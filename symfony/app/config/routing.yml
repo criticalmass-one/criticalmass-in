@@ -1,0 +1,4 @@
+caldera_criticalmass:
+    resource: "@CalderaCriticalmassBundle/Resources/config/routing.yml"
+    prefix:   /
+
