@@ -20,7 +20,7 @@ class City
 	/**
 	 * @ORM\Column(type="string", length=50)
 	 */
-	protected $name;
+	protected $city;
 
 	/**
 	 * @ORM\Column(type="string", length=100)
@@ -50,29 +50,6 @@ class City
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return City
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -165,5 +142,28 @@ class City
     public function getTwitter()
     {
         return $this->twitter;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return City
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
