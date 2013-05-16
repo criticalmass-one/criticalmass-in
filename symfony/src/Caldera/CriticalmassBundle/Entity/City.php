@@ -43,7 +43,7 @@ class City
 	protected $twitter;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="rides")
+	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city_id")
 	 */
 	protected $rides;
     /**

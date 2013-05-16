@@ -1,1 +1,7 @@
 Hello {{ city.title }}!
+
+<ul>
+{% for ride in city.getRides() %}
+<li>{{ ride.id }}</li>
+{% endfor %}
+</ul>
