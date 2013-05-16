@@ -1,7 +1,31 @@
-Hello {{ city.title }}!
+<html>
+<head>
+	<title>{{ city.getTitle }}</title>
+	<style type="text/css">
+	body
+	{
+		font: 1em Helvetica, Arial, Sans-Serif;
+		margin: 0;
+		padding: 0;
+	}
 
-<ul>
-{% for ride in city.getRides() %}
-<li>{{ ride.id }}</li>
-{% endfor %}
-</ul>
+	header, footer
+	{
+		margin: 0 auto;
+		width: 300px;
+		padding: 10px;
+	}
+
+	header
+	{
+		background: black;
+		color: white;
+		font-size: 18px;
+		text-align: center;
+	}
+	</style>
+</head>
+<body>
+	<header>{{ city.getTitle }}</header>
+</body>
+</html>
