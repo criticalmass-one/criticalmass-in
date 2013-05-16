@@ -211,4 +211,10 @@ class City
     {
         return $this->rides;
     }
+
+		public function getCurrentRide()
+		{
+			$rides = $this->getRides();
+			return $rides[1];
+		}
 }
