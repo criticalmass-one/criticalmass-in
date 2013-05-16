@@ -13,7 +13,7 @@
 		padding: 0;
 	}
 
-	header, footer
+	header, section#content, footer
 	{
 		margin: 0 auto;
 		width: 300px;
@@ -23,6 +23,10 @@
 	header
 	{
 		background: black;
+	}
+
+	header h1
+	{
 		color: white;
 		font-size: 25px;
 		text-align: center;
@@ -30,6 +34,11 @@
 	</style>
 </head>
 <body>
-	<header>{{ city.getTitle }}</header>
+	<header><h1>{{ city.getTitle }}</h1></header>
+	<section id="content">
+		<h2>Nächste Tour</h2>
+		<p>Datum: {{ city.getCurrentRide.getDate|date('d.m.Y') }}</p>
+		<p>Uhrzeit: {{ city.getCurrentRide.getTime|date('H:i') }}</p>
+		<p>Treffpunkt: {{ city.getCurrentRide.getLocation }}</p>
 </body>
 </html>
