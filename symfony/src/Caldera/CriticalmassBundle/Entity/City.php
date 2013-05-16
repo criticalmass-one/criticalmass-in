@@ -46,7 +46,14 @@ class City
 	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="rides")
 	 */
 	protected $rides;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -55,6 +62,29 @@ class City
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return City
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**
@@ -150,25 +180,35 @@ class City
     }
 
     /**
-     * Set city
+     * Add rides
      *
-     * @param string $city
+     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
      * @return City
      */
-    public function setCity($city)
+    public function addRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
     {
-        $this->city = $city;
+        $this->rides[] = $rides;
     
         return $this;
     }
 
     /**
-     * Get city
+     * Remove rides
      *
-     * @return string 
+     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
      */
-    public function getCity()
+    public function removeRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
     {
-        return $this->city;
+        $this->rides->removeElement($rides);
+    }
+
+    /**
+     * Get rides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRides()
+    {
+        return $this->rides;
     }
 }
