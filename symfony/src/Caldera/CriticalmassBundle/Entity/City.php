@@ -42,6 +42,11 @@ class City
 	 */
 	protected $twitter;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="rides")
+	 */
+	protected $rides;
+
     /**
      * Get id
      *
