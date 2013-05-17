@@ -54,9 +54,9 @@
 		<p>Treffpunkt: {{ city.getCurrentRide.getLocation }}</p>
 	</section>
 	<footer>
-		<img class="icon" src="{{ asset('bundles/calderacriticalmass/images/rss.png') }}" alt="RSS-Feed" />
-		<img class="icon" src="{{ asset('bundles/calderacriticalmass/images/twitter.png') }}" alt="Twitter" />
-		<img class="icon" src="{{ asset('bundles/calderacriticalmass/images/facebook.png') }}" alt="faebook" />
+		<a href="{{ city.getUrl }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/rss.png') }}" alt="RSS-Feed" /></a>
+		<a href="{{ city.getTwitter }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/twitter.png') }}" alt="Twitter" /></a>
+		<a href="{{ city.getFacebook }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/facebook.png') }}" alt="faebook" /></a>
 	</footer>
 </body>
 </html>
