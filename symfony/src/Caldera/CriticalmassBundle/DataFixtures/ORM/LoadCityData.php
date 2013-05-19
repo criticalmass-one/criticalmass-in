@@ -2,11 +2,12 @@
 
 namespace Caldera\CriticalmassBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Caldera\CriticalmassBundle\Entity\City;
 
-class LoadCityData implements FixtureInterface
+class LoadCity extends AbstractFixture implements OrderedFixtureInterface
 {
 	/**
 	 * {@inheritDoc}
@@ -23,6 +24,8 @@ class LoadCityData implements FixtureInterface
 		$manager->persist($city);
 		$manager->flush();
 
+		$this->addReference("city-hamburg", $city);
+
 		$city = new City();
 		$city->setCity("bremen");
 		$city->setTitle("Critical Mass Bremen");
@@ -33,6 +36,14 @@ class LoadCityData implements FixtureInterface
 		$manager->persist($city);
 		$manager->flush();
 
+		$this->addReference("city-bremen", $city);
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getOrder()
+	{
+		return 1;
 	}
 }
