@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Caldera\CriticalmassBundle\Entity\City;
 
-class LoadCity extends AbstractFixture implements OrderedFixtureInterface
+class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 {
 	/**
 	 * {@inheritDoc}
