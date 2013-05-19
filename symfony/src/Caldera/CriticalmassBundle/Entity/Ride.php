@@ -38,6 +38,11 @@ class Ride
 	 */
 	protected $location;
 
+	/**
+	 * @ORM\Column(type="text")
+	 */
+	protected $map;
+
     /**
      * Get id
      *
@@ -138,5 +143,28 @@ class Ride
     public function getCityId()
     {
         return $this->city_id;
+    }
+
+    /**
+     * Set map
+     *
+     * @param string $map
+     * @return Ride
+     */
+    public function setMap($map)
+    {
+        $this->map = $map;
+
+        return $this;
+    }
+
+    /**
+     * Get map
+     *
+     * @return string 
+     */
+    public function getMap()
+    {
+        return $this->map;
     }
 }
