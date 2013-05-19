@@ -22,5 +22,17 @@ class LoadCityData implements FixtureInterface
 
 		$manager->persist($city);
 		$manager->flush();
+
+		$city = new City();
+		$city->setCity("bremen");
+		$city->setTitle("Critical Mass Bremen");
+		$city->setUrl("http://www.criticalmass-bremen.de/");
+		$city->setFacebook("https://www.facebook.com/CriticalMassBremen");
+		$city->setTwitter("");
+
+		$manager->persist($city);
+		$manager->flush();
+
+
 	}
 }
