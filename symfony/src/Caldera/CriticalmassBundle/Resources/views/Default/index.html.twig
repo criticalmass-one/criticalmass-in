@@ -62,6 +62,7 @@
 			<p class="locationunknown">Der Treffpunkt ist noch nicht bekannt :( Schau später noch mal vorbei.</p>
 		{% else %}
 			<p>Treffpunkt: {{ city.getCurrentRide.getLocation }}</p>
+			{{ city.getCurrentRide.getMap|raw }}
 		{% endif %}
 	</section>
 	<footer>
