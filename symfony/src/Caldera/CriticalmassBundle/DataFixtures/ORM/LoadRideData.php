@@ -14,6 +14,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 	 */
 	public function load(ObjectManager $manager)
 	{
+		// Beispiel-Tour der Critical Mass Hamburg
 		$ride = new Ride();
 		$ride->setCityId($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-05-31"));

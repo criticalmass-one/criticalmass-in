@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class City
 {
 	/**
+	 * Numerische ID der Stadt.
+	 *
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
@@ -18,203 +20,223 @@ class City
   protected $id;
 
 	/**
+	 * Name der Stadt.
+	 *
 	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $city;
 
 	/**
+	 * Bezeichnung der Critical Mass in dieser Stadt, etwa "Critical Mass Hamburg"
+	 * oder "Critical Mass Bremen".
+	 *
 	 * @ORM\Column(type="string", length=100)
 	 */
 	protected $title;
 
 	/**
+	 * Adresse der Webseite der Critical Mass in dieser Stadt.
+	 *
 	 * @ORM\Column(type="string", length=255)
 	 */
 	protected $url;
 
 	/**
+	 * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
+	 *
 	 * @ORM\Column(type="string", length=255)
 	 */
 	protected $facebook;
 
 	/**
+	 * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
+	 *
 	 * @ORM\Column(type="string", length=255)
 	 */
 	protected $twitter;
 
 	/**
+	 * Array mit den Touren in dieser Stadt.
+	 *
 	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city_id")
 	 */
 	protected $rides;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return City
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    
-        return $this;
-    }
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
-    /**
-     * Get city
-     *
-     * @return string 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer 
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return City
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    
-        return $this;
-    }
+	/**
+	 * Set city
+	 *
+	 * @param string $city
+	 * @return City
+	 */
+	public function setCity($city)
+	{
+		$this->city = $city;
 
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
+		return $this;
+	}
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return City
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    
-        return $this;
-    }
+	/**
+	 * Get city
+	 *
+	 * @return string 
+	 */
+	public function getCity()
+	{
+		return $this->city;
+	}
 
-    /**
-     * Get url
-     *
-     * @return string 
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
+	/**
+	 * Set title
+	 *
+	 * @param string $title
+	 * @return City
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
 
-    /**
-     * Set facebook
-     *
-     * @param string $facebook
-     * @return City
-     */
-    public function setFacebook($facebook)
-    {
-        $this->facebook = $facebook;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get facebook
-     *
-     * @return string 
-     */
-    public function getFacebook()
-    {
-        return $this->facebook;
-    }
+	/**
+	 * Get title
+	 *
+	 * @return string 
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     * @return City
-     */
-    public function setTwitter($twitter)
-    {
-        $this->twitter = $twitter;
-    
-        return $this;
-    }
+	/**
+	 * Set url
+	 *
+	 * @param string $url
+	 * @return City
+	 */
+	public function setUrl($url)
+	{
+		$this->url = $url;
 
-    /**
-     * Get twitter
-     *
-     * @return string 
-     */
-    public function getTwitter()
-    {
-        return $this->twitter;
-    }
+		return $this;
+	}
 
-    /**
-     * Add rides
-     *
-     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
-     * @return City
-     */
-    public function addRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
-    {
-        $this->rides[] = $rides;
-    
-        return $this;
-    }
+	/**
+	 * Get url
+	 *
+	 * @return string 
+	 */
+	public function getUrl()
+	{
+		return $this->url;
+	}
 
-    /**
-     * Remove rides
-     *
-     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
-     */
-    public function removeRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
-    {
-        $this->rides->removeElement($rides);
-    }
+	/**
+	 * Set facebook
+	 *
+	 * @param string $facebook
+	 * @return City
+	 */
+	public function setFacebook($facebook)
+	{
+		$this->facebook = $facebook;
 
-    /**
-     * Get rides
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRides()
-    {
-        return $this->rides;
-    }
+		return $this;
+	}
 
-		public function getCurrentRide()
-		{
-			$rides = $this->getRides();
-			return $rides[count($rides) - 1];
-		}
+	/**
+	 * Get facebook
+	 *
+	 * @return string 
+	 */
+	public function getFacebook()
+	{
+		return $this->facebook;
+	}
+
+	/**
+	 * Set twitter
+	 *
+	 * @param string $twitter
+	 * @return City
+	 */
+	public function setTwitter($twitter)
+	{
+		$this->twitter = $twitter;
+
+		return $this;
+	}
+
+	/**
+	 * Get twitter
+	 *
+	 * @return string 
+	 */
+	public function getTwitter()
+	{
+		return $this->twitter;
+	}
+
+	/**
+	 * Add rides
+	 *
+	 * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
+	 * @return City
+	 */
+	public function addRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
+	{
+		$this->rides[] = $rides;
+
+		return $this;
+	}
+
+	/**
+	 * Remove rides
+	 *
+	 * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
+	 */
+	public function removeRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
+	{
+		$this->rides->removeElement($rides);
+	}
+
+	/**
+	 * Get rides
+	 *
+	 * @return \Doctrine\Common\Collections\Collection 
+	 */
+	public function getRides()
+	{
+		return $this->rides;
+	}
+
+	/**
+	* Gibt das letzte Element der Fahrten-Liste zurück, von dem angenommen wird,
+	* dass es die aktuelle Fahrt darstellt.
+	*
+	* @return \Caldera\CriticalmassBundle\Entity\Ride
+	*/
+	public function getCurrentRide()
+	{
+		$rides = $this->getRides();
+		return $rides[count($rides) - 1];
+	}
 }

@@ -14,6 +14,7 @@ class LoadCity extends AbstractFixture implements OrderedFixtureInterface
 	 */
 	public function load(ObjectManager $manager)
 	{
+		// Critical Mass Hamburg
 		$city = new City();
 		$city->setCity("hamburg");
 		$city->setTitle("Critical Mass Hamburg");
@@ -26,6 +27,7 @@ class LoadCity extends AbstractFixture implements OrderedFixtureInterface
 
 		$this->addReference("city-hamburg", $city);
 
+		// Critical Mass Bremen
 		$city = new City();
 		$city->setCity("bremen");
 		$city->setTitle("Critical Mass Bremen");
