@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stellt eine einzelne Tour einer Critical Mass dar.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\RideRepository")
  * @ORM\Table(name="ride")
  */
 class Ride
