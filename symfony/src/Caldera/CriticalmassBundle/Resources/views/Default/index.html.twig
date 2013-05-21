@@ -5,52 +5,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=320,user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<style type="text/css">
-	body
-	{
-		font: 1em Helvetica, Arial, Sans-Serif;
-		margin: 0;
-		padding: 0;
-	}
-
-	header, section#content, footer
-	{
-		margin: 0 auto;
-		width: 300px;
-		padding: 10px;
-	}
-
-	header
-	{
-		background: black;
-	}
-
-	header h1
-	{
-		color: white;
-		font-size: 25px;
-		text-align: center;
-	}
-
-	footer
-	{
-		text-align: center;
-	}
-
-	footer img.icon
-	{
-		width: 70px;
-		height: 70px;
-		margin: 10px;
-	}
-
-	p.locationunknown
-	{
-		border: 1px red solid;
-		background: #fdd;
-		padding: 3px;
-	}
-	</style>
+	{% stylesheets '@CalderaCriticalmassBundle/Resources/public/css/*.css' filter="cssrewrite" %}
+	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
 </head>
 <body>
 	<header><h1>{{ city.getTitle }}</h1></header>
