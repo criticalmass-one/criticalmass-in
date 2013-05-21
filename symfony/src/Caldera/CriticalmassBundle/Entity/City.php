@@ -227,16 +227,4 @@ class City
 	{
 		return $this->rides;
 	}
-
-	/**
-	* Gibt das letzte Element der Fahrten-Liste zurück, von dem angenommen wird,
-	* dass es die aktuelle Fahrt darstellt.
-	*
-	* @return \Caldera\CriticalmassBundle\Entity\Ride
-	*/
-	public function getCurrentRide()
-	{
-		$rides = $this->getRides();
-		return $rides[count($rides) - 1];
-	}
 }
