@@ -24,8 +24,10 @@ class DefaultController extends Controller
 		}
 		else
 		{
+			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->findLatest();
+
 			// Darstellung an das Template weiterreichen
-			return $this->render('CalderaCriticalmassBundle:Default:index.html.twig', array('city' => $city));
+			return $this->render('CalderaCriticalmassBundle:Default:index.html.twig', array('city' => $city, 'ride' => $ride));
 		}
 	}
 }
