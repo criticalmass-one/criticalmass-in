@@ -13,13 +13,13 @@
 	<header><h1>{{ city.getTitle }}</h1></header>
 	<section id="content">
 		<h2>Nächste Tour</h2>
-		<p>Datum: {{ city.getCurrentRide.getDate|date('d.m.Y') }}</p>
-		<p>Uhrzeit: {{ city.getCurrentRide.getTime|date('H:i') }}</p>
-		{% if city.getCurrentRide.getLocation == "tba" %}
+		<p>Datum: {{ ride.getDate|date('d.m.Y') }}</p>
+		<p>Uhrzeit: {{ ride.getTime|date('H:i') }}</p>
+		{% if ride.getLocation == "tba" %}
 			<p class="locationunknown">Der Treffpunkt ist noch nicht bekannt :( Schau später noch mal vorbei.</p>
 		{% else %}
-			<p>Treffpunkt: {{ city.getCurrentRide.getLocation }}</p>
-			{{ city.getCurrentRide.getMap|raw }}
+			<p>Treffpunkt: {{ ride.getLocation }}</p>
+			{{ ride.getMap|raw }}
 		{% endif %}
 	</section>
 	<footer>
