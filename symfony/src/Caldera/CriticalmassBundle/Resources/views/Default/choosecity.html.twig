@@ -55,7 +55,7 @@
 <body>
 	<ul>
 	{% for city in cities %}
-	<li>{{ city['city'].getTitle }}</li>
+	<li>{{ city['city'].getTitle }} (Entfernung: {{ city['distance'] }})</li>
 	{% endfor %}
 	</ul>
 </body>
