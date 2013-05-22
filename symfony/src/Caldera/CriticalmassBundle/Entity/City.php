@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\CityRepository")
  * @ORM\Table(name="city")
  */
 class City
