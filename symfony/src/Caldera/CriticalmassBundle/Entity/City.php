@@ -56,6 +56,16 @@ class City
 	protected $twitter;
 
 	/**
+	 * @ORM\Column(type="float")
+	 */
+	protected $latitude;
+
+	/**
+	 * @ORM\Column(type="float")
+	 */
+	protected $longitude;
+
+	/**
 	 * Array mit den Touren in dieser Stadt.
 	 *
 	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city_id")
@@ -239,4 +249,50 @@ class City
 		$rides = $this->getRides();
 		return $rides[count($rides) - 1];
 	}
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     * @return City
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     * @return City
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
 }
