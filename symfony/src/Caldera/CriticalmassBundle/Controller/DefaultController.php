@@ -8,7 +8,7 @@ class DefaultController extends Controller
 {
 	public function selectcityAction()
 	{
-
+		return $this->render('CalderaCriticalmassBundle:Default:selectcity.html.twig');
 	}
 
 	/**
