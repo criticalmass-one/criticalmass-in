@@ -5,3 +5,8 @@ services:
 #    caldera_criticalmass.example:
 #        class: %caldera_criticalmass.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    caldera_criticalmass_ride_repository:
+        class:           Caldera\CriticalmassBundle\Entity\RideRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [CalderaCriticalmassBundle:Ride]
