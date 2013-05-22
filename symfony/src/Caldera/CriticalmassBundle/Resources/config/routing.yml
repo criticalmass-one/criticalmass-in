@@ -1,3 +1,11 @@
-caldera_criticalmass_city:
+caldera_criticalmass_selectcity:
+    pattern: /
+    defaults: { _controller: CalderaCriticalmassBundle:Default:selectcity }
+
+caldera_criticalmass_choosecity:
+    pattern: /selectcity/{latitude}/{longitude}
+    defaults: { _controller: CalderaCriticalmassBundle:Default:choosecity }
+
+caldera_criticalmass_showcity:
     pattern: /{city}
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
