@@ -56,11 +56,15 @@ class City
 	protected $twitter;
 
 	/**
+	 * Breitengrad der Stadt.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $latitude;
 
 	/**
+	 * Längengrad der Stadt.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $longitude;
