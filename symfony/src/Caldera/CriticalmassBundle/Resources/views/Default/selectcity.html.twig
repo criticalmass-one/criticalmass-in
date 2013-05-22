@@ -52,9 +52,18 @@
 	}
 	</style>
 	<script type="text/javascript">
+		function success(position)
+		{
+			alert(position.coords.latitude + " " + position.coords.longitude);
+		}
+
+		function error(message)
+		{
+			alert("Geolocation fehlgeschlagen: " + message);
+		}
 		if (navigator.geolocation)
 		{
-			alert("Geolocation aktiv");
+			navigator.geolocation.getCurrentPosition(success, error);
 		}
 		else
 		{
