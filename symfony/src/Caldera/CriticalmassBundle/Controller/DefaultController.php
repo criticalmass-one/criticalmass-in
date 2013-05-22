@@ -6,6 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
+	/**
+	 * Zeigt eine Liste der Critical-Mass-Touren in der Umgebung an.
+	 *
+	 * @param $latitude Breitengrad des Suchpunktes
+	 * @param $longitude Längengrad des Suchpunktes
+	 */
 	public function choosecityAction($latitude, $longitude)
 	{
 		$cities = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
@@ -13,6 +19,10 @@ class DefaultController extends Controller
 		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cities' => $cities));
 	}
 
+	/**
+	 * Ruft ein Template auf, dass per JavaScript die Position des Endgerätes
+	 * ausliest und an die nächste Action weiterleitet.
+	 */
 	public function selectcityAction()
 	{
 		return $this->render('CalderaCriticalmassBundle:Default:selectcity.html.twig');
