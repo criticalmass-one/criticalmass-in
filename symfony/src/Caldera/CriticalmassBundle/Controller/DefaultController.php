@@ -14,9 +14,9 @@ class DefaultController extends Controller
 	 */
 	public function choosecityAction($latitude, $longitude)
 	{
-		$cities = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
+		$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
 
-		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cities' => $cities));
+		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cityResults' => $cityResults));
 	}
 
 	/**
