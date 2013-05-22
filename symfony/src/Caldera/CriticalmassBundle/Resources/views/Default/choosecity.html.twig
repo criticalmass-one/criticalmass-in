@@ -55,7 +55,7 @@
 <body>
 	<ul>
 	{% for city in cities %}
-	<li>{{ city['city'].getTitle }} (Entfernung: {{ city['distance']|number_format(2) * 75 }} Kilometer)</li>
+	<li><a href="{{ url('caldera_criticalmass_showcity', {'city': city['city'].getCity }) }}">{{ city['city'].getTitle }}</a> (Entfernung: {{ city['distance']|number_format(2) * 75 }} Kilometer)</li>
 	{% endfor %}
 	</ul>
 </body>
