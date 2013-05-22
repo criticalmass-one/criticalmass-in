@@ -53,6 +53,10 @@
 	</style>
 </head>
 <body>
-	
+	<ul>
+	{% for city in cities %}
+	<li>{{ city['city'].getTitle }}</li>
+	{% endfor %}
+	</ul>
 </body>
 </html>
