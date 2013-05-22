@@ -7,8 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
 	public function choosecityAction()
+	public function choosecityAction($latitude, $longitude)
 	{
-		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig');
+		$cities = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
+
+		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cities' => $cities));
 	}
 
 	public function selectcityAction()
