@@ -6,6 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
+	public function choosecityAction()
+	{
+		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig');
+	}
+
 	public function selectcityAction()
 	{
 		return $this->render('CalderaCriticalmassBundle:Default:selectcity.html.twig');
