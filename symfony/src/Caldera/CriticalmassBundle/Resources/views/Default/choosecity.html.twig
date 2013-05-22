@@ -55,7 +55,7 @@
 <body>
 	<ul>
 	{% for city in cities %}
-	<li>{{ city['city'].getTitle }} (Entfernung: {{ city['distance'] }})</li>
+	<li>{{ city['city'].getTitle }} (Entfernung: {{ city['distance']|number_format(2) * 75 }} Kilometer)</li>
 	{% endfor %}
 	</ul>
 </body>
