@@ -6,7 +6,7 @@
   <property name="builddir" value="${workspace}/app/build" />
 
   <target name="build"
-   depends="prepare,vendors,parameters,lint,phploc,pdepend,phpcpd,phpmd-ci,phpcs-ci,phpdoc,phpunit,phpcb"/>
+   depends="prepare,vendors,parameters,lint,phploc,phpcpd,phpcs-ci,phpdoc,phpunit,phpcb"/>
 
   <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
