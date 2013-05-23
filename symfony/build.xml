@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Critical Mass" default="build">
-  <property name="workspace" value="${basedir}" />
+  <property name="workspace" value="${basedir}/symfony" />
   <property name="sourcedir" value="${basedir}/src" />
   <property name="builddir" value="${workspace}/app/build" />
 
