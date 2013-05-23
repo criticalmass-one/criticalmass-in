@@ -8,6 +8,12 @@ class CityDistanceCalculator
 {
 	public function calculateDistanceFromCityToCity(Entity\City $city1, Entity\City $city2)
 	{
-		return sqrt(pow($city1->getLatitude() - $city2->getLatitude(), 2) + pow($city1->getLongitude() - $city2->getLongitude(), 2));
+		return $this->calculateDistanceFromCoordToCoord($city1->getLatitude(), $city2->getLatitude(), $city1->getLongitude(), $city2->getLongitude());
 	}
+
+	public function calculateDistanceFromCoordToCoord($latitude1, $latitude2, $longitude1, $longitude2)
+	{
+		return sqrt(pow($latitude1 - $latitude2, 2) + pow($longitude1 - $longitude2, 2));
+	}
+
 }
