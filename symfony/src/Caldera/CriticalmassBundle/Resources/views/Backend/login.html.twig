@@ -4,6 +4,7 @@
 {% if error %}
     <div>{{ error.message }}</div>
 {% endif %}
+	<div data-role="header"><h1>Login</h1></div>
 
 	<form action="{{ path('login_check') }}" method="post">
 		<label for="username">Username:</label>
