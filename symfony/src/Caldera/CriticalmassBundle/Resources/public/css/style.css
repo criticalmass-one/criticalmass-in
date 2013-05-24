@@ -5,23 +5,11 @@ body
 	padding: 0;
 }
 
-header, section#content, footer
+section#content, footer
 {
 	margin: 0 auto;
 	width: 300px;
 	padding: 10px;
-}
-
-header
-{
-	background: black;
-}
-
-header h1
-{
-	color: white;
-	font-size: 25px;
-	text-align: center;
 }
 
 footer
