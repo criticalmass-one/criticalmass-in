@@ -8,11 +8,14 @@ function error(message)
 	alert("Geolocation fehlgeschlagen: " + message);
 }
 
-if (navigator.geolocation)
+function getLocation()
 {
-	navigator.geolocation.getCurrentPosition(success, error);
-}
-else
-{
-	alert("Geolocation nicht möglich.");
+	if (navigator.geolocation)
+	{
+		navigator.geolocation.getCurrentPosition(success, error);
+	}
+	else
+	{
+		alert("Geolocation nicht möglich.");
+	}
 }
