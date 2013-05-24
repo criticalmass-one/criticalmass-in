@@ -1,3 +1,9 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: CalderaCriticalmassBundle:Backend:login }
+login_check:
+    pattern:   /login_check
+
 caldera_criticalmass:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing.yml"
     prefix:   /
