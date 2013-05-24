@@ -16,6 +16,11 @@ class DefaultController extends Controller
 	{
 		$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
 
+		foreach ($cityResults as $key => $result)
+		{
+			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findLatest();
+		}
+	
 		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cityResults' => $cityResults));
 	}
 
