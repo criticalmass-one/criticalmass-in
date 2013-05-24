@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=320,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	{% stylesheets '@CalderaCriticalmassBundle/Resources/public/css/*.css' filter="cssrewrite" %}
+	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
+</head>
+<body>
+	{% block body %}{% endblock %}
+</body>
+</html>
