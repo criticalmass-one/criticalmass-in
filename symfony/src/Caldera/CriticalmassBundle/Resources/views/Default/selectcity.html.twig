@@ -1,78 +1,9 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-	<title>criticalmass.in</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=320,user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<style type="text/css">
-	body
-	{
-		font: 1em Helvetica, Arial, Sans-Serif;
-		margin: 0;
-		padding: 0;
-	}
+{% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
 
-	header, section#content, footer
-	{
-		margin: 0 auto;
-		width: 300px;
-		padding: 10px;
-	}
+{% block title %}criticalmass.in{% endblock %}
 
-	header
-	{
-		background: black;
-	}
-
-	header h1
-	{
-		color: white;
-		font-size: 25px;
-		text-align: center;
-	}
-
-	footer
-	{
-		text-align: center;
-	}
-
-	footer img.icon
-	{
-		width: 70px;
-		height: 70px;
-		margin: 10px;
-	}
-
-	p.locationunknown
-	{
-		border: 1px red solid;
-		background: #fdd;
-		padding: 3px;
-	}
-	</style>
-	<script type="text/javascript">
-		function success(position)
-		{
-			window.location = "http://localhost/criticalmass/symfony/web/app_dev.php/selectcity/" + position.coords.latitude + "/" + position.coords.longitude;
-		}
-
-		function error(message)
-		{
-			alert("Geolocation fehlgeschlagen: " + message);
-		}
-
-		if (navigator.geolocation)
-		{
-			navigator.geolocation.getCurrentPosition(success, error);
-		}
-		else
-		{
-			alert("Geolocation nicht möglich.");
-		}
-	</script>
-</head>
-<body>
-	
-</body>
-</html>
+{% block body %}
+<script>
+	getLocation();
+</script>
+{% endblock %}

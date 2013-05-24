@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-	<title>{{ city.getTitle }}</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=320,user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	{% stylesheets '@CalderaCriticalmassBundle/Resources/public/css/*.css' filter="cssrewrite" %}
-	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-	{% endstylesheets %}
-</head>
-<body>
+{% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
+
+{% block title %}{{ city.getTitle }}{% endblock %}
+
+{% block body %}
 	<header><h1>{{ city.getTitle }}</h1></header>
 	<section id="content">
 		<h2>Nächste Tour</h2>
@@ -27,5 +20,4 @@
 		{% if city.getTwitter %}<a href="{{ city.getTwitter }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/twitter.png') }}" alt="Twitter" /></a>{% endif %}
 		{% if city.getFacebook %}<a href="{{ city.getFacebook }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/facebook.png') }}" alt="faebook" /></a>{% endif %}
 	</footer>
-</body>
-</html>
+{% endblock %}
