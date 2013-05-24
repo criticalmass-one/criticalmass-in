@@ -9,6 +9,7 @@
 		<li class="ui-li ui-li-static ui-btn-up-c">
 			<p class="ui-li-aside ui-li-desc">{{ result['distance'] }}</p>
 			<h3 class="ui-li-heading">{{ result['city'].getTitle }}</h3>
+			<p class="ui-li-desc"><strong>{{ result['ride'].getDate|date("d.m.") }}, {{ result['ride'].getTime|date("H:i") }} Uhr</strong></p>
 			<p class="ui-li-desc">In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
 		</li>
 	{% endfor %}
