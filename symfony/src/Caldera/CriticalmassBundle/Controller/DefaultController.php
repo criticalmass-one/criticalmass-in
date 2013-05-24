@@ -46,7 +46,7 @@ class DefaultController extends Controller
 		}
 		else
 		{
-			$ride = $this->get('caldera_criticalmass_ride_repository')->findLatest();
+			$ride = $this->get('caldera_criticalmass_ride_repository')->findLatestByCity($city);
 
 			// Darstellung an das Template weiterreichen
 			return $this->render('CalderaCriticalmassBundle:Default:index.html.twig', array('city' => $city, 'ride' => $ride));
