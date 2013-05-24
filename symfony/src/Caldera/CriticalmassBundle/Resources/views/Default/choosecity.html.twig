@@ -3,6 +3,7 @@
 {% block title %}criticalmass.in{% endblock %}
 
 {% block body %}
+	<div data-role="header"><h1>Wähle deine Stadt</h1></div>
 	<ul>
 	{% for result in cityResults %}
 	<li><a href="{{ url('caldera_criticalmass_showcity', {'city': result['city'].getCity }) }}">{{ result['city'].getTitle }}</a> (Entfernung: {{ result['distance']|number_format(2) * 75 }} Kilometer)</li>
