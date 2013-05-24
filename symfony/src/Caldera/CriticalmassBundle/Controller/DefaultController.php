@@ -18,7 +18,7 @@ class DefaultController extends Controller
 
 		foreach ($cityResults as $key => $result)
 		{
-			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findLatest();
+			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findLatestByCity($cityResults[$key]['city']);
 		}
 	
 		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cityResults' => $cityResults));
