@@ -7,21 +7,6 @@ use Caldera\CriticalmassBundle\Entity as Entity;
 class CityDistanceCalculator
 {
 	/**
-	 * Bestimmt die Entfernung zwischen zwei Städten und gibt das Ergebnis als
-	 * Kilometerangabe zurück.
-	 *
-	 * @param Entity\City $city1 Entität der ersten Stadt
-	 * @param Entity\City $city2 Entität der zweiten Stadt
-	 *
-	 * @return double Berechnete Entfernung zwischen den beiden Städten in Kilo-
-	 * metern
-	 */
-	public function calculateKilometreDistanceFromCityToCity(Entity\City $city1, Entity\City $city2)
-	{
-		return $this->calculateDistanceFromCityToCity($city1, $city2) * 75.;
-	}
-
-	/**
 	 * Bestimmt die Entfernung zwischen zwei Städten und gibt das Ergebnis zu-
 	 * zurück.
 	 *
