@@ -43,7 +43,7 @@ class AccountController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			return $this->redirect("caldera_criticalmass_selectcity");
+			return $this->redirect("");
 		}
 
 
