@@ -57,4 +57,9 @@ class DefaultController extends Controller
 			return $this->render('CalderaCriticalmassBundle:Default:index.html.twig', array('city' => $city, 'ride' => $ride));
 		}
 	}
+
+	public function trackpositionAction()
+	{
+		
+	}
 }
