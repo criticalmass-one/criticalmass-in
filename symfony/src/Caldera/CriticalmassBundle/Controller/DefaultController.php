@@ -68,14 +68,14 @@ class DefaultController extends Controller
 		$position = new Entity\Position();
 
 		$position->setUserId($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneById(11));
-		$position->setLatitude($query->get("latitude"));
-		$position->setLongitude($query->get("longitude"));
-		$position->setAccuracy($query->get("accuracy"));	
-		$position->setAltitude($query->get("altitude"));
-		$position->setAltitudeAccuracy($query->get("altitudeaccuracy"));
-		$position->setHeading($query->get("heading"));
-		$position->setSpeed($query->get("speed"));
-		//$position->setTimestamp($request->request->get("timestamp"));
+		$position->setLatitude($query->get("latitude") ? $query->get("latitude") : 0.0);
+		$position->setLongitude($query->get("longitude") ? $query->get("longitude") : 0.0);
+		$position->setAccuracy($query->get("accuracy") ? $query->get("accuracy") : 0.0);
+		$position->setAltitude($query->get("altitude") ? $query->get("altitude") : 0.0);
+		$position->setAltitudeAccuracy($query->get("altitudeaccuracy") ? $query->get("altitudeaccuracy") : 0.0);
+		$position->setHeading($query->get("heading") ? $query->get("heading") : 0.0);
+		$position->setSpeed($query->get("speed") ? $query->get("speed") : 0.0);
+		$position->setTimestamp($request->request->get("timestamp") : 0);
 
 		$manager = $this->getDoctrine()->getManager();
 		$manager->persist($position);
