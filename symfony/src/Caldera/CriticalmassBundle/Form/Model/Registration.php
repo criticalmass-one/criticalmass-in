@@ -8,7 +8,7 @@ use Caldera\CriticalmassBundle\Entity\User;
 class Registration
 {
 	/**
-	 * @Assert\Type(type="Acme\AccountBundle\Entity\User")
+	 * @Assert\Type(type="Caldera\CriticalmassBundle\Entity\User")
 	 * @Assert\Valid()
 	 */
 	protected $user;
