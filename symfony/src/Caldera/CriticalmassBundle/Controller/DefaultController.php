@@ -63,18 +63,18 @@ class DefaultController extends Controller
 
 	public function trackpositionAction()
 	{
-		$request = $this->getRequest();
+		$query = $this->getRequest()->query;
 
 		$position = new Entity\Position();
 
 		$position->setUserId($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneById(11));
-		$position->setLatitude($request->query->get("latitude"));
-		$position->setLongitude($request->query->get("longitude"));
-		$position->setAccuracy($request->query->get("accuracy"));	
-		$position->setAltitude($request->query->get("altitude"));
-		$position->setAltitudeAccuracy($request->query->get("altitudeaccuracy"));
-		$position->setHeading($request->query->get("heading"));
-		$position->setSpeed($request->query->get("speed"));
+		$position->setLatitude($query->get("latitude"));
+		$position->setLongitude($query->get("longitude"));
+		$position->setAccuracy($query->get("accuracy"));	
+		$position->setAltitude($query->get("altitude"));
+		$position->setAltitudeAccuracy($query->get("altitudeaccuracy"));
+		$position->setHeading($query->get("heading"));
+		$position->setSpeed($query->get("speed"));
 		//$position->setTimestamp($request->request->get("timestamp"));
 
 		$manager = $this->getDoctrine()->getManager();
