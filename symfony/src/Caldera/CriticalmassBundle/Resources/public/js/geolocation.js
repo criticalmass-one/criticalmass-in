@@ -22,20 +22,26 @@ function getLocation()
 
 function sendPosition(position)
 {
-  $.ajax({
-      type: 'GET',
-      url: 'http://localhost/criticalmass/symfony/web/app_dev.php/trackposition',
-      data: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        altitude: position.coords.altitude
-      },
-      cache: false,
-      success: function(result) {
-        alert(result);
-      }
-  });
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost/criticalmass/symfony/web/app_dev.php/trackposition',
+		data: {
+			latitude: position.coords.latitude,
+			longitude: position.coords.longitude,
+			accuracy: position.coords.accuracy,
+			altitude: position.coords.altitude,
+			altitudeaccuracy: position.coords.altitudeAccurary,
+			speed: position.coords.speed,
+			heading: position.coords.heading,
+			timestamp: position.coords.timestamp
+		},
+		cache: false,
+		success: function(result) {
+			alert(result);
+		}
+	});
 }
+
 window.onload = setInterval(function()
 {
 	navigator.geolocation.getCurrentPosition(sendPosition, error);
