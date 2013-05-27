@@ -67,7 +67,7 @@ class DefaultController extends Controller
 
 		$position = new Entity\Position();
 
-		$position->setUserId($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneById(11));
+		$position->setUser($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneById(11));
 		$position->setLatitude($query->get("latitude") ? $query->get("latitude") : 0.0);
 		$position->setLongitude($query->get("longitude") ? $query->get("longitude") : 0.0);
 		$position->setAccuracy($query->get("accuracy") ? $query->get("accuracy") : 0.0);
