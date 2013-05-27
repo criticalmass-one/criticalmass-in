@@ -20,7 +20,7 @@ class AccountController extends Controller
 		);
 	}
 
-	public function createAction()
+	public function processregistrationAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
 
