@@ -15,7 +15,7 @@ security:
 
     providers:
         administrators:
-            entity: { class: CalderaCriticalmassBundle:User, property: username }
+            entity: { class: CalderaCriticalmassBundle:User }
 
     firewalls:
         dev:
