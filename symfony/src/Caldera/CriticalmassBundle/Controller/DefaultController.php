@@ -62,6 +62,7 @@ class DefaultController extends Controller
 	public function trackpositionAction()
 	{
 		$request = $this->getRequest();
-		return new Response('Hello world!');
+		
+		return new Response($request->attributes->get("latitude"));
 	}
 }
