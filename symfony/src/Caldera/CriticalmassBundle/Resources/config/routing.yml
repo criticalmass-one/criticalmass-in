@@ -7,7 +7,7 @@ caldera_criticalmass_choosecity:
     defaults: { _controller: CalderaCriticalmassBundle:Default:choosecity }
 
 caldera_criticalmass_registeruser:
-    pattern: /registeruser
+    pattern: /register
     defaults: { _controller: CalderaCriticalmassBundle:Account:register }
 
 caldera_criticalmass_showcity:
