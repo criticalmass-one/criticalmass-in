@@ -12,14 +12,25 @@ class AccountController extends Controller
 {
 	public function registerAction()
 	{
-		$registration = new Registration();
-		$form = $this->createForm(new RegistrationType(), $registration, array(
-			'action' => $this->generateUrl('account_create'),
-		));
+		$em = $this->getDoctrine()->getEntityManager();
+
+		$form = $this->createForm(new RegistrationType(), new Registration());
+
+		$form->handleRequest($request);
+
+		if ($form->isValid())
+		{
+			$registration = $form->getData();
+
+			$em->persist($registration->getUser());
+			$em->flush();
+
+			return $this->redirect("/");
+		}
 
 		return $this->render(
-		'CalderaCriticalmassBundle:Account:register.html.twig',
+			'CalderaCriticalmassBundle:Account:register.html.twig',
 			array('form' => $form->createView())
-		);
+    );
 	}
 }
