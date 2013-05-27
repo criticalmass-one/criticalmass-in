@@ -12,6 +12,16 @@ class AccountController extends Controller
 {
 	public function registerAction()
 	{
+		$form = $this->createForm(new RegistrationType(), new Registration());
+
+		return $this->render(
+			'CalderaCriticalmassBundle:Account:register.html.twig',
+			array('form' => $form->createView())
+		);
+	}
+
+	public function createAction()
+	{
 		$em = $this->getDoctrine()->getEntityManager();
 
 		$form = $this->createForm(new RegistrationType(), new Registration());
@@ -36,9 +46,10 @@ class AccountController extends Controller
 			return $this->redirect("caldera_criticalmass_selectcity");
 		}
 
+
 		return $this->render(
 			'CalderaCriticalmassBundle:Account:register.html.twig',
 			array('form' => $form->createView())
-    );
+		);
 	}
 }
