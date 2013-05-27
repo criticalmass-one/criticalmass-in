@@ -6,10 +6,11 @@ caldera_criticalmass_choosecity:
     pattern: /selectcity/{latitude}/{longitude}
     defaults: { _controller: CalderaCriticalmassBundle:Default:choosecity }
 
-caldera_criticalmass_showcity:
-    pattern: /{city}
-    defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
-
 caldera_criticalmass_registeruser:
     pattern: /registeruser
-    defaults: { _controller: CalderaCriticalmassBundle:Default:registeruser }
+    defaults: { _controller: CalderaCriticalmassBundle:Account:register }
+
+caldera_criticalmass_showcity:
+    pattern: /show/{city}
+    defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
+
