@@ -18,3 +18,7 @@ caldera_criticalmass_showcity:
     pattern: /show/{city}
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
 
+caldera_criticalmass_trackposition:
+    pattern: /trackposition
+    defaults: { _controller: CalderaCriticalmassBundle:Default:trackposition }
+
