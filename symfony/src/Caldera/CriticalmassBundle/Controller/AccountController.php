@@ -22,7 +22,15 @@ class AccountController extends Controller
 		{
 			$registration = $form->getData();
 
-			$em->persist($registration->getUser());
+			$factory = $this->get('security.encoder_factory');
+
+			$user = $registration->getUser();
+
+			$encoder = $factory->getEncoder($user);
+			$password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+			$user->setPassword($password);
+
+			$em->persist($user);
 			$em->flush();
 
 			return $this->redirect("/");
