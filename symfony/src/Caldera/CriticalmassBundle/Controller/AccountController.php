@@ -5,8 +5,8 @@ namespace Caldera\CriticalmassBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-use Acme\AccountBundle\Form\Type\RegistrationType;
-use Acme\AccountBundle\Form\Model\Registration;
+use Caldera\CriticalmassBundle\Form\Type\RegistrationType;
+use Caldera\CriticalmassBundle\Form\Model\Registration;
 
 class AccountController extends Controller
 {
