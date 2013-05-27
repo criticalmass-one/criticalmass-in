@@ -21,7 +21,7 @@ class Position
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="positions")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
-	protected $user_id;
+	protected $user;
 
 	/**
 	 * @ORM\Column(type="float")
@@ -278,5 +278,28 @@ class Position
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\User $user
+     * @return Position
+     */
+    public function setUser(\Caldera\CriticalmassBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Caldera\CriticalmassBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
