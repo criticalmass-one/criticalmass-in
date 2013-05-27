@@ -43,7 +43,7 @@ class AccountController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			return $this->redirect("");
+			return $this->redirect("show/hamburg");
 		}
 
 
