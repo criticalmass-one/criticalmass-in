@@ -5,6 +5,8 @@ namespace Caldera\CriticalmassBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+use Caldera\CriticalmassBundle\Entity as Entity;
+
 class DefaultController extends Controller
 {
 	/**
@@ -63,6 +65,22 @@ class DefaultController extends Controller
 	{
 		$request = $this->getRequest();
 
-		return new Response($request->request->get("latitude"));
+		$position = new Entity\Position();
+
+		$position->setUserId($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneById(11));
+		$position->setLatitude($request->request->get("latitude"));
+		$position->setLongitude($request->request->get("longitude"));
+		$position->setAccuracy($request->request->get("accuracy"));	
+		$position->setAltitude($request->request->get("altitude"));
+		$position->setAltitudeAccuracy($request->request->get("altitudeaccuracy"));
+		$position->setHeading($request->request->get("heading"));
+		$position->setSpeed($request->request->get("speed"));
+		//$position->setTimestamp($request->request->get("timestamp"));
+
+		$manager = $this->getDoctrine()->getManager();
+		$manager->persist($position);
+		$manager->flush();
+
+		return new Response($position->getId());
 	}
 }
