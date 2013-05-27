@@ -60,6 +60,14 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @inheritDoc
 	 */
+	public function setUsername($username)
+	{
+		$this->username = $username;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getSalt()
 	{
 		return $this->salt;
