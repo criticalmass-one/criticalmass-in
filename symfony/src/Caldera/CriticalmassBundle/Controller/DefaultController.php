@@ -75,7 +75,7 @@ class DefaultController extends Controller
 		$position->setAltitudeAccuracy($query->get("altitudeaccuracy") ? $query->get("altitudeaccuracy") : 0.0);
 		$position->setHeading($query->get("heading") ? $query->get("heading") : 0.0);
 		$position->setSpeed($query->get("speed") ? $query->get("speed") : 0.0);
-		$position->setTimestamp($request->request->get("timestamp") : 0);
+		$position->setTimestamp($query->get("timestamp") ? $request->request->get("timestamp") : 0);
 
 		$manager = $this->getDoctrine()->getManager();
 		$manager->persist($position);
