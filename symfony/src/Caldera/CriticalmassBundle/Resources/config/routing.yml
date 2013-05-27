@@ -10,6 +10,10 @@ caldera_criticalmass_registeruser:
     pattern: /register
     defaults: { _controller: CalderaCriticalmassBundle:Account:register }
 
+caldera_criticalmass_processuserregistration:
+    pattern: /register
+    defaults: { _controller: CalderaCriticalmassBundle:Account:processregistration }
+
 caldera_criticalmass_showcity:
     pattern: /show/{city}
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
