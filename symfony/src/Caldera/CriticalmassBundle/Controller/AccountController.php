@@ -16,7 +16,7 @@ class AccountController extends Controller
 
 		$form = $this->createForm(new RegistrationType(), new Registration());
 
-		$form->handleRequest($request);
+		$form->bind($this->getRequest());
 
 		if ($form->isValid())
 		{
