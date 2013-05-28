@@ -2,18 +2,18 @@
 
 namespace Caldera\CriticalmassBundle\Utility;
 
-use Caldera\CriticalmassBundle\Entity as Entity;
+use \Caldera\CriticalmassBundle\Entity as Entity;
 
 class MapPositionHandler
 {
-	protected Entity\Ride $ride;
+	protected $ride;
 
-	public function __construct(Entity\Ride $ride)
+	public function __construct(\Caldera\CriticalmassBundle\Entity\Ride $ride)
 	{
 		$this->setRide($ride);
 	}
 
-	public function setRide(Entiry\Ride $ride)
+	public function setRide(\Caldera\CriticalmassBundle\Entity\Ride $ride)
 	{
 		$this->ride = $ride;
 	}
