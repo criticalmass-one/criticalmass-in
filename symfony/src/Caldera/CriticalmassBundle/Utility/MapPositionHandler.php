@@ -22,4 +22,14 @@ class MapPositionHandler
 	{
 		return 10;
 	}
+
+	public function getMapCenterLatitude()
+	{
+		return 53.57033623530256;
+	}
+
+	public function getMapCenterLongitude()
+	{
+		return 9.719623122674422;
+	}
 }
