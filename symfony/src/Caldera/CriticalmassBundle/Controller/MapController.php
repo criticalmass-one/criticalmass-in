@@ -20,7 +20,7 @@ class MapController extends Controller
 				'latitude' => $mph->getMapCenterLatitude(),
 				'longitude' => $mph->getMapCenterLongitude()
 			),
-			'zoom' => 10,
+			'zoom' => $mph->getZoomFactor(),
 			'positions' => array(
 				'city1' => array(
 					'latitude' => 53.57033623530256,
