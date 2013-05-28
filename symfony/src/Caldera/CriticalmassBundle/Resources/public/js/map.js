@@ -10,7 +10,7 @@ function initialize() {
 	function setMapOptions(result)
 	{
 		var mapOptions = {
-			zoom: 10,
+			zoom: result.zoom,
 			center: new google.maps.LatLng(result.mapcenter.latitude, result.mapcenter.longitude),
 			mapTypeId: google.maps.MapTypeId.TERRAIN
 		}
