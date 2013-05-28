@@ -21,16 +21,7 @@ class MapController extends Controller
 				'longitude' => $mph->getMapCenterLongitude()
 			),
 			'zoom' => $mph->getZoomFactor(),
-			'positions' => array(
-				'city1' => array(
-					'latitude' => 53.57033623530256,
-					'longitude' => 9.719623122674422
-				),
-				'city2' => array(
-					'latitude' => 53.57033623130256,
-					'longitude' => 9.719623128674422
-				)
-			)
+			'positions' => $mph->getPositions()
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');
