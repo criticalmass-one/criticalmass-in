@@ -22,3 +22,7 @@ caldera_criticalmass_trackposition:
     pattern: /trackposition
     defaults: { _controller: CalderaCriticalmassBundle:Default:trackposition }
 
+caldera_criticalmass_mapcenter:
+    pattern: /mapapi/mapcenter
+    defaults: { _controller: CalderaCriticalmassBundle:Map:mapcenter }
+
