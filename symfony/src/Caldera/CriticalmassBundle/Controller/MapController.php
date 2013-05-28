@@ -16,10 +16,7 @@ class MapController extends Controller
 
 		$response = new Response();
 		$response->setContent(json_encode(array(
-			'mapcenter' => array(
-				'latitude' => $mph->getMapCenterLatitude(),
-				'longitude' => $mph->getMapCenterLongitude()
-			),
+			'mapcenter' => $mph->getMapCenter(),
 			'zoom' => $mph->getZoomFactor(),
 			'positions' => $mph->getPositions()
 		)));

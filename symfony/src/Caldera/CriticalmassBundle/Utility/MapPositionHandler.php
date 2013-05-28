@@ -23,6 +23,14 @@ class MapPositionHandler
 		return 10;
 	}
 
+	public function getMapCenter()
+	{
+		return array(
+			'latitude' => $this->getMapCenterLatitude(),
+			'longitude' => $this->getMapCenterLongitude()
+		);
+	}
+
 	public function getMapCenterLatitude()
 	{
 		return 53.57033623530256;
