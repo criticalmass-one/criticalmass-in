@@ -54,4 +54,13 @@ class MapPositionHandler
 				)
 		);
 	}
+
+	public function getMapData()
+	{
+		return array(
+			'mapcenter' => $mph->getMapCenter(),
+			'zoom' => $mph->getZoomFactor(),
+			'positions' => $mph->getPositions()
+		);
+	}
 }

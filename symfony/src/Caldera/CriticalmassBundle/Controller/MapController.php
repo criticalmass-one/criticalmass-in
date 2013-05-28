@@ -15,11 +15,7 @@ class MapController extends Controller
 		$mph = new Utility\MapPositionHandler(new Entity\Ride());
 
 		$response = new Response();
-		$response->setContent(json_encode(array(
-			'mapcenter' => $mph->getMapCenter(),
-			'zoom' => $mph->getZoomFactor(),
-			'positions' => $mph->getPositions()
-		)));
+		$response->setContent(json_encode($mph->getMapData()));
 
 		$response->headers->set('Content-Type', 'application/json');
 
