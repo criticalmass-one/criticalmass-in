@@ -24,7 +24,7 @@ function sendPosition(position)
 {
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost/criticalmass/symfony/web/app_dev.php/trackposition',
+		url: '/criticalmass/symfony/web/app_dev.php/trackposition',
 		data: {
 			latitude: position.coords.latitude,
 			longitude: position.coords.longitude,
@@ -37,7 +37,7 @@ function sendPosition(position)
 		},
 		cache: false,
 		success: function(result) {
-			alert(result);
+			
 		}
 	});
 }
