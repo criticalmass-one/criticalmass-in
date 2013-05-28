@@ -17,4 +17,9 @@ class MapPositionHandler
 	{
 		$this->ride = $ride;
 	}
+
+	public function getZoomFactor()
+	{
+		return 10;
+	}
 }
