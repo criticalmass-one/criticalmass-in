@@ -8,12 +8,12 @@ class MapPositionHandler
 {
 	protected $ride;
 
-	public function __construct(\Caldera\CriticalmassBundle\Entity\Ride $ride)
+	public function __construct(Entity\Ride $ride)
 	{
 		$this->setRide($ride);
 	}
 
-	public function setRide(\Caldera\CriticalmassBundle\Entity\Ride $ride)
+	public function setRide(Entity\Ride $ride)
 	{
 		$this->ride = $ride;
 	}
