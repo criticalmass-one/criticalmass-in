@@ -1,17 +1,9 @@
 // Create an object containing LatLng, population.
 var citymap = {};
-citymap['chicago'] = {
-  center: new google.maps.LatLng(41.878113, -87.629798),
-  population: 2842518
+citymap['wedel'] = {
+  center: new google.maps.LatLng(53.57033623530256, 9.719623122674422),
+  population: 30000
 };
-citymap['newyork'] = {
-  center: new google.maps.LatLng(40.714352, -74.005973),
-  population: 8143197
-};
-citymap['losangeles'] = {
-  center: new google.maps.LatLng(34.052234, -118.243684),
-  population: 3844829
-}
 var cityCircle;
 
 function initialize() {
