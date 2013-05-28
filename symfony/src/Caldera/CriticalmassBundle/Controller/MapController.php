@@ -17,7 +17,17 @@ class MapController extends Controller
 				'latitude' => 53.57033623530256,
 				'longitude' => 9.719623122674422
 			),
-			'zoom' => 10
+			'zoom' => 10,
+			'positions' => array(
+				'city1' => array(
+					'latitude' => 53.57033623530256,
+					'longitude' => 9.719623122674422
+				),
+				'city2' => array(
+					'latitude' => 53.57033623130256,
+					'longitude' => 9.719623128674422
+				)
+			)
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');

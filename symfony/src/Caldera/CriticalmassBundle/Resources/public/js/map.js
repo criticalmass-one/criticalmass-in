@@ -18,7 +18,7 @@ function initialize() {
 	  var map = new google.maps.Map(document.getElementById('map-canvas'),
 	      mapOptions);
 
-	  for (var city in citymap) {
+	  for (var pos in result.positions) {
 	    // Construct the circle for each value in citymap. We scale population by 20.
 	    var populationOptions = {
 	      strokeColor: '#FF0000',
@@ -27,8 +27,8 @@ function initialize() {
 	      fillColor: '#FF0000',
 	      fillOpacity: 0.35,
 	      map: map,
-	      center: citymap[city].center,
-	      radius: citymap[city].population / 20
+	      center: new google.maps.LatLng(result.positions[pos].latitude, result.positions[pos].longitude),
+	      radius: 1000
 	    };
 	    cityCircle = new google.maps.Circle(populationOptions);
 	  }
