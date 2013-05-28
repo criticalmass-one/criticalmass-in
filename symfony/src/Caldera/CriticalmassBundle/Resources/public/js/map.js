@@ -17,7 +17,7 @@ var cityCircle;
 function initialize() {
   var mapOptions = {
     zoom: 4,
-    center: new google.maps.LatLng(37.09024, -95.712891),
+    center: new google.maps.LatLng(53.57033623530256, 9.719623122674422),
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
 
