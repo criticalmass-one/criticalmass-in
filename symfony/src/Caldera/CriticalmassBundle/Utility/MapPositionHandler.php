@@ -33,7 +33,7 @@ class MapPositionHandler
 
 	public function getMapCenterLatitude()
 	{
-		return 53.57033623530256;
+		return $this->calculateMapCenterLatitude();
 	}
 
 	public function getMapCenterLongitude()
@@ -59,5 +59,30 @@ class MapPositionHandler
 		}
 
 		return $resultArray;
+	}
+
+	public function calculateMapCenterLatitude()
+	{
+		$min = null;
+		$max = null;
+
+		foreach ($this->getPositions() as $position)
+		{
+			if (!isset($min) && !isset($max))
+			{
+				$min = $position->getLatitude();
+				$max = $position->getLatitude();
+			}
+			elseif ($min > $position->getLatitude())
+			{
+				$min = $position->getLatitude();
+			}
+			elseif ($max < $position->getLatitude())
+			{
+				$max = $position->getLatitude();
+			}
+		}
+
+		return $min + ($max - $min) / 2.0;
 	}
 }
