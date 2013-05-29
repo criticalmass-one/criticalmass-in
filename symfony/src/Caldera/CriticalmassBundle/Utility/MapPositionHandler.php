@@ -38,7 +38,7 @@ class MapPositionHandler
 
 	public function getMapCenterLongitude()
 	{
-		return 9.719623122674422;
+		return $this->calculateMapCenter("getLongitude");
 	}
 
 	public function getPositions()
