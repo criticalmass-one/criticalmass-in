@@ -12,7 +12,10 @@ class MapController extends Controller
 {
 	public function mapcenterAction()
 	{
-		$mph = new Utility\MapPositionHandler(new Entity\Ride());
+		$mph = new Utility\MapPositionHandler(
+			new Entity\Ride(),
+			$this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array(), 10)
+	);
 
 		$response = new Response();
 		$response->setContent(json_encode(array(
