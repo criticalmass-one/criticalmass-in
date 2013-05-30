@@ -10,7 +10,7 @@ use Caldera\CriticalmassBundle\Entity as Entity;
 
 class MapController extends Controller
 {
-	public function mapcenterAction()
+	public function mapdataAction()
 	{
 		$mph = new Utility\MapPositionHandler(
 			new Entity\Ride(),
