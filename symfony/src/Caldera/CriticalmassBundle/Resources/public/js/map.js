@@ -36,7 +36,7 @@ function initialize() {
 
 	$.ajax({
 		type: 'GET',
-		url: '/criticalmass/symfony/web/app_dev.php/mapapi/mapcenter',
+		url: '/criticalmass/symfony/web/app_dev.php/mapapi/mapdata',
 		data: {
 		},
 		cache: false,
