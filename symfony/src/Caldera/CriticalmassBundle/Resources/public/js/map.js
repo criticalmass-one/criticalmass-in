@@ -11,7 +11,7 @@ function setMapOptions(result)
 
 	for (var pos in result.positions)
 	{
-		var populationOptions = {
+		var circleOptions = {
 			strokeColor: '#FF0000',
 			strokeOpacity: 0.8,
 			strokeWeight: 2,
@@ -22,7 +22,7 @@ function setMapOptions(result)
 			radius: 1000
 		};
 
-		cityCircle = new google.maps.Circle(populationOptions);
+		cityCircle = new google.maps.Circle(circleOptions);
 	}
 }
 
