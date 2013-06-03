@@ -18,13 +18,13 @@
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 </head>
 <body data-role="page">
-	<section data-role="panel" id="mainpanel">
+	<div data-role="panel" id="mainpanel">
 		<ul data-role="listview" data-theme="d">
 			<li data-icon="delete"><a href="#" data-rel="close">Menü schließen</a></li>
 			<li data-role="list-divider">Critical Mass Hamburg</li>
-		            <li data-icon="back"><a href="#demo-intro" data-rel="back">Demo intro</a></li>
-		        </ul>
-	</section>
+			<li data-icon="back"><a href="#demo-intro" data-rel="back">Demo intro</a></li>
+		</ul>
+	</div>
 	{% block body %}{% endblock %}
 </body>
 </html>
