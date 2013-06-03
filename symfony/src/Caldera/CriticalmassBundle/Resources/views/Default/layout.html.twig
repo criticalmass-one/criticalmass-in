@@ -30,9 +30,9 @@
 			<li><a href="#demo-intro">facebook</a></li>
 			<li><a href="#demo-intro">Twitter</a></li>
 			<li data-role="list-divider">criticalmass.in</li>
-			<li><a href="#demo-intro">Impressum</a></li>
-			<li><a href="#demo-intro">Datenschutz</a></li>
-			<li><a href="#demo-intro">Blog</a></li>
+			<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress'}) }}">Impressum</a></li>
+			<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy'}) }}">Datenschutz</a></li>
+			<li><a href="http://blog.criticalmass.in/">Blog</a></li>
 		</ul>
 	</div>
 	{% block body %}{% endblock %}
