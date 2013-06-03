@@ -19,7 +19,11 @@
 </head>
 <body data-role="page">
 	<section data-role="panel" id="mainpanel">
-		foobarbaz
+		<ul data-role="listview" data-theme="d">
+			<li data-icon="delete"><a href="#" data-rel="close">Menü schließen</a></li>
+			<li data-role="list-divider">Critical Mass Hamburg</li>
+		            <li data-icon="back"><a href="#demo-intro" data-rel="back">Demo intro</a></li>
+		        </ul>
 	</section>
 	{% block body %}{% endblock %}
 </body>
