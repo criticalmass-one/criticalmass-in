@@ -26,3 +26,6 @@ caldera_criticalmass_mapdata:
     pattern: /mapapi/mapdata
     defaults: { _controller: CalderaCriticalmassBundle:Map:mapdata }
 
+caldera_criticalmass_staticpage:
+    pattern: /static/{page}
+    defaults: { _controller: CalderaCriticalmassBundle:StaticPage:show }
