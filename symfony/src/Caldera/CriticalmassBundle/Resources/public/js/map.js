@@ -19,7 +19,7 @@ function setMapOptions(result)
 			fillOpacity: 0.35,
 			map: map,
 			center: new google.maps.LatLng(result.positions[pos].latitude, result.positions[pos].longitude),
-			radius: 1000
+			radius: 100
 		};
 
 		cityCircle = new google.maps.Circle(circleOptions);
