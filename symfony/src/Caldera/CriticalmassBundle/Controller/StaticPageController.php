@@ -8,6 +8,6 @@ class StaticPageController extends Controller
 {
 	public function showAction($page)
 	{
-		return $this->render('CalderaCriticalmassBundle:Default:static:'.$page.'.html.twig');
+		return $this->render('CalderaCriticalmassBundle:Static:'.$page.'.html.twig');
 	}
 }
