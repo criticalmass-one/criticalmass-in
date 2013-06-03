@@ -3,7 +3,10 @@
 {% block title %}{{ city.getTitle }}{% endblock %}
 
 {% block body %}
-<div data-role="header"><h1>{{ city.getTitle }}</h1></div>
+<div data-role="header">
+	<a href="#mainpanel" data-icon="check">Save</a>
+	<h1>{{ city.getTitle }}</h1>
+</div>
 	<section id="content" data-role="content">
 		<h2>Nächste Tour</h2>
 		<p>Datum: {{ ride.getDate|date('d.m.Y') }}</p>
