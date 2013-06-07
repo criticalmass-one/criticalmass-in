@@ -14,10 +14,60 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 	 */
 	public function load(ObjectManager $manager)
 	{
-		// Beispiel-Tour der Critical Mass Hamburg
+		// Beispiel-Touren der Critical Mass Hamburg
+		$ride = new Ride();
+		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setDate(new \DateTime("2013-01-25"));
+		$ride->setTime(new \DateTime("19:00:00"));
+		$ride->setLocation("tba");
+		$ride->setMap("");
+
+		$manager->persist($ride);
+		$manager->flush();
+
+		$ride = new Ride();
+		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setDate(new \DateTime("2013-02-22"));
+		$ride->setTime(new \DateTime("19:00:00"));
+		$ride->setLocation("tba");
+		$ride->setMap("");
+
+		$manager->persist($ride);
+		$manager->flush();
+
+		$ride = new Ride();
+		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setDate(new \DateTime("2013-03-29"));
+		$ride->setTime(new \DateTime("19:00:00"));
+		$ride->setLocation("tba");
+		$ride->setMap("");
+
+		$manager->persist($ride);
+		$manager->flush();
+
+		$ride = new Ride();
+		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setDate(new \DateTime("2013-04-26"));
+		$ride->setTime(new \DateTime("19:00:00"));
+		$ride->setLocation("tba");
+		$ride->setMap("");
+
+		$manager->persist($ride);
+		$manager->flush();
+
 		$ride = new Ride();
 		$ride->setCityId($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-05-31"));
+		$ride->setTime(new \DateTime("19:00:00"));
+		$ride->setLocation("tba");
+		$ride->setMap("");
+
+		$manager->persist($ride);
+		$manager->flush();
+
+		$ride = new Ride();
+		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setDate(new \DateTime("2013-06-28"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
 		$ride->setMap("");
