@@ -21,6 +21,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://cmaugsburg.wordpress.com/");
 		$city->setFacebook("https://www.facebook.com/criticalmassaugsburg");
 		$city->setTwitter("");
+		$city->setLatitude(48.371667);
+		$city->setLongitude(10.898333);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -34,6 +36,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://cmberlin.blogsport.de/");
 		$city->setFacebook("https://www.facebook.com/pages/Critical-Mass-Berlin");
 		$city->setTwitter("https://twitter.com/CM_Berlin");
+		$city->setLatitude(52.518611);
+		$city->setLongitude(13.408056);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -47,6 +51,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("");
 		$city->setFacebook("https://www.facebook.com/pages/Critical-Mass-Bochum/154648004580049");
 		$city->setTwitter("");
+		$city->setLatitude(51.4825);
+		$city->setLongitude(7.216944);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -60,6 +66,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassbraunschweig.de.tl");
 		$city->setFacebook("https://www.facebook.com/critical.mass.braunschweig");
 		$city->setTwitter("");
+		$city->setLatitude(52.269167);
+		$city->setLongitude(10.521111);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -73,6 +81,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.criticalmass-bremen.de/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassBremen");
 		$city->setTwitter("");
+		$city->setLatitude(53.075878);
+		$city->setLongitude(8.807311);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -86,6 +96,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://velolove.me/cmdo/");
 		$city->setFacebook("https://www.facebook.com/pages/Critical-Mass-Dortmund/161748607183306");
 		$city->setTwitter("");
+		$city->setLatitude(51.514167);
+		$city->setLongitude(7.463889);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -99,6 +111,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.myspace.com/dresdencriticalmass");
 		$city->setFacebook("https://www.facebook.com/criticalmassdresden");
 		$city->setTwitter("");
+		$city->setLatitude(51.049259);
+		$city->setLongitude(13.73836);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -112,6 +126,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassduisburg.blogsport.de/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassDuisburg");
 		$city->setTwitter("");
+		$city->setLatitude(51.435147);
+		$city->setLongitude(6.762692);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -125,6 +141,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassduesseldorf.blogsport.de/");
 		$city->setFacebook("");
 		$city->setTwitter("");
+		$city->setLatitude(51.225556);
+		$city->setLongitude(6.782778);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -138,6 +156,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("");
 		$city->setFacebook("https://www.facebook.com/critical.mass.essen");
 		$city->setTwitter("");
+		$city->setLatitude(51.458069);
+		$city->setLongitude(7.014761);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -151,6 +171,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassflensburg.blogsport.de/");
 		$city->setFacebook("https://www.facebook.com/groups/148455028667984/");
 		$city->setTwitter("");
+		$city->setLatitude(54.781944);
+		$city->setLongitude(9.436667);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -164,6 +186,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.critical-mass-frankfurt.de/");
 		$city->setFacebook("https://www.facebook.com/pages/Critical-Mass-Frankfurt-am-Main/151299114891239");
 		$city->setTwitter("");
+		$city->setLatitude(50.110556);
+		$city->setLongitude(8.682222);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -177,6 +201,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.critical-mass-freiburg.de");
 		$city->setFacebook("https://www.facebook.com/critical.mass.freiburg");
 		$city->setTwitter("");
+		$city->setLatitude(47.994828);
+		$city->setLongitude(7.849881);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -190,6 +216,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.criticalmass-hamburg.de/");
 		$city->setFacebook("https://www.facebook.com/criticalmasshamburg");
 		$city->setTwitter("https://www.twitter.com/cm_hh");
+		$city->setLatitude(53.550556);
+		$city->setLongitude(9.993333);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -203,6 +231,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.critical-mass-altona.de/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassAltona");
 		$city->setTwitter("https://www.twitter.com/cm_altona‎");
+		$city->setLatitude(53.55);
+		$city->setLongitude(9.933333);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -216,6 +246,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmasshannover.wordpress.com/");
 		$city->setFacebook("https://www.facebook.com/pages/Critical-Mass-Hannover/483028381718877");
 		$city->setTwitter("");
+		$city->setLatitude(52.374444);
+		$city->setLongitude(9.738611);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -229,6 +261,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.myspace.com/criticalmasskassel");
 		$city->setFacebook("");
 		$city->setTwitter("");
+		$city->setLatitude(51.316667);
+		$city->setLongitude(9.5);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -242,6 +276,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmasskiel.wordpress.com/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassKiel");
 		$city->setTwitter("");
+		$city->setLatitude(54.325278);
+		$city->setLongitude(10.140556);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -255,6 +291,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.criticalmasskoblenz.blogspot.de/");
 		$city->setFacebook("https://www.facebook.com/criticalmass.koblenz");
 		$city->setTwitter("");
+		$city->setLatitude(50.356667);
+		$city->setLongitude(7.593889);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -268,6 +306,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.critical-mass-cologne.de/");
 		$city->setFacebook("https://www.facebook.com/critical.mass.koeln");
 		$city->setTwitter("");
+		$city->setLatitude(50.938056);
+		$city->setLongitude(6.956944);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -281,19 +321,23 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmass.wikia.com/wiki/Leipzig");
 		$city->setFacebook("");
 		$city->setTwitter("https://twitter.com/cmleipzig");
+		$city->setLatitude(51.340333);
+		$city->setLongitude(12.37475);
 
 		$manager->persist($city);
 		$manager->flush();
 
 		$this->addReference("city-leipzig", $city);
 
-		// Critical Mass Leipzig
+		// Critical Mass Lübeck
 		$city = new City();
 		$city->setCity("luebeck");
 		$city->setTitle("Critical Mass Lübeck");
 		$city->setUrl("");
 		$city->setFacebook("https://www.facebook.com/CriticalMassLubeck");
 		$city->setTwitter("");
+		$city->setLatitude(53.869722);
+		$city->setLongitude(10.686389);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -307,6 +351,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("");
 		$city->setFacebook("https://www.facebook.com/criticalmass.magdeburg");
 		$city->setTwitter("");
+		$city->setLatitude(52.133333);
+		$city->setLongitude(11.616667);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -320,6 +366,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassmannheim.blogspot.de/");
 		$city->setFacebook("https://www.facebook.com/pages/Critical-mass-bike-flash-mob-Mannheim/165766566835816");
 		$city->setTwitter("");
+		$city->setLatitude(49.483611);
+		$city->setLongitude(8.463056);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -333,6 +381,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.myspace.com/critical_mass_nuernberg");
 		$city->setFacebook("");
 		$city->setTwitter("");
+		$city->setLatitude(49.452778);
+		$city->setLongitude(11.077778);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -346,6 +396,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassoldenburg.blogsport.de/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassOldenburg");
 		$city->setTwitter("");
+		$city->setLatitude(53.143889);
+		$city->setLongitude(8.213889);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -359,6 +411,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://www.cmrostock.de/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassRostock");
 		$city->setTwitter("");
+		$city->setLatitude(54.083333);
+		$city->setLongitude(12.133333);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -372,6 +426,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://criticalmassstuttgart.wordpress.com/");
 		$city->setFacebook("https://www.facebook.com/getonyourbike");
 		$city->setTwitter("");
+		$city->setLatitude(48.775556);
+		$city->setLongitude(9.182778);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -385,6 +441,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("");
 		$city->setFacebook("");
 		$city->setTwitter("https://twitter.com/VelomobTrier");
+		$city->setLatitude(49.7596);
+		$city->setLongitude(6.6439);
 
 		$manager->persist($city);
 		$manager->flush();
@@ -398,6 +456,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 		$city->setUrl("http://cmwpt.wordpress.com/");
 		$city->setFacebook("https://www.facebook.com/CriticalMassWuppertal");
 		$city->setTwitter("");
+		$city->setLatitude(51.259167);
+		$city->setLongitude(7.211111);
 
 		$manager->persist($city);
 		$manager->flush();
