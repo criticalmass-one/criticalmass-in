@@ -20,6 +20,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$ride->setDate(new \DateTime("2013-05-31"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
+		$ride->setMap("");
 
 		$manager->persist($ride);
 		$manager->flush();
