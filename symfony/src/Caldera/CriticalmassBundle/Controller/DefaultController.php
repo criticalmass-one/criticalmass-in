@@ -22,6 +22,7 @@ class DefaultController extends Controller
 		foreach ($cityResults as $key => $result)
 		{
 			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city_id' => $cityResults[$key]['city']->getId()));
+			$cityResults[$key]['distance'] = $this->get('caldera_criticalmass_citydistancecalculator')->calculateDistanceFromCoordToCoord($cityResults[$key]['city']->getLatitude(), $latitude, $cityResults[$key]['city']->getLongitude(), $longitude);
 		}
 	
 		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cityResults' => $cityResults));
