@@ -10,3 +10,7 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method:  getRepository
         arguments: [CalderaCriticalmassBundle:Ride]
+
+    caldera_criticalmass_citydistancecalculator:
+        class:           Caldera\CriticalmassBundle\Utility\CityDistanceCalculator
+        arguments: []
