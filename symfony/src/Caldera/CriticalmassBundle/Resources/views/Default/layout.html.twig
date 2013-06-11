@@ -20,7 +20,7 @@
 <body>
 	<div data-role="page">
 		{% block body %}{% endblock %}
-		<div data-role="panel" id="mainpanel">
+		<div data-role="panel" id="mainpanel" data-position="left">
 			<ul data-role="listview" data-theme="d">
 				<li data-icon="delete"><a href="#" data-rel="close">Menü schließen</a></li>
 				<li data-role="list-divider">Critical Mass Hamburg</li>
@@ -37,11 +37,11 @@
 				<li><a href="http://blog.criticalmass.in/">Blog</a></li>
 			</ul>
 		</div>
-		<div data-role="panel" id="rightpanel">
+		<div data-role="panel" id="rightpanel" data-position="right">
 			<ul data-role="listview" data-theme="d">
 				<li><a href="#demo-intro">Termine</a></li>
 				<li><a href="#demo-intro">Live</a></li>
-				<li><a href="#demo-intro">Hinweise</a></li>xwxw
+				<li><a href="#demo-intro">Hinweise</a></li>
 			</ul>
 		</div>
 </body>
