@@ -29,6 +29,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 	 */
 	public function load(ObjectManager $manager)
 	{
+		/* Benutzer 1 */
 		$user = new User();
 
 		$user->setUsername("maltehuebner");
@@ -40,6 +41,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$manager->persist($user);
 		$manager->flush();
 
+
+		/* Benutzer 2 */
 		$user = new User();
 
 		$user->setUsername("TestUser1");
@@ -51,6 +54,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$manager->persist($user);
 		$manager->flush();
 
+
+		/* Benutzer 3 */
 		$user = new User();
 
 		$user->setUsername("TestUser2");
