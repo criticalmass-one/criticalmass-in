@@ -24,6 +24,12 @@ class Position
 	protected $user;
 
 	/**
+	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="positions")
+	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+	 */
+	protected $ride;
+
+	/**
 	 * @ORM\Column(type="float")
 	 */
 	protected $latitude;
@@ -330,5 +336,28 @@ class Position
     public function getCreationDateTime()
     {
         return $this->creationDateTime;
+    }
+
+    /**
+     * Set ride
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\Ride $ride
+     * @return Position
+     */
+    public function setRide(\Caldera\CriticalmassBundle\Entity\Ride $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /**
+     * Get ride
+     *
+     * @return \Caldera\CriticalmassBundle\Entity\Ride 
+     */
+    public function getRide()
+    {
+        return $this->ride;
     }
 }
