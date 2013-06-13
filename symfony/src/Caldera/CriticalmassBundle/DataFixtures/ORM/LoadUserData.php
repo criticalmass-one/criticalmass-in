@@ -36,7 +36,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$user->setEmail("maltehuebner@gmx.org");
 
 		$encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-		$user->setPassword($encoder->encodePassword('secret', $user->getSalt()));
+		$user->setPassword($encoder->encodePassword('KennwortMalte', $user->getSalt()));
 
 		$manager->persist($user);
 		$manager->flush();
@@ -49,7 +49,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$user->setEmail("testuser1@criticalmass.in");
 
 		$encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-		$user->setPassword($encoder->encodePassword('secret', $user->getSalt()));
+		$user->setPassword($encoder->encodePassword('KennwortTest1', $user->getSalt()));
 
 		$manager->persist($user);
 		$manager->flush();
@@ -62,7 +62,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$user->setEmail("testuser2@criticalmass.in");
 
 		$encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-		$user->setPassword($encoder->encodePassword('secret', $user->getSalt()));
+		$user->setPassword($encoder->encodePassword('KennwortTest2', $user->getSalt()));
 
 		$manager->persist($user);
 		$manager->flush();
