@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Orm\MappedSuperclass
+ * @ORM\Table(name="position")
  */
 class DefaultFixturePosition extends Position
 {
