@@ -5,8 +5,7 @@ namespace Caldera\CriticalmassBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="position")
+ * @Orm\MappedSuperclass
  */
 class DefaultFixturePosition extends Position
 {
