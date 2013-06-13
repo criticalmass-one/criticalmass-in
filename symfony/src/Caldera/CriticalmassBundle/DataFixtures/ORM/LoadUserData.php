@@ -41,6 +41,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$manager->persist($user);
 		$manager->flush();
 
+		$this->addReference("user-maltehuebner", $user);
+
 
 		/* Benutzer 2 */
 		$user = new User();
@@ -54,6 +56,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$manager->persist($user);
 		$manager->flush();
 
+		$this->addReference("user-testuser1", $user);
+
 
 		/* Benutzer 3 */
 		$user = new User();
@@ -66,6 +70,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
 		$manager->persist($user);
 		$manager->flush();
+
+		$this->addReference("user-testuser2", $user);
 	}
 
 	/**
