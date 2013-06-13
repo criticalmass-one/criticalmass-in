@@ -63,6 +63,12 @@ class Position
 	 */
 	protected $timestamp;
 
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $creationDateTime;
+
+
     /**
      * Get id
      *
@@ -301,5 +307,28 @@ class Position
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set creationDateTime
+     *
+     * @param \DateTime $creationDateTime
+     * @return Position
+     */
+    public function setCreationDateTime($creationDateTime)
+    {
+        $this->creationDateTime = $creationDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getCreationDateTime()
+    {
+        return $this->creationDateTime;
     }
 }
