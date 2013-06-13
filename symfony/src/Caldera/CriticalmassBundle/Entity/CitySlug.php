@@ -22,6 +22,12 @@ class CitySlug
 	 */
 	protected $slug;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs")
+	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+	 */
+	protected $city;
+
     /**
      * Get id
      *
@@ -53,5 +59,28 @@ class CitySlug
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\City $city
+     * @return CitySlug
+     */
+    public function setCity(\Caldera\CriticalmassBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Caldera\CriticalmassBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
