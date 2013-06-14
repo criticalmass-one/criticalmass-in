@@ -12,7 +12,7 @@ class CityController extends Controller
 
 		$cityResults = array();
 
-		if ($latitude = $request->get('latitude') && $longitude = $request->get('longitude'))
+		if (($latitude = $request->get('latitude')) && ($longitude = $request->get('longitude')))
 		{
 			$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
 		}
