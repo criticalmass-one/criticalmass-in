@@ -44,17 +44,20 @@ class DefaultController extends Controller
 	 */
 	public function showcityAction($city)
 	{
-		// Stadt anhand des übergebenen Parameters laden
-		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findOneByCity($city);
+		// aufzurufende Stadt anhand des Slugs ermitteln
+		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($city);
 
 		// wurde die Stadt überhaupt gefunden?
-		if (empty($city))
+		if (empty($citySlug))
 		{
 			// Fehlermeldung werfen
 			throw $this->createNotFoundException('This city does not exist');
 		}
 		else
 		{
+			// Stadt anhand des übergebenen Parameters laden
+			$city = $citySlug->getCity();
+
 			$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city_id' => $city->getId()));
 
 			// Darstellung an das Template weiterreichen

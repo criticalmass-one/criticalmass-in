@@ -65,6 +65,8 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->persist($ride);
 		$manager->flush();
 
+		$this->addReference("city-hamburg-ride-2013-05-31", $ride);
+
 		$ride = new Ride();
 		$ride->setCityId($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-06-28"));
@@ -74,6 +76,8 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 
 		$manager->persist($ride);
 		$manager->flush();
+
+		$this->addReference("city-hamburg-ride-2013-06-28", $ride);
 	}
 
 	/**
