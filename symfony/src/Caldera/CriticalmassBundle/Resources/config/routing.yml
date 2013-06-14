@@ -31,5 +31,5 @@ caldera_criticalmass_staticpage:
     defaults: { _controller: CalderaCriticalmassBundle:StaticPage:show }
 
 caldera_criticalmass_loadcities:
-    pattern: /loadcities/{latitude}/{longitude}
+    pattern: /loadcities/
     defaults: { _controller: CalderaCriticalmassBundle:City:loadcities }
