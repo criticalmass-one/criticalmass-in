@@ -12,5 +12,12 @@ $(window).load(function()
 				});
 			});
 		}
+		else
+		{
+			$('#rightpanel').load('/criticalmass/symfony/web/app_dev.php/loadcities/', function()
+			{
+				$('#rightpanel').trigger('create');
+			});
+		}
 	});
 });
