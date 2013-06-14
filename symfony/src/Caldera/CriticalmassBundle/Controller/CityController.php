@@ -6,9 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CityController extends Controller
 {
-	public function loadcitiesAction($latitude, $longitude)
+	public function loadcitiesAction()
 	{
-		$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
+		$query = $this->getRequest()->query;
+
+		$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($query->get('latitude'), $query->get('longitude'));
 
 		foreach ($cityResults as $key => $result)
 		{
