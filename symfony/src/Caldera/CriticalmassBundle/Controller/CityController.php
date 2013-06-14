@@ -8,13 +8,13 @@ class CityController extends Controller
 {
 	public function loadcitiesAction()
 	{
-		$query = $this->getRequest()->query;
+		$request = $this->getRequest()->request;
 
 		$cityResults = array();
 
-		if ($latitude = $query->get('latitude') && $longitude = $query->get('longitude'))
+		if ($latitude = $request->get('latitude') && $longitude = $request->get('longitude'))
 		{
-			$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($query->get('latitude'), $query->get('longitude'));
+			$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
 		}
 		else
 		{
