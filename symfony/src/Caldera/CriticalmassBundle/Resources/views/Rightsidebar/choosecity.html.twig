@@ -2,7 +2,9 @@
 			{% for result in cityResults %}
 			<li>
 				<a href="{{ path('caldera_criticalmass_showcity', {'city': result['mainSlug'].getSlug }) }}">
+				{% if result['distance'] %}
 				<p class="ui-li-aside ui-li-desc">{{ result['distance']|number_format(1) }} Kilometer</p>
+				{% endif %}
 				<h3 class="ui-li-heading">{{ result['city'].getCity }}</h3>
 				{% if result['ride'] %}
 				<p class="ui-li-desc"><strong>{{ result['ride'].getDate|date("d.m.") }}, {{ result['ride'].getTime|date("H:i") }} Uhr</strong></p>
