@@ -1,7 +1,7 @@
 		<ul data-role="listview" data-theme="d">
 			{% for result in cityResults %}
 			<li>
-				<a href="">
+				<a href="{{ path('caldera_criticalmass_showcity', {'city': result['mainSlug'].getSlug }) }}">
 				<p class="ui-li-aside ui-li-desc">{{ result['distance']|number_format(1) }} Kilometer</p>
 				<h3 class="ui-li-heading">{{ result['city'].getCity }}</h3>
 				{% if result['ride'] %}
