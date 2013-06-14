@@ -36,7 +36,7 @@ class CityController extends Controller
 			}
 			else
 			{
-				$cityResults[$key]['distance'] = 0.0;
+				$cityResults[$key]['distance'] = null;
 			}
 
 			$cityResults[$key]['mainSlug'] = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneByCity($cityResults[$key]['city']);
