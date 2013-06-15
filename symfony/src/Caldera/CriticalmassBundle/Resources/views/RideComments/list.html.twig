@@ -9,9 +9,16 @@
 	<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Städte</a>
 </div>
 
-
-<div data-role="content">
-
+<div id="content" data-role="content">
+	<ul data-role="listview">
+		{% for comment in comments %}
+		<li>
+			<h3 class="ui-li-heading">Malte Hübner</h3>
+			{{ comment.getText }}
+		</li>
+	{% endfor %}
+	</ul>
 </div>
+
 {% endblock %}
 
