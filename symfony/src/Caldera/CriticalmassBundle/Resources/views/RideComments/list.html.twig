@@ -15,7 +15,7 @@
 		<li>
 			<p class="ui-li-aside">{{ comment.getCreationDateTime|date('d.m. H:i') }}</p>
 			<img src="http://www.gravatar.com/avatar/{{ comment.getUser.getGravatarHash }}?s=200" />
-			<h3 class="ui-li-heading">Malte Hübner</h3>
+			<h3 class="ui-li-heading">{{ comment.getUser.getUsername }}</h3>
 			<p>{{ comment.getText }}</p>
 		</li>
 	{% endfor %}
