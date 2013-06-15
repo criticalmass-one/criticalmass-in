@@ -33,3 +33,7 @@ caldera_criticalmass_staticpage:
 caldera_criticalmass_loadcities:
     pattern: /loadcities/
     defaults: { _controller: CalderaCriticalmassBundle:City:loadcities }
+
+caldera_criticalmass_listcomments:
+    pattern: /{citySlug}/comments/list
+    defaults: { _controller: CalderaCriticalmassBundle:Comment:listcomments }
