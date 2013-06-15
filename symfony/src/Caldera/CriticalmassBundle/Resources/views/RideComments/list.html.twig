@@ -10,6 +10,12 @@
 </div>
 
 <div id="content" data-role="content">
+
+	<form action="{{ path('caldera_criticalmass_listcomments', {'citySlug': 'hamburg'}) }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<input type="submit" />
+	</form>
+
 	<ul data-role="listview">
 		{% for comment in comments %}
 		<li>
