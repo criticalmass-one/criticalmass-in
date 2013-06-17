@@ -34,8 +34,15 @@ class CommentController extends Controller
 
 		if ($form->isValid())
 		{
-			$em = $this->getDoctrine()->getManager()->persist($comment);
+
 		}
+		$comment->setUser($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneByUsername("maltehuebner"));
+		$comment->setRide($ride);
+		$comment->setCreationDateTime(new \DateTime("2013-06-17 23:51:55"));
+
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($comment);
+		$em->flush();
 
 		return $this->redirect($this->generateUrl('caldera_criticalmass_listcomments', array('citySlug' => 'hamburg')));
 	}
