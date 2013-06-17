@@ -29,3 +29,7 @@ caldera_criticalmass_mapdata:
 caldera_criticalmass_staticpage:
     pattern: /static/{page}
     defaults: { _controller: CalderaCriticalmassBundle:StaticPage:show }
+
+caldera_criticalmass_live:
+    pattern: /{city}/live
+    defaults: { _controller: CalderaCriticalmassBundle:Live:show }
