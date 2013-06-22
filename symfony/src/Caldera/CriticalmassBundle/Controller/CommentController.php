@@ -9,14 +9,11 @@ class CommentController extends Controller
 	public function listcommentsAction($citySlug)
 	{
 		
-<<<<<<< Updated upstream
-=======
 		$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findAll();
 
 		$form = $this->createFormBuilder(new Comment())->add('text', 'text')->getForm();
 
 		return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
->>>>>>> Stashed changes
 	}
 
 	public function addcommentAction($citySlug)
