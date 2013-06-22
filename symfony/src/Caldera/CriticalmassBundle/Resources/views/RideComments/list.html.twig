@@ -1,0 +1,31 @@
+{% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
+
+{% block title %}Kommentare{% endblock %}
+
+{% block body %}
+<div data-role="header">
+	<a href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menü</a>
+	<h1>Kommentare</h1>
+	<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Städte</a>
+</div>
+
+<div id="content" data-role="content">
+
+	<form action="{{ path('caldera_criticalmass_addcomment', {'citySlug': 'hamburg'}) }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<input type="submit" />
+	</form>
+
+	<ul data-role="listview">
+		{% for comment in comments %}
+		<li>
+			<p class="ui-li-aside">{{ comment.getCreationDateTime|date('d.m. H:i') }}</p>
+			<img src="http://www.gravatar.com/avatar/{{ comment.getUser.getGravatarHash }}?s=200" />
+			<h3 class="ui-li-heading">{{ comment.getUser.getUsername }}</h3>
+			<p>{{ comment.getText }}</p>
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}

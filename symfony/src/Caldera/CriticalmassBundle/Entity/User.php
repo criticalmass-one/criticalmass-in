@@ -98,6 +98,17 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * Hasht die E-Mail-Adresse per MD5, um das dazugehörige Gravartar-Profilbild
+	 * aufrufen zu können.
+	 *
+	 * @return String MD5-gehashte E-Mail-Adresse
+	 */
+	public function getGravatarHash()
+	{
+		return md5($this->getEmail());
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function setPassword($password)

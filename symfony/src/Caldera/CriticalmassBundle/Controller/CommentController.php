@@ -3,15 +3,21 @@
 namespace Caldera\CriticalmassBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\CriticalmassBundle\Entity\Comment;
 
 class CommentController extends Controller
 {
 	public function listcommentsAction($citySlug)
 	{
-		$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findAll();
+		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug);
+
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city_id' => $citySlug->getCity()->getId()), array('date' => 'DESC'));
+
+		$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
 		$form = $this->createFormBuilder(new Comment())->add('text', 'text')->getForm();
 		
+
 
 		return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
 	}
@@ -29,7 +35,13 @@ class CommentController extends Controller
 
 		if ($form->isValid())
 		{
-			$em = $this->getDoctrine()->getManager()->persist($comment);
+			$comment->setUser($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneByUsername("maltehuebner"));
+			$comment->setRide($ride);
+			$comment->setCreationDateTime(new \DateTime());
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($comment);
+			$em->flush();
 		}
 
 		return $this->redirect($this->generateUrl('caldera_criticalmass_listcomments', array('citySlug' => 'hamburg')));
