@@ -30,6 +30,7 @@ caldera_criticalmass_staticpage:
     pattern: /static/{page}
     defaults: { _controller: CalderaCriticalmassBundle:StaticPage:show }
 
+<<<<<<< HEAD
 caldera_criticalmass_loadcities:
     pattern: /loadcities/
     defaults: { _controller: CalderaCriticalmassBundle:City:loadcities }
@@ -37,3 +38,8 @@ caldera_criticalmass_loadcities:
 caldera_criticalmass_listcomments:
     pattern: /{citySlug}/comments/list
     defaults: { _controller: CalderaCriticalmassBundle:Comment:listcomments }
+=======
+caldera_criticalmass_live:
+    pattern: /{city}/live
+    defaults: { _controller: CalderaCriticalmassBundle:Live:show }
+>>>>>>> feature-ccm-2400
