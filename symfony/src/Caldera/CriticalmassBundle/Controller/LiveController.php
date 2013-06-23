@@ -8,6 +8,8 @@ class LiveController extends Controller
 {
 	public function showAction($citySlug)
 	{
-		return $this->render('CalderaCriticalmassBundle:Live:show.html.twig');
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+
+		return $this->render('CalderaCriticalmassBundle:Live:show.html.twig', array('city' => $city));
 	}
 }
