@@ -45,4 +45,3 @@ caldera_criticalmass_addcomment:
 caldera_criticalmass_live:
     pattern: /{citySlug}/live
     defaults: { _controller: CalderaCriticalmassBundle:Live:show }
-
