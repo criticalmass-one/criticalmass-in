@@ -19,7 +19,9 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "doctrine/doctrine-fixtures-bundle": "dev-master"
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "doctrine/data-fixtures" : "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
