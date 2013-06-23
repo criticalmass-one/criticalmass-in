@@ -22,6 +22,7 @@
 </head>
 <body>
 	<div data-role="page">
+		{% block fos_user_content %}{% endblock %}
 		{% block body %}{% endblock %}
 		<div data-role="panel" id="mainpanel" data-position="left">
 			<ul data-role="listview" data-theme="d">
@@ -36,7 +37,13 @@
 				<li><a href="#demo-intro">facebook</a></li>
 				<li><a href="#demo-intro">Twitter</a></li>
 				<li data-role="list-divider">criticalmass.in</li>
-				<li><a href="{{ url('caldera_criticalmass_registeruser') }}">Registrierung</a></li>
+				{% if is_granted('ROLE_USER') %}
+					<li><a href="{{ url('fos_user_security_logout') }}">Logout</a></li>
+				{% else %}
+					<li><a href="{{ url('fos_user_registration_register') }}">Registrierung</a></li>
+					<li><a href="{{ url('fos_user_security_login') }}">Login</a></li>
+				{% endif %}
+				
 				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress'}) }}">Impressum</a></li>
 				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy'}) }}">Datenschutz</a></li>
 				<li><a href="http://blog.criticalmass.in/">Blog</a></li>
