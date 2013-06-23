@@ -18,6 +18,10 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Caldera\CriticalmassBundle\CalderaCriticalmassBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+<<<<<<< HEAD
+=======
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+>>>>>>> feature-ccm-4100
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
