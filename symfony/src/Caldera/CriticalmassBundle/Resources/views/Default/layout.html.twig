@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title>{% block title %}{% endblock %}</title>
+	<title>criticalmass.in</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -22,6 +22,12 @@
 </head>
 <body>
 	<div data-role="page">
+		<div data-role="header">
+			<a href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menü</a>
+			<h1>{% block title %}{% endblock %}</h1>
+			<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Städte</a>
+		</div>
+
 		{% block fos_user_content %}{% endblock %}
 		{% block body %}{% endblock %}
 		<div data-role="panel" id="mainpanel" data-position="left">
