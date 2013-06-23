@@ -5,9 +5,11 @@
 {% block body %}
 <header data-role="header"><h1>Registrierung</h1></header>
 
-<form action="{{ path('caldera_criticalmass_processuserregistration')}}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+<section data-role="content">
+	<form action="{{ path('caldera_criticalmass_processuserregistration')}}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<input type="submit" value="Weiter"/>
+	</form>
+</section>
 
-    <input type="submit" value="Weiter"/>
-</form>
 {% endblock %}
