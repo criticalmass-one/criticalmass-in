@@ -6,9 +6,7 @@ caldera_criticalmass_choosecity:
     pattern: /selectcity/{latitude}/{longitude}
     defaults: { _controller: CalderaCriticalmassBundle:Default:choosecity }
 
-caldera_criticalmass_registeruser:
-    pattern: /register
-    defaults: { _controller: CalderaCriticalmassBundle:Account:register }
+
 
 caldera_criticalmass_processuserregistration:
     pattern: /processregistration
