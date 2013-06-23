@@ -3,11 +3,6 @@
 {% block title %}{{ city.getTitle }}{% endblock %}
 
 {% block body %}
-<div data-role="header">
-	<a href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menü</a>
-	<h1>{{ city.getTitle }}</h1>
-	<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Städte</a>
-</div>
 	<section id="content" data-role="content">
 		<div id="map-canvas" style="width: 500px; height: 500px; margin: 10px auto;"></div>
 	</section>
