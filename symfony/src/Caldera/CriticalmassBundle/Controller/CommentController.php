@@ -16,8 +16,6 @@ class CommentController extends Controller
 		$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
 		$form = $this->createFormBuilder(new Comment())->add('text', 'text')->getForm();
-		
-
 
 		return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
 	}
@@ -35,7 +33,7 @@ class CommentController extends Controller
 
 		if ($form->isValid())
 		{
-			$comment->setUser($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneByUsername("maltehuebner"));
+			$comment->setUser($this->getUser());
 			$comment->setRide($ride);
 			$comment->setCreationDateTime(new \DateTime());
 
