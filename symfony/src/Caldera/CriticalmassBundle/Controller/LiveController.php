@@ -57,4 +57,17 @@ class LiveController extends Controller
 
 		return new Response($this->getRequest()->query->get('status'));
 	}
+
+	public function getintervalAction()
+	{
+		$response = new Response();
+		$response->setContent(json_encode(array(
+			'interval' => $this->getUser()->getGpsInterval() * 1000
+		)));
+
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+
+	}
 }
