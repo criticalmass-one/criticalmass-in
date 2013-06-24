@@ -43,3 +43,7 @@ caldera_criticalmass_addcomment:
 caldera_criticalmass_live:
     pattern: /{citySlug}/live
     defaults: { _controller: CalderaCriticalmassBundle:Live:show }
+
+caldera_criticalmass_settings_gps_interval:
+    pattern: /settings/gpsinterval
+    defaults: { _controller: CalderaCriticalmassBundle:Live:refreshgpsinterval }
