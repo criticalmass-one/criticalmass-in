@@ -37,6 +37,10 @@ function initialize()
 		cache: false,
 		success: setMapOptions
 	});
+
+	$( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
+		alert(event.target.value);
+	} );
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
