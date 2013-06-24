@@ -55,3 +55,7 @@ caldera_criticalmass_settings_gps_status:
 caldera_criticalmass_settings_gps_getinterval:
     pattern: /settings/getgpsinterval
     defaults: { _controller: CalderaCriticalmassBundle:Live:getinterval }
+
+caldera_criticalmass_settings_gps_getstatus:
+    pattern: /settings/getgpsstatus
+    defaults: { _controller: CalderaCriticalmassBundle:Live:getstatus }
