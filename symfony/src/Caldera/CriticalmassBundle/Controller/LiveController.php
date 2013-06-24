@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
@@ -39,5 +40,13 @@ class LiveController extends Controller
 		$manager->flush();
 
 		return new Response($position->getId());
+	}
+
+	public function refreshgpsintervalAction()
+	{
+		$this->getUser()->setGPSInterval($this->getRequest()->query->get('interval'));
+		$this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
+
+		return new Response($this->getRequest()->query->get('interval'));
 	}
 }
