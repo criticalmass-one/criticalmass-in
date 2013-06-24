@@ -41,8 +41,34 @@ function sendPosition(position)
 		}
 	});
 }
-
+/*
 window.onload = setInterval(function()
 {
 	navigator.geolocation.getCurrentPosition(sendPosition, error);
-}, 5000);
+}, 5000);*/
+
+function refreshInterval()
+{
+	$.ajax({
+		type: 'GET',
+		url: '/criticalmass/symfony/web/app_dev.php/settings/getgpsinterval',
+		data: {
+		},
+		cache: false,
+		success: function(result) {
+			var timer = setInterval(function()
+			{
+				clearInterval(timer);
+				refreshInterval();
+				alert(getGPSStatus());
+			}, result.interval);
+		}
+	});
+}
+
+function initialize()
+{
+	refreshInterval();
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
