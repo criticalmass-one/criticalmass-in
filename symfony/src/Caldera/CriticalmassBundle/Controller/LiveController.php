@@ -68,6 +68,17 @@ class LiveController extends Controller
 		$response->headers->set('Content-Type', 'application/json');
 
 		return $response;
+	}
 
+	public function getstatusAction()
+	{
+		$response = new Response();
+		$response->setContent(json_encode(array(
+			'status' => $this->getUser()->getSendGPSInformation()
+		)));
+
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
 	}
 }
