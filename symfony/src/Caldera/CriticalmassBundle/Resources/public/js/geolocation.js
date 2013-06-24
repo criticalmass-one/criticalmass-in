@@ -5,7 +5,7 @@ function success(position)
 
 function error(message)
 {
-	alert("Geolocation fehlgeschlagen: " + message);
+	//alert("Geolocation fehlgeschlagen: " + message);
 }
 
 function getLocation()
@@ -16,7 +16,7 @@ function getLocation()
 	}
 	else
 	{
-		alert("Geolocation nicht möglich.");
+		//alert("Geolocation nicht möglich.");
 	}
 }
 
