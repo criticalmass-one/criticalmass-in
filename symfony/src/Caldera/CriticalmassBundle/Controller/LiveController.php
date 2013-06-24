@@ -49,4 +49,12 @@ class LiveController extends Controller
 
 		return new Response($this->getRequest()->query->get('interval'));
 	}
+
+	public function refreshgpsstatusAction()
+	{
+		$this->getUser()->setSendGPSInformation($this->getRequest()->query->get('status'));
+		$this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
+
+		return new Response($this->getRequest()->query->get('status'));
+	}
 }
