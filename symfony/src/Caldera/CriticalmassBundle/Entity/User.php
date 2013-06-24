@@ -24,6 +24,11 @@ class User extends BaseUser
 	private $sendGPSInformation;
 
 	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $gpsInterval;
+
+	/**
 	 * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
@@ -100,5 +105,28 @@ class User extends BaseUser
     public function getCurrentCity()
     {
         return $this->currentCity;
+    }
+
+    /**
+     * Set gpsInterval
+     *
+     * @param integer $gpsInterval
+     * @return User
+     */
+    public function setGpsInterval($gpsInterval)
+    {
+        $this->gpsInterval = $gpsInterval;
+    
+        return $this;
+    }
+
+    /**
+     * Get gpsInterval
+     *
+     * @return integer 
+     */
+    public function getGpsInterval()
+    {
+        return $this->gpsInterval;
     }
 }
