@@ -18,6 +18,17 @@ class User extends BaseUser
 	 */
 	protected $id;
 
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	private $sendGPSInformation;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
+	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+	 */
+	private $currentCity;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -34,4 +45,60 @@ class User extends BaseUser
 		return md5($this->getEmail());
 	}
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set sendGPSInformation
+     *
+     * @param boolean $sendGPSInformation
+     * @return User
+     */
+    public function setSendGPSInformation($sendGPSInformation)
+    {
+        $this->sendGPSInformation = $sendGPSInformation;
+    
+        return $this;
+    }
+
+    /**
+     * Get sendGPSInformation
+     *
+     * @return boolean 
+     */
+    public function getSendGPSInformation()
+    {
+        return $this->sendGPSInformation;
+    }
+
+    /**
+     * Set currentCity
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\City $currentCity
+     * @return User
+     */
+    public function setCurrentCity(\Caldera\CriticalmassBundle\Entity\City $currentCity = null)
+    {
+        $this->currentCity = $currentCity;
+    
+        return $this;
+    }
+
+    /**
+     * Get currentCity
+     *
+     * @return \Caldera\CriticalmassBundle\Entity\City 
+     */
+    public function getCurrentCity()
+    {
+        return $this->currentCity;
+    }
 }
