@@ -24,22 +24,35 @@ function sendPosition(position)
 {
 	$.ajax({
 		type: 'GET',
-		url: '/criticalmass/symfony/web/app_dev.php/trackposition',
+		url: '/criticalmass/symfony/web/app_dev.php/settings/getgpsstatus',
 		data: {
-			latitude: position.coords.latitude,
-			longitude: position.coords.longitude,
-			accuracy: position.coords.accuracy,
-			altitude: position.coords.altitude,
-			altitudeaccuracy: position.coords.altitudeAccurary,
-			speed: position.coords.speed,
-			heading: position.coords.heading,
-			timestamp: position.coords.timestamp
 		},
 		cache: false,
 		success: function(result) {
+			if (result.status == true)
+			{
+				$.ajax({
+					type: 'GET',
+					url: '/criticalmass/symfony/web/app_dev.php/trackposition',
+					data: {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+						accuracy: position.coords.accuracy,
+						altitude: position.coords.altitude,
+						altitudeaccuracy: position.coords.altitudeAccurary,
+						speed: position.coords.speed,
+						heading: position.coords.heading,
+						timestamp: position.coords.timestamp
+					},
+					cache: false,
+					success: function(result) {
 			
+					}
+				});
+			}
 		}
 	});
+	
 }
 /*
 window.onload = setInterval(function()
