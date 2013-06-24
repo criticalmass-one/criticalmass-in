@@ -28,7 +28,7 @@
 			<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Städte</a>
 		</div>
 
-		{% block fos_user_content %}{% endblock %}
+		<section data-role="content">{% block fos_user_content %}{% endblock %}</section>
 		{% block body %}{% endblock %}
 		<div data-role="panel" id="mainpanel" data-position="left">
 			<ul data-role="listview" data-theme="d">
@@ -45,6 +45,7 @@
 				<li data-role="list-divider">criticalmass.in</li>
 				{% if is_granted('ROLE_USER') %}
 					<li><a href="{{ url('fos_user_security_logout') }}">Logout</a></li>
+					<li><a href="{{ url('fos_user_profile_edit') }}">Einstellungen</a></li>
 				{% else %}
 					<li><a href="{{ url('fos_user_registration_register') }}">Registrierung</a></li>
 					<li><a href="{{ url('fos_user_security_login') }}">Login</a></li>
