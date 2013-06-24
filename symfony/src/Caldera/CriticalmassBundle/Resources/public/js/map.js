@@ -3,7 +3,8 @@ function setMapOptions(result)
 	var mapOptions = {
 		zoom: result.zoom,
 		center: new google.maps.LatLng(result.mapcenter.latitude, result.mapcenter.longitude),
-		mapTypeId: google.maps.MapTypeId.TERRAIN
+		mapTypeId: google.maps.MapTypeId.TERRAIN,
+		disableDefaultUI: true
 	}
 
 	var map = new google.maps.Map(document.getElementById('map-canvas'),
