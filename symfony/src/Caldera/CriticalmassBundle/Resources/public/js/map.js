@@ -39,7 +39,14 @@ function initialize()
 	});
 
 	$( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
-		alert(event.target.value);
+		$.ajax({
+			type: 'GET',
+			url: '/criticalmass/symfony/web/app_dev.php/settings/gpsinterval',
+			data: {
+				'interval': event.target.value
+			},
+			cache: false
+		});
 	} );
 }
 
