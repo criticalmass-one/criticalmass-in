@@ -48,6 +48,18 @@ function initialize()
 			cache: false
 		});
 	} );
+
+	$( "#flip-gps-sender" ).on( "slidestop", function( event, ui ) {
+		alert($("select#flip-gps-sender")[0].selectedIndex);
+		$.ajax({
+			type: 'GET',
+			url: '/criticalmass/symfony/web/app_dev.php/settings/gpsstatus',
+			data: {
+				'status': event.target.selected
+			},
+			cache: false
+		});
+	} );
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
