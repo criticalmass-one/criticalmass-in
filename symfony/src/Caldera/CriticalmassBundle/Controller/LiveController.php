@@ -22,7 +22,7 @@ class LiveController extends Controller
 
 		$position = new Entity\Position();
 
-		$position->setUser($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:User')->findOneById(103));
+		$position->setUser($this->getUser());
 		$position->setRide($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneById(242));
 
 		$position->setLatitude($query->get("latitude") ? $query->get("latitude") : 0.0);
