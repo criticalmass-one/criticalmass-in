@@ -11,7 +11,7 @@ class CommentController extends Controller
 	{
 		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug);
 
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city_id' => $citySlug->getCity()->getId()), array('date' => 'DESC'));
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'DESC'));
 
 		$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
@@ -24,7 +24,7 @@ class CommentController extends Controller
 	{
 		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug);
 
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city_id' => $citySlug->getCity()->getId()), array('date' => 'desc'));
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'desc'));
 
 		$comment = new Comment();
 		$form = $this->createFormBuilder($comment)->add('text', 'text')->getForm();
