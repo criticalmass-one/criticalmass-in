@@ -18,7 +18,7 @@ caldera_criticalmass_showcity:
 
 caldera_criticalmass_trackposition:
     pattern: /trackposition
-    defaults: { _controller: CalderaCriticalmassBundle:Default:trackposition }
+    defaults: { _controller: CalderaCriticalmassBundle:Live:trackposition }
 
 caldera_criticalmass_mapdata:
     pattern: /mapapi/mapdata
