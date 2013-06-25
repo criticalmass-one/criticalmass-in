@@ -16,7 +16,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 	{
 		// Beispiel-Touren der Critical Mass Hamburg
 		$ride = new Ride();
-		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setCity($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-01-25"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
@@ -26,7 +26,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->flush();
 
 		$ride = new Ride();
-		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setCity($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-02-22"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
@@ -36,7 +36,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->flush();
 
 		$ride = new Ride();
-		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setCity($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-03-29"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
@@ -46,7 +46,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->flush();
 
 		$ride = new Ride();
-		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setCity($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-04-26"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
@@ -56,7 +56,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->flush();
 
 		$ride = new Ride();
-		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setCity($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-05-31"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
@@ -68,7 +68,7 @@ class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 		$this->addReference("city-hamburg-ride-2013-05-31", $ride);
 
 		$ride = new Ride();
-		$ride->setCityId($this->getReference("city-hamburg"));
+		$ride->setCity($this->getReference("city-hamburg"));
 		$ride->setDate(new \DateTime("2013-06-28"));
 		$ride->setTime(new \DateTime("19:00:00"));
 		$ride->setLocation("tba");
