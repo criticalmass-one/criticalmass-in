@@ -27,7 +27,7 @@ class Ride
 	 * @ORM\ManyToOne(targetEntity="City", inversedBy="rides")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
-	protected $city_id;
+	protected $city;
 
 	/**
 	 * Datum der Tour vom Typ DateTime.
@@ -143,9 +143,9 @@ class Ride
 	 * @param \Caldera\CriticalmassBundle\Entity\City $cityId
 	 * @return Ride
 	 */
-	public function setCityId(\Caldera\CriticalmassBundle\Entity\City $cityId = null)
+	public function setCity(\Caldera\CriticalmassBundle\Entity\City $city = null)
 	{
-		$this->city_id = $cityId;
+		$this->city = $city;
 
 		return $this;
 	}
@@ -155,9 +155,9 @@ class Ride
 	 *
 	 * @return \Caldera\CriticalmassBundle\Entity\City 
 	 */
-	public function getCityId()
+	public function getCity()
 	{
-		return $this->city_id;
+		return $this->city;
 	}
 
 	/**
