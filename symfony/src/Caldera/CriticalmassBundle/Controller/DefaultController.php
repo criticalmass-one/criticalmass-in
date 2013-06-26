@@ -21,7 +21,7 @@ class DefaultController extends Controller
 
 		foreach ($cityResults as $key => $result)
 		{
-			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city_id' => $cityResults[$key]['city']->getId()));
+			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $cityResults[$key]['city']->getId()));
 			$cityResults[$key]['distance'] = $this->get('caldera_criticalmass_citydistancecalculator')->calculateDistanceFromCoordToCoord($cityResults[$key]['city']->getLatitude(), $latitude, $cityResults[$key]['city']->getLongitude(), $longitude);
 		}
 	
@@ -58,7 +58,7 @@ class DefaultController extends Controller
 			// Stadt anhand des übergebenen Parameters laden
 			$city = $citySlug->getCity();
 
-			$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city_id' => $city->getId()));
+			$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $city->getId()));
 
 			// Darstellung an das Template weiterreichen
 			return $this->render('CalderaCriticalmassBundle:Default:index.html.twig', array('city' => $city, 'ride' => $ride));
