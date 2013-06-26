@@ -2,7 +2,7 @@ function sendPosition(position)
 {
 	$.ajax({
 		type: 'GET',
-		url: '/criticalmass/symfony/web/app_dev.php/trackposition',
+		url: '/trackposition',
 		data: {
 			latitude: position.coords.latitude,
 			longitude: position.coords.longitude,
@@ -25,7 +25,7 @@ function preparePositionSending()
 {
 	$.ajax({
 		type: 'GET',
-		url: '/criticalmass/symfony/web/app_dev.php/settings/getgpsstatus',
+		url: '/settings/getgpsstatus',
 		data: {
 		},
 		cache: false,
@@ -49,7 +49,7 @@ function refreshInterval()
 {
 	$.ajax({
 		type: 'GET',
-		url: '/criticalmass/symfony/web/app_dev.php/settings/getgpsinterval',
+		url: '/settings/getgpsinterval',
 		data: {
 		},
 		cache: false,

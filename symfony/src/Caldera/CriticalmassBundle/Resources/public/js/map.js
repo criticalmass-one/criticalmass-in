@@ -31,7 +31,7 @@ function initialize()
 {
 	$.ajax({
 		type: 'GET',
-		url: '/criticalmass/symfony/web/app_dev.php/mapapi/mapdata',
+		url: '/mapapi/mapdata',
 		data: {
 		},
 		cache: false,
@@ -41,7 +41,7 @@ function initialize()
 	$( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
 		$.ajax({
 			type: 'GET',
-			url: '/criticalmass/symfony/web/app_dev.php/settings/gpsinterval',
+			url: '/settings/gpsinterval',
 			data: {
 				'interval': event.target.value
 			},
@@ -52,7 +52,7 @@ function initialize()
 	$( "#flip-gps-sender" ).on( "slidestop", function( event, ui ) {
 		$.ajax({
 			type: 'GET',
-			url: '/criticalmass/symfony/web/app_dev.php/settings/gpsstatus',
+			url: '/settings/gpsstatus',
 			data: {
 				'status': $("select#flip-gps-sender")[0].selectedIndex
 			},
