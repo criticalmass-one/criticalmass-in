@@ -7,7 +7,7 @@
 {% if app.user != null %}
 	<form action="{{ path('caldera_criticalmass_addcomment', {'citySlug': 'hamburg'}) }}" method="post" {{ form_enctype(form) }}>
 		{{ form_widget(form) }}
-		<input type="submit" />
+		<input type="submit" value="Absenden" />
 	</form>
 {% endif %}
 
