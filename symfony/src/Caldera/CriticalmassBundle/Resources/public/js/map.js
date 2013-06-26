@@ -29,14 +29,18 @@ function setMapOptions(result)
 
 function initialize()
 {
-	$.ajax({
-		type: 'GET',
-		url: '/mapapi/mapdata',
-		data: {
-		},
-		cache: false,
-		success: setMapOptions
-	});
+	if ($('#mapcanvas').length > 0)
+	{
+alert("fooooo");
+		$.ajax({
+			type: 'GET',
+			url: '/mapapi/mapdata',
+			data: {
+			},
+			cache: false,
+			success: setMapOptions
+		});
+	}
 
 	$( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
 		$.ajax({
