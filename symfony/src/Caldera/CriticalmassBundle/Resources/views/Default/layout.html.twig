@@ -10,9 +10,9 @@
 {% endstylesheets %}
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 {% javascripts
+    '@CalderaCriticalmassBundle/Resources/public/js/jquery-1.10.1.js'
+    '@CalderaCriticalmassBundle/Resources/public/js/jquery.mobile-1.3.1.js'
     '@CalderaCriticalmassBundle/Resources/public/js/scripts.js'
     '@CalderaCriticalmassBundle/Resources/public/js/geolocation.js'
     '@CalderaCriticalmassBundle/Resources/public/js/map.js' %}
@@ -44,7 +44,7 @@
 				<li><a href="#demo-intro">Twitter</a></li>
 				<li data-role="list-divider">criticalmass.in</li>
 				{% if is_granted('ROLE_USER') %}
-					<li><a href="{{ url('fos_user_security_logout') }}">Logout</a></li>
+					<li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false">Logout</a></li>
 					<li><a href="{{ url('fos_user_profile_edit') }}">Einstellungen</a></li>
 					<li><a href="{{ url('fos_user_change_password') }}">Kennwort ändern</a></li>
 				{% else %}
