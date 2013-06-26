@@ -6,7 +6,7 @@ $(window).load(function()
 		{
 			navigator.geolocation.getCurrentPosition(function(position)
 			{
-				$('#rightpanel').load('/criticalmass/symfony/web/app_dev.php/loadcities/', { 'latitude': position.coords.latitude, 'longitude': position.coords.longitude }, function()
+				$('#rightpanel').load('/loadcities/', { 'latitude': position.coords.latitude, 'longitude': position.coords.longitude }, function()
 				{
 					$('#rightpanel').trigger('create');
 				});
@@ -14,7 +14,7 @@ $(window).load(function()
 		}
 		else
 		{
-			$('#rightpanel').load('/criticalmass/symfony/web/app_dev.php/loadcities/', function()
+			$('#rightpanel').load('/loadcities/', function()
 			{
 				$('#rightpanel').trigger('create');
 			});
