@@ -56,6 +56,7 @@ function refreshInterval()
 		success: function(result) {
 			var timer = setInterval(function()
 			{
+alert(result.interval);
 				clearInterval(timer);
 				refreshInterval();
 				preparePositionSending();
@@ -64,9 +65,10 @@ function refreshInterval()
 	});
 }
 
-function initialize()
+function initializeGeolocation()
 {
+	alert("gogogo");
 	refreshInterval();
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initializeGeolocation);

@@ -27,7 +27,7 @@ function setMapOptions(result)
 	}
 }
 
-function initialize()
+function initializeMap()
 {
 //	if ($('#mapcanvas').length > 0)
 //	{
@@ -64,4 +64,4 @@ function initialize()
 	} );
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initializeMap);
