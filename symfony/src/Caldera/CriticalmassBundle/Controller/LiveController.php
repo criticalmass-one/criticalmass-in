@@ -64,8 +64,9 @@ class LiveController extends Controller
 	public function getintervalAction()
 	{
 		$response = new Response();
+
 		$response->setContent(json_encode(array(
-			'interval' => $this->getUser()->getGpsInterval() * 1000
+			'interval' => ($this->getUser() != null ? $this->getUser()->getGpsInterval() * 1000 : 0)
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');
@@ -77,7 +78,7 @@ class LiveController extends Controller
 	{
 		$response = new Response();
 		$response->setContent(json_encode(array(
-			'status' => $this->getUser()->getSendGPSInformation()
+			'status' => ($this->getUser() != null ? $this->getUser()->getSendGPSInformation() : 0)
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');
