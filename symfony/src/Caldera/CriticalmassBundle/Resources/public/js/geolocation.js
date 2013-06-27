@@ -56,7 +56,6 @@ function refreshInterval()
 		success: function(result) {
 			var timer = setInterval(function()
 			{
-alert(result.interval);
 				clearInterval(timer);
 				refreshInterval();
 				preparePositionSending();
@@ -67,7 +66,6 @@ alert(result.interval);
 
 function initializeGeolocation()
 {
-	alert("gogogo");
 	refreshInterval();
 }
 
