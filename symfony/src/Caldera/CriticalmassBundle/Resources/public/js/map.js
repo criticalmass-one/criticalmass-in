@@ -29,9 +29,8 @@ function setMapOptions(result)
 
 function initialize()
 {
-	if ($('#mapcanvas').length > 0)
-	{
-alert("fooooo");
+//	if ($('#mapcanvas').length > 0)
+//	{
 		$.ajax({
 			type: 'GET',
 			url: '/mapapi/mapdata',
@@ -40,7 +39,7 @@ alert("fooooo");
 			cache: false,
 			success: setMapOptions
 		});
-	}
+//	}
 
 	$( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
 		$.ajax({
