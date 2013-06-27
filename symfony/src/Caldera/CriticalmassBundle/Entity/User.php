@@ -21,12 +21,12 @@ class User extends BaseUser
 	/**
 	 * @ORM\Column(type="boolean")
 	 */
-	private $sendGPSInformation;
+	private $sendGPSInformation = 1;
 
 	/**
 	 * @ORM\Column(type="integer")
 	 */
-	private $gpsInterval;
+	private $gpsInterval = 10;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
