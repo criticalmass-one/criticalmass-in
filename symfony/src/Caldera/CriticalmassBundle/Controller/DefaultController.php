@@ -58,7 +58,7 @@ class DefaultController extends Controller
 			// Stadt anhand des übergebenen Parameters laden
 			$city = $citySlug->getCity();
 
-			$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $city->getId()));
+			$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
 
 			// Darstellung an das Template weiterreichen
 			return $this->render('CalderaCriticalmassBundle:Default:index.html.twig', array('city' => $city, 'ride' => $ride));
