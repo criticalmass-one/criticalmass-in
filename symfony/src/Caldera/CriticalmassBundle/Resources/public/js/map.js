@@ -29,8 +29,8 @@ function setMapOptions(result)
 
 function initializeMap()
 {
-//	if ($('#mapcanvas').length > 0)
-//	{
+	if ($('#map-canvas').length > 0)
+	{
 		$.ajax({
 			type: 'GET',
 			url: '/mapapi/mapdata',
@@ -39,7 +39,7 @@ function initializeMap()
 			cache: false,
 			success: setMapOptions
 		});
-//	}
+	}
 
 	$( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
 		$.ajax({
@@ -64,4 +64,11 @@ function initializeMap()
 	} );
 }
 
-google.maps.event.addDomListener(window, 'load', initializeMap);
+function startMapInitialization()
+{
+	initializeMap();
+
+	var timer = setInterval(initializeMap, 5000);
+}
+
+google.maps.event.addDomListener(window, 'load', startMapInitialization);
