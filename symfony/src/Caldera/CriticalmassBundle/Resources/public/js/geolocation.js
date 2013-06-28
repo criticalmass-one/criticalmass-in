@@ -57,8 +57,12 @@ function refreshInterval()
 			var timer = setInterval(function()
 			{
 				clearInterval(timer);
-				refreshInterval();
-				preparePositionSending();
+
+				if (result.interval > 0)
+				{
+					refreshInterval();
+					preparePositionSending();
+				}
 			}, result.interval);
 		}
 	});
