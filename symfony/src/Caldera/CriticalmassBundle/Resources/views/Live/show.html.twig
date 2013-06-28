@@ -14,7 +14,7 @@
 					<option value="on"{% if app.user.sendGPSInformation == 1 %} selected="selected"{% endif %}>An</option>
 				</select>
 			<label for="slider-gps-interval">GPS-Intervall in Sekunden:</label>
-				<input type="range" name="slider-gps-interval" id="slider-gps-interval" value="{{ app.user.gpsinterval }}" min="1" max="300" />
+				<input type="range" name="slider-gps-interval" id="slider-gps-interval" value="{{ app.user.gpsinterval }}" min="1" max="30" />
 		</div>
 {% endif %}
 	</section>
