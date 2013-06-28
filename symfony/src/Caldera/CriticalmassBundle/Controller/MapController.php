@@ -14,7 +14,7 @@ class MapController extends Controller
 	{
 		$mph = new Utility\MapPositionHandler(
 			new Entity\Ride(),
-			$this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 50)
+			$this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 15)
 	);
 
 		$response = new Response();
