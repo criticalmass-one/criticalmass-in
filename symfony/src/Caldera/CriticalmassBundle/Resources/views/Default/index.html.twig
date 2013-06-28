@@ -15,9 +15,4 @@
 		{% endif %}
 	</section>
 	<section id="content2"><div id="map-canvas" style="width: 300px; height: 300px; margin: 10px auto;"></div></section>
-	<footer>
-		{% if city.getUrl %}<a href="{{ city.getUrl }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/rss.png') }}" alt="RSS-Feed" /></a>{% endif %}
-		{% if city.getTwitter %}<a href="{{ city.getTwitter }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/twitter.png') }}" alt="Twitter" /></a>{% endif %}
-		{% if city.getFacebook %}<a href="{{ city.getFacebook }}"><img class="icon" src="{{ asset('bundles/calderacriticalmass/images/facebook.png') }}" alt="faebook" /></a>{% endif %}
-	</footer>
 {% endblock %}
