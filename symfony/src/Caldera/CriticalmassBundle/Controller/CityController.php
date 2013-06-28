@@ -28,7 +28,7 @@ class CityController extends Controller
 
 		foreach ($cityResults as $key => $result)
 		{
-			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city_id' => $cityResults[$key]['city']->getId()), array('date' => 'desc'));
+			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $cityResults[$key]['city']->getId()), array('date' => 'desc'));
 
 			if ($latitude && $longitude)
 			{
