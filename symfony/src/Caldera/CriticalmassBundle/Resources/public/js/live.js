@@ -1,3 +1,5 @@
+var markerArray = [];
+
 function setMapOptions(result)
 {
 	var mapOptions = {
@@ -23,6 +25,7 @@ function setMapOptions(result)
 		};
 
 		cityCircle = new google.maps.Circle(circleOptions);
+		markerArray.push(cityCircle);
 	}
 }
 
