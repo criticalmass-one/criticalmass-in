@@ -1,4 +1,22 @@
 var markerArray = [];
+var map;
+
+function addMarker(options)
+{
+	var circleOptions = {
+		strokeColor: options.strokeColor,
+		strokeOpacity: options.strokeOpacity,
+		strokeWeight: options.strokeWeight,
+		fillColor: options.fillColor,
+		fillOpacity: options.fillOpacity,
+		map: map,
+		center: new google.maps.LatLng(options.latitude, options.longitude),
+		radius: options.radius
+	};
+
+	cityCircle = new google.maps.Circle(circleOptions);
+	markerArray.push(cityCircle);
+}
 
 function setMapOptions(result)
 {
@@ -9,23 +27,11 @@ function setMapOptions(result)
 		disableDefaultUI: true
 	}
 
-	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	for (var pos in result.positions)
 	{
-		var circleOptions = {
-			strokeColor: result.positions[pos].strokeColor,
-			strokeOpacity: result.positions[pos].strokeOpacity,
-			strokeWeight: result.positions[pos].strokeWeight,
-			fillColor: result.positions[pos].fillColor,
-			fillOpacity: result.positions[pos].fillOpacity,
-			map: map,
-			center: new google.maps.LatLng(result.positions[pos].latitude, result.positions[pos].longitude),
-			radius: result.positions[pos].radius
-		};
-
-		cityCircle = new google.maps.Circle(circleOptions);
-		markerArray.push(cityCircle);
+		addMarker(result.positions[pos]);
 	}
 }
 
