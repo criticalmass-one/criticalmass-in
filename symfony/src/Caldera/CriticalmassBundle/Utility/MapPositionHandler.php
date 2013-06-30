@@ -29,42 +29,42 @@ class MapPositionHandler
 	public function getZoomFactor()
 	{
 		$minX = null;
-                $maxX = null;
+		$maxX = null;
 		$minY = null;
 		$maxY = null;
 
-                foreach ($this->getPositions() as $position)
-                {
-                        if (!isset($minX) && !isset($maxX) && !isset($minY) && !isset($maxY))
-                        {
-                                $minX = $position->getLatitude();
+		foreach ($this->getPositions() as $position)
+		{
+			if (!isset($minX) && !isset($maxX) && !isset($minY) && !isset($maxY))
+			{
+				$minX = $position->getLatitude();
 				$maxX = $position->getLatitude();
 				$minY = $position->getLongitude();
 				$maxY = $position->getLongitude();
-                        }
-                        else
-                        {
-                                if ($minX > $position->getLatitude())
-                                {
-                                        $minX = $position->getLatitude();
-                                }
+			}
+			else
+			{
+				if ($minX > $position->getLatitude())
+				{
+					$minX = $position->getLatitude();
+				}
 
-                                if ($maxX < $position->getLatitude())
-                                {
-                                        $maxX = $position->getLatitude();
-                                }
+				if ($maxX < $position->getLatitude())
+				{
+					$maxX = $position->getLatitude();
+				}
 
-                                if ($minY > $position->getLongitude())
-                                {
-                                        $minY = $position->getLongitude();
-                                }
+				if ($minY > $position->getLongitude())
+				{
+					$minY = $position->getLongitude();
+				}
 
-                                if ($maxY < $position->getLongitude())
-                                {
-                                        $maxY = $position->getLongitude();
-                                }
-                        }
-                }
+				if ($maxY < $position->getLongitude())
+				{
+					$maxY = $position->getLongitude();
+				}
+			}
+		}
 
 		$distanceX = $maxX - $minX;
 		$distanceY = $maxY - $minY;
@@ -99,7 +99,13 @@ class MapPositionHandler
 		{
 			$resultArray["position".$position->getId()] = array(
 				'latitude' => $position->getLatitude(),
-				'longitude' => $position->getLongitude()
+				'longitude' => $position->getLongitude(),
+				'radius' => 100,
+				'strokeColor' => '#ff0000',
+				'fillColor' => 'ff0000',
+				'strokeOpacity' => 0.8,
+				'fillOpacity' => 0.35,
+				'strokeWeight' => 2
 			);
 		}
 

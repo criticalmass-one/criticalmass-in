@@ -7,20 +7,19 @@ function setMapOptions(result)
 		disableDefaultUI: true
 	}
 
-	var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	for (var pos in result.positions)
 	{
 		var circleOptions = {
-			strokeColor: '#FF0000',
-			strokeOpacity: 0.8,
-			strokeWeight: 2,
-			fillColor: '#FF0000',
-			fillOpacity: 0.35,
+			strokeColor: result.positions[pos].strokeColor,
+			strokeOpacity: result.positions[pos].strokeOpacity,
+			strokeWeight: result.positions[pos].strokeWeight,
+			fillColor: result.positions[pos].fillColor,
+			fillOpacity: result.positions[pos].fillOpacity,
 			map: map,
 			center: new google.maps.LatLng(result.positions[pos].latitude, result.positions[pos].longitude),
-			radius: 100
+			radius: result.positions[pos].radius
 		};
 
 		cityCircle = new google.maps.Circle(circleOptions);
