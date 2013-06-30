@@ -14,8 +14,8 @@ function addMarker(options)
 		radius: options.radius
 	};
 
-	cityCircle = new google.maps.Circle(circleOptions);
-	markerArray.push(cityCircle);
+	circleMarker = new google.maps.Circle(circleOptions);
+	markerArray.push(circleMarker);
 }
 
 function setMapOptions(result)
