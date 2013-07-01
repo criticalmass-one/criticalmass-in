@@ -29,6 +29,12 @@ function clearMarker()
 	}
 }
 
+function refreshMarkers()
+{
+	clearMarker();
+	startLoadingMarker();
+}
+
 function startLoadingMarker()
 {
 	$.ajax({
@@ -104,7 +110,7 @@ function startInitialization()
 {
 	initializeLivePage();
 
-	var timer = setInterval(initializeLivePage, 5000);
+	var timer = setInterval(refreshMarkers, 5000);
 }
 
 google.maps.event.addDomListener(window, 'load', startInitialization);
