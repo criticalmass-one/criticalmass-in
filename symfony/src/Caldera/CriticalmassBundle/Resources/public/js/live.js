@@ -15,7 +15,7 @@ function addMarker(options)
 	};
 
 	circleMarker = new google.maps.Circle(circleOptions);
-	markersArray.push(circleMarker);
+	markersArray[options.id] = circleMarker;
 }
 
 function clearMarkers()
