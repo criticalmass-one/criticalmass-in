@@ -72,11 +72,11 @@ function initializeMap()
 	} );
 }
 
-function startMapInitialization()
+function startInitialization()
 {
 	initializeMap();
 
 	var timer = setInterval(initializeMap, 5000);
 }
 
-google.maps.event.addDomListener(window, 'load', startMapInitialization);
+google.maps.event.addDomListener(window, 'load', startInitialization);
