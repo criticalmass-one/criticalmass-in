@@ -47,7 +47,7 @@ function setMapOptions(result)
 	}
 }
 
-function initializeMap()
+function initializeLivePage()
 {
 	if ($('#map-canvas').length > 0)
 	{
@@ -88,7 +88,7 @@ function startInitialization()
 {
 	initializeMap();
 
-	var timer = setInterval(initializeMap, 5000);
+	var timer = setInterval(initializeLivePage, 5000);
 }
 
 google.maps.event.addDomListener(window, 'load', startInitialization);
