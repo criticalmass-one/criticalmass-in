@@ -29,10 +29,39 @@ function clearMarkers()
 	}
 }
 
+function clearMarker(id)
+{
+	markersArray[id].setMap(null);
+	markersArray[id] = undefined;
+}
+
 function refreshMarkers()
 {
-	//clearMarkers();
 	startLoadingMarkers();
+}
+
+function flushOldMarkers(result)
+{
+	var pos;
+	var i;
+
+	for (i in markersArray)
+	{
+		var found = false;
+
+		for (pos in result.positions)
+		{
+			if (i == result.positions[pos].id)
+			{
+				found = true;
+			}
+		}
+
+		if (!found)
+		{
+			clearMarker(i);
+		}
+	}
 }
 
 function existsMarker(options)
@@ -72,6 +101,8 @@ function proceedLoadingMarkers(result)
 			addMarker(result.positions[pos]);
 		}
 	}
+
+	flushOldMarkers(result);
 }
 
 function setMapOptions(result)
