@@ -18,6 +18,18 @@ function addMarker(options)
 	markerArray.push(circleMarker);
 }
 
+function clearMarker()
+{
+	if (markerArray)
+	{
+		for (i in markerArray)
+		{
+			markerArray[i].setMap(null);
+		}
+	}
+}
+
+
 function setMapOptions(result)
 {
 	var mapOptions = {
