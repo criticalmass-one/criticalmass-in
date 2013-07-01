@@ -31,8 +31,24 @@ function clearMarkers()
 
 function refreshMarkers()
 {
-	clearMarkers();
+	//clearMarkers();
 	startLoadingMarkers();
+}
+
+function existsMarker(options)
+{
+	var found = false;
+
+	for (i in markersArray)
+	{
+		if (i == options.id)
+		{
+			found = true;
+			break;
+		}
+	}
+
+	return found;
 }
 
 function startLoadingMarkers()
@@ -51,7 +67,10 @@ function proceedLoadingMarkers(result)
 {
 	for (var pos in result.positions)
 	{
-		addMarker(result.positions[pos]);
+		if (!existsMarker(result.positions[pos]))
+		{
+			addMarker(result.positions[pos]);
+		}
 	}
 }
 
