@@ -1,4 +1,4 @@
-var markerArray = [];
+var markersArray = [];
 var map;
 
 function addMarker(options)
@@ -15,27 +15,27 @@ function addMarker(options)
 	};
 
 	circleMarker = new google.maps.Circle(circleOptions);
-	markerArray.push(circleMarker);
+	markersArray.push(circleMarker);
 }
 
-function clearMarker()
+function clearMarkers()
 {
-	if (markerArray)
+	if (markersArray)
 	{
-		for (i in markerArray)
+		for (i in markersArray)
 		{
-			markerArray[i].setMap(null);
+			markersArray[i].setMap(null);
 		}
 	}
 }
 
 function refreshMarkers()
 {
-	clearMarker();
-	startLoadingMarker();
+	clearMarkers();
+	startLoadingMarkers();
 }
 
-function startLoadingMarker()
+function startLoadingMarkers()
 {
 	$.ajax({
 		type: 'GET',
@@ -43,11 +43,11 @@ function startLoadingMarker()
 		data: {
 		},
 		cache: false,
-		success: proceedLoadingMarker
+		success: proceedLoadingMarkers
 	});
 }
 
-function proceedLoadingMarker(result)
+function proceedLoadingMarkers(result)
 {
 	for (var pos in result.positions)
 	{
@@ -66,7 +66,7 @@ function setMapOptions(result)
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	proceedLoadingMarker(result);
+	proceedLoadingMarkers(result);
 }
 
 function initializeLivePage()
