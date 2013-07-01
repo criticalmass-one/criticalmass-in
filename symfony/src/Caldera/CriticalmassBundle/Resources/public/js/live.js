@@ -29,6 +29,25 @@ function clearMarker()
 	}
 }
 
+function startLoadingMarker()
+{
+	$.ajax({
+		type: 'GET',
+		url: '/mapapi/mapdata',
+		data: {
+		},
+		cache: false,
+		success: proceedLoadingMarker
+	});
+}
+
+function proceedLoadingMarker(result)
+{
+	for (var pos in result.positions)
+	{
+		addMarker(result.positions[pos]);
+	}
+}
 
 function setMapOptions(result)
 {
@@ -41,10 +60,7 @@ function setMapOptions(result)
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	for (var pos in result.positions)
-	{
-		addMarker(result.positions[pos]);
-	}
+	proceedLoadingMarker(result);
 }
 
 function initializeLivePage()
@@ -86,7 +102,7 @@ function initializeLivePage()
 
 function startInitialization()
 {
-	initializeMap();
+	initializeLivePage();
 
 	var timer = setInterval(initializeLivePage, 5000);
 }
