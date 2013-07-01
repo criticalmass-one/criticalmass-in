@@ -32,7 +32,7 @@ function clearMarkers()
 function clearMarker(id)
 {
 	markersArray[id].setMap(null);
-	markersArray[id] = undefined;
+	delete markersArray[id];
 }
 
 function refreshMarkers()
