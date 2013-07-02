@@ -38,11 +38,7 @@ function clearMarker(id)
 function refreshMarkers()
 {
 	$.ajax({
-		type: 'GET',
 		url: '/mapapi/mapdata',
-		data: {
-		},
-		cache: false,
 		success: refreshMarkers2
 	});
 
