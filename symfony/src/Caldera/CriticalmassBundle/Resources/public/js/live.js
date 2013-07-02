@@ -116,7 +116,7 @@ function setMapOptions(result)
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	proceedLoadingMarkers(result);
+	placeNewMarkers(result);
 }
 
 function initializeLivePage()
