@@ -48,7 +48,7 @@ function refreshMarkers()
 
 }
 
-function refreshMarkers2(result)
+function placeNewMarkers(result)
 {
 	for (var pos in result.positions)
 	{
@@ -57,7 +57,11 @@ function refreshMarkers2(result)
 			addMarker(result.positions[pos]);
 		}
 	}
+}
 
+function refreshMarkers2(result)
+{
+	placeNewMarkers(result);
 	flushOldMarkers(result);
 }
 
