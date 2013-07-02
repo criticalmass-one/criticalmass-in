@@ -18,7 +18,7 @@ function addMarker(options)
 	markersArray[options.id] = circleMarker;
 }
 
-function clearMarkers()
+function clearAllMarkers()
 {
 	if (markersArray)
 	{
@@ -37,7 +37,28 @@ function clearMarker(id)
 
 function refreshMarkers()
 {
-	startLoadingMarkers();
+	$.ajax({
+		type: 'GET',
+		url: '/mapapi/mapdata',
+		data: {
+		},
+		cache: false,
+		success: refreshMarkers2
+	});
+
+}
+
+function refreshMarkers2(result)
+{
+	for (var pos in result.positions)
+	{
+		if (!existsMarker(result.positions[pos]))
+		{
+			addMarker(result.positions[pos]);
+		}
+	}
+
+	flushOldMarkers(result);
 }
 
 function flushOldMarkers(result)
@@ -78,31 +99,6 @@ function existsMarker(options)
 	}
 
 	return found;
-}
-
-function startLoadingMarkers()
-{
-	$.ajax({
-		type: 'GET',
-		url: '/mapapi/mapdata',
-		data: {
-		},
-		cache: false,
-		success: proceedLoadingMarkers
-	});
-}
-
-function proceedLoadingMarkers(result)
-{
-	for (var pos in result.positions)
-	{
-		if (!existsMarker(result.positions[pos]))
-		{
-			addMarker(result.positions[pos]);
-		}
-	}
-
-	flushOldMarkers(result);
 }
 
 function setMapOptions(result)
