@@ -3,18 +3,10 @@ var map;
 
 function addMarker(options)
 {
-	var circleOptions = {
-		strokeColor: options.strokeColor,
-		strokeOpacity: options.strokeOpacity,
-		strokeWeight: options.strokeWeight,
-		fillColor: options.fillColor,
-		fillOpacity: options.fillOpacity,
-		map: map,
-		center: new google.maps.LatLng(options.latitude, options.longitude),
-		radius: options.radius
-	};
+	options.map = map;
+	options.center = new google.maps.LatLng(options.latitude, options.longitude),
 
-	circleMarker = new google.maps.Circle(circleOptions);
+	circleMarker = new google.maps.Circle(options);
 	markersArray[options.id] = circleMarker;
 }
 
