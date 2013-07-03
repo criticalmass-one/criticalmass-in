@@ -8,7 +8,9 @@
             <tr>
                 <th>Id</th>
                 <th>Date</th>
+                <th>Hastime</th>
                 <th>Time</th>
+                <th>Haslocation</th>
                 <th>Location</th>
                 <th>Map</th>
                 <th>Actions</th>
@@ -19,7 +21,9 @@
             <tr>
                 <td><a href="{{ path('admin_ride_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ entity.hasTime }}</td>
                 <td>{{ entity.time|date('H:i') }}</td>
+                <td>{{ entity.hasLocation }}</td>
                 <td>{{ entity.location }}</td>
                 <td>{{ entity.map }}</td>
                 <td>
