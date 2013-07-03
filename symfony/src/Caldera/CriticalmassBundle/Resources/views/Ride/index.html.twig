@@ -18,7 +18,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('admin_ride_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ entity.time }}</td>
                 <td>{{ entity.location }}</td>
                 <td>{{ entity.map }}</td>
