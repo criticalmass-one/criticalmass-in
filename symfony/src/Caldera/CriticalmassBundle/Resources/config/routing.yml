@@ -59,3 +59,7 @@ caldera_criticalmass_settings_gps_getinterval:
 caldera_criticalmass_settings_gps_getstatus:
     pattern: /settings/getgpsstatus
     defaults: { _controller: CalderaCriticalmassBundle:Live:getstatus }
+
+CalderaCriticalmassBundle_admin_ride:
+    resource: "@CalderaCriticalmassBundle/Resources/config/routing/ride.yml"
+    prefix:   /admin/ride
