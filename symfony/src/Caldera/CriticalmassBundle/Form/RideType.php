@@ -12,7 +12,9 @@ class RideType extends AbstractType
     {
         $builder
             ->add('date')
+            ->add('hasTime')
             ->add('time')
+            ->add('hasLocation')
             ->add('location')
             ->add('map')
             ->add('city')
