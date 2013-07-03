@@ -1,0 +1,30 @@
+admin_ride:
+    pattern:  /
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:index" }
+
+admin_ride_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:show" }
+
+admin_ride_new:
+    pattern:  /new
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:new" }
+
+admin_ride_create:
+    pattern:  /create
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:create" }
+    requirements: { _method: post }
+
+admin_ride_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:edit" }
+
+admin_ride_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:update" }
+    requirements: { _method: post|put }
+
+admin_ride_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CalderaCriticalmassBundle:Ride:delete" }
+    requirements: { _method: post|delete }
