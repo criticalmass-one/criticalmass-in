@@ -41,6 +41,17 @@ class RideController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            if (!$entity->getLocation())
+            {
+              $entity->setLocation("");
+            }
+
+            if (!$entity->getMap())
+            {
+              $entity->setMap("");
+            }
+
             $em->persist($entity);
             $em->flush();
 
