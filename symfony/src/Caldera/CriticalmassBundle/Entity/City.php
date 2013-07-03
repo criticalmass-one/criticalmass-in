@@ -287,4 +287,9 @@ class City
     {
         return $this->longitude;
     }
+
+		public function __toString()
+		{
+			return $this->getCity();
+		}
 }
