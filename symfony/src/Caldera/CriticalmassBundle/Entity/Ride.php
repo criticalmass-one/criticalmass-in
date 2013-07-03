@@ -19,7 +19,7 @@ class Ride
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	protected $id;
+	private $id;
 
 	/**
 	 * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
@@ -27,28 +27,38 @@ class Ride
 	 * @ORM\ManyToOne(targetEntity="City", inversedBy="rides")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
-	protected $city;
+	private $city;
 
 	/**
 	 * Datum der Tour vom Typ DateTime.
 	 *
 	 * @ORM\Column(type="date")
 	 */
-	protected $date;
+	private $date;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	private $hasTime;
 
 	/**
 	 * Uhrzeit der Tour vom Typ DateTime.
 	 *
 	 * @ORM\Column(type="time")
 	 */
-	protected $time;
+	private $time;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	private $hasLocation;
 
 	/**
 	 * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
 	 *
 	 * @ORM\Column(type="string", length=255)
 	 */
-	protected $location;
+	private $location;
 
 	/**
 	 * Zeichenkette eines Karten-Embeddings, beispielsweise von Google-Maps. Wird
@@ -56,130 +66,177 @@ class Ride
 	 *
 	 * @ORM\Column(type="text")
 	 */
-	protected $map;
+	private $map;
 
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
 
-	/**
-	 * Set date
-	 *
-	 * @param \DateTime $date
-	 * @return Ride
-	 */
-	public function setDate($date)
-	{
-		$this->date = $date;
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-		return $this;
-	}
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Ride
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
 
-	/**
-	 * Get date
-	 *
-	 * @return \DateTime 
-	 */
-	public function getDate()
-	{
-		return $this->date;
-	}
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 
-	/**
-	 * Set time
-	 *
-	 * @param \DateTime $time
-	 * @return Ride
-	 */
-	public function setTime($time)
-	{
-		$this->time = $time;
+    /**
+     * Set hasTime
+     *
+     * @param boolean $hasTime
+     * @return Ride
+     */
+    public function setHasTime($hasTime)
+    {
+        $this->hasTime = $hasTime;
+    
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get hasTime
+     *
+     * @return boolean 
+     */
+    public function getHasTime()
+    {
+        return $this->hasTime;
+    }
 
-	/**
-	 * Get time
-	 *
-	 * @return \DateTime 
-	 */
-	public function getTime()
-	{
-		return $this->time;
-	}
+    /**
+     * Set time
+     *
+     * @param \DateTime $time
+     * @return Ride
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+    
+        return $this;
+    }
 
-	/**
-	 * Set location
-	 *
-	 * @param string $location
-	 * @return Ride
-	 */
-	public function setLocation($location)
-	{
-		$this->location = $location;
+    /**
+     * Get time
+     *
+     * @return \DateTime 
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
 
-		return $this;
-	}
+    /**
+     * Set hasLocation
+     *
+     * @param boolean $hasLocation
+     * @return Ride
+     */
+    public function setHasLocation($hasLocation)
+    {
+        $this->hasLocation = $hasLocation;
+    
+        return $this;
+    }
 
-/**
- * Get location
- *
- * @return string 
- */
-	public function getLocation()
-	{
-		return $this->location;
-	}
+    /**
+     * Get hasLocation
+     *
+     * @return boolean 
+     */
+    public function getHasLocation()
+    {
+        return $this->hasLocation;
+    }
 
-	/**
-	 * Set city_id
-	 *
-	 * @param \Caldera\CriticalmassBundle\Entity\City $cityId
-	 * @return Ride
-	 */
-	public function setCity(\Caldera\CriticalmassBundle\Entity\City $city = null)
-	{
-		$this->city = $city;
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return Ride
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get location
+     *
+     * @return string 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
 
-	/**
-	 * Get city_id
-	 *
-	 * @return \Caldera\CriticalmassBundle\Entity\City 
-	 */
-	public function getCity()
-	{
-		return $this->city;
-	}
+    /**
+     * Set map
+     *
+     * @param string $map
+     * @return Ride
+     */
+    public function setMap($map)
+    {
+        $this->map = $map;
+    
+        return $this;
+    }
 
-	/**
-	 * Set map
-	 *
-	 * @param string $map
-	 * @return Ride
-	 */
-	public function setMap($map)
-	{
-		$this->map = $map;
+    /**
+     * Get map
+     *
+     * @return string 
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
 
-		return $this;
-	}
+    /**
+     * Set city
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\City $city
+     * @return Ride
+     */
+    public function setCity(\Caldera\CriticalmassBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
 
-	/**
-	 * Get map
-	 *
-	 * @return string 
-	 */
-	public function getMap()
-	{
-		return $this->map;
-	}
+    /**
+     * Get city
+     *
+     * @return \Caldera\CriticalmassBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 }
