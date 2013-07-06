@@ -1,13 +1,48 @@
 {% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
 
 {% block body %}
-    <h1>Tourdetails editieren</h1>
+    <h1>Tourdetails definieren</h1>
 
     <form action="{{ path('admin_ride_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
+        <div>
+          <label>Datum</label>
+            {{ form_errors(edit_form.date) }}
+            {{ form_widget(edit_form.date) }}
+        </div>
+
+        <div>
+          <label>Uhrzeit anzeigen?</label>
+            {{ form_errors(edit_form.hasTime) }}
+            {{ form_widget(edit_form.hasTime) }}
+        </div>
+
+        <div>
+          <label>Uhrzeit</label>
+            {{ form_errors(edit_form.time) }}
+            {{ form_widget(edit_form.time) }}
+        </div>
+
+        <div>
+          <label>Treffpunkt anzeigen?</label>
+            {{ form_errors(edit_form.hasLocation) }}
+            {{ form_widget(edit_form.hasLocation) }}
+        </div>
+
+        <div>
+          <label>Treffpunkt</label>
+            {{ form_errors(edit_form.location) }}
+            {{ form_widget(edit_form.location) }}
+        </div>
+
+        <div>
+          <label>Stadt</label>
+            {{ form_errors(edit_form.city) }}
+            {{ form_widget(edit_form.city) }}
+        </div>
+
         <p>
-            <button type="submit">Edit</button>
+            <button type="submit">Speichern</button>
         </p>
     </form>
 
