@@ -37,9 +37,9 @@
 			<ul data-role="listview" data-theme="d">
 				<li data-icon="delete"><a href="#" data-rel="close">Menü schließen</a></li>
 				<li data-role="list-divider">Critical Mass Hamburg</li>
-				<li><a href="{{ url('caldera_criticalmass_showcity', {'city': 'hamburg'}) }}">Termine</a></li>
-				<li><a href="{{ url('caldera_criticalmass_live', {'citySlug': 'hamburg'}) }}" data-ajax="false">Live</a></li>
-				<li><a href="{{ url('caldera_criticalmass_listcomments', {'citySlug': 'hamburg'}) }}">Kommentare</a></li>
+				<li><a href="{{ url('caldera_criticalmass_showcity', {'citySlug': app.user.getCurrentCitySlug }) }}">Termine</a></li>
+				<li><a href="{{ url('caldera_criticalmass_live', {'citySlug': app.user.getCurrentCitySlug }) }}" data-ajax="false">Live</a></li>
+				<li><a href="{{ url('caldera_criticalmass_listcomments', {'citySlug': app.user.getCurrentCitySlug }) }}">Kommentare</a></li>
 				<li data-role="list-divider">Neuigkeiten</li>
 				<li><a href="http://www.criticalmass-hamburg.de/">Website</a></li>
 				<li><a href="http://www.facebook.com/criticalmasshamburg">facebook</a></li>
