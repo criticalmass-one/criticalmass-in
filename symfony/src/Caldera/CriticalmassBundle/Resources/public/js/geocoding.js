@@ -25,6 +25,11 @@ function codeAddress() {
   {
     if (status == google.maps.GeocoderStatus.OK)
     {
+      if (marker)
+      {
+        marker.setMap(null);
+      }
+
       map.setCenter(results[0].geometry.location);
 
       marker = new google.maps.Marker({
