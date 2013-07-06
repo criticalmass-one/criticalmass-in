@@ -61,6 +61,14 @@ class Ride
 	private $location;
 
 	/**
+	 * Technische Bezeichnung des Treffpunktes der Tour als Zeichenkette fuer die
+	 * Darstellung der Karte.
+	 *
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $mapLocation;
+
+	/**
 	 * Zeichenkette eines Karten-Embeddings, beispielsweise von Google-Maps. Wird
 	 * anschließend unter dem Treffpunkt eingebunden.
 	 *
@@ -299,5 +307,28 @@ class Ride
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set mapLocation
+     *
+     * @param string $mapLocation
+     * @return Ride
+     */
+    public function setMapLocation($mapLocation)
+    {
+        $this->mapLocation = $mapLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Get mapLocation
+     *
+     * @return string 
+     */
+    public function getMapLocation()
+    {
+        return $this->mapLocation;
     }
 }

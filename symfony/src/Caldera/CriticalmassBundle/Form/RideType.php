@@ -16,6 +16,7 @@ class RideType extends AbstractType
             ->add('time')
             ->add('hasLocation')
             ->add('location')
+            ->add('mapLocation')
             ->add('city')
         ;
     }

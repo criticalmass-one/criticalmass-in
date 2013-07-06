@@ -9,8 +9,8 @@
 		{% if ride.getLocation == "tba" %}
 			<p class="locationunknown">Der Treffpunkt ist noch nicht bekannt :( Schau später noch mal vorbei.</p>
 		{% else %}
-			<p>Treffpunkt: {{ ride.getLocation }}</p>
-			{{ ride.getMap|raw }}
+			<p>Treffpunkt: <span id="location-string">Fischmarkt, Hamburg</span></p>
+{{ ride.getLocation }}
+      <div id="location-map" style="width: 300px; height: 300px; margin: 10px auto;"></div>
 		{% endif %}
-	<section id="content2"><div id="map-canvas" style="width: 300px; height: 300px; margin: 10px auto;"></div></section>
 {% endblock %}
