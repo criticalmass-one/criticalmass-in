@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassBundle\Listener;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent as FilterControllerEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as Controller;
@@ -25,12 +26,18 @@ class CityListener
 
 		if (isset($citySlug))
 		{
-			$user = $controller->getUser();
-
 			$city = $city = $this->doctrine->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
-			$user->setCurrentCity($city);
 
-			$controller->get('fos_user.user_manager')->updateUser($user);
+			$session = new Session();
+			$session->set('currentCitySlug', $city->getMainSlug()->getSlug());
+
+			if ($controller->getUser())
+			{
+				$user = $controller->getUser();
+				$user->setCurrentCity($city);
+
+				$controller->get('fos_user.user_manager')->updateUser($user);
+			}
 		}
 	}
 }
