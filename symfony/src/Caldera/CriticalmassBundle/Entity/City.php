@@ -72,175 +72,153 @@ class City
 	/**
 	 * Array mit den Touren in dieser Stadt.
 	 *
-	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city_id")
+	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
 	 */
 	protected $rides;
 
 	/**
-	 * Constructor
+	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city")
 	 */
-	public function __construct()
+	protected $slugs;
+
+	public function __toString()
 	{
-		$this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+		return $this->getCity();
 	}
 
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->slugs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * Set city
-	 *
-	 * @param string $city
-	 * @return City
-	 */
-	public function setCity($city)
-	{
-		$this->city = $city;
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return City
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 
-	/**
-	 * Get city
-	 *
-	 * @return string 
-	 */
-	public function getCity()
-	{
-		return $this->city;
-	}
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return City
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
 
-	/**
-	 * Set title
-	 *
-	 * @param string $title
-	 * @return City
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-		return $this;
-	}
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return City
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    
+        return $this;
+    }
 
-	/**
-	 * Get title
-	 *
-	 * @return string 
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
-	/**
-	 * Set url
-	 *
-	 * @param string $url
-	 * @return City
-	 */
-	public function setUrl($url)
-	{
-		$this->url = $url;
+    /**
+     * Set facebook
+     *
+     * @param string $facebook
+     * @return City
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+    
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get facebook
+     *
+     * @return string 
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
 
-	/**
-	 * Get url
-	 *
-	 * @return string 
-	 */
-	public function getUrl()
-	{
-		return $this->url;
-	}
+    /**
+     * Set twitter
+     *
+     * @param string $twitter
+     * @return City
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    
+        return $this;
+    }
 
-	/**
-	 * Set facebook
-	 *
-	 * @param string $facebook
-	 * @return City
-	 */
-	public function setFacebook($facebook)
-	{
-		$this->facebook = $facebook;
-
-		return $this;
-	}
-
-	/**
-	 * Get facebook
-	 *
-	 * @return string 
-	 */
-	public function getFacebook()
-	{
-		return $this->facebook;
-	}
-
-	/**
-	 * Set twitter
-	 *
-	 * @param string $twitter
-	 * @return City
-	 */
-	public function setTwitter($twitter)
-	{
-		$this->twitter = $twitter;
-
-		return $this;
-	}
-
-	/**
-	 * Get twitter
-	 *
-	 * @return string 
-	 */
-	public function getTwitter()
-	{
-		return $this->twitter;
-	}
-
-	/**
-	 * Add rides
-	 *
-	 * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
-	 * @return City
-	 */
-	public function addRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
-	{
-		$this->rides[] = $rides;
-
-		return $this;
-	}
-
-	/**
-	 * Remove rides
-	 *
-	 * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
-	 */
-	public function removeRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
-	{
-		$this->rides->removeElement($rides);
-	}
-
-	/**
-	 * Get rides
-	 *
-	 * @return \Doctrine\Common\Collections\Collection 
-	 */
-	public function getRides()
-	{
-		return $this->rides;
-	}
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
 
     /**
      * Set latitude
@@ -251,7 +229,7 @@ class City
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-
+    
         return $this;
     }
 
@@ -274,7 +252,7 @@ class City
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-
+    
         return $this;
     }
 
@@ -288,8 +266,69 @@ class City
         return $this->longitude;
     }
 
-		public function __toString()
-		{
-			return $this->getCity();
-		}
+    /**
+     * Add rides
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
+     * @return City
+     */
+    public function addRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
+    {
+        $this->rides[] = $rides;
+    
+        return $this;
+    }
+
+    /**
+     * Remove rides
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
+     */
+    public function removeRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
+    {
+        $this->rides->removeElement($rides);
+    }
+
+    /**
+     * Get rides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRides()
+    {
+        return $this->rides;
+    }
+
+    /**
+     * Add slugs
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\CitySlug $slugs
+     * @return City
+     */
+    public function addSlug(\Caldera\CriticalmassBundle\Entity\CitySlug $slugs)
+    {
+        $this->slugs[] = $slugs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove slugs
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\CitySlug $slugs
+     */
+    public function removeSlug(\Caldera\CriticalmassBundle\Entity\CitySlug $slugs)
+    {
+        $this->slugs->removeElement($slugs);
+    }
+
+    /**
+     * Get slugs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSlugs()
+    {
+        return $this->slugs;
+    }
 }

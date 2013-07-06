@@ -29,7 +29,7 @@ class User extends BaseUser
 	private $gpsInterval = 10;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
+	 * @ORM\OneToOne(targetEntity="City")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
 	private $currentCity;
@@ -129,4 +129,10 @@ class User extends BaseUser
     {
         return $this->gpsInterval;
     }
+
+		public function getCurrentCitySlug()
+		{
+			$slugs = $this->getCurrentCity()->getRides();
+			return $slugs[0]->getSlug();
+		}
 }
