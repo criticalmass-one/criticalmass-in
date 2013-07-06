@@ -132,7 +132,7 @@ class User extends BaseUser
 
 		public function getCurrentCitySlug()
 		{
-			$slugs = $this->getCurrentCity()->getRides();
+			$slugs = $this->getCurrentCity()->getSlugs();
 			return $slugs[0]->getSlug();
 		}
 }
