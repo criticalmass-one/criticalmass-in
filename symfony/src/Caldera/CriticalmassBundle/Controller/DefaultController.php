@@ -42,10 +42,10 @@ class DefaultController extends Controller
 	 *
 	 * @param $city Name der Stadt
 	 */
-	public function showcityAction($city)
+	public function showcityAction($citySlug)
 	{
 		// aufzurufende Stadt anhand des Slugs ermitteln
-		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($city);
+		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug);
 
 		// wurde die Stadt überhaupt gefunden?
 		if (empty($citySlug))
