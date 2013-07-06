@@ -13,11 +13,18 @@ class CommentController extends Controller
 
 		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'DESC'));
 
-		$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
+		if ($ride)
+		{
+			$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
-		$form = $this->createFormBuilder(new Comment())->add('text', 'text')->getForm();
+			$form = $this->createFormBuilder(new Comment())->add('text', 'text')->getForm();
 
-		return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
+			return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
+		}
+		else
+		{
+			return $this->render('CalderaCriticalmassBundle:RideComments:nocomments.html.twig');
+		}
 	}
 
 	public function addcommentAction($citySlug)
