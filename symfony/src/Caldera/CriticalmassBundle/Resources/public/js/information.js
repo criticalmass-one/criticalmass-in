@@ -1,6 +1,3 @@
-var map;
-var marker;
-
 function initialize() {
 	$.ajax({
 		type: 'GET',
@@ -16,9 +13,9 @@ function initialize() {
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			}
 
-			map = new google.maps.Map(document.getElementById('information-map'), mapOptions);
+			var map = new google.maps.Map(document.getElementById('information-map'), mapOptions);
 
-			marker = new google.maps.Marker({
+			var marker = new google.maps.Marker({
 				map: map,
 				position: latlng
 		  });
