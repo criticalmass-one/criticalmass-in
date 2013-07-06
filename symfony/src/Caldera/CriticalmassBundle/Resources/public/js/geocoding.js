@@ -16,6 +16,16 @@ function initialize() {
   {
     codeAddress();
   });
+
+  $('#caldera_criticalmassbundle_ridetype_latitude').change(function()
+  {
+    locateAddress();
+  });
+
+  $('#caldera_criticalmassbundle_ridetype_longitude').change(function()
+  {
+    locateAddress();
+  });
 }
 
 function placeNewMarker(location)
@@ -46,6 +56,17 @@ function codeAddress() {
       $('#caldera_criticalmassbundle_ridetype_longitude').val(results[0].geometry.location.lng());
     }
   });
+}
+
+function locateAddress() {
+  var address = $('#caldera_criticalmassbundle_ridetype_mapLocation').val();
+
+  var location = new google.maps.LatLng(
+    $('#caldera_criticalmassbundle_ridetype_latitude').val(),
+    $('#caldera_criticalmassbundle_ridetype_longitude').val()
+  );
+
+  placeNewMarker(location);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
