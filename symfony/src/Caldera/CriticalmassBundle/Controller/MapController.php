@@ -31,4 +31,20 @@ class MapController extends Controller
 
 		return $response;
 	}
+
+	public function ridelocationAction($citySlug)
+	{
+		$city = $city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+		$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
+
+		$response = new Response();
+		$response->setContent(json_encode(array(
+			'latitude' => $ride->getLatitude(),
+			'longitude' => $ride->getLongitude()
+		)));
+
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+	}
 }

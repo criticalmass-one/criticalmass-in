@@ -60,6 +60,10 @@ caldera_criticalmass_settings_gps_getstatus:
     pattern: /settings/getgpsstatus
     defaults: { _controller: CalderaCriticalmassBundle:Live:getstatus }
 
+caldera_criticalmass_getridelocation:
+    pattern: /mapapi/getridelocation/{citySlug}
+    defaults: { _controller: CalderaCriticalmassBundle:Map:ridelocation }
+
 CalderaCriticalmassBundle_admin_ride:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing/ride.yml"
     prefix:   /admin/ride
