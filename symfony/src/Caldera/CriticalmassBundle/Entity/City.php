@@ -331,4 +331,9 @@ class City
     {
         return $this->slugs;
     }
+
+		public function getMainSlug()
+		{
+			return $this->slugs[0];
+		}
 }
