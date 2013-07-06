@@ -13,7 +13,7 @@ caldera_criticalmass_processuserregistration:
     defaults: { _controller: CalderaCriticalmassBundle:Account:processregistration }
 
 caldera_criticalmass_showcity:
-    pattern: /show/{city}
+    pattern: /{citySlug}/show/
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
 
 caldera_criticalmass_trackposition:
