@@ -50,6 +50,18 @@
 
         <div id="geocoding-map" style="width: 300px; height: 300px;"></div>
 
+        <div>
+          <label>Breitengrad des Treffpunktes</label>
+            {{ form_errors(edit_form.latitude) }}
+            {{ form_widget(edit_form.latitude) }}
+        </div>
+
+        <div>
+          <label>Längengrad des Treffpunktes</label>
+            {{ form_errors(edit_form.longitude) }}
+            {{ form_widget(edit_form.longitude) }}
+        </div>
+
         {{ form_widget(edit_form._token) }}
         <p>
             <button type="submit">Speichern</button>
