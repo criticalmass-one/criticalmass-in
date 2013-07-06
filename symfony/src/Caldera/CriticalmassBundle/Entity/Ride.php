@@ -68,6 +68,21 @@ class Ride
 	 */
 	private $map;
 
+	/**
+	 * Breitengrad des Treffpunktes.
+	 *
+	 * @ORM\Column(type="float")
+	 */
+	private $latitude;
+
+	/**
+	 * Laengengrad des Treffpunktes.
+	 *
+	 * @ORM\Column(type="float")
+	 */
+	private $longitude;
+
+
 
     /**
      * Get id
@@ -238,5 +253,51 @@ class Ride
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     * @return Ride
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+    
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     * @return Ride
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+    
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }
