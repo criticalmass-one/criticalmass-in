@@ -6,7 +6,7 @@
 		<h2>Nächste Tour</h2>
 		<p>Datum: {{ ride.getDate|date('d.m.Y') }}</p>
 		<p>Uhrzeit: {{ ride.getTime|date('H:i') }}</p>
-		{% if ride.getLocation == "tba" %}
+		{% if ride.hasLocation == false %}
 			<p class="locationunknown">Der Treffpunkt ist noch nicht bekannt :( Schau später noch mal vorbei.</p>
 		{% else %}
 			<p>Treffpunkt: {{ ride.getLocation }}</p>
