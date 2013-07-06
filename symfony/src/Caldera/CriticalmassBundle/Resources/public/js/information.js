@@ -8,14 +8,20 @@ function initialize() {
 		data: {
 		},
 		success: function(result) {
-		  var latlng = new google.maps.LatLng(result.latitude, result.longitude);
-		  var mapOptions = {
+			var latlng = new google.maps.LatLng(result.latitude, result.longitude);
+
+			var mapOptions = {
 				zoom: 12,
 				center: latlng,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
-		  }
-		  map = new google.maps.Map(document.getElementById('information-map'), mapOptions);
-			
+			}
+
+			map = new google.maps.Map(document.getElementById('information-map'), mapOptions);
+
+			marker = new google.maps.Marker({
+				map: map,
+				position: latlng
+		  });
 		}
 	});
 }
