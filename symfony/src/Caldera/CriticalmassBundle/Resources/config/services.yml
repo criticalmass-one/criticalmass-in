@@ -14,3 +14,9 @@ services:
     caldera_criticalmass_citydistancecalculator:
         class:           Caldera\CriticalmassBundle\Utility\CityDistanceCalculator
         arguments: []
+
+    caldera_criticalmass_citylistener:
+        class: Caldera\CriticalmassBundle\Listener\CityListener
+        arguments: [@doctrine]
+        tags:
+          - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
