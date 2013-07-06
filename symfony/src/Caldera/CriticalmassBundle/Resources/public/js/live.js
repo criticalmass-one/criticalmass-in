@@ -1,6 +1,16 @@
 var markersArray = [];
 var map;
 
+function setLastModifiedLabel()
+{
+	var d = new Date();
+
+	$('p.lastmodified span#datetime').html(
+		(d.getHours() < 10 ? '0' + d.getHours() : d.getHours()) + ':' + 
+		(d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + ':' + 
+		(d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()) + ' Uhr');
+}
+
 function addMarker(options)
 {
 	options.map = map;
@@ -51,6 +61,7 @@ function refreshMarkers2(result)
 {
 	placeNewMarkers(result);
 	flushOldMarkers(result);
+	setLastModifiedLabel();
 }
 
 function flushOldMarkers(result)
