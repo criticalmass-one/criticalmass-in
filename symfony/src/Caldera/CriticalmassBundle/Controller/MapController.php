@@ -38,10 +38,14 @@ class MapController extends Controller
 		$ride = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
 
 		$response = new Response();
-		$response->setContent(json_encode(array(
-			'latitude' => $ride->getLatitude(),
-			'longitude' => $ride->getLongitude()
-		)));
+
+		if ($ride->getHasLocation())
+		{
+			$response->setContent(json_encode(array(
+				'latitude' => $ride->getLatitude(),
+				'longitude' => $ride->getLongitude()
+			)));
+		}
 
 		$response->headers->set('Content-Type', 'application/json');
 
