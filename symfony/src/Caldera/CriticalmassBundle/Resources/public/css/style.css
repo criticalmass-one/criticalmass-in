@@ -24,7 +24,8 @@ footer img.icon
 	margin: 10px;
 }
 
-p.locationunknown
+p.locationunknown,
+.error
 {
 	border: 1px red solid;
 	background: #fdd;
