@@ -3,7 +3,6 @@
 {% block title %}{{ city.getTitle }}{% endblock %}
 
 {% block body %}
-	<section id="content" data-role="content">
 		<h2>Nächste Tour</h2>
 		<p>Datum: {{ ride.getDate|date('d.m.Y') }}</p>
 		<p>Uhrzeit: {{ ride.getTime|date('H:i') }}</p>
@@ -13,6 +12,5 @@
 			<p>Treffpunkt: {{ ride.getLocation }}</p>
 			{{ ride.getMap|raw }}
 		{% endif %}
-	</section>
 	<section id="content2"><div id="map-canvas" style="width: 300px; height: 300px; margin: 10px auto;"></div></section>
 {% endblock %}
