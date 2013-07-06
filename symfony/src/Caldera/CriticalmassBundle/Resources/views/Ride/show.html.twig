@@ -1,33 +1,25 @@
 {% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
 
 {% block body %}
-    <h1>Ride</h1>
+    <h1>Tour-Details</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Date</th>
+                <th>Datum</th>
                 <td>{{ entity.date|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>Hastime</th>
-                <td>{{ entity.hasTime }}</td>
+                <th>Uhrzeit</th>
+                <td>{% if entity.hasTime %} {{ entity.time|date('H:i') }} {% else %} <em>undefiniert {% endif %}</td>
             </tr>
             <tr>
-                <th>Time</th>
-                <td>{{ entity.time|date('H:i') }}</td>
-            </tr>
-            <tr>
-                <th>Haslocation</th>
-                <td>{{ entity.hasLocation }}</td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td>{{ entity.location }}</td>
+                <th>Treffpunkt</th>
+                <td>{% if entity.hasLocation %} {{ entity.location }} {% else %} <em>undefiniert {% endif %}</td>
             </tr>
             <tr>
                 <th>Map</th>
