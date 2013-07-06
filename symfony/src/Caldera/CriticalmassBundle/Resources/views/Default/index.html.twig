@@ -4,6 +4,7 @@
 
 {% block body %}
 
+	{% if ride %}
 		<h2>Nächste Tour</h2>
 		<p>Datum: {{ ride.getDate|date('d.m.Y') }}</p>
 
@@ -17,5 +18,8 @@
 		{% else %}
 		<p class="locationunknown">Uhrzeit und Treffpunkt sind noch nicht bekannt :( Schau später noch mal vorbei.</p>
 		{% endif %}
+	{% else %}
+		<p class="locationunknown">Für diese Stadt sind keine Touren bekannt :(</p>
+	{% endif %}
 
 {% endblock %}
