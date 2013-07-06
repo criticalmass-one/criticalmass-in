@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
 
-{% block body -%}
+{% block body %}
     <h1>Ride creation</h1>
 
     <form action="{{ path('admin_ride_create') }}" method="post" {{ form_enctype(form) }}>
