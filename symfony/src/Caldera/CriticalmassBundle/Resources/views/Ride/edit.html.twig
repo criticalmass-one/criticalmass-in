@@ -4,17 +4,12 @@
     <h1>Tourdetails definieren</h1>
 
     <form action="{{ path('admin_ride_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+      {{ form_errors(edit_form) }}
         <input type="hidden" name="_method" value="PUT" />
         <div>
           <label>Datum</label>
             {{ form_errors(edit_form.date) }}
             {{ form_widget(edit_form.date) }}
-        </div>
-
-        <div>
-          <label>Uhrzeit anzeigen?</label>
-            {{ form_errors(edit_form.hasTime) }}
-            {{ form_widget(edit_form.hasTime) }}
         </div>
 
         <div>
@@ -24,9 +19,9 @@
         </div>
 
         <div>
-          <label>Treffpunkt anzeigen?</label>
-            {{ form_errors(edit_form.hasLocation) }}
-            {{ form_widget(edit_form.hasLocation) }}
+          <label>
+            {{ form_errors(edit_form.hasTime) }}
+            {{ form_widget(edit_form.hasTime, {'attr': {'type': 'checkbox'}}) }} Uhrzeit anzeigen?</label>
         </div>
 
         <div>
@@ -36,11 +31,18 @@
         </div>
 
         <div>
+          <label>
+            {{ form_errors(edit_form.hasLocation) }}
+            {{ form_widget(edit_form.hasLocation, {'attr': {'type': 'checkbox'}}) }} Treffpunkt anzeigen?</label>
+        </div>
+
+        <div>
           <label>Stadt</label>
             {{ form_errors(edit_form.city) }}
             {{ form_widget(edit_form.city) }}
         </div>
 
+        {{ form_widget(edit_form._token) }}
         <p>
             <button type="submit">Speichern</button>
         </p>
