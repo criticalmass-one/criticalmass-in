@@ -36,6 +36,9 @@ function codeAddress() {
           map: map,
           position: results[0].geometry.location
       });
+
+      $('#caldera_criticalmassbundle_ridetype_latitude').val(results[0].geometry.location.lat());
+      $('#caldera_criticalmassbundle_ridetype_longitude').val(results[0].geometry.location.lng());
     }
   });
 }
