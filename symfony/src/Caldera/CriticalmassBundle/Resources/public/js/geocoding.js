@@ -18,6 +18,21 @@ function initialize() {
   });
 }
 
+function placeNewMarker(location)
+{
+  if (marker)
+  {
+    marker.setMap(null);
+  }
+
+  map.setCenter(location);
+
+  marker = new google.maps.Marker({
+      map: map,
+      position: location
+  });
+}
+
 function codeAddress() {
   var address = $('#caldera_criticalmassbundle_ridetype_mapLocation').val();
 
@@ -25,17 +40,7 @@ function codeAddress() {
   {
     if (status == google.maps.GeocoderStatus.OK)
     {
-      if (marker)
-      {
-        marker.setMap(null);
-      }
-
-      map.setCenter(results[0].geometry.location);
-
-      marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-      });
+      placeNewMarker(results[0].geometry.location);
 
       $('#caldera_criticalmassbundle_ridetype_latitude').val(results[0].geometry.location.lat());
       $('#caldera_criticalmassbundle_ridetype_longitude').val(results[0].geometry.location.lng());
