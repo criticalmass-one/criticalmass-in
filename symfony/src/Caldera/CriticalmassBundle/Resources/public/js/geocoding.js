@@ -1,31 +1,36 @@
 var geocoder;
 var map;
+var marker;
+
 function initialize() {
   geocoder = new google.maps.Geocoder();
   var latlng = new google.maps.LatLng(-34.397, 150.644);
   var mapOptions = {
-    zoom: 8,
+    zoom: 12,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   map = new google.maps.Map(document.getElementById('geocoding-map'), mapOptions);
 
-  $('#caldera_criticalmassbundle_ridetype_location').change(function() {
+  $('#caldera_criticalmassbundle_ridetype_mapLocation').change(function()
+  {
     codeAddress();
   });
 }
 
 function codeAddress() {
-  var address = $('#caldera_criticalmassbundle_ridetype_location').val();
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
+  var address = $('#caldera_criticalmassbundle_ridetype_mapLocation').val();
+
+  geocoder.geocode( { 'address': address}, function(results, status)
+  {
+    if (status == google.maps.GeocoderStatus.OK)
+    {
       map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
+
+      marker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location
       });
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }
