@@ -28,8 +28,7 @@ class CityListener
 		{
 			$city = $city = $this->doctrine->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
-			$session = new Session();
-			$session->set('currentCitySlug', $city->getMainSlug()->getSlug());
+			$controller->getRequest()->getSession()->set('currentCitySlug', $city->getMainSlug()->getSlug());
 
 			if ($controller->getUser())
 			{
