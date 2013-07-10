@@ -54,7 +54,7 @@ class MapController extends Controller
 
 	public function citylocationAction($citySlug)
 	{
-		$city = $city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
 		$response = new Response();
 
