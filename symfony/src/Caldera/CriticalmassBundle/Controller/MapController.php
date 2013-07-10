@@ -51,4 +51,23 @@ class MapController extends Controller
 
 		return $response;
 	}
+
+	public function citylocationAction($citySlug)
+	{
+		$city = $city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+
+		$response = new Response();
+
+		if ($ride->getHasLocation())
+		{
+			$response->setContent(json_encode(array(
+				'latitude' => $city->getLatitude(),
+				'longitude' => $city->getLongitude()
+			)));
+		}
+
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+	}
 }
