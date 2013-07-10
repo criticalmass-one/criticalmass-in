@@ -4,12 +4,38 @@ var marker;
 
 function initialize() {
   geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+  var latlng;
+
+  if ($('#caldera_criticalmassbundle_ridetype_latitude').val() != 0 &&
+      $('#caldera_criticalmassbundle_ridetype_longitude').val() != 0)
+  {
+    latlng = new google.maps.LatLng(
+      $('#caldera_criticalmassbundle_ridetype_latitude').val(),
+      $('#caldera_criticalmassbundle_ridetype_longitude').val()
+    );
+
+    /*placeNewMarker(latlng);*/
+  }
+  else
+  {
+    $.ajax({
+      type: 'GET',
+      url: '/mapapi/getcitylocation/hamburg',
+      data: {
+      },
+      success: function(result) {
+        latlng = new google.maps.LatLng(result.latitude, result.longitude);
+      }
+    });
+  }
+
   var mapOptions = {
     zoom: 12,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
+
   map = new google.maps.Map(document.getElementById('geocoding-map'), mapOptions);
 
   $('#caldera_criticalmassbundle_ridetype_mapLocation').change(function()
@@ -27,6 +53,7 @@ function initialize() {
     locateAddress();
   });
 }
+
 
 function placeNewMarker(location)
 {
