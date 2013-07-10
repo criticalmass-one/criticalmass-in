@@ -39,10 +39,13 @@ function placeNewMarker(location)
 
   marker = new google.maps.Marker({
       map: map,
-      position: location
       position: location,
       draggable: true
   });
+
+  google.maps.event.addListener(marker, 'drag', markerListener);
+}
+
 function markerListener()
 {
   var latlng = marker.getPosition();
