@@ -16,6 +16,8 @@ function initialize() {
     );
 
     /*placeNewMarker(latlng);*/
+    initMap(latlng);
+    placeNewMarker(latlng);
   }
   else
   {
@@ -24,8 +26,10 @@ function initialize() {
       url: '/mapapi/getcitylocation/hamburg',
       data: {
       },
-      success: function(result) {
+      success: function(result)
+      {
         latlng = new google.maps.LatLng(result.latitude, result.longitude);
+        initMap(latlng);
       }
     });
   }
