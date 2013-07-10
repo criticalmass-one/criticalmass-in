@@ -15,7 +15,6 @@ function initialize() {
       $('#caldera_criticalmassbundle_ridetype_longitude').val()
     );
 
-    /*placeNewMarker(latlng);*/
     initMap(latlng);
     placeNewMarker(latlng);
   }
