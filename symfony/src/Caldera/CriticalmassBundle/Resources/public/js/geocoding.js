@@ -30,13 +30,6 @@ function initialize() {
     });
   }
 
-  var mapOptions = {
-    zoom: 12,
-    center: latlng,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  }
-
-  map = new google.maps.Map(document.getElementById('geocoding-map'), mapOptions);
 
   $('#caldera_criticalmassbundle_ridetype_mapLocation').change(function()
   {
@@ -54,6 +47,16 @@ function initialize() {
   });
 }
 
+function initMap(latlng)
+{
+  var mapOptions = {
+    zoom: 12,
+    center: latlng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+
+  map = new google.maps.Map(document.getElementById('geocoding-map'), mapOptions);
+}
 
 function placeNewMarker(location)
 {
