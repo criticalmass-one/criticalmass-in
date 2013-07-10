@@ -43,6 +43,12 @@ function placeNewMarker(location)
       position: location,
       draggable: true
   });
+function markerListener()
+{
+  var latlng = marker.getPosition();
+
+  $('#caldera_criticalmassbundle_ridetype_latitude').val(latlng.lat());
+  $('#caldera_criticalmassbundle_ridetype_longitude').val(latlng.lng());
 }
 
 function codeAddress() {
