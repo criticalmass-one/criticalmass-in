@@ -40,6 +40,8 @@ function placeNewMarker(location)
   marker = new google.maps.Marker({
       map: map,
       position: location
+      position: location,
+      draggable: true
   });
 }
 
