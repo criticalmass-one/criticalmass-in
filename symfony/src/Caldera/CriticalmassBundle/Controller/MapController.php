@@ -70,4 +70,18 @@ class MapController extends Controller
 
 		return $response;
 	}
+
+	public function citylocationbyidAction($cityId)
+	{
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findOneById($cityId);
+
+		$response = new Response();
+
+		$response->setContent(json_encode(array(
+			'latitude' => $city->getLatitude(),
+			'longitude' => $city->getLongitude()
+		)));
+
+		return $response;
+	}
 }
