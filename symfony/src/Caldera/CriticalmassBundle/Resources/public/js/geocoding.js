@@ -22,7 +22,7 @@ function initialize() {
   {
     $.ajax({
       type: 'GET',
-      url: '/mapapi/getcitylocation/hamburg',
+      url: '/mapapi/getcitylocationbyid/hamburg',
       data: {
       },
       success: function(result)
@@ -33,6 +33,12 @@ function initialize() {
     });
   }
 
+  $('#caldera_criticalmassbundle_ridetype_city').change(function()
+  {
+    var cityId = $('#caldera_criticalmassbundle_ridetype_city').val();
+
+    centerMapToLngLat(cityId);
+  });
 
   $('#caldera_criticalmassbundle_ridetype_mapLocation').change(function()
   {
@@ -47,6 +53,23 @@ function initialize() {
   $('#caldera_criticalmassbundle_ridetype_longitude').change(function()
   {
     locateAddress();
+  });
+}
+
+function centerMapToLngLat(cityId)
+{
+  alert("FOOO: " + cityId);
+  $.ajax({
+    type: 'GET',
+    url: '/mapapi/getcitylocationbyid/' + cityId,
+    data: {
+    },
+    success: function(result)
+    {
+      alert("A: " + result.latitude + "B: " + result.longitude);
+      var latlng = new google.maps.LatLng(result.latitude, result.longitude);
+      map.setCenter(latlng);
+    }
   });
 }
 
