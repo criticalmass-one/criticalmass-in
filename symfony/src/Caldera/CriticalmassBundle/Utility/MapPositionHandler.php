@@ -69,7 +69,7 @@ class MapPositionHandler
 		$distanceX = $maxX - $minX;
 		$distanceY = $maxY - $minY;
 
-		$distance = ($distanceX > $distanceY ? $distanceX : $distanceY);
+		$distance = ($distanceX > $distanceY ? $distanceX : $distanceY) + 0.001;
 
 		$zoomFactor = floor(log(960 * 360 / $distance / 256)) + 1;
 
