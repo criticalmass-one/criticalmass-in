@@ -68,6 +68,10 @@ caldera_criticalmass_getcitylocation:
     pattern: /mapapi/getcitylocation/{citySlug}
     defaults: { _controller: CalderaCriticalmassBundle:Map:citylocation }
 
+caldera_criticalmass_getcitylocationbyid:
+    pattern: /mapapi/getcitylocationbyid/{cityId}
+    defaults: { _controller: CalderaCriticalmassBundle:Map:citylocationbyid }
+
 CalderaCriticalmassBundle_admin_ride:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing/ride.yml"
     prefix:   /admin/ride
