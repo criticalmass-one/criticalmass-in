@@ -38,5 +38,9 @@ class CityListener
 				$controller->get('fos_user.user_manager')->updateUser($user);
 			}
 		}
+		else
+		{
+			
+		}
 	}
 }
