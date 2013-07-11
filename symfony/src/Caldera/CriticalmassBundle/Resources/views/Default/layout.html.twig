@@ -42,9 +42,18 @@
 				<li><a href="{{ url('caldera_criticalmass_live', {'citySlug': app.session.get('currentCitySlug') }) }}" data-ajax="false">Live</a></li>
 				<li><a href="{{ url('caldera_criticalmass_listcomments', {'citySlug': app.session.get('currentCitySlug') }) }}">Kommentare</a></li>
 				<li data-role="list-divider">Neuigkeiten</li>
-				<li><a href="http://www.criticalmass-hamburg.de/">Website</a></li>
-				<li><a href="http://www.facebook.com/criticalmasshamburg">facebook</a></li>
-				<li><a href="http://www.twitter.com/cm_hh">Twitter</a></li>
+				{% if app.session.get('city').getUrl %}
+				<li><a href="{{ app.session.get('city').getUrl }}">Website</a></li>
+				{% endif %}
+
+				{% if app.session.get('city').getFacebook %}
+				<li><a href="{{ app.session.get('city').getFacebook }}">facebook</a></li>
+				{% endif %}
+
+				{% if app.session.get('city').getTwitter %}
+				<li><a href="{{ app.session.get('city').getTwitter }}">Twitter</a></li>
+				{% endif %}
+
 				{% endif %}
 				<li data-role="list-divider">criticalmass.in</li>
 				{% if is_granted('ROLE_ADMIN') %}
