@@ -4,6 +4,8 @@ namespace Caldera\CriticalmassBundle\Utility\Notifications;
 
 class BaseNotification
 {
+	private $token;
+	private $user;
 	private $message;
 	private $device;
 	private $title;
@@ -12,6 +14,16 @@ class BaseNotification
 	private $priority;
 	private $timestamp;
 	private $sound;
+
+	public function setToken($token)
+	{
+		$this->token = $token;
+	}
+
+	public function getToken()
+	{
+		return $this->token;
+	}
 
 	public function setMessage($message)
 	{
