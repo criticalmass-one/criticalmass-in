@@ -34,6 +34,11 @@ class User extends BaseUser
 	 */
 	private $currentCity;
 
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $pushoverKey;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -134,4 +139,27 @@ class User extends BaseUser
 		{
 			return $this->getCurrentCity()->getMainSlug()->getSlug();
 		}
+
+    /**
+     * Set pushoverKey
+     *
+     * @param string $pushoverKey
+     * @return User
+     */
+    public function setPushoverKey($pushoverKey)
+    {
+        $this->pushoverKey = $pushoverKey;
+    
+        return $this;
+    }
+
+    /**
+     * Get pushoverKey
+     *
+     * @return string 
+     */
+    public function getPushoverKey()
+    {
+        return $this->pushoverKey;
+    }
 }
