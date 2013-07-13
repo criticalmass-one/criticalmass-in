@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassBundle\Utility\Notifications;
 
-interface BaseNotification
+class BaseNotification
 {
 	private $message;
 	private $device;
