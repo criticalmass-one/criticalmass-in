@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Caldera\CriticalmassBundle\Entity\Ride;
 use Caldera\CriticalmassBundle\Form\RideType;
-use Caldera\CriticalmassBundle\Utility;
+use Caldera\CriticalmassBundle\Utility as Utility;
 
 /**
  * Ride controller.
@@ -205,6 +205,13 @@ class RideController extends Controller
 		public function sendnotificationsAction($rideId, $notificationType)
 		{
 			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
+
+			switch ($notificationType)
+			{
+				case 'location':
+					$notification = new Utility\Notifications\LocationPublishedNotification($ride);
+					break;
+			}
 
 			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('ride' => $ride));
 		}
