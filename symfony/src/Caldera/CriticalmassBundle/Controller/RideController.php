@@ -197,6 +197,6 @@ class RideController extends Controller
 
 		public function notificationsAction()
 		{
-			return $this->render('CalderaCriticalmassBundle:Ride:notification.twig.html')
+			return $this->render('CalderaCriticalmassBundle:Ride:notifications.html.twig');
 		}
 }
