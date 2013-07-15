@@ -205,7 +205,7 @@ class RideController extends Controller
 		public function sendnotificationsAction($rideId, $notificationType)
 		{
 			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
-			$users = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->findByCity($ride->getCity());
+			$users = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:User')->findByCurrentCity($ride->getCity());
 
 			switch ($notificationType)
 			{
