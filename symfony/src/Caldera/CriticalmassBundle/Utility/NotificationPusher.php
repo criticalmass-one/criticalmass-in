@@ -8,6 +8,7 @@ class NotificationPusher
 {
 	private $notification;
 	private $users = array();
+	private $notificationsSent = 0;
 
 	public function __construct(Notifications\BaseNotification $notification, $users)
 	{
@@ -15,8 +16,6 @@ class NotificationPusher
 		$this->users = $users;
 	}
 
-/*	"token" => "wP7MBPTf5TFvazDCtWf2mL1eH9m1fK",$container->getParameter('mailer.transport');
-	"user" => "Gb1whEAd6G1mUxPccfgHRJWYYAnrxh",*/
 	public function sendNotification()
 	{
 		foreach ($this->users as $user)
@@ -38,6 +37,13 @@ class NotificationPusher
 
 			curl_exec($ch);
 			curl_close($ch);
+
+			++$this->notificationsSent;
 		}
+	}
+
+	public function getSentNotifications()
+	{
+		return $this->notificationsSent;
 	}
 }
