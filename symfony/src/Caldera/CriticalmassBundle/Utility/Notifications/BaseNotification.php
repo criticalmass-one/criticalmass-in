@@ -100,7 +100,7 @@ class BaseNotification
 		$this->sound = $sound;
 	}
 
-	public function getSound($sound)
+	public function getSound()
 	{
 		return $this->sound;
 	}
