@@ -217,6 +217,6 @@ class RideController extends Controller
 			$np = new Utility\NotificationPusher($notification, $users);
 			$np->sendNotification();
 
-			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('ride' => $ride));
+			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('notificationsPusher' => $np));
 		}
 }
