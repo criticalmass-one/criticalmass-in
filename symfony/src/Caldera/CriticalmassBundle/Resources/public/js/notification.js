@@ -1,6 +1,6 @@
 function initialize()
 {
-  $('#notify_ride').change(function()
+  $('#notify_ride').click(function()
   {
     alert('foo');
   });
