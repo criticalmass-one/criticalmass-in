@@ -30,5 +30,5 @@ admin_ride_delete:
     requirements: { _method: post|delete }
 
 admin_ride_notifications:
-    pattern:  /{id}/notifications
+    pattern:  /{rideId}/notifications
     defaults: { _controller: "CalderaCriticalmassBundle:Ride:notifications" }
