@@ -1,18 +1,27 @@
+function processNotification(type)
+{
+  /*
+  $.ajax({
+    url: '/admin/ride/44/sendnotifications/' + type,
+    success: refreshMarkers2
+  });*/
+}
+
 function initialize()
 {
   $('#notify_ride').click(function()
   {
-    alert('foo');
+    processNotification('ride');
   });
 
   $('#notify_time').click(function()
   {
-    alert('bar');
+    processNotification('time');
   });
 
   $('#notify_location').click(function()
   {
-    alert('baz');
+    processNotification('location');
   });
 }
 
