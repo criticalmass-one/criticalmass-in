@@ -24,7 +24,7 @@ class NotificationPusher
 			curl_setopt_array($ch = curl_init(), array(
 				CURLOPT_URL => 'https://api.pushover.net/1/messages.json',
 				CURLOPT_POSTFIELDS => array(
-					'token' => $this->notification->getToken(),
+					'token' => 'wP7MBPTf5TFvazDCtWf2mL1eH9m1fK',
 					'user' => $user->getPushoverKey(),
 					'message' => $this->notification->getMessage(),
 					'device' => $this->notification->getDevice(),
