@@ -205,6 +205,7 @@ class RideController extends Controller
 		public function sendnotificationsAction($rideId, $notificationType)
 		{
 			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
+			$users = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->findByCity($ride->getCity());
 
 			switch ($notificationType)
 			{
@@ -212,6 +213,9 @@ class RideController extends Controller
 					$notification = new Utility\Notifications\LocationPublishedNotification($ride);
 					break;
 			}
+
+			$np = new Utility\NotificationPusher($notification, $users);
+			$np->sendNotification();
 
 			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('ride' => $ride));
 		}
