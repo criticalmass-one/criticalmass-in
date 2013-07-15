@@ -17,7 +17,7 @@ class CommentController extends Controller
 		{
 			$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
-			$form = $this->createFormBuilder(new Comment())->add('text', 'text')->getForm();
+			$form = $this->createFormBuilder(new Comment())->add('text', 'text')->add('image', 'file')->getForm();
 
 			return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
 		}
@@ -34,7 +34,7 @@ class CommentController extends Controller
 		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'desc'));
 
 		$comment = new Comment();
-		$form = $this->createFormBuilder($comment)->add('text', 'text')->getForm();
+		$form = $this->createFormBuilder($comment)->add('text', 'text')->add('image', 'file')->getForm();
 
 		$form->handleRequest($this->getRequest());
 
