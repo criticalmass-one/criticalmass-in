@@ -4,16 +4,16 @@
 	<h1>Benachrichtigungen senden</h1>
 
 	<div data-role="controlgroup">
-		<button>Tour ankündigen</button>
+		<button id="notify_ride">Tour ankündigen</button>
 
 		{% if ride.hasTime %}
-		<button>Uhrzeit ankündigen</button>
+		<button id="notify_time">Uhrzeit ankündigen</button>
 		{% else %}
 		<button disabled="disabled">Uhrzeit ankündigen</button>
 		{% endif %}
 
 		{% if ride.hasLocation %}
-		<button>Treffpunkt ankündigen</button>
+		<button id="notify_location">Treffpunkt ankündigen</button>
 		{% else %}
 		<button disabled="disabled">Treffpunkt ankündigen</button>
 		{% endif %}
