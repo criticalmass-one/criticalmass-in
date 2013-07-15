@@ -5,7 +5,18 @@
 
 	<div data-role="controlgroup">
 		<button>Tour ankündigen</button>
+
+		{% if ride.hasTime %}
 		<button>Uhrzeit ankündigen</button>
+		{% else %}
+		<button disabled="disabled">Uhrzeit ankündigen</button>
+		{% endif %}
+
+		{% if ride.hasLocation %}
 		<button>Treffpunkt ankündigen</button>
+		{% else %}
+		<button disabled="disabled">Treffpunkt ankündigen</button>
+		{% endif %}
+
 	</div>
 {% endblock %}
