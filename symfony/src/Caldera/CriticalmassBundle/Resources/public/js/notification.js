@@ -5,6 +5,7 @@ function processNotification(type)
     url: '/admin/ride/44/sendnotifications/' + type,
     success: refreshMarkers2
   });*/
+  $('#confirmationpopup').popup('open');
 }
 
 function initialize()
