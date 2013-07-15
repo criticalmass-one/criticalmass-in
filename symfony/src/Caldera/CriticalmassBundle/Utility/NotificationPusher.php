@@ -7,12 +7,15 @@ use \Caldera\CriticalmassBundle\Entity as Entity;
 class NotificationPusher
 {
 	private $notification;
+	private $users = array();
 
-	public function __construct(Notifications\BaseNotification $notification)
+	public function __construct(Notifications\BaseNotification $notification, $users)
 	{
 		$this->notification = $notification;
+		$this->users = $users;
 	}
-/*	"token" => "wP7MBPTf5TFvazDCtWf2mL1eH9m1fK",
+
+/*	"token" => "wP7MBPTf5TFvazDCtWf2mL1eH9m1fK",$container->getParameter('mailer.transport');
 	"user" => "Gb1whEAd6G1mUxPccfgHRJWYYAnrxh",*/
 	public function sendNotification()
 	{
