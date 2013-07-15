@@ -39,6 +39,12 @@ class Comment
 	 */
 	protected $text;
 
+	/**
+	 * @ORM\OneToOne(targetEntity="CommentImage")
+	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+	 */
+	private $image;
+
     /**
      * Get id
      *
@@ -139,5 +145,28 @@ class Comment
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Caldera\CriticalmassBundle\Entity\CommentImage $image
+     * @return Comment
+     */
+    public function setImage(\Caldera\CriticalmassBundle\Entity\CommentImage $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Caldera\CriticalmassBundle\Entity\CommentImage 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }
