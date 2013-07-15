@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Caldera\CriticalmassBundle\Entity\Ride;
 use Caldera\CriticalmassBundle\Form\RideType;
+use Caldera\CriticalmassBundle\Utility;
 
 /**
  * Ride controller.
@@ -193,4 +194,9 @@ class RideController extends Controller
             ->getForm()
         ;
     }
+
+		public function notificationsAction()
+		{
+			return $this->render('CalderaCriticalmassBundle:Ride:notification.twig.html')
+		}
 }
