@@ -33,6 +33,6 @@ admin_ride_notifications:
     pattern:  /{rideId}/notifications
     defaults: { _controller: "CalderaCriticalmassBundle:Ride:notifications" }
 
-admin_ride_notifications:
+admin_ride_sendnotifications:
     pattern:  /{rideId}/sendnotifications/{notificationType}
     defaults: { _controller: "CalderaCriticalmassBundle:Ride:sendnotifications" }
