@@ -201,4 +201,11 @@ class RideController extends Controller
 
 			return $this->render('CalderaCriticalmassBundle:Ride:notifications.html.twig', array('ride' => $ride));
 		}
+
+		public function sendnotificationsAction($rideId, $notificationType)
+		{
+			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
+
+			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('ride' => $ride));
+		}
 }
