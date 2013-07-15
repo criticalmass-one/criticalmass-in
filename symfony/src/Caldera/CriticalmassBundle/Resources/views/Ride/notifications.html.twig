@@ -20,6 +20,10 @@
 	</div>
 
 	<div data-role="popup" id="confirmationpopup">
-		<p>This is a completely basic popup, no options set.<p>
+		<div data-role="header"><h1>Benachrichtigungen senden</h1></div>
+		<h3>Bist du sicher?</h3>
+		<p>Teilnehmer der Stadt {{ ride.getCity }} werden sofort benachrichtigt.</p>
+		<a data-role="button" data-inline="true" href="/admin/ride/44/sendnotifications/ride">Senden</a>
+		<a data-role="button" data-inline="true" data-rel="back">Abbrechen</a>
 	</div>
 {% endblock %}
