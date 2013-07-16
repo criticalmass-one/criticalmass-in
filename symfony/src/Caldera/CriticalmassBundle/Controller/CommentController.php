@@ -46,13 +46,14 @@ class CommentController extends Controller
 			$commentImage = new CommentImage();
 			$commentImage->setUser($this->getUser());
 			$commentImage->setCreationDateTime(new \DateTime());
+			$commentImage->setPath($comment->getImage());
 
 			$em->persist($commentImage);
 
 			$comment->setUser($this->getUser());
 			$comment->setRide($ride);
 			$comment->setCreationDateTime(new \DateTime());
-			$comment->setImage($commentImage);
+			$comment->setImage2($commentImage);
 
 			$em->persist($comment);
 			$em->flush();

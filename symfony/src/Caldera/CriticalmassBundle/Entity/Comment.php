@@ -147,13 +147,20 @@ class Comment
         return $this->ride;
     }
 
+    public function setImage(\Symfony\Component\HttpFoundation\File\UploadedFile $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
     /**
      * Set image
      *
      * @param \Caldera\CriticalmassBundle\Entity\CommentImage $image
      * @return Comment
      */
-    public function setImage(\Caldera\CriticalmassBundle\Entity\CommentImage $image = null)
+    public function setImage2(\Caldera\CriticalmassBundle\Entity\CommentImage $image = null)
     {
         $this->image = $image;
     
