@@ -169,9 +169,11 @@ class CommentImage
     public function preUpload()
     {//$this->getFile()->guessExtension();
 			$newPath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/';
-			$this->getFile()->move($newPath, 'abc'.'.'.$this->getFile()->guessExtension());
+			$newFilename = 'abc'.'.'.$this->getFile()->guessExtension();
 
-			$this->setPath($newPath);
+			$this->getFile()->move($newPath, $newFilename);
+
+			$this->setPath($newPath.$newFilename);
     }
 
     /**
@@ -180,7 +182,7 @@ class CommentImage
      */
     public function upload()
     {
-        
+
     }
 
     /**
