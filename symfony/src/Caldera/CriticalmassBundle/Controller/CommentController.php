@@ -4,6 +4,7 @@ namespace Caldera\CriticalmassBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Caldera\CriticalmassBundle\Entity\Comment;
+use Caldera\CriticalmassBundle\Entity\CommentImage;
 
 class CommentController extends Controller
 {
@@ -40,11 +41,19 @@ class CommentController extends Controller
 
 		if ($form->isValid())
 		{
+			$em = $this->getDoctrine()->getManager();
+
+			$commentImage = new CommentImage();
+			$commentImage->setUser($this->getUser());
+			$commentImage->setCreationDateTime(new \DateTime());
+
+			$em->persist($commentImage);
+
 			$comment->setUser($this->getUser());
 			$comment->setRide($ride);
 			$comment->setCreationDateTime(new \DateTime());
+			$comment->setImage($commentImage);
 
-			$em = $this->getDoctrine()->getManager();
 			$em->persist($comment);
 			$em->flush();
 		}

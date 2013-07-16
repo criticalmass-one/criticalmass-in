@@ -5,7 +5,7 @@
 {% block body %}
 
 {% if app.user != null %}
-	<form action="{{ path('caldera_criticalmass_addcomment', {'citySlug': 'hamburg'}) }}" method="post" {{ form_enctype(form) }}>
+	<form action="{{ path('caldera_criticalmass_addcomment', {'citySlug': 'hamburg'}) }}" method="post" {{ form_enctype(form) }} data-ajax="false">
 		{{ form_widget(form) }}
 		<input type="submit" value="Absenden" />
 	</form>
