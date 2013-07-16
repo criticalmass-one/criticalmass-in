@@ -36,6 +36,10 @@ caldera_criticalmass_listcomments:
     pattern: /{citySlug}/comments/list
     defaults: { _controller: CalderaCriticalmassBundle:Comment:listcomments }
 
+caldera_criticalmass_viewcommentimage:
+    pattern: /{citySlug}/comments/image/{commentId}
+    defaults: { _controller: CalderaCriticalmassBundle:Comment:viewcommentimage }
+
 caldera_criticalmass_addcomment:
     pattern: /{citySlug}/comments/add
     defaults: { _controller: CalderaCriticalmassBundle:Comment:addcomment }
