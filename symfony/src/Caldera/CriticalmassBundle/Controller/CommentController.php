@@ -46,7 +46,7 @@ class CommentController extends Controller
 			$commentImage = new CommentImage();
 			$commentImage->setUser($this->getUser());
 			$commentImage->setCreationDateTime(new \DateTime());
-			$commentImage->setPath($comment->getImage());
+			$commentImage->setFile($comment->getImage());
 
 			$em->persist($commentImage);
 
