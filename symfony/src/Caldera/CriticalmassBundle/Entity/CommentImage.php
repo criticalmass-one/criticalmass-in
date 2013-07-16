@@ -146,6 +146,7 @@ class CommentImage
 
     private $temp;
 		private $file;
+
     /**
      * Sets file.
      *
@@ -154,30 +155,21 @@ class CommentImage
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
-				echo $this->file; die;
-        // check if we have an old image path
-        if (isset($this->path)) {
-            // store the old name to delete after the update
-            $this->temp = $this->path;
-            $this->path = null;
-        } else {
-            $this->path = 'initial';
-        }
     }
 
 		public function getFile()
 		{
 			return $this->file;
 		}
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function preUpload()
     {//$this->getFile()->guessExtension();
-			echo $this->path;
-			$newPath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/'.sha1(uniqid(mt_rand(), true));
-			move_uploaded_file($this->path, $newPath);
+			$newPath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/';
+			$this->getFile()->move($newPath, 'abc'.'.'.$this->getFile()->guessExtension());
 
 			$this->setPath($newPath);
     }
@@ -188,7 +180,7 @@ class CommentImage
      */
     public function upload()
     {
-        //$this->getFile()->move($this->getUploadRootDir(), $this->path);
+        
     }
 
     /**
