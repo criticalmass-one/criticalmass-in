@@ -61,4 +61,13 @@ class CommentController extends Controller
 
 		return $this->redirect($this->generateUrl('caldera_criticalmass_listcomments', array('citySlug' => 'hamburg')));
 	}
+
+	public function viewimageAction($commentId)
+	{
+		$response = new Response();
+
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+	}
 }
