@@ -3,6 +3,10 @@
 namespace Caldera\CriticalmassBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
 use Caldera\CriticalmassBundle\Entity\Comment;
 use Caldera\CriticalmassBundle\Entity\CommentImage;
 
@@ -64,13 +68,20 @@ class CommentController extends Controller
 
 	public function viewcommentimageAction($commentId)
 	{
-		$response = new Response();
+		$response = new StreamedResponse();
 
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findOneById($commentId);
+		$comment = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findOneById($commentId);
 
-		$response->headers->set('Content-Type', 'image/jpeg');
+		$response->setCallback(function()
+		{
+			$name = $comment->getImage()->getPath();
+			$fp = fopen($name, 'rb');
+			fpassthru($fp);
+		});
 
-		$response->setContent(file_get_contents($comment->getImage()->getPath()));
+		$d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'image.jpg');
+		$response->headers->set('Content-Disposition', $d);
+		//$response->send();
 
 		return $response;
 	}
