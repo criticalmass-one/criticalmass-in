@@ -194,4 +194,8 @@ class CommentImage
             unlink($file);
         }
     }*/
+	public function getWebPath()
+	{
+		return 'http://www.criticalmass.in/uploads/commentimages/abc.jpeg';
+	}
 }
