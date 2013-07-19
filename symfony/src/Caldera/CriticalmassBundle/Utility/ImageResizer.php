@@ -41,8 +41,11 @@ class ImageResizer
 		$this->newWidth = $width;
 		$this->newHeight = $height;
 
-		imagescale($this->image, $width, $height, IMG_BILINEAR_FIXED);
-		imagejpeg($this->image, '/var/www/criticalmass.in/symfony/web/uploads/commentimages/'.$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
+		$resizedImage = imagecreatetruecolor($width, $height);
+
+		imagecopyresized($resizedImage, $this->image, 0, 0, 0, 0, $width, $height, imagesx($this->image), imagesy($this->image));
+
+		imagejpeg($resizedImage, '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/'.$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
 	}
 
 	public function getResizedPath()
