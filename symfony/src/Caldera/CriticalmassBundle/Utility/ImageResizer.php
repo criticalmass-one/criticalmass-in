@@ -11,6 +11,7 @@ class ImageResizer
 	public function __construct(Entity\CommentImage $commentImage)
 	{
 		$this->commentImage = $commentImage;
+		$this->image = imagecreatefromjpeg($this->commentImage->getPath());
 	}
 
 	public function resizeLongSideToLength($length)
