@@ -11,9 +11,6 @@ class ImageResizer
 	private $commentImage;
 	private $image;
 
-	private $newWidth;
-	private $newHeight;
-
 	public function __construct(\appDevDebugProjectContainer $container)
 	{
 		$this->container = $container;
