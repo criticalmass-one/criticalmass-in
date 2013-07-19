@@ -50,7 +50,7 @@ class ImageResizer
 
 	public function getResizedPath()
 	{
-		return 'http://www.criticalmass.in/uploads/commentimages/'.$this->commentImage->getId().'-'.$this->newWidth.'x'.$this->newHeight.'.jpeg';
+		return 'http://localhost:8000/uploads/commentimages/'.$this->commentImage->getId().'-'.$this->newWidth.'x'.$this->newHeight.'.jpeg';
 	}
 
 	public function __destruct()
