@@ -182,7 +182,7 @@ class CommentImage
      */
     public function upload()
     {
-
+	rename($this->getPath(), '/var/www/criticalmass.in/symfony/web/uploads/commentimages/'.$this->getId().'.jpeg');
     }
 
     /**
@@ -196,6 +196,14 @@ class CommentImage
     }*/
 	public function getWebPath()
 	{
-		return 'http://www.criticalmass.in/uploads/commentimages/abc.jpeg';
+		return 'http://www.criticalmass.in/uploads/commentimages/'.$this->getId().'.jpeg';
+	}
+
+	public function getWebPathForLength($length)
+	{
+		$ir = new Utility\ImageResizer($this);
+		$ir->resizeLongSideToLength(300);
+
+		return 'http://www.criticalmass.in/uploads/commentimages/'.$ir->getResizedPath();
 	}
 }
