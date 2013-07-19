@@ -199,11 +199,11 @@ class CommentImage
 		return 'http://www.criticalmass.in/uploads/commentimages/'.$this->getId().'.jpeg';
 	}
 
-	public function getWebPathForLength($length)
+	public function getResizedWebPath($length)
 	{
 		$ir = new Utility\ImageResizer($this);
 		$ir->resizeLongSideToLength(300);
 
-		return 'http://www.criticalmass.in/uploads/commentimages/'.$ir->getResizedPath();
+		return $ir->getResizedPath();
 	}
 }
