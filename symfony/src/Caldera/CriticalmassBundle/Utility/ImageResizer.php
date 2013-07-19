@@ -55,12 +55,12 @@ class ImageResizer
 
 		imagecopyresized($resizedImage, $this->image, 0, 0, 0, 0, $width, $height, imagesx($this->image), imagesy($this->image));
 
-		imagejpeg($resizedImage, $this->container->get('commentimage_upload_filepath').$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
+		imagejpeg($resizedImage, $this->container->getParameter('commentimage_upload_filepath').$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
 	}
 
 	public function getResizedPath()
 	{
-		return $this->container->get('commentimage_upload_filepath').$this->commentImage->getId().'-'.$this->newWidth.'x'.$this->newHeight.'.jpeg';
+		return $this->container->getParameter('commentimage_upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg';
 	}
 
 	public function __destruct()
