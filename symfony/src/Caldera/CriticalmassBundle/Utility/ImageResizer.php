@@ -7,6 +7,7 @@ use \Caldera\CriticalmassBundle\Entity as Entity;
 class ImageResizer
 {
 	private $commentImage;
+	private $image;
 
 	public function __construct(Entity\CommentImage $commentImage)
 	{
