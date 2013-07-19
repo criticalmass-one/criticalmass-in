@@ -20,7 +20,7 @@ class ImageResizer
 
 	public function resizeLongSideToLength($length)
 	{
-		list($width, $height, $type, $attr) = getimagesize($this->getPath());
+		list($width, $height, $type, $attr) = getimagesize($this->commentImage->getPath());
 
 		if ($width > $height)
 		{
