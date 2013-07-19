@@ -22,6 +22,8 @@ class ImageResizer
 		$this->commentImage = $commentImage;
 
 		$this->image = imagecreatefromjpeg($this->commentImage->getPath());
+
+		return $this;
 	}
 
 	public function resizeLongSideToLength($length)
