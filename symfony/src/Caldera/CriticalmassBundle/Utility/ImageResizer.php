@@ -12,9 +12,15 @@ class ImageResizer
 	private $newWidth;
 	private $newHeight;
 
-	public function __construct(Entity\CommentImage $commentImage)
+	public function __construct(\appDevDebugProjectContainer $container)
+	{
+		$this->container = $container;
+	}
+
+	public function loadImage(Entity\CommentImage $commentImage)
 	{
 		$this->commentImage = $commentImage;
+
 		$this->image = imagecreatefromjpeg($this->commentImage->getPath());
 	}
 
