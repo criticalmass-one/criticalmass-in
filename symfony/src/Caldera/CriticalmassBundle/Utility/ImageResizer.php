@@ -6,6 +6,8 @@ use \Caldera\CriticalmassBundle\Entity as Entity;
 
 class ImageResizer
 {
+	private $container;
+
 	private $commentImage;
 	private $image;
 
@@ -53,12 +55,12 @@ class ImageResizer
 
 		imagecopyresized($resizedImage, $this->image, 0, 0, 0, 0, $width, $height, imagesx($this->image), imagesy($this->image));
 
-		imagejpeg($resizedImage, '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/'.$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
+		imagejpeg($resizedImage, $this->container->get('commentimage_upload_filepath').$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
 	}
 
 	public function getResizedPath()
 	{
-		return 'http://localhost:8000/uploads/commentimages/'.$this->commentImage->getId().'-'.$this->newWidth.'x'.$this->newHeight.'.jpeg';
+		return $this->container->get('commentimage_upload_filepath').$this->commentImage->getId().'-'.$this->newWidth.'x'.$this->newHeight.'.jpeg';
 	}
 
 	public function __destruct()
