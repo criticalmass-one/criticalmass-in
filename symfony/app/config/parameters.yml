@@ -14,3 +14,5 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     commentimage_upload_filepath: /Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/
     commentimage_upload_webpath: http://localhost:8000/uploads/commentimages/
+    commentimage_upload_longside: 600
+    commentimage_upload_quality: 100
