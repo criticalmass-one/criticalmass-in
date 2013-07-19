@@ -170,7 +170,7 @@ class CommentImage
      */
     public function preUpload()
     {//$this->getFile()->guessExtension();
-			$newPath = '/var/www/criticalmass.in/symfony/web/uploads/commentimages/';
+			$newPath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/';
 			$newFilename = 'abc'.'.'.$this->getFile()->guessExtension();
 
 			$this->getFile()->move($newPath, $newFilename);
@@ -184,7 +184,7 @@ class CommentImage
      */
     public function upload()
     {
-	rename($this->getPath(), '/var/www/criticalmass.in/symfony/web/uploads/commentimages/'.$this->getId().'.jpeg');
+	rename($this->getPath(), '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/'.$this->getId().'.jpeg');
     }
 
     /**
@@ -198,10 +198,10 @@ class CommentImage
     }*/
 	public function getWebPath()
 	{
-		return 'http://www.criticalmass.in/uploads/commentimages/'.$this->getId().'.jpeg';
+		return 'http://localhost:8000/uploads/commentimages/'.$this->getId().'.jpeg';
 	}
 
-	public function getResizedWebPath($length)
+	public function getResizedWebPath($length = 300)
 	{
 		$ir = new Utility\ImageResizer($this);
 		$ir->resizeLongSideToLength(300);
