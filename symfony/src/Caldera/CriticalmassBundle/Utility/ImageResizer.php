@@ -23,4 +23,9 @@ class ImageResizer
 	{
 		
 	}
+
+	public function __destruct()
+	{
+		imagedestroy($this->image);
+	}
 }
