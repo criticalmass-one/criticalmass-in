@@ -52,9 +52,6 @@ class ImageResizer
 
 	public function resizeTo($width, $height)
 	{
-		$this->newWidth = $width;
-		$this->newHeight = $height;
-
 		$resizedImage = imagecreatetruecolor($width, $height);
 
 		imagecopyresized($resizedImage, $this->image, 0, 0, 0, 0, $width, $height, imagesx($this->image), imagesy($this->image));
