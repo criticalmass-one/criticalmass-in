@@ -17,7 +17,20 @@ class ImageResizer
 
 	public function resizeLongSideToLength($length)
 	{
-		
+		list($width, $height, $type, $attr) = getimagesize($this->getPath());
+
+		if ($width > $height)
+		{
+			$longSide = $width;
+		}
+		else
+		{
+			$longSide = $height;
+		}
+
+		$resizeFactor = $length / $longSide;
+
+		$this->resizeTo($width * $resizeFactor, $height * $resizeFactor);
 	}
 
 	public function resizeTo($width, $height)
