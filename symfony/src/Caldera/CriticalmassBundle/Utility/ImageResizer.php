@@ -27,7 +27,7 @@ class ImageResizer
 
 	public function resize()
 	{
-		$this->resizeLongSideToLength($this->container->getParameter('commentimage_upload_longside'));
+		$this->resizeLongSideToLength($this->container->getParameter('commentimage.upload_longside'));
 
 		return $this;
 	}
@@ -64,13 +64,13 @@ class ImageResizer
 	public function save()
 	{
 		imagejpeg($this->image,
-							$this->container->getParameter('commentimage_upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg',
-							$this->container->getParameter('commentimage_upload_quality'));
+							$this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg',
+							$this->container->getParameter('commentimage.upload_quality'));
 	}
 
 	public function getResizedPath()
 	{
-		return $this->container->getParameter('commentimage_upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg';
+		return $this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg';
 	}
 
 	public function __destruct()
