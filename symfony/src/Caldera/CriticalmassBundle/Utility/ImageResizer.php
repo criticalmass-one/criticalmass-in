@@ -9,6 +9,9 @@ class ImageResizer
 	private $commentImage;
 	private $image;
 
+	private $newWidth;
+	private $newHeight;
+
 	public function __construct(Entity\CommentImage $commentImage)
 	{
 		$this->commentImage = $commentImage;
@@ -35,8 +38,16 @@ class ImageResizer
 
 	public function resizeTo($width, $height)
 	{
+		$this->newWidth = $width;
+		$this->newHeight = $height;
+
 		imagescale($this->image, $width, $height, IMG_BILINEAR_FIXED);
 		imagejpeg($this->image, '/var/www/criticalmass.in/symfony/web/uploads/commentimages/'.$this->commentImage->getId().'-'.$width.'x'.$height.'.jpeg');
+	}
+
+	public function getResizedPath()
+	{
+		return 'http://www.criticalmass.in/uploads/commentimages/'.$this->commentImage->getId().'-'.$this->newWidth.'x'.$this->newHeight.'.jpeg';
 	}
 
 	public function __destruct()
