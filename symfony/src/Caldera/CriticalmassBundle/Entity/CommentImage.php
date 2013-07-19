@@ -201,7 +201,7 @@ class CommentImage
 		return 'http://localhost:8000/uploads/commentimages/'.$this->getId().'.jpeg';
 	}
 
-	public function getResizedWebPath($length = 300)
+	public function getResizedWebPath()
 	{
 		$ir = new Utility\ImageResizer($this);
 		$ir->resizeLongSideToLength(300);
