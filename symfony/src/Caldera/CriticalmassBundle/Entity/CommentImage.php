@@ -2,6 +2,8 @@
 
 namespace Caldera\CriticalmassBundle\Entity;
 
+use Caldera\CriticalmassBundle\Utility as Utility;
+
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
