@@ -16,13 +16,18 @@ class ImageResizer
 		$this->container = $container;
 	}
 
-	public function loadImage(Entity\CommentImage $commentImage)
+	public function setCommentImage(Entity\CommentImage $commentImage)
 	{
 		$this->commentImage = $commentImage;
 
-		$this->image = imagecreatefromjpeg($this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'.jpeg');
+		$this->image = imagecreatefromjpeg($this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getPath());
 
 		return $this;
+	}
+
+	public function getCommentImage()
+	{
+		return $this->commentImage;
 	}
 
 	public function resize()
@@ -58,15 +63,15 @@ class ImageResizer
 
 		$this->commentImage->setResizedWidth(imagesx($this->image));
 		$this->commentImage->setResizedHeight(imagesy($this->image));
-
-		$this->container->get('doctrine')->getManager()->persist($this->commentImage);
 	}
 
 	public function save()
 	{
 		imagejpeg($this->image,
-							$this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg',
+							$this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getName().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg',
 							$this->container->getParameter('commentimage.upload_quality'));
+
+		return $this;
 	}
 
 	public function getResizedPath()
