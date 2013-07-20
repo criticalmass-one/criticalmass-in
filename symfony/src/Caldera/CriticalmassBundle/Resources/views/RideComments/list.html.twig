@@ -19,7 +19,7 @@
 			<h3 class="ui-li-heading">{{ comment.getUser.getUsername }}</h3>
 			<p>{{ comment.getText }}</p>
 			{% if comment.getImage %}
-				<img src="/uploads/commentimages/{{ comment.getImage.getId }}-600x450.jpeg" class="commentimage" />
+				<img src="/uploads/commentimages/{{ comment.getImage.getName }}-{{ comment.getImage.getResizedWidth }}x{{ comment.getImage.getResizedHeight }}.jpeg" class="commentimage" />
 			{% endif %}
 		</li>
 	{% endfor %}
