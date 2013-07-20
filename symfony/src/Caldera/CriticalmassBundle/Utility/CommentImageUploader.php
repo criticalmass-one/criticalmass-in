@@ -45,9 +45,10 @@ class CommentImageUploader
 	{
 		$this->commentImage->setUser($this->securityContext->getToken()->getUser());
 		$this->commentImage->setCreationDateTime(new \DateTime());
-		$this->commentImage->setName(md5(mt_rand()).'.'.$this->imageFile->guessExtension());
+		$this->commentImage->setName(md5(mt_rand()));
+		$this->commentImage->setPath($this->commentImage->getName().'.'.$this->imageFile->guessExtension());
 
-		$this->imageFile->move($this->container->getParameter('commentimage.upload_filepath'), $this->commentImage->getName());
+		$this->imageFile->move($this->container->getParameter('commentimage.upload_filepath'), $this->commentImage->getPath());
 
 		return $this;
 	}
