@@ -31,3 +31,10 @@ p.locationunknown,
 	background: #fdd;
 	padding: 3px;
 }
+
+img.commentimage
+{
+  border: 1px #aaa solid;
+  padding: 3px;
+  background: #fff;
+}
