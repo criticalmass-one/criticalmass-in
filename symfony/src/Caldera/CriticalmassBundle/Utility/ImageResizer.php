@@ -20,7 +20,7 @@ class ImageResizer
 	{
 		$this->commentImage = $commentImage;
 
-		$this->image = imagecreatefromjpeg($this->commentImage->getPath());
+		$this->image = imagecreatefromjpeg($this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'.jpeg');
 
 		return $this;
 	}
@@ -34,7 +34,7 @@ class ImageResizer
 
 	public function resizeLongSideToLength($length)
 	{
-		list($width, $height, $type, $attr) = getimagesize($this->commentImage->getPath());
+		list($width, $height, $type, $attr) = getimagesize($this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'.jpeg');
 
 		if ($width > $height)
 		{
@@ -58,7 +58,10 @@ class ImageResizer
 
 		$this->image = $resizedImage;
 
-		return $this;
+		$this->commentImage->setResizedWidth(imagesx($this->image));
+		$this->commentImage->setResizedHeight(imagesy($this->image));
+
+		$this->container->get('doctrine')->getManager()->persist($this->commentImage);
 	}
 
 	public function save()
