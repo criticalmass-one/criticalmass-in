@@ -34,20 +34,18 @@ class ImageResizer
 
 	public function resizeLongSideToLength($length)
 	{
-		list($width, $height, $type, $attr) = getimagesize($this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'.jpeg');
-
-		if ($width > $height)
+		if (imagesx($this->image) > imagesy($this->image))
 		{
-			$longSide = $width;
+			$longSide = imagesx($this->image);
 		}
 		else
 		{
-			$longSide = $height;
+			$longSide = imagesy($this->image);
 		}
 
 		$resizeFactor = $length / $longSide;
 
-		$this->resizeTo($width * $resizeFactor, $height * $resizeFactor);
+		$this->resizeTo(imagesx($this->image) * $resizeFactor, imagesy($this->image) * $resizeFactor);
 	}
 
 	public function resizeTo($width, $height)
