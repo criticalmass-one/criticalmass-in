@@ -50,6 +50,7 @@ class CommentController extends Controller
 			$commentImage = new CommentImage();
 
 			$commentImage = $this->get('caldera_criticalmass_imageuploader')->setCommentImage($commentImage)->setImageFile($comment->getImage())->processUpload()->getCommentImage();
+			$commentImage = $this->get('caldera_criticalmass_imageresizer')->setCommentImage($commentImage)->resize()->save()->getCommentImage();
 
 			$em->persist($commentImage);
 
