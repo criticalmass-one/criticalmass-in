@@ -76,6 +76,10 @@ caldera_criticalmass_getcitylocationbyid:
     pattern: /mapapi/getcitylocationbyid/{cityId}
     defaults: { _controller: CalderaCriticalmassBundle:Map:citylocationbyid }
 
+caldera_criticalmass_pushnotificationsettings:
+    pattern: /profile/pushnotifications
+    defaults: { _controller: CalderaCriticalmassBundle:Default:pushnotifications }
+
 CalderaCriticalmassBundle_admin_ride:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing/ride.yml"
     prefix:   /admin/ride
