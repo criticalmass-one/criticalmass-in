@@ -27,4 +27,4 @@ services:
 
     caldera_criticalmass_imageuploader:
         class:     Caldera\CriticalmassBundle\Utility\CommentImageUploader
-        arguments: [@service_container]
+        arguments: [@security.context, @service_container]

@@ -47,12 +47,12 @@ class CommentImage
 	/**
 	 * @ORM\Column(type="smallint")
 	 */
-	protected $resizedWidth;
+	protected $resizedWidth = 0;
 
 	/**
 	 * @ORM\Column(type="smallint")
 	 */
-	protected $resizedHeight;
+	protected $resizedHeight = 0;
 
     /**
      * Get id
@@ -156,9 +156,6 @@ class CommentImage
         return $this->path;
     }
 
-    private $temp;
-		private $file;
-
     /**
      * Sets file.
      *
@@ -174,43 +171,10 @@ class CommentImage
 			return $this->file;
 		}
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {//$this->getFile()->guessExtension();
-			$newPath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/';
-			$newFilename = 'abc'.'.'.$this->getFile()->guessExtension();
-
-			$this->getFile()->move($newPath, $newFilename);
-
-			$this->setPath($newPath.$newFilename);
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-	rename($this->getPath(), '/Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/'.$this->getId().'.jpeg');
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-/*    public function removeUpload()
-    {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
-        }
-    }*/
-	public function getWebPath()
-	{
-
-		return 'http://localhost:8000/uploads/commentimages/'.$this->getId().'.jpeg';
-	}
+		public function getWebPath()
+		{
+			return 'http://localhost:8000/uploads/commentimages/'.$this->getId().'.jpeg';
+		}
 
 	public function getResizedWebPath()
 	{
