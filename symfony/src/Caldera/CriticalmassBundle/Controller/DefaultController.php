@@ -67,6 +67,15 @@ class DefaultController extends Controller
 
 	public function pushnotificationsAction()
 	{
-		return $this->render('CalderaCriticalmassBundle:Default:pushnotifications.html.twig');
+		$form = $this->createFormBuilder($this->getUser())->add('pushoverkey', 'text')->getForm();
+
+		$form->handleRequest($this->getRequest());
+
+		if ($form->isValid())
+		{
+			$this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
+		}
+
+		return $this->render('CalderaCriticalmassBundle:Default:pushnotifications.html.twig', array('form' => $form->createView()));
 	}
 }
