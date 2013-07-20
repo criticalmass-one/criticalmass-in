@@ -22,6 +22,14 @@ class CommentController extends Controller
 		{
 			$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
+			foreach ($comments as $comment)
+			{
+				if ($comment->getImage())
+				{
+					$this->get('caldera_criticalmass_imageresizer')->loadImage($comment->getImage())->resize()->save();
+				}
+			}
+
 			$form = $this->createFormBuilder(new Comment())->add('text', 'text')->add('image', 'file')->getForm();
 
 			return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
@@ -51,7 +59,10 @@ class CommentController extends Controller
 			$commentImage->setUser($this->getUser());
 			$commentImage->setCreationDateTime(new \DateTime());
 			$commentImage->setFile($comment->getImage());
-
+			$commentImage->setResizedWidth(242);
+			
+			$commentImage->setResizedHeight(242);
+			
 			$em->persist($commentImage);
 
 			$comment->setUser($this->getUser());
