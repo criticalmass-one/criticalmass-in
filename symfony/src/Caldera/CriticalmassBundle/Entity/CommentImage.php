@@ -44,6 +44,16 @@ class CommentImage
 	 */
 	protected $path;
 
+	/**
+	 * @ORM\Column(type="smallint")
+	 */
+	protected $resizedWidth;
+
+	/**
+	 * @ORM\Column(type="smallint")
+	 */
+	protected $resizedHeight;
+
     /**
      * Get id
      *
@@ -198,14 +208,63 @@ class CommentImage
     }*/
 	public function getWebPath()
 	{
+
 		return 'http://localhost:8000/uploads/commentimages/'.$this->getId().'.jpeg';
 	}
 
 	public function getResizedWebPath()
 	{
+		return $this->getWebPath();
+		/*
 		$ir = new Utility\ImageResizer($this);
 		$ir->resizeLongSideToLength(300);
 
-		return $ir->getResizedPath();
+		return $ir->getResizedPath();*/
 	}
+
+    /**
+     * Set resizedWidth
+     *
+     * @param integer $resizedWidth
+     * @return CommentImage
+     */
+    public function setResizedWidth($resizedWidth)
+    {
+        $this->resizedWidth = $resizedWidth;
+    
+        return $this;
+    }
+
+    /**
+     * Get resizedWidth
+     *
+     * @return integer 
+     */
+    public function getResizedWidth()
+    {
+        return $this->resizedWidth;
+    }
+
+    /**
+     * Set resizedHeight
+     *
+     * @param integer $resizedHeight
+     * @return CommentImage
+     */
+    public function setResizedHeight($resizedHeight)
+    {
+        $this->resizedHeight = $resizedHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get resizedHeight
+     *
+     * @return integer 
+     */
+    public function getResizedHeight()
+    {
+        return $this->resizedHeight;
+    }
 }
