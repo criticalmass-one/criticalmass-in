@@ -24,3 +24,7 @@ services:
     caldera_criticalmass_imageresizer:
         class:     Caldera\CriticalmassBundle\Utility\ImageResizer
         arguments: [@service_container]
+
+    caldera_criticalmass_imageuploader:
+        class:     Caldera\CriticalmassBundle\Utility\CommentImageUploader
+        arguments: [@service_container]
