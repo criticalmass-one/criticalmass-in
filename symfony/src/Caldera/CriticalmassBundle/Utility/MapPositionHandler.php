@@ -97,7 +97,7 @@ class MapPositionHandler
 
 		foreach ($this->getPositions() as $position)
 		{
-			$resultArray["position".$position->getId()] = array(
+			$resultArray["position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000)] = array(
 				'id' => $position->getId(),
 				'latitude' => $position->getLatitude(),
 				'longitude' => $position->getLongitude(),
