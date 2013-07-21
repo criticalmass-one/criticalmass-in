@@ -65,24 +65,4 @@ class CommentController extends Controller
 
 		return $this->redirect($this->generateUrl('caldera_criticalmass_listcomments', array('citySlug' => 'hamburg')));
 	}
-
-	public function viewcommentimageAction($commentId)
-	{
-		$response = new StreamedResponse();
-
-		$comment = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findOneById($commentId);
-
-		$response->setCallback(function()
-		{
-			$name = $comment->getImage()->getPath();
-			$fp = fopen($name, 'rb');
-			fpassthru($fp);
-		});
-
-		$d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'image.jpg');
-		$response->headers->set('Content-Disposition', $d);
-		//$response->send();
-
-		return $response;
-	}
 }
