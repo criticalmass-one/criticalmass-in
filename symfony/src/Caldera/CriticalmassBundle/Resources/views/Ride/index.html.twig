@@ -1,51 +1,19 @@
 {% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
 
 {% block body %}
-    <h1>Ride list</h1>
+	<h1>Tour-Übersicht</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Hastime</th>
-                <th>Time</th>
-                <th>Haslocation</th>
-                <th>Location</th>
-                <th>Map</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('admin_ride_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ entity.hasTime }}</td>
-                <td>{{ entity.time|date('H:i') }}</td>
-                <td>{{ entity.hasLocation }}</td>
-                <td>{{ entity.location }}</td>
-                <td>{{ entity.map }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_ride_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_ride_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<ul data-role="listview" data-inset="true">
+	{% for entity in entities %}
+		<li class=""><a href="{{ path('admin_ride_show', { 'id': entity.id }) }}">
+			<p class="ui-li-aside ui-li-desc"><strong>{{ entity.time|date('H:i') }}</strong></p>
+			<h3 class="ui-li-heading">{{ entity.date|date('Y-m-d') }}</h3>
+			<p class="ui-li-desc"><strong>{{ entity.location }}</strong></p></a>
+		</li>
+	{% endfor %}
+	</ul>
 
-        <ul>
-        <li>
-            <a href="{{ path('admin_ride_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+	<ul>
+		<li><a href="{{ path('admin_ride_new') }}">Neue Fahrt anlegen</a></li>
+	</ul>
+{% endblock %}
