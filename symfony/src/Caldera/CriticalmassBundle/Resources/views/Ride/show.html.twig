@@ -29,6 +29,11 @@
     </table>
 
         <ul class="record_actions">
+			    <li>
+			        <a href="{{ path('admin_ride_notifications', {'rideId': entity.id }) }}">
+			            Benachrichtigungen senden
+			        </a>
+			    </li>
     <li>
         <a href="{{ path('admin_ride') }}">
             Back to the list
