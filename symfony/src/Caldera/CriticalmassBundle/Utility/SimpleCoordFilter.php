@@ -2,8 +2,15 @@
 
 namespace Caldera\CriticalmassBundle\Utility;
 
+use Caldera\CriticalmassBundle\Entity as Entity;
+
 class SimpleCoordFilter extends BaseCoordFilter
 {
+	public function __construct(Entity\Ride $ride, $positions)
+	{
+		parent::__construct($ride, $positions);
+	}
+
 	public function getCalculatedPositions()
 	{
 		$sortedPositions = array();
@@ -13,7 +20,7 @@ class SimpleCoordFilter extends BaseCoordFilter
 
 		foreach ($this->positions as $position)
 		{
-			$sortedPositions[$position->getUser()->getId()][$position->getCreatedDateTime()->format("Y-m-d-h-i-s")] = $position;
+			$sortedPositions[$position->getUser()->getId()][$position->getCreationDateTime()->format("Y-m-d-H-i-s")] = $position;
 		}
 
 		foreach ($sortedPositions as $sortedPositionUser => $sortedPositionArray)
@@ -26,13 +33,14 @@ class SimpleCoordFilter extends BaseCoordFilter
 			{
 				krsort($sortedPositionArray);
 
-				$newPositions[$sortedPositionsUser] = array_pop($sortedPositionArray);
-				$oldPositions[$sortedPositionsUser] = array_pop($sortedPositionArray);
+				$newPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
+				$oldPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
 			}
 		}
 
 
 
+		$oldPosition = new Entity\Position();
 
 		$tmpValueX = 0.0;
 		$tmpValueY = 0.0;
@@ -43,11 +51,11 @@ class SimpleCoordFilter extends BaseCoordFilter
 			$tmpValueY += $position->getLongitude();
 		}
 
-		$oldPositionX = $tmpValueX / (float) count($oldPositions);
-		$oldPositionY = $tmpValueY / (float) count($oldPositions);
+		$oldPosition->setLatitude($tmpValueX / (float) count($oldPositions));
+		$oldPosition->setLongitude($tmpValueY / (float) count($oldPositions));
 
 
-
+		$newPosition = new Entity\Position();
 
 		$tmpValueX = 0.0;
 		$tmpValueY = 0.0;
@@ -58,10 +66,10 @@ class SimpleCoordFilter extends BaseCoordFilter
 			$tmpValueY += $position->getLongitude();
 		}
 
-		$newPositionX = $tmpValueX / (float) count($newPositions);
-		$newPositionY = $tmpValueY / (float) count($newPositions);
+		$newPosition->setLatitude($tmpValueX / (float) count($newPositions));
+		$newPosition->setLongitude($tmpValueY / (float) count($newPositions));
 
 
-		return array(array($oldPositionX, $oldPositionY), array($newPositionX, $newPositionY));
+		return array($oldPosition, $newPosition);
 	}
 }
