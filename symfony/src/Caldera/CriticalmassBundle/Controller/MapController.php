@@ -12,10 +12,15 @@ class MapController extends Controller
 {
 	public function mapdataAction()
 	{
-		$mph = new Utility\MapPositionHandler(
+		$scf = new Utility\SimpleCoordFilter(
 			new Entity\Ride(),
 			$this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 15)
-	);
+		);
+
+		$mph = new Utility\MapPositionHandler(
+			new Entity\Ride(),
+			$scf->getCalculatedPositions()
+		);
 
 		$response = new Response();
 		$response->setContent(json_encode(array(
