@@ -212,6 +212,12 @@ class RideController extends Controller
 				case 'location':
 					$notification = new Utility\Notifications\LocationPublishedNotification($ride);
 					break;
+				case 'time':
+					$notification = new Utility\Notifications\TimePublishedNotification($ride);
+					break;
+				case 'ride':
+					$notification = new Utility\Notifications\RideAnnouncementNotification($ride);
+					break;
 			}
 
 			$np = new Utility\NotificationPusher($notification, $users);
