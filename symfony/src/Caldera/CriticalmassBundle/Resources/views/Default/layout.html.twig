@@ -40,7 +40,7 @@
 				<li data-icon="delete"><a href="#" data-rel="close">Menü schließen</a></li>
 				{% if app.session.get('currentCitySlug') %}
 				<li data-role="list-divider">{{ app.session.get('city').getTitle }}</li>
-				<li><a href="{{ url('caldera_criticalmass_showcity', {'citySlug': app.session.get('currentCitySlug') }) }}">Termine</a></li>
+				<li><a href="{{ url('caldera_criticalmass_showcity', {'citySlug': app.session.get('currentCitySlug') }) }}" data-ajax="false">Termine</a></li>
 				<li><a href="{{ url('caldera_criticalmass_live', {'citySlug': app.session.get('currentCitySlug') }) }}" data-ajax="false">Live</a></li>
 				<li><a href="{{ url('caldera_criticalmass_listcomments', {'citySlug': app.session.get('currentCitySlug') }) }}">Kommentare</a></li>
 				<li data-role="list-divider">Neuigkeiten</li>
