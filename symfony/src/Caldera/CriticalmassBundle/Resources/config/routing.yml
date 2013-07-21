@@ -6,12 +6,6 @@ caldera_criticalmass_choosecity:
     pattern: /selectcity/{latitude}/{longitude}
     defaults: { _controller: CalderaCriticalmassBundle:Default:choosecity }
 
-
-
-caldera_criticalmass_processuserregistration:
-    pattern: /processregistration
-    defaults: { _controller: CalderaCriticalmassBundle:Account:processregistration }
-
 caldera_criticalmass_showcity:
     pattern: /{citySlug}/show/
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
@@ -31,8 +25,6 @@ caldera_criticalmass_staticpage:
 caldera_criticalmass_loadcities:
     pattern: /loadcities/
     defaults: { _controller: CalderaCriticalmassBundle:City:loadcities }
-
-
 
 caldera_criticalmass_live:
     pattern: /{citySlug}/live
