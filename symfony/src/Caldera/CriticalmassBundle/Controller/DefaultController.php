@@ -10,25 +10,6 @@ use Caldera\CriticalmassBundle\Entity as Entity;
 class DefaultController extends Controller
 {
 	/**
-	 * Zeigt eine Liste der Critical-Mass-Touren in der Umgebung an.
-	 *
-	 * @param $latitude Breitengrad des Suchpunktes
-	 * @param $longitude Längengrad des Suchpunktes
-	 */
-	public function choosecityAction($latitude, $longitude)
-	{
-		$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
-
-		foreach ($cityResults as $key => $result)
-		{
-			$cityResults[$key]['ride'] = $this->get('caldera_criticalmass_ride_repository')->findOneBy(array('city' => $cityResults[$key]['city']->getId()));
-			$cityResults[$key]['distance'] = $this->get('caldera_criticalmass_citydistancecalculator')->calculateDistanceFromCoordToCoord($cityResults[$key]['city']->getLatitude(), $latitude, $cityResults[$key]['city']->getLongitude(), $longitude);
-		}
-	
-		return $this->render('CalderaCriticalmassBundle:Default:choosecity.html.twig', array('cityResults' => $cityResults));
-	}
-
-	/**
 	 * Ruft ein Template auf, dass per JavaScript die Position des Endgerätes
 	 * ausliest und an die nächste Action weiterleitet.
 	 */
