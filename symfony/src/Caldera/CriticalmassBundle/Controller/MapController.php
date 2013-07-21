@@ -13,11 +13,11 @@ class MapController extends Controller
 	public function mapdataAction()
 	{
 		$totalPositions = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 15);
-		/*
+
 		$scf = new Utility\SimpleCoordFilter(
 			new Entity\Ride(),
 			$totalPositions
-		);*/
+		);
 
 		$mph = new Utility\MapPositionHandler(
 			new Entity\Ride(),

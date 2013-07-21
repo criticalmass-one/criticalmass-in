@@ -81,7 +81,7 @@ class MapPositionHandler
 	{
 		$resultArray = array();
 
-		foreach ($this->$filteredPositions as $position)
+		foreach ($this->filteredPositions as $position)
 		{
 			$resultArray["position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000)] = array(
 				'id' => $position->getId(),
@@ -104,7 +104,7 @@ class MapPositionHandler
 		$min = null;
 		$max = null;
 
-		foreach ($this->$filteredPositions as $position)
+		foreach ($this->filteredPositions as $position)
 		{
 			if (!isset($min) && !isset($max))
 			{
