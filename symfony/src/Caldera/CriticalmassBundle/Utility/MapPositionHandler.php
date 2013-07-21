@@ -7,23 +7,14 @@ use \Caldera\CriticalmassBundle\Entity as Entity;
 class MapPositionHandler
 {
 	protected $ride;
+	protected $filteredPositions = array();
+	protected $totalPositions = array();
 
-	protected $positions = array();
-
-	public function __construct(Entity\Ride $ride, $positions)
-	{
-		$this->setRide($ride);
-		$this->setPositions($positions);
-	}
-
-	public function setRide(Entity\Ride $ride)
+	public function __construct(Entity\Ride $ride, $filteredPositions, $totalPositions)
 	{
 		$this->ride = $ride;
-	}
-
-	public function setPositions($positions)
-	{
-		$this->positions = $positions;
+		$this->filteredPositions = $filteredPositions;
+		$this->totalPositions = $totalPositions;
 	}
 
 	public function getZoomFactor()
@@ -33,7 +24,7 @@ class MapPositionHandler
 		$minY = null;
 		$maxY = null;
 
-		foreach ($this->getPositions() as $position)
+		foreach ($this->totalPositions as $position)
 		{
 			if (!isset($minX) && !isset($maxX) && !isset($minY) && !isset($maxY))
 			{
@@ -86,16 +77,11 @@ class MapPositionHandler
 		return $this->calculateMapCenter("getLongitude");
 	}
 
-	public function getPositions()
-	{
-		return $this->positions;
-	}
-
 	public function getPositionArray()
 	{
 		$resultArray = array();
 
-		foreach ($this->getPositions() as $position)
+		foreach ($this->$filteredPositions as $position)
 		{
 			$resultArray["position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000)] = array(
 				'id' => $position->getId(),
@@ -118,7 +104,7 @@ class MapPositionHandler
 		$min = null;
 		$max = null;
 
-		foreach ($this->getPositions() as $position)
+		foreach ($this->$filteredPositions as $position)
 		{
 			if (!isset($min) && !isset($max))
 			{
