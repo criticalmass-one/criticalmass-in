@@ -26,4 +26,9 @@
 		<a data-role="button" data-inline="true" href="/admin/ride/{{ ride.getId }}/sendnotifications/ride">Senden</a>
 		<a data-role="button" data-inline="true" data-rel="back">Abbrechen</a>
 	</div>
+
+	<ul class="record_actions">
+		<li><a href="{{ path('admin_ride') }}">Zurück zur Übersicht</a></li>
+		<li><a href="{{ path('admin_ride_show', { 'id': ride.id }) }}">Zurück zur Tour</a></li>
+	</ul>
 {% endblock %}
