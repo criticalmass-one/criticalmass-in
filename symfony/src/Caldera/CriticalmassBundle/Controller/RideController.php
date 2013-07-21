@@ -24,7 +24,7 @@ class RideController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CalderaCriticalmassBundle:Ride')->findAll();
+        $entities = $em->getRepository('CalderaCriticalmassBundle:Ride')->findBy(array('city' => $this->getUser()->getCurrentCity()), array('date' => 'DESC'));
 
         return $this->render('CalderaCriticalmassBundle:Ride:index.html.twig', array(
             'entities' => $entities,
