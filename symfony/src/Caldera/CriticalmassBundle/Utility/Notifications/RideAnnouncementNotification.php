@@ -8,7 +8,7 @@ class RideAnnouncementNotification extends BaseNotification
 {
 	public function __construct(Ride $ride)
 	{
-		$this->setMessage('Nächste Tour: '.$ride->getDate());
+		$this->setMessage('Nächste Tour: '.$ride->getDate()->format('d.m.Y'));
 		$this->setTitle($ride->getCity()->getTitle());
 		$this->setUrl('http://www.criticalmass.in/'.$ride->getCity()->getMainSlug()->getSlug());
 		$this->setUrlTitle('criticalmass.in/'.$ride->getCity()->getMainSlug()->getSlug());
