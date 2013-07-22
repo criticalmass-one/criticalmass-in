@@ -220,7 +220,8 @@ class RideController extends Controller
 					break;
 			}
 
-			$np = new Utility\NotificationPusher($notification, $users);
+			$np = new Utility\PushoverNotificationPusher($notification, $users);
+			$np->setPushoverKey('wP7MBPTf5TFvazDCtWf2mL1eH9m1fK');
 			$np->sendNotification();
 
 			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('notificationsPusher' => $np));
