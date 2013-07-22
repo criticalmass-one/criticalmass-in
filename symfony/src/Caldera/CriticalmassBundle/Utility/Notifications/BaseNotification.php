@@ -4,26 +4,10 @@ namespace Caldera\CriticalmassBundle\Utility\Notifications;
 
 class BaseNotification
 {
-	private $token;
-	private $user;
-	private $message;
-	private $device;
-	private $title;
-	private $url;
-	private $urlTitle;
-	private $priority;
-	private $timestamp;
-	private $sound;
-
-	public function setToken($token)
-	{
-		$this->token = $token;
-	}
-
-	public function getToken()
-	{
-		return $this->token;
-	}
+	protected $message;
+	protected $title;
+	protected $url;
+	protected $urlTitle;
 
 	public function setMessage($message)
 	{
@@ -33,16 +17,6 @@ class BaseNotification
 	public function getMessage()
 	{
 		return $this->message;
-	}
-
-	public function setDevice($device)
-	{
-		$this->device = $device;
-	}
-
-	public function getDevice()
-	{
-		return $this->device;
 	}
 
 	public function setTitle($title)
@@ -74,35 +48,4 @@ class BaseNotification
 	{
 		return $this->urlTitle;
 	}
-
-	public function setPriority($priority)
-	{
-		$this->priority = $priority;
-	}
-
-	public function getPriority()
-	{
-		return $this->priority;
-	}
-
-	public function setTimestamp($timestamp)
-	{
-		$this->timestamp = $timestamp;
-	}
-
-	public function getTimestamp()
-	{
-		return $this->timestamp;
-	}
-
-	public function setSound($sound)
-	{
-		$this->sound = $sound;
-	}
-
-	public function getSound()
-	{
-		return $this->sound;
-	}
-
 }
