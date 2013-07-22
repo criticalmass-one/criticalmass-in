@@ -16,3 +16,4 @@ parameters:
     commentimage.upload_webpath: http://localhost:8000/uploads/commentimages/
     commentimage.upload_longside: 600
     commentimage.upload_quality: 100
+    notifications.pushoverkey: wP7MBPTf5TFvazDCtWf2mL1eH9m1fK
