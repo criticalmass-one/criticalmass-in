@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility\Notifications;
 
 use Caldera\CriticalmassBundle\Entity\Ride as Ride;
 
-class RideAnnouncementNotification extends BaseNotification
+class RideAnnouncementNotification extends PushoverNotification
 {
 	public function __construct(Ride $ride)
 	{
