@@ -38,3 +38,11 @@ img.commentimage
   padding: 3px;
   background: #fff;
 }
+
+img#cmscreenlogo
+{
+  width: 300px;
+  height: 262px;
+  display: block;
+  margin: 0 auto;
+}
