@@ -46,3 +46,9 @@ img#cmscreenlogo
   display: block;
   margin: 0 auto;
 }
+
+div.mapcanvas
+{
+  width: 100%;
+  height: 300px;
+}
