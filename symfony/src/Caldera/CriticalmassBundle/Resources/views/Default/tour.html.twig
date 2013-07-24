@@ -11,7 +11,7 @@
 		{% if ride.hasTime and ride.hasLocation %}
 		<p>Uhrzeit: {{ ride.getTime|date('H:i') }}</p>
 		<p>Treffpunkt: {{ ride.getLocation }}</p>
-		<div id="information-map" style="width: 300px; height: 300px; margin: 10px auto;"></div>
+		<div id="information-map" class="mapcanvas"></div>
 		{% elseif ride.hasTime and ride.hasLocation == false %}
 		<p>Uhrzeit: {{ ride.getTime|date('H:i') }}</p>
 		<p class="locationunknown">Der Treffpunkt ist noch nicht bekannt :( Schau später noch mal vorbei.</p>
