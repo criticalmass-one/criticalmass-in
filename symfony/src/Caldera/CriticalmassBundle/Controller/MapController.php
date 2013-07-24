@@ -12,7 +12,14 @@ class MapController extends Controller
 {
 	public function mapdataAction()
 	{
-		$totalPositions = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 15);
+		//$totalPositions = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 500);
+		$totalPositions = $em->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
+   ->where('p.creationDateTime < :minAge')
+   ->andWhere('p.creationDateTime > :maxAge')
+   ->setParameter('minAge', '2013-06-28 19:00:00')
+   ->setParameter('maxAge', '2013-06-28 23:00:00')
+   ->getQuery()
+   ->getResult();
 
 		$scf = new Utility\SimpleCoordFilter(
 			new Entity\Ride(),
