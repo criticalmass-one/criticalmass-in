@@ -6,11 +6,6 @@ use Caldera\CriticalmassBundle\Entity as Entity;
 
 class SimplePositionFilter extends BasePositionFilter
 {
-	public function __construct(Entity\Ride $ride)
-	{
-		parent::__construct($ride);
-	}
-
 	public function getCalculatedPositions()
 	{
 		$sortedPositions = array();
