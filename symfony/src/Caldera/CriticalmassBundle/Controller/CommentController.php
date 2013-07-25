@@ -47,17 +47,20 @@ class CommentController extends Controller
 		{
 			$em = $this->getDoctrine()->getManager();
 
-			$commentImage = new CommentImage();
+			if ($comment->getImage())
+			{
+				$commentImage = new CommentImage();
 
-			$commentImage = $this->get('caldera_criticalmass_imageuploader')->setCommentImage($commentImage)->setImageFile($comment->getImage())->processUpload()->getCommentImage();
-			$commentImage = $this->get('caldera_criticalmass_imageresizer')->setCommentImage($commentImage)->resize()->save()->getCommentImage();
+				$commentImage = $this->get('caldera_criticalmass_imageuploader')->setCommentImage($commentImage)->setImageFile($comment->getImage())->processUpload()->getCommentImage();
+				$commentImage = $this->get('caldera_criticalmass_imageresizer')->setCommentImage($commentImage)->resize()->save()->getCommentImage();
 
-			$em->persist($commentImage);
+				$em->persist($commentImage);
+				$comment->setImage2($commentImage);
+			}
 
 			$comment->setUser($this->getUser());
 			$comment->setRide($ride);
 			$comment->setCreationDateTime(new \DateTime());
-			$comment->setImage2($commentImage);
 
 			$em->persist($comment);
 			$em->flush();
