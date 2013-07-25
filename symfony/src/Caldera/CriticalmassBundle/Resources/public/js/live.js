@@ -30,23 +30,28 @@ function setArrow(result)
 	var vector = [position2.latitude - position1.latitude, position2.longitude - position1.longitude];
 	var arrowLength = 5;
 
-	var coord1 = new google.maps.LatLng(position1.latitude, position1.longitude);
-	var coord2 = new google.maps.LatLng(position1.latitude + vector[0] * arrowLength, position1.longitude + vector[1] * arrowLength);
+	alert('Vector ' + vector[0] + ' ' + vector[1] + ' Position1 ' + position1.latitude + ' ' + position1.longitude + ' Position2 ' + position2.latitude + ' ' + position2.longitude);
 
-	if (arrow)
+	if ((vector[0] > 0) || (vector[1] > 0))
 	{
-		arrow.setMap(null);
-		arrow = null;
-	}
+		var coord1 = new google.maps.LatLng(position1.latitude, position1.longitude);
+		var coord2 = new google.maps.LatLng(position1.latitude + vector[0] * arrowLength, position1.longitude + vector[1] * arrowLength);
 
-	arrow = new google.maps.Polyline({
-		path: [coord1, coord2],
-		icons: [{
-			icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW },
-			offset: '100%'
-		}],
-		map: map
-	});
+		if (arrow)
+		{
+			arrow.setMap(null);
+			arrow = null;
+		}
+
+		arrow = new google.maps.Polyline({
+			path: [coord1, coord2],
+			icons: [{
+				icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW },
+				offset: '100%'
+			}],
+			map: map
+		});
+	}
 }
 
 function addMarker(options)
@@ -86,6 +91,7 @@ function refreshMarkers()
 
 function placeNewMarkers(result)
 {
+/*
 	for (var pos in result.mainpositions)
 	{
 		if (!existsMarker(result.mainpositions[pos]))
@@ -93,7 +99,7 @@ function placeNewMarkers(result)
 			addMarker(result.mainpositions[pos]);
 		}
 	}
-
+*/
 	for (var pos in result.additionalpositions)
 	{
 		if (!existsMarker(result.additionalpositions[pos]))
