@@ -40,6 +40,7 @@ class MapController extends Controller
 			'mainpositions' => $mph->getMainPositions(),
 			'additionalpositions' => $mph->getAdditionalPositions(),
 			'usercounter' => $mph->getUserCounter(),
+			'averagespeed' => $mph->getAverageSpeed()
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');
