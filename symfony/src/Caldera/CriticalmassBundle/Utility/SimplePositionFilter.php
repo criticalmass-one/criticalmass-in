@@ -39,30 +39,36 @@ class SimplePositionFilter extends BasePositionFilter
 
 		$tmpValueX = 0.0;
 		$tmpValueY = 0.0;
+		$tmpDateTime = 0;
 
 		foreach ($oldPositions as $position)
 		{
 			$tmpValueX += $position->getLatitude();
 			$tmpValueY += $position->getLongitude();
+			$tmpDateTime += $position->getCreationDateTime()->format('U');
 		}
 
 		$oldPosition->setLatitude($tmpValueX / (float) count($oldPositions));
 		$oldPosition->setLongitude($tmpValueY / (float) count($oldPositions));
+		$oldPosition->setCreationDateTime(new \Datetime('@'.$tmpDateTime / (float) count($oldPositions)));
 
 
 		$newPosition = new Entity\Position();
 
 		$tmpValueX = 0.0;
 		$tmpValueY = 0.0;
+		$tmpDateTime = 0;
 
 		foreach ($newPositions as $position)
 		{
 			$tmpValueX += $position->getLatitude();
 			$tmpValueY += $position->getLongitude();
+			$tmpDateTime += $position->getCreationDateTime()->format('U');
 		}
 
 		$newPosition->setLatitude($tmpValueX / (float) count($newPositions));
 		$newPosition->setLongitude($tmpValueY / (float) count($newPositions));
+		$newPosition->setCreationDateTime(new \DateTime('@'.$tmpDateTime / (float) count($newPositions)));
 
 
 		return array($oldPosition, $newPosition);
