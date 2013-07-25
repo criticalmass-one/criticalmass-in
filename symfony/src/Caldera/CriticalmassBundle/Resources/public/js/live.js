@@ -14,8 +14,14 @@ function setLastModifiedLabel()
 
 function setArrow(result)
 {
-	var coord1 = new google.maps.LatLng(result.mainpositions['position-0'].latitude, result.mainpositions['position-0'].longitude);
-	var coord2 = new google.maps.LatLng(result.mainpositions['position-1'].latitude, result.mainpositions['position-1'].longitude);
+	var position1 = result.mainpositions['position-0'];
+	var position2 = result.mainpositions['position-1'];
+
+	var vector = [position2.latitude - position1.latitude, position2.longitude - position1.longitude];
+	var arrowLength = 12;
+
+	var coord1 = new google.maps.LatLng(position1.latitude, position1.longitude);
+	var coord2 = new google.maps.LatLng(position1.latitude + vector[0] * arrowLength, position1.longitude + vector[1] * arrowLength);
 
 	arrow = new google.maps.Polyline({
 		path: [coord1, coord2],
@@ -149,6 +155,7 @@ function setMapOptions(result)
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	placeNewMarkers(result);
+	setArrow(result);
 }
 
 function initializeLivePage()
