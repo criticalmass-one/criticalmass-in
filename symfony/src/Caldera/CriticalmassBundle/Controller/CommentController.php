@@ -66,6 +66,6 @@ class CommentController extends Controller
 			$em->flush();
 		}
 
-		return $this->redirect($this->generateUrl('caldera_criticalmass_listcomments', array('citySlug' => 'hamburg')));
+		return $this->redirect($this->generateUrl('caldera_criticalmass_listcomments', array('citySlug' => $this->getUser()->getCurrentCity()->getMainSlug()->getSlug())));
 	}
 }
