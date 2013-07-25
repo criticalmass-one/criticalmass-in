@@ -16,6 +16,12 @@ function setUsercounter(result)
 {
 	$('span#usercounter').html(result.usercounter);
 }
+
+function setAverageSpeed(result)
+{
+	$('span#averagespeed').html(result.averagespeed);
+}
+
 function setArrow(result)
 {
 	var position1 = result.mainpositions['position-0'];
@@ -97,6 +103,7 @@ function refreshMarkers2(result)
 	flushOldMarkers(result);
 	setLastModifiedLabel();
 	setUsercounter(result);
+	setAverageSpeed(result);
 	setArrow(result);
 }
 
@@ -160,6 +167,7 @@ function setMapOptions(result)
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	placeNewMarkers(result);
+	setAverageSpeed(result);
 	setUsercounter(result);
 	setArrow(result);
 }
