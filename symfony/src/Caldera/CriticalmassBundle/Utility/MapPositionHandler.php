@@ -24,6 +24,20 @@ class MapPositionHandler
 		$this->positionFilter->setPositions($positions);
 	}
 
+	public function getUserCounter()
+	{
+		$users = array();
+
+		foreach ($this->positions as $position)
+		{
+			if (!in_array($position->getUser(), $users))
+			{
+				$users[] = $position->getUser();
+			}
+		}
+
+		return count($users);
+	}
 	public function getZoomFactor()
 	{
 		$minX = null;
