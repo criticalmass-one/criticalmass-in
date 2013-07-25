@@ -83,11 +83,29 @@ class MapPositionHandler
 
 		foreach ($this->filteredPositions as $position)
 		{
-			$resultArray["position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000)] = array(
-				'id' => $position->getId(),
+			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
+
+			$resultArray[$newId] = array(
+				'id' => $newId,
 				'latitude' => $position->getLatitude(),
 				'longitude' => $position->getLongitude(),
 				'radius' => 100,
+				'strokeColor' => '#ff0000',
+				'fillColor' => 'ff0000',
+				'strokeOpacity' => 0.8,
+				'fillOpacity' => 0.35,
+				'strokeWeight' => 2
+			);
+		}
+
+		foreach ($this->totalPositions as $position)
+		{
+			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
+			$resultArray[$newId] = array(
+				'id' => $newId,
+				'latitude' => $position->getLatitude(),
+				'longitude' => $position->getLongitude(),
+				'radius' => 10,
 				'strokeColor' => '#ff0000',
 				'fillColor' => 'ff0000',
 				'strokeOpacity' => 0.8,
