@@ -21,6 +21,22 @@ class DistanceCalculator
 	}
 
 	/**
+	 * Bestimmt die Entfernung zwischen zwei Punkten und gibt das Ergebnis zu-
+	 * zurück.
+	 *
+	 * @since 2013-07-25
+	 *
+	 * @param Entity\Position $position1 Position der ersten Stadt
+	 * @param Entity\Position $position2 Position der zweiten Stadt
+	 *
+	 * @return double Berechnete Entfernung zwischen den beiden Positionen
+	 */
+	public function calculateDistanceFromCityToCity(Entity\Position $position1, Entity\Position $position2)
+	{
+		return $this->calculateDistanceFromCoordToCoord($position1->getLatitude(), $position2->getLatitude(), $position1->getLongitude(), $position2->getLongitude());
+	}
+
+	/**
 	 * Berechnung der Entfernung zwischen zwei Punkten auf einer als Ebene ange-
 	 * nommenen Erdoberfläche.
 	 *
