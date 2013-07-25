@@ -11,8 +11,8 @@ services:
         factory_method:  getRepository
         arguments: [CalderaCriticalmassBundle:Ride]
 
-    caldera_criticalmass_citydistancecalculator:
-        class:           Caldera\CriticalmassBundle\Utility\CityDistanceCalculator
+    caldera_criticalmass_distancecalculator:
+        class:           Caldera\CriticalmassBundle\Utility\DistanceCalculator
         arguments: []
 
     caldera_criticalmass_citylistener:

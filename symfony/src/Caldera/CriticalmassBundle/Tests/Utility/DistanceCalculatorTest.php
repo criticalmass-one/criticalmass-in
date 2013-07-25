@@ -10,12 +10,12 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Überprüft die Funktionalität der Entfernungsberechnung zwischen zwei
 	 * Städten. Dazu werden die Städte Hamburg und Bremen angelegt und mit ihren
-	 * Koordinaten ausgestattet, an den CityDistanceCalculator und das Ergebnis
+	 * Koordinaten ausgestattet, an den DistanceCalculator und das Ergebnis
 	 * ausgewertet.
 	 */
 	public function testCalculateDistanceFromCityToCity()
 	{
-		$cdc = new Utility\CityDistanceCalculator();
+		$cdc = new Utility\DistanceCalculator();
 
 		$hamburg = new Entity\City();
 		$bremen = new Entity\City();

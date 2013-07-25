@@ -32,7 +32,7 @@ class CityController extends Controller
 
 			if ($latitude && $longitude)
 			{
-				$cityResults[$key]['distance'] = $this->get('caldera_criticalmass_citydistancecalculator')->calculateDistanceFromCoordToCoord($cityResults[$key]['city']->getLatitude(), $latitude, $cityResults[$key]['city']->getLongitude(), $longitude);
+				$cityResults[$key]['distance'] = $this->get('caldera_criticalmass_distancecalculator')->calculateDistanceFromCoordToCoord($cityResults[$key]['city']->getLatitude(), $latitude, $cityResults[$key]['city']->getLongitude(), $longitude);
 			}
 			else
 			{

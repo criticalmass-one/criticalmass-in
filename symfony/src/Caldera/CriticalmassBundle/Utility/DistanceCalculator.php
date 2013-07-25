@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
-class CityDistanceCalculator
+class DistanceCalculator
 {
 	/**
 	 * Bestimmt die Entfernung zwischen zwei Städten und gibt das Ergebnis zu-
