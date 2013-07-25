@@ -104,8 +104,8 @@ class MapPositionHandler
 				'strokeWeight' => 2
 			);
 		}
-		/*
-		foreach ($this->totalPositions as $position)
+
+		foreach ($this->positions as $position)
 		{
 			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
 			$resultArray[$newId] = array(
@@ -119,7 +119,7 @@ class MapPositionHandler
 				'fillOpacity' => 0.35,
 				'strokeWeight' => 2
 			);
-		}*/
+		}
 
 		return $resultArray;
 	}
