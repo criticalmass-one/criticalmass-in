@@ -22,9 +22,11 @@
      %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+{% if app.user %}
 <script>
 var citySlugString = '{{ app.user.getCurrentCity.getMainSlug.getSlug }}';
 </script>
+{% endif %}
 </head>
 <body>
 	<div data-role="page">
