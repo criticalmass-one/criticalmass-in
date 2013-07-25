@@ -14,10 +14,12 @@ class MapController extends Controller
 	{
 		//$totalPositions = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 500);
 		$totalPositions = $this->getDoctrine()->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
-   ->where('p.creationDateTime > :minAge')
-   ->andWhere('p.creationDateTime < :maxAge')
-   ->setParameter('minAge', '2013-06-28 16:00:00')
-   ->setParameter('maxAge', '2013-06-28 16:30:00')
+   //->where('p.creationDateTime > :minAge')
+   //->andWhere('p.creationDateTime < :maxAge')
+   //->setParameter('minAge', '2013-06-28 16:00:00')
+   //->setParameter('maxAge', '2013-07-26 22:30:00')
+   ->add('orderBy', 'p.creationDateTime DESC')
+   ->setMaxResults(15)
    ->getQuery()
    ->getResult();
 
