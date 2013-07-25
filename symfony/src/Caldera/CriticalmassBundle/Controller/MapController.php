@@ -37,7 +37,8 @@ class MapController extends Controller
 				'longitude' => $mph->getMapCenterLongitude()
 			),
 			'zoom' => $mph->getZoomFactor(),
-			'positions' => $mph->getPositionArray()
+			'mainpositions' => $mph->getMainPositions(),
+			'additionalpositions' => $mph->getAdditionalPositions()
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');

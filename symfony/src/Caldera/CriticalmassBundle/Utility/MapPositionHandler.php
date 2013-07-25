@@ -84,13 +84,14 @@ class MapPositionHandler
 		return $this->calculateMapCenter("getLongitude");
 	}
 
-	public function getPositionArray()
+	public function getMainPositions()
 	{
 		$resultArray = array();
+		$counter = 0;
 
 		foreach ($this->positionFilter->getCalculatedPositions() as $position)
 		{
-			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
+			$newId = "position-".$counter;
 
 			$resultArray[$newId] = array(
 				'id' => $newId,
@@ -103,11 +104,21 @@ class MapPositionHandler
 				'fillOpacity' => 0.35,
 				'strokeWeight' => 2
 			);
+
+			++$counter;
 		}
+
+		return $resultArray;
+	}
+
+	public function getAdditionalPositions()
+	{
+		$resultArray = array();
 
 		foreach ($this->positions as $position)
 		{
-			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
+			$newId = "position-".$position->getId();
+
 			$resultArray[$newId] = array(
 				'id' => $newId,
 				'latitude' => $position->getLatitude(),
@@ -120,6 +131,7 @@ class MapPositionHandler
 				'strokeWeight' => 2
 			);
 		}
+
 
 		return $resultArray;
 	}

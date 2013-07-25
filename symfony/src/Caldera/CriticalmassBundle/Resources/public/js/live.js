@@ -1,5 +1,6 @@
 var markersArray = [];
 var map;
+var arrow;
 
 function setLastModifiedLabel()
 {
@@ -11,10 +12,25 @@ function setLastModifiedLabel()
 		(d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()) + ' Uhr');
 }
 
+function setArrow(result)
+{
+	var coord1 = new google.maps.LatLng(result.mainpositions['position-0'].latitude, result.mainpositions['position-0'].longitude);
+	var coord2 = new google.maps.LatLng(result.mainpositions['position-1'].latitude, result.mainpositions['position-1'].longitude);
+
+	arrow = new google.maps.Polyline({
+		path: [coord1, coord2],
+		icons: [{
+			icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW },
+			offset: '100%'
+		}],
+		map: map
+	});
+}
+
 function addMarker(options)
 {
 	options.map = map;
-	options.center = new google.maps.LatLng(options.latitude, options.longitude),
+	options.center = new google.maps.LatLng(options.latitude, options.longitude);
 
 	circleMarker = new google.maps.Circle(options);
 	markersArray[options.id] = circleMarker;
@@ -48,11 +64,19 @@ function refreshMarkers()
 
 function placeNewMarkers(result)
 {
-	for (var pos in result.positions)
+	for (var pos in result.mainpositions)
 	{
-		if (!existsMarker(result.positions[pos]))
+		if (!existsMarker(result.mainpositions[pos]))
 		{
-			addMarker(result.positions[pos]);
+			addMarker(result.mainpositions[pos]);
+		}
+	}
+
+	for (var pos in result.additionalpositions)
+	{
+		if (!existsMarker(result.additionalpositions[pos]))
+		{
+			addMarker(result.additionalpositions[pos]);
 		}
 	}
 }
@@ -62,6 +86,7 @@ function refreshMarkers2(result)
 	placeNewMarkers(result);
 	flushOldMarkers(result);
 	setLastModifiedLabel();
+	setArrow(result);
 }
 
 function flushOldMarkers(result)
@@ -73,9 +98,17 @@ function flushOldMarkers(result)
 	{
 		var found = false;
 
-		for (pos in result.positions)
+		for (pos in result.mainpositions)
 		{
-			if (i == result.positions[pos].id)
+			if (i == result.mainpositions[pos].id)
+			{
+				found = true;
+			}
+		}
+
+		for (pos in result.additionalpositions)
+		{
+			if (i == result.additionalpositions[pos].id)
 			{
 				found = true;
 			}
