@@ -31,7 +31,7 @@ class DistanceCalculator
 	 *
 	 * @return double Berechnete Entfernung zwischen den beiden Positionen
 	 */
-	public function calculateDistanceFromCityToCity(Entity\Position $position1, Entity\Position $position2)
+	public function calculateDistanceFromPositionToPosition(Entity\Position $position1, Entity\Position $position2)
 	{
 		return $this->calculateDistanceFromCoordToCoord($position1->getLatitude(), $position2->getLatitude(), $position1->getLongitude(), $position2->getLongitude());
 	}
