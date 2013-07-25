@@ -26,7 +26,7 @@ class SimplePositionFilter extends BasePositionFilter
 			}
 			else
 			{
-				krsort($sortedPositionArray);
+				ksort($sortedPositionArray);
 
 				$newPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
 				$oldPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
