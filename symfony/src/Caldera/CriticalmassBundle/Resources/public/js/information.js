@@ -1,7 +1,7 @@
 function initialize() {
 	$.ajax({
 		type: 'GET',
-		url: '/mapapi/getridelocation/hamburg',
+		url: '/mapapi/getridelocation/' + citySlugString,
 		data: {
 		},
 		success: function(result) {

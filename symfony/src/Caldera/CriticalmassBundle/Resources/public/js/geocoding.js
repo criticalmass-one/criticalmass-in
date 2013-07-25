@@ -22,7 +22,7 @@ function initialize() {
   {
     $.ajax({
       type: 'GET',
-      url: '/mapapi/getcitylocationbyid/hamburg',
+      url: '/mapapi/getcitylocationbyid/' + citySlugString,
       data: {
       },
       success: function(result)
