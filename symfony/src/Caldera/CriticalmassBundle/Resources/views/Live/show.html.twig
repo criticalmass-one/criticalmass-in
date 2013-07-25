@@ -18,15 +18,15 @@
 				<label for="slider-gps-interval">GPS-Intervall in Sekunden:</label>
 					<input type="range" name="slider-gps-interval" id="slider-gps-interval" value="{{ app.user.gpsinterval }}" min="1" max="30" />
 			</div>
- 
-		  <div data-role="collapsible">
-		    <h3>Section 2</h3>
-		    <p>I'm the collapsible set content for section 2.</p>
-		  </div>
+
+			<div data-role="collapsible">
+				<h3>Statistik</h3>
+				<p class="lastmodified">zuletzt aktualisiert: <span id="datetime">nie</span></p>
+				<p class="usercounter">Einberechnete Benutzer: <span id="usercounter">0</span></p>
+				<p class="averagespeed">Einberechnete Benutzer: <span id="averagespeed">0</span> Kilometer pro Stunde</p>
+			</div>
 		</div>
 
 		{% endif %}
-
-		<p class="lastmodified">zuletzt aktualisiert: <span id="datetime">nie</span></p>
 
 {% endblock %}
