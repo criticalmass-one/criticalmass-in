@@ -12,6 +12,10 @@ function setLastModifiedLabel()
 		(d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()) + ' Uhr');
 }
 
+function setUsercounter(result)
+{
+	$('span#usercounter').html(result.usercounter);
+}
 function setArrow(result)
 {
 	var position1 = result.mainpositions['position-0'];
@@ -92,6 +96,7 @@ function refreshMarkers2(result)
 	placeNewMarkers(result);
 	flushOldMarkers(result);
 	setLastModifiedLabel();
+	setUsercounter(result);
 	setArrow(result);
 }
 
@@ -155,6 +160,7 @@ function setMapOptions(result)
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	placeNewMarkers(result);
+	setUsercounter(result);
 	setArrow(result);
 }
 
