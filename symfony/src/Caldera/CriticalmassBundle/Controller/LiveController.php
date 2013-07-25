@@ -21,12 +21,12 @@ class LiveController extends Controller
 		$query = $this->getRequest()->query;
 
 		/* QND */
-		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug('hamburg')->getCity();
+		$city = $this->getUser()->getCurrentCity();
 
 		$position = new Entity\Position();
 
 		$position->setUser($this->getUser());
-		$position->setRide($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneByCity($city));
+		$position->setRide($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC')));
 
 		$position->setLatitude($query->get("latitude") ? $query->get("latitude") : 0.0);
 		$position->setLongitude($query->get("longitude") ? $query->get("longitude") : 0.0);
