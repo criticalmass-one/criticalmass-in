@@ -1,6 +1,6 @@
 var markersArray = [];
 var map;
-var arrow;
+var arrow = null;
 
 function setLastModifiedLabel()
 {
@@ -35,7 +35,7 @@ function setArrow(result)
 
 	if (arrow)
 	{
-		arrow.map = null;
+		arrow.setMap(null);
 		arrow = null;
 	}
 
