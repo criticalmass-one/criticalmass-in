@@ -22,7 +22,7 @@ class MapController extends Controller
    ->getResult();
 
 
-		$scf = new Utility\SimpleCoordFilter(
+		$scf = new Utility\SimplePositionFilter(
 			new Entity\Ride(),
 			$totalPositions
 		);

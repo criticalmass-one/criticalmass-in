@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
-class SimpleCoordFilter extends BaseCoordFilter
+class SimplePositionFilter extends BasePositionFilter
 {
 	public function __construct(Entity\Ride $ride, $positions)
 	{
