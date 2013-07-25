@@ -38,6 +38,20 @@ class MapPositionHandler
 
 		return count($users);
 	}
+
+	public function getAverageSpeed()
+	{
+		$positions = $this->positionFilter->getCalculatedPositions();
+
+		$dc = new Utility\DistanceCalculator();
+		$distance = $dc->calculateDistanceFromPositionToPosition($positions[0], $positions[1]);
+		$time = $positions[1]->getCreationDateTime()->format('U') - $positions[0]->getCreationDateTime()->format('U');
+
+		$averageSpeed = $distance / $time;
+
+		return round($averageSpeed, 2);
+	}
+
 	public function getZoomFactor()
 	{
 		$minX = null;
