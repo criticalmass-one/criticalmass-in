@@ -7,15 +7,24 @@
 		<div id="map-canvas" class="mapcanvas"></div>
 
 		{% if app.user != null %}
-		<div data-role="fieldcontain">
-			<label for="flip-gps-sender">GPS-Übertragung:</label>
-				<select name="flip-gps-sender" id="flip-gps-sender" data-role="slider">
-					<option value="off"{% if app.user.sendGPSInformation == 0 %} selected="selected"{% endif %}>Aus</option>
-					<option value="on"{% if app.user.sendGPSInformation == 1 %} selected="selected"{% endif %}>An</option>
-				</select>
-			<label for="slider-gps-interval">GPS-Intervall in Sekunden:</label>
-				<input type="range" name="slider-gps-interval" id="slider-gps-interval" value="{{ app.user.gpsinterval }}" min="1" max="30" />
+		<div data-role="collapsible-set">
+			<div data-role="collapsible">
+				<h3>GPS-Einstellungen</h3>
+				<label for="flip-gps-sender">GPS-Übertragung:</label>
+					<select name="flip-gps-sender" id="flip-gps-sender" data-role="slider">
+						<option value="off"{% if app.user.sendGPSInformation == 0 %} selected="selected"{% endif %}>Aus</option>
+						<option value="on"{% if app.user.sendGPSInformation == 1 %} selected="selected"{% endif %}>An</option>
+					</select>
+				<label for="slider-gps-interval">GPS-Intervall in Sekunden:</label>
+					<input type="range" name="slider-gps-interval" id="slider-gps-interval" value="{{ app.user.gpsinterval }}" min="1" max="30" />
+			</div>
+ 
+		  <div data-role="collapsible">
+		    <h3>Section 2</h3>
+		    <p>I'm the collapsible set content for section 2.</p>
+		  </div>
 		</div>
+
 		{% endif %}
 
 		<p class="lastmodified">zuletzt aktualisiert: <span id="datetime">nie</span></p>
