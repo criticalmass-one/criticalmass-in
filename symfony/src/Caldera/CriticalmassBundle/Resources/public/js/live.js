@@ -33,6 +33,12 @@ function setArrow(result)
 	var coord1 = new google.maps.LatLng(position1.latitude, position1.longitude);
 	var coord2 = new google.maps.LatLng(position1.latitude + vector[0] * arrowLength, position1.longitude + vector[1] * arrowLength);
 
+	if (arrow)
+	{
+		arrow.map = null;
+		arrow = null;
+	}
+
 	arrow = new google.maps.Polyline({
 		path: [coord1, coord2],
 		icons: [{
