@@ -28,7 +28,7 @@ function setArrow(result)
 	var position2 = result.mainpositions['position-1'];
 
 	var vector = [position2.latitude - position1.latitude, position2.longitude - position1.longitude];
-	var arrowLength = 12;
+	var arrowLength = 5;
 
 	var coord1 = new google.maps.LatLng(position1.latitude, position1.longitude);
 	var coord2 = new google.maps.LatLng(position1.latitude + vector[0] * arrowLength, position1.longitude + vector[1] * arrowLength);
