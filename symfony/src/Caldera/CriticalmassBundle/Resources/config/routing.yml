@@ -10,9 +10,9 @@ caldera_criticalmass_showcity:
     pattern: /{citySlug}/show/
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
 
-caldera_criticalmass_showcity2:
-    pattern: /{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
+#caldera_criticalmass_showcity2:
+#    pattern: /{citySlug}
+#    defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
 
 caldera_criticalmass_trackposition:
     pattern: /trackposition
