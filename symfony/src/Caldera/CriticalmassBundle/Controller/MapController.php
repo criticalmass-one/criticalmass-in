@@ -16,22 +16,19 @@ class MapController extends Controller
 		$totalPositions = $this->getDoctrine()->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
    ->where('p.creationDateTime > :minAge')
    ->andWhere('p.creationDateTime < :maxAge')
-   ->setParameter('minAge', '2013-06-28 19:00:00')
-   ->setParameter('maxAge', '2013-06-28 23:00:00')
+   ->setParameter('minAge', '2013-06-28 16:00:00')
+   ->setParameter('maxAge', '2013-06-28 16:30:00')
    ->getQuery()
    ->getResult();
 
 
-		$scf = new Utility\SimplePositionFilter(
-			new Entity\Ride(),
-			$totalPositions
-		);
 
 		$mph = new Utility\MapPositionHandler(
 			new Entity\Ride(),
-			$scf->getCalculatedPositions(),
-			$totalPositions
+			new Utility\SimplePositionFilter(new Entity\Ride())
 		);
+
+		$mph->setPositions($totalPositions);
 
 		$response = new Response();
 		$response->setContent(json_encode(array(

@@ -9,9 +9,13 @@ abstract class BasePositionFilter
 	protected $ride;
 	protected $positions = array();
 
-	public function __construct(Entity\Ride $ride, $positions)
+	public function __construct(Entity\Ride $ride)
 	{
 		$this->ride = $ride;
+	}
+
+	public function setPositions($positions)
+	{
 		$this->positions = $positions;
 	}
 

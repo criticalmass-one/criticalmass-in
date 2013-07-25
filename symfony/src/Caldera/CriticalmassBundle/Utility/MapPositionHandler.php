@@ -3,18 +3,25 @@
 namespace Caldera\CriticalmassBundle\Utility;
 
 use \Caldera\CriticalmassBundle\Entity as Entity;
+use \Caldera\CriticalmassBundle\Utility as Utility;
+
 
 class MapPositionHandler
 {
 	protected $ride;
-	protected $filteredPositions = array();
-	protected $totalPositions = array();
+	protected $positions = array();
+	protected $positionFilter;
 
-	public function __construct(Entity\Ride $ride, $filteredPositions, $totalPositions)
+	public function __construct(Entity\Ride $ride, Utility\BasePositionFilter $positionFilter)
 	{
 		$this->ride = $ride;
-		$this->filteredPositions = $filteredPositions;
-		$this->totalPositions = $totalPositions;
+		$this->positionFilter = $positionFilter;
+	}
+
+	public function setPositions($positions)
+	{
+		$this->positions = $positions;
+		$this->positionFilter->setPositions($positions);
 	}
 
 	public function getZoomFactor()
@@ -24,7 +31,7 @@ class MapPositionHandler
 		$minY = null;
 		$maxY = null;
 
-		foreach ($this->totalPositions as $position)
+		foreach ($this->positionFilter->getCalculatedPositions() as $position)
 		{
 			if (!isset($minX) && !isset($maxX) && !isset($minY) && !isset($maxY))
 			{
@@ -81,7 +88,7 @@ class MapPositionHandler
 	{
 		$resultArray = array();
 
-		foreach ($this->filteredPositions as $position)
+		foreach ($this->positionFilter->getCalculatedPositions() as $position)
 		{
 			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
 
@@ -97,7 +104,7 @@ class MapPositionHandler
 				'strokeWeight' => 2
 			);
 		}
-
+		/*
 		foreach ($this->totalPositions as $position)
 		{
 			$newId = "position-".$position->getLatitude()."-".$position->getLongitude()."-".rand(0, 50000);
@@ -112,7 +119,7 @@ class MapPositionHandler
 				'fillOpacity' => 0.35,
 				'strokeWeight' => 2
 			);
-		}
+		}*/
 
 		return $resultArray;
 	}
@@ -122,7 +129,7 @@ class MapPositionHandler
 		$min = null;
 		$max = null;
 
-		foreach ($this->filteredPositions as $position)
+		foreach ($this->positionFilter->getCalculatedPositions() as $position)
 		{
 			if (!isset($min) && !isset($max))
 			{
