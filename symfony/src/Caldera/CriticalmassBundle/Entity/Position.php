@@ -360,4 +360,14 @@ class Position
     {
         return $this->ride;
     }
+
+    public function isEqual(\Caldera\CriticalmassBundle\Entity\Position $position)
+    {
+	if (($position->getLatitude() == $this->getLatitude()) and ($position->getLongitude() == $this->getLongitude()))
+	{
+		return true;
+	}
+
+	return false;
+    }
 }
