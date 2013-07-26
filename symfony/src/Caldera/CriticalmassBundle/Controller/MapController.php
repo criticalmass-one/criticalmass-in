@@ -19,7 +19,7 @@ class MapController extends Controller
    //->setParameter('minAge', '2013-06-28 16:00:00')
    //->setParameter('maxAge', '2013-07-26 22:30:00')
    ->add('orderBy', 'p.creationDateTime DESC')
-   ->setMaxResults(15)
+   ->setMaxResults(300)
    ->getQuery()
    ->getResult();
 
@@ -76,13 +76,10 @@ class MapController extends Controller
 
 		$response = new Response();
 
-		if ($ride->getHasLocation())
-		{
-			$response->setContent(json_encode(array(
-				'latitude' => $city->getLatitude(),
-				'longitude' => $city->getLongitude()
-			)));
-		}
+		$response->setContent(json_encode(array(
+			'latitude' => $city->getLatitude(),
+			'longitude' => $city->getLongitude()
+		)));
 
 		$response->headers->set('Content-Type', 'application/json');
 
