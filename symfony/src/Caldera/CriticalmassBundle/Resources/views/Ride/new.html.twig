@@ -1,20 +1,74 @@
 {% extends 'CalderaCriticalmassBundle:Default:layout.html.twig' %}
 
 {% block body %}
-    <h1>Ride creation</h1>
+    <h1>Tour erstellen</h1>
 
-    <form action="{{ path('admin_ride_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
+	<h1>Tourdetails definieren</h1>
 
+	<form action="{{ path('admin_ride_create') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_errors(form) }}
+		<div>
+			<label>Stadt</label>
+			{{ form_errors(form.city) }}
+			{{ form_widget(form.city) }}
+		</div>
+
+		<div>
+			<label>Datum</label>
+			{{ form_errors(form.date) }}
+			{{ form_widget(form.date) }}
+		</div>
+
+		<div>
+			<label>Uhrzeit</label>
+			{{ form_errors(form.time) }}
+			{{ form_widget(form.time) }}
+		</div>
+
+		<div>
+			<label>
+				{{ form_errors(form.hasTime) }}
+				{{ form_widget(form.hasTime, {'attr': {'type': 'checkbox'}}) }} Uhrzeit anzeigen?</label>
+		</div>
+
+		<div>
+			<label>Treffpunkt</label>
+			{{ form_errors(form.location) }}
+			{{ form_widget(form.location) }}
+		</div>
+
+		<div>
+			<label>
+				{{ form_errors(form.hasLocation) }}
+				{{ form_widget(form.hasLocation, {'attr': {'type': 'checkbox'}}) }} Treffpunkt anzeigen?</label>
+		</div>
+
+		<div>
+			<label>Genaue Adresse des Treffpunktes</label>
+			{{ form_errors(form.mapLocation) }}
+			{{ form_widget(form.mapLocation) }}
+		</div>
+
+		<div id="geocoding-map" class="mapcanvas"></div>
+
+		<div>
+			<label>Breitengrad des Treffpunktes</label>
+			{{ form_errors(form.latitude) }}
+			{{ form_widget(form.latitude) }}
+		</div>
+
+		<div>
+			<label>Längengrad des Treffpunktes</label>
+			{{ form_errors(form.longitude) }}
+			{{ form_widget(form.longitude) }}
+		</div>
+
+		{{ form_widget(form._token) }}
+
+		<p><button type="submit">Speichern</button></p>
+	</form>
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_ride') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+	<li><a href="{{ path('admin_ride') }}">Zurück zur Übersicht</a></li>
+	</ul>
+
 {% endblock %}
