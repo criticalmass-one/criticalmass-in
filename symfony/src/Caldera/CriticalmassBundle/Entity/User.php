@@ -37,7 +37,7 @@ class User extends BaseUser
 	/**
 	 * @ORM\Column(type="string", length=255)
 	 */
-	private $pushoverKey;
+	private $pushoverKey = '';
 
 	public function __construct()
 	{
