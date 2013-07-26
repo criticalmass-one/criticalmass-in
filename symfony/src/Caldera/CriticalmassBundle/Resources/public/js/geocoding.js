@@ -2,13 +2,13 @@ var geocoder;
 var map;
 var marker;
 
-function initialize() {
+function initializeGeocoding() {
   geocoder = new google.maps.Geocoder();
 
   var latlng;
 
-  if ($('#caldera_criticalmassbundle_ridetype_latitude').val() != 0 &&
-      $('#caldera_criticalmassbundle_ridetype_longitude').val() != 0)
+  if ($('#caldera_criticalmassbundle_ridetype_latitude').val() != '0' &&
+      $('#caldera_criticalmassbundle_ridetype_longitude').val() != '0')
   {
     latlng = new google.maps.LatLng(
       $('#caldera_criticalmassbundle_ridetype_latitude').val(),
@@ -22,7 +22,7 @@ function initialize() {
   {
     $.ajax({
       type: 'GET',
-      url: '/mapapi/getcitylocationbyid/' + citySlugString,
+      url: '/mapapi/getcitylocation/' + citySlugString,
       data: {
       },
       success: function(result)
@@ -136,4 +136,4 @@ function locateAddress() {
   placeNewMarker(location);
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initializeGeocoding);
