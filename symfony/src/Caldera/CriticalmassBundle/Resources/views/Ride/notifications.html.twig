@@ -19,13 +19,29 @@
 		{% endif %}
 	</div>
 
-	<div data-role="popup" id="confirmationpopup">
+	<div data-role="popup" id="confirmationpopupride">
 		<div data-role="header"><h1>Benachrichtigungen senden</h1></div>
 		<h3>Bist du sicher?</h3>
 		<p>Teilnehmer der Stadt {{ ride.getCity }} werden sofort benachrichtigt.</p>
 		<a data-role="button" data-inline="true" href="/admin/ride/{{ ride.getId }}/sendnotifications/ride">Senden</a>
 		<a data-role="button" data-inline="true" data-rel="back">Abbrechen</a>
 	</div>
+
+        <div data-role="popup" id="confirmationpopuptime">
+                <div data-role="header"><h1>Benachrichtigungen senden</h1></div>
+                <h3>Bist du sicher?</h3>
+                <p>Teilnehmer der Stadt {{ ride.getCity }} werden sofort benachrichtigt.</p>
+                <a data-role="button" data-inline="true" href="/admin/ride/{{ ride.getId }}/sendnotifications/time">Senden</a>
+                <a data-role="button" data-inline="true" data-rel="back">Abbrechen</a>
+        </div>
+
+        <div data-role="popup" id="confirmationpopuplocation">
+                <div data-role="header"><h1>Benachrichtigungen senden</h1></div>
+                <h3>Bist du sicher?</h3>
+                <p>Teilnehmer der Stadt {{ ride.getCity }} werden sofort benachrichtigt.</p>
+                <a data-role="button" data-inline="true" href="/admin/ride/{{ ride.getId }}/sendnotifications/location">Senden</a>
+                <a data-role="button" data-inline="true" data-rel="back">Abbrechen</a>
+        </div>
 
 	<ul class="record_actions">
 		<li><a href="{{ path('admin_ride') }}">Zurück zur Übersicht</a></li>
