@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility;
 
 use \Caldera\CriticalmassBundle\Entity as Entity;
 
-class PushoverNotificationPusher extends BaseNotificationsPusher
+class PushoverNotificationPusher extends BaseNotificationPusher
 {
 	protected $pushoverKey;
 
