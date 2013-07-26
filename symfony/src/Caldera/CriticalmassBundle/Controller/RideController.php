@@ -221,7 +221,7 @@ class RideController extends Controller
 			}
 
 			$np = new Utility\PushoverNotificationPusher($notification, $users);
-			$np->setPushoverKey($this->getParameter('pushoverkey.notifications'));
+			$np->setPushoverKey($this->container->getParameter('notifications.pushoverkey'));
 			$np->sendNotification();
 
 			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('notificationsPusher' => $np));
