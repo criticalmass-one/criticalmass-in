@@ -12,12 +12,17 @@ class MapController extends Controller
 {
 	public function mapdataAction()
 	{
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($this->getRequest()->getSession()->get('currentCitySlug'))->getCity();
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
+
 		//$totalPositions = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Position')->findBy(array(), array("id" => "DESC"), 500);
 		$totalPositions = $this->getDoctrine()->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
+		->where("p.ride = :rideId")
    //->where('p.creationDateTime > :minAge')
    //->andWhere('p.creationDateTime < :maxAge')
    //->setParameter('minAge', '2013-06-28 16:00:00')
    //->setParameter('maxAge', '2013-07-26 22:30:00')
+   ->setParameter('rideId', $ride->getId())
    ->add('orderBy', 'p.creationDateTime DESC')
    ->setMaxResults(300)
    ->getQuery()
