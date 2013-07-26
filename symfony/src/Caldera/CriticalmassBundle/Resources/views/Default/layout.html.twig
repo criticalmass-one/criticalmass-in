@@ -22,9 +22,9 @@
      %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
-{% if app.user %}
+{% if app.session.get('currentCitySlug') %}
 <script>
-var citySlugString = '{{ app.user.getCurrentCity.getMainSlug.getSlug }}';
+var citySlugString = '{{ app.session.get('currentCitySlug') }}';
 </script>
 {% endif %}
 </head>
