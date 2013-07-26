@@ -1,4 +1,4 @@
-function initialize() {
+function initializeInformation() {
 	$.ajax({
 		type: 'GET',
 		url: '/mapapi/getridelocation/' + citySlugString,
@@ -23,4 +23,4 @@ function initialize() {
 	});
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initializeInformation);

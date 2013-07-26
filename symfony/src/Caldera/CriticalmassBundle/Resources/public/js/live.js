@@ -30,7 +30,7 @@ function setArrow(result)
 	var vector = [position2.latitude - position1.latitude, position2.longitude - position1.longitude];
 	var arrowLength = 5;
 
-	alert('Vector ' + vector[0] + ' ' + vector[1] + ' Position1 ' + position1.latitude + ' ' + position1.longitude + ' Position2 ' + position2.latitude + ' ' + position2.longitude);
+//	alert('Vector ' + vector[0] + ' ' + vector[1] + ' Position1 ' + position1.latitude + ' ' + position1.longitude + ' Position2 ' + position2.latitude + ' ' + position2.longitude);
 
 	if ((vector[0] > 0) || (vector[1] > 0))
 	{
