@@ -29,7 +29,13 @@ class SimplePositionFilter extends BasePositionFilter
 				ksort($sortedPositionArray);
 
 				$newPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
-				$oldPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
+
+				do
+				{
+					$oldPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
+				}
+				while ($newPositions[$sortedPositionUser]->isEqual($oldPositions[$sortedPositionUser]));
+
 			}
 		}
 
