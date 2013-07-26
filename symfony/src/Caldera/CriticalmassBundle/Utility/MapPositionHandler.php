@@ -49,6 +49,8 @@ class MapPositionHandler
 
 		$averageSpeed = $distance / $time;
 
+		$averageSpeed *= 3600;
+
 		return round($averageSpeed, 2);
 	}
 
