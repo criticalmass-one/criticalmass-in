@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassBundle\Utility\Notifications;
 
-class BaseNotification
+class PushoverNotification extends BaseNotification
 {
 	protected $token;
 	protected $user;
