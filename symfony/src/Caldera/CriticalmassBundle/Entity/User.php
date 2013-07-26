@@ -29,7 +29,7 @@ class User extends BaseUser
 	private $gpsInterval = 10;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="City")
+	 * @ORM\ManyToOne(targetEntity="City")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
 	private $currentCity;
