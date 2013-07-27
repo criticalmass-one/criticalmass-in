@@ -8,33 +8,30 @@ class UserPositionFilter extends BasePositionFilter
 {
 	public function process()
 	{
-		/*
-		$sortedPositions = array();
+		$positionSortedByUser = array();
 		$filteredPositions = array();
 
-		foreach ($this->positions as $position)
+		foreach ($this->positionArray->getPositions() as $position)
 		{
-			$sortedPositions[$position->getUser()->getId()][$position->getCreationDateTime()->format("Y-m-d-H-i-s")] = $position;
+			$positionSortedByUser[$position->getUser()->getId()][$position->getCreationDateTime()->format("Y-m-d-H-i-s")] = $position;
 		}
 
-		foreach ($sortedPositions as $sortedPositionUser => $sortedPositionArray)
+		foreach ($positionSortedByUser as $positionSortedByUserKey => $positionSortedByUserValue)
 		{
-			if (count($sortedPositionArray) < 2)
-			{
-				unset($sortedPositions[$sortedPositionUser]);
-			}
-			else
-			{
-				ksort($sortedPositionArray);
+			ksort($positionSortedByUserValue);
 
-				$newPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
+			$firstPosition = array_pop($positionSortedByUserValue);
 
-				do
-				{
-					$oldPositions[$sortedPositionUser] = array_pop($sortedPositionArray);
-				}
-				while ($newPositions[$sortedPositionUser]->isEqual($oldPositions[$sortedPositionUser]));
+			do
+			{
+				$secondPosition = array_pop($positionSortedByUserValue);
 			}
-		}*/
+			while ($firstPosition->isEqual($secondPosition));
+
+			$filteredPositions[] = $firstPosition;
+			$filteredPositions[] = $secondPosition;
+		}
+
+		$this->positionArray->setPositions($filteredPositions);
 	}
 }
