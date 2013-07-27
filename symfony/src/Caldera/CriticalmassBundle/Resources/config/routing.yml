@@ -70,6 +70,10 @@ CalderaCriticalmassBundle_ridecomments:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing/ridecomments.yml"
     prefix:   /
 
+caldera_criticalmass_godmode:
+    pattern: /{citySlug}/godmode/{status}
+    defaults: { _controller: CalderaCriticalmassBundle:Live:godmode }
+
 caldera_criticalmass_showcity2:
     pattern: /{citySlug}
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }

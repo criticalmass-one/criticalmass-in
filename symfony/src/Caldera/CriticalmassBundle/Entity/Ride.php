@@ -90,7 +90,10 @@ class Ride
 	 */
 	private $longitude;
 
-
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $godMode;
 
     /**
      * Get id
@@ -330,5 +333,28 @@ class Ride
     public function getMapLocation()
     {
         return $this->mapLocation;
+    }
+
+    /**
+     * Set godMode
+     *
+     * @param integer $godMode
+     * @return Ride
+     */
+    public function setGodMode($godMode)
+    {
+        $this->godMode = $godMode;
+    
+        return $this;
+    }
+
+    /**
+     * Get godMode
+     *
+     * @return integer 
+     */
+    public function getGodMode()
+    {
+        return $this->godMode;
     }
 }

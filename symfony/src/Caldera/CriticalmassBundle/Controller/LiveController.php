@@ -85,4 +85,18 @@ class LiveController extends Controller
 
 		return $response;
 	}
+
+	public function godmodeAction($citySlug, $status)
+	{
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
+
+		$ride->setGodMode($status);
+
+		$manager = $this->getDoctrine()->getManager();
+                $manager->persist($ride);
+                $manager->flush();
+
+		return new Response("Godmode fuer ".$city->getCity()." ist: ".$status);
+	}
 }
