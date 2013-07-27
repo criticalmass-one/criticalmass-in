@@ -8,7 +8,7 @@ class DoublePositionFilter extends BasePositionFilter
 {
 	public function process()
 	{
-		foreach ($this->positionArray->getPositions() as $key1 => $position1)
+		/*foreach ($this->positionArray->getPositions() as $key1 => $position1)
 		{
 			foreach ($this->positionArray->getPositions() as $key2 => $position2)
 			{
@@ -17,6 +17,6 @@ class DoublePositionFilter extends BasePositionFilter
 					$this->positionArray->deletePosition($key2);
 				}
 			}
-		}
+		}*/
 	}
 }
