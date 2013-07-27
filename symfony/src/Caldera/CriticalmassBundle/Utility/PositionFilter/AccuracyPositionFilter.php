@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility\PositionFilter;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
-class UserPositionFilter extends BasePositionFilter
+class AccuracyPositionFilter extends BasePositionFilter
 {
 	public function process()
 	{
