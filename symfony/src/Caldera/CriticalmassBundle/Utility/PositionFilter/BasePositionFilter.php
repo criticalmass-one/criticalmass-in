@@ -7,21 +7,21 @@ use Caldera\CriticalmassBundle\Entity as Entity;
 abstract class BasePositionFilter
 {
 	protected $ride;
-	protected $positions = array();
+	protected $positionArray;
 
 	public function __construct(Entity\Ride $ride)
 	{
 		$this->ride = $ride;
 	}
 
-	public function setPositions($positions)
+	public function setPositionArray(PositionArray $positionArray)
 	{
-		$this->positions = $positions;
+		$this->positionArray = $positionArray;
 	}
 
-	public function getPositions()
+	public function getPositionArray()
 	{
-		return $this->positions;
+		return $this->positionArray;
 	}
 
 	public abstract function process();
