@@ -37,4 +37,9 @@ class PositionArray
 	{
 		$this->positions[] = $position;
 	}
+
+	public function deletePosition($key)
+	{
+		unset($this->positions[$key]);
+	}
 }
