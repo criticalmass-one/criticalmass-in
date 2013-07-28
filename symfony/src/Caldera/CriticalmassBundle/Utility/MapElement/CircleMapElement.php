@@ -22,7 +22,7 @@ class CircleMapElement
 			'type' => 'circle',
 			'latitude' => $this->centerPosition->getLatitude(),
 			'longitude' => $this->centerPosition->getLongitude(),
-			'radius' => $this->toPosition,
+			'radius' => $this->radius,
 			'strokeColor' => '#ff0000',
 			'fillColor' => '#ff0000',
 			'strokeOpacity' => 0.8,
