@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassBundle\Utility\PositionFilter;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
+use Caldera\CriticalmassBundle\Utility\PositionArray as PositionArray;
 
 abstract class BasePositionFilter
 {

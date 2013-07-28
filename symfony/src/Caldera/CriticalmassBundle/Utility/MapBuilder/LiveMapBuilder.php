@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassBundle\Utility\MapBuilder;
 
-use Caldera\CriticalmassBundle\Utility\PositionFilter as PositionFilter;
+use Caldera\CriticalmassBundle\Utility\PositionFilterChain as PositionFilterChain;
 use Caldera\CriticalmassBundle\Utility\MapElement as MapElement;
 use Caldera\CriticalmassBundle\Utility\MapBuilder\MapBuilderHelper as MapBuilderHelper;
 use Caldera\CriticalmassBundle\Utility as Utility;
@@ -46,13 +46,13 @@ class LiveMapBuilder extends BaseMapBuilder
 
 	public function calculateMainPositions()
 	{
-		$psf = new PositionFilter\PositionFilterChain();
+		$psf = new PositionFilterChain\PositionFilterChain();
 		$this->mainPositions = $psf->setRide($this->ride)->setPositions($this->positions)->execute()->getPositions();
 	}
 
 	public function calculateAdditionalPositions()
 	{
-		$psf = new PositionFilter\TailFilterChain();
+		$psf = new PositionFilterChain\TailPositionFilterChain();
 		$this->additionalPositions = $psf->setRide($this->ride)->setPositions($this->positions)->execute()->getPositions();
 	}
 }
