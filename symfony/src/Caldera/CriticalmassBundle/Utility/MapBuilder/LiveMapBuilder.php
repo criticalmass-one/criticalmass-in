@@ -111,7 +111,12 @@ class LiveMapBuilder extends BaseMapBuilder
 
 	public function calculateAdditionalPositions()
 	{
-		
+		$psf = new PositionFilter\TailFilterChain();
+		$psf->setRide($this->ride);
+		$psf->setPositions($this->positions);
+		$psf->execute();
+
+		$this->additionalPositions = $psf->getPositions();
 	}
 
 	public function calculateMapCenter($coordinateFunction)
