@@ -1,8 +1,10 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Utility\PositionFilter;
+namespace Caldera\CriticalmassBundle\Utility\PositionFilterChain;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
+use Caldera\CriticalmassBundle\Utility as Utility;
+use Caldera\CriticalmassBundle\Utility\PositionFilter as PositionFilter;
 
 abstract class BasePositionFilterChain
 {
@@ -21,7 +23,7 @@ abstract class BasePositionFilterChain
 
 	public function setPositions($positions)
 	{
-		$this->positionArray = new PositionArray($positions);
+		$this->positionArray = new Utility\PositionArray($positions);
 
 		return $this;
 	}
