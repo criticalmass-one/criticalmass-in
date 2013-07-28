@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Utility\PositionFilter;
+namespace Caldera\CriticalmassBundle\Utility;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
