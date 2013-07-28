@@ -33,7 +33,7 @@ class MapPositionHandler
 	}
 
 	public function getAverageSpeed()
-	{
+	{/*
 		$positions = $this->positionFilter->getCalculatedPositions();
 
 		$dc = new Utility\DistanceCalculator();
@@ -44,12 +44,13 @@ class MapPositionHandler
 
 		$averageSpeed *= 3600;
 
-		return round($averageSpeed, 2);
+		return round($averageSpeed, 2);*/
+		return 42.42;
 	}
 
 	public function getZoomFactor()
 	{
-		$minX = null;
+/*		$minX = null;
 		$maxX = null;
 		$minY = null;
 		$maxY = null;
@@ -94,7 +95,8 @@ class MapPositionHandler
 
 		$zoomFactor = floor(log(960 * 360 / $distance / 256)) + 1;
 
-		return $zoomFactor;
+		return $zoomFactor;*/
+		return 10;
 	}
 
 	public function getMapCenterLatitude()
@@ -119,20 +121,9 @@ class MapPositionHandler
 
 		foreach ($psf->getPositions() as $position)
 		{
-			$newId = "position-".$counter;
+			$circle = new Utility\MapElement\CircleMapElement($position, 100);
 
-			$resultArray[$newId] = array(
-				'id' => $newId,
-				'latitude' => $position->getLatitude(),
-				'longitude' => $position->getLongitude(),
-				'radius' => 100,
-				'strokeColor' => '#ff0000',
-				'fillColor' => 'ff0000',
-				'strokeOpacity' => 0.8,
-				'fillOpacity' => 0.35,
-				'strokeWeight' => 2
-			);
-
+			$resultArray['position-'.$counter] = $circle->draw();
 			++$counter;
 		}
 
@@ -141,25 +132,19 @@ class MapPositionHandler
 
 	public function getAdditionalPositions()
 	{
+		$psf = new Utility\PositionFilter\PositionFilterChain();
+		$psf->setRide($this->ride);
+		$psf->setPositions($this->positions);
+		$psf->execute();
+
 		$resultArray = array();
 
-		foreach ($this->positions as $position)
+		foreach ($psf->getPositions() as $position)
 		{
-			$newId = "position-".$position->getId();
+			$circle = new Utility\MapElement\CircleMapElement($position, 10);
 
-			$resultArray[$newId] = array(
-				'id' => $newId,
-				'latitude' => $position->getLatitude(),
-				'longitude' => $position->getLongitude(),
-				'radius' => 10,
-				'strokeColor' => '#ff0000',
-				'fillColor' => 'ff0000',
-				'strokeOpacity' => 0.8,
-				'fillOpacity' => 0.35,
-				'strokeWeight' => 2
-			);
+			$resultArray[$circle->getId()] = $circle->draw();
 		}
-
 
 		return $resultArray;
 	}
@@ -169,7 +154,12 @@ class MapPositionHandler
 		$min = null;
 		$max = null;
 
-		foreach ($this->positionFilter->getCalculatedPositions() as $position)
+		$psf = new Utility\PositionFilter\PositionFilterChain();
+		$psf->setRide($this->ride);
+		$psf->setPositions($this->positions);
+		$psf->execute();
+
+		foreach ($psf->getPositions() as $position)
 		{
 			if (!isset($min) && !isset($max))
 			{
