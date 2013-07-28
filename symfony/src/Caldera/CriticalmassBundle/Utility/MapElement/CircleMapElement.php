@@ -17,7 +17,7 @@ class CircleMapElement
 
 	public function getId()
 	{
-		return 'circle-'.$this->centerPosition.'-'.$this->radius;
+		return 'circle-'.$this->centerPosition->getLatitude().'-'.$this->centerPosition->getLongitude().'-'.$this->radius;
 	}
 
 	public function draw()
