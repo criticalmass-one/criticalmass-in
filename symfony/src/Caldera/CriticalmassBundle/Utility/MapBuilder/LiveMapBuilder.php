@@ -75,12 +75,16 @@ class LiveMapBuilder extends BaseMapBuilder
 
 	public function getMapCenterLatitude()
 	{
-		return $this->calculateMapCenter("getLatitude");
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions[0], $this->mainPositions[1]);
+
+		return $mcc->calculateMapCenter("getLatitude");
 	}
 
 	public function getMapCenterLongitude()
 	{
-		return $this->calculateMapCenter("getLongitude");
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions[0], $this->mainPositions[1]);
+
+		return $mcc->calculateMapCenter("getLongitude");
 	}
 
 	public function calculateMainPositions()
@@ -93,30 +97,5 @@ class LiveMapBuilder extends BaseMapBuilder
 	{
 		$psf = new PositionFilter\TailFilterChain();
 		$this->additionalPositions = $psf->setRide($this->ride)->setPositions($this->positions)->execute()->getPositions();
-	}
-
-	public function calculateMapCenter($coordinateFunction)
-	{
-		$min = null;
-		$max = null;
-
-		foreach ($this->mainPositions as $position)
-		{
-			if (!isset($min) && !isset($max))
-			{
-				$min = $position->$coordinateFunction();
-				$max = $position->$coordinateFunction();
-			}
-			elseif ($min > $position->$coordinateFunction())
-			{
-				$min = $position->$coordinateFunction();
-			}
-			elseif ($max < $position->$coordinateFunction())
-			{
-				$max = $position->$coordinateFunction();
-			}
-		}
-
-		return $min + ($max - $min) / 2.0;
 	}
 }
