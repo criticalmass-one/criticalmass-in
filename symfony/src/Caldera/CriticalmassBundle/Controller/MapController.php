@@ -44,6 +44,7 @@ class MapController extends Controller
 		);
 
 		$lmp->calculateMainPositions();
+		$lmp->calculateAdditionalPositions();
 
 		$response = new Response();
 		$response->setContent(json_encode($lmp->draw()));
