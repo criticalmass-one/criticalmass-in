@@ -38,24 +38,15 @@ class MapController extends Controller
    ->getResult();
 		}
 
-
-		$mph = new Utility\MapPositionHandler(
-			new Entity\Ride(),
+		$lmp = new Utility\MapBuilder\LiveMapBuilder(
+			$ride,
 			$totalPositions
 		);
 
+		$lmp->calculateMainPositions();
+
 		$response = new Response();
-		$response->setContent(json_encode(array(
-			//'mapcenter' => array(
-				//'latitude' => $mph->getMapCenterLatitude(),
-				//'longitude' => $mph->getMapCenterLongitude()
-				//),
-			//'zoom' => $mph->getZoomFactor(),
-			'mainpositions' => $mph->getMainPositions()
-			//'additionalpositions' => $mph->getAdditionalPositions(),
-			//'usercounter' => $mph->getUserCounter(),
-			//'averagespeed' => $mph->getAverageSpeed()
-		)));
+		$response->setContent(json_encode($lmp->draw()));
 
 		$response->headers->set('Content-Type', 'application/json');
 
