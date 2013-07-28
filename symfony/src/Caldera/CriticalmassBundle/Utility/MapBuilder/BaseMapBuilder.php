@@ -53,7 +53,17 @@ abstract class BaseMapBuilder
 
 	public function getAdditionalPositions()
 	{
-		return $this->additionalPositions;
+		$resultArray = array();
+
+		foreach ($this->additionalPositions as $position)
+		{
+			$circle = new MapElement\CircleMapElement($position, 10);
+
+			$resultArray[$position->getId()] = $circle->draw();
+		}
+
+		return $resultArray;
+
 	}
 
 	public function draw()
