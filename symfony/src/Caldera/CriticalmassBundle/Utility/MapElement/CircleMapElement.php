@@ -9,7 +9,7 @@ class CircleMapElement
 	protected $centerPosition;
 	protected $radius;
 
-	public function __construct(Position $centerPosition, Position $radius)
+	public function __construct(Position $centerPosition, $radius)
 	{
 		$this->centerPosition = $centerPosition;
 		$this->radius = $radius;
