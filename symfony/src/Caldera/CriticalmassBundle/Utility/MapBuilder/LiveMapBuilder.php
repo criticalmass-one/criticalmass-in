@@ -13,7 +13,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	{
 		$ucc = new MapBuilderHelper\UserCounterCalculator($this->additionalPositions);
 
-		return $asc->getUserCounter();
+		return $ucc->getUserCounter();
 	}
 
 	public function getAverageSpeed()
@@ -27,7 +27,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	{
 		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions[0], $this->mainPositions[1]);
 
-		return $asc->getZoomFactor();
+		return $zfc->getZoomFactor();
 	}
 
 	public function getMapCenterLatitude()

@@ -18,7 +18,7 @@ class UserCounterCalculator
 	{
 		$users = array();
 
-		foreach ($this->mainPositions as $position)
+		foreach ($this->positions as $position)
 		{
 			if (!in_array($position->getUser(), $users))
 			{
