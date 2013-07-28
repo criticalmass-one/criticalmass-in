@@ -19,14 +19,13 @@ abstract class BasePositionFilterChain
 
 	public function setPositions($positions)
 	{
-		$this->positionArray = new PositionArray($this->positions);
+		$this->positionArray = new PositionArray($positions);
 	}
-
-	public abstract function execute();
 
 	public function getPositions()
 	{
-		return $this->positions;
+		return $this->positionArray->getPositions();
 	}
 
+	public abstract function execute();
 }
