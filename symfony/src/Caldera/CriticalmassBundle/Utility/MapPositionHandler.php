@@ -10,18 +10,11 @@ class MapPositionHandler
 {
 	protected $ride;
 	protected $positions = array();
-	protected $positionFilter;
 
-	public function __construct(Entity\Ride $ride, Utility\BasePositionFilter $positionFilter)
+	public function __construct(Entity\Ride $ride, $positions)
 	{
 		$this->ride = $ride;
-		$this->positionFilter = $positionFilter;
-	}
-
-	public function setPositions($positions)
-	{
 		$this->positions = $positions;
-		$this->positionFilter->setPositions($positions);
 	}
 
 	public function getUserCounter()
@@ -116,10 +109,15 @@ class MapPositionHandler
 
 	public function getMainPositions()
 	{
+		$psf = new Utility\PositionFilter\PositionFilterChain();
+		$psf->setRide($this->ride);
+		$psf->setPositions($this->positions);
+		$psf->execute();
+
 		$resultArray = array();
 		$counter = 0;
 
-		foreach ($this->positionFilter->getCalculatedPositions() as $position)
+		foreach ($psf->getPositions() as $position)
 		{
 			$newId = "position-".$counter;
 

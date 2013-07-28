@@ -19,7 +19,7 @@ class PositionFilterChain extends BasePositionFilterChain
 
 	public function setPositions($positions)
 	{
-		$this->positionArray = new PositionArray($this->positions);
+		$this->positionArray = new PositionArray($positions);
 	}
 
 	public function execute()
@@ -27,10 +27,17 @@ class PositionFilterChain extends BasePositionFilterChain
 		$this->filters[] = new AccuracyPositionFilter($this->ride);
 		$this->filters[] = new DoublePositionFilter($this->ride);
 		$this->filters[] = new UserPositionFilter($this->ride);
+
+		foreach ($this->filters as $filter)
+		{
+			$filter->setPositionArray($this->positionArray);
+			$filter->process();
+			$this->positionArray = $filter->getPositionArray();
+		}
 	}
 
 	public function getPositions()
 	{
-		return $this->positions;
+		return $this->positionArray->getPositions();
 	}
 }
