@@ -15,11 +15,15 @@ abstract class BasePositionFilterChain
 	public function setRide(Entity\Ride $ride)
 	{
 		$this->ride = $ride;
+
+		return $this;
 	}
 
 	public function setPositions($positions)
 	{
 		$this->positionArray = new PositionArray($positions);
+
+		return $this;
 	}
 
 	public function getPositions()

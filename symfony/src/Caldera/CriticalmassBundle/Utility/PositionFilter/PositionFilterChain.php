@@ -18,5 +18,7 @@ class PositionFilterChain extends BasePositionFilterChain
 			$filter->process();
 			$this->positionArray = $filter->getPositionArray();
 		}
+
+		return $this;
 	}
 }
