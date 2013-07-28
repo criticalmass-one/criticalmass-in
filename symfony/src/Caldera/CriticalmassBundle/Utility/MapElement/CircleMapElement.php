@@ -23,7 +23,7 @@ class CircleMapElement
 	public function draw()
 	{
 		return array(
-			'id' => $this->getId()
+			'id' => $this->getId(),
 			'type' => 'circle',
 			'latitude' => $this->centerPosition->getLatitude(),
 			'longitude' => $this->centerPosition->getLongitude(),
