@@ -41,22 +41,20 @@ class MapController extends Controller
 
 		$mph = new Utility\MapPositionHandler(
 			new Entity\Ride(),
-			new Utility\SimplePositionFilter(new Entity\Ride())
+			$totalPositions
 		);
-
-		$mph->setPositions($totalPositions);
 
 		$response = new Response();
 		$response->setContent(json_encode(array(
-			'mapcenter' => array(
-				'latitude' => $mph->getMapCenterLatitude(),
-				'longitude' => $mph->getMapCenterLongitude()
-			),
-			'zoom' => $mph->getZoomFactor(),
-			'mainpositions' => $mph->getMainPositions(),
-			'additionalpositions' => $mph->getAdditionalPositions(),
-			'usercounter' => $mph->getUserCounter(),
-			'averagespeed' => $mph->getAverageSpeed()
+			//'mapcenter' => array(
+				//'latitude' => $mph->getMapCenterLatitude(),
+				//'longitude' => $mph->getMapCenterLongitude()
+				//),
+			//'zoom' => $mph->getZoomFactor(),
+			'mainpositions' => $mph->getMainPositions()
+			//'additionalpositions' => $mph->getAdditionalPositions(),
+			//'usercounter' => $mph->getUserCounter(),
+			//'averagespeed' => $mph->getAverageSpeed()
 		)));
 
 		$response->headers->set('Content-Type', 'application/json');
