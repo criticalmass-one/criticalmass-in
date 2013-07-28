@@ -6,22 +6,6 @@ use Caldera\CriticalmassBundle\Entity as Entity;
 
 class PositionFilterChain extends BasePositionFilterChain
 {
-	protected $ride;
-
-	protected $filters = array();
-
-	protected $positionArray;
-
-	public function setRide(Entity\Ride $ride)
-	{
-		$this->ride = $ride;
-	}
-
-	public function setPositions($positions)
-	{
-		$this->positionArray = new PositionArray($positions);
-	}
-
 	public function execute()
 	{
 		$this->filters[] = new AccuracyPositionFilter($this->ride);
@@ -34,10 +18,5 @@ class PositionFilterChain extends BasePositionFilterChain
 			$filter->process();
 			$this->positionArray = $filter->getPositionArray();
 		}
-	}
-
-	public function getPositions()
-	{
-		return $this->positionArray->getPositions();
 	}
 }
