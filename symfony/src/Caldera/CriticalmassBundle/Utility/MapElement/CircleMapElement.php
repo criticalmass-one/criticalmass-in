@@ -33,7 +33,6 @@ class CircleMapElement
 			'strokeOpacity' => 0.8,
 			'fillOpacity' => 0.35,
 			'strokeWeight' => 2.0
-			);
-		)
+		);
 	}
 }
