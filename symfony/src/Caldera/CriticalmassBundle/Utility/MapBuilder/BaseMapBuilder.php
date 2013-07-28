@@ -34,4 +34,40 @@ abstract class BaseMapBuilder
 	public abstract function calculateMainPositions();
 
 	public abstract function calculateAdditionalPositions();
+
+	public function getMainPositions()
+	{
+		$resultArray = array();
+		$counter = 0;
+
+		foreach ($this->mainPositions as $position)
+		{
+			$circle = new MapElement\CircleMapElement($position, 100);
+
+			$resultArray['position-'.$counter] = $circle->draw();
+			++$counter;
+		}
+
+		return $resultArray;
+	}
+
+	public function getAdditionalPositions()
+	{
+		return $this->additionalPositions;
+	}
+
+	public function draw()
+	{
+		return array(
+			'mapcenter' => array(
+				'latitude' => $this->getMapCenterLatitude(),
+				'longitude' => $this->getMapCenterLongitude()
+				),
+				'zoom' => $this->getZoomFactor(),
+				'mainpositions' => $this->getMainPositions(),
+				'additionalpositions' => $this->getAdditionalPositions(),
+				'usercounter' => $this->getUserCounter(),
+				'averagespeed' => $this->getAverageSpeed()
+			);
+	}
 }
