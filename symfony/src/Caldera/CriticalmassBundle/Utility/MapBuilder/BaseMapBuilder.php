@@ -2,19 +2,23 @@
 
 namespace Caldera\CriticalmassBundle\Utility\MapBuilder;
 
+use \Caldera\CriticalmassBundle\Utility\MapElement as MapElement;
 use \Caldera\CriticalmassBundle\Entity as Entity;
 
 abstract class BaseMapBuilder
 {
+	protected $positions = array();
+
 	protected $mainPositions;
 
 	protected $additionalPositions;
 
 	protected $ride;
 
-	public function __construct(Entity\Ride $ride)
+	public function __construct(Entity\Ride $ride, $positions)
 	{
 		$this->ride = $ride;
+		$this->positions = $positions;
 	}
 
 	public abstract function getUserCounter();
