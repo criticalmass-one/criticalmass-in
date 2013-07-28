@@ -15,10 +15,15 @@ class ArrowMapElement
 		$this->toPosition = $toPosition;
 	}
 
+	public function getId()
+	{
+		return 'arrow-'.$this->fromPosition.'-'.$this->toPosition;
+	}
+
 	public function draw()
 	{
 		return array(
-			'id' => 'arrow-'.$this->fromPosition.'-'.$this->toPosition,
+			'id' => $this->getId(),
 			'type' => 'arrow',
 			'fromPosition' => $this->fromPosition,
 			'toPosition' => $this->toPosition

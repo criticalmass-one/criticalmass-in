@@ -15,10 +15,15 @@ class CircleMapElement
 		$this->radius = $radius;
 	}
 
+	public function getId()
+	{
+		return 'circle-'.$this->centerPosition.'-'.$this->radius;
+	}
+
 	public function draw()
 	{
 		return array(
-			'id' => 'circle-'.$this->centerPosition.'-'.$this->radius,
+			'id' => $this->getId()
 			'type' => 'circle',
 			'latitude' => $this->centerPosition->getLatitude(),
 			'longitude' => $this->centerPosition->getLongitude(),
