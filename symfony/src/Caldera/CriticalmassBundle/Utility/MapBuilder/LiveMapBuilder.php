@@ -4,24 +4,16 @@ namespace Caldera\CriticalmassBundle\Utility\MapBuilder;
 
 use Caldera\CriticalmassBundle\Utility\PositionFilter as PositionFilter;
 use Caldera\CriticalmassBundle\Utility\MapElement as MapElement;
+use Caldera\CriticalmassBundle\Utility\MapBuilder\MapBuilderHelper as MapBuilderHelper;
 use Caldera\CriticalmassBundle\Utility as Utility;
 
 class LiveMapBuilder extends BaseMapBuilder
 {
 	public function getUserCounter()
-	{/*
-		$users = array();
+	{
+		$ucc = new MapBuilderHelper\UserCounterCalculator($this->additionalPositions);
 
-		foreach ($this->mainPositions as $position)
-		{
-			if (!in_array($position->getUser(), $users))
-			{
-				$users[] = $position->getUser();
-			}
-		}
-
-		return count($users);*/
-		return 107;
+		return $asc->getUserCounter();
 	}
 
 	public function getAverageSpeed()
