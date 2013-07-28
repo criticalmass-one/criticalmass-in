@@ -18,17 +18,9 @@ class LiveMapBuilder extends BaseMapBuilder
 
 	public function getAverageSpeed()
 	{
-		$positions = $this->mainPositions;
+		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions[0], $this->mainPositions[1]);
 
-		$dc = new Utility\DistanceCalculator();
-		$distance = $dc->calculateDistanceFromPositionToPosition($positions[0], $positions[1]);
-		$time = $positions[1]->getCreationDateTime()->format('U') - $positions[0]->getCreationDateTime()->format('U');
-
-		$averageSpeed = $distance / $time;
-
-		$averageSpeed *= 3600;
-
-		return round($averageSpeed, 2);
+		return $asc->getAverageSpeed();
 	}
 
 	public function getZoomFactor()
