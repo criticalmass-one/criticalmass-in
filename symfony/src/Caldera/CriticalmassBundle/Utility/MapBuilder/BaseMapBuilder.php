@@ -4,10 +4,11 @@ namespace Caldera\CriticalmassBundle\Utility\MapBuilder;
 
 use \Caldera\CriticalmassBundle\Utility\MapElement as MapElement;
 use \Caldera\CriticalmassBundle\Entity as Entity;
+use \Caldera\CriticalmassBundle\Utility\PositionArray as PositionArray;
 
 abstract class BaseMapBuilder
 {
-	protected $positions = array();
+	protected $positionArray;
 
 	protected $mainPositions;
 
@@ -18,7 +19,8 @@ abstract class BaseMapBuilder
 	public function __construct(Entity\Ride $ride, $positions)
 	{
 		$this->ride = $ride;
-		$this->positions = $positions;
+
+		$this->positionArray = new PositionArray($positions);
 	}
 
 	public abstract function getUserCounter();
@@ -40,7 +42,7 @@ abstract class BaseMapBuilder
 		$resultArray = array();
 		$counter = 0;
 
-		foreach ($this->mainPositions as $position)
+		foreach ($this->mainPositions->getPositions() as $position)
 		{
 			$circle = new MapElement\CircleMapElement($position, 100);
 
@@ -55,7 +57,7 @@ abstract class BaseMapBuilder
 	{
 		$resultArray = array();
 
-		foreach ($this->additionalPositions as $position)
+		foreach ($this->additionalPositions->getPositions() as $position)
 		{
 			$circle = new MapElement\CircleMapElement($position, 10);
 

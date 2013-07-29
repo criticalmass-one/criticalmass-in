@@ -18,28 +18,28 @@ class LiveMapBuilder extends BaseMapBuilder
 
 	public function getAverageSpeed()
 	{
-		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions[0], $this->mainPositions[1]);
+		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions);
 
 		return $asc->getAverageSpeed();
 	}
 
 	public function getZoomFactor()
 	{
-		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions[0], $this->mainPositions[1]);
+		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions);
 
 		return $zfc->getZoomFactor();
 	}
 
 	public function getMapCenterLatitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions[0], $this->mainPositions[1]);
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions);
 
 		return $mcc->calculateMapCenter("getLatitude");
 	}
 
 	public function getMapCenterLongitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions[0], $this->mainPositions[1]);
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions);
 
 		return $mcc->calculateMapCenter("getLongitude");
 	}
@@ -47,12 +47,12 @@ class LiveMapBuilder extends BaseMapBuilder
 	public function calculateMainPositions()
 	{
 		$psf = new PositionFilterChain\PositionFilterChain();
-		$this->mainPositions = $psf->setRide($this->ride)->setPositions($this->positions)->execute()->getPositions();
+		$this->mainPositions = $psf->setRide($this->ride)->setPositions($this->positionArray->getPositions())->execute()->getPositionArray();
 	}
 
 	public function calculateAdditionalPositions()
 	{
 		$psf = new PositionFilterChain\TailPositionFilterChain();
-		$this->additionalPositions = $psf->setRide($this->ride)->setPositions($this->positions)->execute()->getPositions();
+		$this->additionalPositions = $psf->setRide($this->ride)->setPositions($this->positionArray->getPositions())->execute()->getPositionArray();
 	}
 }
