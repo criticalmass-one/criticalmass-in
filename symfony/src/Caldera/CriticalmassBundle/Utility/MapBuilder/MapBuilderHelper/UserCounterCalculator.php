@@ -5,20 +5,13 @@ namespace Caldera\CriticalmassBundle\Utility\MapBuilder\MapBuilderHelper;
 use Caldera\CriticalmassBundle\Entity\Position;
 use Caldera\CriticalmassBundle\Utility as Utility;
 
-class UserCounterCalculator
+class UserCounterCalculator extends BaseMapBuilderHelper
 {
-	protected $positions = array();
-
-	public function __construct($positions)
-	{
-		$this->positions = $positions;
-	}
-
 	public function getUserCounter()
 	{
 		$users = array();
 
-		foreach ($this->positions as $position)
+		foreach ($this->positionArray->getPositions() as $position)
 		{
 			if (!in_array($position->getUser(), $users))
 			{

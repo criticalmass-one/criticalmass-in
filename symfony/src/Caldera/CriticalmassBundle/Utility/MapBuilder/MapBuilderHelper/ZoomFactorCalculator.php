@@ -5,16 +5,8 @@ namespace Caldera\CriticalmassBundle\Utility\MapBuilder\MapBuilderHelper;
 use Caldera\CriticalmassBundle\Entity\Position;
 use Caldera\CriticalmassBundle\Utility as Utility;
 
-class ZoomFactorCalculator
+class ZoomFactorCalculator extends BaseMapBuilderHelper
 {
-	protected $positions = array();
-
-	public function __construct(Position $position1, Position $position2)
-	{
-		$this->positions[] = $position1;
-		$this->positions[] = $position2;
-	}
-
 	public function getZoomFactor()
 	{
 		$minX = null;
@@ -22,7 +14,7 @@ class ZoomFactorCalculator
 		$minY = null;
 		$maxY = null;
 
-		foreach ($this->positions as $position)
+		foreach ($this->positionArray->getPositions() as $position)
 		{
 			if (!isset($minX) && !isset($maxX) && !isset($minY) && !isset($maxY))
 			{
