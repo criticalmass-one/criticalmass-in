@@ -33,5 +33,10 @@ abstract class BasePositionFilterChain
 		return $this->positionArray->getPositions();
 	}
 
+	public function getPositionArray()
+	{
+		return $this->positionArray;
+	}
+
 	public abstract function execute();
 }
