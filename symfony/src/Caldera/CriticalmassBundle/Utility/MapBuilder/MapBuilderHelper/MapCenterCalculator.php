@@ -7,8 +7,6 @@ use Caldera\CriticalmassBundle\Utility as Utility;
 
 class MapCenterCalculator extends BaseMapBuilderHelper
 {
-	protected $positions = array();
-
 	public function getMapCenterLatitude()
 	{
 		return $this->calculateMapCenter("getLatitude");
@@ -24,7 +22,7 @@ class MapCenterCalculator extends BaseMapBuilderHelper
 		$min = null;
 		$max = null;
 
-		foreach ($this->positions as $position)
+		foreach ($this->positionArray->getPositions() as $position)
 		{
 			if (!isset($min) && !isset($max))
 			{
