@@ -8,6 +8,11 @@ class CircleMapElement extends BaseMapElement
 {
 	protected $centerPosition;
 	protected $radius;
+	protected $strokeColor = '#ff0000';
+	protected $fillColor = '#ff0000';
+	protected $strokeOpacity = 0.8;
+	protected $fillOpacity = 0.35;
+	protected $strokeWeight = 2.0;
 
 	public function __construct(Position $centerPosition, $radius)
 	{
@@ -28,11 +33,11 @@ class CircleMapElement extends BaseMapElement
 			'latitude' => $this->centerPosition->getLatitude(),
 			'longitude' => $this->centerPosition->getLongitude(),
 			'radius' => $this->radius,
-			'strokeColor' => '#ff0000',
-			'fillColor' => '#ff0000',
-			'strokeOpacity' => 0.8,
-			'fillOpacity' => 0.35,
-			'strokeWeight' => 2.0
+			'strokeColor' => $this->strokeColor,
+			'fillColor' => $this->fillColor,
+			'strokeOpacity' => $this->strokeOpacity,
+			'fillOpacity' => $this->fillOpacity,
+			'strokeWeight' => $this->strokeWeight
 		);
 	}
 }
