@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility\MapElement;
 
 use \Caldera\CriticalmassBundle\Entity\Position;
 
-class CircleMapElement
+class CircleMapElement extends BaseMapElement
 {
 	protected $centerPosition;
 	protected $radius;

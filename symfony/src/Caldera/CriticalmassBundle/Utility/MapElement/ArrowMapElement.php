@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassBundle\Utility\MapElement;
 
 use \Caldera\CriticalmassBundle\Entity\Position;
 
-class ArrowMapElement
+class ArrowMapElement extends BaseMapElement
 {
 	protected $fromPosition;
 	protected $toPosition;
@@ -28,6 +28,5 @@ class ArrowMapElement
 			'fromPosition' => $this->fromPosition,
 			'toPosition' => $this->toPosition
 			);
-		)
 	}
 }
