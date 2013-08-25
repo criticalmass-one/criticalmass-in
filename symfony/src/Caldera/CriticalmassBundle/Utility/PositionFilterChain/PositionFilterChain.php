@@ -7,19 +7,10 @@ use Caldera\CriticalmassBundle\Utility\PositionFilter as PositionFilter;
 
 class PositionFilterChain extends BasePositionFilterChain
 {
-	public function execute()
+	public function registerFilter()
 	{
 		$this->filters[] = new PositionFilter\AccuracyPositionFilter($this->ride);
 		$this->filters[] = new PositionFilter\DoublePositionFilter($this->ride);
 		$this->filters[] = new PositionFilter\UserPositionFilter($this->ride);
-
-		foreach ($this->filters as $filter)
-		{
-			$filter->setPositionArray($this->positionArray);
-			$filter->process();
-			$this->positionArray = $filter->getPositionArray();
-		}
-
-		return $this;
 	}
 }

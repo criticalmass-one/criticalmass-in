@@ -38,5 +38,17 @@ abstract class BasePositionFilterChain
 		return $this->positionArray;
 	}
 
-	public abstract function execute();
+	public abstract function registerFilter();
+
+	public function execute()
+	{
+		foreach ($this->filters as $filter)
+		{
+			$filter->setPositionArray($this->positionArray);
+			$filter->process();
+			$this->positionArray = $filter->getPositionArray();
+		}
+
+		return $this;
+	}
 }
