@@ -93,7 +93,7 @@ class Ride
 	/**
 	 * @ORM\Column(type="integer")
 	 */
-	private $godMode;
+	private $godMode = 0;
 
     /**
      * Get id
