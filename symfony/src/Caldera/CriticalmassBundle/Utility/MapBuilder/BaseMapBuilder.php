@@ -70,14 +70,19 @@ abstract class BaseMapBuilder
 
 	public function draw()
 	{
+		$elements = array();
+
+		$elements = array_merge($elements, $this->getMainPositions());
+		
+		$elements = array_merge($elements, $this->getAdditionalPositions());
+
 		return array(
 			'mapcenter' => array(
 				'latitude' => $this->getMapCenterLatitude(),
 				'longitude' => $this->getMapCenterLongitude()
 				),
 				'zoom' => $this->getZoomFactor(),
-				'mainpositions' => $this->getMainPositions(),
-				'additionalpositions' => $this->getAdditionalPositions(),
+				'elements' => $elements,
 				'usercounter' => $this->getUserCounter(),
 				'averagespeed' => $this->getAverageSpeed()
 			);
