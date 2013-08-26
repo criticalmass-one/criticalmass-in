@@ -1,6 +1,6 @@
-var markersArray = [];
 var map;
-var arrow = null;
+
+var elementsArray = [];
 
 function setLastModifiedLabel()
 {
@@ -22,142 +22,35 @@ function setAverageSpeed(result)
 	$('span#averagespeed').html(result.averagespeed);
 }
 
-function setArrow(result)
+function drawCircle(circleElement)
 {
-	var position1 = result.mainpositions['position-0'];
-	var position2 = result.mainpositions['position-1'];
-
-	var vector = [position2.latitude - position1.latitude, position2.longitude - position1.longitude];
-	var arrowLength = 5;
-
-//	alert('Vector ' + vector[0] + ' ' + vector[1] + ' Position1 ' + position1.latitude + ' ' + position1.longitude + ' Position2 ' + position2.latitude + ' ' + position2.longitude);
-
-	if ((vector[0] > 0) || (vector[1] > 0))
+	if (!doesElementExist(circleElement.id))
 	{
-		var coord1 = new google.maps.LatLng(position1.latitude, position1.longitude);
-		var coord2 = new google.maps.LatLng(position1.latitude + vector[0] * arrowLength, position1.longitude + vector[1] * arrowLength);
+		circleElement.map = map;
+		circleElement.center = new google.maps.LatLng(circleElement.latitude, circleElement.longitude);
 
-		if (arrow)
-		{
-			arrow.setMap(null);
-			arrow = null;
-		}
-
-		arrow = new google.maps.Polyline({
-			path: [coord1, coord2],
-			icons: [{
-				icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW },
-				offset: '100%'
-			}],
-			map: map
-		});
+		googleMapsCircleElement = new google.maps.Circle(circleElement);
+		elementsArray[circleElement.id] = googleMapsCircleElement;
 	}
 }
 
-function addMarker(options)
+function drawArrow(circleElement)
 {
-	options.map = map;
-	options.center = new google.maps.LatLng(options.latitude, options.longitude);
-
-	circleMarker = new google.maps.Circle(options);
-	markersArray[options.id] = circleMarker;
-}
-
-function clearAllMarkers()
-{
-	if (markersArray)
-	{
-		for (i in markersArray)
-		{
-			markersArray[i].setMap(null);
-		}
-	}
-}
-
-function clearMarker(id)
-{
-	markersArray[id].setMap(null);
-	delete markersArray[id];
-}
-
-function refreshMarkers()
-{
-	$.ajax({
-		url: '/mapapi/mapdata',
-		success: refreshMarkers2
-	});
 
 }
 
-function placeNewMarkers(result)
+function drawMarker(circleElement)
 {
-/*
-	for (var pos in result.mainpositions)
-	{
-		if (!existsMarker(result.mainpositions[pos]))
-		{
-			addMarker(result.mainpositions[pos]);
-		}
-	}
-*/
-	for (var pos in result.additionalpositions)
-	{
-		if (!existsMarker(result.additionalpositions[pos]))
-		{
-			addMarker(result.additionalpositions[pos]);
-		}
-	}
+
 }
 
-function refreshMarkers2(result)
-{
-	placeNewMarkers(result);
-	flushOldMarkers(result);
-	setLastModifiedLabel();
-	setUsercounter(result);
-	setAverageSpeed(result);
-	setArrow(result);
-}
-
-function flushOldMarkers(result)
-{
-	var pos;
-	var i;
-
-	for (i in markersArray)
-	{
-		var found = false;
-
-		for (pos in result.mainpositions)
-		{
-			if (i == result.mainpositions[pos].id)
-			{
-				found = true;
-			}
-		}
-
-		for (pos in result.additionalpositions)
-		{
-			if (i == result.additionalpositions[pos].id)
-			{
-				found = true;
-			}
-		}
-
-		if (!found)
-		{
-			clearMarker(i);
-		}
-	}
-}
-
-function existsMarker(options)
+function doesElementExist(elementId)
 {
 	var found = false;
 
-	for (i in markersArray)
+	for (index in elementsArray)
 	{
-		if (i == options.id)
+		if (index == elementId)
 		{
 			found = true;
 			break;
@@ -165,6 +58,88 @@ function existsMarker(options)
 	}
 
 	return found;
+}
+
+
+function clearElement(id)
+{
+	elementsArray[id].setMap(null);
+	delete markersArray[id];
+}
+
+function clearAllElements()
+{
+	if (elementsArray)
+	{
+		for (index in elementsArray)
+		{
+			elementsArray[index].setMap(null);
+		}
+	}
+}
+
+function clearOldElements(elements)
+{
+	var pos;
+	var index;
+
+	for (index in elementsArray)
+	{
+		var found = false;
+
+		for (pos in elements)
+		{
+			if (index == elements[pos].id)
+			{
+				found = true;
+			}
+		}
+
+		if (!found)
+		{
+			clearElement(i);
+		}
+	}
+}
+
+function refreshElements(elements)
+{
+	if (elements)
+	{
+		for (index in elements)
+		{
+			if (elements[index].type == "circle")
+			{
+				drawCircle(elements[index]);
+			}
+			/*
+			if (elements[index].type == "arrow")
+			{
+				drawArrow(elements[index]);
+			}
+
+			if (elements[index].type == "marker")
+			{
+				drawMarker(elements[index]);
+			}*/
+		}
+	}
+}
+
+function refreshLivePage()
+{
+	$.ajax({
+		url: '/mapapi/mapdata',
+		success: refreshLivePage2
+	});
+}
+
+function refreshLivePage2(result)
+{
+	refreshElements(result.elements);
+	setLastModifiedLabel();
+	setUsercounter(result);
+	setAverageSpeed(result);
 }
 
 function setMapOptions(result)
@@ -178,10 +153,9 @@ function setMapOptions(result)
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	placeNewMarkers(result);
+	refreshElements(result.elements);
 	setAverageSpeed(result);
 	setUsercounter(result);
-	setArrow(result);
 }
 
 function initializeLivePage()
@@ -225,7 +199,7 @@ function startInitialization()
 {
 	initializeLivePage();
 
-	var timer = setInterval(refreshMarkers, 5000);
+	var timer = setInterval(refreshLivePage, 5000);
 }
 
 google.maps.event.addDomListener(window, 'load', startInitialization);
