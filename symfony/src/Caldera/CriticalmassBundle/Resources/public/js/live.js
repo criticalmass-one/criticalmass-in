@@ -1,7 +1,18 @@
+/**
+ * Enthält während des Betriebs der Live-Seite die Instanz der eingebetteten Karte.
+ */
 var map;
 
+/**
+ * Array aller in der Karte enthaltenen grafischen Elemente.
+ */
 var elementsArray = [];
 
+/**
+ * Setzt den Zeitpunkt der letzten Änderung der Seite auf die aktuelle Uhr-
+ * zeit. Sollte es sich bei den Bestandteilen der Uhrzeit um einstellige Werte
+ * handeln, wird eine führende Null vorangestellt.
+ */
 function setLastModifiedLabel()
 {
 	var d = new Date();
@@ -12,16 +23,27 @@ function setLastModifiedLabel()
 		(d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()) + ' Uhr');
 }
 
+/**
+ * Aktualisiert die Aufschrift des Zählers momentan angemeldeter Benutzer auf
+ * den Wert aus dem Resultat-Array.
+ */
 function setUsercounter(result)
 {
 	$('span#usercounter').html(result.usercounter);
 }
 
+/**
+ * Aktualisiert die Aufschrift der Durchschnittsgeschwindigkeit auf den Wert
+ * aus dem Resultat-Array.
+ */
 function setAverageSpeed(result)
 {
 	$('span#averagespeed').html(result.averagespeed);
 }
 
+/**
+ * Zeichnet ein Kreis-Element aus den übergebenen Informationen.
+ */
 function drawCircle(circleElement)
 {
 	if (!doesElementExist(circleElement.id))
@@ -60,24 +82,41 @@ function doesElementExist(elementId)
 	return found;
 }
 
-
-function clearElement(id)
+/**
+ * Entfernt ein grafisches Element aus der Kartenansicht. Dazu sind zwei
+ * Schritte notwendig: Zuerst wird das Element aus der Karte entfernt, indem
+ * die Karten-Eigenschaft auf null gesetzt wird. Anschließend wird das Element
+ * aus dem Array gelöscht.
+ *
+ * @param elementId: ID des zu entfernenden Elements
+ */
+function clearElement(elementId)
 {
-	elementsArray[id].setMap(null);
-	delete markersArray[id];
+	elementsArray[elementId].setMap(null);
+	delete markersArray[elementId];
 }
 
+/**
+ * Entfernt alle grafischen Elemente aus der eingebetteten Karte.
+ */
 function clearAllElements()
 {
 	if (elementsArray)
 	{
 		for (index in elementsArray)
 		{
-			elementsArray[index].setMap(null);
+			clearElement(index);
 		}
 	}
 }
 
+/**
+ * Entfernt alle grafischen Elemente aus der Karte, die nicht mehr in der aktu-
+ * ellen Liste einzuzeichnender Elemente vorhanden sind.
+ *
+ * @param elements: Liste jener Elemente, die noch in der Karte vorhanden sein
+ * sollen
+ */
 function clearOldElements(elements)
 {
 	var pos;
@@ -102,6 +141,12 @@ function clearOldElements(elements)
 	}
 }
 
+/**
+ * Empfängt eine Liste einzuzeichnender Elemente. Je nach Typ des grafischen
+ * Elementes wird die weitere Bearbeitung an eine separate Funktion delegiert.
+ *
+ * @param elements: Liste einzuzeichnender Elemente
+ */
 function refreshElements(elements)
 {
 	if (elements)
@@ -126,6 +171,11 @@ function refreshElements(elements)
 	}
 }
 
+/**
+ * Stößt den Prozess der Aktualisierung der Live-Übersicht an, indem aktu-
+ * elle Daten vom Server angefordert und zur Verarbeitung weitergereicht wer-
+ * den.
+ */
 function refreshLivePage()
 {
 	$.ajax({
@@ -134,6 +184,12 @@ function refreshLivePage()
 	});
 }
 
+/**
+ * Diese Funktion empfängt die JSON-Antwort des Servers und delegiert die Ak-
+ * tualisierung an verschiedene Unterfunktionen.
+ *
+ * @param result: JSON-Antwort des Servers
+ */
 function refreshLivePage2(result)
 {
 	refreshElements(result.elements);
@@ -142,6 +198,15 @@ function refreshLivePage2(result)
 	setAverageSpeed(result);
 }
 
+/**
+ * Initialisiert die eingebettete Karte. Dazu werden einige Informationen aus
+ * der Antwort des Servers übernommen, beispielsweise der Mittelpunkt und die
+ * Zoom-Stufe der Kartenansicht.
+ *
+ * Anschließend werden die grafischen Elemente in die Karte eingebaut.
+ *
+ * @param result: JSON-Antwort des Servers
+ */
 function setMapOptions(result)
 {
 	var mapOptions = {
@@ -153,11 +218,12 @@ function setMapOptions(result)
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	refreshElements(result.elements);
-	setAverageSpeed(result);
-	setUsercounter(result);
+	refreshLivePage2(result);
 }
 
+/**
+ * Initialisiert den Ablauf der Live-Seite. Primär werden hier Event-Handler festgelegt.
+ */
 function initializeLivePage()
 {
 	if ($('#map-canvas').length > 0)
@@ -195,6 +261,10 @@ function initializeLivePage()
 	} );
 }
 
+/**
+ * Stößt die Initialisierung der Live-Übersicht an und setzt gleichzeitig 
+ * eine Intervallfunktion fest, mit der neue Daten regelmäßig geladen werden.
+ */
 function startInitialization()
 {
 	initializeLivePage();
