@@ -61,4 +61,20 @@ abstract class BasePositionFilter
 	 * ser Methode erfolgt die eigentliche Filter der Positionen.
 	 */
 	public abstract function process();
+
+	/**
+	 * Gibt an, ob es sich um einen einfachen oder einen komplexen Filter handelt.
+	 * Einfache Filter koennen ueber eine Doctrine-Abfrage abgehandelt werden.
+	 *
+	 * @return Boolean: True, falls es sich um einen komplexen Filter handelt
+	 */
+	public function isComplexFilter()
+	{
+		return false;
+	}
+
+	/**
+	 * Diese Methode haengt zusaetzliche Argumente an die uebergebene Abfrage an.
+	 */
+//	public abstract function getQuery();
 }
