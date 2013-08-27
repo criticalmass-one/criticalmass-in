@@ -43,7 +43,9 @@ class UserPositionFilter extends BasePositionFilter
 			{
 				$secondPosition = array_pop($positionSortedByUserValue);
 			}
-			while ($firstPosition->isEqual($secondPosition));
+			// die Schleife laeuft, bis eine nicht-identische Positon gefunden wurde oder aber
+			// das Array leer ist
+			while ($firstPosition->isEqual($secondPosition) && count($positionSortedByUserValue));
 
 			// beide Positionen dem Array hinzufuegen
 			$filteredPositions[] = $firstPosition;
