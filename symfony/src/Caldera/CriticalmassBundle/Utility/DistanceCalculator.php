@@ -4,6 +4,11 @@ namespace Caldera\CriticalmassBundle\Utility;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
+/**
+ * Diese Hilfsklasse berechnet die Entfernungen zwischen zwei Punkten. Die ver-
+ * schiedenen Methoden nehmen dabei Staedte, Positionen oder Koordinatenangaben
+ * als Parameter an.
+ */
 class DistanceCalculator
 {
 	/**
@@ -49,20 +54,26 @@ class DistanceCalculator
 	 */
 	public function calculateDistanceFromCoordToCoord($latitude1, $latitude2, $longitude1, $longitude2)
 	{
+		// wenn beide Koordinaten identisch sind, laesst sich die Distanz nicht berechnen
 		if (($latitude1 == $latitude2) &&
 				($longitude1 == $longitude2))
 		{
 			return 0.0;
 		}
 
+		// Radius der Erde
 		$radius = 6371.0;
 
+		// Koordinaten in radiale Werte umwandeln
 		$latitude1 = deg2rad($latitude1);
 		$latitude2 = deg2rad($latitude2);
 		$longitude1 = deg2rad($longitude1);
 		$longitude2 = deg2rad($longitude2);
 
-		$distance = acos(sin($latitude1) * sin($latitude2) + cos($latitude1) * cos($latitude2) * cos($longitude2 - $longitude1)) * $radius;
+		// Distanzberechnung
+		$distance = acos(sin($latitude1) * sin($latitude2) + 
+								cos($latitude1) * cos($latitude2) * cos($longitude2 - $longitude1)) *
+								$radius;
 
 		return $distance;
 	}
