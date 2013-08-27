@@ -19,7 +19,7 @@ class AccuracyPositionFilter extends BasePositionFilter
 		foreach ($this->positionArray->getPositions() as $key => $position)
 		{
 			// ist die Genauigkeit schlechter als 30 Meter?
-			if ($position->getAccuracy() > 30)
+			if ($position->getAccuracy() > 100)
 			{
 				// dann loeschen
 				$this->positionArray->deletePosition($key);
