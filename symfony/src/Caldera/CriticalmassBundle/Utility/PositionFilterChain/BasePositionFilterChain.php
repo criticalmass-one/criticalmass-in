@@ -14,11 +14,18 @@ abstract class BasePositionFilterChain
 
 	protected $positionArray;
 
+	protected $doctrine;
+
 	public function setRide(Entity\Ride $ride)
 	{
 		$this->ride = $ride;
 
 		return $this;
+	}
+
+	public function setDoctrine(\Doctrine\Bundle\DoctrineBundle\Registry $doctrine)
+	{
+		$this->doctrine = $doctrine;
 	}
 
 	public function setPositions($positions)
@@ -40,7 +47,27 @@ abstract class BasePositionFilterChain
 
 	public abstract function registerFilter();
 
-	public function execute()
+	public function hasComplexFilter()
+	{
+		$complex = false;
+
+		foreach ($this->filters as $filter)
+		{
+			if ($filter->isComplexFilter())
+			{
+				$complex = true;
+			}
+		}
+
+		return $complex;
+	}
+
+	protected function executeSimpleFilterChain()
+	{
+		
+	}
+
+	protected function executeComplexFilterChain()
 	{
 		foreach ($this->filters as $filter)
 		{
@@ -50,5 +77,19 @@ abstract class BasePositionFilterChain
 		}
 
 		return $this;
+	}
+
+	public function execute()
+	{
+		$this->registerFilter();
+
+		if ($this->hasComplexFilter())
+		{
+			return $this->executeComplexFilterChain();
+		}
+		else
+		{
+			return $this->executeSimpleFilterChain();
+		}
 	}
 }
