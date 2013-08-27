@@ -14,7 +14,7 @@ class MapController extends Controller
 	{
 		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($this->getRequest()->getSession()->get('currentCitySlug'))->getCity();
 		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
-
+		/*
 		if ($ride->getGodMode() == 1)
 		{
 		$totalPositions = $this->getDoctrine()->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
@@ -23,7 +23,7 @@ class MapController extends Controller
    ->setParameter('rideId', $ride->getId())
    ->setParameter('userId', 7)
    ->add('orderBy', 'p.creationDateTime DESC')
-   ->setMaxResults(100)
+   ->setMaxResults(10)
    ->getQuery()
    ->getResult();
 		}
@@ -33,14 +33,14 @@ class MapController extends Controller
                 ->where("p.ride = :rideId")
    ->setParameter('rideId', $ride->getId())
    ->add('orderBy', 'p.creationDateTime DESC')
-   ->setMaxResults(100)
+   ->setMaxResults(10)
    ->getQuery()
    ->getResult();
-		}
+		}*/
 
 		$lmp = new Utility\MapBuilder\LiveMapBuilder(
 			$ride,
-			$totalPositions
+			$this->getDoctrine()
 		);
 
 		$lmp->calculateMainPositions();
