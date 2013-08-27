@@ -49,13 +49,19 @@ class DistanceCalculator
 	 */
 	public function calculateDistanceFromCoordToCoord($latitude1, $latitude2, $longitude1, $longitude2)
 	{
+		if (($latitude1 == $latitude2) &&
+				($longitude1 == $longitude2))
+		{
+			return 0.0;
+		}
+
 		$radius = 6371.0;
 
 		$latitude1 = deg2rad($latitude1);
 		$latitude2 = deg2rad($latitude2);
 		$longitude1 = deg2rad($longitude1);
 		$longitude2 = deg2rad($longitude2);
-		
+
 		$distance = acos(sin($latitude1) * sin($latitude2) + cos($latitude1) * cos($latitude2) * cos($longitude2 - $longitude1)) * $radius;
 
 		return $distance;
