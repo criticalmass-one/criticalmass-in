@@ -42,4 +42,9 @@ class PositionArray
 	{
 		unset($this->positions[$key]);
 	}
+
+	public function countPositions()
+	{
+		return count($this->positions);
+	}
 }
