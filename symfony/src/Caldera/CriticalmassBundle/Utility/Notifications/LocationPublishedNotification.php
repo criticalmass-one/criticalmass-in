@@ -4,8 +4,17 @@ namespace Caldera\CriticalmassBundle\Utility\Notifications;
 
 use Caldera\CriticalmassBundle\Entity\Ride as Ride;
 
+/**
+ * Diese Benachrichtigung informiert den Benutzer darueber, dass der Treffpunkt bekanntgegeben wurde.
+ */
 class LocationPublishedNotification extends PushoverNotification
 {
+	/**
+	 * Im Konstruktor werden die Eigenschaften dieser Benachrichtigung festgelegt.
+	 *
+	 * @param Ride $ride: Ride-Entitaet, aus der die Eigenschaften ausgelesen wer-
+	 * den koennen.
+	 */
 	public function __construct(Ride $ride)
 	{
 		$this->setMessage('Der Treffpunkt wurde veröffentlicht: '.$ride->getLocation());
