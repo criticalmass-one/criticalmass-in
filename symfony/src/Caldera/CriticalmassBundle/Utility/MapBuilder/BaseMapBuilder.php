@@ -10,17 +10,20 @@ abstract class BaseMapBuilder
 {
 	protected $positionArray;
 
+	protected $doctrine;
+
 	protected $mainPositions;
 
 	protected $additionalPositions;
 
 	protected $ride;
 
-	public function __construct(Entity\Ride $ride, $positions)
+	public function __construct(Entity\Ride $ride, \Doctrine\Bundle\DoctrineBundle\Registry $doctrine)
 	{
 		$this->ride = $ride;
 
-		$this->positionArray = new PositionArray($positions);
+		$this->doctrine = $doctrine;
+//		$this->positionArray = new PositionArray($positions);
 	}
 
 	public abstract function getUserCounter();
