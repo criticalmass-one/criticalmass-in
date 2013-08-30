@@ -12,6 +12,6 @@ class RidePositionFilter extends BasePositionFilter
 
 	public function buildQuery($queryBuilder)
 	{
-		return $queryBuilder->where("p.ride_id = ".$ride->getId());
+		return $queryBuilder->where("p.ride = ".$this->ride->getId());
 	}
 }

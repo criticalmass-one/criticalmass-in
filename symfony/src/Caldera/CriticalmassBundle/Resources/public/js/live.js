@@ -179,7 +179,7 @@ function refreshElements(elements)
 function refreshLivePage()
 {
 	$.ajax({
-		url: '/mapapi/mapdata',
+		url: '/mapapi/mapdata/' + citySlugString,
 		success: refreshLivePage2
 	});
 }
@@ -230,7 +230,7 @@ function initializeLivePage()
 	{
 		$.ajax({
 			type: 'GET',
-			url: '/mapapi/mapdata',
+			url: '/mapapi/mapdata/' + citySlugString,
 			data: {
 			},
 			cache: false,
