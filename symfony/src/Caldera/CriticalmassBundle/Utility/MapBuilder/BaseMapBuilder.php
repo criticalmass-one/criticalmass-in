@@ -74,8 +74,13 @@ abstract class BaseMapBuilder
 	{
 		$elements = array();
 
-		$elements = array_merge($elements, $this->getMainPositions());
+		//$elements = array_merge($elements, $this->getMainPositions());
 		
+		$main = $this->mainPositions->getPositions();
+
+		$arrow = new MapElement\ArrowMapElement($main[0], $main[1]);
+		$elements[] = $arrow->draw();
+
 		$elements = array_merge($elements, $this->getAdditionalPositions());
 
 		return array(
