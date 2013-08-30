@@ -56,9 +56,28 @@ function drawCircle(circleElement)
 	}
 }
 
-function drawArrow(circleElement)
+function drawArrow(arrowElement)
 {
+	if (!doesElementExist(arrowElement.id))
+	{
+		var lineCoordinates = [
+			new google.maps.LatLng(arrowElement.fromPosition.latitude, arrowElement.fromPosition.longitude),
+			new google.maps.LatLng(arrowElement.toPosition.latitude, arrowElement.toPosition.longitude)
+		];
 
+		var lineSymbol = {
+			path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		};
+
+		elementsArray[arrowElement.id] = new google.maps.Polyline({
+			path: lineCoordinates,
+			icons: [{
+				icon: lineSymbol,
+				offset: '100%'
+			}],
+			map: map
+		});
+	}
 }
 
 function drawMarker(circleElement)
@@ -153,22 +172,26 @@ function refreshElements(elements)
 	{
 		for (index in elements)
 		{
-			if (elements[index].type == "circle")
-			{
-				drawCircle(elements[index]);
-			}
-			/*
 			if (elements[index].type == "arrow")
 			{
 				drawArrow(elements[index]);
 			}
 
+			if (elements[index].type == "circle")
+			{
+				drawCircle(elements[index]);
+			}
+
+
+			/*
 			if (elements[index].type == "marker")
 			{
 				drawMarker(elements[index]);
 			}*/
 		}
 	}
+
+	clearOldElements(elements);
 }
 
 /**
