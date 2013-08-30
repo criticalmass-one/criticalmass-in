@@ -11,6 +11,11 @@ use Caldera\CriticalmassBundle\Entity as Entity;
  */
 class UserPositionFilter extends BasePositionFilter
 {
+	public function isComplexFilter()
+	{
+		return true;
+	}
+
 	/**
 	 * Implementierung der Filterung.
 	 */

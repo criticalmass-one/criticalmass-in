@@ -64,7 +64,20 @@ abstract class BasePositionFilterChain
 
 	protected function executeSimpleFilterChain()
 	{
-		
+		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
+		$queryBuilder = $repository->createQueryBuilder('p');
+
+		foreach ($this->filters as $filter)
+		{
+			$queryBuilder = $filter->buildQuery($queryBuilder);
+		}
+
+		echo $queryBuilder;
+		$positions = $queryBuilder->getQuery()->getResult();
+
+		$this->positionArray = new Utility\PositionArray($positions);
+
+		return $this;
 	}
 
 	protected function executeComplexFilterChain()

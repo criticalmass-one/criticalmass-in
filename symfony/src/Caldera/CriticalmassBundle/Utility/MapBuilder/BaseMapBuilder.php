@@ -23,7 +23,6 @@ abstract class BaseMapBuilder
 		$this->ride = $ride;
 
 		$this->doctrine = $doctrine;
-//		$this->positionArray = new PositionArray($positions);
 	}
 
 	public abstract function getUserCounter();

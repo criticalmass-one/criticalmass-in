@@ -50,7 +50,6 @@ class LiveMapBuilder extends BaseMapBuilder
 
 		$psf->setDoctrine($this->doctrine);
 		$psf->setRide($this->ride);
-		$psf->setPositions($this->positionArray->getPositions());
 		$psf->execute();
 
 		$this->mainPositions = $psf->getPositionArray();
@@ -59,6 +58,11 @@ class LiveMapBuilder extends BaseMapBuilder
 	public function calculateAdditionalPositions()
 	{
 		$psf = new PositionFilterChain\TailPositionFilterChain();
-		$this->additionalPositions = $psf->setRide($this->ride)->setPositions($this->positionArray->getPositions())->execute()->getPositionArray();
+
+		$psf->setDoctrine($this->doctrine);
+		$psf->setRide($this->ride);
+		$psf->execute();
+
+		$this->additionalPositions = $psf->getPositionArray();
 	}
 }
