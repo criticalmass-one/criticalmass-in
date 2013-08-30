@@ -36,25 +36,28 @@ class UserPositionFilter extends BasePositionFilter
 		// fuer jeden Benutzer werden nun die letzten beiden Positionen herausgesucht
 		foreach ($positionSortedByUser as $positionSortedByUserKey => $positionSortedByUserValue)
 		{
-			// zunaechst werden die Positionen nach ihrer Uhrzeit sortiert
-			ksort($positionSortedByUserValue);
-
-			// die neueste Position auslesen
-			$firstPosition = array_pop($positionSortedByUserValue);
-
-			// jetzt wird die zweitneueste Position gesucht, die nicht mit der neuesten
-			// Position identisch ist
-			do
+			if (count($positionSortedByUserValue) > 1)
 			{
-				$secondPosition = array_pop($positionSortedByUserValue);
-			}
-			// die Schleife laeuft, bis eine nicht-identische Positon gefunden wurde oder aber
-			// das Array leer ist
-			while ($firstPosition->isEqual($secondPosition) && count($positionSortedByUserValue));
+				// zunaechst werden die Positionen nach ihrer Uhrzeit sortiert
+				ksort($positionSortedByUserValue);
 
-			// beide Positionen dem Array hinzufuegen
-			$filteredPositions[] = $firstPosition;
-			$filteredPositions[] = $secondPosition;
+				// die neueste Position auslesen
+				$firstPosition = array_pop($positionSortedByUserValue);
+
+				// jetzt wird die zweitneueste Position gesucht, die nicht mit der neuesten
+				// Position identisch ist
+				do
+				{
+					$secondPosition = array_pop($positionSortedByUserValue);
+				}
+				// die Schleife laeuft, bis eine nicht-identische Positon gefunden wurde oder aber
+				// das Array leer ist
+				while ($firstPosition->isEqual($secondPosition) && count($positionSortedByUserValue) > 1);
+
+				// beide Positionen dem Array hinzufuegen
+				$filteredPositions[] = $firstPosition;
+				$filteredPositions[] = $secondPosition;
+			}
 		}
 
 		// nun muessen die neuen Werte im Filter gespeichert werden

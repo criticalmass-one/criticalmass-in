@@ -112,7 +112,7 @@ function doesElementExist(elementId)
 function clearElement(elementId)
 {
 	elementsArray[elementId].setMap(null);
-	delete markersArray[elementId];
+	delete elementsArray[elementId];
 }
 
 /**
@@ -155,7 +155,7 @@ function clearOldElements(elements)
 
 		if (!found)
 		{
-			clearElement(i);
+			clearElement(elements[pos].id);
 		}
 	}
 }
@@ -172,12 +172,14 @@ function refreshElements(elements)
 	{
 		for (index in elements)
 		{
-			if (elements[index].type == "arrow")
+			var type = elements[index].type;
+
+			if (type == "arrow")
 			{
 				drawArrow(elements[index]);
 			}
 
-			if (elements[index].type == "circle")
+			if (type == "circle")
 			{
 				drawCircle(elements[index]);
 			}

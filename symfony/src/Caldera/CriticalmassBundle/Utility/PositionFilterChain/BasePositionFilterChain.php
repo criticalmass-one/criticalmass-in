@@ -66,6 +66,8 @@ abstract class BasePositionFilterChain
 	{
 		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
 		$queryBuilder = $repository->createQueryBuilder('p');
+                $queryBuilder->where("p.ride = ".$this->ride->getId());
+                $queryBuilder->orderBy('p.creationDateTime', 'DESC');
 
 		foreach ($this->filters as $filter)
 		{
@@ -83,6 +85,9 @@ abstract class BasePositionFilterChain
 	{
 		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
 		$queryBuilder = $repository->createQueryBuilder('p');
+		$queryBuilder->where("p.ride = ".$this->ride->getId());
+		$queryBuilder->orderBy('p.creationDateTime', 'DESC');
+
 		$positions = $queryBuilder->getQuery()->getResult();
 		$this->positionArray = new Utility\PositionArray($positions);
 

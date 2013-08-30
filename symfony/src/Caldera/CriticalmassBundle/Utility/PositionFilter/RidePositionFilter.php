@@ -11,7 +11,7 @@ class RidePositionFilter extends BasePositionFilter
 		// alle Positionen durchlaufen
 		foreach ($this->positionArray->getPositions() as $key => $position)
 		{
-			if ($position->getRide()->getId() != $this->ride->getId())
+			if (!is_object($position->getRide()) or ($position->getRide()->getId() != $this->ride->getId()))
 			{
 				$this->positionArray->deletePosition($key);
 			}
