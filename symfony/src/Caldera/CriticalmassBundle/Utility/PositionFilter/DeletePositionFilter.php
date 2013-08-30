@@ -22,4 +22,10 @@ class DeletePositionFilter extends BasePositionFilter
 			$this->positionArray->deletePosition($key);
 		}
 	}
+
+	public function buildQuery($queryBuilder)
+	{
+		return $queryBuilder;
+		//return $queryBuilder->setMaxResults(0);
+	}
 }

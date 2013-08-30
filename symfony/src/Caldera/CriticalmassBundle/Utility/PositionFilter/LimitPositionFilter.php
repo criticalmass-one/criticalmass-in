@@ -15,4 +15,9 @@ class LimitPositionFilter extends BasePositionFilter
 			$this->positionArray->deletePosition($key);
 		}
 	}
+
+	public function buildQuery($queryBuilder)
+	{
+		return $queryBuilder->setMaxResults(10);
+	}
 }

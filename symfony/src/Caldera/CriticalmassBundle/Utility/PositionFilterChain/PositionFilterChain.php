@@ -10,9 +10,9 @@ class PositionFilterChain extends BasePositionFilterChain
 	public function registerFilter()
 	{
 		$this->filters[] = new PositionFilter\RidePositionFilter($this->ride);
-		/*$this->filters[] = new PositionFilter\AccuracyPositionFilter($this->ride);
-		$this->filters[] = new PositionFilter\DoublePositionFilter($this->ride);
+		$this->filters[] = new PositionFilter\AccuracyPositionFilter($this->ride);
+		//$this->filters[] = new PositionFilter\DoublePositionFilter($this->ride);
 		$this->filters[] = new PositionFilter\UserPositionFilter($this->ride);
-		$this->filters[] = new PositionFilter\LimitPositionFilter($this->ride);*/
+		//$this->filters[] = new PositionFilter\LimitPositionFilter($this->ride);
 	}
 }

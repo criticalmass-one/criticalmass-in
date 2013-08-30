@@ -8,6 +8,8 @@ class TailPositionFilterChain extends BasePositionFilterChain
 {
 	public function registerFilter()
 	{
-		$this->filters[] = new PositionFilter\DeletePositionFilter($this->ride);
+		$this->filters[] = new PositionFilter\RidePositionFilter($this->ride);
+		$this->filters[] = new PositionFilter\AccuracyPositionFilter($this->ride);
+		$this->filters[] = new PositionFilter\LimitPositionFilter($this->ride);
 	}
 }

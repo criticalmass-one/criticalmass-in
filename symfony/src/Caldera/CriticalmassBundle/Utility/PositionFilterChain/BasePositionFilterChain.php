@@ -72,7 +72,6 @@ abstract class BasePositionFilterChain
 			$queryBuilder = $filter->buildQuery($queryBuilder);
 		}
 
-		echo $queryBuilder;
 		$positions = $queryBuilder->getQuery()->getResult();
 
 		$this->positionArray = new Utility\PositionArray($positions);
@@ -82,6 +81,11 @@ abstract class BasePositionFilterChain
 
 	protected function executeComplexFilterChain()
 	{
+		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
+		$queryBuilder = $repository->createQueryBuilder('p');
+		$positions = $queryBuilder->getQuery()->getResult();
+		$this->positionArray = new Utility\PositionArray($positions);
+
 		foreach ($this->filters as $filter)
 		{
 			$filter->setPositionArray($this->positionArray);
