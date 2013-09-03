@@ -138,16 +138,16 @@ function clearAllElements()
  */
 function clearOldElements(elements)
 {
-	var pos;
 	var index;
 
 	for (index in elementsArray)
 	{
 		var found = false;
+		var pos;
 
 		for (pos in elements)
 		{
-			if (index == elements[pos].id)
+			if (index == pos)
 			{
 				found = true;
 			}
@@ -155,7 +155,7 @@ function clearOldElements(elements)
 
 		if (!found)
 		{
-			clearElement(elements[pos].id);
+			clearElement(index);
 		}
 	}
 }
@@ -170,20 +170,21 @@ function refreshElements(elements)
 {
 	if (elements)
 	{
+	        clearOldElements(elements);
+
 		for (index in elements)
 		{
 			var type = elements[index].type;
-
-			if (type == "arrow")
-			{
-				drawArrow(elements[index]);
-			}
 
 			if (type == "circle")
 			{
 				drawCircle(elements[index]);
 			}
 
+                        if (type == "arrow")
+                        {
+                                drawArrow(elements[index]);
+                        }
 
 			/*
 			if (elements[index].type == "marker")
@@ -192,8 +193,6 @@ function refreshElements(elements)
 			}*/
 		}
 	}
-
-	clearOldElements(elements);
 }
 
 /**

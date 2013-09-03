@@ -54,8 +54,8 @@ class ArrowMapElement extends BaseMapElement
 		return array(
 			'id' => $this->getId(),
 			'type' => 'arrow',
-			'fromPosition' => array('latitude' => $this->fromPosition->getLatitude(), 'longitude' => $this->fromPosition->getLongitude()),
-			'toPosition' => array('latitude' => $this->toPosition->getLatitude(), 'longitude' => $this->toPosition->getLongitude())
+			'toPosition' => array('latitude' => $this->fromPosition->getLatitude(), 'longitude' => $this->fromPosition->getLongitude()),
+			'fromPosition' => array('latitude' => $this->toPosition->getLatitude(), 'longitude' => $this->toPosition->getLongitude())
 			);
 	}
 }

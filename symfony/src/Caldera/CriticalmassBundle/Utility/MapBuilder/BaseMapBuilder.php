@@ -81,6 +81,9 @@ abstract class BaseMapBuilder
 		$arrow = new MapElement\ArrowMapElement($main[0], $main[1]);
 		$elements[] = $arrow->draw();
 
+		$marker = new MapElement\MarkerMapElement($this->ride);
+		$elements[] = $marker->draw();
+
 		$elements = array_merge($elements, $this->getAdditionalPositions());
 
 		return array(
