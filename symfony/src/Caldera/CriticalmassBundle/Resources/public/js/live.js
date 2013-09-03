@@ -170,21 +170,26 @@ function refreshElements(elements)
 {
 	if (elements)
 	{
-	        clearOldElements(elements);
+		// lösche alte Elemenete
+		clearOldElements(elements);
 
+		// JSON-Antwort durchgehen
 		for (index in elements)
 		{
+			// Typ des Elementes auslesen
 			var type = elements[index].type;
 
+			// Kreis
 			if (type == "circle")
 			{
 				drawCircle(elements[index]);
 			}
 
-                        if (type == "arrow")
-                        {
-                                drawArrow(elements[index]);
-                        }
+			// Pfeil
+			if (type == "arrow")
+			{
+				drawArrow(elements[index]);
+			}
 
 			/*
 			if (elements[index].type == "marker")
@@ -216,9 +221,16 @@ function refreshLivePage()
  */
 function refreshLivePage2(result)
 {
+	// grafische Elemente neu anordnen
 	refreshElements(result.elements);
+
+	// Anzeige der letzten Änderung aktualisieren
 	setLastModifiedLabel();
+
+	// Benutzerzähler aktualisieren
 	setUsercounter(result);
+
+	// Geschwindigkeitsanzeige aktualisieren
 	setAverageSpeed(result);
 }
 
