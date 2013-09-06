@@ -64,11 +64,33 @@ abstract class BasePositionFilterChain
 
 	protected function executeSimpleFilterChain()
 	{
-		
+		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
+		$queryBuilder = $repository->createQueryBuilder('p');
+                $queryBuilder->where("p.ride = ".$this->ride->getId());
+                $queryBuilder->orderBy('p.creationDateTime', 'DESC');
+
+		foreach ($this->filters as $filter)
+		{
+			$queryBuilder = $filter->buildQuery($queryBuilder);
+		}
+
+		$positions = $queryBuilder->getQuery()->getResult();
+
+		$this->positionArray = new Utility\PositionArray($positions);
+
+		return $this;
 	}
 
 	protected function executeComplexFilterChain()
 	{
+		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
+		$queryBuilder = $repository->createQueryBuilder('p');
+		$queryBuilder->where("p.ride = ".$this->ride->getId());
+		$queryBuilder->orderBy('p.creationDateTime', 'DESC');
+
+		$positions = $queryBuilder->getQuery()->getResult();
+		$this->positionArray = new Utility\PositionArray($positions);
+
 		foreach ($this->filters as $filter)
 		{
 			$filter->setPositionArray($this->positionArray);

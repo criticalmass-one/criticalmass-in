@@ -56,9 +56,28 @@ function drawCircle(circleElement)
 	}
 }
 
-function drawArrow(circleElement)
+function drawArrow(arrowElement)
 {
+	if (!doesElementExist(arrowElement.id))
+	{
+		var lineCoordinates = [
+			new google.maps.LatLng(arrowElement.fromPosition.latitude, arrowElement.fromPosition.longitude),
+			new google.maps.LatLng(arrowElement.toPosition.latitude, arrowElement.toPosition.longitude)
+		];
 
+		var lineSymbol = {
+			path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		};
+
+		elementsArray[arrowElement.id] = new google.maps.Polyline({
+			path: lineCoordinates,
+			icons: [{
+				icon: lineSymbol,
+				offset: '100%'
+			}],
+			map: map
+		});
+	}
 }
 
 function drawMarker(circleElement)
@@ -93,7 +112,7 @@ function doesElementExist(elementId)
 function clearElement(elementId)
 {
 	elementsArray[elementId].setMap(null);
-	delete markersArray[elementId];
+	delete elementsArray[elementId];
 }
 
 /**
@@ -119,16 +138,16 @@ function clearAllElements()
  */
 function clearOldElements(elements)
 {
-	var pos;
 	var index;
 
 	for (index in elementsArray)
 	{
 		var found = false;
+		var pos;
 
 		for (pos in elements)
 		{
-			if (index == elements[pos].id)
+			if (index == pos)
 			{
 				found = true;
 			}
@@ -136,7 +155,7 @@ function clearOldElements(elements)
 
 		if (!found)
 		{
-			clearElement(i);
+			clearElement(index);
 		}
 	}
 }
@@ -151,18 +170,28 @@ function refreshElements(elements)
 {
 	if (elements)
 	{
+		// lösche alte Elemenete
+		clearOldElements(elements);
+
+		// JSON-Antwort durchgehen
 		for (index in elements)
 		{
-			if (elements[index].type == "circle")
+			// Typ des Elementes auslesen
+			var type = elements[index].type;
+
+			// Kreis
+			if (type == "circle")
 			{
 				drawCircle(elements[index]);
 			}
-			/*
-			if (elements[index].type == "arrow")
+
+			// Pfeil
+			if (type == "arrow")
 			{
 				drawArrow(elements[index]);
 			}
 
+			/*
 			if (elements[index].type == "marker")
 			{
 				drawMarker(elements[index]);
@@ -179,7 +208,7 @@ function refreshElements(elements)
 function refreshLivePage()
 {
 	$.ajax({
-		url: '/mapapi/mapdata',
+		url: '/mapapi/mapdata/' + citySlugString,
 		success: refreshLivePage2
 	});
 }
@@ -192,9 +221,16 @@ function refreshLivePage()
  */
 function refreshLivePage2(result)
 {
+	// grafische Elemente neu anordnen
 	refreshElements(result.elements);
+
+	// Anzeige der letzten Änderung aktualisieren
 	setLastModifiedLabel();
+
+	// Benutzerzähler aktualisieren
 	setUsercounter(result);
+
+	// Geschwindigkeitsanzeige aktualisieren
 	setAverageSpeed(result);
 }
 
@@ -230,7 +266,7 @@ function initializeLivePage()
 	{
 		$.ajax({
 			type: 'GET',
-			url: '/mapapi/mapdata',
+			url: '/mapapi/mapdata/' + citySlugString,
 			data: {
 			},
 			cache: false,

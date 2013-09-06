@@ -26,4 +26,9 @@ class AccuracyPositionFilter extends BasePositionFilter
 			}
 		}
 	}
+
+	public function buildQuery($queryBuilder)
+	{
+		return $queryBuilder->andWhere("p.accuracy < 101");
+	}
 }

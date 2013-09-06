@@ -76,5 +76,8 @@ abstract class BasePositionFilter
 	/**
 	 * Diese Methode haengt zusaetzliche Argumente an die uebergebene Abfrage an.
 	 */
-//	public abstract function getQuery();
+	public function buildQuery($queryBuilder)
+	{
+		return $queryBuilder;
+	}
 }
