@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stellt eine einzelne Tour einer Critical Mass dar.
  *
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\RideRepository")
  * @ORM\Table(name="ride")
  */
 class Ride
@@ -37,6 +36,8 @@ class Ride
 	private $date;
 
 	/**
+	 * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
+	 *
 	 * @ORM\Column(type="boolean")
 	 */
 	private $hasTime;
@@ -49,6 +50,8 @@ class Ride
 	private $time;
 
 	/**
+	 * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
+	 *
 	 * @ORM\Column(type="boolean")
 	 */
 	private $hasLocation;
@@ -69,14 +72,6 @@ class Ride
 	private $mapLocation;
 
 	/**
-	 * Zeichenkette eines Karten-Embeddings, beispielsweise von Google-Maps. Wird
-	 * anschließend unter dem Treffpunkt eingebunden.
-	 *
-	 * @ORM\Column(type="text")
-	 */
-	private $map;
-
-	/**
 	 * Breitengrad des Treffpunktes.
 	 *
 	 * @ORM\Column(type="float")
@@ -91,6 +86,10 @@ class Ride
 	private $longitude;
 
 	/**
+	 * Schalter fuer den God-Mode dieser Tour. Wenn der Gode-Mode aktiviert ist,
+	 * werden lediglich die Positionsdaten eines Administrators zur Berechnung
+	 * herangezogen.
+	 *
 	 * @ORM\Column(type="integer")
 	 */
 	private $godMode = 0;
@@ -218,29 +217,6 @@ class Ride
     public function getLocation()
     {
         return $this->location;
-    }
-
-    /**
-     * Set map
-     *
-     * @param string $map
-     * @return Ride
-     */
-    public function setMap($map)
-    {
-        $this->map = $map;
-    
-        return $this;
-    }
-
-    /**
-     * Get map
-     *
-     * @return string 
-     */
-    public function getMap()
-    {
-        return $this->map;
     }
 
     /**

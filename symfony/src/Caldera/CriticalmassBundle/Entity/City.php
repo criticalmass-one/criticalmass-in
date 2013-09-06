@@ -5,6 +5,9 @@ namespace Caldera\CriticalmassBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
+ * derer einzelne Critical-Mass-Touren stattfinden.
+ *
  * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\CityRepository")
  * @ORM\Table(name="city")
  */
@@ -81,9 +84,27 @@ class City
 	 */
 	protected $slugs;
 
+	/**
+	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
+	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
+	 * mit dem Namen ihrer Stadt dargestellt werden.
+	 *
+	 * @return String: Name der Stadt
+	 */
 	public function __toString()
 	{
 		return $this->getCity();
+	}
+
+	/**
+	 * Diese Methode gibt den ersten Slug dieser Stadt zurueck, mit dem unter an-
+	 * derem Verlinkungen innerhalb der Web-App-Routen konstruiert werden.
+	 *
+	 * @return Entity\CitySlug: Beliebiger Slug dieser Stadt
+	 */
+	public function getMainSlug()
+	{
+		return $this->slugs[0];
 	}
 
     /**
@@ -331,9 +352,4 @@ class City
     {
         return $this->slugs;
     }
-
-		public function getMainSlug()
-		{
-			return $this->slugs[0];
-		}
 }

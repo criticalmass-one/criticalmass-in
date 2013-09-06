@@ -5,12 +5,17 @@ namespace Caldera\CriticalmassBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Die Comment-Entitaet repraesentiert einen Kommentar, der von angemeldeten
+ * Benutzern zu einer Tour abgegeben werden kann.
+ *
  * @ORM\Entity()
  * @ORM\Table(name="comment")
  */
 class Comment
 {
 	/**
+	 * ID des Kommentars.
+	 *
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
@@ -18,28 +23,38 @@ class Comment
 	protected $id;
 
 	/**
+	 * Autor des Kommentars.
+	 *
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
 
 	/**
+	 * Tour des Kommentars.
+	 *
 	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="comments")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
 	 */
 	protected $ride;
 
 	/**
+	 * Zeitpunkt der Erstellung.
+	 *
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $creationDateTime;
 
 	/**
+	 * Eigentlicher Text des Kommentars.
+	 *
 	 * @ORM\Column(type="text")
 	 */
 	protected $text;
 
 	/**
+	 * Optional hochgeladenes Foto des Kommentars.
+	 *
 	 * @ORM\OneToOne(targetEntity="CommentImage")
 	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
 	 */

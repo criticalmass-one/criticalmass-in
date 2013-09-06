@@ -7,8 +7,15 @@ use Caldera\CriticalmassBundle\Utility\MapElement as MapElement;
 use Caldera\CriticalmassBundle\Utility\MapBuilder\MapBuilderHelper as MapBuilderHelper;
 use Caldera\CriticalmassBundle\Utility as Utility;
 
+/**
+ * Implementierung eines MapBuilders, der allen Anspruechen der Aufgabenstel-
+ * lung genuegt.
+ */
 class LiveMapBuilder extends BaseMapBuilder
 {
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getUserCounter()
 	{
 		$ucc = new MapBuilderHelper\UserCounterCalculator($this->additionalPositions);
@@ -16,6 +23,9 @@ class LiveMapBuilder extends BaseMapBuilder
 		return $ucc->getUserCounter();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getAverageSpeed()
 	{
 		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions);
@@ -23,6 +33,9 @@ class LiveMapBuilder extends BaseMapBuilder
 		return $asc->getAverageSpeed();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getZoomFactor()
 	{
 		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions);
@@ -30,6 +43,9 @@ class LiveMapBuilder extends BaseMapBuilder
 		return $zfc->getZoomFactor();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getMapCenterLatitude()
 	{
 		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions);
@@ -37,6 +53,9 @@ class LiveMapBuilder extends BaseMapBuilder
 		return $mcc->calculateMapCenter("getLatitude");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getMapCenterLongitude()
 	{
 		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions);
@@ -44,6 +63,9 @@ class LiveMapBuilder extends BaseMapBuilder
 		return $mcc->calculateMapCenter("getLongitude");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function calculateMainPositions()
 	{
 		$psf = new PositionFilterChain\PositionFilterChain();
@@ -56,6 +78,9 @@ class LiveMapBuilder extends BaseMapBuilder
 		$this->mainPositions = $psf->getPositionArray();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function calculateAdditionalPositions()
 	{
 		$psf = new PositionFilterChain\TailPositionFilterChain();

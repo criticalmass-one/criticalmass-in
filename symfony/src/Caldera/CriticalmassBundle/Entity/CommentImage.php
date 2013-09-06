@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Diese Klasse repraesentiert ein Bild, das zu einem Kommentar hochgeladen
+ * wurde.
+ *
  * @ORM\Entity()
  * @ORM\Table(name="commentimage")
  * @ORM\HasLifecycleCallbacks
@@ -17,6 +20,8 @@ use Doctrine\ORM\Mapping as ORM;
 class CommentImage
 {
 	/**
+	 * Numerische ID dieses Bildes.
+	 *
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,32 +29,44 @@ class CommentImage
 	protected $id;
 
 	/**
+	 * Autor dieses Bildes.
+	 *
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
 
 	/**
+	 * Zeitpunkt der Erstellung dieser Entitaet.
+	 *
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $creationDateTime;
 
 	/**
+	 * Name des Bildes.
+	 *
 	 * @ORM\Column(type="string", length=255)
 	 */
-	protected $name = "Foo";
+	protected $name = "Image";
 
 	/**
+	 * Speicherort der Bilddatei.
+	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $path;
 
 	/**
+	 * Breite des verkleinerten Vorschaubildes.
+	 *
 	 * @ORM\Column(type="smallint")
 	 */
 	protected $resizedWidth = 0;
 
 	/**
+	 * Hoehe des verkleinerten Vorschaubildes.
+	 *
 	 * @ORM\Column(type="smallint")
 	 */
 	protected $resizedHeight = 0;

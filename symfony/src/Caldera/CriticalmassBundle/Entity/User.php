@@ -6,12 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
+ * Diese Benutzer-Entitaet basiert auf der User-Enitaet des FOSUserBundles und 
+ * fuegt einige zusaetzliche Eigenschaften hinzu.
+ *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {
 	/**
+	 * Numerische ID dieses Benutzers.
+	 *
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
@@ -19,26 +24,40 @@ class User extends BaseUser
 	protected $id;
 
 	/**
+	 * Schalter fuer die GPS-Aktivitaet, entscheidet ob der Benutzer GPS-Daten von
+	 * der Live-Uebersicht senden moechte.
+	 *
 	 * @ORM\Column(type="boolean")
 	 */
 	private $sendGPSInformation = 1;
 
 	/**
+	 * Vom Benutzer gewaehltes Intervall in Sekunden, in dem GPS-Daten an den
+	 * Server gesendet werden sollen.
+	 *
 	 * @ORM\Column(type="integer")
 	 */
 	private $gpsInterval = 10;
 
 	/**
+	 * Vom Benutzer momentan ausgewaehlte Stadt.
+	 *
 	 * @ORM\ManyToOne(targetEntity="City")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
 	private $currentCity;
 
 	/**
+	 * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
+	 * werden koennen.
+	 *
 	 * @ORM\Column(type="string", length=255)
 	 */
 	private $pushoverKey = '';
 
+	/**
+	 * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -48,13 +67,24 @@ class User extends BaseUser
 	 * Hasht die E-Mail-Adresse per MD5, um das dazugehörige Gravartar-Profilbild
 	 * aufrufen zu können.
 	 *
-	 * @return String MD5-gehashte E-Mail-Adresse
+	 * @return String: MD5-gehashte E-Mail-Adresse
 	 */
 	public function getGravatarHash()
 	{
 		return md5($this->getEmail());
 	}
 
+	/**
+	 * Gibt den Slug der Stadt zurueck, die der Benutzer gerade ausgewaehlt hat.
+	 * Hilfreich, um beispielsweise innerhalb eines Templates automatisch einen
+	 * Slug angeben zu koennen, um Routen zu konstruieren.
+	 *
+	 * @return String: Slug der ausgewaehlten Stadt
+	 */
+	public function getCurrentCitySlug()
+	{
+		return $this->getCurrentCity()->getMainSlug()->getSlug();
+	}
 
     /**
      * Get id
@@ -134,11 +164,6 @@ class User extends BaseUser
     {
         return $this->gpsInterval;
     }
-
-		public function getCurrentCitySlug()
-		{
-			return $this->getCurrentCity()->getMainSlug()->getSlug();
-		}
 
     /**
      * Set pushoverKey

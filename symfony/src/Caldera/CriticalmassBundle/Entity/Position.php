@@ -5,12 +5,17 @@ namespace Caldera\CriticalmassBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * In dieser Entitaet wird ein Positions-Datum abgelegt, das mit den Eigen-
+ * schaften aus der Geolocation-Spezifikation ausgestattet ist.
+ *
  * @ORM\Entity()
  * @ORM\Table(name="position")
  */
 class Position
 {
 	/**
+	 * ID der Entitaet.
+	 *
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
@@ -18,62 +23,103 @@ class Position
 	protected $id;
 
 	/**
+	 * Sender dieses Datums.
+	 *
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="positions")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
 
 	/**
+	 * Tour, zu der diese Entitaet abgespeichert wurde.
+	 *
 	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="positions")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
 	 */
 	protected $ride;
 
 	/**
+	 * Breitengrad der Position.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $latitude;
 
 	/**
+	 * Laengengrad der Position.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $longitude;
 
 	/**
+	 * Vom Smartphone berechnete Genauigkeit dieser Positionsangabe.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $accuracy;
 
 	/**
+	 * Hoehe der Positon.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $altitude;
 
 	/**
+	 * Vom Smartphone berechnete Genauigkeit der Hoehenangabe.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $altitudeAccuracy;
 
 	/**
+	 * Wert des eventuell eingebauten Kompasses.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $heading;
 
 	/**
+	 * Momentane Geschwindigkeit des Geraetes.
+	 *
 	 * @ORM\Column(type="float")
 	 */
 	protected $speed;
 
 	/**
+	 * Zeitpunkt, zu dem die obigen Angaben vom Smartphone ermittelt wurden.
+	 *
 	 * @ORM\Column(type="integer")
 	 */
 	protected $timestamp;
 
 	/**
+	 * Zeitpunkt der Erstellung dieses Positionsdatums.
+	 *
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $creationDateTime;
 
+	/**
+	 * Vergleicht ein Positionsdatum mit einem weiteren Positionsdatum. Zwei Posi-
+	 * tionen sind per Definition identisch, wenn Laengen- und Breitengrad ueber-
+	 * einstimmen.
+	 *
+	 * @param Position $position: Zu vergleichendes Positions-Datum
+	 *
+	 * @return Boolean: True, wenn Laengen- und Breitengrad identisch sind
+	 */
+	public function isEqual(\Caldera\CriticalmassBundle\Entity\Position $position)
+	{
+		if (($position->getLatitude() == $this->getLatitude()) and 
+				($position->getLongitude() == $this->getLongitude()))
+		{
+			return true;
+		}
+
+		return false;
+	}
 
     /**
      * Get id
@@ -359,15 +405,5 @@ class Position
     public function getRide()
     {
         return $this->ride;
-    }
-
-    public function isEqual(\Caldera\CriticalmassBundle\Entity\Position $position)
-    {
-	if (($position->getLatitude() == $this->getLatitude()) and ($position->getLongitude() == $this->getLongitude()))
-	{
-		return true;
-	}
-
-	return false;
     }
 }

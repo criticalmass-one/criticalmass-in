@@ -98,23 +98,41 @@ class ImageResizer
 			$longSide = imagesy($this->image);
 		}
 
+		// Verkleinerungsfaktor berechnen
 		$resizeFactor = $length / $longSide;
 
+		// Skalierung mit den neuen Dimensionen anstossen
 		$this->resizeTo(imagesx($this->image) * $resizeFactor, imagesy($this->image) * $resizeFactor);
 	}
 
+	/**
+	 * Skaliert das enthaltene Bild zu der uebergebenen Breite und Hoehe.
+	 *
+	 * @param Integer $width: Neue Breite
+	 * @param Integer $height: Neue Hoehe
+	 */
 	public function resizeTo($width, $height)
 	{
+		// neues Bild mit den uebergebenen Dimensionen erzeugen
 		$resizedImage = imagecreatetruecolor($width, $height);
 
+		// Bild skaliert kopieren
 		imagecopyresized($resizedImage, $this->image, 0, 0, 0, 0, $width, $height, imagesx($this->image), imagesy($this->image));
 
+		// neues Bild abspeichern
 		$this->image = $resizedImage;
 
+		// Angaben der Groesse des Bildes aktualisieren
 		$this->commentImage->setResizedWidth(imagesx($this->image));
 		$this->commentImage->setResizedHeight(imagesy($this->image));
 	}
 
+	/**
+	 * Speichert das enthaltene Bild an einem in den Einstellungen konfigurierten
+	 * Ort ab.
+	 *
+	 * @return $this
+	 */
 	public function save()
 	{
 		imagejpeg($this->image,
@@ -124,11 +142,20 @@ class ImageResizer
 		return $this;
 	}
 
+	/**
+	 * Gibt fuer ein skaliertes Bild den Dateinamen zurueck.
+	 *
+	 * @return String: Dateiname des skalierten Bildes
+	 */
 	public function getResizedPath()
 	{
 		return $this->container->getParameter('commentimage.upload_filepath').$this->commentImage->getId().'-'.imagesx($this->image).'x'.imagesy($this->image).'.jpeg';
 	}
 
+	/**
+	 * Loescht das enthaltene Bild beim Zerstoeren der Instanz dieser Klasse und
+	 * gibt den Speicher wieder frei.
+	 */
 	public function __destruct()
 	{
 		imagedestroy($this->image);
