@@ -7,96 +7,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
+/**
+ * Dieser Controller dient lediglich der Anzeige der Live-Darstellung der Tour.
+ */
 class LiveController extends Controller
 {
+	/**
+	 * Diese Methode dient lediglich der Anzeige der Live-Darstellung der Tour.
+	 * Sie laedt die Daten der angefragten Stadt aus der Datenbank und bestueckt
+	 * das entsprechende Template.
+	 *
+	 * @param String citySlug: Kurzbezeichnung der ausgewaehlten Stadt
+	 */
 	public function showAction($citySlug)
 	{
 		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
 		return $this->render('CalderaCriticalmassBundle:Live:show.html.twig', array('city' => $city));
-	}
-
-	public function trackpositionAction()
-	{
-		$query = $this->getRequest()->query;
-
-		/* QND */
-		$city = $this->getUser()->getCurrentCity();
-
-		$position = new Entity\Position();
-
-		$position->setUser($this->getUser());
-		$position->setRide($this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC')));
-
-		$position->setLatitude($query->get("latitude") ? $query->get("latitude") : 0.0);
-		$position->setLongitude($query->get("longitude") ? $query->get("longitude") : 0.0);
-		$position->setAccuracy($query->get("accuracy") ? $query->get("accuracy") : 0.0);
-		$position->setAltitude($query->get("altitude") ? $query->get("altitude") : 0.0);
-		$position->setAltitudeAccuracy($query->get("altitudeaccuracy") ? $query->get("altitudeaccuracy") : 0.0);
-		$position->setHeading($query->get("heading") ? $query->get("heading") : 0.0);
-		$position->setSpeed($query->get("speed") ? $query->get("speed") : 0.0);
-		$position->setTimestamp($query->get("timestamp") ? $request->request->get("timestamp") : 0);
-		$position->setCreationDateTime(new \DateTime());
-
-		$manager = $this->getDoctrine()->getManager();
-		$manager->persist($position);
-		$manager->flush();
-
-		return new Response($position->getId());
-	}
-
-	public function refreshgpsintervalAction()
-	{
-		$this->getUser()->setGPSInterval($this->getRequest()->query->get('interval'));
-		$this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
-
-		return new Response($this->getRequest()->query->get('interval'));
-	}
-
-	public function refreshgpsstatusAction()
-	{
-		$this->getUser()->setSendGPSInformation($this->getRequest()->query->get('status'));
-		$this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
-
-		return new Response($this->getRequest()->query->get('status'));
-	}
-
-	public function getintervalAction()
-	{
-		$response = new Response();
-
-		$response->setContent(json_encode(array(
-			'interval' => ($this->getUser() != null ? $this->getUser()->getGpsInterval() * 1000 : 0)
-		)));
-
-		$response->headers->set('Content-Type', 'application/json');
-
-		return $response;
-	}
-
-	public function getstatusAction()
-	{
-		$response = new Response();
-		$response->setContent(json_encode(array(
-			'status' => ($this->getUser() != null ? $this->getUser()->getSendGPSInformation() : 0)
-		)));
-
-		$response->headers->set('Content-Type', 'application/json');
-
-		return $response;
-	}
-
-	public function godmodeAction($citySlug, $status)
-	{
-		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
-
-		$ride->setGodMode($status);
-
-		$manager = $this->getDoctrine()->getManager();
-                $manager->persist($ride);
-                $manager->flush();
-
-		return new Response("Godmode fuer ".$city->getCity()." ist: ".$status);
 	}
 }

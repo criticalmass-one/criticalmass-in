@@ -46,6 +46,11 @@ class DefaultController extends Controller
 		}
 	}
 
+	/**
+	 * Diese Methode ruft ein Formular auf, in das der Benutzer seinen persoenli-
+	 * chen Pushover-Schluessel eintragen kann. Wenn das Formular abgesendet wur-
+	 * de, wird der Key in der User-Entitaet gespeichert.
+	 */
 	public function pushnotificationsAction()
 	{
 		$form = $this->createFormBuilder($this->getUser())->add('pushoverkey', 'text')->getForm();

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stellt eine einzelne Tour einer Critical Mass dar.
  *
+ * @ORM\Entity
  * @ORM\Table(name="ride")
  */
 class Ride
@@ -59,7 +60,7 @@ class Ride
 	/**
 	 * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
 	 *
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	private $location;
 
@@ -67,7 +68,7 @@ class Ride
 	 * Technische Bezeichnung des Treffpunktes der Tour als Zeichenkette fuer die
 	 * Darstellung der Karte.
 	 *
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	private $mapLocation;
 
@@ -93,6 +94,13 @@ class Ride
 	 * @ORM\Column(type="integer")
 	 */
 	private $godMode = 0;
+	/**
+	 * Zeichenkette eines Karten-Embeddings, beispielsweise von Google-Maps. Wird
+	 * anschließend unter dem Treffpunkt eingebunden.
+	 *
+	 * @ORM\Column(type="text")
+	 */
+	private $map;
 
     /**
      * Get id

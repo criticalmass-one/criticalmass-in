@@ -21,11 +21,6 @@ abstract class BasePositionFilter
 	protected $ride;
 
 	/**
-	 * PositionArray mit den Position-Entitaeten.
-	 */
-	protected $positionArray;
-
-	/**
 	 * Dem Konstruktor wird jeweils eine Instanz einer Ride-Entitaet uebergeben.
 	 *
 	 * @param Entity\Ride $ride: Instanz einer Ride-Entitaet
@@ -35,49 +30,4 @@ abstract class BasePositionFilter
 		$this->ride = $ride;
 	}
 
-	/**
-	 * Diese Methode empfaengt als Parameter ein PositionArray und speichert es
-	 * in der Eigenschaft positionArray zur weiteren Verarbeitung ab.
-	 *
-	 * @param PositionArray $positionArray: Array mit den Positionen
-	 */
-	public function setPositionArray(PositionArray $positionArray)
-	{
-		$this->positionArray = $positionArray;
-	}
-
-	/**
-	 * Gibt das abgespeicherte PositionArray zurueck.
-	 *
-	 * @return PositionArray: Instanz eines PositionArray
-	 */
-	public function getPositionArray()
-	{
-		return $this->positionArray;
-	}
-
-	/**
-	 * Alle erbenden Klassen muessen die Methode process() implementieren. In die-
-	 * ser Methode erfolgt die eigentliche Filter der Positionen.
-	 */
-	public abstract function process();
-
-	/**
-	 * Gibt an, ob es sich um einen einfachen oder einen komplexen Filter handelt.
-	 * Einfache Filter koennen ueber eine Doctrine-Abfrage abgehandelt werden.
-	 *
-	 * @return Boolean: True, falls es sich um einen komplexen Filter handelt
-	 */
-	public function isComplexFilter()
-	{
-		return false;
-	}
-
-	/**
-	 * Diese Methode haengt zusaetzliche Argumente an die uebergebene Abfrage an.
-	 */
-	public function buildQuery($queryBuilder)
-	{
-		return $queryBuilder;
-	}
 }

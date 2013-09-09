@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Utility;
+namespace Caldera\CriticalmassBundle\Utility\NotificationPusher;
 
 use \Caldera\CriticalmassBundle\Entity as Entity;
 

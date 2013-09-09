@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Utility\PositionFilter;
+namespace Caldera\CriticalmassBundle\Utility\PositionFilter\ComplexPositionFilter;
 
 use Caldera\CriticalmassBundle\Entity as Entity;
 
@@ -9,13 +9,8 @@ use Caldera\CriticalmassBundle\Entity as Entity;
  * zern und gibt anschliessend die letzten beiden Positionen des Nutzers zu-
  * rueck.
  */
-class UserPositionFilter extends BasePositionFilter
+class UserPositionFilter extends ComplexPositionFilter
 {
-	public function isComplexFilter()
-	{
-		return true;
-	}
-
 	/**
 	 * Implementierung der Filterung.
 	 */

@@ -10,14 +10,6 @@ caldera_criticalmass_showcity:
     pattern: /{citySlug}/show/
     defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
 
-caldera_criticalmass_trackposition:
-    pattern: /trackposition
-    defaults: { _controller: CalderaCriticalmassBundle:Live:trackposition }
-
-caldera_criticalmass_mapdata:
-    pattern: /mapapi/mapdata/{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Map:mapdata }
-
 caldera_criticalmass_staticpage:
     pattern: /static/{page}
     defaults: { _controller: CalderaCriticalmassBundle:StaticPage:show }
@@ -30,34 +22,6 @@ caldera_criticalmass_live:
     pattern: /{citySlug}/live
     defaults: { _controller: CalderaCriticalmassBundle:Live:show }
 
-caldera_criticalmass_settings_gps_interval:
-    pattern: /settings/gpsinterval
-    defaults: { _controller: CalderaCriticalmassBundle:Live:refreshgpsinterval }
-
-caldera_criticalmass_settings_gps_status:
-    pattern: /settings/gpsstatus
-    defaults: { _controller: CalderaCriticalmassBundle:Live:refreshgpsstatus }
-
-caldera_criticalmass_settings_gps_getinterval:
-    pattern: /settings/getgpsinterval
-    defaults: { _controller: CalderaCriticalmassBundle:Live:getinterval }
-
-caldera_criticalmass_settings_gps_getstatus:
-    pattern: /settings/getgpsstatus
-    defaults: { _controller: CalderaCriticalmassBundle:Live:getstatus }
-
-caldera_criticalmass_getridelocation:
-    pattern: /mapapi/getridelocation/{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Map:ridelocation }
-
-caldera_criticalmass_getcitylocation:
-    pattern: /mapapi/getcitylocation/{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Map:citylocation }
-
-caldera_criticalmass_getcitylocationbyid:
-    pattern: /mapapi/getcitylocationbyid/{cityId}
-    defaults: { _controller: CalderaCriticalmassBundle:Map:citylocationbyid }
-
 caldera_criticalmass_pushnotificationsettings:
     pattern: /profile/pushnotifications
     defaults: { _controller: CalderaCriticalmassBundle:Default:pushnotifications }
@@ -68,6 +32,10 @@ CalderaCriticalmassBundle_admin_ride:
 
 CalderaCriticalmassBundle_ridecomments:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing/ridecomments.yml"
+    prefix:   /
+
+CalderaCriticalmassBundle_api:
+    resource: "@CalderaCriticalmassBundle/Resources/config/routing/api.yml"
     prefix:   /
 
 caldera_criticalmass_godmode:

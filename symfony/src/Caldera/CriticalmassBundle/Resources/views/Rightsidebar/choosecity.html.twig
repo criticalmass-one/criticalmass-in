@@ -1,7 +1,7 @@
 		<ul data-role="listview" data-theme="d">
 			{% for result in cityResults %}
 			<li>
-				<a href="{{ path('caldera_criticalmass_showcity', {'citySlug': result['mainSlug'].getSlug }) }}" data-ajax="false">
+				<a href="{{ path('caldera_criticalmass_showcity', {'citySlug': result['city'].getMainSlug.getSlug }) }}" data-ajax="false">
 				{% if result['distance'] %}
 				<p class="ui-li-aside ui-li-desc">{{ result['distance']|number_format(1) }} Kilometer</p>
 				{% endif %}

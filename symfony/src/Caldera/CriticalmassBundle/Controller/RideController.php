@@ -10,8 +10,10 @@ use Caldera\CriticalmassBundle\Form\RideType;
 use Caldera\CriticalmassBundle\Utility as Utility;
 
 /**
- * Ride controller.
- *
+ * Dieser Controller stellt realisiert den Administrationsbereich zur Touren-
+ * verwaltung. Der Controller wurde automatisch ueber Symfonys CRUD-Faehigkei-
+ * ten erzeugt und lediglich in den Templates sowie zum Verschicken von Be-
+ * nachrichtigungen modifiziert.
  */
 class RideController extends Controller
 {
@@ -42,16 +44,6 @@ class RideController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
-            if (!$entity->getLocation())
-            {
-              $entity->setLocation("");
-            }
-
-            if (!$entity->getMap())
-            {
-              $entity->setMap("");
-            }
 
             $em->persist($entity);
             $em->flush();
@@ -195,6 +187,13 @@ class RideController extends Controller
         ;
     }
 
+		/**
+		 * Zeigt die Seite zum Verschicken von Push-Benachrichtigungen an.
+		 *
+		 * @param Integer $rideId: ID der Tour, fuer die Nachrichten verschickt wer-
+		 * den sollen
+		 */
+		
 		public function notificationsAction($rideId)
 		{
 			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
@@ -202,11 +201,22 @@ class RideController extends Controller
 			return $this->render('CalderaCriticalmassBundle:Ride:notifications.html.twig', array('ride' => $ride));
 		}
 
+		/**
+		 * In dieser Methode werden nun endlich die Notifications verschickt. Es wird
+		 * je nach Typ der Benachrichtigung eine entsprechende Instanz  der Benach-
+		 * richtigung erstellt und an einen NotificationPusher zum Versand ueber-
+		 * stellt.
+		 *
+		 * @param Integer $rideId: ID der Tour
+		 * @param String $notificationType: Typ der Benachrichtigung
+		 */
 		public function sendnotificationsAction($rideId, $notificationType)
 		{
+			// Tour und Stadt auslesen
 			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
 			$users = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:User')->findByCurrentCity($ride->getCity());
 
+			// je nach gewaehltem Benachrichtigungstyp verschiedene Instanzen erstellen
 			switch ($notificationType)
 			{
 				case 'location':
@@ -220,7 +230,8 @@ class RideController extends Controller
 					break;
 			}
 
-			$np = new Utility\PushoverNotificationPusher($notification, $users);
+			// NotificationPusher erstellen
+			$np = new Utility\NotificationPusher\PushoverNotificationPusher($notification, $users);
 			$np->setPushoverKey($this->container->getParameter('notifications.pushoverkey'));
 			$np->sendNotification();
 
