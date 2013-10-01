@@ -1,0 +1,3 @@
+caldera_criticalmass_desktop_homepage:
+    pattern:  /desktop/hamburg/live
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Live:show }

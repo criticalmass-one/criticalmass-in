@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>CalderaCriticalmassDesktopBundle</title>
+    <style>
+
+    </style>
+    <script>
+        var mapOptions = {
+            zoom: result.zoom,
+            center: new google.maps.LatLng(result.mapcenter.latitude, result.mapcenter.longitude),
+            mapTypeId: google.maps.MapTypeId.TERRAIN,
+            disableDefaultUI: true
+        }
+
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    </script>
+</head>
+<body>
+<div id="livemap"></div>
+</body>
+</html>
