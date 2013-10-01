@@ -300,4 +300,29 @@ class ApiController extends Controller
 		// kurze Rueckmeldung anzeigen
 		return new Response("Godmode fuer ".$city->getCity()." ist: ".$status);
 	}
+
+    public function listcitiesAction()
+    {
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findAll();
+
+        $citiesResult = array();
+
+        foreach ($cities as $city)
+        {
+            $citiesResult[] = array(
+                'city' => $city->getCity(),
+                'center' => array('latitude' => $city->getLatitude(), 'longitude' => $city->getLongitude()),
+                'foo' => 'bar'
+            );
+        }
+
+        $response = new Response();
+        $response->setContent(json_encode(array(
+            'cities' => $citiesResult
+        )));
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
 }
