@@ -37,7 +37,14 @@ class City
 	 */
 	protected $title;
 
-	/**
+    /**
+     * Kurze Beschreibung der Critical Mass dieser Stadt.
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $description;
+
+    /**
 	 * Adresse der Webseite der Critical Mass in dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255)
@@ -351,5 +358,28 @@ class City
     public function getSlugs()
     {
         return $this->slugs;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return City
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
