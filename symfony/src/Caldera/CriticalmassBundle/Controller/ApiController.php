@@ -313,7 +313,7 @@ class ApiController extends Controller
                 'id' => $city->getId(),
                 'city' => $city->getCity(),
                 'center' => array('latitude' => $city->getLatitude(), 'longitude' => $city->getLongitude()),
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vestibulum risus a blandit fermentum. Maecenas fermentum sodales leo, et mollis mi commodo non. Nullam gravida diam fermentum arcu fermentum pellentesque. Sed gravida in diam in pharetra. Sed tristique risus eu leo adipiscing, et pulvinar magna pellentesque. Nam eu risus nec massa placerat egestas non quis nibh. Proin non posuere erat, vitae rhoncus enim. Maecenas fringilla sem a lectus cursus, eu ultrices nunc molestie.',
+                'description' => '<div class="infowindow"><header><img class="citylogo" src="/images/citylogos/224.jpg" /><h2 class="citytitle">'.$city->getTitle().'</h2></header><p>'.$city->getDescription().'</p></div>',
                 'foo' => 'bar'
             );
         }
