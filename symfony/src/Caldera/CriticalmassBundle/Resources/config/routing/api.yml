@@ -33,3 +33,7 @@ caldera_criticalmass_getcitylocation:
 caldera_criticalmass_getcitylocationbyid:
     pattern: /mapapi/getcitylocationbyid/{cityId}
     defaults: { _controller: CalderaCriticalmassBundle:Api:citylocationbyid }
+
+caldera_criticalmass_apilistcities:
+    pattern: /api/listcities
+    defaults: { _controller: CalderaCriticalmassBundle:Api:listcities }
