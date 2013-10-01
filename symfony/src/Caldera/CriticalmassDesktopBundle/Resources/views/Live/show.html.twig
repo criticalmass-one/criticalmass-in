@@ -2,6 +2,7 @@
 <head>
     <title>CalderaCriticalmassDesktopBundle</title>
     <link rel="stylesheet" href="/css/reset.css" type="text/css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <style>
         #livemap-canvas
@@ -21,6 +22,32 @@
         }
     </style>
     <script>
+        var map;
+        var elementsArray = [];
+        var infoWindowArray = [];
+
+        function addLoadedMarkers(result)
+        {
+            for (cityId in result.cities)
+            {
+                var city = result.cities[cityId];
+
+                elementsArray[cityId]  = new google.maps.Marker({
+                    position: new google.maps.LatLng(city.center.latitude, city.center.longitude),
+                    map: map,
+                    title: city.city
+                });
+
+                infoWindowArray[cityId] = new google.maps.InfoWindow({ content: 'foobarbaz' });
+
+                google.maps.event.addListener(elementsArray[cityId], 'click', function(cityId) {
+                    return function() {
+                        infoWindowArray[cityId].open(map,elementsArray[cityId]);
+                    }
+                }(cityId));
+            }
+        }
+
         function startInitialization()
         {
             var pos = new google.maps.LatLng(53.0, 9.0);
@@ -34,7 +61,7 @@
             map = new google.maps.Map(document.getElementById('livemap-canvas'), mapOptions);
 
 
-        var contentString = '<div id="content">'+
+            var contentString = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
                 '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
@@ -55,19 +82,14 @@
                 '</div>'+
                 '</div>';
 
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-
-        var marker = new google.maps.Marker({
-            position: pos,
-            map: map,
-            title: 'Uluru (Ayers Rock)'
-        });
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-        });
+            $.ajax({
+                type: 'GET',
+                url: '/api/listcities',
+                cache: false,
+                success: addLoadedMarkers
+            });
         }
+
         google.maps.event.addDomListener(window, 'load', startInitialization);
     </script>
 </head>
