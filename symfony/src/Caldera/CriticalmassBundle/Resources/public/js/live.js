@@ -80,8 +80,16 @@ function drawArrow(arrowElement)
 	}
 }
 
-function drawMarker(circleElement)
+function drawMarker(markerElement)
 {
+    if (!doesElementExist(markerElement.id))
+    {
+        elementsArray[markerElement.id] = new google.maps.Marker({
+            position: new google.maps.LatLng(markerElement.centerPosition.latitude, markerElement.centerPosition.longitude),
+            map: map,
+            title: 'Startpunkt'
+        });
+    }
 
 }
 
@@ -193,11 +201,10 @@ function refreshElements(elements)
 				drawArrow(elements[index]);
 			}
 
-			/*
 			if (elements[index].type == "marker")
 			{
 				drawMarker(elements[index]);
-			}*/
+			}
 		}
 	}
 }
