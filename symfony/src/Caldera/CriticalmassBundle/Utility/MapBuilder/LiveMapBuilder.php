@@ -18,7 +18,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getUserCounter()
 	{
-		$ucc = new MapBuilderHelper\UserCounterCalculator($this->additionalPositions);
+		$ucc = new MapBuilderHelper\UserCounterCalculator($this->additionalPositions, $this->ride);
 
 		return $ucc->getUserCounter();
 	}
@@ -28,7 +28,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getAverageSpeed()
 	{
-		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions);
+		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions, $this->ride);
 
 		return $asc->getAverageSpeed();
 	}
@@ -38,7 +38,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getZoomFactor()
 	{
-		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions);
+		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions, $this->ride);
 
 		return $zfc->getZoomFactor();
 	}
@@ -48,9 +48,9 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getMapCenterLatitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions);
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions, $this->ride);
 
-		return $mcc->calculateMapCenter("getLatitude");
+		return $mcc->getMapCenterLatitude();
 	}
 
 	/**
@@ -58,9 +58,9 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getMapCenterLongitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions);
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions, $this->ride);
 
-		return $mcc->calculateMapCenter("getLongitude");
+		return $mcc->getMapCenterLongitude();
 	}
 
 	/**
