@@ -94,13 +94,6 @@ class Ride
 	 * @ORM\Column(type="integer")
 	 */
 	private $godMode = 0;
-	/**
-	 * Zeichenkette eines Karten-Embeddings, beispielsweise von Google-Maps. Wird
-	 * anschließend unter dem Treffpunkt eingebunden.
-	 *
-	 * @ORM\Column(type="text")
-	 */
-	private $map;
 
     /**
      * Get id
