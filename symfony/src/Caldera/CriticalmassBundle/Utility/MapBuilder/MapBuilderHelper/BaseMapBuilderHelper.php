@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassBundle\Utility\MapBuilder\MapBuilderHelper;
 
 use Caldera\CriticalmassBundle\Utility\PositionArray as PositionArray;
+use Caldera\CriticalmassBundle\Entity\Ride as Ride;
 
 /**
  * Ein MapBuilderHelper ist ein Untermodul des MapBuilders und fuer die Berech-
@@ -16,14 +17,17 @@ abstract class BaseMapBuilderHelper
 	 */
 	protected $positionArray;
 
+    protected $ride;
+
 	/**
 	 * Konstruiert einen MapBuilderHelper, der ein PositionArray zur Bearbeitung
 	 * erhaelt.
 	 *
 	 * @param PositionArray $positionArray: Array mit den Positionsdaten
 	 */
-	public function __construct(PositionArray $positionArray)
+	public function __construct(PositionArray $positionArray, Ride $ride)
 	{
 		$this->positionArray = $positionArray;
+        $this->ride = $ride;
 	}
 }
