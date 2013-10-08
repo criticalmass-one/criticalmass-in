@@ -158,12 +158,18 @@ abstract class BaseMapBuilder
 	{
 		$elements = array();
 
+        $marker = new MapElement\MarkerMapElement($this->ride);
+        $elements[] = $marker->draw();
+
 		$elements = array_merge($elements, $this->getMainPositions());
 		
 		$main = $this->mainPositions->getPositions();
 
-		$arrow = new MapElement\ArrowMapElement($main[0], $main[1]);
-		$elements[] = $arrow->draw();
+        if (count($main) > 1)
+        {
+      		$arrow = new MapElement\ArrowMapElement($main[0], $main[1]);
+            $elements[] = $arrow->draw();
+        }
 
 		$elements = array_merge($elements, $this->getAdditionalPositions());
 
