@@ -89,7 +89,9 @@ function doesElementExist(elementId)
 {
 	var found = false;
 
-	for (index in elementsArray)
+    var index;
+
+    for (index in elementsArray)
 	{
 		if (index == elementId)
 		{
@@ -145,7 +147,7 @@ function clearOldElements(elements)
 		var found = false;
 		var pos;
 
-		for (pos in elements)
+		for (pos in elementsArray)
 		{
 			if (index == pos)
 			{
