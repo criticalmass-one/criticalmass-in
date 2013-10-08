@@ -209,35 +209,36 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 
 		$this->addReference("city-freiburg", $city);
 
-		// Critical Mass Hamburg
-		$city = new City();
-		$city->setCity("Hamburg");
-		$city->setTitle("Critical Mass Hamburg");
-		$city->setUrl("http://www.criticalmass-hamburg.de/");
-		$city->setFacebook("https://www.facebook.com/criticalmasshamburg");
-		$city->setTwitter("https://www.twitter.com/cm_hh");
-		$city->setLatitude(53.550556);
-		$city->setLongitude(9.993333);
+        // Critical Mass Hamburg
+        $city = new City();
+        $city->setCity("Hamburg");
+        $city->setTitle("Critical Mass Hamburg");
+        $city->setDescription("Mit 3.252 Teilnehmern im Sommer 2013 ist die Critical Mass Hamburg die größte monatliche Critical Mass der Welt.");
+        $city->setUrl("http://www.criticalmass-hamburg.de/");
+        $city->setFacebook("https://www.facebook.com/criticalmasshamburg");
+        $city->setTwitter("https://www.twitter.com/cm_hh");
+        $city->setLatitude(53.550556);
+        $city->setLongitude(9.993333);
 
-		$manager->persist($city);
-		$manager->flush();
+        $manager->persist($city);
+        $manager->flush();
 
-		$this->addReference("city-hamburg", $city);
+        // Critical Mass Hamburg-Altona
+        $city = new City();
+        $city->setCity("Altona");
+        $city->setTitle("Critical Mass Altona");
+        $city->setUrl("http://www.critical-mass-altona.de/");
+        $city->setFacebook("https://www.facebook.com/CriticalMassAltona");
+        $city->setTwitter("https://www.twitter.com/cm_altona‎");
+        $city->setLatitude(53.55);
+        $city->setLongitude(9.933333);
 
-		// Critical Mass Hamburg-Altona
-		$city = new City();
-		$city->setCity("Altona");
-		$city->setTitle("Critical Mass Hamburg-Altona");
-		$city->setUrl("http://www.critical-mass-altona.de/");
-		$city->setFacebook("https://www.facebook.com/CriticalMassAltona");
-		$city->setTwitter("https://www.twitter.com/cm_altona‎");
-		$city->setLatitude(53.55);
-		$city->setLongitude(9.933333);
+        $manager->persist($city);
+        $manager->flush();
 
-		$manager->persist($city);
-		$manager->flush();
+        $this->addReference("city-altona", $city);
 
-		$this->addReference("city-altona", $city);
+        $this->addReference("city-hamburg", $city);
 
 		// Critical Mass Hannover
 		$city = new City();
@@ -359,20 +360,35 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 
 		$this->addReference("city-magdeburg", $city);
 
-		// Critical Mass Mannheim
-		$city = new City();
-		$city->setCity("Mannheim");
-		$city->setTitle("Critical Mass Mannheim");
-		$city->setUrl("http://criticalmassmannheim.blogspot.de/");
-		$city->setFacebook("https://www.facebook.com/pages/Critical-mass-bike-flash-mob-Mannheim/165766566835816");
-		$city->setTwitter("");
-		$city->setLatitude(49.483611);
-		$city->setLongitude(8.463056);
+        // Critical Mass Mannheim
+        $city = new City();
+        $city->setCity("Mannheim");
+        $city->setTitle("Critical Mass Mannheim");
+        $city->setUrl("http://criticalmassmannheim.blogspot.de/");
+        $city->setFacebook("https://www.facebook.com/pages/Critical-mass-bike-flash-mob-Mannheim/165766566835816");
+        $city->setTwitter("");
+        $city->setLatitude(49.483611);
+        $city->setLongitude(8.463056);
 
-		$manager->persist($city);
-		$manager->flush();
+        $manager->persist($city);
+        $manager->flush();
 
-		$this->addReference("city-mannheim", $city);
+        $this->addReference("city-mannheim", $city);
+
+        // Critical Mass München
+        $city = new City();
+        $city->setCity("München");
+        $city->setTitle("Critical Mass München");
+        $city->setUrl("");
+        $city->setFacebook("https://www.facebook.com/criticalmassmuenchen");
+        $city->setTwitter("");
+        $city->setLatitude(48.137222);
+        $city->setLongitude(11.575556);
+
+        $manager->persist($city);
+        $manager->flush();
+
+        $this->addReference("city-muenchen", $city);
 
 		// Critical Mass Nürnberg
 		$city = new City();
