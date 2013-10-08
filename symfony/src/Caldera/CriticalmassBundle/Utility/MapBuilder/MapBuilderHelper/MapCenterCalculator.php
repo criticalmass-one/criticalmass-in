@@ -18,8 +18,16 @@ class MapCenterCalculator extends BaseMapBuilderHelper
 	 */
 	public function getMapCenterLatitude()
 	{
-		return $this->calculateMapCenter("getLatitude");
-	}
+        if ($this->positionArray->countPositions() > 0)
+        {
+    		return $this->calculateMapCenter("getLatitude");
+
+        }
+        else
+        {
+            return $this->ride->getLatitude();
+        }
+    }
 
 	/**
 	 * Gibt den berechneten Laengengrad zurueck.
@@ -28,8 +36,15 @@ class MapCenterCalculator extends BaseMapBuilderHelper
 	 */
 	public function getMapCenterLongitude()
 	{
-		return $this->calculateMapCenter("getLongitude");
-	}
+        if ($this->positionArray->countPositions() > 0)
+        {
+    		return $this->calculateMapCenter("getLongitude");
+        }
+        else
+        {
+            return $this->ride->getLongitude();
+        }
+    }
 
 	/**
 	 * Berechnet je nach Parameter den Breiten- oder den Laengengrad des Mittel-
