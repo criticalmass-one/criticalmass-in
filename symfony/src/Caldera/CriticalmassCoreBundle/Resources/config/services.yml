@@ -1,0 +1,7 @@
+parameters:
+#    caldera_criticalmass_core.example.class: Caldera\CriticalmassCoreBundle\Example
+
+services:
+#    caldera_criticalmass_core.example:
+#        class: %caldera_criticalmass_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
