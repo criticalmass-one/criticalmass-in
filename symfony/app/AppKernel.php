@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Caldera\CriticalmassDesktopBundle\CalderaCriticalmassDesktopBundle(),
+            new Caldera\CriticalmassCoreBundle\CalderaCriticalmassCoreBundle(),
+            new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
