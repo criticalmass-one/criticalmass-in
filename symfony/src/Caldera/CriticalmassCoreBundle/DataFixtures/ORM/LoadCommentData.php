@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\DataFixtures\ORM;
+namespace Caldera\CriticalmassCoreBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
