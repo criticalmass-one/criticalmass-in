@@ -10,6 +10,7 @@ function sidebarLocationSuccess(position)
 {
 	$('#rightpanel').load('/loadcities/', { 'latitude': position.coords.latitude, 'longitude': position.coords.longitude }, function()
 	{
+        sessionStorage.setItem('rightsidebarContent', $('#rightpanel').html());
 		$('#rightpanel').trigger('create');
 	});
 }
@@ -24,6 +25,7 @@ function sidebarLocationNoPosition()
 {
 	$('#rightpanel').load('/loadcities/', function()
 	{
+        sessionStorage.setItem('rightsidebarContent', $('#rightpanel').html());
 		$('#rightpanel').trigger('create');
 	});
 }
@@ -39,6 +41,12 @@ $(window).load(function()
 	// Event-Listener eintragen
 	$('#rightpanel').on('panelbeforeopen', function(event, ui)
 	{
+        if (sessionStorage.getItem('rightsidebarContent'))
+        {
+            $('#rightpanel').html(sessionStorage.getItem('rightsidebarContent'));
+            $('#rightpanel').trigger('create');
+        }
+        else
 		// Ist der Geolocation-Service verfuegbar?
 		if (navigator.geolocation)
 		{
