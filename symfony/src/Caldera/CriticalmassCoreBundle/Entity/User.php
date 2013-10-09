@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -10,7 +10,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * fuegt einige zusaetzliche Eigenschaften hinzu.
  *
  * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {
@@ -122,10 +122,10 @@ class User extends BaseUser
     /**
      * Set currentCity
      *
-     * @param \Caldera\CriticalmassBundle\Entity\City $currentCity
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $currentCity
      * @return User
      */
-    public function setCurrentCity(\Caldera\CriticalmassBundle\Entity\City $currentCity = null)
+    public function setCurrentCity(\Caldera\CriticalmassCoreBundle\Entity\City $currentCity = null)
     {
         $this->currentCity = $currentCity;
     
@@ -135,7 +135,7 @@ class User extends BaseUser
     /**
      * Get currentCity
      *
-     * @return \Caldera\CriticalmassBundle\Entity\City 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
      */
     public function getCurrentCity()
     {

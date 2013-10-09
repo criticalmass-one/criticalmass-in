@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -223,10 +223,10 @@ class Ride
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassBundle\Entity\City $city
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
      * @return Ride
      */
-    public function setCity(\Caldera\CriticalmassBundle\Entity\City $city = null)
+    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
     {
         $this->city = $city;
     
@@ -236,7 +236,7 @@ class Ride
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassBundle\Entity\City 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
      */
     public function getCity()
     {

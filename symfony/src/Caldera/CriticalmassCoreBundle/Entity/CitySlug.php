@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,10 +79,10 @@ class CitySlug
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassBundle\Entity\City $city
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
      * @return CitySlug
      */
-    public function setCity(\Caldera\CriticalmassBundle\Entity\City $city = null)
+    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
     {
         $this->city = $city;
 
@@ -92,7 +92,7 @@ class CitySlug
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassBundle\Entity\City 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
      */
     public function getCity()
     {

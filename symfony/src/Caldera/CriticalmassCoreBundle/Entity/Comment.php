@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -119,10 +119,10 @@ class Comment
     /**
      * Set user
      *
-     * @param \Caldera\CriticalmassBundle\Entity\User $user
+     * @param \Caldera\CriticalmassCoreBundle\Entity\User $user
      * @return Comment
      */
-    public function setUser(\Caldera\CriticalmassBundle\Entity\User $user = null)
+    public function setUser(\Caldera\CriticalmassCoreBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -132,7 +132,7 @@ class Comment
     /**
      * Get user
      *
-     * @return \Caldera\CriticalmassBundle\Entity\User 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\User
      */
     public function getUser()
     {
@@ -142,10 +142,10 @@ class Comment
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassBundle\Entity\Ride $ride
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
      * @return Comment
      */
-    public function setRide(\Caldera\CriticalmassBundle\Entity\Ride $ride = null)
+    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -155,7 +155,7 @@ class Comment
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassBundle\Entity\Ride 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride
      */
     public function getRide()
     {
@@ -172,10 +172,10 @@ class Comment
     /**
      * Set image
      *
-     * @param \Caldera\CriticalmassBundle\Entity\CommentImage $image
+     * @param \Caldera\CriticalmassCoreBundle\Entity\CommentImage $image
      * @return Comment
      */
-    public function setImage2(\Caldera\CriticalmassBundle\Entity\CommentImage $image = null)
+    public function setImage2(\Caldera\CriticalmassCoreBundle\Entity\CommentImage $image = null)
     {
         $this->image = $image;
     
@@ -185,7 +185,7 @@ class Comment
     /**
      * Get image
      *
-     * @return \Caldera\CriticalmassBundle\Entity\CommentImage 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\CommentImage
      */
     public function getImage()
     {

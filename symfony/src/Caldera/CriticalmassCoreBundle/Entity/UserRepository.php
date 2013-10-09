@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;

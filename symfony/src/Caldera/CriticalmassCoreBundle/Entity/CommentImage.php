@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Caldera\CriticalmassBundle\Utility as Utility;
 
@@ -107,10 +107,10 @@ class CommentImage
     /**
      * Set user
      *
-     * @param \Caldera\CriticalmassBundle\Entity\User $user
+     * @param \Caldera\CriticalmassCoreBundle\Entity\User $user
      * @return CommentImage
      */
-    public function setUser(\Caldera\CriticalmassBundle\Entity\User $user = null)
+    public function setUser(\Caldera\CriticalmassCoreBundle\Entity\User $user = null)
     {
         $this->user = $user;
     
@@ -120,7 +120,7 @@ class CommentImage
     /**
      * Get user
      *
-     * @return \Caldera\CriticalmassBundle\Entity\User 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\User
      */
     public function getUser()
     {

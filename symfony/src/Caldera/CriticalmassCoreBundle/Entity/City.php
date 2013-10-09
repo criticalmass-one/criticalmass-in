@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
  * derer einzelne Critical-Mass-Touren stattfinden.
  *
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassBundle\Entity\CityRepository")
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Entity\CityRepository")
  * @ORM\Table(name="city")
  */
 class City
@@ -297,10 +297,10 @@ class City
     /**
      * Add rides
      *
-     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
      * @return City
      */
-    public function addRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
+    public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
     {
         $this->rides[] = $rides;
     
@@ -310,9 +310,9 @@ class City
     /**
      * Remove rides
      *
-     * @param \Caldera\CriticalmassBundle\Entity\Ride $rides
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
      */
-    public function removeRide(\Caldera\CriticalmassBundle\Entity\Ride $rides)
+    public function removeRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
     {
         $this->rides->removeElement($rides);
     }
@@ -330,10 +330,10 @@ class City
     /**
      * Add slugs
      *
-     * @param \Caldera\CriticalmassBundle\Entity\CitySlug $slugs
+     * @param \Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs
      * @return City
      */
-    public function addSlug(\Caldera\CriticalmassBundle\Entity\CitySlug $slugs)
+    public function addSlug(\Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs)
     {
         $this->slugs[] = $slugs;
     
@@ -343,9 +343,9 @@ class City
     /**
      * Remove slugs
      *
-     * @param \Caldera\CriticalmassBundle\Entity\CitySlug $slugs
+     * @param \Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs
      */
-    public function removeSlug(\Caldera\CriticalmassBundle\Entity\CitySlug $slugs)
+    public function removeSlug(\Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs)
     {
         $this->slugs->removeElement($slugs);
     }
