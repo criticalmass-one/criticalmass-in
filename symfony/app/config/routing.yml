@@ -1,3 +1,11 @@
+caldera_criticalmass_mobile:
+    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_core:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 caldera_criticalmass_desktop:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
     prefix:   /
