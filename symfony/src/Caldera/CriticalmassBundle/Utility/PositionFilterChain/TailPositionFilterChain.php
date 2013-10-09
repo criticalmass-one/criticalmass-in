@@ -20,5 +20,6 @@ class TailPositionFilterChain extends BasePositionFilterChain
 		$this->filters[] = new SimplePositionFilter\AccuracyPositionFilter($this->ride);
 		$this->filters[] = new SimplePositionFilter\LimitPositionFilter($this->ride);
 		$this->filters[] = new SimplePositionFilter\OrderPositionFilter($this->ride);
+        $this->filters[] = new SimplePositionFilter\DeletePositionFilter($this->ride);
 	}
 }
