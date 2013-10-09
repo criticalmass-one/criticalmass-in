@@ -223,6 +223,8 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($city);
         $manager->flush();
 
+        $this->addReference("city-hamburg", $city);
+
         // Critical Mass Hamburg-Altona
         $city = new City();
         $city->setCity("Altona");
@@ -237,8 +239,6 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
 
         $this->addReference("city-altona", $city);
-
-        $this->addReference("city-hamburg", $city);
 
 		// Critical Mass Hannover
 		$city = new City();
