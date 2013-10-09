@@ -14,6 +14,6 @@ class LimitPositionFilter extends SimplePositionFilter
 	 */
 	public function buildQuery($queryBuilder)
 	{
-		return $queryBuilder->setMaxResults(100);
+		return $queryBuilder->setMaxResults(5);
 	}
 }
