@@ -1,11 +1,10 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Listener;
+namespace Caldera\CriticalmassCoreBundle\Listener;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent as FilterControllerEvent;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as Controller;
 
 /**
  * Dieser Event-Listener wird jeweils vor jedem Controller-Aufruf alarmiert und
@@ -50,7 +49,7 @@ class CityListener
 		if (isset($citySlug))
 		{
 			// CitySlug-Instanz laden
-			$city = $city = $this->doctrine->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+			$city = $city = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
 			// Eigenschaften in der Session persistieren
 			$controller->getRequest()->getSession()->set('currentCitySlug', $city->getMainSlug()->getSlug());

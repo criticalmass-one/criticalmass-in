@@ -2,6 +2,8 @@ parameters:
 #    caldera_criticalmass_core.example.class: Caldera\CriticalmassCoreBundle\Example
 
 services:
-#    caldera_criticalmass_core.example:
-#        class: %caldera_criticalmass_core.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    caldera_criticalmasscore_citylistener:
+        class: Caldera\CriticalmassCoreBundle\Listener\CityListener
+        arguments: [@doctrine]
+        tags:
+          - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

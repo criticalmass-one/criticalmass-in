@@ -15,12 +15,6 @@ services:
         class:           Caldera\CriticalmassBundle\Utility\DistanceCalculator
         arguments: []
 
-    caldera_criticalmass_citylistener:
-        class: Caldera\CriticalmassBundle\Listener\CityListener
-        arguments: [@doctrine]
-        tags:
-          - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
     caldera_criticalmass_imageresizer:
         class:     Caldera\CriticalmassBundle\Utility\ImageResizer
         arguments: [@service_container]
