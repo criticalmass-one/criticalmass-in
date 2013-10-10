@@ -4,7 +4,6 @@ namespace Caldera\CriticalmassCoreBundle\Utility\MapBuilder;
 
 use \Caldera\CriticalmassCoreBundle\Utility\MapElement as MapElement;
 use \Caldera\CriticalmassCoreBundle\Entity as Entity;
-use \Caldera\CriticalmassCoreBundle\Utility\PositionArray as PositionArray;
 
 /**
  * Zur Anzeige der Daten und eingeblendeten grafischen Elemente auf der Live-
