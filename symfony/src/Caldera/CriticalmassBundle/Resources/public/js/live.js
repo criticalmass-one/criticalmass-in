@@ -157,7 +157,6 @@ function clearOldElements(elements)
 
 		for (pos in elementsArray)
 		{
-            alert("Vergleiche " + index + " mit " + pos);
 			if (index == pos)
 			{
 				found = true;
