@@ -111,7 +111,7 @@ abstract class BasePositionFilterChain
 		$this->registerFilter();
 
 		// QueryBuilder konstruieren
-		$repository = $this->doctrine->getRepository('CalderaCriticalmassBundle:Position');
+		$repository = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:Position');
 		$queryBuilder = $repository->createQueryBuilder('p');
 
 		// alle einfachen Filter ausfuehren, um eine MySQL-Abfrage zusammenzustellen
