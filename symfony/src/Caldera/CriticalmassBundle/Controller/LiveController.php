@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-use Caldera\CriticalmassBundle\Entity as Entity;
+use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
 /**
  * Dieser Controller dient lediglich der Anzeige der Live-Darstellung der Tour.
@@ -21,7 +21,7 @@ class LiveController extends Controller
 	 */
 	public function showAction($citySlug)
 	{
-		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
 		return $this->render('CalderaCriticalmassBundle:Live:show.html.twig', array('city' => $city));
 	}
