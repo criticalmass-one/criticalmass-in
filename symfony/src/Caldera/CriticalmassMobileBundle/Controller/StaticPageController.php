@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Controller;
+namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -25,7 +25,7 @@ class StaticPageController extends Controller
 		if (in_array($page, $enabledTemplates))
 		{
 			// dann rendern
-			return $this->render('CalderaCriticalmassBundle:Static:'.$page.'.html.twig');
+			return $this->render('CalderaCriticalmassMobileBundle:Static:'.$page.'.html.twig');
 		}
 		else
 		{

@@ -1,13 +1,12 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Controller;
+namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Caldera\CriticalmassBundle\Entity\Ride;
-use Caldera\CriticalmassBundle\Form\RideType;
-use Caldera\CriticalmassBundle\Utility as Utility;
+use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\CriticalmassCoreBundle\Utility as Utility;
 
 /**
  * Dieser Controller stellt realisiert den Administrationsbereich zur Touren-
@@ -26,9 +25,9 @@ class RideController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CalderaCriticalmassBundle:Ride')->findBy(array('city' => $this->getUser()->getCurrentCity()), array('date' => 'DESC'));
+        $entities = $em->getRepository('CalderaCriticalmassMobileBundle:Ride')->findBy(array('city' => $this->getUser()->getCurrentCity()), array('date' => 'DESC'));
 
-        return $this->render('CalderaCriticalmassBundle:Ride:index.html.twig', array(
+        return $this->render('CalderaCriticalmassMobileBundle:Ride:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -51,7 +50,7 @@ class RideController extends Controller
             return $this->redirect($this->generateUrl('admin_ride_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('CalderaCriticalmassBundle:Ride:new.html.twig', array(
+        return $this->render('CalderaCriticalmassMobileBundle:Ride:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -66,7 +65,7 @@ class RideController extends Controller
         $entity = new Ride();
         $form   = $this->createForm(new RideType(), $entity);
 
-        return $this->render('CalderaCriticalmassBundle:Ride:new.html.twig', array(
+        return $this->render('CalderaCriticalmassMobileBundle:Ride:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -80,7 +79,7 @@ class RideController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CalderaCriticalmassBundle:Ride')->find($id);
+        $entity = $em->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ride entity.');
@@ -88,7 +87,7 @@ class RideController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('CalderaCriticalmassBundle:Ride:show.html.twig', array(
+        return $this->render('CalderaCriticalmassMobileBundle:Ride:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
@@ -101,7 +100,7 @@ class RideController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CalderaCriticalmassBundle:Ride')->find($id);
+        $entity = $em->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ride entity.');
@@ -110,7 +109,7 @@ class RideController extends Controller
         $editForm = $this->createForm(new RideType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('CalderaCriticalmassBundle:Ride:edit.html.twig', array(
+        return $this->render('CalderaCriticalmassMobileBundle:Ride:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -125,7 +124,7 @@ class RideController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CalderaCriticalmassBundle:Ride')->find($id);
+        $entity = $em->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ride entity.');
@@ -142,7 +141,7 @@ class RideController extends Controller
             return $this->redirect($this->generateUrl('admin_ride_edit', array('id' => $id)));
         }
 
-        return $this->render('CalderaCriticalmassBundle:Ride:edit.html.twig', array(
+        return $this->render('CalderaCriticalmassMobileBundle:Ride:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -159,7 +158,7 @@ class RideController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('CalderaCriticalmassBundle:Ride')->find($id);
+            $entity = $em->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Ride entity.');
@@ -196,9 +195,9 @@ class RideController extends Controller
 		
 		public function notificationsAction($rideId)
 		{
-			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
+			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
 
-			return $this->render('CalderaCriticalmassBundle:Ride:notifications.html.twig', array('ride' => $ride));
+			return $this->render('CalderaCriticalmassMobileBundle:Ride:notifications.html.twig', array('ride' => $ride));
 		}
 
 		/**
@@ -213,8 +212,8 @@ class RideController extends Controller
 		public function sendnotificationsAction($rideId, $notificationType)
 		{
 			// Tour und Stadt auslesen
-			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:Ride')->find($rideId);
-			$users = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassBundle:User')->findByCurrentCity($ride->getCity());
+			$ride = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+			$users = $this->getDoctrine()->getManager()->getRepository('CalderaCriticalmassCoreBundle:User')->findByCurrentCity($ride->getCity());
 
 			// je nach gewaehltem Benachrichtigungstyp verschiedene Instanzen erstellen
 			switch ($notificationType)
@@ -235,6 +234,6 @@ class RideController extends Controller
 			$np->setPushoverKey($this->container->getParameter('notifications.pushoverkey'));
 			$np->sendNotification();
 
-			return $this->render('CalderaCriticalmassBundle:Ride:sendnotifications.html.twig', array('notificationsPusher' => $np));
+			return $this->render('CalderaCriticalmassMobileBundle:Ride:sendnotifications.html.twig', array('notificationsPusher' => $np));
 		}
 }

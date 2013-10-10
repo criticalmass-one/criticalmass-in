@@ -1,42 +1,41 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Controller;
+namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-use Caldera\CriticalmassBundle\Entity\Comment;
-use Caldera\CriticalmassBundle\Entity\CommentImage;
+use Caldera\CriticalmassCoreBundle\Entity\Comment;
+use Caldera\CriticalmassCoreBundle\Entity\CommentImage;
 
 class CommentController extends Controller
 {
 	public function listcommentsAction($citySlug)
 	{
-		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug);
+		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'DESC'));
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'DESC'));
 
 		if ($ride)
 		{
-			$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
+			$comments = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Comment')->findBy(array('ride' => $ride->getId()), array('creationDateTime' => 'DESC'));
 
 			$form = $this->createFormBuilder(new Comment())->add('text', 'text')->add('image', 'file')->getForm();
 
-			return $this->render('CalderaCriticalmassBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
+			return $this->render('CalderaCriticalmassMobileBundle:RideComments:list.html.twig', array('comments' => $comments, 'form' => $form->createView()));
 		}
 		else
 		{
-			return $this->render('CalderaCriticalmassBundle:RideComments:nocomments.html.twig');
+			return $this->render('CalderaCriticalmassMobileBundle:RideComments:nocomments.html.twig');
 		}
 	}
 
 	public function addcommentAction($citySlug)
 	{
-		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug);
+		$citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'desc'));
+		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $citySlug->getCity()->getId()), array('date' => 'desc'));
 
 		$comment = new Comment();
 		$form = $this->createFormBuilder($comment)->add('text', 'text')->add('image', 'file')->getForm();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Controller;
+namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -34,12 +34,12 @@ class CityController extends Controller
 		if (($latitude = $request->get('latitude')) && ($longitude = $request->get('longitude')))
 		{
 			// Orte nach ihrer Entfernung sortieren
-			$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findNearestedByLocation($latitude, $longitude);
+			$cityResults = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findNearestedByLocation($latitude, $longitude);
 		}
 		else
 		{
 			// ansonsten nach dem Alphabet vorgehen
-			$tmpResults = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findAll(array(), array('order' => 'asc'));
+			$tmpResults = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findAll(array(), array('order' => 'asc'));
 
 			foreach ($tmpResults as $result)
 			{
@@ -63,6 +63,6 @@ class CityController extends Controller
 		}
 
 		// Template rendern und zurueckgeben
-		return $this->render('CalderaCriticalmassBundle:Rightsidebar:choosecity.html.twig', array('cityResults' => $cityResults));
+		return $this->render('CalderaCriticalmassMobileBundle:Rightsidebar:choosecity.html.twig', array('cityResults' => $cityResults));
 	}
 }
