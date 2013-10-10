@@ -1,0 +1,3 @@
+CalderaCriticalmassCoreBundle_Api:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/api.yml"
+    prefix:   /

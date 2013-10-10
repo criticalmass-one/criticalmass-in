@@ -1,39 +1,39 @@
 caldera_criticalmass_trackposition:
     pattern: /trackposition
-    defaults: { _controller: CalderaCriticalmassBundle:Api:trackposition }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:trackposition }
 
 caldera_criticalmass_mapdata:
     pattern: /mapapi/mapdata/{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Api:mapdata }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:mapdata }
 
 caldera_criticalmass_settings_gps_interval:
     pattern: /settings/gpsinterval
-    defaults: { _controller: CalderaCriticalmassBundle:Api:refreshgpsinterval }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:refreshgpsinterval }
 
 caldera_criticalmass_settings_gps_status:
     pattern: /settings/gpsstatus
-    defaults: { _controller: CalderaCriticalmassBundle:Api:refreshgpsstatus }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:refreshgpsstatus }
 
 caldera_criticalmass_settings_gps_getinterval:
     pattern: /settings/getgpsinterval
-    defaults: { _controller: CalderaCriticalmassBundle:Api:getinterval }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:getinterval }
 
 caldera_criticalmass_settings_gps_getstatus:
     pattern: /settings/getgpsstatus
-    defaults: { _controller: CalderaCriticalmassBundle:Api:getstatus }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:getstatus }
 
 caldera_criticalmass_getridelocation:
     pattern: /mapapi/getridelocation/{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Api:ridelocation }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:ridelocation }
 
 caldera_criticalmass_getcitylocation:
     pattern: /mapapi/getcitylocation/{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Api:citylocation }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:citylocation }
 
 caldera_criticalmass_getcitylocationbyid:
     pattern: /mapapi/getcitylocationbyid/{cityId}
-    defaults: { _controller: CalderaCriticalmassBundle:Api:citylocationbyid }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:citylocationbyid }
 
 caldera_criticalmass_apilistcities:
     pattern: /api/listcities
-    defaults: { _controller: CalderaCriticalmassBundle:Api:listcities }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:listcities }

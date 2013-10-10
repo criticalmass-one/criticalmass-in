@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassBundle\Controller;
+namespace Caldera\CriticalmassCoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -172,7 +172,7 @@ class ApiController extends Controller
 		$position->setAltitudeAccuracy($query->get("altitudeaccuracy") ? $query->get("altitudeaccuracy") : 0.0);
 		$position->setHeading($query->get("heading") ? $query->get("heading") : 0.0);
 		$position->setSpeed($query->get("speed") ? $query->get("speed") : 0.0);
-		$position->setTimestamp($query->get("timestamp") ? $request->request->get("timestamp") : 0);
+		$position->setTimestamp($query->get("timestamp") ? $query->request->get("timestamp") : 0);
 		$position->setCreationDateTime(new \DateTime());
 
 		// Entitaet ueber den Manager abspeichern

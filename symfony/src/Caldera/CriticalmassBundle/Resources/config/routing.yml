@@ -34,9 +34,7 @@ CalderaCriticalmassBundle_ridecomments:
     resource: "@CalderaCriticalmassBundle/Resources/config/routing/ridecomments.yml"
     prefix:   /
 
-CalderaCriticalmassBundle_api:
-    resource: "@CalderaCriticalmassBundle/Resources/config/routing/api.yml"
-    prefix:   /
+
 
 caldera_criticalmass_godmode:
     pattern: /{citySlug}/godmode/{status}
