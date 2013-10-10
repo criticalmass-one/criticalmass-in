@@ -69,4 +69,4 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Caldera\CriticalmassBundle\Entity\User
+    user_class: Caldera\CriticalmassCoreBundle\Entity\User

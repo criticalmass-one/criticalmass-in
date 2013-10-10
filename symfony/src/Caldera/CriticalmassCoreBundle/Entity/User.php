@@ -9,8 +9,8 @@ use FOS\UserBundle\Model\User as BaseUser;
  * Diese Benutzer-Entitaet basiert auf der User-Enitaet des FOSUserBundles und 
  * fuegt einige zusaetzliche Eigenschaften hinzu.
  *
+ * @ORM\Entity
  * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {
