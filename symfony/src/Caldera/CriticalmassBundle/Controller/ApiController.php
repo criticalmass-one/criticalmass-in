@@ -5,8 +5,8 @@ namespace Caldera\CriticalmassBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-use Caldera\CriticalmassBundle\Utility as Utility;
-use Caldera\CriticalmassBundle\Entity as Entity;
+use Caldera\CriticalmassCoreBundle\Utility as Utility;
+use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
 /**
  * Dieser Controller stellt eine API-Schnittstelle fuer die asynchrone Kommuni-
@@ -33,32 +33,10 @@ class ApiController extends Controller
 	 */
 	public function mapdataAction($citySlug)
 	{
-		$city = $city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
-//		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:CitySlug')->findOneBySlug($this->getRequest()->getSession()->get('currentCitySlug'))->getCity();
-		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
-		/*
-		if ($ride->getGodMode() == 1)
-		{
-		$totalPositions = $this->getDoctrine()->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
-		->where("p.ride = :rideId")
-		->andWhere("p.user = :userId")
-   ->setParameter('rideId', $ride->getId())
-   ->setParameter('userId', 7)
-   ->add('orderBy', 'p.creationDateTime DESC')
-   ->setMaxResults(10)
-   ->getQuery()
-   ->getResult();
-		}
-		else
-		{
-                $totalPositions = $this->getDoctrine()->getRepository("CalderaCriticalmassBundle:Position")->createQueryBuilder('p')
-                ->where("p.ride = :rideId")
-   ->setParameter('rideId', $ride->getId())
-   ->add('orderBy', 'p.creationDateTime DESC')
-   ->setMaxResults(10)
-   ->getQuery()
-   ->getResult();
-		}*/
+		$city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+
+  		$ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
+
 
 		$lmp = new Utility\MapBuilder\LiveMapBuilder(
 			$ride,
