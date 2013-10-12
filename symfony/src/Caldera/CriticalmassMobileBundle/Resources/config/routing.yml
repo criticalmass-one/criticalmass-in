@@ -36,8 +36,8 @@ CalderaCriticalmassBundle_ridecomments:
 
 caldera_criticalmass_godmode:
     pattern: /{citySlug}/godmode/{status}
-    defaults: { _controller: CalderaCriticalmassBundle:Live:godmode }
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Live:godmode }
 
 caldera_criticalmass_showcity2:
     pattern: /{citySlug}
-    defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:showcity }
