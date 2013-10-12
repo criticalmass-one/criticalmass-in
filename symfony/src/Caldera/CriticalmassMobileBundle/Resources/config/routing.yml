@@ -1,0 +1,43 @@
+caldera_criticalmass_selectcity:
+    pattern: /
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:selectcity }
+
+caldera_criticalmass_choosecity:
+    pattern: /selectcity/{latitude}/{longitude}
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:choosecity }
+
+caldera_criticalmass_showcity:
+    pattern: /{citySlug}/show/
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:showcity }
+
+caldera_criticalmass_staticpage:
+    pattern: /static/{page}
+    defaults: { _controller: CalderaCriticalmassMobileBundle:StaticPage:show }
+
+caldera_criticalmass_loadcities:
+    pattern: /loadcities/
+    defaults: { _controller: CalderaCriticalmassMobileBundle:City:loadcities }
+
+caldera_criticalmass_live:
+    pattern: /{citySlug}/live
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Live:show }
+
+caldera_criticalmass_pushnotificationsettings:
+    pattern: /profile/pushnotifications
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:pushnotifications }
+
+CalderaCriticalmassBundle_admin_ride:
+    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing/ride.yml"
+    prefix:   /admin/ride
+
+CalderaCriticalmassBundle_ridecomments:
+    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing/ridecomments.yml"
+    prefix:   /
+
+caldera_criticalmass_godmode:
+    pattern: /{citySlug}/godmode/{status}
+    defaults: { _controller: CalderaCriticalmassBundle:Live:godmode }
+
+caldera_criticalmass_showcity2:
+    pattern: /{citySlug}
+    defaults: { _controller: CalderaCriticalmassBundle:Default:showcity }
