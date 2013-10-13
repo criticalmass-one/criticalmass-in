@@ -281,7 +281,7 @@ class ApiController extends Controller
 
     public function listcitiesAction()
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassBundle:City')->findAll();
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findAll();
 
         $citiesResult = array();
 
