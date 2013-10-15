@@ -84,15 +84,34 @@ function drawMarker(markerElement)
 {
     if (!doesElementExist(markerElement.id))
     {
-        elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map)
-            .bindPopup('fooobaaaaarbaaaaaz');
+        if (markerElement.type == 'citymarker')
+        {
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup('fooobaaaaarbaaaaaz');
+        }
+        if (markerElement.type == 'positionmarker')
+        {
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup('fooobaaaaarbaaaaaz');
+        }
+        if (markerElement.type == 'ridemarker')
+        {
+            var popupContent = '<section class="ride"><h2>' + markerElement.title + '</h2>';
 
-/*
-            new google.maps.Marker({
-            position: new google.maps.LatLng(markerElement.centerPosition.latitude, markerElement.centerPosition.longitude),
-            map: map,
-            title: 'Startpunkt'
-        });*/
+            if (markerElement.hasLocation)
+            {
+                popupContent += '<address>' + markerElement.location + '</address>';
+            }
+
+            popupContent += '<time>Datum: ' + markerElement.date + '</time>';
+
+            if (markerElement.hasTime)
+            {
+                popupContent += '<time>Uhrzeit: ' + markerElement.time + '</time>';
+            }
+
+            popupContent += '</section>';
+
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup(popupContent);
+        }
     }
 }
 
@@ -204,7 +223,7 @@ function refreshElements(elements)
                 drawArrow(elements[index]);
             }
 
-            if (elements[index].type == "marker")
+            if (elements[index].type == "positionmarker" || elements[index].type == "ridemarker" || elements[index].type == "citymarker")
             {
                 drawMarker(elements[index]);
             }
@@ -258,7 +277,7 @@ function refreshLivePage2(result)
 function setMapOptions(result)
 {
     // create a map in the "map" div, set the view to a given place and zoom
-    map = L.map('map').setView([53, 9], 5);
+    map = L.map('map').setView([result.mapCenter.latitude, result.mapCenter.longitude], result.zoom);
 
     // add an OpenStreetMap tile layer
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -322,19 +341,6 @@ function startInitialization()
         success: setMapOptions
     });
 
-}
-
-
-
-function addLoadedMarkers(result)
-{
-    for (cityId in result.cities)
-    {
-        var city = result.cities[cityId];
-
-        L.marker([city.center.latitude, city.center.longitude], { riseOnHover: true }).addTo(map)
-            .bindPopup('<h2>' + city.title + '</h2><p>' + city.description + '</p>');
-    }
 }
 
 window.onload = function()
