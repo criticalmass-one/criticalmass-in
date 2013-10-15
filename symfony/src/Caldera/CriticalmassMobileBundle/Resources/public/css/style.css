@@ -7,3 +7,14 @@ section#content
 {
     padding: 0px !important;
 }
+
+div.leaflet-popup-content section.ride h2
+{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+div.leaflet-popup-content section.ride time
+{
+    display: block;
+}
