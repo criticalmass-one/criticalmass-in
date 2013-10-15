@@ -12,6 +12,6 @@ class PermanentPositionFilter extends SimplePositionFilter
 	 */
 	public function buildQuery($queryBuilder)
 	{
-		return $queryBuilder->innerJoin('p.user', 'u', Expr\Join::WITH, $queryBuilder->expr()->eq('u.id', 'p.user'));
+		return $queryBuilder->innerJoin('p.user', 'u', Expr\Join::WITH, $queryBuilder->expr()->eq('u.id', 'p.user'))->andWhere('u.isPermanent = 1');
 	}
 }
