@@ -22,7 +22,7 @@ class PositionMarkerMapElement extends BaseMapElement
 	{
 		return array(
 			'id' => $this->getId(),
-			'type' => 'marker',
+			'type' => 'positionmarker',
 			'centerPosition' => array('latitude' => $this->position->getLatitude(), 'longitude' => $this->position->getLongitude())
 			);
 	}
