@@ -47,7 +47,14 @@ class User extends BaseUser
 	 */
 	private $currentCity;
 
-	/**
+    /**
+     * Soll die Position dauerhaft auf der Karte eingeblendet werden?
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isPermanent = 1;
+
+    /**
 	 * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
 	 * werden koennen.
 	 *
@@ -186,5 +193,28 @@ class User extends BaseUser
     public function getPushoverKey()
     {
         return $this->pushoverKey;
+    }
+
+    /**
+     * Set isPermanent
+     *
+     * @param boolean $isPermanent
+     * @return User
+     */
+    public function setIsPermanent($isPermanent)
+    {
+        $this->isPermanent = $isPermanent;
+    
+        return $this;
+    }
+
+    /**
+     * Get isPermanent
+     *
+     * @return boolean 
+     */
+    public function getIsPermanent()
+    {
+        return $this->isPermanent;
     }
 }

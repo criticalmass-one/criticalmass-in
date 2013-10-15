@@ -46,7 +46,7 @@
                  }(cityId));*/
                 // add a marker in the given location, attach some popup content to it and open the popup
                 L.marker([city.center.latitude, city.center.longitude], { riseOnHover: true }).addTo(map)
-                        .bindPopup(city.description);
+                        .bindPopup('<h2>' + city.title + '</h2><p>' + city.description + '</p>');
             }
         }
 
