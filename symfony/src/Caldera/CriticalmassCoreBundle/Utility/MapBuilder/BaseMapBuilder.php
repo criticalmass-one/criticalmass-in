@@ -116,7 +116,7 @@ abstract class BaseMapBuilder
 		$elements = array_merge($elements, $this->getAdditionalPositions());*/
 
 		return array(
-			'mapcenter' => array(
+			'mapCenter' => array(
 				'latitude' => $this->getMapCenterLatitude(),
 				'longitude' => $this->getMapCenterLongitude()
 				),
