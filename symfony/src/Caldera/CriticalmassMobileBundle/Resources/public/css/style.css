@@ -1,0 +1,9 @@
+div#map
+{
+    height: 640px;
+}
+
+section#content
+{
+    padding: 0px !important;
+}
