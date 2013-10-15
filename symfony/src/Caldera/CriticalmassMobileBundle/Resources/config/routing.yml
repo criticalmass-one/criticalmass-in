@@ -40,4 +40,4 @@ caldera_criticalmass_godmode:
 
 caldera_criticalmass_showcity2:
     pattern: /{citySlug}
-    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:showcity }
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Map:showcity }
