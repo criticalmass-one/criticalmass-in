@@ -23,7 +23,9 @@ class RideMarkerMapElement extends BaseMapElement
 		return array(
 			'id' => $this->getId(),
 			'type' => 'marker',
-			'centerPosition' => array('latitude' => $this->ride->getLatitude(), 'longitude' => $this->ride->getLongitude())
+			'centerPosition' => array('latitude' => $this->ride->getLatitude(), 'longitude' => $this->ride->getLongitude()),
+            'location' => $this->ride->getLocation(),
+            'time' => $this->ride->getTime()
 			);
 	}
 }
