@@ -148,7 +148,7 @@ function doesElementExist(elementId)
  */
 function clearElement(elementId)
 {
-    elementsArray[elementId].setMap(null);
+    map.removeLayer(elementsArray[elementId]);
     delete elementsArray[elementId];
 }
 
@@ -182,9 +182,10 @@ function clearOldElements(elements)
         var found = false;
         var pos;
 
-        for (pos in elementsArray)
+        for (pos in elements)
         {
-            if (index == pos)
+            //alert("Vergleiche " + index + " und " + elements[pos].id);
+            if (index == elements[pos].id)
             {
                 found = true;
             }
