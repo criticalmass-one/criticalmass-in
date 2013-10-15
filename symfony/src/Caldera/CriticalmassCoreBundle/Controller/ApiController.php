@@ -287,13 +287,25 @@ class ApiController extends Controller
 
         foreach ($cities as $city)
         {
-            $citiesResult['city-'.$city->getId()] = array(
+            $cityResultArray = array(
                 'id' => $city->getId(),
                 'city' => $city->getCity(),
-                'center' => array('latitude' => $city->getLatitude(), 'longitude' => $city->getLongitude()),
-                'description' => '<div class="infowindow"><header><h2 class="citytitle">'.$city->getTitle().'</h2></header><p>'.$city->getDescription().'</p></div>',
-                'foo' => 'bar'
+                'title' => $city->getTitle(),
+                'description' => $city->getDescription()
             );
+
+            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
+
+            if ($ride)
+            {
+                $cityResultArray['center'] = array('latitude' => $ride->getLatitude(), 'longitude' => $ride->getLongitude());
+            }
+            else
+            {
+                $cityResultArray['center'] = array('latitude' => $city->getLatitude(), 'longitude' => $city->getLongitude());
+            }
+
+            $citiesResult['city-'.$city->getId()] = $cityResultArray;
         }
 
         $response = new Response();
