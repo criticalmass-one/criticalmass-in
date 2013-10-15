@@ -88,10 +88,15 @@ function drawMarker(markerElement)
         {
             elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup('fooobaaaaarbaaaaaz');
         }
+
         if (markerElement.type == 'positionmarker')
         {
-            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup('fooobaaaaarbaaaaaz');
+            var popupContent = '<section class="position"><h2>' + markerElement.username + '</h2><p>' + markerElement.description + '</p></section>';
+
+
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup(popupContent);
         }
+
         if (markerElement.type == 'ridemarker')
         {
             var popupContent = '<section class="ride"><h2>' + markerElement.title + '</h2>';
