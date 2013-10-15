@@ -22,17 +22,7 @@ abstract class BaseMapBuilder
 	 */
 	protected $doctrine;
 
-	/**
-	 * Speicher fuer die so genannten Hauptpositionen, mit denen der Mittelpunkt
-	 * des Teilnehmerfeldes berechnet wird.
-	 */
-	protected $mainPositions;
-
-	/**
-	 * Speicher fuer die zusaetzlichen Positionen, die bei Bedarf eingeblendet
-	 * werden koennen.
-	 */
-	protected $additionalPositions;
+	protected $elements = array();
 
 	/**
 	 * Speicher fuer die dazugehoerige Ride-Entitaet.
@@ -97,54 +87,7 @@ abstract class BaseMapBuilder
 	 * Berechnet die Hauptpositionen zur Berechnung des Mittelpunktes des Teil-
 	 * nehmerfeldes.
 	 */
-	public abstract function calculateMainPositions();
-
-	/**
-	 * Berechnet zusaetzliche Positionen, die auf der Karte eingeblendet werden
-	 * koennen.
-	 */
-	public abstract function calculateAdditionalPositions();
-
-	/**
-	 * Gibt eine Liste von Webelementen der Hauptpositionen zurueck.
-	 *
-	 * @return Array der Webelemente der Hauptpositionen
-	 */
-	public function getMainPositions()
-	{
-		$resultArray = array();
-		$counter = 0;
-
-		foreach ($this->mainPositions->getPositions() as $position)
-		{
-			$circle = new MapElement\CircleMapElement($position, 100);
-
-			$resultArray['position-'.$counter] = $circle->draw();
-			++$counter;
-		}
-
-		return $resultArray;
-	}
-
-	/**
-	 * Gibt eine Liste von Webelementen der zusaetzlichen Positionen zurueck.
-	 *
-	 * @return Array der Webelemente der zusaetzlichen Positionen
-	 */
-	public function getAdditionalPositions()
-	{
-		$resultArray = array();
-
-		foreach ($this->additionalPositions->getPositions() as $position)
-		{
-			$circle = new MapElement\CircleMapElement($position, 10);
-
-			$resultArray[$position->getId()] = $circle->draw();
-		}
-
-		return $resultArray;
-
-	}
+	public abstract function calculatePositions();
 
 	/**
 	 * Gibt die JSON-Antwort zurueck, die zur Darstellung der Karteninhalte an den
@@ -154,13 +97,13 @@ abstract class BaseMapBuilder
 	 * @return String: JSON-Daten zur Darstellung der Karteninhalte
 	 */
 	public function draw()
-	{
-		$elements = array();
+	{/*
+		 = array();
 
         $marker = new MapElement\MarkerMapElement($this->ride);
-        $elements[] = $marker->draw();
+        $this->elements[] = $marker->draw();
 
-		$elements = array_merge($elements, $this->getMainPositions());
+        $this->elements = array_merge($this->elements, $this->getMainPositions());
 		
 		$main = $this->mainPositions->getPositions();
 
@@ -170,7 +113,7 @@ abstract class BaseMapBuilder
             $elements[] = $arrow->draw();
         }
 
-		$elements = array_merge($elements, $this->getAdditionalPositions());
+		$elements = array_merge($elements, $this->getAdditionalPositions());*/
 
 		return array(
 			'mapcenter' => array(
@@ -178,7 +121,7 @@ abstract class BaseMapBuilder
 				'longitude' => $this->getMapCenterLongitude()
 				),
 				'zoom' => $this->getZoomFactor(),
-				'elements' => $elements,
+				'elements' => $this->elements,
 				'usercounter' => $this->getUserCounter(),
 				'averagespeed' => $this->getAverageSpeed()
 			);

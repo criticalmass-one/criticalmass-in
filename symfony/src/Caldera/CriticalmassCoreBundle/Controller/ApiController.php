@@ -44,8 +44,8 @@ class ApiController extends Controller
 		);
 
 		// Berechnung der angeforderten Positionsdaten anstossen
-		$lmp->calculateMainPositions();
-		$lmp->calculateAdditionalPositions();
+		$lmp->calculatePositions();
+        $lmp->additionalElements();
 
 		// neue Antwort zusammensetzen und als JSON klassifizieren
 		$response = new Response();

@@ -18,7 +18,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getUserCounter()
 	{
-		$ucc = new MapBuilderHelper\UserCounterCalculator($this->additionalPositions, $this->ride);
+		$ucc = new MapBuilderHelper\UserCounterCalculator($this->positionArray, $this->ride);
 
 		return $ucc->getUserCounter();
 	}
@@ -28,7 +28,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getAverageSpeed()
 	{
-		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->mainPositions, $this->ride);
+		$asc = new MapBuilderHelper\AverageSpeedCalculator($this->positionArray, $this->ride);
 
 		return $asc->getAverageSpeed();
 	}
@@ -38,7 +38,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getZoomFactor()
 	{
-		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->mainPositions, $this->ride);
+		$zfc = new MapBuilderHelper\ZoomFactorCalculator($this->positionArray, $this->ride);
 
 		return $zfc->getZoomFactor();
 	}
@@ -48,7 +48,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getMapCenterLatitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions, $this->ride);
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->positionArray, $this->ride);
 
 		return $mcc->getMapCenterLatitude();
 	}
@@ -58,7 +58,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getMapCenterLongitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->mainPositions, $this->ride);
+		$mcc = new MapBuilderHelper\MapCenterCalculator($this->positionArray, $this->ride);
 
 		return $mcc->getMapCenterLongitude();
 	}
@@ -66,7 +66,7 @@ class LiveMapBuilder extends BaseMapBuilder
 	/**
 	 * {@inheritDoc}
 	 */
-	public function calculateMainPositions()
+	public function calculatePositions()
 	{
 		$psf = new PositionFilterChain\PositionFilterChain();
 
@@ -74,20 +74,47 @@ class LiveMapBuilder extends BaseMapBuilder
 		$psf->setRide($this->ride);
 		$psf->execute();
 
-		$this->mainPositions = $psf->getPositionArray();
+        $this->positionArray = $psf->getPositionArray();
+
+        $counter = 0;
+
+        foreach ($this->positionArray->getPositions() as $position)
+        {
+            $circle = new MapElement\CircleMapElement($position, 100);
+
+            $this->elements['position-'.$counter] = $circle->draw();
+            ++$counter;
+        }
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function calculateAdditionalPositions()
-	{
-		$psf = new PositionFilterChain\TailPositionFilterChain();
+    public function calculatePermanentPositions()
+    {
+        $psf = new PositionFilterChain\PermanentPositionFilterChain();
 
-		$psf->setDoctrine($this->doctrine);
-		$psf->setRide($this->ride);
-		$psf->execute();
+        $psf->setDoctrine($this->doctrine);
+        $psf->setRide($this->ride);
+        $psf->execute();
 
-		$this->additionalPositions = $psf->getPositionArray();
-	}
+        $this->positionArray = $psf->getPositionArray();
+
+        foreach ($this->positionArray->getPositions() as $position)
+        {
+            $marker = new MapElement\PositionMarkerMapElement($position);
+
+            $this->elements[$marker->getId()] = $marker->draw();
+        }
+    }
+
+    public function additionalElements()
+    {/*
+        if ($this->positionArray->countPositions() > 1)
+        {
+            $arrow = new MapElement\ArrowMapElement($positionArray[0], $positionArray[1]);
+            $elements[] = $arrow->draw();
+        }*/
+
+        $this->calculatePermanentPositions();
+        $marker = new MapElement\RideMarkerMapElement($this->ride);
+        $this->elements[] = $marker->draw();
+    }
 }
