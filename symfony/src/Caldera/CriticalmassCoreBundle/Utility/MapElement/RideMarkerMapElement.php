@@ -22,10 +22,14 @@ class RideMarkerMapElement extends BaseMapElement
 	{
 		return array(
 			'id' => $this->getId(),
-			'type' => 'marker',
+			'type' => 'ridemarker',
 			'centerPosition' => array('latitude' => $this->ride->getLatitude(), 'longitude' => $this->ride->getLongitude()),
+            'title' => $this->ride->getCity()->getTitle(),
             'location' => $this->ride->getLocation(),
-            'time' => $this->ride->getTime()
+            'hasLocation' => $this->ride->getHasLocation(),
+            'date' => $this->ride->getDate()->format('d.m.Y'),
+            'time' => $this->ride->getTime()->format('H:i'),
+            'hasTime' => $this->ride->getHasTime()
 			);
 	}
 }
