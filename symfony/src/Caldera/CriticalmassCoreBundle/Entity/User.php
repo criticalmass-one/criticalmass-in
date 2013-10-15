@@ -23,6 +23,13 @@ class User extends BaseUser
 	 */
 	protected $id;
 
+    /**
+     * Enthaelt eine kurze Beschreibung zur eigenen Person.
+     *
+     * @ORM\Column(type="string")
+     */
+    private $description;
+
 	/**
 	 * Schalter fuer die GPS-Aktivitaet, entscheidet ob der Benutzer GPS-Daten von
 	 * der Live-Uebersicht senden moechte.
@@ -216,5 +223,28 @@ class User extends BaseUser
     public function getIsPermanent()
     {
         return $this->isPermanent;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return User
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
