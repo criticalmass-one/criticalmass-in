@@ -49,7 +49,7 @@ class CityListener
 		if (isset($citySlug))
 		{
 			// CitySlug-Instanz laden
-			$city = $city = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+			$city = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
 			// Eigenschaften in der Session persistieren
 			$controller->getRequest()->getSession()->set('currentCitySlug', $city->getMainSlug()->getSlug());
