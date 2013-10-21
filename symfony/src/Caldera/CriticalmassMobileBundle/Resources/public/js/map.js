@@ -45,15 +45,19 @@ function setAverageSpeed(result)
  * Zeichnet ein Kreis-Element aus den übergebenen Informationen.
  */
 function drawCircle(circleElement)
-{/*
+{
     if (!doesElementExist(circleElement.id))
     {
-        circleElement.map = map;
-        circleElement.center = new google.maps.LatLng(circleElement.latitude, circleElement.longitude);
+        var circleOptions = {
+            color: circleElement.strokeColor,
+            fillColor: circleElement.fillColor,
+            opacity: circleElement.strokeOpacity,
+            fillOpacity: circleElement.fillOpacity,
+            weight: circleElement.strokeWeight
+        };
 
-        googleMapsCircleElement = new google.maps.Circle(circleElement);
-        elementsArray[circleElement.id] = googleMapsCircleElement;
-    }*/
+        elementsArray[circleElement.id] = L.circle([circleElement.centerPosition.latitude, circleElement.centerPosition.longitude], circleElement.radius, circleOptions).addTo(map);
+    }
 }
 
 function drawArrow(arrowElement)
