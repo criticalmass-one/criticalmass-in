@@ -1,15 +1,3 @@
-caldera_criticalmass_mobile:
-    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_core:
-    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_desktop:
-    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
-    prefix:   /
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -29,6 +17,14 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
-caldera_criticalmass:
-    resource: "@CalderaCriticalmassBundle/Resources/config/routing.yml"
+caldera_criticalmass_core:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_mobile:
+    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_desktop:
+    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
     prefix:   /
