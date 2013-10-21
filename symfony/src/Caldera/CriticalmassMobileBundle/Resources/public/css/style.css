@@ -1,12 +1,12 @@
 div#map
 {
-    height: 640px;
+    height: 320px;
 }
 
-section#content
+/*section#content
 {
     padding: 0px !important;
-}
+}*/
 
 div.leaflet-popup-content section.ride h2,
 div.leaflet-popup-content section.position h2
