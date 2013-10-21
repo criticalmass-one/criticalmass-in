@@ -21,7 +21,7 @@ class PositionArray
 	 *
 	 * @param $positions: Liste mit Positionsdaten
 	 */
-	public function __construct($positions)
+	public function __construct($positions = array())
 	{
 		$this->positions = $positions;
 	}
@@ -100,4 +100,11 @@ class PositionArray
 	{
 		return count($this->positions);
 	}
+
+    public function merge(PositionArray $positionArray)
+    {
+        $this->positions = array_merge($this->positions, $positionArray->getPositions());
+
+        return $this;
+    }
 }
