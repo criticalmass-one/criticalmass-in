@@ -74,11 +74,11 @@ class LiveMapBuilder extends BaseMapBuilder
 		$psf->setRide($this->ride);
 		$psf->execute();
 
-        $this->positionArray = $psf->getPositionArray();
+        $this->positionArray->merge($psf->getPositionArray());
 
         $counter = 0;
 
-        foreach ($this->positionArray->getPositions() as $position)
+        foreach ($psf->getPositionArray()->getPositions() as $position)
         {
             $circle = new MapElement\CircleMapElement($position, 100);
 
@@ -95,9 +95,9 @@ class LiveMapBuilder extends BaseMapBuilder
         $psf->setRide($this->ride);
         $psf->execute();
 
-        $this->positionArray = $psf->getPositionArray();
+        $this->positionArray->merge($psf->getPositionArray());
 
-        foreach ($this->positionArray->getPositions() as $position)
+        foreach ($psf->getPositionArray()->getPositions() as $position)
         {
             $marker = new MapElement\PositionMarkerMapElement($position);
 
