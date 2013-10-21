@@ -81,8 +81,10 @@ class CircleMapElement extends BaseMapElement
 		return array(
 			'id' => $this->getId(),
 			'type' => 'circle',
-			'latitude' => $this->centerPosition->getLatitude(),
-			'longitude' => $this->centerPosition->getLongitude(),
+			'centerPosition' => array(
+                'latitude' => $this->centerPosition->getLatitude(),
+			    'longitude' => $this->centerPosition->getLongitude()
+            ),
 			//'radius' => $this->radius,
 			'radius' => 50,
 			'strokeColor' => $this->strokeColor,
