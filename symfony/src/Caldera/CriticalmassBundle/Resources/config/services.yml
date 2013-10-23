@@ -7,10 +7,6 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
 
 
-    caldera_criticalmass_distancecalculator:
-        class:           Caldera\CriticalmassBundle\Utility\DistanceCalculator
-        arguments: []
-
     caldera_criticalmass_imageresizer:
         class:     Caldera\CriticalmassBundle\Utility\ImageResizer
         arguments: [@service_container]
