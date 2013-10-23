@@ -8,6 +8,7 @@ This document contains information on how to download, install, and start
 using Symfony. For a more detailed explanation, see the [Installation][1]
 chapter of the Symfony Documentation.
 
+
 1) Installing the Standard Edition
 ----------------------------------
 
@@ -42,6 +43,7 @@ following command:
 
     php composer.phar install
 
+
 2) Checking your System Configuration
 -------------------------------------
 
@@ -61,6 +63,7 @@ Access the `config.php` script from a browser:
 
 If you get any warnings or recommendations, fix them before moving on.
 
+
 3) Browsing the Demo Application
 --------------------------------
 
@@ -75,6 +78,7 @@ Symfony Application online" link of the `config.php` page.
 To see a real-live Symfony page in action, access the following page:
 
     web/app_dev.php/demo/hello/Fabien
+
 
 4) Getting started with Symfony
 -------------------------------
@@ -103,6 +107,7 @@ playing with it, you can remove it by following these steps:
   * remove the `security.providers`, `security.firewalls.login` and
     `security.firewalls.secured_area` entries in the `security.yml` file or
     tweak the security configuration to fit your needs.
+
 
 What's inside?
 ---------------
