@@ -22,7 +22,7 @@ class CityRepository extends EntityRepository
 	 */
 	public function findNearestedByLocation($latitude, $longitude)
 	{
-		$cities = $this->getEntityManager()->createQuery("SELECT c AS city, SQRT((c.latitude - ".$latitude.") * (c.latitude - ".$latitude.") + (c.longitude - ".$longitude.") * (c.longitude - ".$longitude.")) AS distance FROM CalderaCriticalmassBundle:City c ORDER BY distance ASC")->getResult();
+		$cities = $this->getEntityManager()->createQuery("SELECT c AS city, SQRT((c.latitude - ".$latitude.") * (c.latitude - ".$latitude.") + (c.longitude - ".$longitude.") * (c.longitude - ".$longitude.")) AS distance FROM CalderaCriticalmassCoreBundle:City c ORDER BY distance ASC")->getResult();
 
 		return $cities;
 	}
