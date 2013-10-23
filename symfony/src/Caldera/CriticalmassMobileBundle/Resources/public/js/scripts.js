@@ -41,7 +41,7 @@ $(window).load(function()
 	// Event-Listener eintragen
 	$('#rightpanel').on('panelbeforeopen', function(event, ui)
 	{
-        if (sessionStorage.getItem('rightsidebarContent'))
+        if (sessionStorage.getItem('rightsidebarContent') != null)
         {
             $('#rightpanel').html(sessionStorage.getItem('rightsidebarContent'));
             $('#rightpanel').trigger('create');
