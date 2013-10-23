@@ -19,3 +19,8 @@ div.leaflet-popup-content section.ride time
 {
     display: block;
 }
+
+img#cmscreenlogo
+{
+    width: 240px;
+}
