@@ -108,6 +108,10 @@ function drawMarker(markerElement)
             {
                 popupContent += '<address>' + markerElement.location + '</address>';
             }
+            else
+            {
+                popupContent += '<span>Der Treffpunkt ist noch nicht bekannt.</span>';
+            }
 
             popupContent += '<time>Datum: ' + markerElement.date + '</time>';
 
