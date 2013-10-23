@@ -23,4 +23,5 @@ div.leaflet-popup-content section.ride time
 img#cmscreenlogo
 {
     width: 240px;
+    margin: 0 auto;
 }
