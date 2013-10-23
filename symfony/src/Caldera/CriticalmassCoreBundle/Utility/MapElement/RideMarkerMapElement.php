@@ -20,10 +20,21 @@ class RideMarkerMapElement extends BaseMapElement
 
 	public function draw()
 	{
+        $centerPosition = array();
+
+        if ($this->ride->getHasLocation())
+        {
+            $centerPosition = array('latitude' => $this->ride->getLatitude(), 'longitude' => $this->ride->getLongitude());
+        }
+        else
+        {
+            $centerPosition = array('latitude' => $this->ride->getCity()->getLatitude(), 'longitude' => $this->ride->getCity()->getLongitude());
+        }
+
 		return array(
 			'id' => $this->getId(),
 			'type' => 'ridemarker',
-			'centerPosition' => array('latitude' => $this->ride->getLatitude(), 'longitude' => $this->ride->getLongitude()),
+			'centerPosition' => $centerPosition,
             'title' => $this->ride->getCity()->getTitle(),
             'location' => $this->ride->getLocation(),
             'hasLocation' => $this->ride->getHasLocation(),
