@@ -60,16 +60,16 @@ class MapCenterCalculator extends BaseMapBuilderHelper
 
 		foreach ($this->positionArray->getPositions() as $position)
 		{
-			if (!isset($min) && !isset($max))
+			if (!isset($min) && !isset($max) && !$position->getUser()->getIsPermanent())
 			{
 				$min = $position->$coordinateFunction();
 				$max = $position->$coordinateFunction();
 			}
-			elseif ($min > $position->$coordinateFunction())
+			elseif ($min > $position->$coordinateFunction() && !$position->getUser()->getIsPermanent())
 			{
 				$min = $position->$coordinateFunction();
 			}
-			elseif ($max < $position->$coordinateFunction())
+			elseif ($max < $position->$coordinateFunction() && !$position->getUser()->getIsPermanent())
 			{
 				$max = $position->$coordinateFunction();
 			}
