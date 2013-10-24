@@ -122,7 +122,12 @@ function drawMarker(markerElement)
 
             popupContent += '</section>';
 
-            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup(popupContent).openPopup();
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup(popupContent);
+
+            if (markerElement.popup)
+            {
+                elementsArray[markerElement.id].openPopup();
+            }
         }
     }
 }
