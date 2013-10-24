@@ -334,4 +334,18 @@ class Ride
     {
         return $this->godMode;
     }
+
+    public function isRideRolling()
+    {
+        // total dämliche Berechnung des Timestamp, weil das Datumsformat unserer Entität das nicht besser hergibt!
+        $rideTimeStamp = $this->getDate()->format('U') + $this->getTime()->format('H') * 3600 + $this->getTime()->format('i');
+
+        if ($rideTimeStamp + 900 > time())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }
