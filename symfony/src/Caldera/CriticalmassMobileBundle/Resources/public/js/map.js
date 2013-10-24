@@ -281,6 +281,18 @@ function refreshLivePage2(result)
 
     // Geschwindigkeitsanzeige aktualisieren
     setAverageSpeed(result);
+
+    refreshMapCenter(result);
+}
+
+function refreshMapCenter(result)
+{
+    var distance = map.getCenter().distanceTo(new L.LatLng(result.mapCenter.latitude, result.mapCenter.longitude));
+
+    if (distance < 5000)
+    {
+        map.panTo(new L.LatLng(result.mapCenter.latitude, result.mapCenter.longitude));
+    }
 }
 
 /**
