@@ -348,4 +348,27 @@ class Ride
         return false;
     }
 
+    public function getPublicLatitude()
+    {
+        if ($this->getHasLocation())
+        {
+            return $this->getLatitude();
+        }
+        else
+        {
+            return $this->getCity()->getLatitude();
+        }
+    }
+
+    public function getPublicLongitude()
+    {
+        if ($this->getHasLocation())
+        {
+            return $this->getLongitude();
+        }
+        else
+        {
+            return $this->getCity()->getLongitude();
+        }
+    }
 }
