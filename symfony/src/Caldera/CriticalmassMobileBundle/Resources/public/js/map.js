@@ -322,8 +322,7 @@ function setMapOptions(result)
  * Initialisiert den Ablauf der Live-Seite. Primär werden hier Event-Handler festgelegt.
  */
 function initializeLivePage()
-{/*
-
+{
     $( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
         $.ajax({
             type: 'GET',
@@ -344,7 +343,7 @@ function initializeLivePage()
             },
             cache: false
         });
-    } );*/
+    } );
 }
 
 /**
@@ -460,4 +459,5 @@ window.onload = function()
 {
     startMapInitialization();
     refreshGeolocationInterval();
+    initializeLivePage();
 }
