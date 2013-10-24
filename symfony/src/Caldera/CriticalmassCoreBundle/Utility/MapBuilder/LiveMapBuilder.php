@@ -48,9 +48,16 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getMapCenterLatitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->positionArray, $this->ride);
+        if ($this->ride->isRideRolling())
+        {
+    		$mcc = new MapBuilderHelper\MapCenterCalculator($this->positionArray, $this->ride);
 
-		return $mcc->getMapCenterLatitude();
+    		return $mcc->getMapCenterLatitude();
+        }
+        else
+        {
+            return $this->ride->getPublicLatitude();
+        }
 	}
 
 	/**
@@ -58,9 +65,16 @@ class LiveMapBuilder extends BaseMapBuilder
 	 */
 	public function getMapCenterLongitude()
 	{
-		$mcc = new MapBuilderHelper\MapCenterCalculator($this->positionArray, $this->ride);
+        if ($this->ride->isRideRolling())
+        {
+    		$mcc = new MapBuilderHelper\MapCenterCalculator($this->positionArray, $this->ride);
 
-		return $mcc->getMapCenterLongitude();
+    		return $mcc->getMapCenterLongitude();
+        }
+        else
+        {
+            return $this->ride->getPublicLongitude();
+        }
 	}
 
 	/**
