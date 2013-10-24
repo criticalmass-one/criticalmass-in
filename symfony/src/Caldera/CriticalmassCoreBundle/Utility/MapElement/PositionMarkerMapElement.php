@@ -24,11 +24,8 @@ class PositionMarkerMapElement extends BaseMapElement
 			'id' => $this->getId(),
 			'type' => 'positionmarker',
 			'centerPosition' => array('latitude' => $this->position->getLatitude(), 'longitude' => $this->position->getLongitude()),
-            'username' => 'Aufkleber-Fahrrad',
-            'description' => 'Hier gibt’s Aufkleber! 50 Stück für 1,50 Euro!'
+            'username' => $this->position->getUser()->getUsernameCanonical(),
+            'description' => $this->position->getUser()->getDescription()
 			);
 	}
 }
-/*,
-            'username' => $this->position->getUser()->getUsernameCanonical(),
-            'description' => $this->position->getUser()->getDescription()*/
