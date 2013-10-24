@@ -58,17 +58,18 @@
 
 				{% endif %}
 				<li data-role="list-divider">criticalmass.in</li>
-				{% if is_granted('ROLE_ADMIN') %}
-				<li><a href="{{ url('admin_ride') }}" data-ajax="false">Administration</a></li>
-				{% endif %}
-				{% if is_granted('ROLE_USER') %}
-					<li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false">Logout</a></li>
-					<li><a href="{{ url('fos_user_profile_edit') }}">Einstellungen</a></li>
-					<li><a href="{{ url('fos_user_change_password') }}">Kennwort ändern</a></li>
-					<li><a href="{{ url('caldera_criticalmass_pushnotificationsettings') }}">Push-Nachrichten</a></li>
-				{% else %}
-					<li><a href="{{ url('fos_user_registration_register') }}">Registrierung</a></li>
-					<li><a href="{{ url('fos_user_security_login') }}">Login</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ url('admin_ride') }}" data-ajax="false">Administration</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                <li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false">Logout</a></li>
+                <li><a href="{{ url('fos_user_profile_edit') }}">Einstellungen</a></li>
+                <li><a href="{{ url('fos_user_change_password') }}">Kennwort ändern</a></li>
+                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings') }}">Push-Nachrichten</a></li>
+                {% else %}
+                <li><a href="{{ url('fos_user_registration_register') }}">Registrierung</a></li>
+                <li><a href="{{ url('fos_user_security_login') }}">Login</a></li>
+                <li><a href="{{ url('fos_user_resetting_request') }}">Kennwort vergessen?</a></li>
 				{% endif %}
 				
 				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress'}) }}">Impressum</a></li>
