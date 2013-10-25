@@ -70,3 +70,14 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Caldera\CriticalmassCoreBundle\Entity\User
+    registration:
+        confirmation:
+            enabled:    true
+        from_email:
+            address:        malte@criticalmass.in
+            sender_name:    Malte Hübner, criticalmass.in
+    resetting:
+        email:
+            from_email:
+                address:        malte@criticalmass.in
+                sender_name:    Malte Hübner, criticalmass.in
