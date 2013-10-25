@@ -287,9 +287,9 @@ function refreshLivePage2(result)
 
 function refreshMapCenter(result)
 {
-    var distance = map.getCenter().distanceTo(new L.LatLng(result.mapCenter.latitude, result.mapCenter.longitude));
+    var autoCenter = $("select#flip-auto-center")[0].selectedIndex;
 
-    if (distance < 5000)
+    if (autoCenter == 1)
     {
         map.panTo(new L.LatLng(result.mapCenter.latitude, result.mapCenter.longitude));
     }
