@@ -59,7 +59,7 @@ class User extends BaseUser
      *
      * @ORM\Column(type="boolean")
      */
-    private $isPermanent = 1;
+    private $isPermanent = 0;
 
     /**
 	 * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
