@@ -73,9 +73,9 @@ fos_user:
     registration:
         confirmation:
             enabled:    true
-        from_email:
-            address:        malte@criticalmass.in
-            sender_name:    Malte Hübner, criticalmass.in
+            from_email:
+                address:        malte@criticalmass.in
+                sender_name:    Malte Hübner, criticalmass.in
     resetting:
         email:
             from_email:
