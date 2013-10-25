@@ -26,7 +26,7 @@ class User extends BaseUser
     /**
      * Enthaelt eine kurze Beschreibung zur eigenen Person.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $description;
 
