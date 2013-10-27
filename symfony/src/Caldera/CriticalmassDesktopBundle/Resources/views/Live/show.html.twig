@@ -1,11 +1,12 @@
 <html>
 <head>
     <title>CalderaCriticalmassDesktopBundle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% stylesheets '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
+
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
@@ -42,7 +43,7 @@
             }
         }
 
-        window.onload = function()
+        /*window.onload = function()
         {
         // create a map in the "map" div, set the view to a given place and zoom
         map = L.map('map').setView([53, 9], 5);
@@ -60,25 +61,34 @@
                 cache: false,
                 success: addLoadedMarkers
             });
-        }
+        }*/
     </script>
 </head>
 <body>
-<div id="content">
-    <aside id="sidebar">
-        <img id="criticalmassbikefist" src="{{ asset('bundles/calderacriticalmass/images/criticalmass-logo.png') }}" />
-
-        <nav id="mainmenu">
-            <ul id="menu">
-                <li>Registrieren</li>
-                <li>Einloggen</li>
-                <li>Impressum</li>
-                <li>Datenschutz</li>
-            </ul>
-        </nav>
-    </aside>
-
-    <div id="map"></div>
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#">criticalmass.in</a>
+        <ul class="nav">
+            <li class="active"><a href="#">Übersicht</a></li>
+            <li><a href="#">Galerie</a></li>
+            <li><a href="#">Impressum</a></li>
+        </ul>
+        <ul class="nav pull-right">
+            <li class="dropdown" class="">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Hamburg
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>A</li>
+                    <li>B</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
+{% javascripts '@CalderaCriticalmassDesktopBundle/Resources/public/js/*' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 </body>
 </html>
