@@ -81,3 +81,9 @@ fos_user:
             from_email:
                 address:        malte@criticalmass.in
                 sender_name:    Malte Hübner, criticalmass.in
+
+mobile_detect:
+    redirect:
+        mobile: ~
+        tablet: ~
+    switch_device_view: ~
