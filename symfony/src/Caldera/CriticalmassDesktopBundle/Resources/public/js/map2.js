@@ -457,7 +457,6 @@ function refreshGeolocationInterval()
 
 window.onload = function()
 {
-    alert('Foo');
     startMapInitialization();
     refreshGeolocationInterval();
     initializeLivePage();
