@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Caldera\CriticalmassBundle\Entity\DefaultFixturePosition;
+use Caldera\CriticalmassCoreBundle\Entity\DefaultFixturePosition;
 
 class LoadPositionData extends AbstractFixture implements OrderedFixtureInterface
 {

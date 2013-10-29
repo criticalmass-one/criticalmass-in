@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Caldera\CriticalmassBundle\Entity\City;
+use Caldera\CriticalmassCoreBundle\Entity\City;
 
 class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 {

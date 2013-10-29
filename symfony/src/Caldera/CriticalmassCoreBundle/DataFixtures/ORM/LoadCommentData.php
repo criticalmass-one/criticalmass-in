@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Caldera\CriticalmassBundle\Entity\Comment;
+use Caldera\CriticalmassCoreBundle\Entity\Comment;
 
 class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 {
