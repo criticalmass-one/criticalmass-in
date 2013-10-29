@@ -29,7 +29,7 @@ function setLastModifiedLabel()
  */
 function setUsercounter(result)
 {
-    $('span#usercounter').html(result.usercounter);
+    $('span#usercounter').html(result.userOnline);
 }
 
 /**
@@ -38,7 +38,7 @@ function setUsercounter(result)
  */
 function setAverageSpeed(result)
 {
-    $('span#averagespeed').html(result.averagespeed);
+    $('span#averagespeed').html(result.averageSpeed);
 }
 
 /**
@@ -307,7 +307,7 @@ function refreshMapCenter(result)
 function setMapOptions(result)
 {
     // create a map in the "map" div, set the view to a given place and zoom
-    map = L.map('map').setView([result.mapCenter.latitude, result.mapCenter.longitude], result.zoom);
+    map = L.map('map').setView([result.mapCenter.latitude, result.mapCenter.longitude], result.zoomFactor);
 
     // add an OpenStreetMap tile layer
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
