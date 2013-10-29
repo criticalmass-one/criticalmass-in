@@ -23,8 +23,10 @@ class CityMarkerMapElement extends BaseMapElement
 		return array(
 			'id' => $this->getId(),
 			'type' => 'citymarker',
+            'cityTitle' => $this->city->getCity(),
+            'citySlug' => $this->city->getMainSlug()->getSlug(),
 			'centerPosition' => array('latitude' => $this->city->getLatitude(), 'longitude' => $this->city->getLongitude()),
-            'description' => $city->getDescription()
+            'description' => $this->city->getDescription()
 			);
 	}
 }
