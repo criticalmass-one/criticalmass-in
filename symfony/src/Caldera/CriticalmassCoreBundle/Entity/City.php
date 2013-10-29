@@ -382,4 +382,9 @@ class City
     {
         return $this->description;
     }
+
+    public function isEqual(City $city)
+    {
+        return $city->getId() == $this->getId();
+    }
 }
