@@ -17,6 +17,8 @@ class LiveMapBuilder extends BaseMapBuilder
         $this->registerModule("AverageSpeedMapBuilderModule");
         $this->registerModule("ZoomFactorMapBuilderModule");
         $this->registerModule("UserOnlineMapBuilderModule");
+        $this->registerModule("RideMapBuilderModule");
+
     }
 
 
