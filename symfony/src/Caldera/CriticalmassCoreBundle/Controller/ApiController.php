@@ -43,9 +43,12 @@ class ApiController extends Controller
 			$this->getDoctrine()
 		);
 
+        $lmp->registerModules();
+        $lmp->execute();
+
 		// Berechnung der angeforderten Positionsdaten anstossen
-		$lmp->calculatePositions();
-        $lmp->additionalElements();
+		/*$lmp->calculatePositions();
+        $lmp->additionalElements();*/
 
 		// neue Antwort zusammensetzen und als JSON klassifizieren
 		$response = new Response();
