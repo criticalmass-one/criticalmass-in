@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassCoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Caldera\CriticalmassBundle\Entity\Ride;
+use Caldera\CriticalmassCoreBundle\Entity\Ride;
 
 class LoadRideData extends AbstractFixture implements OrderedFixtureInterface
 {

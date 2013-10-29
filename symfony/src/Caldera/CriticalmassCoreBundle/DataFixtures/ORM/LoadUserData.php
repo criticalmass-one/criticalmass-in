@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Caldera\CriticalmassBundle\Entity\User;
+use Caldera\CriticalmassCoreBundle\Entity\User;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
