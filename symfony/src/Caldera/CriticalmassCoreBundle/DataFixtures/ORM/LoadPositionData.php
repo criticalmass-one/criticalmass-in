@@ -15,7 +15,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 	public function load(ObjectManager $manager)
 	{
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57805);
 		$position->setLongitude(9.72877);
@@ -25,7 +25,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57843);
 		$position->setLongitude(9.72815);
@@ -35,7 +35,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57859);
 		$position->setLongitude(9.72804);
@@ -45,7 +45,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57780);
 		$position->setLongitude(9.72866);
@@ -55,7 +55,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57734);
 		$position->setLongitude(9.72421);
@@ -65,7 +65,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57709);
 		$position->setLongitude(9.72213);
@@ -75,7 +75,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57570);
 		$position->setLongitude(9.72157);
@@ -85,7 +85,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57410);
 		$position->setLongitude(9.72101);
@@ -95,7 +95,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57447);
 		$position->setLongitude(9.71772);
@@ -105,7 +105,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57661);
 		$position->setLongitude(9.71764);
@@ -115,7 +115,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.57988);
 		$position->setLongitude(9.71751);
@@ -125,7 +125,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58024);
 		$position->setLongitude(9.72);
@@ -135,7 +135,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58081);
 		$position->setLongitude(9.72248);
@@ -145,7 +145,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58244);
 		$position->setLongitude(9.72559);
@@ -155,7 +155,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58373);
 		$position->setLongitude(9.7232);
@@ -165,7 +165,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58481);
 		$position->setLongitude(9.72308);
@@ -175,7 +175,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58485);
 		$position->setLongitude(9.72286);
@@ -185,7 +185,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58375);
 		$position->setLongitude(9.72334);
@@ -195,7 +195,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58239);
 		$position->setLongitude(9.71373);
@@ -205,7 +205,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.5814);
 		$position->setLongitude(9.70358);
@@ -215,7 +215,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->flush();
 
 		$position = new DefaultFixturePosition();
-		$position->setRide($this->getReference("city-hamburg-ride-2013-05-31"));
+		$position->setRide($this->getReference("city-wedel-ride-2013-05-31"));
 		$position->setUser($this->getReference("user-maltehuebner"));
 		$position->setLatitude(53.58188);
 		$position->setLongitude(9.70412);

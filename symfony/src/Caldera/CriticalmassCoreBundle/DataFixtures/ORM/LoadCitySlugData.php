@@ -274,12 +274,19 @@ class LoadCitySlugData extends AbstractFixture implements OrderedFixtureInterfac
 		$manager->persist($citySlug);
 		$manager->flush();
 
-		$citySlug = new CitySlug();
-		$citySlug->setCity($this->getReference("city-trier"));
-		$citySlug->setSlug("trier");
+        $citySlug = new CitySlug();
+        $citySlug->setCity($this->getReference("city-trier"));
+        $citySlug->setSlug("trier");
 
-		$manager->persist($citySlug);
-		$manager->flush();
+        $manager->persist($citySlug);
+        $manager->flush();
+
+        $citySlug = new CitySlug();
+        $citySlug->setCity($this->getReference("city-wedel"));
+        $citySlug->setSlug("wedel");
+
+        $manager->persist($citySlug);
+        $manager->flush();
 
 		$citySlug = new CitySlug();
 		$citySlug->setCity($this->getReference("city-wuppertal"));

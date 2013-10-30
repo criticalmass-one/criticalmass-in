@@ -450,20 +450,35 @@ class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 
 		$this->addReference("city-stuttgart", $city);
 
-		// Critical Mass Trier
-		$city = new City();
-		$city->setCity("Trier");
-		$city->setTitle("Critical Mass Trier");
-		$city->setUrl("");
-		$city->setFacebook("");
-		$city->setTwitter("https://twitter.com/VelomobTrier");
-		$city->setLatitude(49.7596);
-		$city->setLongitude(6.6439);
+        // Critical Mass Trier
+        $city = new City();
+        $city->setCity("Trier");
+        $city->setTitle("Critical Mass Trier");
+        $city->setUrl("");
+        $city->setFacebook("");
+        $city->setTwitter("https://twitter.com/VelomobTrier");
+        $city->setLatitude(49.7596);
+        $city->setLongitude(6.6439);
 
-		$manager->persist($city);
-		$manager->flush();
+        $manager->persist($city);
+        $manager->flush();
 
-		$this->addReference("city-trier", $city);
+        $this->addReference("city-trier", $city);
+
+        // Critical Mass Wedel
+        $city = new City();
+        $city->setCity("Wedel");
+        $city->setTitle("Lichtertour Wedel");
+        $city->setUrl("http://www.adfc-wedel.de/");
+        $city->setFacebook("");
+        $city->setTwitter("");
+        $city->setLatitude(53.5810);
+        $city->setLongitude(9.7037);
+
+        $manager->persist($city);
+        $manager->flush();
+
+        $this->addReference("city-wedel", $city);
 
 		// Critical Mass Wuppertal
 		$city = new City();
