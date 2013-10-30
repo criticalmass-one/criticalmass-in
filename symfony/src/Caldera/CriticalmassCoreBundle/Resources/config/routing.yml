@@ -5,3 +5,8 @@ CalderaCriticalmassCoreBundle_Api:
 caldera_criticalmass_standardridegenerator:
     pattern: /standardridegenerator
     defaults: { _controller: CalderaCriticalmassCoreBundle:Default:index }
+
+caldera_criticalmass_ridecompiler:
+    pattern: /ridecompiler
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Default:index2 }
+
