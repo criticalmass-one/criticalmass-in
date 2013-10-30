@@ -16,5 +16,9 @@ class DefaultController extends Controller
 
         return new Response();
     }
+
+    public function index2Action()
+    {
+        return new Response();
     }
 }
