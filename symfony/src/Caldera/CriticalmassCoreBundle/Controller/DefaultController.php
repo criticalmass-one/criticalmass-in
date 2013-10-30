@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassCoreBundle\Controller;
 
-use Caldera\CriticalmassCoreBundle\Utility\PositionFilterChain\RideCompiler;
+use Caldera\CriticalmassCoreBundle\Utility\RideCompiler;
 use Caldera\CriticalmassCoreBundle\Utility\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,9 +1,8 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Utility\PositionFilterChain;
+namespace Caldera\CriticalmassCoreBundle\Utility;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
-use \Caldera\CriticalmassCoreBundle\Utility\DistanceCalculator;
 use \Caldera\CriticalmassCoreBundle\Entity\Position;
 use \Caldera\CriticalmassCoreBundle\Entity\RideTrack;
 
