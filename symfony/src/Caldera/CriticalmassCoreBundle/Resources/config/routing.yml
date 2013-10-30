@@ -1,3 +1,7 @@
 CalderaCriticalmassCoreBundle_Api:
     resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/api.yml"
     prefix:   /
+
+caldera_criticalmass_standardridegenerator:
+    pattern: /standardridegenerator
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Default:index }
