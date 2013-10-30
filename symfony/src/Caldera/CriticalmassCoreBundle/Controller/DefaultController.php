@@ -2,12 +2,19 @@
 
 namespace Caldera\CriticalmassCoreBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Utility\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('CalderaCriticalmassCoreBundle:Default:index.html.twig', array('name' => $name));
+        $srg = new StandardRideGenerator($this->getDoctrine(), 11, 2013);
+
+        $srg->execute();
+
+        return new Response();
+    }
     }
 }
