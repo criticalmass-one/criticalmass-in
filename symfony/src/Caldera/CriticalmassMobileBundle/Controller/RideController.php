@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Caldera\CriticalmassCoreBundle\Utility as Utility;
 
@@ -14,7 +14,7 @@ use Caldera\CriticalmassCoreBundle\Utility as Utility;
  * ten erzeugt und lediglich in den Templates sowie zum Verschicken von Be-
  * nachrichtigungen modifiziert.
  */
-class RideController extends Controller
+class RideController extends Controller implements Trackable
 {
 
     /**

@@ -3,13 +3,14 @@
 namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 
 /**
  * Dieser Controller dient lediglich der Anzeige statischer Seiten, etwa dem
  * Impressum oder den Datenschutzrichtlinien. Aus Sicherheitsgruenden muessen
  * die anzeigbaren Seiten zunaechst aktiviert werden.
  */
-class StaticPageController extends Controller
+class StaticPageController extends Controller implements Trackable
 {
 	/**
 	 * Zeigt den Inhalt der angeforderten Seite an.

@@ -3,13 +3,11 @@
 namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Caldera\CriticalmassCoreBundle\Entity\Comment;
 use Caldera\CriticalmassCoreBundle\Entity\CommentImage;
 
-class CommentController extends Controller
+class CommentController extends Controller implements Trackable
 {
 	public function listcommentsAction($citySlug)
 	{

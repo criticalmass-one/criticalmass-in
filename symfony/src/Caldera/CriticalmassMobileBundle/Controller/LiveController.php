@@ -3,14 +3,13 @@
 namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
 /**
  * Dieser Controller dient lediglich der Anzeige der Live-Darstellung der Tour.
  */
-class LiveController extends Controller
+class LiveController extends Controller implements Trackable
 {
 	/**
 	 * Diese Methode dient lediglich der Anzeige der Live-Darstellung der Tour.

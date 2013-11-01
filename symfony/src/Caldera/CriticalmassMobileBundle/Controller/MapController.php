@@ -3,8 +3,9 @@
 namespace Caldera\CriticalmassMobileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 
-class MapController extends Controller
+class MapController extends Controller implements Trackable
 {
     public function showcityAction($citySlug)
     {
