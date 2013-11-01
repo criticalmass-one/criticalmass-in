@@ -87,7 +87,7 @@ class City
 	protected $rides;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city")
+	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
 	 */
 	protected $slugs;
 
