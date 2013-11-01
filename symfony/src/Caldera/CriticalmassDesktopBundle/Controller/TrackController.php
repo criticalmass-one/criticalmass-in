@@ -2,9 +2,10 @@
 
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class TrackController extends Controller
+class TrackController extends Controller implements Trackable
 {
     public function showrideAction($rideId)
     {

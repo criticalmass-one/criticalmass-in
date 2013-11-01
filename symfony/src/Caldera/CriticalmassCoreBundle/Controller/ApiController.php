@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassCoreBundle\Controller;
 
+use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +16,7 @@ use Caldera\CriticalmassCoreBundle\Entity as Entity;
  * ten Informationen der API abfragen koennten. Fuer einige der Methoden ist
  * eine Anmeldung notwendig.
  */
-class ApiController extends Controller
+class ApiController extends Controller implements Trackable
 {
 	/**
 	 * Diese Methode ist die wahrscheinlich wichtigste im gesamten Projekt. Ueber
