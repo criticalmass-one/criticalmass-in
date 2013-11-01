@@ -4,7 +4,7 @@ namespace Caldera\CriticalmassStatisticBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class StatisticController extends Controller
 {
     public function indexAction($name)
     {
