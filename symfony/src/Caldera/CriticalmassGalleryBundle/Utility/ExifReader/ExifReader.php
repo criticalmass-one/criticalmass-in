@@ -25,11 +25,14 @@ class ExifReader extends BaseExifReader
     {
         foreach ($this->exifArray as $exifArrayValue)
         {
-            if (strpos($exifArrayValue, "EF") == 0)
+
+            if (is_string($exifArrayValue) && strpos($exifArrayValue, "USM") > 0)
             {
                 return $exifArrayValue;
             }
         }
+
+        return null;
     }
 
     public function getShutterSpeed()
