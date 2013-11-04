@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Malte
- * Date: 02.11.13
- * Time: 12:02
- */
 
-namespace Caldera\CriticalmassGalleryBundle\Utility;
-
+namespace Caldera\CriticalmassGalleryBundle\Utility\ExifReader;
 
 abstract class BaseExifReader {
 
@@ -27,7 +20,7 @@ abstract class BaseExifReader {
     {
         $tmpArray = explode("/", $valueString);
 
-        if (count($tmpArray) == 1)
+        if (count($tmpArray) == 2)
         {
             return $tmpArray['0']/$tmpArray['1'];
         }

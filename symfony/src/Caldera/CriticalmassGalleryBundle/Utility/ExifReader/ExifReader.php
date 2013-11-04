@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Malte
- * Date: 02.11.13
- * Time: 11:59
- */
 
-namespace Caldera\CriticalmassGalleryBundle\Utility;
+namespace Caldera\CriticalmassGalleryBundle\Utility\ExifReader;
 
 
 class ExifReader extends BaseExifReader
