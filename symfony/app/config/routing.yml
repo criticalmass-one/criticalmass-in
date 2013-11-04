@@ -28,7 +28,13 @@ caldera_criticalmass_core:
 caldera_criticalmass_mobile:
     resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
     prefix:   /
+    host:     "{host}"
+    requirements:
+        host: %mobile_host%
 
 caldera_criticalmass_desktop:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
     prefix:   /
+    host:     "{host}"
+    requirements:
+        host: %www_host%
