@@ -65,7 +65,7 @@
                 <li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false" data-qa-ta="mainpanel-menu-logout">Logout</a></li>
                 <li><a href="{{ url('fos_user_profile_edit') }}" data-qa-ta="mainpanel-menu-settings">Einstellungen</a></li>
                 <li><a href="{{ url('fos_user_change_password') }}" data-qa-ta="mainpanel-menu-changepassword">Kennwort ändern</a></li>
-                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings') }}" data-qa-ta="mainpanel-menu-pushsettings">Push-Nachrichten</a></li>
+                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-pushsettings">Push-Nachrichten</a></li>
                 {% else %}
                 <li><a href="{{ url('fos_user_registration_register') }}" data-qa-ta="mainpanel-menu-register">Registrierung</a></li>
                 <li><a href="{{ url('fos_user_security_login') }}" data-qa-ta="mainpanel-menu-login">Login</a></li>
