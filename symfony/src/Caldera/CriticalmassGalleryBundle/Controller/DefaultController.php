@@ -21,4 +21,17 @@ class DefaultController extends Controller implements Trackable
 
         return new Response();
     }
+
+    public function displayimageAction($id)
+    {
+        $image = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Image')->findOneById($id);
+
+        $imageString = file_get_contents("/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/".$image->getId().".jpg");
+
+        $response = new Response();
+        $response->setContent($imageString);
+        $response->headers->set("Content-Type", "image/jpg");
+
+        return $response;
+    }
 }
