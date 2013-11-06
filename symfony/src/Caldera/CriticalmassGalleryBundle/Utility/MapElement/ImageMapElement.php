@@ -25,7 +25,9 @@ class ImageMapElement extends BaseMapElement
 			'id' => $this->getId(),
 			'type' => 'image',
 			'centerPosition' => array('latitude' => $this->image->getExifLatitude(), 'longitude' => $this->image->getExifLongitude()),
-            'imagePath' => 'http://www.criticalmass.local/image/display/'.$this->image->getId()
+            'imagePath' => 'http://www.criticalmass.local/image/display/'.$this->image->getId(),
+            'imageWidth' => $this->image->getWidth(),
+            'imageHeight' => $this->image->getHeight()
 			);
 	}
 }
