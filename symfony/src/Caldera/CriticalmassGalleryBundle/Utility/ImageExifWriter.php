@@ -20,7 +20,7 @@ class ImageExifWriter {
 
         $this->image->setExifMake($exifReader->getMake());
         $this->image->setExifModel($exifReader->getModel());
-        //$this->image->setExifLens($exifReader->getLens());
+        $this->image->setExifLens($exifReader->getLens());
         $this->image->setExifShutterSpeed($exifReader->getShutterSpeed());
         $this->image->setExifAperture($exifReader->getAperture());
         $this->image->setExifExposureBias($exifReader->getExposureBias());
