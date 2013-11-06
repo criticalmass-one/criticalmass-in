@@ -47,6 +47,11 @@ class Image
     private $exifModel;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $exifLens;
+
+    /**
      * @ORM\Column(type="float")
      */
     private $exifShutterSpeed;
@@ -561,5 +566,28 @@ class Image
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set exifLens
+     *
+     * @param string $exifLens
+     * @return Image
+     */
+    public function setExifLens($exifLens)
+    {
+        $this->exifLens = $exifLens;
+    
+        return $this;
+    }
+
+    /**
+     * Get exifLens
+     *
+     * @return string 
+     */
+    public function getExifLens()
+    {
+        return $this->exifLens;
     }
 }
