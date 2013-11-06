@@ -1,7 +1,7 @@
 caldera_criticalmass_desktop_homepage:
-    pattern:  /desktop/hamburg/live
+    pattern:  /hamburg
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Live:show }
 
 caldera_criticalmass_desktop_showride:
-    pattern:  /desktop/hamburg/{rideId}
+    pattern:  /hamburg/{rideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Track:showride }

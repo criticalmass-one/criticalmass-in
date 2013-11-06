@@ -25,6 +25,10 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        domain: "%domain%"
+        mobile_host: "m.%domain%"
+        www_host: "www.%domain%"
 
 # Assetic Configuration
 assetic:

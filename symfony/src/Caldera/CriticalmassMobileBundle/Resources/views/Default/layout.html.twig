@@ -42,7 +42,7 @@
 				<li data-icon="delete"><a href="#" data-rel="close" data-qa-ta="mainpanel-button-close">Menü schließen</a></li>
 				{% if app.session.get('currentCitySlug') %}
 				<li data-role="list-divider" data-qa-ta="mainpanel-city-title">{{ app.session.get('city').getTitle }}</li>
-				<li><a href="{{ url('caldera_criticalmass_city', {'citySlug': app.session.get('currentCitySlug') }) }}" data-ajax="false" data-qa-ta="mainpanel-menu-city-overview">Übersicht</a></li>
+				<li><a href="{{ url('caldera_criticalmass_city', {'citySlug': app.session.get('currentCitySlug'), 'host': mobile_host }) }}" data-ajax="false" data-qa-ta="mainpanel-menu-city-overview">Übersicht</a></li>
 				<li data-role="list-divider">Neuigkeiten</li>
 				{% if app.session.get('city').getUrl %}
 				<li><a href="{{ app.session.get('city').getUrl }}" data-qa-ta="mainpanel-menu-city-webseite">Website</a></li>
@@ -65,15 +65,15 @@
                 <li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false" data-qa-ta="mainpanel-menu-logout">Logout</a></li>
                 <li><a href="{{ url('fos_user_profile_edit') }}" data-qa-ta="mainpanel-menu-settings">Einstellungen</a></li>
                 <li><a href="{{ url('fos_user_change_password') }}" data-qa-ta="mainpanel-menu-changepassword">Kennwort ändern</a></li>
-                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings') }}" data-qa-ta="mainpanel-menu-pushsettings">Push-Nachrichten</a></li>
+                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-pushsettings">Push-Nachrichten</a></li>
                 {% else %}
                 <li><a href="{{ url('fos_user_registration_register') }}" data-qa-ta="mainpanel-menu-register">Registrierung</a></li>
                 <li><a href="{{ url('fos_user_security_login') }}" data-qa-ta="mainpanel-menu-login">Login</a></li>
                 <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mainpanel-menu-resetpassword">Kennwort vergessen?</a></li>
 				{% endif %}
 				
-				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress'}) }}" data-qa-ta="mainpanel-menu-impress">Impressum</a></li>
-				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy'}) }}" data-qa-ta="mainpanel-menu-privacy">Datenschutz</a></li>
+				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress', 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-impress">Impressum</a></li>
+				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy', 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-privacy">Datenschutz</a></li>
 				<li><a href="http://blog.criticalmass.in/">Blog</a></li>
 			</ul>
 		</div>
