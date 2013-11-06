@@ -63,7 +63,7 @@ class ExifReader extends BaseExifReader
 
     public function getDateTime()
     {
-        return $this->exifArray['DateTimeOriginal'];
+        return new \DateTime($this->exifArray['DateTimeOriginal']);
     }
 
     public function getFocalLength()
@@ -76,5 +76,13 @@ class ExifReader extends BaseExifReader
         return $this->exifArray['FileSize'];
     }
 
+    public function getWidth()
+    {
+          return $this->exifArray['COMPUTED']['Width'];
+    }
 
+    public function getHeight()
+    {
+        return $this->exifArray['COMPUTED']['Height'];
+    }
 } 
