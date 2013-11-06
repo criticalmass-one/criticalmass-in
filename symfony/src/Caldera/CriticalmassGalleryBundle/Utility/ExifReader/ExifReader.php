@@ -7,12 +7,12 @@ class ExifReader extends BaseExifReader
 {
     public function getMake()
     {
-        return $this->exifArray['ExposureTime'];
+        return $this->exifArray['Make'];
     }
 
     public function getModel()
     {
-        return $this->exifArray['ExposureTime'];
+        return $this->exifArray['Model'];
     }
 
     public function getLens()
@@ -31,7 +31,7 @@ class ExifReader extends BaseExifReader
 
     public function getShutterSpeed()
     {
-        return $this->exifArray['ExposureTime'];
+        return $this->calcFraction($this->exifArray['ExposureTime']);
     }
 
     public function getGpsCoordinates()
@@ -48,12 +48,12 @@ class ExifReader extends BaseExifReader
 
     public function getExposureBias()
     {
-        return $this->exifArray['ExposureBiasValue'];
+        return $this->calcFraction($this->exifArray['ExposureBiasValue']);
     }
 
     public function getAperture()
     {
-        return $this->exifArray['FNumber'];
+        return $this->calcFraction($this->exifArray['FNumber']);
     }
 
     public function getIso()
@@ -68,7 +68,7 @@ class ExifReader extends BaseExifReader
 
     public function getFocalLength()
     {
-        return $this->exifArray['FocalLength'];
+        return $this->calcFraction($this->exifArray['FocalLength']);
     }
 
 
