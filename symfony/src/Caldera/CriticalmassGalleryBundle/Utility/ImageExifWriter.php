@@ -28,6 +28,7 @@ class ImageExifWriter {
         $this->image->setExifIso($exifReader->getIso());
         $this->image->setExifDateTime($exifReader->getDateTime());
         $this->image->setExifFlash($exifReader->getFlash());
+        $this->image->setFileSize($exifReader->getFileSize());
 
         $gpsCoordinates = $exifReader->getGpsCoordinates();
         $this->image->setExifLatitude($gpsCoordinates['latitude']);

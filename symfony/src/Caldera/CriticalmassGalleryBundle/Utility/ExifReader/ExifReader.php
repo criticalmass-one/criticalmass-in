@@ -71,5 +71,10 @@ class ExifReader extends BaseExifReader
         return $this->calcFraction($this->exifArray['FocalLength']);
     }
 
+    public function getFileSize()
+    {
+        return $this->exifArray['FileSize'];
+    }
+
 
 } 
