@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Image
  *
- * @ORM\Table()
+ * @ORM\Table(name="image")
  * @ORM\Entity
  */
 class Image
@@ -62,7 +62,7 @@ class Image
     private $exifAperture;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="datetime")
      */
     private $exifDateTime;
 
@@ -117,7 +117,7 @@ class Image
     private $visible;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="datetime")
      */
     private $creationDateTime;
 
