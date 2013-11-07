@@ -91,14 +91,35 @@ function drawArrow(arrowElement)
  });
  }*/
 }
+/*
+function resizeImagesToZoomLevel(zoomLevel)
+{
+    var index;
+
+    for (index in elementsArray)
+    {
+        if (elementsArray[index].type == "image")
+        {
+            clearElement(elementsArray[index].id);
+        }
+    }
+}*/
 
 function drawImage(imageElement)
 {
     if (!doesElementExist(imageElement.id))
     {
         var imageUrl = imageElement.imagePath;
+
+        var ratio = imageElement.imageWidth / imageElement.imageHeight;
+
+        var showWidth = 10;
+        var showHeight = showWidth / ratio;
+        var scaleFactor = 0.00005;
+        var gpsHeightCorrection = 3.7;
+
         var imageBounds = [[imageElement.centerPosition.latitude, imageElement.centerPosition.longitude],
-                           [imageElement.centerPosition.latitude + 0.001, imageElement.centerPosition.longitude + 0.001]];
+                           [imageElement.centerPosition.latitude + showWidth * scaleFactor, imageElement.centerPosition.longitude + showHeight * scaleFactor * gpsHeightCorrection]];
 
         elementsArray[imageElement.id] = L.imageOverlay(imageUrl, imageBounds).addTo(map);
     }
@@ -345,6 +366,10 @@ function setMapOptions(result)
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 18
     }).addTo(map);
+
+/*    map.on("zoomend", function(){
+        resizeImagesToZoomLevel(map.getZoom());
+    });*/
 
     refreshLivePage2(result);
 }
