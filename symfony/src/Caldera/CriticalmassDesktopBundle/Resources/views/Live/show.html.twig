@@ -23,7 +23,7 @@
         <ul class="nav">
             <li class="active"><a href="#">Übersicht</a></li>
             <li><a href="#">Galerie</a></li>
-            <li><a href="#">Impressum</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#impress">Impressum</a></li>
         </ul>
         <ul class="nav pull-right">
             <li class="dropdown">
@@ -79,6 +79,36 @@
             <footer class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
                 <button type="button" class="btn btn-primary">Speichern</button>
+            </footer>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="impress">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Impressum</h4>
+            </header>
+            <section class="modal-body">
+                <p>Verantwortlich nach § 5 TMG:</p>
+                <address>
+                    <strong>Fachhochschule Wedel</strong><br />
+                    Feldstraße 143<br />
+                    22880 Wedel<br />
+                    Deutschland<br />
+                    <abbr title="Phone">Telefon:</abbr> 0700 11 864 833
+                </address>
+
+                <address>
+                    <strong>Malte Hübner</strong><br />
+                    <a href="mailto:#">malte@criticalmass.in</a>
+                </address>
+            </section>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-primary">Okay</button>
             </footer>
         </div>
     </div>
