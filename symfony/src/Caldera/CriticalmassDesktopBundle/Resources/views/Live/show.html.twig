@@ -17,7 +17,7 @@
     </script>
 </head>
 <body>
-<div class="navbar navbar-static-top">
+<header class="navbar navbar-static-top">
     <div class="navbar-inner">
         <a class="brand" href="#">criticalmass.in</a>
         <ul class="nav">
@@ -26,7 +26,7 @@
             <li><a href="#">Impressum</a></li>
         </ul>
         <ul class="nav pull-right">
-            <li class="dropdown" class="">
+            <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="currentCitySlugButton">
                     Hamburg
                     <b class="caret"></b>
@@ -36,10 +36,54 @@
                     <li><a href="#">B</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="#" data-toggle="modal" data-target="#myModal">
+                    Kartenoptionen
+                </a>
+            </li>
         </ul>
     </div>
+</header>
+<section id="map" style="width: 100%; height: 85%; z-index: 0;"></section>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Kartenoptionen</h4>
+            </header>
+            <section class="modal-body">
+                <p>Zeige die folgenden Elemente auf der Karte an:</p>
+                <section class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">GPS-Positionen:</label>
+                        <ul class="controls">
+                            <input type="checkbox" id="inputEmail" />
+                        </ul>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">Permanente Positionen:</label>
+                        <ul class="controls">
+                            <input type="checkbox" id="inputEmail" />
+                        </ul>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">Bilder anzeigen:</label>
+                        <ul class="controls">
+                            <input type="checkbox" id="inputEmail" />
+                        </ul>
+                    </div>
+                </section>
+            </section>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary">Speichern</button>
+            </footer>
+        </div>
+    </div>
 </div>
-<div id="map" style="width: 100%; height: 100%; z-index: 0;"></div>
+
 {% javascripts '@CalderaCriticalmassDesktopBundle/Resources/public/js/*' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
