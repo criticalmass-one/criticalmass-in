@@ -5,6 +5,7 @@ namespace Caldera\CriticalmassGalleryBundle\Controller;
 use Caldera\CriticalmassGalleryBundle\Entity\Image;
 use Caldera\CriticalmassGalleryBundle\Utility\ExifReader;
 use Caldera\CriticalmassGalleryBundle\Utility\ImageExifWriter;
+use Caldera\CriticalmassGalleryBundle\Utility\ImageImporter;
 use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +14,12 @@ class DefaultController extends Controller implements Trackable
 {
     public function indexAction($name)
     {
-        $filename = "/Applications/XAMPP/htdocs/criticalmass/symfony/web/IMG_9707.jpg";
-        $image = new Image();
+        $dir = ".";
 
-        $iew = new ImageExifWriter($image);
-        $image = $iew->readExifFromFilename($filename);
+        $ii = new ImageImporter($this->getDoctrine());
+        $ii->setRide($this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneById(2));
+        $ii->setUser($this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:User')->findOneById(1));
+        $ii->setDirectory($dir)->fetchImageFiles()->execute();
 
         return new Response();
     }

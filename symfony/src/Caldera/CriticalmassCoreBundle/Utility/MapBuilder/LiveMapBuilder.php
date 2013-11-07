@@ -14,13 +14,13 @@ class LiveMapBuilder extends BaseMapBuilder
         $coreNamespace = "\\Caldera\\CriticalmassCoreBundle\\Utility\\MapBuilderModule\\";
 
         $this->registerModule($coreNamespace."MapCenterMapBuilderModule");
-        $this->registerModule($coreNamespace."StandardPositionMapBuilderModule");
-        $this->registerModule($coreNamespace."PermanentPositionMapBuilderModule");
+        //$this->registerModule($coreNamespace."StandardPositionMapBuilderModule");
+        //$this->registerModule($coreNamespace."PermanentPositionMapBuilderModule");
         $this->registerModule($coreNamespace."AverageSpeedMapBuilderModule");
         $this->registerModule($coreNamespace."ZoomFactorMapBuilderModule");
         $this->registerModule($coreNamespace."UserOnlineMapBuilderModule");
-        $this->registerModule($coreNamespace."RideMapBuilderModule");
-        $this->registerModule($coreNamespace."OtherCitiesMapBuilderModule");
+        //$this->registerModule($coreNamespace."RideMapBuilderModule");
+        //$this->registerModule($coreNamespace."OtherCitiesMapBuilderModule");
         $this->registerModule("\\Caldera\\CriticalmassGalleryBundle\\Utility\\MapBuilderModule\\ImageMapBuilderModule");
     }
 }
