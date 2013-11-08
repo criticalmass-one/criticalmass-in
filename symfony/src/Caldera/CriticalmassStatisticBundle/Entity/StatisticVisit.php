@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassStatisticBundle\Entity;
 
+use Caldera\CriticalmassStatisticBundle\Utility\StatisticEntityWriter\StatisticEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="statisticvisit")
  */
-class StatisticVisit
+class StatisticVisit implements StatisticEntity
 {
   /**
    * @ORM\Id

@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassStatisticBundle\Entity;
 
+use Caldera\CriticalmassStatisticBundle\Utility\StatisticEntityWriter\StatisticEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="statistictrack")
  */
-class StatisticTrack
+class StatisticTrack implements StatisticEntity
 {
   /**
    * @ORM\Id
@@ -73,12 +74,14 @@ class StatisticTrack
   /**
    * @ORM\Column(type="string")
    */
-  protected $actionElementName;
+  protected $elementName;
 
   /**
    * @ORM\Column(type="string")
    */
   protected $actionType;
+
+  
 
     /**
      * Get id
@@ -94,7 +97,7 @@ class StatisticTrack
      * Set remoteAddr
      *
      * @param string $remoteAddr
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setRemoteAddr($remoteAddr)
     {
@@ -117,7 +120,7 @@ class StatisticTrack
      * Set remoteHost
      *
      * @param string $remoteHost
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setRemoteHost($remoteHost)
     {
@@ -140,7 +143,7 @@ class StatisticTrack
      * Set referer
      *
      * @param string $referer
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setReferer($referer)
     {
@@ -163,7 +166,7 @@ class StatisticTrack
      * Set query
      *
      * @param string $query
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setQuery($query)
     {
@@ -186,7 +189,7 @@ class StatisticTrack
      * Set environment
      *
      * @param string $environment
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setEnvironment($environment)
     {
@@ -209,7 +212,7 @@ class StatisticTrack
      * Set host
      *
      * @param string $host
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setHost($host)
     {
@@ -232,7 +235,7 @@ class StatisticTrack
      * Set agent
      *
      * @param string $agent
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setAgent($agent)
     {
@@ -255,7 +258,7 @@ class StatisticTrack
      * Set dateTime
      *
      * @param \DateTime $dateTime
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setDateTime($dateTime)
     {
@@ -275,72 +278,26 @@ class StatisticTrack
     }
 
     /**
-     * Set user
+     * Set elementName
      *
-     * @param \Caldera\CriticalmassStatisticBundle\Entity\User $user
-     * @return StatisticVisit
-     */
-    public function setUser($user = null)
-    {
-        $this->user = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Caldera\CriticalmassStatisticBundle\Entity\User 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set city
-     *
-     * @param \Caldera\CriticalmassStatisticBundle\Entity\City $city
-     * @return StatisticVisit
-     */
-    public function setCity($city = null)
-    {
-        $this->city = $city;
-    
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return \Caldera\CriticalmassStatisticBundle\Entity\City 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set actionElementName
-     *
-     * @param string $actionElementName
+     * @param string $elementName
      * @return StatisticTrack
      */
-    public function setActionElementName($actionElementName)
+    public function setElementName($elementName)
     {
-        $this->actionElementName = $actionElementName;
+        $this->elementName = $elementName;
     
         return $this;
     }
 
     /**
-     * Get actionElementName
+     * Get elementName
      *
      * @return string 
      */
-    public function getActionElementName()
+    public function getElementName()
     {
-        return $this->actionElementName;
+        return $this->elementName;
     }
 
     /**
@@ -364,5 +321,51 @@ class StatisticTrack
     public function getActionType()
     {
         return $this->actionType;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\User $user
+     * @return StatisticTrack
+     */
+    public function setUser($user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @return StatisticTrack
+     */
+    public function setCity($city = null)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
