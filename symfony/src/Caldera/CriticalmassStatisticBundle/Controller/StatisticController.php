@@ -3,11 +3,14 @@
 namespace Caldera\CriticalmassStatisticBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends Controller
 {
-    public function indexAction($name)
+    public function trackAction($name)
     {
-        return $this->render('CalderaCriticalmassStatisticBundle:Default:index.html.twig', array('name' => $name));
+        $response = new Response();
+
+        return $response;
     }
 }
