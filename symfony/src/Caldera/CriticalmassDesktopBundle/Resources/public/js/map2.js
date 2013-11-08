@@ -418,8 +418,25 @@ function startMapInitialization()
     var timer = setInterval(refreshLivePage, 5000);
 }
 
+function startTracking()
+{
+    $('a').click(function()
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/app_dev.php/statistictrack',
+            cache: false,
+            data: { elementName: $(this).attr("data-track-onclick"),
+                    actionType: "onclick"
+            }
+        });
+    });
+}
+
 window.onload = function()
 {
     startMapInitialization();
     initializeLivePage();
+
+    startTracking();
 }
