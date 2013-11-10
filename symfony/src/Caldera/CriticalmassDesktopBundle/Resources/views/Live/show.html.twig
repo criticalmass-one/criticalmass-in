@@ -17,36 +17,7 @@
     </script>
 </head>
 <body>
-<header class="navbar navbar-static-top">
-    <div class="navbar-inner">
-        <a class="brand" href="#">criticalmass.in</a>
-        <ul class="nav">
-            <li class="active"><a href="#" data-track-onclick="navbar-overview-button-click">Übersicht</a></li>
-            <li><a href="#" data-track-onclick="navbar-gallery-button-click">Galerie</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#impress" data-track-onclick="navbar-impress-button-click">Impressum</a></li>
-        </ul>
-        <ul class="nav pull-right">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="currentCitySlugButton">
-                    Hamburg
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">A</a></li>
-                    <li><a href="#">B</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#myModal">
-                    Kartenoptionen
-                </a>
-            </li>
-        </ul>
-    </div>
-</header>
-<section id="map" style="width: 100%; height: 85%; z-index: 0;"></section>
-
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="myModal" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <header class="modal-header">
@@ -85,7 +56,7 @@
 </div>
 
 
-<div class="modal fade" id="impress">
+<div class="modal fade" id="impress" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <header class="modal-header">
@@ -113,6 +84,38 @@
         </div>
     </div>
 </div>
+
+<header class="navbar navbar-static-top">
+    <div class="navbar-inner">
+        <a class="brand" href="#">criticalmass.in</a>
+        <ul class="nav">
+            <li class="active"><a href="#" data-track-onclick="navbar-overview-button-click">Übersicht</a></li>
+            <li><a href="#" data-track-onclick="navbar-blog-button-click">Blog</a></li>
+            <li><a href="#" data-track-onclick="navbar-login-button-click">Login</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#impress" data-track-onclick="navbar-impress-button-click">Impressum</a></li>
+        </ul>
+        <ul class="nav pull-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="currentCitySlugButton">
+                    Hamburg
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">A</a></li>
+                    <li><a href="#">B</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" data-toggle="modal" data-target="#myModal">
+                    Kartenoptionen
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+<section id="map" style="width: 100%; height: 85%; z-index: 0;"></section>
+
+
 
 {% javascripts '@CalderaCriticalmassDesktopBundle/Resources/public/js/*' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
