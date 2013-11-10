@@ -6,11 +6,9 @@ parameters:
     mailer_password: null
     locale: de
     secret: ThisTokenIsNotSoSecretChangeIt
-    commentimage.upload_filepath: /Applications/XAMPP/htdocs/criticalmass/symfony/web/uploads/commentimages/
-    commentimage.upload_webpath: http://localhost:8000/uploads/commentimages/
-    commentimage.upload_longside: 600
-    commentimage.upload_quality: 100
-    notifications.pushoverkey: wP7MBPTf5TFvazDCtWf2mL1eH9m1fK
-    domain: criticalmass.local
-    mobile_host: m.%domain%
-    www_host: www.%domain%
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: criticalmass
+    database_user: root
+    database_password: null
