@@ -1355,23 +1355,11 @@
 
     ],
     "minimum-stability": "stable",
-<<<<<<< HEAD
-    "stability-flags": {
-        "friendsofsymfony/user-bundle": 20
-    },
-=======
-<<<<<<< Updated upstream
-    "stability-flags": [
-
-    ],
-=======
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "doctrine/data-fixtures": 20
     },
->>>>>>> Stashed changes
->>>>>>> feature-ccm-4100
     "platform": {
         "php": ">=5.3.3"
     },
