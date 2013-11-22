@@ -32,8 +32,6 @@ abstract class BaseMapBuilder
 
     public function registerModule($moduleName)
     {
-        $moduleName = "\\Caldera\\CriticalmassCoreBundle\\Utility\\MapBuilderModule\\".$moduleName;
-
         $this->modules[$moduleName] = new $moduleName($this);
     }
 

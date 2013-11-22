@@ -1,0 +1,7 @@
+caldera_criticalmass_gallery_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Default:index }
+
+caldera_criticalmass_gallery_displayimage:
+    pattern:  /image/display/{id}
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Default:displayImage }

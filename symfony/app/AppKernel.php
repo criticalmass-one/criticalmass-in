@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
             new SunCat\MobileDetectBundle\MobileDetectBundle(),
             new Caldera\CriticalmassStatisticBundle\CalderaCriticalmassStatisticBundle(),
+            new Caldera\CriticalmassGalleryBundle\CalderaCriticalmassGalleryBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

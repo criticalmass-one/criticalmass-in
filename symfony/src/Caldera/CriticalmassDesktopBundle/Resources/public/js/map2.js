@@ -91,6 +91,39 @@ function drawArrow(arrowElement)
  });
  }*/
 }
+/*
+function resizeImagesToZoomLevel(zoomLevel)
+{
+    var index;
+
+    for (index in elementsArray)
+    {
+        if (elementsArray[index].type == "image")
+        {
+            clearElement(elementsArray[index].id);
+        }
+    }
+}*/
+
+function drawImage(imageElement)
+{
+    if (!doesElementExist(imageElement.id))
+    {
+        var imageUrl = imageElement.imagePath;
+
+        var ratio = imageElement.imageWidth / imageElement.imageHeight;
+
+        var showWidth = 10;
+        var showHeight = showWidth / ratio;
+        var scaleFactor = 0.00005;
+        var gpsHeightCorrection = 3.7;
+
+        var imageBounds = [[imageElement.centerPosition.latitude, imageElement.centerPosition.longitude],
+                           [imageElement.centerPosition.latitude + showWidth * scaleFactor, imageElement.centerPosition.longitude + showHeight * scaleFactor * gpsHeightCorrection]];
+
+        elementsArray[imageElement.id] = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+    }
+}
 
 function drawMarker(markerElement)
 {
@@ -210,10 +243,10 @@ function clearOldElements(elements)
 
         for (pos in elements)
         {
-            //alert("Vergleiche " + index + " und " + elements[pos].id);
             if (index == elements[pos].id)
             {
                 found = true;
+                break;
             }
         }
 
@@ -258,6 +291,11 @@ function refreshElements(elements)
             if (elements[index].type == "positionmarker" || elements[index].type == "ridemarker" || elements[index].type == "citymarker")
             {
                 drawMarker(elements[index]);
+            }
+
+            if (elements[index].type == "image")
+            {
+                drawImage(elements[index]);
             }
         }
     }
@@ -329,6 +367,10 @@ function setMapOptions(result)
         maxZoom: 18
     }).addTo(map);
 
+/*    map.on("zoomend", function(){
+        resizeImagesToZoomLevel(map.getZoom());
+    });*/
+
     refreshLivePage2(result);
 }
 
@@ -376,102 +418,8 @@ function startMapInitialization()
     var timer = setInterval(refreshLivePage, 5000);
 }
 
-/**
- * Sendet die aktuelle Position des Clients an den Server. Es werden alle Daten
- * uebertragen, die in der Geolocation-Spezifikation vorgesehen sind, um die
- * weitere Auswertung kuemmert sich der Server.
- *
- * @param position: Ergebnis der Geolocation-Abfrage
- */function sendPosition(position)
-{
-    $.ajax({
-        type: 'GET',
-        url: '/trackposition',
-        data: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            accuracy: position.coords.accuracy,
-            altitude: position.coords.altitude,
-            altitudeaccuracy: position.coords.altitudeAccurary,
-            speed: position.coords.speed,
-            heading: position.coords.heading,
-            timestamp: position.coords.timestamp
-        },
-        cache: false,
-        success: function(result) {
-
-        }
-    });
-}
-
-/**
- * Hier wird noch kurz abgefragt, ob der Benutzer ueberhaupt GPS-Daten senden
- * moechte oder diese Funktionalitaet abgeschaltet hat.
- */
-function preparePositionSending()
-{
-    // Status der Geolocation-Uebertragung abfragen
-    $.ajax({
-        type: 'GET',
-        url: '/settings/getgpsstatus',
-        data: {
-        },
-        cache: false,
-        success: function(result) {
-            // sollen Daten gesendet werden?
-            if (result.status == true)
-            {
-                // Unterstuetzt der Browser ueberhaupt die Geolocation-Dienste?
-                if (navigator.geolocation)
-                {
-                    // Position abfragen und an den Server senden lassen
-                    navigator.geolocation.getCurrentPosition(sendPosition);
-                }
-                else
-                {
-                    //alert("Geolocation nicht möglich.");
-                }
-            }
-        }
-    });
-}
-
-/**
- * Diese Funktion stoesst das Senden der GPS-Position des Clients an. Dazu
- * wird zunaechst der Server befragt, ob der Benutzer Daten senden moechte so-
- * wie das Intervall fuer den naechsten Aufruf abgefragt. Anschliessend werden
- * die Geolocation-Daten uebertragen, der aktuelle Intervall-Timer geloescht
- * und ein neuer Timer mit dem Ergebnis-Intervall der Benutzerabfrage gestar-
- * tet. Diese Funktion ruft sich also in regelmaessigen Abstaenden selbst auf.
- */
-function refreshGeolocationInterval()
-{
-    // Intervall abfragen
-    $.ajax({
-        type: 'GET',
-        url: '/settings/getgpsinterval',
-        data: {
-        },
-        cache: false,
-        success: function(result) {
-            // aus dem Ergebnis wird ein neuer Timer erstellt
-            var timer = setInterval(function()
-            {
-                clearInterval(timer);
-
-                if (result.interval > 0)
-                {
-                    refreshGeolocationInterval();
-                    preparePositionSending();
-                }
-            }, result.interval);
-        }
-    });
-}
-
 window.onload = function()
 {
     startMapInitialization();
-    refreshGeolocationInterval();
     initializeLivePage();
 }

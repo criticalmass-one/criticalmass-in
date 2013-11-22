@@ -11,50 +11,16 @@ class LiveMapBuilder extends BaseMapBuilder
 {
     public function registerModules()
     {
-        $this->registerModule("MapCenterMapBuilderModule");
-        $this->registerModule("StandardPositionMapBuilderModule");
-        $this->registerModule("PermanentPositionMapBuilderModule");
-        $this->registerModule("AverageSpeedMapBuilderModule");
-        $this->registerModule("ZoomFactorMapBuilderModule");
-        $this->registerModule("UserOnlineMapBuilderModule");
-        $this->registerModule("RideMapBuilderModule");
-        $this->registerModule("OtherCitiesMapBuilderModule");
+        $coreNamespace = "\\Caldera\\CriticalmassCoreBundle\\Utility\\MapBuilderModule\\";
+
+        $this->registerModule($coreNamespace."MapCenterMapBuilderModule");
+        //$this->registerModule($coreNamespace."StandardPositionMapBuilderModule");
+        //$this->registerModule($coreNamespace."PermanentPositionMapBuilderModule");
+        $this->registerModule($coreNamespace."AverageSpeedMapBuilderModule");
+        $this->registerModule($coreNamespace."ZoomFactorMapBuilderModule");
+        $this->registerModule($coreNamespace."UserOnlineMapBuilderModule");
+        //$this->registerModule($coreNamespace."RideMapBuilderModule");
+        //$this->registerModule($coreNamespace."OtherCitiesMapBuilderModule");
+        $this->registerModule("\\Caldera\\CriticalmassGalleryBundle\\Utility\\MapBuilderModule\\ImageMapBuilderModule");
     }
-
-
-
-
-
-
-/**
-    public function calculatePermanentPositions()
-    {
-        $psf = new PositionFilterChain\PermanentPositionFilterChain();
-
-        $psf->setDoctrine($this->doctrine);
-        $psf->setRide($this->ride);
-        $psf->execute();
-
-        $this->positionArray->merge($psf->getPositionArray());
-
-        foreach ($psf->getPositionArray()->getPositions() as $position)
-        {
-            $marker = new MapElement\PositionMarkerMapElement($position);
-
-            $this->elements[$marker->getId()] = $marker->draw();
-        }
-    }
-
-    public function additionalElements()
-    {/*
-        if ($this->positionArray->countPositions() > 1)
-        {
-            $arrow = new MapElement\ArrowMapElement($positionArray[0], $positionArray[1]);
-            $elements[] = $arrow->draw();
-        }
-
-        $this->calculatePermanentPositions();
-        $marker = new MapElement\RideMarkerMapElement($this->ride);
-        $this->elements[] = $marker->draw();
-    }*/
 }

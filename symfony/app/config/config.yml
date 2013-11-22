@@ -1,6 +1,6 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: database.yml }
+    - { resource: criticalmass.yml }
     - { resource: security.yml }
 
 framework:
