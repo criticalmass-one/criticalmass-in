@@ -8,15 +8,15 @@
     {% if app.user != null %}
         <div data-role="collapsible-set">
             <div data-role="collapsible">
-                <h3 data-qa-ta="mobile_map_gpssettings">GPS-Einstellungen</h3>
+                <h3 data-qa-ta="mobile-map-gpssettings">GPS-Einstellungen</h3>
                 <label for="flip-auto-center">automatisch zentrieren:</label>
-                <select name="flip-auto-center" id="flip-auto-center" data-role="slider" data-qa-ta="mobile_map_centring">
+                <select name="flip-auto-center" id="flip-auto-center" data-role="slider" data-qa-ta="mobile-map-centring">
                     <option value="off">Aus</option>
                     <option value="on" selected="selected">An</option>
                 </select>
 
                 <label for="flip-gps-sender">GPS-Übertragung:</label>
-                <select name="flip-gps-sender" id="flip-gps-sender" data-role="slider" data-qa-ta="mobile_map_gpssender">
+                <select name="flip-gps-sender" id="flip-gps-sender" data-role="slider" data-qa-ta="mobile-map-gpssender">
                     <option value="off"{% if app.user.sendGPSInformation == 0 %} selected="selected"{% endif %}>Aus</option>
                     <option value="on"{% if app.user.sendGPSInformation == 1 %} selected="selected"{% endif %}>An</option>
                 </select>
@@ -27,9 +27,9 @@
 
             <div data-role="collapsible">
                 <h3 data-qa-ta="mobile_map_statistic">Statistik</h3>
-                <p class="lastmodified">zuletzt aktualisiert: <span id="datetime">nie</span></p>
-                <p class="usercounter">Einberechnete Benutzer: <span id="usercounter">0</span></p>
-                <p class="averagespeed">Durchschnittsgeschwindigkeit: <span id="averagespeed">0</span> Kilometer pro Stunde</p>
+                <p class="lastmodified">zuletzt aktualisiert: <span id="datetime" data-qa-ta="mobile-map-datetime">nie</span></p>
+                <p class="usercounter">Einberechnete Benutzer: <span id="usercounter" data-qa-ta="mobile-map-usercounter">0</span></p>
+                <p class="averagespeed">Durchschnittsgeschwindigkeit: <span id="averagespeed" data-qa-ta="mobile-map-averagespeed">0</span> Kilometer pro Stunde</p>
             </div>
         </div>
 

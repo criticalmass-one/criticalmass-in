@@ -29,9 +29,9 @@
 <body>
 	<div data-role="page">
 		<div data-role="header">
-			<a href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mainpanel-button-open">Menü</a>
+			<a href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
 			<h1>{% block title %}{% endblock %}</h1>
-			<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="rightpanel-button-open">Städte</a>
+			<a href="#rightpanel" data-icon="home" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-rightpanel-open">Städte</a>
 		</div>
 
 		<section data-role="content" id="content">{% block fos_user_content %}{% endblock %}
@@ -39,42 +39,42 @@
 		</section>
 		<div data-role="panel" id="mainpanel" data-position="left" data-qa-ta="mainpanel">
 			<ul data-role="listview" data-theme="d">
-				<li data-icon="delete"><a href="#" data-rel="close" data-qa-ta="mainpanel-button-close">Menü schließen</a></li>
+				<li data-icon="delete"><a href="#" data-rel="close" data-qa-ta="mobile-mainpanel-close">Menü schließen</a></li>
 				{% if app.session.get('currentCitySlug') %}
 				<li data-role="list-divider" data-qa-ta="mainpanel-city-title">{{ app.session.get('city').getTitle }}</li>
-				<li><a href="{{ url('caldera_criticalmass_city', {'citySlug': app.session.get('currentCitySlug'), 'host': mobile_host }) }}" data-ajax="false" data-qa-ta="mainpanel-menu-city-overview">Übersicht</a></li>
+				<li><a href="{{ url('caldera_criticalmass_city', {'citySlug': app.session.get('currentCitySlug'), 'host': mobile_host }) }}" data-ajax="false" data-qa-ta="mobile-mainpanel-cityoverview">Übersicht</a></li>
 				<li data-role="list-divider">Neuigkeiten</li>
 				{% if app.session.get('city').getUrl %}
-				<li><a href="{{ app.session.get('city').getUrl }}" data-qa-ta="mainpanel-menu-city-webseite">Website</a></li>
+				<li><a href="{{ app.session.get('city').getUrl }}" data-qa-ta="mobile-mainpanel-webpage">Website</a></li>
 				{% endif %}
 
 				{% if app.session.get('city').getFacebook %}
-				<li><a href="{{ app.session.get('city').getFacebook }}" data-qa-ta="mainpanel-menu-city-facebook">facebook</a></li>
+				<li><a href="{{ app.session.get('city').getFacebook }}" data-qa-ta="mobile-mainpanel-facebook">facebook</a></li>
 				{% endif %}
 
 				{% if app.session.get('city').getTwitter %}
-				<li><a href="{{ app.session.get('city').getTwitter }}" data-qa-ta="mainpanel-menu-city-twitter">Twitter</a></li>
+				<li><a href="{{ app.session.get('city').getTwitter }}" data-qa-ta="mobile-mainpanel-twitter">Twitter</a></li>
 				{% endif %}
 
 				{% endif %}
 				<li data-role="list-divider">criticalmass.in</li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ url('admin_ride') }}" data-ajax="false" data-qa-ta="mainpanel-menu-administration">Administration</a></li>
+                    <li><a href="{{ url('admin_ride') }}" data-ajax="false" data-qa-ta="mobile-mainpanel-administration">Administration</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
-                <li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false" data-qa-ta="mainpanel-menu-logout">Logout</a></li>
-                <li><a href="{{ url('fos_user_profile_edit') }}" data-qa-ta="mainpanel-menu-settings">Einstellungen</a></li>
-                <li><a href="{{ url('fos_user_change_password') }}" data-qa-ta="mainpanel-menu-changepassword">Kennwort ändern</a></li>
-                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-pushsettings">Push-Nachrichten</a></li>
+                <li><a href="{{ url('fos_user_security_logout') }}" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
+                <li><a href="{{ url('fos_user_profile_edit') }}" data-qa-ta="mobile-mainpanel-settings">Einstellungen</a></li>
+                <li><a href="{{ url('fos_user_change_password') }}" data-qa-ta="mobile-mainpanel-changepassword">Kennwort ändern</a></li>
+                <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-pushsettings">Push-Nachrichten</a></li>
                 {% else %}
-                <li><a href="{{ url('fos_user_registration_register') }}" data-qa-ta="mainpanel-menu-register">Registrierung</a></li>
-                <li><a href="{{ url('fos_user_security_login') }}" data-qa-ta="mainpanel-menu-login">Login</a></li>
-                <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mainpanel-menu-resetpassword">Kennwort vergessen?</a></li>
+                <li><a href="{{ url('fos_user_registration_register') }}" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
+                <li><a href="{{ url('fos_user_security_login') }}" data-qa-ta="mobile-mainpanel-login">Login</a></li>
+                <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mobile-mainpanel-resetpassword">Kennwort vergessen?</a></li>
 				{% endif %}
 				
-				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress', 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-impress">Impressum</a></li>
-				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy', 'host': mobile_host }) }}" data-qa-ta="mainpanel-menu-privacy">Datenschutz</a></li>
-				<li><a href="http://blog.criticalmass.in/">Blog</a></li>
+				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress', 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
+				<li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy', 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
+				<li><a href="http://blog.criticalmass.in/" data-qa-ta="mobile-mainpanel-blog">Blog</a></li>
 			</ul>
 		</div>
 		<div data-role="panel" id="rightpanel" data-position="right">
