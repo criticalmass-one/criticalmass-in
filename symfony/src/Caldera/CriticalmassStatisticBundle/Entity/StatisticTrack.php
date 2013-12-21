@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="statisticvisit")
+ * @ORM\Table(name="statistictrack")
  */
-class StatisticVisit implements StatisticEntity
+class StatisticTrack implements StatisticEntity
 {
   /**
    * @ORM\Id
@@ -71,6 +71,17 @@ class StatisticVisit implements StatisticEntity
    */
   protected $dateTime;
 
+  /**
+   * @ORM\Column(type="string")
+   */
+  protected $elementName;
+
+  /**
+   * @ORM\Column(type="string")
+   */
+  protected $actionType;
+
+  
 
     /**
      * Get id
@@ -86,7 +97,7 @@ class StatisticVisit implements StatisticEntity
      * Set remoteAddr
      *
      * @param string $remoteAddr
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setRemoteAddr($remoteAddr)
     {
@@ -109,7 +120,7 @@ class StatisticVisit implements StatisticEntity
      * Set remoteHost
      *
      * @param string $remoteHost
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setRemoteHost($remoteHost)
     {
@@ -132,7 +143,7 @@ class StatisticVisit implements StatisticEntity
      * Set referer
      *
      * @param string $referer
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setReferer($referer)
     {
@@ -155,7 +166,7 @@ class StatisticVisit implements StatisticEntity
      * Set query
      *
      * @param string $query
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setQuery($query)
     {
@@ -178,7 +189,7 @@ class StatisticVisit implements StatisticEntity
      * Set environment
      *
      * @param string $environment
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setEnvironment($environment)
     {
@@ -201,7 +212,7 @@ class StatisticVisit implements StatisticEntity
      * Set host
      *
      * @param string $host
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setHost($host)
     {
@@ -224,7 +235,7 @@ class StatisticVisit implements StatisticEntity
      * Set agent
      *
      * @param string $agent
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setAgent($agent)
     {
@@ -247,7 +258,7 @@ class StatisticVisit implements StatisticEntity
      * Set dateTime
      *
      * @param \DateTime $dateTime
-     * @return StatisticVisit
+     * @return StatisticTrack
      */
     public function setDateTime($dateTime)
     {
@@ -267,10 +278,56 @@ class StatisticVisit implements StatisticEntity
     }
 
     /**
+     * Set elementName
+     *
+     * @param string $elementName
+     * @return StatisticTrack
+     */
+    public function setElementName($elementName)
+    {
+        $this->elementName = $elementName;
+    
+        return $this;
+    }
+
+    /**
+     * Get elementName
+     *
+     * @return string 
+     */
+    public function getElementName()
+    {
+        return $this->elementName;
+    }
+
+    /**
+     * Set actionType
+     *
+     * @param string $actionType
+     * @return StatisticTrack
+     */
+    public function setActionType($actionType)
+    {
+        $this->actionType = $actionType;
+    
+        return $this;
+    }
+
+    /**
+     * Get actionType
+     *
+     * @return string 
+     */
+    public function getActionType()
+    {
+        return $this->actionType;
+    }
+
+    /**
      * Set user
      *
-     * @param \Caldera\CriticalmassStatisticBundle\Entity\User $user
-     * @return StatisticVisit
+     * @param \Caldera\CriticalmassCoreBundle\Entity\User $user
+     * @return StatisticTrack
      */
     public function setUser($user = null)
     {
@@ -282,7 +339,7 @@ class StatisticVisit implements StatisticEntity
     /**
      * Get user
      *
-     * @return \Caldera\CriticalmassStatisticBundle\Entity\User 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\User 
      */
     public function getUser()
     {
@@ -292,8 +349,8 @@ class StatisticVisit implements StatisticEntity
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassStatisticBundle\Entity\City $city
-     * @return StatisticVisit
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @return StatisticTrack
      */
     public function setCity($city = null)
     {
@@ -305,7 +362,7 @@ class StatisticVisit implements StatisticEntity
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassStatisticBundle\Entity\City 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City 
      */
     public function getCity()
     {
