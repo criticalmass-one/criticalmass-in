@@ -72,13 +72,20 @@
                 <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mobile-mainpanel-resetpassword">Kennwort vergessen?</a></li>
             {% endif %}
 
-            <li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'impress', 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
+            <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
             <li><a href="{{ url('caldera_criticalmass_staticpage', {'page': 'privacy', 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
             <li><a href="http://blog.criticalmass.in/" data-qa-ta="mobile-mainpanel-blog">Blog</a></li>
         </ul>
     </div>
     <div data-role="panel" id="rightpanel" data-position="right">
     </div>
+</div>
+<div data-role="page" id="impressPage">
+    <h2>Impressum</h2>
+
+    <p>Angaben nach § 5 TMG:</p>
+    <p>Malte Hübner<br />Fritz-Reuter-Straße 57<br />24782 Büdelsdorf</p>
+    <p><a href="mailto:malte@criticalmass-hamburg.de">malte@criticalmass-hamburg.de</a><br />0700 11 864 833</p>
 </div>
 </body>
 </html>
