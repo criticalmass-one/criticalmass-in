@@ -16,7 +16,7 @@ class DefaultController extends Controller implements Trackable
 	 */
 	public function selectcityAction()
 	{
-		return $this->render('CalderaCriticalmassMobileBundle:Default:selectcity.html.twig');
+		return $this->render('CalderaCriticalmassMobileBundle:MultiPage:main.html.twig');
 	}
 
 	/**
