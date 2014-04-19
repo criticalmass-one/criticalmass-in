@@ -62,7 +62,7 @@
             <li><a href="{{ url('fos_user_change_password') }}" data-qa-ta="mobile-mainpanel-changepassword">Kennwort ändern</a></li>
             <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-pushsettings">Push-Nachrichten</a></li>
         {% else %}
-            <li><a href="{{ url('fos_user_registration_register') }}" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
+            <li><a href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
             <li><a href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
             <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mobile-mainpanel-resetpassword">Kennwort vergessen?</a></li>
         {% endif %}
@@ -126,21 +126,29 @@
         </form>    </section>
 </section>
 
-
-
-
-<section data-role="page" id="privacyPage">
+<!-- Registrierung -->
+<section data-role="page" id="registerPage">
     <header data-role="header">
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
-        <h1>Datenschutz</h1>
+        <h1>Registrierung</h1>
     </header>
-    <section class="menu"></section>
     <section data-role="content" id="content">
-        <h2>Datenschutz</h2>
+        <h2>Registrierung</h2>
+        <form action="/app_dev.php/register/" method="POST">
+            <label for="fos_user_registration_form_email">Deine E-Mail-Adresse</label>
+            <input id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required" type="email">
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <label for="fos_user_registration_form_username">Dein Benutzername</label>
+            <input id="fos_user_registration_form_username" name="fos_user_registration_form[username]" required="required" maxlength="255" pattern=".{2,}" type="text">
+
+            <label for="fos_user_registration_form_plainPassword_first">Dein Kennwort</label>
+            <input id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required" type="password">
+
+            <label for="fos_user_registration_form_plainPassword_second">Passwort bestätigen</label>
+            <input id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" type="password">
+
+            <input data-disabled="false" class="ui-btn-hidden" value="Registrieren" type="submit">
+        </form>
     </section>
 </section>
 
