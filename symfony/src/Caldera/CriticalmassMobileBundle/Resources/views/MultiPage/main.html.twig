@@ -30,6 +30,8 @@
     {% endstylesheets %}
 </head>
 <body>
+
+<!-- Menü -->
 <section data-role="panel" id="mainpanel" data-position="left" data-qa-ta="mainpanel">
     <ul data-role="listview" data-theme="a">
         <li data-icon="delete"><a href="#" data-rel="close" data-qa-ta="mobile-mainpanel-close">Menü schließen</a></li>
@@ -61,7 +63,7 @@
             <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-pushsettings">Push-Nachrichten</a></li>
         {% else %}
             <li><a href="{{ url('fos_user_registration_register') }}" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
-            <li><a href="{{ url('fos_user_security_login') }}" data-qa-ta="mobile-mainpanel-login">Login</a></li>
+            <li><a href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
             <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mobile-mainpanel-resetpassword">Kennwort vergessen?</a></li>
         {% endif %}
 
@@ -70,6 +72,7 @@
     </ul>
 </section>
 
+<!-- Impressum -->
 <section data-role="page" id="impressPage">
     <header data-role="header">
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
@@ -84,6 +87,65 @@
         <p><a href="mailto:malte@criticalmass.in">malte@criticalmass.in</a><br />0700 11 864 833</p>
     </section>
 </section>
+
+<!-- Datenschutz -->
+<section data-role="page" id="privacyPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Datenschutz</h1>
+    </header>
+    <section class="menu"></section>
+    <section data-role="content" id="content">
+        <h2>Datenschutz</h2>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </section>
+</section>
+
+<!-- Login -->
+<section data-role="page" id="loginPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Login</h1>
+    </header>
+    <section data-role="content" id="content">
+        <form action="{{ path("fos_user_security_check") }}" method="post" data-ajax="false">
+
+            <label for="username">Dein Benutzername</label>
+            <input type="text" id="username" name="_username" value="" required="required" data-qa-ta="mobile-loginform-username" />
+
+            <label for="password">Dein Kennwort</label>
+            <input type="password" id="password" name="_password" required="required" data-qa-ta="mobile-loginform-password" />
+
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" data-qa-ta="mobile-loginform-rememberme" />
+            <label for="remember_me">Erinnere dich an mich</label>
+
+            <input type="submit" id="_submit" name="_submit" value="Login" data-qa-ta="mobile-loginform-submit" />
+        </form>    </section>
+</section>
+
+
+
+
+<section data-role="page" id="privacyPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Datenschutz</h1>
+    </header>
+    <section class="menu"></section>
+    <section data-role="content" id="content">
+        <h2>Datenschutz</h2>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </section>
+</section>
+
+
+
 
 <section data-role="page" id="privacyPage">
     <header data-role="header">
