@@ -354,7 +354,7 @@ function startMapInitialization()
 {
     $.ajax({
         type: 'GET',
-        url: '/mapapi/mapdata/' + citySlugString,
+        url: '/app_dev.php/api/completemapdata/' + citySlugString,
         cache: false,
         success: setMapOptions
     });

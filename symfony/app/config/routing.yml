@@ -1,3 +1,7 @@
+caldera_criticalmass_api:
+    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
+    prefix:   /
+
 caldera_criticalmass_gallery:
     resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing.yml"
     prefix:   /
