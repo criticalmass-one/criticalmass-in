@@ -306,13 +306,10 @@ function refreshMapCenter(result)
  */
 function setMapOptions(result)
 {
-    // create a map in the "map" div, set the view to a given place and zoom
     map = L.map('map').setView([result.mapCenter.latitude, result.mapCenter.longitude], result.zoomFactor);
 
-    // add an OpenStreetMap tile layer
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 18
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
+        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(map);
 
     refreshLivePage2(result);
