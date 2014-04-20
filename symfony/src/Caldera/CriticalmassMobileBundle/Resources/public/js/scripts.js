@@ -1,4 +1,18 @@
 /**
+ * Ruft im Hintergrund die Logout-URL auf und beendet die Sitzung des Benutzers.
+ */
+function logout()
+{
+    $.ajax({
+        type : 'GET',
+        url : '/app_dev.php/logout',
+        success : function(data){
+            alert(data);
+        }
+    });
+}
+
+/**
  * Ruft die Liste der Staedte mit den Koordinaten der Position des Benutzers
  * auf, so dass die Liste nach der Entfernung der Staedte zu der angegebenen
  * Position sortiert wird. Anschliessend wird der Create-Trigger aufgerufen, um
