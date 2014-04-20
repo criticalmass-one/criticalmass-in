@@ -1,3 +1,3 @@
-caldera_criticalmass_api_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: CalderaCriticalmassApiBundle:Default:index }
+caldera_criticalmass_mapdata:
+    pattern: /api/completemapdata/{citySlug}
+    defaults: { _controller: CalderaCriticalmassApiBundle:Api:completemapdata }

@@ -2,9 +2,7 @@ caldera_criticalmass_trackposition:
     pattern: /trackposition
     defaults: { _controller: CalderaCriticalmassCoreBundle:Api:trackposition }
 
-caldera_criticalmass_mapdata:
-    pattern: /mapapi/mapdata/{citySlug}
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:mapdata }
+
 
 caldera_criticalmass_settings_gps_interval:
     pattern: /settings/gpsinterval
