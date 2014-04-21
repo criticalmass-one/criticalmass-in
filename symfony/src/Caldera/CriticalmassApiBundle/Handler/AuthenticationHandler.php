@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassApiBundleBundle\Handler;
+namespace Caldera\CriticalmassApiBundle\Handler;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
