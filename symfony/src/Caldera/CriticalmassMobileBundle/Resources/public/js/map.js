@@ -278,7 +278,7 @@ function refreshElements(elements)
 function refreshLivePage()
 {
     $.ajax({
-        url: '/mapapi/mapdata/' + citySlugString,
+        url: '/app_dev.php/api/completemapdata/' + citySlugString,
         success: refreshLivePage2
     });
 }
@@ -341,17 +341,6 @@ function setMapOptions(result)
  */
 function initializeLivePage()
 {
-    $("#slider-gps-interval").on("slidestop", function(event, ui) {
-        $.ajax({
-            type: 'GET',
-            url: '/app_dev.php/api/gpsinterval',
-            data: {
-                'interval': event.target.value
-            },
-            cache: false
-        });
-    } );
-
     $("#flip-gps-sender").on("slidestop", function(event, ui) {
         $.ajax({
             type: 'GET',
@@ -447,34 +436,17 @@ function preparePositionSending()
  * und ein neuer Timer mit dem Ergebnis-Intervall der Benutzerabfrage gestar-
  * tet. Diese Funktion ruft sich also in regelmaessigen Abstaenden selbst auf.
  */
-function refreshGeolocationInterval()
+function startGeolocationInterval()
 {
-    // Intervall abfragen
-    $.ajax({
-        type: 'GET',
-        url: '/app_dev.php/api/getgpsinterval',
-        data: {
-        },
-        cache: false,
-        success: function(result) {
-            // aus dem Ergebnis wird ein neuer Timer erstellt
-            var timer = setInterval(function()
-            {
-                clearInterval(timer);
-
-                if (result.interval > 0)
-                {
-                    refreshGeolocationInterval();
-                    preparePositionSending();
-                }
-            }, result.interval);
-        }
-    });
-}
+    var timer = setInterval(function()
+    {
+        preparePositionSending();
+    }, 5000);
+ }
 
 window.onload = function()
 {
     startMapInitialization();
-    refreshGeolocationInterval();
+    startGeolocationInterval();
     initializeLivePage();
 }

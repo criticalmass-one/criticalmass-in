@@ -39,14 +39,6 @@ class User extends BaseUser
 	private $sendGPSInformation = 1;
 
 	/**
-	 * Vom Benutzer gewaehltes Intervall in Sekunden, in dem GPS-Daten an den
-	 * Server gesendet werden sollen.
-	 *
-	 * @ORM\Column(type="integer")
-	 */
-	private $gpsInterval = 10;
-
-	/**
 	 * Vom Benutzer momentan ausgewaehlte Stadt.
 	 *
 	 * @ORM\ManyToOne(targetEntity="City")
@@ -154,29 +146,6 @@ class User extends BaseUser
     public function getCurrentCity()
     {
         return $this->currentCity;
-    }
-
-    /**
-     * Set gpsInterval
-     *
-     * @param integer $gpsInterval
-     * @return User
-     */
-    public function setGpsInterval($gpsInterval)
-    {
-        $this->gpsInterval = $gpsInterval;
-    
-        return $this;
-    }
-
-    /**
-     * Get gpsInterval
-     *
-     * @return integer 
-     */
-    public function getGpsInterval()
-    {
-        return $this->gpsInterval;
     }
 
     /**
