@@ -133,7 +133,17 @@ function drawMarker(markerElement)
 
             popupContent += '</section>';
 
-            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup(popupContent);
+            var criticalmassIcon = L.icon({
+                iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+                iconSize: [25, 41],
+                iconAnchor: [13, 41],
+                popupAnchor: [0, -36],
+                shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+                shadowSize: [41, 41],
+                shadowAnchor: [13, 41]
+            });
+
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true, icon: criticalmassIcon }).addTo(map).bindPopup(popupContent);
 
             if (markerElement.popup)
             {
