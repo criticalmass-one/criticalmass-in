@@ -147,21 +147,6 @@ class ApiController extends Controller implements Trackable
 	}
 
 	/**
-	 * Diese Methode verarbeitet die Angabe des Intervalls, in das der Client GPS-
-	 * Daten senden soll. Das Intervall wird in der Datenbank nicht-fluechtig ge-
-	 * speichert.
-	 *
-	 * @return Integer: Neue Intervall-Angabe zu Kontrollzwecken
-	 */
-	public function refreshgpsintervalAction()
-	{
-		$this->getUser()->setGPSInterval($this->getRequest()->query->get('interval'));
-		$this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
-
-		return new Response($this->getRequest()->query->get('interval'));
-	}
-
-	/**
 	 * In dieser Methode wird gespeichert, ob der Benutzer GPS-Daten senden moech-
 	 * te oder nicht. Die Methode nimmt eine AJAX-Anfrage an, die auf dem Client
 	 * beim Umlegen des jeweiligen Schalters ausgeloest wird.

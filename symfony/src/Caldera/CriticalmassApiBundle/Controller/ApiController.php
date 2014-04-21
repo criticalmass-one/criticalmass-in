@@ -37,15 +37,26 @@ class ApiController extends Controller
         $lmp->registerModules();
         $lmp->execute();
 
-        // Berechnung der angeforderten Positionsdaten anstossen
-        /*$lmp->calculatePositions();
-        $lmp->additionalElements();*/
-
         // neue Antwort zusammensetzen und als JSON klassifizieren
         $response = new Response();
         $response->setContent(json_encode($lmp->draw()));
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     * Diese Methode verarbeitet die Angabe des Intervalls, in das der Client GPS-
+     * Daten senden soll. Das Intervall wird in der Datenbank nicht-fluechtig ge-
+     * speichert.
+     *
+     * @return Integer: Neue Intervall-Angabe zu Kontrollzwecken
+     */
+    public function gpsintervalAction()
+    {
+        $this->getUser()->setGPSInterval($this->getRequest()->query->get('interval'));
+        $this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
+
+        return new Response($this->getRequest()->query->get('interval'));
     }
 }

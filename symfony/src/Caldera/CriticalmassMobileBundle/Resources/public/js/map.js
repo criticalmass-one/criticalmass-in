@@ -320,10 +320,10 @@ function setMapOptions(result)
  */
 function initializeLivePage()
 {
-    $( "#slider-gps-interval" ).on( "slidestop", function( event, ui ) {
+    $("#slider-gps-interval").on("slidestop", function(event, ui) {
         $.ajax({
             type: 'GET',
-            url: '/settings/gpsinterval',
+            url: '/app_dev.php/api/gpsinterval',
             data: {
                 'interval': event.target.value
             },
