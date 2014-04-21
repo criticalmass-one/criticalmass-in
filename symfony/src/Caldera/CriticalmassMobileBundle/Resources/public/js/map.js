@@ -369,7 +369,7 @@ function startMapInitialization()
 {
     $.ajax({
         type: 'GET',
-        url: '/trackposition',
+        url: '/app_dev.php/api/trackposition',
         data: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -382,7 +382,6 @@ function startMapInitialization()
         },
         cache: false,
         success: function(result) {
-
         }
     });
 }
@@ -396,7 +395,7 @@ function preparePositionSending()
     // Status der Geolocation-Uebertragung abfragen
     $.ajax({
         type: 'GET',
-        url: '/settings/getgpsstatus',
+        url: '/app_dev.php/api/getgpsstatus',
         data: {
         },
         cache: false,
@@ -432,7 +431,7 @@ function refreshGeolocationInterval()
     // Intervall abfragen
     $.ajax({
         type: 'GET',
-        url: '/settings/getgpsinterval',
+        url: '/app_dev.php/api/getgpsinterval',
         data: {
         },
         cache: false,

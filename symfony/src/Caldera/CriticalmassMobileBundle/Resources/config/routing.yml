@@ -1,3 +1,7 @@
+caldera_criticalmass_multisite_index:
+    pattern: /#livePage
+    defaults: { _controller: CalderaCriticalmassMobileBundle:Default:show }
+
 caldera_criticalmass_selectcity:
     pattern: /
     defaults: { _controller: CalderaCriticalmassMobileBundle:Default:selectcity }

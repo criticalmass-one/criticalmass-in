@@ -1,25 +1,3 @@
-caldera_criticalmass_trackposition:
-    pattern: /trackposition
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:trackposition }
-
-
-
-caldera_criticalmass_settings_gps_interval:
-    pattern: /settings/gpsinterval
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:refreshgpsinterval }
-
-caldera_criticalmass_settings_gps_status:
-    pattern: /settings/gpsstatus
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:refreshgpsstatus }
-
-caldera_criticalmass_settings_gps_getinterval:
-    pattern: /settings/getgpsinterval
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:getinterval }
-
-caldera_criticalmass_settings_gps_getstatus:
-    pattern: /settings/getgpsstatus
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Api:getstatus }
-
 caldera_criticalmass_getridelocation:
     pattern: /mapapi/getridelocation/{citySlug}
     defaults: { _controller: CalderaCriticalmassCoreBundle:Api:ridelocation }
