@@ -10,6 +10,12 @@ var elementsArray = [];
 
 var citySlugString = 'hamburg';
 
+function switchCityContext(newCitySlug)
+{
+    citySlugString = newCitySlug;
+    refreshLivePage();
+}
+
 /**
  * Setzt den Zeitpunkt der letzten Änderung der Seite auf die aktuelle Uhr-
  * zeit. Sollte es sich bei den Bestandteilen der Uhrzeit um einstellige Werte
@@ -92,7 +98,10 @@ function drawMarker(markerElement)
     {
         if (markerElement.type == 'citymarker')
         {
-            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup('fooobaaaaarbaaaaaz');
+            elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude, markerElement.centerPosition.longitude], { riseOnHover: true }).addTo(map).bindPopup(markerElement.cityTitle);
+            elementsArray[markerElement.id].on('click', function(){
+                switchCityContext(markerElement.citySlug);
+            })
         }
 
         if (markerElement.type == 'positionmarker')
