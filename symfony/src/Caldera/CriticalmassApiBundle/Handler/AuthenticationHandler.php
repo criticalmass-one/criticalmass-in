@@ -37,8 +37,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
             else
             {
                 // Otherwise, redirect him to wherever you want
-                $url = $this->router->generate('user_view', array(
-                'nickname' => $token->getUser()->getNickname()
+                $url = $this->router->generate('caldera_criticalmass_multisite_index', array(
                 ));
             }
 
