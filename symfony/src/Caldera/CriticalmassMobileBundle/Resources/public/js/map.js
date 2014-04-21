@@ -334,7 +334,7 @@ function initializeLivePage()
     $( "#flip-gps-sender" ).on( "slidestop", function( event, ui ) {
         $.ajax({
             type: 'GET',
-            url: '/settings/gpsstatus',
+            url: '/app_dev.php/api/gpsstatus',
             data: {
                 'status': $("select#flip-gps-sender")[0].selectedIndex
             },

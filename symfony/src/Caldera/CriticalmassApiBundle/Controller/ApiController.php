@@ -59,4 +59,19 @@ class ApiController extends Controller
 
         return new Response($this->getRequest()->query->get('interval'));
     }
+
+    /**
+     * In dieser Methode wird gespeichert, ob der Benutzer GPS-Daten senden moech-
+     * te oder nicht. Die Methode nimmt eine AJAX-Anfrage an, die auf dem Client
+     * beim Umlegen des jeweiligen Schalters ausgeloest wird.
+     *
+     * @return Integer: Kontrollangabe, ob Daten gesendet werden sollen oder nicht
+     */
+    public function gpsstatusAction()
+    {
+        $this->getUser()->setSendGPSInformation($this->getRequest()->query->get('status'));
+        $this->container->get('fos_user.user_manager')->updateUser($this->getUser(), true);
+
+        return new Response($this->getRequest()->query->get('status'));
+    }
 }

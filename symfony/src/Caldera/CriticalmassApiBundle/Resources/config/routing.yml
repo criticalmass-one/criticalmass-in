@@ -5,3 +5,7 @@ caldera_criticalmass_mapdata:
 caldera_criticalmass_gpsinterval:
     pattern: /api/gpsinterval
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:gpsinterval }
+
+caldera_criticalmass_gpsstatus:
+    pattern: /api/gpsstatus
+    defaults: { _controller: CalderaCriticalmassApiBundle:Api:gpsstatus }
