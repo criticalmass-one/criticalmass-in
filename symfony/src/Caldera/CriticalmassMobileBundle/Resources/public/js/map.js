@@ -333,6 +333,11 @@ function setMapOptions(result)
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(map);
 
+    map.on('dragstart', function()
+    {
+        $("select#flip-auto-center").val('off').slider('refresh');
+    });
+
     refreshLivePage2(result);
 }
 
