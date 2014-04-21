@@ -17,14 +17,7 @@
     {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    {% if app.session.get('currentCitySlug') %}
-        <script>
-//            var citySlugString = '{{ app.session.get('currentCitySlug') }}';
-        </script>
-    {% endif %}
     <script>
-
-        var citySlugString = "hamburg";
         $(function() { $( "body>[data-role='panel']" ).panel().enhanceWithin(); });
     </script>
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}

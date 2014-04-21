@@ -8,6 +8,8 @@ var map;
  */
 var elementsArray = [];
 
+var citySlugString = 'hamburg';
+
 /**
  * Setzt den Zeitpunkt der letzten Änderung der Seite auf die aktuelle Uhr-
  * zeit. Sollte es sich bei den Bestandteilen der Uhrzeit um einstellige Werte
