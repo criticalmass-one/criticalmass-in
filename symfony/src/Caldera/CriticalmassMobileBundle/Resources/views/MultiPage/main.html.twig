@@ -42,13 +42,9 @@
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
         {% if is_granted('ROLE_USER') %}
             <li><a href="javascript:logout();" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
-            <li><a href="{{ url('fos_user_profile_edit') }}" data-qa-ta="mobile-mainpanel-settings">Einstellungen</a></li>
-            <li><a href="{{ url('fos_user_change_password') }}" data-qa-ta="mobile-mainpanel-changepassword">Kennwort ändern</a></li>
-            <li><a href="{{ url('caldera_criticalmass_pushnotificationsettings', { 'host': mobile_host }) }}" data-qa-ta="mobile-mainpanel-pushsettings">Push-Nachrichten</a></li>
         {% else %}
             <li><a href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
             <li><a href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
-            <li><a href="{{ url('fos_user_resetting_request') }}" data-qa-ta="mobile-mainpanel-resetpassword">Kennwort vergessen?</a></li>
         {% endif %}
 
         <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>

@@ -331,7 +331,7 @@ function initializeLivePage()
         });
     } );
 
-    $( "#flip-gps-sender" ).on( "slidestop", function( event, ui ) {
+    $("#flip-gps-sender").on("slidestop", function(event, ui) {
         $.ajax({
             type: 'GET',
             url: '/app_dev.php/api/gpsstatus',
