@@ -1,3 +1,0 @@
-caldera_criticalmass_statistic_track:
-    pattern:  /statistictrack
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Api:track }
