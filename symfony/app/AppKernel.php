@@ -23,8 +23,6 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassCoreBundle\CalderaCriticalmassCoreBundle(),
             new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
             new SunCat\MobileDetectBundle\MobileDetectBundle(),
-            new Caldera\CriticalmassStatisticBundle\CalderaCriticalmassStatisticBundle(),
-            new Caldera\CriticalmassGalleryBundle\CalderaCriticalmassGalleryBundle(),
             new Caldera\CriticalmassApiBundle\CalderaCriticalmassApiBundle(),
         );
 
