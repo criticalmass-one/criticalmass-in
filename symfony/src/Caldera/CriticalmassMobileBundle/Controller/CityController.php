@@ -2,7 +2,6 @@
 
 namespace Caldera\CriticalmassMobileBundle\Controller;
 
-use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -10,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * stueckung der Liste der Staedte im aufklappbaren Menue auf der rechten Sei-
  * te der Web-App dient.
  */
-class CityController extends Controller implements Trackable
+class CityController extends Controller
 {
 	/**
 	 * Diese Methode stellt eine Liste der in der Datenbank vorhandenen Staedte

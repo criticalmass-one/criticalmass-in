@@ -9,7 +9,7 @@ use Caldera\CriticalmassCoreBundle\Entity as Entity;
 /**
  * Dieser Controller dient lediglich der Anzeige der Live-Darstellung der Tour.
  */
-class LiveController extends Controller implements Trackable
+class LiveController extends Controller
 {
 	/**
 	 * Diese Methode dient lediglich der Anzeige der Live-Darstellung der Tour.

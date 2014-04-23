@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
-class DefaultController extends Controller implements Trackable
+class DefaultController extends Controller
 {
 	/**
 	 * Ruft ein Template auf, dass per JavaScript die Position des Endgerätes

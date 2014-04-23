@@ -14,7 +14,7 @@ use Caldera\CriticalmassCoreBundle\Utility as Utility;
  * ten erzeugt und lediglich in den Templates sowie zum Verschicken von Be-
  * nachrichtigungen modifiziert.
  */
-class RideController extends Controller implements Trackable
+class RideController extends Controller
 {
 
     /**

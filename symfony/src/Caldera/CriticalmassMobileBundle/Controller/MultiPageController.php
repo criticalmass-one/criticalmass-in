@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassMobileBundle\Controller;
 use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class MultiPageController extends Controller implements Trackable
+class MultiPageController extends Controller
 {
     public function mainAction()
     {

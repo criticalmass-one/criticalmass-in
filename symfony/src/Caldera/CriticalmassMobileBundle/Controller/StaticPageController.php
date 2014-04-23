@@ -10,7 +10,7 @@ use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
  * Impressum oder den Datenschutzrichtlinien. Aus Sicherheitsgruenden muessen
  * die anzeigbaren Seiten zunaechst aktiviert werden.
  */
-class StaticPageController extends Controller implements Trackable
+class StaticPageController extends Controller
 {
 	/**
 	 * Zeigt den Inhalt der angeforderten Seite an.

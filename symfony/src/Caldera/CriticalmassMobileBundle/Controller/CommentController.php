@@ -7,7 +7,7 @@ use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Caldera\CriticalmassCoreBundle\Entity\Comment;
 use Caldera\CriticalmassCoreBundle\Entity\CommentImage;
 
-class CommentController extends Controller implements Trackable
+class CommentController extends Controller
 {
 	public function listcommentsAction($citySlug)
 	{
