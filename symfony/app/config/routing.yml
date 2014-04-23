@@ -2,14 +2,6 @@ caldera_criticalmass_api:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
     prefix:   /
 
-caldera_criticalmass_gallery:
-    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_statistic:
-    resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing.yml"
-    prefix:   /
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
