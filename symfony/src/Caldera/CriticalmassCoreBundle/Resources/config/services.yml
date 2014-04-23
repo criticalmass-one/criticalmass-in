@@ -8,12 +8,6 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
-    caldera_criticalmassstatistic_statisticlistener:
-        class: Caldera\CriticalmassStatisticBundle\Listener\StatisticListener
-        arguments: [@doctrine]
-        tags:
-          - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
     caldera_criticalmass_ride_repository:
         class:           Caldera\CriticalmassBundle\Entity\RideRepository
         factory_service: doctrine.orm.entity_manager
