@@ -16,7 +16,7 @@ use Caldera\CriticalmassCoreBundle\Entity as Entity;
  * ten Informationen der API abfragen koennten. Fuer einige der Methoden ist
  * eine Anmeldung notwendig.
  */
-class ApiController extends Controller implements Trackable
+class ApiController extends Controller
 {
 	/**
 	 * Gibt den Breiten- und Laengengrad des Treffpunktes der aktuellen Tour der
