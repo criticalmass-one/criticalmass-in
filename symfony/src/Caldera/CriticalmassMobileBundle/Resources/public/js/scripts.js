@@ -23,7 +23,11 @@ function loadAllCities()
             for (index in data.cities)
             {
                 var city = data.cities[index];
+                var cityId = 'city-' + city.id + '-' + city.slug;
                 var listItem = document.createElement('li');
+
+                $(listItem).attr('data-cityslug', city.slug);
+                $(listItem).attr('id', cityId);
 
                 $(listItem).append('<h3>' + city.title + '</h3>');
 
@@ -33,6 +37,8 @@ function loadAllCities()
                 }
 
                 $('#cityList').append(listItem);
+
+                $('#' + cityId).click(function(data) { citySlugString = $(this).attr('data-cityslug'); });
             }
 
             $('#cityList').listview('refresh');
