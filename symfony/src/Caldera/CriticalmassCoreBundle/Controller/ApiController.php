@@ -2,7 +2,6 @@
 
 namespace Caldera\CriticalmassCoreBundle\Controller;
 
-use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
