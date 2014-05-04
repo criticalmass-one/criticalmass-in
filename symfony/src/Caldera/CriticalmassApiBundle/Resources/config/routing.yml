@@ -1,3 +1,7 @@
+CalderaCriticalmassCoreBundle_Api:
+    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/cities.yml"
+    prefix:   /api/cities
+
 caldera_criticalmass_mapdata:
     pattern: /api/completemapdata/{citySlug}
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:completemapdata }
