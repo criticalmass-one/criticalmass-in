@@ -52,7 +52,7 @@
         <h1>Critical Mass</h1>
     </header>
     <section class="menu"></section>
-    <section data-role="content" id="content">
+    <section data-role="content" id="startPageContent">
 
     </section>
 </section>
@@ -64,7 +64,7 @@
         <h1>Impressum</h1>
     </header>
     <section class="menu"></section>
-    <section data-role="content" id="content">
+    <section data-role="content" id="impressPageContent">
         <h2>Impressum</h2>
 
         <p>Angaben nach § 5 TMG:</p>
@@ -80,7 +80,7 @@
         <h1>Datenschutz</h1>
     </header>
     <section class="menu"></section>
-    <section data-role="content" id="content">
+    <section data-role="content" id="privacyPageContent">
         <h2>Datenschutz</h2>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -95,7 +95,7 @@
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
         <h1>Login</h1>
     </header>
-    <section data-role="content" id="content">
+    <section data-role="content" id="loginPageContent">
         <form action="{{ path("fos_user_security_check") }}" method="post" data-ajax="false">
 
             <label for="username">Dein Benutzername</label>
@@ -117,7 +117,7 @@
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
         <h1>Registrierung</h1>
     </header>
-    <section data-role="content" id="content">
+    <section data-role="content" id="registerPageContent">
         <h2>Registrierung</h2>
         <form action="/app_dev.php/register/" method="POST">
             <label for="fos_user_registration_form_email">Deine E-Mail-Adresse</label>
@@ -143,7 +143,7 @@
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
         <h1>Critical Mass Hamburg</h1>
     </header>
-    <section data-role="content" id="content">
+    <section data-role="content" id="livePageContent">
         <div id="map"></div>
 
         {% if app.user != null %}
