@@ -1,0 +1,3 @@
+caldera_criticalmass_api_cities_listall:
+    pattern: /listall
+    defaults: { _controller: CalderaCriticalmassApiBundle:Cities:listall }
