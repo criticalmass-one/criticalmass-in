@@ -454,4 +454,6 @@ window.onload = function()
     startMapInitialization();
     startGeolocationInterval();
     initializeLivePage();
+
+    loadAllCities();
 }
