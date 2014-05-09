@@ -1,22 +1,18 @@
-/**
- * Ruft im Hintergrund die Logout-URL auf und beendet die Sitzung des Benutzers.
- */
-function logout()
+StartPage = function(pageIdentifier)
 {
-    $.ajax({
-        type : 'GET',
-        url : '/app_dev.php/logout',
-        success : function(data){
-            alert(data);
-        }
-    });
+    this.loadAllCities();
 }
 
-function loadAllCities()
+StartPage.prototype = new AppPage();
+StartPage.prototype.constructor = StartPage;
+
+StartPage.prototype.cityList;
+
+StartPage.prototype.loadAllCities = function()
 {
     $.ajax({
         type: 'GET',
-        url: '/app_dev.php/api/cities/listall',
+        url: this.getApiPrefix() + 'cities/listall',
         cache: false,
         success: function(data)
         {
@@ -29,12 +25,17 @@ function loadAllCities()
                 $(listItem).attr('data-cityslug', city.slug);
                 $(listItem).attr('id', cityId);
 
-                $(listItem).append('<h3>' + city.title + '</h3>');
+                var linkItem = document.createElement('a');
+
+                $(linkItem).append('<img src="http://www.criticalmass.local/bundles/calderacriticalmassmobile/images/criticalmass-bikefist-100.png" />')
+                $(linkItem).append('<h3>' + city.title + '</h3>');
 
                 if (city.description != null)
                 {
-                    $(listItem).append('<p>' + city.description + '</p>');
+                    $(linkItem).append('<p>' + city.description + '</p>');
                 }
+
+                $(listItem).append(linkItem);
 
                 $('#cityList').append(listItem);
 
