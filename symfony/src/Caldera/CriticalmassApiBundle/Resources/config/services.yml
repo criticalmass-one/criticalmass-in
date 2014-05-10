@@ -1,9 +1,0 @@
-parameters:
-    vendor_security.authentication_handler: Caldera\CriticalmassApiBundle\Handler\AuthenticationHandler
-
-services:
-    authentication_handler:
-        class:  %vendor_security.authentication_handler%
-        arguments:  [@router]
-        tags:
-            - { name: 'monolog.logger', channel: 'security' }
