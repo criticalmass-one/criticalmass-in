@@ -30,6 +30,42 @@
             var positionSender = new PositionSender(startPage);
         };
     </script>
+    <script type="text/javascript">
+        $(function ()
+        {
+            $('#form-login').submit(function (e) {
+                e.preventDefault();
+
+                var $this = $(e.currentTarget),
+                        inputs = {};
+
+                // Send all form's inputs
+                $.each($this.find('input'), function (i, item) {
+                    var $item = $(item);
+                    inputs[$item.attr('name')] = $item.val();
+                });
+
+                // Send form into ajax
+                $.ajax({
+                    url: $this.attr('action'),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: inputs,
+                    success: function (data) {
+                        if (data.has_error) {
+                            // Insert your error process
+                            alert(data.error);
+                        }
+                        else {
+                            // Insert your success process
+                            alert('Welcome ' + data.username + ' !');
+                            window.location = data.target_path;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
@@ -124,19 +160,19 @@
         <h1>Login</h1>
     </header>
     <section data-role="content" id="loginPageContent">
-        <form action="{{ path("fos_user_security_check") }}" method="post" data-ajax="false">
+        <form action="{{ path("fos_user_security_check") }}" method="post" id="form-login">
+            <label for="username">Dein Benutzername:</label>
+            <input type="text" id="username" name="_username" required="required" />
 
-            <label for="username">Dein Benutzername</label>
-            <input type="text" id="username" name="_username" value="" required="required" data-qa-ta="mobile-loginform-username" />
+            <label for="password">Dein Kennwort:</label>
+            <input type="password" id="password" name="_password" required="required" />
 
-            <label for="password">Dein Kennwort</label>
-            <input type="password" id="password" name="_password" required="required" data-qa-ta="mobile-loginform-password" />
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">Eingeloggt bleiben?</label>
 
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on" data-qa-ta="mobile-loginform-rememberme" />
-            <label for="remember_me">Erinnere dich an mich</label>
-
-            <input type="submit" id="_submit" name="_submit" value="Login" data-qa-ta="mobile-loginform-submit" />
-        </form>    </section>
+            <input type="submit" id="_submit" name="_submit" value="Fuck that shit!" />
+        </form>
+    </section>
 </section>
 
 <!-- Registrierung -->

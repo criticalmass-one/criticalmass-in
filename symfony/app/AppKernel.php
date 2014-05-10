@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
             new Caldera\CriticalmassApiBundle\CalderaCriticalmassApiBundle(),
             new SunCat\MobileDetectBundle\MobileDetectBundle(),
+            new Divi\AjaxLoginBundle\DiviAjaxLoginBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

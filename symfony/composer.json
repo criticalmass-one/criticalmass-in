@@ -23,7 +23,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "doctrine/data-fixtures" : "dev-master",
         "mobiledetect/mobiledetectlib": "dev-master",
-        "suncat/mobile-detect-bundle": "dev-master"
+        "suncat/mobile-detect-bundle": "dev-master",
+        "divi/ajax-login-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

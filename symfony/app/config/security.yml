@@ -14,7 +14,7 @@ security:
         secured_area:
                     pattern:    ^/
                     anonymous: ~
-                    form_login:
+                    ajax_form_login:
                         login_path:  /login
                         check_path:  /login_check
         main:
