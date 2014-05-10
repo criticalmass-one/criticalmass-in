@@ -35,7 +35,38 @@ PositionSender.prototype.catchPosition = function()
 
 PositionSender.prototype.processPosition = function(positionResult)
 {
-    alert(positionResult);
+    $.ajax({
+        type: 'GET',
+        url: '/app_dev.php/api/trackposition',
+        data: {
+            latitude: positionResult.coords.latitude,
+            longitude: positionResult.coords.longitude,
+            accuracy: positionResult.coords.accuracy,
+            altitude: positionResult.coords.altitude,
+            altitudeaccuracy: positionResult.coords.altitudeAccurary,
+            speed: positionResult.coords.speed,
+            heading: positionResult.coords.heading,
+            timestamp: positionResult.coords.timestamp
+        },
+        cache: false,
+        success: function(result) {
+        }
+    });
+
+    this.setQuality(positionResult.coords.accuracy);
+}
+
+PositionSender.prototype.quality = null;
+
+PositionSender.prototype.setQuality = function(quality)
+{
+    alert(quality);
+    this.quality = quality;
+}
+
+PositionSender.prototype.getQuality = function()
+{
+    return this.quality;
 }
 
 PositionSender.prototype.processError = function(positionError)
