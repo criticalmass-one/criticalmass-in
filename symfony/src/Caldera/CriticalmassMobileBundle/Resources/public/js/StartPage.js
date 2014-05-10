@@ -1,6 +1,8 @@
 StartPage = function(pageIdentifier)
 {
     this.loadAllCities();
+
+    this.pageIdentifier = pageIdentifier;
 }
 
 StartPage.prototype = new AppPage();
@@ -14,6 +16,7 @@ StartPage.prototype.loadAllCities = function()
         type: 'GET',
         url: this.getApiPrefix() + 'cities/listall',
         cache: false,
+        context: this,
         success: function(data)
         {
             for (index in data.cities)
@@ -39,7 +42,14 @@ StartPage.prototype.loadAllCities = function()
 
                 $('#cityList').append(listItem);
 
-                $('#' + cityId).click(function(data) { citySlugString = $(this).attr('data-cityslug'); });
+                // TODO Mit echtem Binding wird das hier schöner
+                var this2 = this;
+
+                $('#' + cityId).click(function()
+                {
+                    var newCitySlug = $(this).attr('data-cityslug');
+                    this2.switchCity(newCitySlug);
+                });
             }
 
             $('#cityList').listview('refresh');

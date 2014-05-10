@@ -106,3 +106,30 @@ AppPage.prototype.logout = function()
         }
     });
 }
+
+
+AppPage.prototype.switchCity = function(newCitySlug)
+{
+    alert('Stadt gewechselt, jetzt: ' + newCitySlug);
+    var newCity = new City(newCitySlug);
+}
+
+
+AppPage.prototype.showNotificationLayer = function(notificationLayer)
+{
+    $('#' + this.pageIdentifier + ' section[data-role="content"]').prepend('<div id="notificationLayer" class="notification" data-icon="navigation">' + notificationLayer.getNotificationMessage() + '</div>');
+
+    var this2 = this;
+
+    $('#notificationLayer').click(function()
+    {
+        this2.flushNotification();
+    })
+}
+
+AppPage.prototype.flushNotification = function()
+{
+    $('div#notificationLayer').slideUp(250, function() {
+        this.remove();
+    });
+}

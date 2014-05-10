@@ -22,7 +22,10 @@
 
         window.onload = function()
         {
-            var mapPage = new MapPage('mapPage');
+            //var mapPage = new MapPage('mapPage');
+            var startPage = new StartPage('startPage');
+
+            var positionSender = new PositionSender(startPage);
         };
     </script>
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
@@ -30,7 +33,6 @@
     {% endstylesheets %}
 </head>
 <body id="webapp">
-
 <!-- Menü -->
 <section data-role="panel" id="mainpanel" data-position="left" data-qa-ta="mainpanel">
     <ul data-role="listview" data-theme="a">
