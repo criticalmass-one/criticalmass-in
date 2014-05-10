@@ -2,6 +2,8 @@ PositionSender = function(parentPage)
 {
     this.parentPage = parentPage;
 
+    this.parentPage.positionSender = this;
+
     this.catchPosition();
 };
 
@@ -60,8 +62,9 @@ PositionSender.prototype.quality = null;
 
 PositionSender.prototype.setQuality = function(quality)
 {
-    alert(quality);
     this.quality = quality;
+
+    this.parentPage.refreshGpsQualityGauge();
 }
 
 PositionSender.prototype.getQuality = function()
@@ -69,6 +72,25 @@ PositionSender.prototype.getQuality = function()
     return this.quality;
 }
 
+PositionSender.prototype.getJQueryQualityTheme = function()
+{
+    if (this.quality >= 0 && this.quality < 30)
+    {
+        return 'c';
+    }
+
+    if (this.quality >= 30 && this.quality < 100)
+    {
+        return 'd';
+    }
+
+    if (this.quality >= 100)
+    {
+        return 'b';
+    }
+
+    return 'e';
+}
 PositionSender.prototype.processError = function(positionError)
 {
     switch(positionError.code)
@@ -87,5 +109,6 @@ PositionSender.prototype.processError = function(positionError)
             break;
     }
 
+    this.setQuality(-1);
     this.parentPage.showNotificationLayer(notificationLayer);
 }

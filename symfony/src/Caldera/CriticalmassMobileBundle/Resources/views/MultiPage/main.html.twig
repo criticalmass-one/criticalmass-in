@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="/themes/criticalmass.css" />
+    <link rel="stylesheet" href="/themes/jquery.mobile.icons.min.css" />
     {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -57,6 +59,7 @@
     <header data-role="header">
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
         <h1>Critical Mass</h1>
+        <a href="#gpsPage" data-icon="navigation" class="gpsgauge ui-btn-right" data-theme="c">GPS</a>
     </header>
     <section class="menu"></section>
     <section data-role="content" id="startPageContent">

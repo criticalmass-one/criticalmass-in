@@ -10,6 +10,8 @@ AppPage = function(pageIdentifier)
     }
 };
 
+AppPage.prototype.positionSender = null;
+
 AppPage.prototype.pageIdentifier = null;
 
 AppPage.prototype.citySlug = 'Hamburg';
@@ -132,4 +134,12 @@ AppPage.prototype.flushNotification = function()
     $('div#notificationLayer').slideUp(250, function() {
         this.remove();
     });
+}
+
+AppPage.prototype.refreshGpsQualityGauge = function()
+{
+    var theme = this.positionSender.getJQueryQualityTheme();
+
+    $('a.gpsgauge').attr('data-theme', theme);
+    $('a.gpsgauge').trigger('create');
 }
