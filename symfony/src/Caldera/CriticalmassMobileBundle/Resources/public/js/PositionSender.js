@@ -43,16 +43,16 @@ PositionSender.prototype.processError = function(positionError)
     switch(positionError.code)
     {
         case positionError.PERMISSION_DENIED:
-            var notificationLayer = new NotificationLayer('User denied the request for Geolocation.');
+            var notificationLayer = new NotificationLayer('Wir kommen leider nicht an deine Positionsdaten ran. Bitte erlaube dieser App den Zugriff auf deine Positionsdaten.');
             break;
         case positionError.POSITION_UNAVAILABLE:
-            var notificationLayer = new NotificationLayer('Location information is unavailable.');
+            var notificationLayer = new NotificationLayer('Dein Gerät hat leider keine brauchbaren Positionsdaten zurückgeliefert.');
             break;
         case positionError.TIMEOUT:
-            var notificationLayer = new NotificationLayer('The request to get user location timed out.');
+            var notificationLayer = new NotificationLayer('Dein Gerät konnte die Anfrage an deine Positionsdaten leider nicht bearbeiten.');
             break;
         case positionError.UNKNOWN_ERROR:
-            var notificationLayer = new NotificationLayer('An unknown error occurred.');
+            var notificationLayer = new NotificationLayer('Hmm, es ist ein unbekannter Fehler aufgetreten — mehr wissen wir leider auch nicht.');
             break;
     }
 
