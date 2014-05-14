@@ -205,6 +205,8 @@ AppPage.prototype.refreshGpsQualityGauge = function()
 {
     var theme = this.positionSender.getJQueryQualityTheme();
 
-    $('a.gpsgauge').attr('data-theme', theme);
-    $('a.gpsgauge').trigger('create');
+    var gpsGauge = $('a.gpsgauge');
+
+    gpsGauge.attr('data-theme', theme);
+    gpsGauge.trigger('create');
 }
