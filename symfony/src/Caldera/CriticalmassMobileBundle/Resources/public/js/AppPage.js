@@ -46,6 +46,7 @@ AppPage.prototype.getUserLoginStatus = function()
 
 AppPage.prototype.initMenuUserStatus = function()
 {
+    alert('wefewfewf');
     if (this.getUserLoginStatus())
     {
         $('#profileButton').show();

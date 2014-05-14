@@ -1,16 +1,14 @@
 StartPage = function(pageIdentifier)
 {
-    this.loadAllCities();
-
     this.pageIdentifier = pageIdentifier;
 
+    this.loadAllCities();
     this.initEventListeners();
+    this.initMenuUserStatus();
 }
 
 StartPage.prototype = new AppPage();
 StartPage.prototype.constructor = StartPage;
-
-StartPage.prototype.cityList;
 
 StartPage.prototype.loadAllCities = function()
 {
