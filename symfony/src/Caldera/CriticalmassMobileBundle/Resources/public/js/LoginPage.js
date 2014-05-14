@@ -1,39 +1,60 @@
-$(function ()
+LoginPage = function()
 {
-    $('#form-login').submit(function (e) {
-        e.preventDefault();
+    this.initLoginPageEventListeners();
+}
 
-        var $this = $(e.currentTarget),
-            inputs = {};
+LoginPage.prototype.initLoginPageEventListeners = function()
+{
+    var this2 = this;
 
-        // Send all form's inputs
-        $.each($this.find('input'), function (i, item) {
-            var $item = $(item);
-            inputs[$item.attr('name')] = $item.val();
-        });
+    $('#form-login').submit(function(element)
+    {
+        this2.processLogin(element);
+    })
+}
 
-        // Send form into ajax
-        $.ajax({
-            url : $this.attr('action'),
-            type : 'POST',
-            dataType : 'json',
-            data : inputs,
-            success : function (data) {
-                alert("OK");
-                if (data.has_error) {
-                    // Insert your error process
-                    alert(data.error);
-                }
-                else {
-                    // Insert your success process
-                    alert('Welcome ' + data.username + ' !');
-                    window.location = data.target_path;
-                }
-            },
-            failure : function(data)
+LoginPage.prototype.processLogin = function(element)
+{
+    element.preventDefault();
+
+    var loginData = {};
+    loginData['_username'] = $('input[name="_username"]').val();
+    loginData['_password'] = $('input[name="_password"]').val();
+    loginData['_remember_me'] = $('input[name="_remember_me"]').val();
+    loginData['_submit'] = $('input[name="_submit"]').val();
+
+    var this2 = this;
+
+    $.ajax({
+        url : '/app_dev.php/login_check',
+        type : 'POST',
+        context : this2,
+        dataType : 'json',
+        data : loginData,
+        success : function (data)
+        {
+            if (data.has_error)
             {
-                alert("FEHLER");
+                alert(data.error);
             }
-        });
+            else
+            {
+                this2.switchToLoggedInMode();
+            }
+        },
+        failure : function(data)
+        {
+
+        }
     });
-});
+}
+
+LoginPage.prototype.switchToLoggedInMode = function()
+{
+    alert('Jetzt eingeloggt');
+}
+
+LoginPage.prototype.switchToLoggedOutMode = function()
+{
+    alert('Jetzt ausgeloggt!');
+}
