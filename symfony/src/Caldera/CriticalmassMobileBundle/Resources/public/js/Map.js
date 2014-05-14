@@ -11,7 +11,12 @@ Map = function(mapIdentifier, city)
         success: this.setMapOptions
     });
 
-    this.timer = setInterval(this.getNewMapData, 5000);
+    var this2 = this;
+
+    this.timer = setInterval(function()
+    {
+        this2.getNewMapData();
+    }, 5000);
 };
 
 Map.prototype.mapIdentifier = null;
