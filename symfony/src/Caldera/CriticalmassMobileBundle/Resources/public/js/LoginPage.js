@@ -45,7 +45,7 @@ LoginPage.prototype.processLogin = function(element)
             }
             else
             {
-                this2.switchToLoggedInMode();
+                this2.switchToLoggedInMode(data);
             }
         },
         failure : function(data)

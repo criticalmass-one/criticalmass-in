@@ -70,9 +70,10 @@ AppPage.prototype.logout = function()
     });
 }
 
-AppPage.prototype.switchToLoggedInMode = function()
+AppPage.prototype.switchToLoggedInMode = function(data)
 {
     localStorage.userLoginStatus = true;
+    localStorage.userName = data.username;
 
     this.toggleMenuItems();
 }
@@ -80,6 +81,7 @@ AppPage.prototype.switchToLoggedInMode = function()
 AppPage.prototype.switchToLoggedOutMode = function()
 {
     localStorage.userLoginStatus = false;
+    localStorage.userName = null;
 
     this.toggleMenuItems();
 }
