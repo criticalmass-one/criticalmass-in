@@ -54,24 +54,3 @@ LoginPage.prototype.processLogin = function(element)
         }
     });
 }
-
-LoginPage.prototype.switchToLoggedInMode = function()
-{
-    localStorage.userLoginStatus = true;
-
-    this.toggleMenuItems();
-}
-
-LoginPage.prototype.switchToLoggedOutMode = function()
-{
-    localStorage.userLoginStatus = false;
-
-    this.toggleMenuItems();
-}
-
-LoginPage.prototype.toggleMenuItems = function()
-{
-    $('#loginButton').toggle();
-    $('#logoutButton').toggle();
-    $('#registerButton').toggle();
-}

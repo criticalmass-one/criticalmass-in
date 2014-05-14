@@ -16,7 +16,6 @@ AppPage.prototype.initEventListeners = function()
 {
     var this2 = this;
 
-    alert("efwefewf");
     $('a#logoutButton').click(function()
     {
         this2.logout();
@@ -50,15 +49,47 @@ AppPage.prototype.initMenuUserStatus = function()
     if (this.getUserLoginStatus())
     {
         $('#logoutButton').show();
-        $('#registerButton').show();
     }
     else
     {
         $('#loginButton').show();
+        $('#registerButton').show();
     }
 }
 
+AppPage.prototype.logout = function()
+{
+    $.ajax({
+        type : 'GET',
+        context : this,
+        url : '/app_dev.php/logout',
+        success : function(data)
+        {
+            this.switchToLoggedOutMode();
+        }
+    });
+}
 
+AppPage.prototype.switchToLoggedInMode = function()
+{
+    localStorage.userLoginStatus = true;
+
+    this.toggleMenuItems();
+}
+
+AppPage.prototype.switchToLoggedOutMode = function()
+{
+    localStorage.userLoginStatus = false;
+
+    this.toggleMenuItems();
+}
+
+AppPage.prototype.toggleMenuItems = function()
+{
+    $('#loginButton').toggle();
+    $('#logoutButton').toggle();
+    $('#registerButton').toggle();
+}
 
 AppPage.prototype.environment = 'dev';
 
@@ -128,20 +159,6 @@ AppPage.prototype.getUrlPrefix = function(ajaxResponseData)
 AppPage.prototype.getApiPrefix = function()
 {
     return this.getUrlPrefix() + 'api/';
-}
-
-
-AppPage.prototype.logout = function()
-{
-    $.ajax({
-        type : 'GET',
-        url : '/app_dev.php/logout',
-        success : function(data){
-            alert(data);
-        }
-    });
-
-    alert('tschö!');
 }
 
 
