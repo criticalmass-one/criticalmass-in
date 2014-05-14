@@ -13,7 +13,7 @@ security:
     firewalls:
         main:
             pattern: ^/
-            form_login:
+            ajax_form_login:
                 provider: fos_userbundle
             logout:
                 invalidate_session: false

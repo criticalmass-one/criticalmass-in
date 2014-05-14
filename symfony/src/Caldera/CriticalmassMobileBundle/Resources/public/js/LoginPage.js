@@ -14,11 +14,12 @@ $(function ()
 
         // Send form into ajax
         $.ajax({
-            url: $this.attr('action'),
-            type: 'POST',
-            dataType: 'json',
-            data: inputs,
-            success: function (data) {
+            url : $this.attr('action'),
+            type : 'POST',
+            dataType : 'json',
+            data : inputs,
+            success : function (data) {
+                alert("OK");
                 if (data.has_error) {
                     // Insert your error process
                     alert(data.error);
@@ -28,6 +29,10 @@ $(function ()
                     alert('Welcome ' + data.username + ' !');
                     window.location = data.target_path;
                 }
+            },
+            failure : function(data)
+            {
+                alert("FEHLER");
             }
         });
     });
