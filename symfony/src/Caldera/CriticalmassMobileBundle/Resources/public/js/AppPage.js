@@ -75,6 +75,10 @@ AppPage.prototype.switchToLoggedInMode = function(data)
     localStorage.userLoginStatus = true;
     localStorage.userName = data.username;
 
+
+    var notificationLayer = new NotificationLayer("Hej " + data.username + ", willkommen zurück!");
+    this.showNotificationLayer(notificationLayer);
+
     this.toggleMenuItems();
 }
 
@@ -82,6 +86,9 @@ AppPage.prototype.switchToLoggedOutMode = function()
 {
     localStorage.userLoginStatus = false;
     localStorage.userName = null;
+
+    var notificationLayer = new NotificationLayer("Du hast dich gerade abgemeldet. Bis zum nächsten Mal!");
+    this.showNotificationLayer(notificationLayer);
 
     this.toggleMenuItems();
 }
@@ -176,6 +183,7 @@ AppPage.prototype.showNotificationLayer = function(notificationLayer)
     $('#' + this.pageIdentifier + ' section[data-role="content"]').prepend('<div id="notificationLayer" class="notification" data-icon="navigation">' + notificationLayer.getNotificationMessage() + '</div>');
 
     var this2 = this;
+
 
     $('#notificationLayer').click(function()
     {
