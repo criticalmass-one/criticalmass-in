@@ -25,7 +25,7 @@
         window.onload = function()
         {
             //var mapPage = new MapPage('mapPage');
-            var startPage = new StartPage('startPage');
+            //var startPage = new StartPage('startPage');
             var loginPage = new LoginPage('loginPage');
 
             //var positionSender = new PositionSender(startPage);
@@ -43,13 +43,9 @@
             <li data-role="list-divider" data-qa-ta="mainpanel-city-title">Critical Mass Hamburg</li>
             <li><a href="#livePage" data-ajax="false" data-qa-ta="mobile-mainpanel-cityoverview">Übersicht</a></li>
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
-        {% if is_granted('ROLE_USER') %}
-            <li><a id="logoutButton" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
-        {% else %}
-            <li><a href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
-            <li><a href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
-        {% endif %}
-
+            <li><a id="logoutButton" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
+            <li><a id="registerButton" style="display: none;" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
+            <li><a id="loginButton" style="display: none;" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
         <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
         <li><a href="#privacyPage" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
     </ul>

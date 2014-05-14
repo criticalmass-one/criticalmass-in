@@ -39,6 +39,26 @@ AppPage.prototype.getCitySlug = function()
 }
 
 
+AppPage.prototype.getUserLoginStatus = function()
+{
+    return localStorage.userLoginStatus;
+}
+
+AppPage.prototype.initMenuUserStatus = function()
+{
+    if (this.getUserLoginStatus())
+    {
+        $('#logoutButton').show();
+        $('#registerButton').show();
+    }
+    else
+    {
+        $('#loginButton').show();
+    }
+}
+
+
+
 AppPage.prototype.environment = 'dev';
 
 AppPage.prototype.setEnvironment = function(newEnvironment)

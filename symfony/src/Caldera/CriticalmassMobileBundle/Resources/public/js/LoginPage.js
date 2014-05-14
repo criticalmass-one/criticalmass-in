@@ -1,7 +1,12 @@
 LoginPage = function()
 {
     this.initLoginPageEventListeners();
+    this.initMenuUserStatus();
 }
+
+LoginPage.prototype = new AppPage();
+
+LoginPage.prototype.constructor = LoginPage;
 
 LoginPage.prototype.initLoginPageEventListeners = function()
 {
@@ -31,7 +36,7 @@ LoginPage.prototype.processLogin = function(element)
         context : this2,
         dataType : 'json',
         data : loginData,
-        success : function (data)
+        success : function(data)
         {
             if (data.has_error)
             {
@@ -51,10 +56,21 @@ LoginPage.prototype.processLogin = function(element)
 
 LoginPage.prototype.switchToLoggedInMode = function()
 {
-    alert('Jetzt eingeloggt');
+    localStorage.userLoginStatus = true;
+
+    this.toggleMenuItems();
 }
 
 LoginPage.prototype.switchToLoggedOutMode = function()
 {
-    alert('Jetzt ausgeloggt!');
+    localStorage.userLoginStatus = false;
+
+    this.toggleMenuItems();
+}
+
+LoginPage.prototype.toggleMenuItems = function()
+{
+    $('#loginButton').toggle();
+    $('#logoutButton').toggle();
+    $('#registerButton').toggle();
 }
