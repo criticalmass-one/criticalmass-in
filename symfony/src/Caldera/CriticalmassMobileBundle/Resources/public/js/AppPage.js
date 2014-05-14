@@ -48,6 +48,7 @@ AppPage.prototype.initMenuUserStatus = function()
 {
     if (this.getUserLoginStatus())
     {
+        $('#profileButton').show();
         $('#logoutButton').show();
     }
     else
@@ -95,6 +96,7 @@ AppPage.prototype.switchToLoggedOutMode = function()
 
 AppPage.prototype.toggleMenuItems = function()
 {
+    $('#profileButton').toggle();
     $('#loginButton').toggle();
     $('#logoutButton').toggle();
     $('#registerButton').toggle();
