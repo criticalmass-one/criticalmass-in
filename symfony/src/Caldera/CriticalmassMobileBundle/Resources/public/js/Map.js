@@ -179,7 +179,7 @@ Map.prototype.clearAllElements = function()
 
 Map.prototype.clearElement = function(elementId)
 {
-    this.map.removeLayer(elementsArray[elementId]);
+    this.map.removeLayer(this.elementsArray[elementId]);
     delete this.elementsArray[elementId];
 };
 
