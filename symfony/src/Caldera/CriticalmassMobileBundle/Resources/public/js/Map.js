@@ -94,13 +94,13 @@ Map.prototype.refreshMap = function(ajaxResultData)
     this.refreshLabels(ajaxResultData);
 };
 
-Map.prototype.refreshMapCenter = function()
+Map.prototype.refreshMapCenter = function(ajaxResultData)
 {
     var autoCenter = $("select#flip-auto-center")[0].selectedIndex;
 
     if (autoCenter == 1)
     {
-        map.panTo(new L.LatLng(result.mapCenter.latitude, result.mapCenter.longitude));
+        this.map.panTo(new L.LatLng(ajaxResultData.mapCenter.latitude, ajaxResultData.mapCenter.longitude));
     }
 };
 
