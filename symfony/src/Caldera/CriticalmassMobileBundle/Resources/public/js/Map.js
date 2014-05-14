@@ -11,7 +11,6 @@ Map = function(mapIdentifier, city)
         success: this.setMapOptions
     });
 
-    this.initEventListeners();
     this.timer = setInterval(this.getNewMapData, 5000);
 };
 
@@ -38,6 +37,7 @@ Map.prototype.setMapOptions = function(ajaxResultData)
 
 
     this.refreshMap(ajaxResultData);
+    this.initMapPageEventListeners();
 };
 
 Map.prototype.getNewMapData = function()
@@ -51,7 +51,7 @@ Map.prototype.getNewMapData = function()
     });
 };
 
-Map.prototype.initEventListeners = function()
+Map.prototype.initMapPageEventListeners = function()
 {
     this.map.on('dragstart', function()
     {

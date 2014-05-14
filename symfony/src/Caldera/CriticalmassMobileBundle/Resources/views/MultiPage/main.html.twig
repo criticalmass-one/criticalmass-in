@@ -24,11 +24,11 @@
 
         window.onload = function()
         {
-            //var mapPage = new MapPage('mapPage');
-            var startPage = new StartPage('startPage');
+            var mapPage = new MapPage('mapPage');
+            //var startPage = new StartPage('startPage');
             //var loginPage = new LoginPage('loginPage');
 
-            //var positionSender = new PositionSender(startPage);
+            var positionSender = new PositionSender(mapPage);
         };
     </script>
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
