@@ -11,17 +11,12 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        secured_area:
-                    pattern:    ^/
-                    anonymous: ~
-                    ajax_form_login:
-                        login_path:  /login
-                        check_path:  /login_check
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-            logout:       true
+            logout:
+                invalidate_session: false
             anonymous:    true
             remember_me:
                 key:      aSecretKey
