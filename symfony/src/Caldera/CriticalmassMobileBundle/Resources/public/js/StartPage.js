@@ -3,6 +3,8 @@ StartPage = function(pageIdentifier)
     this.loadAllCities();
 
     this.pageIdentifier = pageIdentifier;
+
+    this.initEventListeners();
 }
 
 StartPage.prototype = new AppPage();

@@ -10,6 +10,18 @@ AppPage = function(pageIdentifier)
     }
 };
 
+AppPage.prototype.isLoaded = false;
+
+AppPage.prototype.initEventListeners = function()
+{
+    var this2 = this;
+
+    $('a#logoutButton').click(function()
+    {
+        this2.logout();
+    });
+}
+
 AppPage.prototype.positionSender = null;
 
 AppPage.prototype.pageIdentifier = null;
@@ -107,6 +119,8 @@ AppPage.prototype.logout = function()
             alert(data);
         }
     });
+
+    alert('tschö!');
 }
 
 
