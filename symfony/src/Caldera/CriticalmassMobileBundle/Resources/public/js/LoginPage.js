@@ -1,5 +1,6 @@
 LoginPage = function()
 {
+    this.initEventListeners();
     this.initLoginPageEventListeners();
     this.initMenuUserStatus();
 }

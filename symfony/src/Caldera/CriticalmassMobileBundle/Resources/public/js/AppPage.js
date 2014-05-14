@@ -16,6 +16,7 @@ AppPage.prototype.initEventListeners = function()
 {
     var this2 = this;
 
+    alert("efwefewf");
     $('a#logoutButton').click(function()
     {
         this2.logout();
