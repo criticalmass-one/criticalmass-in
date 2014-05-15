@@ -52,7 +52,7 @@ PositionSender.prototype.processPosition = function(positionResult)
         },
         cache: false,
         success: function(result) {
-            alert("YEAH");
+
         }
     });
 
