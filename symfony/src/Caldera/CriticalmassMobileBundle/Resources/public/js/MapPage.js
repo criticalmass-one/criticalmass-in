@@ -1,7 +1,8 @@
 MapPage = function(pageIdentifier)
 {
-    AppPage.call(this, pageIdentifier);
+    this.pageIdentifier = pageIdentifier;
 
+    this.initMenuUserStatus();
     this.initMap();
 }
 
