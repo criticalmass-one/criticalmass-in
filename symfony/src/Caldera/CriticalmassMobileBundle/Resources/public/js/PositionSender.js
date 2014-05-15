@@ -48,7 +48,7 @@ PositionSender.prototype.processPosition = function(positionResult)
             altitudeaccuracy: positionResult.coords.altitudeAccurary,
             speed: positionResult.coords.speed,
             heading: positionResult.coords.heading,
-            timestamp: positionResult.coords.timestamp
+            timestamp: positionResult.timestamp
         },
         cache: false,
         success: function(result) {
