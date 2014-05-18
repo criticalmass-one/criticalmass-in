@@ -32,6 +32,7 @@
 
             $('#mainpanel').panel({
                 open: function() {
+                    _paq.push(['trackEvent', 'main_menu', 'open']);
                 }
             });
         };
@@ -202,7 +203,7 @@
             </div>
 
         {% else %}
-            <p>Bitte <a data-qa-ta="mobile-map-login" href="{{ url('fos_user_security_login') }}">logge dich ein</a> oder <a data-qa-ta="mobile-map-register" href="{{ url('fos_user_registration_register') }}">registriere dich</a>, um GPS-Daten zu senden.</p>
+            <p>Bitte <a data-qa-ta="mobile-map-login" href="#loginPage">logge dich ein</a> oder <a data-qa-ta="mobile-map-register" href="#registerPage">registriere dich</a>, um GPS-Daten zu senden.</p>
         {% endif %}
     </section>
 </section>
