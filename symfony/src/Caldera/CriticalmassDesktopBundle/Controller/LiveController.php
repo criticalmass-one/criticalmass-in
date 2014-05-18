@@ -2,10 +2,9 @@
 
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
-use Caldera\CriticalmassStatisticBundle\Utility\Trackable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class LiveController extends Controller implements Trackable
+class LiveController extends Controller
 {
     public function showAction()
     {

@@ -25,11 +25,17 @@
         window.onload = function()
         {
             var mapPage = new MapPage('mapPage');
-            //var startPage = new StartPage('startPage');
-            //var loginPage = new LoginPage('loginPage');
+            var startPage = new StartPage('startPage');
+            var loginPage = new LoginPage('loginPage');
 
             var positionSender = new PositionSender(mapPage);
+
+            $('#mainpanel').panel({
+                open: function() {
+                }
+            });
         };
+
     </script>
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -200,5 +206,22 @@
         {% endif %}
     </section>
 </section>
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(["setCookieDomain", "*.www.criticalmass.in"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.caldera.cc/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 1]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+        g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<noscript><p><img src="http://piwik.caldera.cc/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+
 </body>
 </html>

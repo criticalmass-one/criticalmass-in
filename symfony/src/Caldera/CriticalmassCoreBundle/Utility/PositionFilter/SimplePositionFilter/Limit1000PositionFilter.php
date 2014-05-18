@@ -7,13 +7,13 @@ use Caldera\CriticalmassCoreBundle\Entity as Entity;
 /**
  * Begrenzt die Anzahl der Positionsdaten auf 100.
  */
-class LimitPositionFilter extends SimplePositionFilter
+class Limit1000PositionFilter extends SimplePositionFilter
 {
 	/**
 	 * {@inheritDoc}
 	 */
 	public function buildQuery($queryBuilder)
 	{
-		return $queryBuilder->setMaxResults(25);
+		return $queryBuilder->setMaxResults(1000);
 	}
 }

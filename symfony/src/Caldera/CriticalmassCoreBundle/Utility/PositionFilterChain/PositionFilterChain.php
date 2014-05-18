@@ -20,7 +20,7 @@ class PositionFilterChain extends BasePositionFilterChain
 	{
 		$this->filters[] = new SimplePositionFilter\RidePositionFilter($this->ride);
 		$this->filters[] = new SimplePositionFilter\AccuracyPositionFilter($this->ride);
-		$this->filters[] = new SimplePositionFilter\LimitPositionFilter($this->ride);
+		$this->filters[] = new SimplePositionFilter\Limit25PositionFilter($this->ride);
 		$this->filters[] = new SimplePositionFilter\OrderPositionFilter($this->ride);
 		$this->filters[] = new ComplexPositionFilter\UserPositionFilter($this->ride);
 	}

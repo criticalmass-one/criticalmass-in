@@ -1,124 +1,96 @@
 <html>
 <head>
-    <title>CalderaCriticalmassDesktopBundle</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% stylesheets '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css' filter="cssrewrite" %}
+    <title>criticalmass.in</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+
+    {% javascripts '@CalderaCriticalmassDesktopBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% stylesheets '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
     <script>
-        var citySlugString = 'hamburg';
+        var map = new Map('map', new City('hamburg'));
+
+        function setElementHeight(elementLocator, height)
+        {
+            $(elementLocator).height(height);
+        }
+
+        function refreshHeight()
+        {
+            var height = $(document).height() - $('header#header').height() - $('footer#footer').height();
+
+            setElementHeight('section#content', height);
+            setElementHeight('#map', height);
+        }
+
+        $(document).ready(function()
+        {
+            refreshHeight();
+        });
+
+        $(window).resize(function()
+        {
+            refreshHeight();
+        });
     </script>
 </head>
 <body>
-<div class="modal fade" id="myModal" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <header class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Kartenoptionen</h4>
-            </header>
-            <section class="modal-body">
-                <p>Zeige die folgenden Elemente auf der Karte an:</p>
-                <section class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label" for="inputEmail">GPS-Positionen:</label>
-                        <ul class="controls">
-                            <input type="checkbox" id="inputEmail" />
+    <header id="header" class="navbar navbar-default navbar-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">criticalmass.in</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
                         </ul>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="inputEmail">Permanente Positionen:</label>
-                        <ul class="controls">
-                            <input type="checkbox" id="inputEmail" />
-                        </ul>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="inputEmail">Bilder anzeigen:</label>
-                        <ul class="controls">
-                            <input type="checkbox" id="inputEmail" />
-                        </ul>
-                    </div>
-                </section>
-            </section>
-            <footer class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                <button type="button" class="btn btn-primary">Speichern</button>
-            </footer>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="impress" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <header class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Impressum</h4>
-            </header>
-            <section class="modal-body">
-                <p>Verantwortlich nach § 5 TMG:</p>
-                <address>
-                    <strong>Fachhochschule Wedel</strong><br />
-                    Feldstraße 143<br />
-                    22880 Wedel<br />
-                    Deutschland<br />
-                    <abbr title="Phone">Telefon:</abbr> 0700 11 864 833
-                </address>
-
-                <address>
-                    <strong>Malte Hübner</strong><br />
-                    <a href="mailto:#">malte@criticalmass.in</a>
-                </address>
-            </section>
-            <footer class="modal-footer">
-                <button type="button" class="btn btn-primary">Okay</button>
-            </footer>
-        </div>
-    </div>
-</div>
-
-<header class="navbar navbar-static-top">
-    <div class="navbar-inner">
-        <a class="brand" href="#">criticalmass.in</a>
-        <ul class="nav">
-            <li class="active"><a href="#" data-track-onclick="navbar-overview-button-click">Übersicht</a></li>
-            <li><a href="#" data-track-onclick="navbar-blog-button-click">Blog</a></li>
-            <li><a href="#" data-track-onclick="navbar-login-button-click">Login</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#impress" data-track-onclick="navbar-impress-button-click">Impressum</a></li>
-        </ul>
-        <ul class="nav pull-right">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="currentCitySlugButton">
-                    Hamburg
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">A</a></li>
-                    <li><a href="#">B</a></li>
+                    </li>
                 </ul>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#myModal">
-                    Kartenoptionen
-                </a>
-            </li>
-        </ul>
-    </div>
-</header>
-<section id="map" style="width: 100%; height: 85%; z-index: 0;"></section>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../navbar/">Default</a></li>
+                    <li><a href="../navbar-static-top/">Static top</a></li>
+                    <li class="active"><a href="./">Fixed top</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </header>
 
+    <section id="content">
+        <div id="map"></div>
+    </section>
 
-
-{% javascripts '@CalderaCriticalmassDesktopBundle/Resources/public/js/*' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+    <footer id="footer">
+        Ride on. Impressum? Datenschutz! criticalmass.in by United Caldera
+    </footer>
 </body>
 </html>
