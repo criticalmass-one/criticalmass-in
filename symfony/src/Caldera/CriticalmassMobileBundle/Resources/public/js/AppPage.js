@@ -10,8 +10,6 @@ AppPage = function(pageIdentifier)
     }
 };
 
-AppPage.prototype.isLoaded = false;
-
 AppPage.prototype.initEventListeners = function()
 {
     var this2 = this;
