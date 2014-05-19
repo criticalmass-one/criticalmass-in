@@ -1,7 +1,8 @@
-Map = function(mapIdentifier, city)
+Map = function(mapIdentifier, city, parentPage)
 {
     this.mapIdentifier = mapIdentifier;
     this.city = city;
+    this.parentPage = parentPage;
 
     $.ajax({
         type: 'GET',
@@ -19,6 +20,7 @@ Map = function(mapIdentifier, city)
     }, 5000);
 };
 
+Map.prototype.parentPage = null;
 Map.prototype.mapIdentifier = null;
 Map.prototype.city = null;
 
