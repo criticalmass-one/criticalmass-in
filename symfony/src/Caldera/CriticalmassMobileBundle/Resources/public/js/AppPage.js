@@ -36,7 +36,6 @@ AppPage.prototype.getCitySlug = function()
     return this.citySlug;
 }
 
-
 AppPage.prototype.getUserLoginStatus = function()
 {
     return localStorage.userLoginStatus;
@@ -171,12 +170,26 @@ AppPage.prototype.getApiPrefix = function()
 }
 
 
-AppPage.prototype.switchCity = function(newCitySlug)
+AppPage.prototype.switchCityBySlug = function(newCitySlug)
 {
-    alert('Stadt gewechselt, jetzt: ' + newCitySlug);
-    var newCity = new City(newCitySlug);
+    var cityFactory = new CityFactory();
+
+    var newCity = cityFactory.getCityBySlug(newCitySlug);
+
+    this.setAppTitle(newCitySlug);
+    this.setPageTitle(newCitySlug);
 }
 
+AppPage.prototype.setAppTitle = function(newTitle)
+{
+    $('title').html(newTitle);
+}
+
+AppPage.prototype.setPageTitle = function(newTitle)
+{
+    var pageTitle = $('section#' + this.pageIdentifier + ' header h1');
+    pageTitle.html('Critical Mass ' + newTitle);
+}
 
 AppPage.prototype.showNotificationLayer = function(notificationLayer)
 {
