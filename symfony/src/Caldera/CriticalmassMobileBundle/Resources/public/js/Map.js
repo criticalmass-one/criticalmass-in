@@ -205,6 +205,8 @@ Map.prototype.doesElementExist = function(elementId)
 
 Map.prototype.drawMarker = function(markerElement)
 {
+    var this2 = this;
+
     if (!this.doesElementExist(markerElement.id))
     {
         if (markerElement.type == 'citymarker')
@@ -215,9 +217,9 @@ Map.prototype.drawMarker = function(markerElement)
                                                             ).addTo(this.map)
                                                              .bindPopup(markerElement.cityTitle);
 
-            this.elementsArray[markerElement.id].on('click', function(){
-                //switchCityContext(markerElement.citySlug);
-            })
+            this.elementsArray[markerElement.id].on('click', function(e) {
+                this.parentPage.switchCityBySlug(markerElement.citySlug);
+            }, this);
         }
 
         if (markerElement.type == 'positionmarker')
