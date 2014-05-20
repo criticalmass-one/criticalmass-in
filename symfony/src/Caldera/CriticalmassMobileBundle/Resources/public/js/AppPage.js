@@ -99,83 +99,12 @@ AppPage.prototype.toggleMenuItems = function()
     $('#registerButton').toggle();
 }
 
-AppPage.prototype.environment = 'dev';
-
-AppPage.prototype.setEnvironment = function(newEnvironment)
-{
-    this.environment = newEnvironment;
-}
-
-AppPage.prototype.getEnvironment = function()
-{
-    return this.environment;
-}
-
-
-AppPage.prototype.system = 'local';
-
-AppPage.prototype.setSystem = function(newSystem)
-{
-    this.system = newSystem;
-}
-
-AppPage.prototype.getSystem = function()
-{
-    return this.system;
-}
-
-
-AppPage.prototype.getHostName = function()
-{
-    if (this.getSystem() == 'local')
-    {
-        return 'www.criticalmass.local';
-    }
-
-    return 'www.criticalmass.in';
-}
-
-AppPage.prototype.getPortNumber = function()
-{
-    return 80;
-}
-
-AppPage.prototype.getProtocolString = function()
-{
-    return 'http://';
-}
-
-AppPage.prototype.getEnvironmentString = function()
-{
-    if (this.getEnvironment() == 'dev')
-    {
-        return 'app_dev.php';
-    }
-
-    return '';
-}
-
-AppPage.prototype.getUrlPrefix = function(ajaxResponseData)
-{
-    return this.getProtocolString() +
-           this.getHostName() +
-           ':' + this.getPortNumber() +
-           '/' + this.getEnvironmentString() +
-           '/';
-}
-
-AppPage.prototype.getApiPrefix = function()
-{
-    return this.getUrlPrefix() + 'api/';
-}
-
-
 AppPage.prototype.switchCityBySlug = function(newCitySlug)
 {
     var newCity = CityFactory.getCityFromStorageBySlug(newCitySlug);
 
     this.setAppTitle(newCity.getTitle());
-    this.setPageTitle(newCity.getTitle());
+    this.refreshCityTitles(newCity.getTitle());
 }
 
 AppPage.prototype.setAppTitle = function(newTitle)
@@ -183,10 +112,9 @@ AppPage.prototype.setAppTitle = function(newTitle)
     $('title').html(newTitle);
 }
 
-AppPage.prototype.setPageTitle = function(newTitle)
+AppPage.prototype.refreshCityTitles = function(newTitle)
 {
-    var pageTitle = $('section#' + this.pageIdentifier + ' header h1');
-    pageTitle.html(newTitle);
+    $('.city-full-title').html(newTitle);
 }
 
 AppPage.prototype.showNotificationLayer = function(notificationLayer)
