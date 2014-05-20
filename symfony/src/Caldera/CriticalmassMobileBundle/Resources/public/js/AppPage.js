@@ -172,12 +172,10 @@ AppPage.prototype.getApiPrefix = function()
 
 AppPage.prototype.switchCityBySlug = function(newCitySlug)
 {
-    var cityFactory = new CityFactory();
+    var newCity = CityFactory.getCityFromStorageBySlug(newCitySlug);
 
-    var newCity = cityFactory.getCityBySlug(newCitySlug);
-
-    this.setAppTitle(newCitySlug);
-    this.setPageTitle(newCitySlug);
+    this.setAppTitle(newCity.getTitle());
+    this.setPageTitle(newCity.getTitle());
 }
 
 AppPage.prototype.setAppTitle = function(newTitle)
@@ -188,7 +186,7 @@ AppPage.prototype.setAppTitle = function(newTitle)
 AppPage.prototype.setPageTitle = function(newTitle)
 {
     var pageTitle = $('section#' + this.pageIdentifier + ' header h1');
-    pageTitle.html('Critical Mass ' + newTitle);
+    pageTitle.html(newTitle);
 }
 
 AppPage.prototype.showNotificationLayer = function(notificationLayer)
