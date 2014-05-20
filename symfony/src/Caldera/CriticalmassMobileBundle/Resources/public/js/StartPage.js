@@ -20,7 +20,7 @@ StartPage.prototype.loadAllCities = function()
     {
         $.ajax({
             type: 'GET',
-            url: this.getApiPrefix() + 'cities/listall',
+            url: UrlFactory.getApiPrefix() + 'cities/listall',
             cache: false,
             context: this,
             success: function(data)

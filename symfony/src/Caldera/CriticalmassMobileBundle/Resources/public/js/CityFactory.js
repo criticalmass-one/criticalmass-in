@@ -62,7 +62,7 @@ CityFactory.getCityBySlug = function(citySlug)
         $.ajax({
             type: 'GET',
             async: false,
-            url: 'http://www.criticalmass.local/app_dev.php/api/cities/getbyslug/' + citySlug,
+            url: UrlFactory.getApiPrefix() + 'cities/getbyslug/' + citySlug,
             cache: false,
             context: this,
             success: function(ajaxResultData)

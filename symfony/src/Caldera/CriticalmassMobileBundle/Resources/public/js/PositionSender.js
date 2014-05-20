@@ -39,7 +39,7 @@ PositionSender.prototype.processPosition = function(positionResult)
 {
     $.ajax({
         type: 'GET',
-        url: '/app_dev.php/api/trackposition',
+        url: UrlFactory.getApiPrefix() + 'trackposition',
         data: {
             latitude: positionResult.coords.latitude,
             longitude: positionResult.coords.longitude,

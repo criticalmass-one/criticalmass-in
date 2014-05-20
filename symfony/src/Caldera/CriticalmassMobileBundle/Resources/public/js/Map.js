@@ -6,7 +6,7 @@ Map = function(mapIdentifier, city, parentPage)
 
     $.ajax({
         type: 'GET',
-        url: 'http://www.criticalmass.local/app_dev.php/api/completemapdata/' + this.city.getCitySlug(),
+        url: 'http://www.criticalmass.local/app_dev.php/api/completemapdata/' + 'hamburg', //this.city.getCitySlug(),
         cache: false,
         context: this,
         success: this.setMapOptions
@@ -51,7 +51,7 @@ Map.prototype.getNewMapData = function()
 {
     $.ajax({
         type: 'GET',
-        url: 'http://www.criticalmass.local/app_dev.php/api/completemapdata/' + this.city.getCitySlug(),
+        url: UrlFactory.getApiPrefix() + 'completemapdata/' + 'hamburg', //this.city.getCitySlug(),
         cache: false,
         context: this,
         success: this.refreshMap
@@ -68,7 +68,7 @@ Map.prototype.initMapPageEventListeners = function()
     $("#flip-gps-sender").on("slidestop", function(event, ui) {
         $.ajax({
             type: 'GET',
-            url: '/app_dev.php/api/gpsstatus',
+            url: UrlFactory.getApiPrefix() + 'gpsstatus',
             data: {
                 'status': $("select#flip-gps-sender")[0].selectedIndex
             },

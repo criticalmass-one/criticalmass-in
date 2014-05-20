@@ -34,7 +34,7 @@ LoginPage.prototype.processLogin = function(element)
     var this2 = this;
 
     $.ajax({
-        url : '/app_dev.php/login_check',
+        url : UrlFactory.getUrlPrefix() + 'login_check',
         type : 'POST',
         context : this2,
         dataType : 'json',

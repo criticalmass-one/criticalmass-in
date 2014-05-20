@@ -60,7 +60,7 @@ AppPage.prototype.logout = function()
     $.ajax({
         type : 'GET',
         context : this,
-        url : '/app_dev.php/logout',
+        url : UrlFactory.getUrlPrefix() + 'logout',
         success : function(data)
         {
             this.switchToLoggedOutMode();
