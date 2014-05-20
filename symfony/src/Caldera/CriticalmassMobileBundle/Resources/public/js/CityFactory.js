@@ -3,15 +3,77 @@ CityFactory = function()
 
 }
 
-CityFactory.prototype.getCityBySlug = function(citySlugString)
+CityFactory.convertJSONToCity = function(jsonData)
 {
-    if (citySlugString == 'hamburg')
+    var cityObject = JSON.parse(jsonData);
+    var city = new City();
+
+    city.setId(cityObject.id);
+    city.setCitySlug(cityObject.slug);
+    city.setCity(cityObject.city);
+    city.setTitle(cityObject.title);
+    city.setDescription(cityObject.description);
+}
+
+CityFactory.convertObjectToCity = function(objectData)
+{
+    var city = new City();
+
+    city.setId(objectData.id);
+    city.setCitySlug(objectData.slug);
+    city.setCity(objectData.city);
+    city.setTitle(objectData.title);
+    city.setDescription(objectData.description);
+
+    return city;
+}
+
+CityFactory.getCityFromStorageBySlug = function(citySlug)
+{
+    if (!sessionStorage.cityListData)
     {
-        return new City('hamburg');
+        alert("STORAGE IST LEER");
+        return null;
     }
 
-    if (citySlugString == 'wedel')
+    var cityList = JSON.parse(sessionStorage.cityListData);
+
+    for (index in cityList.cities)
     {
-        return new City('wedel');
+        if (cityList.cities[index].slug == citySlug)
+        {
+            return this.convertObjectToCity(cityList.cities[index]);
+        }
     }
+
+    return null;
+}
+
+CityFactory.getCityBySlug = function(citySlug)
+{
+    var city = null;
+
+    if (localStorage.city)
+    {
+        city = localStorage.city;
+    }
+    else
+    {
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: 'http://www.criticalmass.local/app_dev.php/api/cities/getbyslug/' + citySlug,
+            cache: false,
+            context: this,
+            success: function(ajaxResultData)
+            {
+                city = new City();
+                city.parseAjaxResultData(ajaxResultData.city);
+
+                localStorage.city = city;
+            }
+        });
+    }
+
+    return city;
 }
