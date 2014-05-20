@@ -14,6 +14,11 @@ class CitiesController extends Controller
     {
         $citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
+        if (empty($citySlug))
+        {
+            throw $this->createNotFoundException('This city is not registered.');
+        }
+
         $city = $citySlug->getCity();
 
         $response = new Response();
