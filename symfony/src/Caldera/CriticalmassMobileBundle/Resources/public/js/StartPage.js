@@ -2,7 +2,7 @@ StartPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
-    this.loadAllCities();
+    this.initCityList();
     this.initEventListeners();
     this.initMenuUserStatus();
 }
@@ -10,33 +10,18 @@ StartPage = function(pageIdentifier)
 StartPage.prototype = new AppPage();
 StartPage.prototype.constructor = StartPage;
 
-StartPage.prototype.loadAllCities = function()
+StartPage.prototype.initCityList = function()
 {
-    if (sessionStorage.cityListData)
+    if (!localStorage.cityListData)
     {
-        this.createCityList(JSON.parse(sessionStorage.cityListData));
+        CityFactory.storeAllCities();
     }
-    else
-    {
-        $.ajax({
-            type: 'GET',
-            url: UrlFactory.getApiPrefix() + 'cities/listall',
-            cache: false,
-            context: this,
-            success: function(data)
-            {
-                sessionStorage.cityListData = JSON.stringify(data);
-                this.createCityList(data);
-            }
-        });
-    }
-}
 
-StartPage.prototype.createCityList = function(data)
-{
-    for (index in data.cities)
+    var cities = JSON.parse(localStorage.cityListData).cities;
+
+    for (index in cities)
     {
-        var city = data.cities[index];
+        var city = cities[index];
         var cityId = 'city-' + city.id + '-' + city.slug;
         var listItem = document.createElement('li');
 
