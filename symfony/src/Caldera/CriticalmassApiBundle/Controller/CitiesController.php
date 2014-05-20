@@ -10,6 +10,28 @@ use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
 class CitiesController extends Controller
 {
+    public function getbyslugAction($citySlug)
+    {
+        $citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        $city = $citySlug->getCity();
+
+        $response = new Response();
+        $response->setContent(json_encode(array(
+            'city' => array(
+                'id' => $city->getId(),
+                'city' => $city->getCity(),
+                'title' => $city->getTitle(),
+                'description' => $city->getDescription(),
+                'slug' => $city->getMainSlug()->getSlug()
+             )
+        )));
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     public function listallAction()
     {
         $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findAll();
