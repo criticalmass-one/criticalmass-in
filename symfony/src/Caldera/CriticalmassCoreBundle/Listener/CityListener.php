@@ -49,21 +49,26 @@ class CityListener
 		if (isset($citySlug))
 		{
 			// CitySlug-Instanz laden
-			$city = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+			$citySlug2 = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
-			// Eigenschaften in der Session persistieren
-			$controller->getRequest()->getSession()->set('currentCitySlug', $city->getMainSlug()->getSlug());
-			$controller->getRequest()->getSession()->set('city', $city);
+            if (!empty($citySlug2))
+            {
+                $city = $citySlug2->getCity();
 
-			// handelt es sich um einen angemeldeten Benutzer?
-			if ($controller->getUser())
-			{
-				// dann zusaetzlich Aenderungen in die Datenbank schreiben
-				$user = $controller->getUser();
-				$user->setCurrentCity($city);
+                // Eigenschaften in der Session persistieren
+                $controller->getRequest()->getSession()->set('currentCitySlug', $city->getMainSlug()->getSlug());
+                $controller->getRequest()->getSession()->set('city', $city);
 
-				$controller->get('fos_user.user_manager')->updateUser($user);
-			}
+                // handelt es sich um einen angemeldeten Benutzer?
+                if ($controller->getUser())
+                {
+                    // dann zusaetzlich Aenderungen in die Datenbank schreiben
+                    $user = $controller->getUser();
+                    $user->setCurrentCity($city);
+
+                    $controller->get('fos_user.user_manager')->updateUser($user);
+                }
+            }
 		}
 	}
 }
