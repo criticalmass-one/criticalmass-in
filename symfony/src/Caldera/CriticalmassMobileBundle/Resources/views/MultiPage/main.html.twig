@@ -30,6 +30,8 @@
 
             var positionSender = new PositionSender(mapPage);
 
+            CityFactory.storeAllCities();
+
             $('#mainpanel').panel({
                 open: function() {
                     _paq.push(['trackEvent', 'main_menu', 'open']);
