@@ -30,13 +30,13 @@ CityFactory.convertObjectToCity = function(objectData)
 
 CityFactory.getCityFromStorageBySlug = function(citySlug)
 {
-    if (!sessionStorage.cityListData)
+    if (!localStorage.cityListData)
     {
         alert("STORAGE IST LEER");
         return null;
     }
 
-    var cityList = JSON.parse(sessionStorage.cityListData);
+    var cityList = JSON.parse(localStorage.cityListData);
 
     for (index in cityList.cities)
     {
@@ -76,4 +76,28 @@ CityFactory.getCityBySlug = function(citySlug)
     }
 
     return city;
+}
+
+CityFactory.storeAllCities = function()
+{
+    if (!localStorage.cityListData)
+    {
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: UrlFactory.getApiPrefix() + 'cities/listall',
+            cache: false,
+            context: this,
+            success: function(data)
+            {
+                localStorage.cityListData = JSON.stringify(data);
+            }
+        });
+    }
+}
+
+CityFactory.refreshAllStoredCities = function()
+{
+    localStore.cityListData = null;
+    this.storeAllCities();
 }
