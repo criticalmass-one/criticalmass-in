@@ -22,8 +22,22 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassCoreBundle\CalderaCriticalmassCoreBundle(),
             new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
             new Caldera\CriticalmassApiBundle\CalderaCriticalmassApiBundle(),
-            new SunCat\MobileDetectBundle\MobileDetectBundle(),
-            new Divi\AjaxLoginBundle\DiviAjaxLoginBundle()
+            //new SunCat\MobileDetectBundle\MobileDetectBundle(),
+            new Divi\AjaxLoginBundle\DiviAjaxLoginBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            // Add your dependencies
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            //...
+
+            // If you haven't already, add the storage bundle
+            // This example uses SonataDoctrineORMAdmin but
+            // it works the same with the alternatives
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+
+            // Then add SonataAdminBundle
+            new Sonata\AdminBundle\SonataAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
