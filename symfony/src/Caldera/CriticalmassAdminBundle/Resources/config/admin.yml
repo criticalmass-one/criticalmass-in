@@ -9,3 +9,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
+
+    sonata.admin.city:
+        class: Caldera\CriticalmassAdminBundle\Admin\CityAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "City" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassCoreBundle\Entity\City
+            - ~
+        calls:
+            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
