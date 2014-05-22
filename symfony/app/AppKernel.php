@@ -38,6 +38,7 @@ class AppKernel extends Kernel
 
             // Then add SonataAdminBundle
             new Sonata\AdminBundle\SonataAdminBundle(),
+            new Caldera\CriticalmassAdminBundle\CalderaCriticalmassAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
