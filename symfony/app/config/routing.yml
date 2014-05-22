@@ -1,7 +1,3 @@
-caldera_criticalmass_admin:
-    resource: "@CalderaCriticalmassAdminBundle/Resources/config/routing.yml"
-    prefix:   /
-
 caldera_criticalmass_api:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
     prefix:   /
