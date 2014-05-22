@@ -1,0 +1,11 @@
+services:
+    sonata.admin.post:
+        class: Caldera\CriticalmassAdminBundle\Admin\RideAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Ride" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassCoreBundle\Entity\Ride
+            - ~
+        calls:
+            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
