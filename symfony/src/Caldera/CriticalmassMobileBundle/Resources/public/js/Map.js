@@ -30,21 +30,80 @@ Map.prototype.timer = null;
 
 Map.prototype.tileLayerAddress = 'https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png';
 
+Map.prototype.getOverridingMapPosition = function()
+{
+    var address = new String(window.location);
+    var addressArray = address.split('/');
+    var tail = addressArray.pop();
+
+    if (tail.indexOf('@') > 0)
+    {
+        var positionString = tail.split('@').pop();
+        var positionArray = positionString.split(',');
+
+        var mapPosition = { latitude: positionArray.shift(), longitude: positionArray.shift(), zoomFactor: positionArray.shift() };
+
+        return mapPosition;
+    }
+}
+
+Map.prototype.refreshOverridingMapPosition = function()
+{
+    var address = new String(window.location);
+    var addressArray = address.split('/');
+    var tail = addressArray.pop();
+
+    tail = tail.slice(tail.indexOf('@'), tail.indexOf('#'));
+
+    var positionString = this.map.getCenter().lat + "," + this.map.getCenter().lng + "," + this.map.getZoom();
+    tail = positionString + tail;
+
+    addressArray.push(tail);
+
+    address = addressArray.join();
+
+    window.location = '#mapPage@' + positionString;
+}
+
 Map.prototype.setMapOptions = function(ajaxResultData)
 {
-    this.map = L.map('map').setView(
-        [ajaxResultData.mapCenter.latitude,
-         ajaxResultData.mapCenter.longitude
-        ],
-        ajaxResultData.zoomFactor);
+    this.map = L.map('map');
+
+    var mapPositon = this.getOverridingMapPosition();
+
+    if (mapPositon != null)
+    {
+        this.map.setView([mapPositon.latitude,
+                          mapPositon.longitude],
+                          mapPositon.zoomFactor);
+    }
+    else
+    {
+        this.map.setView([ajaxResultData.mapCenter.latitude,
+            ajaxResultData.mapCenter.longitude],
+            ajaxResultData.zoomFactor);
+    }
+
 
     L.tileLayer(this.tileLayerAddress, {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(this.map);
 
 
+    var this2 = this;
+
+    this.map.on('dragend', function()
+    {
+        this2.refreshOverridingMapPosition();
+    });
+    this.map.on('zoomend', function()
+    {
+        this2.refreshOverridingMapPosition();
+    });
+
     this.refreshMap(ajaxResultData);
     this.initMapPageEventListeners();
+
 };
 
 Map.prototype.getNewMapData = function()
