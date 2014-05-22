@@ -13,9 +13,14 @@ class RideAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('location', 'text', array('label' => 'Post Title'))
-            ->add('author', 'entity', array('class' => 'Caldera\CriticalmasCoreBundle\Entity\User'))
-            ->add('body') //if no type is specified, SonataAdminBundle tries to guess it
+            ->add('city', null, array('label' => 'Stadt'))
+            ->add('date', 'date', array('label' => 'Datum'))
+            ->add('hasTime', 'checkbox', array('label' => 'Uhrzeit anzeigen?'))
+            ->add('time', 'time', array('label' => 'Uhrzeit'))
+            ->add('hasLocation', 'checkbox', array('label' => 'Treffpunkt anzeigen?'))
+            ->add('location', 'text', array('label' => 'Treffpunkt'))
+            ->add('latitude', 'text', array('label' => 'Breitengrad'))
+            ->add('longitude', 'text', array('label' => 'Längengrad'))
         ;
     }
 
@@ -23,7 +28,10 @@ class RideAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('city')
             ->add('location')
+            ->add('date')
+            ->add('time')
         ;
     }
 
@@ -31,7 +39,10 @@ class RideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->addIdentifier('city')
             ->addIdentifier('location')
+            ->addIdentifier('date')
+            ->addIdentifier('time')
         ;
     }
 }
