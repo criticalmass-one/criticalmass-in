@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: criticalmass.yml }
     - { resource: security.yml }
+    - { resource: @CalderaCriticalmassAdminBundle/Resources/config/admin.yml }
 
 framework:
     #esi:             ~
