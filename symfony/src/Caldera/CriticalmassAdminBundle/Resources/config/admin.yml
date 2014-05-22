@@ -1,5 +1,5 @@
 services:
-    sonata.admin.post:
+    sonata.admin.ride:
         class: Caldera\CriticalmassAdminBundle\Admin\RideAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Content", label: "Ride" }
