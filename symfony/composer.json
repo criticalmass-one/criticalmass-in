@@ -20,7 +20,7 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofsymfony/user-bundle": "1.3.3",
         "doctrine/data-fixtures" : "dev-master",
         "divi/ajax-login-bundle": "dev-master",
         "knplabs/knp-menu": "2.0.*@dev",
@@ -29,7 +29,10 @@
         "sonata-project/jquery-bundle": "dev-master",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/block-bundle": "dev-master",
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master"
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "sonata-project/easy-extends-bundle": "dev-master",
+        "sonata-project/datagrid-bundle": "dev-master",
+        "sonata-project/user-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
