@@ -52,10 +52,10 @@
             <li data-role="list-divider" data-qa-ta="mainpanel-city-title" class="city-full-title">Critical Mass Hamburg</li>
             <li><a href="#mapPage" data-ajax="false" data-qa-ta="mobile-mainpanel-mapPage">Karte</a></li>
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
-            <li><a id="profileButton" style="display: none;" href="#profilePage" data-qa-ta="mobile-mainpanel-profile">Dein Profil</a></li>
-            <li><a id="logoutButton" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
-            <li><a id="registerButton" style="display: none;" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
-            <li><a id="loginButton" style="display: none;" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
+            <li><a id="profileButton" class="show-loggedin-only" style="display: none;" href="#profilePage" data-qa-ta="mobile-mainpanel-profile">Dein Profil</a></li>
+            <li><a id="logoutButton" class="show-loggedin-only" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
+            <li><a id="registerButton" class="show-loggedout-only" style="display: none;" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
+            <li><a id="loginButton" class="show-loggedout-only" style="display: none;" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
         <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
         <li><a href="#privacyPage" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
     </ul>
@@ -70,35 +70,31 @@
     <section data-role="content" id="mapPageContent">
         <div id="map"></div>
 
-        {% if app.user != null %}
-            <div data-role="collapsible-set">
-                <div data-role="collapsible">
-                    <h3 data-qa-ta="mobile-map-gpssettings">GPS-Einstellungen</h3>
-                    <label for="flip-auto-center">automatisch zentrieren:</label>
-                    <select name="flip-auto-center" id="flip-auto-center" data-role="slider" data-qa-ta="mobile-map-centring">
-                        <option value="off">Aus</option>
-                        <option value="on" selected="selected">An</option>
-                    </select>
+        <div data-role="collapsible-set">
+            <div data-role="collapsible" class="show-loggedin-only" style="display: none;">
+                <h3 data-qa-ta="mobile-map-gpssettings">GPS-Einstellungen</h3>
+                <label for="flip-auto-center">automatisch zentrieren:</label>
+                <select name="flip-auto-center" id="flip-auto-center" data-role="slider" data-qa-ta="mobile-map-centring">
+                    <option value="off">Aus</option>
+                    <option value="on" selected="selected">An</option>
+                </select>
 
-                    <label for="flip-gps-sender">GPS-Übertragung:</label>
-                    <select name="flip-gps-sender" id="flip-gps-sender" data-role="slider" data-qa-ta="mobile-map-gpssender">
-                        <option value="off"{% if app.user.sendGPSInformation == 0 %} selected="selected"{% endif %}>Aus</option>
-                        <option value="on"{% if app.user.sendGPSInformation == 1 %} selected="selected"{% endif %}>An</option>
-                    </select>
-                </div>
-
-                <div data-role="collapsible">
-                    <h3 data-qa-ta="mobile-map-statistic">Statistik</h3>
-                    <p class="lastmodified">zuletzt aktualisiert: <span id="datetime" data-qa-ta="mobile-map-datetime">nie</span></p>
-                    <p class="usercounter">Einberechnete Benutzer: <span id="usercounter" data-qa-ta="mobile-map-usercounter">0</span></p>
-                    <p class="averagespeed">Durchschnittsgeschwindigkeit: <span id="averagespeed" data-qa-ta="mobile-map-averagespeed">0</span> Kilometer pro Stunde</p>
-                </div>
+                <label for="flip-gps-sender">GPS-Übertragung:</label>
+                <select name="flip-gps-sender" id="flip-gps-sender" data-role="slider" data-qa-ta="mobile-map-gpssender">
+                    <option value="off">Aus</option>
+                    <option value="on" selected="selected">An</option>
+                </select>
             </div>
 
-        {% else %}
-            <p>Bitte <a data-qa-ta="mobile-map-login" href="#loginPage">logge dich ein</a> oder <a data-qa-ta="mobile-map-register" href="#registerPage">registriere dich</a>, um GPS-Daten zu senden.</p>
-        {% endif %}
+            <div data-role="collapsible">
+                <h3 data-qa-ta="mobile-map-statistic">Statistik</h3>
+                <p class="lastmodified">zuletzt aktualisiert: <span id="datetime" data-qa-ta="mobile-map-datetime">nie</span></p>
+                <p class="usercounter">Einberechnete Benutzer: <span id="usercounter" data-qa-ta="mobile-map-usercounter">0</span></p>
+                <p class="averagespeed">Durchschnittsgeschwindigkeit: <span id="averagespeed" data-qa-ta="mobile-map-averagespeed">0</span> Kilometer pro Stunde</p>
+            </div>
+        </div>
     </section>
+</section>
 
 <!-- Startseite -->
 <section data-role="page" id="startPage">

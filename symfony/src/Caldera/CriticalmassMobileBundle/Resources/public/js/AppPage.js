@@ -43,15 +43,13 @@ AppPage.prototype.getUserLoginStatus = function()
 
 AppPage.prototype.initMenuUserStatus = function()
 {
-    if (this.getUserLoginStatus())
+    if (this.getUserLoginStatus() == true)
     {
-        $('#profileButton').show();
-        $('#logoutButton').show();
+        $('.show-loggedin-only').show();
     }
     else
     {
-        $('#loginButton').show();
-        $('#registerButton').show();
+        $('.show-loggedout-only').show();
     }
 }
 
@@ -72,7 +70,6 @@ AppPage.prototype.switchToLoggedInMode = function(data)
 {
     localStorage.userLoginStatus = true;
     localStorage.userName = data.username;
-
 
     var notificationLayer = new NotificationLayer("Hej " + data.username + ", willkommen zurück!");
     this.showNotificationLayer(notificationLayer);
