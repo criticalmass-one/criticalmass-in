@@ -2,6 +2,7 @@ MapPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
+    this.initEventListeners();
     this.initMenuUserStatus();
     this.initMap();
 }
