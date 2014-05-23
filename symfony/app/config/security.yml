@@ -39,7 +39,8 @@ security:
                 use_forward:    false
                 check_path:     /login_check
                 failure_path:   null
-            logout:             true
+            logout:
+                invalidate_session: false
             anonymous:          true
         #main:
         #    pattern: ^/
