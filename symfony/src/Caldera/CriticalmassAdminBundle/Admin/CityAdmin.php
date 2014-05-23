@@ -21,7 +21,7 @@ class CityAdmin extends Admin
             ->add('twitter', 'text', array('label' => 'Twitter-Konto'))
             ->add('latitude', 'text', array('label' => 'Breitengrad'))
             ->add('longitude', 'text', array('label' => 'Längengrad'))
-        ;
+            ->add('slugs', 'sonata_type_model', array('expanded' => false, 'by_reference' => false, 'multiple' => true));
     }
 
     // Fields to be shown on filter forms

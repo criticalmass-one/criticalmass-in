@@ -39,9 +39,11 @@ class RideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('city')
-            ->addIdentifier('location')
             ->addIdentifier('date')
+            ->addIdentifier('city')
+            ->addIdentifier('hasLocation')
+            ->addIdentifier('location')
+            ->addIdentifier('hasTime')
             ->addIdentifier('time')
         ;
     }
