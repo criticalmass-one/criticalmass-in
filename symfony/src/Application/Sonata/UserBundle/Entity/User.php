@@ -1,27 +1,24 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Application\Sonata\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 /**
- * Diese Benutzer-Entitaet basiert auf der User-Enitaet des FOSUserBundles und 
- * fuegt einige zusaetzliche Eigenschaften hinzu.
- *
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="fos_user_user")
  */
 class User extends BaseUser
 {
-	/**
-	 * Numerische ID dieses Benutzers.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * Numerische ID dieses Benutzers.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
      * Enthaelt eine kurze Beschreibung zur eigenen Person.
@@ -30,21 +27,21 @@ class User extends BaseUser
      */
     private $description;
 
-	/**
-	 * Schalter fuer die GPS-Aktivitaet, entscheidet ob der Benutzer GPS-Daten von
-	 * der Live-Uebersicht senden moechte.
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	private $sendGPSInformation = 1;
+    /**
+     * Schalter fuer die GPS-Aktivitaet, entscheidet ob der Benutzer GPS-Daten von
+     * der Live-Uebersicht senden moechte.
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $sendGPSInformation = 1;
 
-	/**
-	 * Vom Benutzer momentan ausgewaehlte Stadt.
-	 *
-	 * @ORM\ManyToOne(targetEntity="City")
-	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-	 */
-	private $currentCity;
+    /**
+     * Vom Benutzer momentan ausgewaehlte Stadt.
+     *
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    private $currentCity;
 
     /**
      * Soll die Position dauerhaft auf der Karte eingeblendet werden?
@@ -54,48 +51,48 @@ class User extends BaseUser
     private $isPermanent = 0;
 
     /**
-	 * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
-	 * werden koennen.
-	 *
-	 * @ORM\Column(type="string", length=255)
-	 */
-	private $pushoverKey = '';
+     * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
+     * werden koennen.
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pushoverKey = '';
 
-	/**
-	 * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    /**
+     * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * Hasht die E-Mail-Adresse per MD5, um das dazugehörige Gravartar-Profilbild
-	 * aufrufen zu können.
-	 *
-	 * @return String: MD5-gehashte E-Mail-Adresse
-	 */
-	public function getGravatarHash()
-	{
-		return md5($this->getEmail());
-	}
+    /**
+     * Hasht die E-Mail-Adresse per MD5, um das dazugehörige Gravartar-Profilbild
+     * aufrufen zu können.
+     *
+     * @return String: MD5-gehashte E-Mail-Adresse
+     */
+    public function getGravatarHash()
+    {
+        return md5($this->getEmail());
+    }
 
-	/**
-	 * Gibt den Slug der Stadt zurueck, die der Benutzer gerade ausgewaehlt hat.
-	 * Hilfreich, um beispielsweise innerhalb eines Templates automatisch einen
-	 * Slug angeben zu koennen, um Routen zu konstruieren.
-	 *
-	 * @return String: Slug der ausgewaehlten Stadt
-	 */
-	public function getCurrentCitySlug()
-	{
-		return $this->getCurrentCity()->getMainSlug()->getSlug();
-	}
+    /**
+     * Gibt den Slug der Stadt zurueck, die der Benutzer gerade ausgewaehlt hat.
+     * Hilfreich, um beispielsweise innerhalb eines Templates automatisch einen
+     * Slug angeben zu koennen, um Routen zu konstruieren.
+     *
+     * @return String: Slug der ausgewaehlten Stadt
+     */
+    public function getCurrentCitySlug()
+    {
+        return $this->getCurrentCity()->getMainSlug()->getSlug();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -111,14 +108,14 @@ class User extends BaseUser
     public function setSendGPSInformation($sendGPSInformation)
     {
         $this->sendGPSInformation = $sendGPSInformation;
-    
+
         return $this;
     }
 
     /**
      * Get sendGPSInformation
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSendGPSInformation()
     {
@@ -134,7 +131,7 @@ class User extends BaseUser
     public function setCurrentCity(\Caldera\CriticalmassCoreBundle\Entity\City $currentCity = null)
     {
         $this->currentCity = $currentCity;
-    
+
         return $this;
     }
 
@@ -157,14 +154,14 @@ class User extends BaseUser
     public function setPushoverKey($pushoverKey)
     {
         $this->pushoverKey = $pushoverKey;
-    
+
         return $this;
     }
 
     /**
      * Get pushoverKey
      *
-     * @return string 
+     * @return string
      */
     public function getPushoverKey()
     {
@@ -180,14 +177,14 @@ class User extends BaseUser
     public function setIsPermanent($isPermanent)
     {
         $this->isPermanent = $isPermanent;
-    
+
         return $this;
     }
 
     /**
      * Get isPermanent
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsPermanent()
     {
@@ -203,14 +200,14 @@ class User extends BaseUser
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

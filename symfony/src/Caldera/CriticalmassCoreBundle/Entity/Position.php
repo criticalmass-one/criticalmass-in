@@ -25,7 +25,7 @@ class Position
 	/**
 	 * Sender dieses Datums.
 	 *
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="positions")
+	 * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="positions")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;

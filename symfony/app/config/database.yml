@@ -5,4 +5,4 @@ parameters:
     database_port: null
     database_name: criticalmass
     database_user: root
-    database_password:
+    database_password: null
