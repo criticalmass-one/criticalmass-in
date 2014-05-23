@@ -318,10 +318,10 @@ class Position
     /**
      * Set user_id
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\User $userId
+     * @param \Application\Sonata\UserBundle\Entity\User $userId
      * @return Position
      */
-    public function setUserId(\Caldera\CriticalmassCoreBundle\Entity\User $userId = null)
+    public function setUserId(\Application\Sonata\UserBundle\Entity\User $userId = null)
     {
         $this->user_id = $userId;
 
@@ -341,10 +341,10 @@ class Position
     /**
      * Set user
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Position
      */
-    public function setUser(\Caldera\CriticalmassCoreBundle\Entity\User $user = null)
+    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
