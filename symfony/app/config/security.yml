@@ -33,7 +33,7 @@ security:
         main:
             pattern:             .*
             context:             user
-            form_login:
+            ajax_form_login:
                 provider:       fos_userbundle
                 login_path:     /login
                 use_forward:    false
