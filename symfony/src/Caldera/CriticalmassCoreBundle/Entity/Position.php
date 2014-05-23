@@ -90,7 +90,7 @@ class Position
 	/**
 	 * Zeitpunkt, zu dem die obigen Angaben vom Smartphone ermittelt wurden.
 	 *
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="bigint")
 	 */
 	protected $timestamp;
 
