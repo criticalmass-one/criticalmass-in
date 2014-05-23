@@ -4,17 +4,27 @@ PositionSender = function(parentPage)
 
     this.parentPage.positionSender = this;
 
-    this.catchPosition();
+    this.startSender();
 };
 
 PositionSender.prototype.parentPage = null;
 
-PositionSender.prototype.catchPosition = function()
+PositionSender.prototype.interval = null;
+
+PositionSender.prototype.startSender = function()
+{
+  var this2 = this;
+
+  this.interval = window.setInterval(function()
+  {
+      this2.catchPosition(this2);
+  }, 1000);
+}
+
+PositionSender.prototype.catchPosition = function(this2)
 {
     if (navigator.geolocation)
     {
-        var this2 = this;
-
         function processError2(positionError)
         {
             this2.processError(positionError);
@@ -31,7 +41,7 @@ PositionSender.prototype.catchPosition = function()
     else
     {
         var notificationLayer = new NotificationLayer('Schade: Dein Browser unterstützt leider noch keine Positionsbestimmung.');
-        this.showNotificationLayer(notificationLayer);
+        this.parentPage.showNotificationLayer(notificationLayer);
     }
 }
 
@@ -40,6 +50,7 @@ PositionSender.prototype.processPosition = function(positionResult)
     $.ajax({
         type: 'GET',
         url: UrlFactory.getApiPrefix() + 'trackposition',
+        context: this,
         data: {
             latitude: positionResult.coords.latitude,
             longitude: positionResult.coords.longitude,
@@ -53,10 +64,15 @@ PositionSender.prototype.processPosition = function(positionResult)
         cache: false,
         success: function(result) {
 
+        },
+        error: function()
+        {
+            var notificationLayer = new NotificationLayer('Deine Position konnte nicht an den Server übertragen werden.');
+            this.parentPage.showNotificationLayer(notificationLayer);
         }
     });
 
-    this.setQuality(positionResult.coords.accuracy);
+    //this.setQuality(positionResult.coords.accuracy);
 }
 
 PositionSender.prototype.quality = null;
