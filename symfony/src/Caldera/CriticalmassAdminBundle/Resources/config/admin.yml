@@ -20,3 +20,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
+
+    sonata.admin.cityslug:
+        class: Caldera\CriticalmassAdminBundle\Admin\CitySlugAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "CitySlug" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassCoreBundle\Entity\CitySlug
+            - ~
+        calls:
+            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
