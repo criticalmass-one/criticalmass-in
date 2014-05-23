@@ -38,7 +38,7 @@ AppPage.prototype.getCitySlug = function()
 
 AppPage.prototype.getUserLoginStatus = function()
 {
-    return localStorage.userLoginStatus;
+    return localStorage.userLoginStatus == 'true';
 }
 
 AppPage.prototype.initMenuUserStatus = function()
@@ -46,10 +46,12 @@ AppPage.prototype.initMenuUserStatus = function()
     if (this.getUserLoginStatus() == true)
     {
         $('.show-loggedin-only').show();
+        $('.show-loggedout-only').hide();
     }
     else
     {
         $('.show-loggedout-only').show();
+        $('.show-loggedin-only').hide();
     }
 }
 
