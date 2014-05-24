@@ -26,7 +26,7 @@ class AverageSpeedMapBuilderModule extends BaseMapBuilderModule
                 $this->mapBuilder->positionArray->getPosition(1)->getCreationDateTime()->format('U');
 
             // Durchschnittsgeschwindigkeit berechnen
-            $averageSpeed = $distance / $time;
+            $averageSpeed = $distance / ($time + 0.001);
 
             // in Kilometer pro Stunde umrechnen
             $averageSpeed *= 3600;
