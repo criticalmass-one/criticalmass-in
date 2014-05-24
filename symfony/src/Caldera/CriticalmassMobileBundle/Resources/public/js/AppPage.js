@@ -118,15 +118,17 @@ AppPage.prototype.refreshCityTitles = function(newTitle)
 
 AppPage.prototype.showNotificationLayer = function(notificationLayer)
 {
-    $('#' + this.pageIdentifier + ' section[data-role="content"]').prepend('<div id="notificationLayer" class="notification" data-icon="navigation">' + notificationLayer.getNotificationMessage() + '</div>');
-
-    var this2 = this;
-
-
-    $('#notificationLayer').click(function()
+    if ($('#notificationLayer').length == 0)
     {
-        this2.flushNotification();
-    })
+        $('#' + this.pageIdentifier + ' section[data-role="content"]').prepend('<div id="notificationLayer" class="notification" data-icon="navigation">' + notificationLayer.getNotificationMessage() + '</div>');
+
+        var this2 = this;
+
+        $('#notificationLayer').click(function()
+        {
+            this2.flushNotification();
+        });
+    }
 }
 
 AppPage.prototype.flushNotification = function()
