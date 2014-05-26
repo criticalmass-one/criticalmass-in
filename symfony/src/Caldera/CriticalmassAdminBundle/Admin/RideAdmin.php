@@ -13,13 +13,19 @@ class RideAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('city', null, array('label' => 'Stadt'))
-            ->add('dateTime', 'datetime', array('label' => 'Start'))
-            ->add('hasTime', 'checkbox', array('label' => 'Uhrzeit anzeigen?'))
-            ->add('hasLocation', 'checkbox', array('label' => 'Treffpunkt anzeigen?'))
-            ->add('location', 'text', array('label' => 'Treffpunkt'))
-            ->add('latitude', 'text', array('label' => 'Breitengrad'))
-            ->add('longitude', 'text', array('label' => 'Längengrad'))
+            ->with('Stadt', array('class' => 'col-md-6'))
+                ->add('city', null, array('label' => 'Stadt'))
+            ->end()
+            ->with('Datum und Uhrzeit', array('class' => 'col-md-6'))
+                ->add('dateTime', 'datetime', array('label' => 'Start'))
+                ->add('hasTime', 'checkbox', array('label' => 'Uhrzeit anzeigen?'))
+            ->end()
+            ->with('Treffpunkt', array('class' => 'col-md-6'))
+                ->add('hasLocation', 'checkbox', array('label' => 'Treffpunkt anzeigen?'))
+                ->add('location', 'text', array('label' => 'Treffpunkt'))
+                ->add('latitude', 'text', array('label' => 'Breitengrad'))
+                ->add('longitude', 'text', array('label' => 'Längengrad'))
+            ->end()
         ;
     }
 

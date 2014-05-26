@@ -13,15 +13,19 @@ class CityAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('city', 'text', array('label' => 'Stadt'))
-            ->add('title', 'text', array('label' => 'Bezeichnung'))
-            ->add('description', 'text', array('label' => 'Beschreibung'))
-            ->add('url', 'text', array('label' => 'Webseite'))
-            ->add('facebook', 'text', array('label' => 'facebook-Seite'))
-            ->add('twitter', 'text', array('label' => 'Twitter-Konto'))
-            ->add('latitude', 'text', array('label' => 'Breitengrad'))
-            ->add('longitude', 'text', array('label' => 'Längengrad'))
-            ->add('slugs', 'sonata_type_model', array('expanded' => false, 'by_reference' => false, 'multiple' => true));
+            ->with('Einstellungen', array('class' => 'col-md-6'))
+                ->add('city', 'text', array('label' => 'Stadt'))
+                ->add('title', 'text', array('label' => 'Bezeichnung'))
+                ->add('description', 'text', array('label' => 'Beschreibung'))
+            ->with('Social Media', array('class' => 'col-md-6'))
+                ->add('url', 'text', array('label' => 'Webseite'))
+                ->add('facebook', 'text', array('label' => 'facebook-Seite'))
+                ->add('twitter', 'text', array('label' => 'Twitter-Konto'))
+            ->with('Geografie', array('class' => 'col-md-6'))
+                ->add('latitude', 'text', array('label' => 'Breitengrad'))
+                ->add('longitude', 'text', array('label' => 'Längengrad'))
+            ->with('Slugs', array('class' => 'col-md-6'))
+                ->add('slugs', 'sonata_type_model', array('expanded' => false, 'by_reference' => false, 'multiple' => true));
     }
 
     // Fields to be shown on filter forms
