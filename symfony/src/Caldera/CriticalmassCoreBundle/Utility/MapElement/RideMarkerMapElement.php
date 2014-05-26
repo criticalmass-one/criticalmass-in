@@ -40,8 +40,8 @@ class RideMarkerMapElement extends BaseMapElement
             'title' => $this->ride->getCity()->getTitle(),
             'location' => $this->ride->getLocation(),
             'hasLocation' => $this->ride->getHasLocation(),
-            'date' => $this->ride->getDate()->format('d.m.Y'),
-            'time' => $this->ride->getTime()->format('H:i'),
+            'date' => $this->ride->getDateTime()->format('d.m.Y'),
+            'time' => $this->ride->getDateTime()->format('H:i'),
             'hasTime' => $this->ride->getHasTime(),
             'popup' => !$this->ride->isRideRolling()
 			);

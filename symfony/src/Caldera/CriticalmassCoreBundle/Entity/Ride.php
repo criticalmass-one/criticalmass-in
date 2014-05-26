@@ -30,12 +30,12 @@ class Ride
 	 */
 	private $city;
 
-	/**
-	 * Datum der Tour vom Typ DateTime.
-	 *
-	 * @ORM\Column(type="date")
-	 */
-	private $date;
+    /**
+     * Startdatum und -uhrzeit der Tour.
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $dateTime;
 
 	/**
 	 * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
@@ -43,13 +43,6 @@ class Ride
 	 * @ORM\Column(type="boolean")
 	 */
 	private $hasTime;
-
-	/**
-	 * Uhrzeit der Tour vom Typ DateTime.
-	 *
-	 * @ORM\Column(type="time")
-	 */
-	private $time;
 
 	/**
 	 * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
@@ -109,12 +102,12 @@ class Ride
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param \DateTime $dateTime
      * @return Ride
      */
-    public function setDate($date)
+    public function setDateTime($dateTime)
     {
-        $this->date = $date;
+        $this->dateTime = $dateTime;
     
         return $this;
     }
@@ -124,9 +117,9 @@ class Ride
      *
      * @return \DateTime 
      */
-    public function getDate()
+    public function getDateTime()
     {
-        return $this->date;
+        return $this->dateTime;
     }
 
     /**
@@ -150,29 +143,6 @@ class Ride
     public function getHasTime()
     {
         return $this->hasTime;
-    }
-
-    /**
-     * Set time
-     *
-     * @param \DateTime $time
-     * @return Ride
-     */
-    public function setTime($time)
-    {
-        $this->time = $time;
-    
-        return $this;
-    }
-
-    /**
-     * Get time
-     *
-     * @return \DateTime 
-     */
-    public function getTime()
-    {
-        return $this->time;
     }
 
     /**
@@ -338,10 +308,10 @@ class Ride
 
     public function isRideRolling()
     {
-        // total dämliche Berechnung des Timestamp, weil das Datumsformat unserer Entität das nicht besser hergibt!
-        $rideTimeStamp = $this->getDate()->format('U') + $this->getTime()->format('H') * 3600 + $this->getTime()->format('i');
+        $rideTimeStamp = $this->getDateTime()->format('U');
+        $nowTimeStamp = (new \DateTime())->getTimeStamp();
 
-        if ($rideTimeStamp + 900 < time())
+        if ($rideTimeStamp + 900 < $nowTimeStamp)
         {
             return true;
         }

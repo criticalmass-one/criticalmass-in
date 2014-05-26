@@ -14,9 +14,8 @@ class RideAdmin extends Admin
     {
         $formMapper
             ->add('city', null, array('label' => 'Stadt'))
-            ->add('date', 'date', array('label' => 'Datum'))
+            ->add('dateTime', 'datetime', array('label' => 'Start'))
             ->add('hasTime', 'checkbox', array('label' => 'Uhrzeit anzeigen?'))
-            ->add('time', 'time', array('label' => 'Uhrzeit'))
             ->add('hasLocation', 'checkbox', array('label' => 'Treffpunkt anzeigen?'))
             ->add('location', 'text', array('label' => 'Treffpunkt'))
             ->add('latitude', 'text', array('label' => 'Breitengrad'))
@@ -30,8 +29,7 @@ class RideAdmin extends Admin
         $datagridMapper
             ->add('city')
             ->add('location')
-            ->add('date')
-            ->add('time')
+            ->add('dateTime')
         ;
     }
 
@@ -39,12 +37,11 @@ class RideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('date')
+            ->addIdentifier('dateTime')
             ->addIdentifier('city')
             ->addIdentifier('hasLocation')
             ->addIdentifier('location')
             ->addIdentifier('hasTime')
-            ->addIdentifier('time')
         ;
     }
 }

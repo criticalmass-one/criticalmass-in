@@ -13,11 +13,11 @@ class TraceMapBuilder extends BaseMapBuilder
     {
         $coreNamespace = "\\Caldera\\CriticalmassCoreBundle\\Utility\\MapBuilderModule\\";
 
-        $this->registerModule($coreNamespace."MapCenterMapBuilderModule");
         $this->registerModule($coreNamespace."TracePositionMapBuilderModule");
         $this->registerModule($coreNamespace."AverageSpeedMapBuilderModule");
         $this->registerModule($coreNamespace."ZoomFactorMapBuilderModule");
         $this->registerModule($coreNamespace."UserOnlineMapBuilderModule");
+        $this->registerModule($coreNamespace."MapCenterMapBuilderModule");
         $this->registerModule($coreNamespace."RideMapBuilderModule");
         $this->registerModule($coreNamespace."OtherCitiesMapBuilderModule");
     }

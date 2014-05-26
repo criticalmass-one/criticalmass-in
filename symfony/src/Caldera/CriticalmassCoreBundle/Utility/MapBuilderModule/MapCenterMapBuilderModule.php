@@ -7,10 +7,22 @@ class MapCenterMapBuilderModule extends BaseMapBuilderModule
 {
     public function execute()
     {
-        $this->mapBuilder->response["mapCenter"] = array(
-            "latitude" => $this->getMapCenterLatitude(),
-            "longitude" => $this->getMapCenterLongitude()
-        );
+        $ride = $this->mapBuilder->ride;
+
+        if ($ride->getHasLocation() && !$ride->isRideRolling())
+        {
+            $this->mapBuilder->response["mapCenter"] = array(
+                "latitude" => $this->mapBuilder->ride->getLatitude(),
+                "longitude" => $this->mapBuilder->ride->getLongitude()
+            );
+        }
+        else
+        {
+            $this->mapBuilder->response["mapCenter"] = array(
+                "latitude" => $this->getMapCenterLatitude(),
+                "longitude" => $this->getMapCenterLongitude()
+            );
+        }
     }
 
     public function getMapCenterLatitude()
