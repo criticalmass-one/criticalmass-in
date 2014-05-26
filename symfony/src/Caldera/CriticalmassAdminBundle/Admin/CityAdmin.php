@@ -17,15 +17,19 @@ class CityAdmin extends Admin
                 ->add('city', 'text', array('label' => 'Stadt'))
                 ->add('title', 'text', array('label' => 'Bezeichnung'))
                 ->add('description', 'text', array('label' => 'Beschreibung'))
+            ->end()
             ->with('Social Media', array('class' => 'col-md-6'))
                 ->add('url', 'text', array('label' => 'Webseite'))
                 ->add('facebook', 'text', array('label' => 'facebook-Seite'))
                 ->add('twitter', 'text', array('label' => 'Twitter-Konto'))
+            ->end()
             ->with('Geografie', array('class' => 'col-md-6'))
                 ->add('latitude', 'text', array('label' => 'Breitengrad'))
                 ->add('longitude', 'text', array('label' => 'Längengrad'))
+            ->end()
             ->with('Slugs', array('class' => 'col-md-6'))
-                ->add('slugs', 'sonata_type_model', array('expanded' => false, 'by_reference' => false, 'multiple' => true));
+                ->add('slugs', 'sonata_type_model', array('expanded' => false, 'by_reference' => false, 'multiple' => true))
+            ->end();
     }
 
     // Fields to be shown on filter forms
