@@ -28,7 +28,13 @@ class CityAdmin extends Admin
                 ->add('longitude', 'text', array('label' => 'Längengrad'))
             ->end()
             ->with('Slugs', array('class' => 'col-md-6'))
-                ->add('slugs', 'sonata_type_model', array('expanded' => false, 'by_reference' => false, 'multiple' => true))
+                ->add('slugs', 'sonata_type_collection', array(), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable'  => 'position',
+                'allow_delete' => true
+
+            ))
             ->end();
     }
 

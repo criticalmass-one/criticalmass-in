@@ -13,7 +13,6 @@ class CitySlugAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('city', 'sonata_type_model', array('label' => 'Stadt'))
             ->add('slug', 'text', array('label' => 'Slug'))
         ;
     }
