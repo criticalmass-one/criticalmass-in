@@ -340,10 +340,14 @@ Map.prototype.drawMarker = function(markerElement)
             ).addTo(this.map)
                 .bindPopup(popupContent);
 
-            if (markerElement.popup && !this.hasOverridingMapPosition())
+            if (markerElement.citySlug == this.parentPage.getCitySlug() && !this.hasOverridingMapPosition())
             {
                 this.elementsArray[markerElement.id].openPopup();
             }
+
+            this.elementsArray[markerElement.id].on('click', function(e) {
+                this.switchCity(markerElement.citySlug);
+            }, this);
         }
     }
 };
@@ -372,10 +376,5 @@ Map.prototype.switchCity = function(newCitySlug)
 {
     this.parentPage.switchCityBySlug(newCitySlug);
 
-    var this2 = this;
-
-    this.timer = setInterval(function()
-    {
-        this2.getNewMapData();
-    }, 5000);
+    this.getNewMapData();
 };
