@@ -42,13 +42,12 @@ StartPage.prototype.initCityList = function()
 
         $('#cityList').append(listItem);
 
-        // TODO Mit echtem Binding wird das hier schöner
         var this2 = this;
 
         $('#' + cityId).click(function()
         {
             var newCitySlug = $(this).attr('data-cityslug');
-            this2.switchCity(newCitySlug);
+            this2.switchCityBySlug(newCitySlug);
         });
     }
 
