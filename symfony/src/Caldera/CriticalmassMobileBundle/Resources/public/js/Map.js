@@ -286,7 +286,7 @@ Map.prototype.drawMarker = function(markerElement)
                 .bindPopup(markerElement.cityTitle);
 
             this.elementsArray[markerElement.id].on('click', function(e) {
-                this.parentPage.switchCityBySlug(markerElement.citySlug);
+                this.switchCity(markerElement.citySlug);
             }, this);
         }
 
@@ -366,4 +366,16 @@ Map.prototype.drawCircle = function(circleElement)
                                                         ],
                                                         circleElement.radius, circleOptions).addTo(this.map);
     }
+};
+
+Map.prototype.switchCity = function(newCitySlug)
+{
+    this.parentPage.switchCityBySlug(newCitySlug);
+
+    var this2 = this;
+
+    this.timer = setInterval(function()
+    {
+        this2.getNewMapData();
+    }, 5000);
 };
