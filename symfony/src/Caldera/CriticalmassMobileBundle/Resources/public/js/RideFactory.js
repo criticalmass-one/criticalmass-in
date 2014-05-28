@@ -3,6 +3,11 @@ RideFactory = function()
 
 }
 
+RideFactory.hasRides = function()
+{
+    return (localStorage.rideListData != null) && (localStorage.rideListData != '');
+}
+
 RideFactory.convertObjectToRide = function(objectData)
 {
     var ride = new Ride();
