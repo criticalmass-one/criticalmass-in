@@ -106,5 +106,3 @@ CityFactory.refreshAllStoredCities = function(callback)
     localStorage.cityListData = null;
     this.storeAllCities(callback);
 }
-    this.storeAllCities();
-}
