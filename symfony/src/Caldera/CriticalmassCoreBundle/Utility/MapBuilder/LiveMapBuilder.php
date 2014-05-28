@@ -20,7 +20,7 @@ class LiveMapBuilder extends BaseMapBuilder
         $this->registerModule($coreNamespace."ZoomFactorMapBuilderModule");
         $this->registerModule($coreNamespace."UserOnlineMapBuilderModule");
         $this->registerModule($coreNamespace."RideMapBuilderModule");
-        $this->registerModule($coreNamespace."OtherCitiesMapBuilderModule");
+        $this->registerModule($coreNamespace."OtherRidesMapBuilderModule");
         //$this->registerModule("\\Caldera\\CriticalmassGalleryBundle\\Utility\\MapBuilderModule\\ImageMapBuilderModule");
     }
 }
