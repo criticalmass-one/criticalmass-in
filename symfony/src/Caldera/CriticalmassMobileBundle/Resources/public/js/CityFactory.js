@@ -3,6 +3,11 @@ CityFactory = function()
 
 }
 
+CityFactory.hasCities = function()
+{
+    return (localStorage.cityListData != null) && (localStorage.cityListData != '');
+}
+
 CityFactory.convertJSONToCity = function(jsonData)
 {
     var cityObject = JSON.parse(jsonData);
