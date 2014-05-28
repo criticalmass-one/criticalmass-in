@@ -32,7 +32,6 @@ CityFactory.getCityFromStorageBySlug = function(citySlug)
 {
     if (!localStorage.cityListData)
     {
-        alert("STORAGE IST LEER");
         return null;
     }
 
