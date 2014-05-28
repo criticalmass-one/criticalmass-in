@@ -45,6 +45,15 @@ Map.prototype.getOverridingMapPosition = function()
 
         return mapPosition;
     }
+
+    return null;
+}
+
+Map.prototype.hasOverridingMapPosition = function()
+{
+    var address = new String(window.location);
+
+    return address.indexOf('@') > 0;
 }
 
 Map.prototype.refreshOverridingMapPosition = function()
@@ -69,13 +78,15 @@ Map.prototype.setMapOptions = function(ajaxResultData)
 {
     this.map = L.map('map');
 
-    var mapPositon = this.getOverridingMapPosition();
-
-    if (mapPositon != null)
+    if (this.hasOverridingMapPosition())
     {
+        var mapPositon = this.getOverridingMapPosition();
+
         this.map.setView([mapPositon.latitude,
                           mapPositon.longitude],
                           mapPositon.zoomFactor);
+
+        $("select#flip-auto-center").val('off').slider('refresh');
     }
     else
     {
@@ -88,7 +99,6 @@ Map.prototype.setMapOptions = function(ajaxResultData)
     L.tileLayer(this.tileLayerAddress, {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(this.map);
-
 
     var this2 = this;
 
@@ -271,10 +281,10 @@ Map.prototype.drawMarker = function(markerElement)
         if (markerElement.type == 'citymarker')
         {
             this.elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude,
-                                                             markerElement.centerPosition.longitude],
-                                                             { riseOnHover: true }
-                                                            ).addTo(this.map)
-                                                             .bindPopup(markerElement.cityTitle);
+                markerElement.centerPosition.longitude],
+                { riseOnHover: true }
+            ).addTo(this.map)
+                .bindPopup(markerElement.cityTitle);
 
             this.elementsArray[markerElement.id].on('click', function(e) {
                 this.parentPage.switchCityBySlug(markerElement.citySlug);
@@ -286,10 +296,10 @@ Map.prototype.drawMarker = function(markerElement)
             var popupContent = '<section class="position"><h2>' + markerElement.username + '</h2><p>' + markerElement.description + '</p></section>';
 
             this.elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude,
-                                                             markerElement.centerPosition.longitude],
-                                                             { riseOnHover: true }
-                                                            ).addTo(this.map)
-                                                             .bindPopup(popupContent);
+                markerElement.centerPosition.longitude],
+                { riseOnHover: true }
+            ).addTo(this.map)
+                .bindPopup(popupContent);
         }
 
         if (markerElement.type == 'ridemarker')
@@ -325,13 +335,13 @@ Map.prototype.drawMarker = function(markerElement)
             });
 
             this.elementsArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude,
-                                                             markerElement.centerPosition.longitude],
-                                                             { riseOnHover: true,
-                                                               icon: criticalmassIcon }
-                                                            ).addTo(this.map)
-                                                             .bindPopup(popupContent);
+                markerElement.centerPosition.longitude],
+                { riseOnHover: true,
+                    icon: criticalmassIcon }
+            ).addTo(this.map)
+                .bindPopup(popupContent);
 
-            if (markerElement.popup)
+            if (markerElement.popup && !this.hasOverridingMapPosition())
             {
                 this.elementsArray[markerElement.id].openPopup();
             }
