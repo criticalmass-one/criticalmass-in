@@ -40,7 +40,7 @@ RideFactory.getRideFromStorageBySlug = function(citySlug)
 
 RideFactory.storeAllRides = function()
 {
-    if (!localStorage.rideListData)
+    if (!localStorage.rideListData) or (localStorage.rideListData == null)
     {
         $.ajax({
             type: 'GET',
