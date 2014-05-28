@@ -79,7 +79,7 @@ CityFactory.getCityBySlug = function(citySlug)
 
 CityFactory.storeAllCities = function()
 {
-    if (!localStorage.cityListData)
+    if (!localStorage.cityListData) or (localStorage.cityListData = null)
     {
         $.ajax({
             type: 'GET',
