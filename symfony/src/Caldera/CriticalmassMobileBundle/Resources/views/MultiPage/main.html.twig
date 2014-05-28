@@ -19,23 +19,37 @@
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script>
+        var isPageLoaded = false;
+
         $(function() { $( "body>[data-role='panel']" ).panel().enhanceWithin(); });
 
         window.onload = function()
         {
-            var mapPage = new MapPage('mapPage');
-            var startPage = new StartPage('startPage');
-            var loginPage = new LoginPage('loginPage');
+            function loadingCompletedCallback()
+            {
+                if (CityFactory.hasCities() && RideFactory.hasRides() && !isPageLoaded)
+                {
+                    isPageLoaded = true;
 
-            var positionSender = new PositionSender(mapPage);
+                    var mapPage = new MapPage('mapPage');
+                    var startPage = new StartPage('startPage');
 
-            $('#mainpanel').panel({
-                open: function() {
-                    _paq.push(['trackEvent', 'main_menu', 'open']);
+                    //CityFactory.getNearestCity();
+
+                    var loginPage = new LoginPage('loginPage');
+
+                    //var positionSender = new PositionSender(mapPage);
+
+                    $('#mainpanel').panel({
+                        open: function() {
+                            _paq.push(['trackEvent', 'main_menu', 'open']);
+                        }
+                    });
                 }
-            });
+            }
 
-
+            CityFactory.refreshAllStoredCities(loadingCompletedCallback);
+            RideFactory.refreshAllStoredRides(loadingCompletedCallback);
         };
 
     </script>
