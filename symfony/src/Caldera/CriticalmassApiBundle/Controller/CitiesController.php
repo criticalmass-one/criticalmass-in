@@ -53,7 +53,7 @@ class CitiesController extends Controller
                 'slug' => $city->getMainSlug()->getSlug()
             );
 
-            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('date' => 'DESC'));
+            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
 
             if ($ride)
             {
