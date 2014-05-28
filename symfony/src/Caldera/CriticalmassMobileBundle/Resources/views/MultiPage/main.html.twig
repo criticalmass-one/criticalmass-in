@@ -5,23 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
     <link rel="stylesheet" href="/themes/jquery.mobile.icons.min.css" />
-    {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
     <script>
         var isPageLoaded = false;
 
-        $(function() { $( "body>[data-role='panel']" ).panel().enhanceWithin(); });
+        function getCurrentPageId() {
+            return $(":mobile-pagecontainer").pagecontainer( "getActivePage" )[0].id;
+        }
 
         window.onload = function()
         {
@@ -33,12 +25,9 @@
 
                     var mapPage = new MapPage('mapPage');
                     var startPage = new StartPage('startPage');
-
-                    //CityFactory.getNearestCity();
-
                     var loginPage = new LoginPage('loginPage');
 
-                    //var positionSender = new PositionSender(mapPage);
+                    var positionSender = new PositionSender(mapPage);
 
                     $('#mainpanel').panel({
                         open: function() {
@@ -47,6 +36,8 @@
                     });
                 }
             }
+
+            $(function() { $( "body>[data-role='panel']" ).panel().enhanceWithin(); });
 
             CityFactory.refreshAllStoredCities(loadingCompletedCallback);
             RideFactory.refreshAllStoredRides(loadingCompletedCallback);
@@ -236,6 +227,11 @@
 </script>
 <noscript><p><img src="http://piwik.caldera.cc/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+{% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 </body>
 </html>

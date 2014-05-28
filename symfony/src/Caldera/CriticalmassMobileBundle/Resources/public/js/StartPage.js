@@ -2,21 +2,27 @@ StartPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
-    this.initCityList();
     this.initEventListeners();
     this.initMenuUserStatus();
+
+    var this2 = this;
+    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
+        this2.initCityList();
+    });
 }
 
 StartPage.prototype = new AppPage();
 StartPage.prototype.constructor = StartPage;
 
+StartPage.prototype.initPage = false;
+
 StartPage.prototype.initCityList = function()
 {
-    if (!localStorage.cityListData)
+    if (!localStorage.cityListData && !this.initPage)
     {
         CityFactory.storeAllCities();
     }
-    else
+    else if (!this.initPage)
     {
         var cities = JSON.parse(localStorage.cityListData).cities;
 
@@ -60,8 +66,9 @@ StartPage.prototype.initCityList = function()
                 this2.switchCityBySlug(newCitySlug);
                 window.location = '#mapPage';
             });
+
+
+            $('#cityList').listview('refresh');
         }
     }
-
-    $('#cityList').listview('refresh');
 }

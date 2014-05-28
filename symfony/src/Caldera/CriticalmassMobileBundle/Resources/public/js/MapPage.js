@@ -4,7 +4,11 @@ MapPage = function(pageIdentifier)
 
     this.initEventListeners();
     this.initMenuUserStatus();
-    this.initMap();
+
+    var this2 = this;
+    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
+        this2.initMap();
+    });
 }
 
 MapPage.prototype = new AppPage();
