@@ -168,7 +168,7 @@
         <h1>Login</h1>
     </header>
     <section data-role="content" id="loginPageContent">
-        <form action="{{ path("fos_user_security_check") }}" method="post" id="form-login">
+        <form action="" method="post" id="form-login" class="show-loggedout-only" style="display: none;">
             <label for="username">Dein Benutzername:</label>
             <input type="text" id="username" name="_username" required="required" />
 
