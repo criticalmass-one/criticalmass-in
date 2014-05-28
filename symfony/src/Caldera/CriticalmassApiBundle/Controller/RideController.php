@@ -23,8 +23,7 @@ class RideController extends Controller
                 $resultArray[$ride2->getCity()->getMainSlug()->getSlug()] = array(
                     'id' => $ride2->getId(),
                     'slug' => $ride2->getCity()->getMainSlug()->getSlug(),
-                    'time' => $ride2->getTime(),
-                    'date' => $ride2->getDate(),
+                    'dateTime' => $ride2->getDateTime()->format('F d, Y H:i:s'),
                     'location' => $ride2->getLocation(),
                     'latitude' => $ride2->getLatitude(),
                     'longitude' => $ride2->getLongitude()
