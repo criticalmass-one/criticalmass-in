@@ -30,7 +30,7 @@ class ApiController extends Controller
 
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
 
-        $lmp = new Utility\MapBuilder\TraceMapBuilder(
+        $lmp = new Utility\MapBuilder\LiveMapBuilder(
             $ride,
             $this->getDoctrine()
         );
