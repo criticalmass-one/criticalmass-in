@@ -18,6 +18,12 @@ AppPage.prototype.initEventListeners = function()
     {
         this2.logout();
     });
+
+    $('#mainpanel').panel({
+        open: function() {
+            _paq.push(['trackEvent', 'main_menu', 'open']);
+        }
+    });
 }
 
 AppPage.prototype.positionSender = null;
