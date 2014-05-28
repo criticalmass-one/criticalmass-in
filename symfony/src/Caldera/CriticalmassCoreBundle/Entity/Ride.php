@@ -342,4 +342,9 @@ class Ride
             return $this->getCity()->getLongitude();
         }
     }
+
+    public function isEqual(Ride $ride)
+    {
+        return $ride->getId() == $this->getId();
+    }
 }
