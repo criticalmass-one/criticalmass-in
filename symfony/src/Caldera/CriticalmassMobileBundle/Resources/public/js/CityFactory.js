@@ -97,6 +97,6 @@ CityFactory.storeAllCities = function()
 
 CityFactory.refreshAllStoredCities = function()
 {
-    localStore.cityListData = null;
+    localStorage.cityListData = null;
     this.storeAllCities();
 }
