@@ -50,7 +50,6 @@ RideFactory.storeAllRides = function()
             context: this,
             success: function(data)
             {
-                alert("Abspeichern");
                 localStorage.rideListData = JSON.stringify(data);
             }
         });
