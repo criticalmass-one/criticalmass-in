@@ -47,12 +47,13 @@ LoginPage.prototype.processLogin = function(element)
             }
             else
             {
+                _paq.push(['trackEvent', 'userstatus', 'login']);
                 this2.switchToLoggedInMode(data);
             }
         },
-        failure : function(data)
+        error : function(data)
         {
-
+            alert(JSON.stringify(data));
         }
     });
 }

@@ -70,6 +70,7 @@ AppPage.prototype.logout = function()
         success : function(data)
         {
             this.switchToLoggedOutMode();
+            _paq.push(['trackEvent', 'userstatus', 'logout']);
         }
     });
 }
@@ -110,6 +111,9 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
 
     this.setAppTitle(newCity.getTitle() + ' — criticalmass.in');
     this.refreshCityTitles(newCity.getTitle());
+    this.citySlug = newCitySlug;
+
+    _paq.push(['trackEvent', 'switch_city', newCitySlug]);
 }
 
 AppPage.prototype.setAppTitle = function(newTitle)
