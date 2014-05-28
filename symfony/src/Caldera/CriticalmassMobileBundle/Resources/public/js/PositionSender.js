@@ -66,10 +66,12 @@ PositionSender.prototype.processPosition = function(positionResult)
         },
         cache: false,
         success: function(result) {
-
+            _paq.push(['trackEvent', 'sendPosition', 'success']);
         },
         error: function()
         {
+            _paq.push(['trackEvent', 'sendPosition', 'error']);
+
             var notificationLayer = new NotificationLayer('Deine Position konnte nicht an den Server übertragen werden.');
             this.parentPage.showNotificationLayer(notificationLayer);
         }
