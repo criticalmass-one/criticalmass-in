@@ -21,7 +21,7 @@ MapPage.prototype.initMap = function()
 {
     if (this.map == null)
     {
-        this.map = new Map('map', CityFactory.getCityBySlug('hamburg'), this);
+        this.map = new Map('map', this.getCitySlug(), this);
     }
     else
     {
