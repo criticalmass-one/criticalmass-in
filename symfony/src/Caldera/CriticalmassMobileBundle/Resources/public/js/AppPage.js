@@ -30,16 +30,14 @@ AppPage.prototype.positionSender = null;
 
 AppPage.prototype.pageIdentifier = null;
 
-AppPage.prototype.citySlug = 'Hamburg';
-
 AppPage.prototype.setCitySlug = function(newCitySlug)
 {
-    this.citySlug = newCitySlug;
+    citySlug = newCitySlug;
 }
 
 AppPage.prototype.getCitySlug = function()
 {
-    return this.citySlug;
+    return citySlug;
 }
 
 AppPage.prototype.getUserLoginStatus = function()
@@ -111,7 +109,7 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
 
     this.setAppTitle(newCity.getTitle() + ' — criticalmass.in');
     this.refreshCityTitles(newCity.getTitle());
-    this.citySlug = newCitySlug;
+    this.setCitySlug(newCitySlug);
 
     _paq.push(['trackEvent', 'switch_city', newCitySlug]);
 }
