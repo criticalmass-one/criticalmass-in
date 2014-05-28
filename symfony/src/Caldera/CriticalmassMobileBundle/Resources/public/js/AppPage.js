@@ -102,7 +102,7 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
 {
     var newCity = CityFactory.getCityFromStorageBySlug(newCitySlug);
 
-    this.setAppTitle(newCity.getTitle());
+    this.setAppTitle(newCity.getTitle() + ' — criticalmass.in');
     this.refreshCityTitles(newCity.getTitle());
 }
 
