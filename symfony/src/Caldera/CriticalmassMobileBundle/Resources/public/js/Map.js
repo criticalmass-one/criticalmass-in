@@ -6,7 +6,7 @@ Map = function(mapIdentifier, city, parentPage)
 
     $.ajax({
         type: 'GET',
-        url: 'http://www.criticalmass.local/app_dev.php/api/completemapdata/' + 'hamburg', //this.city.getCitySlug(),
+        url: 'http://www.criticalmass.local/app_dev.php/api/completemapdata/' + this.parentPage.getCitySlug(),
         cache: false,
         context: this,
         success: this.setMapOptions
@@ -22,7 +22,6 @@ Map = function(mapIdentifier, city, parentPage)
 
 Map.prototype.parentPage = null;
 Map.prototype.mapIdentifier = null;
-Map.prototype.city = null;
 
 Map.prototype.elementsArray = [];
 
@@ -120,7 +119,7 @@ Map.prototype.getNewMapData = function()
 {
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'completemapdata/' + 'hamburg', //this.city.getCitySlug(),
+        url: UrlFactory.getApiPrefix() + 'completemapdata/' + this.parentPage.getCitySlug(),
         cache: false,
         context: this,
         success: this.refreshMap
