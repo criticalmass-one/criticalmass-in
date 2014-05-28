@@ -137,13 +137,3 @@ AppPage.prototype.flushNotification = function()
         this.remove();
     });
 }
-
-AppPage.prototype.refreshGpsQualityGauge = function()
-{
-    var theme = this.positionSender.getJQueryQualityTheme();
-
-    var gpsGauge = $('a.gpsgauge');
-
-    gpsGauge.attr('data-theme', theme);
-    gpsGauge.trigger('create');
-}
