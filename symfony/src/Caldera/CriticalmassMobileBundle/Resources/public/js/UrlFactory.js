@@ -51,7 +51,7 @@ UrlFactory.getEnvironmentString = function()
 {
     if (this.getEnvironment() == 'dev')
     {
-        return 'app_dev.php';
+        return 'app_dev.php/';
     }
 
     return '';
@@ -62,7 +62,7 @@ UrlFactory.getUrlPrefix = function(ajaxResponseData)
     return this.getProtocolString() +
         this.getHostName() +
         ':' + this.getPortNumber() +
-        '/' + this.getEnvironmentString() +
+        this.getEnvironmentString() +
         '/';
 }
 
