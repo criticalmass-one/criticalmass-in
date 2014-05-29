@@ -9,7 +9,7 @@ class MultiPageController extends Controller
 {
     public function mainAction()
     {
-        return $this->render('CalderaCriticalmassMobileBundle:MultiPage:main.html.twig');
+        return $this->render('CalderaCriticalmassMobileBundle:MultiPage:main.html.twig', array('citySlug' => 'hamburg'));
     }
 
     public function slugindexAction($slug)
