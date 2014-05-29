@@ -6,7 +6,7 @@ Map = function(mapIdentifier, city, parentPage)
 
     $.ajax({
         type: 'GET',
-        url: 'http://www.criticalmass.local/app_dev.php/api/completemapdata/' + this.parentPage.getCitySlug(),
+        url: UrlFactory.getApiPrefix() + 'completemapdata/' + this.parentPage.getCitySlug(),
         cache: false,
         context: this,
         success: this.setMapOptions
