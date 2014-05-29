@@ -18,12 +18,10 @@ StartPage.prototype.initPage = false;
 
 StartPage.prototype.initCityList = function()
 {
-    if (!localStorage.cityListData && !this.initPage)
+    if (this.initPage == false)
     {
-        CityFactory.storeAllCities();
-    }
-    else if (!this.initPage)
-    {
+        this.initPage = true;
+
         var cities = JSON.parse(localStorage.cityListData).cities;
 
         for (index in cities)
@@ -64,7 +62,6 @@ StartPage.prototype.initCityList = function()
             {
                 var newCitySlug = $(this).attr('data-cityslug');
                 this2.switchCityBySlug(newCitySlug);
-                window.location = '#mapPage';
             });
 
 
