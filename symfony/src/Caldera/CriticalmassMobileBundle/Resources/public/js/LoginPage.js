@@ -42,7 +42,6 @@ LoginPage.prototype.processLogin = function(element)
             if (data.has_error)
             {
                 $.mobile.changePage('#loginPageErrorDialog', 'pop', true, true);
-                //$('#loginPageErrorDialog').page({ dialog: true });
                 _paq.push(['trackEvent', 'user_login', 'failed']);
             }
             else
@@ -53,7 +52,7 @@ LoginPage.prototype.processLogin = function(element)
         },
         error: function(data)
         {
-            alert(JSON.stringify(data));
+            $.mobile.changePage('#loginPageErrorDialog', 'pop', true, true);
             _paq.push(['trackEvent', 'user_login', 'failed']);
         }
     });
