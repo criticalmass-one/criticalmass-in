@@ -2,12 +2,6 @@ parameters:
 #    caldera_criticalmass_core.example.class: Caldera\CriticalmassCoreBundle\Example
 
 services:
-    caldera_criticalmasscore_citylistener:
-        class: Caldera\CriticalmassCoreBundle\Listener\CityListener
-        arguments: [@doctrine]
-        tags:
-          - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
     caldera_criticalmass_ride_repository:
         class:           Caldera\CriticalmassCoreBundle\Entity\RideRepository
         factory_service: doctrine.orm.entity_manager
