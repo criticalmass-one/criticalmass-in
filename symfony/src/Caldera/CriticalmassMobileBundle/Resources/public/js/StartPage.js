@@ -64,6 +64,8 @@ StartPage.prototype.initCityList = function()
             {
                 var newCitySlug = $(this).attr('data-cityslug');
                 this2.switchCityBySlug(newCitySlug);
+
+                $(":mobile-pagecontainer").pagecontainer("change", "#mapPage");
             });
 
 
