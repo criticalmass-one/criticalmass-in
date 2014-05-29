@@ -2,11 +2,7 @@ MapPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
-
-    var this2 = this;
-    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
-        this2.initMap();
-    });
+    this.initMapPageEventListeners();
 }
 
 MapPage.prototype = new AppPage();
@@ -14,6 +10,14 @@ MapPage.prototype = new AppPage();
 MapPage.prototype.constructor = MapPage;
 
 MapPage.prototype.map = null;
+
+MapPage.prototype.initMapPageEventListeners = function()
+{
+    var this2 = this;
+    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
+        this2.initMap();
+    });
+}
 
 MapPage.prototype.initMap = function()
 {

@@ -2,17 +2,21 @@ StartPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
-
-    var this2 = this;
-    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
-        this2.initCityList();
-    });
+    this.initStartPageEventListeners();
 }
 
 StartPage.prototype = new AppPage();
 StartPage.prototype.constructor = StartPage;
 
 StartPage.prototype.initPage = false;
+
+StartPage.prototype.initStartPageEventListeners = function()
+{
+    var this2 = this;
+    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
+        this2.initCityList();
+    });
+}
 
 StartPage.prototype.initCityList = function()
 {
