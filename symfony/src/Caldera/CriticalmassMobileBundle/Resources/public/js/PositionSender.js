@@ -52,7 +52,7 @@ PositionSender.prototype.processPosition = function(positionResult)
 {
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'trackposition',
+        url: UrlFactory.getApiPrefix() + 'trackposition/' + this.parentPage.getCitySlug(),
         context: this,
         data: {
             latitude: positionResult.coords.latitude,

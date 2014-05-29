@@ -87,13 +87,13 @@ class ApiController extends Controller
      *
      * @return Integer: ID der Entitaet zu Kontrollzwecken
      */
-    public function trackpositionAction()
+    public function trackpositionAction($citySlug)
     {
         // Query oeffnen
         $query = $this->getRequest()->query;
 
         // vom Benutzer aktuell ausgewaehlte Stadt laden
-        $city = $this->getUser()->getCurrentCity();
+        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
         // Positions-Entitaet bereitstellen
         $position = new Entity\Position();

@@ -23,7 +23,7 @@ caldera_criticalmass_gpsstatus:
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:gpsstatus }
 
 caldera_criticalmass_trackposition:
-    pattern: /api/trackposition
+    pattern: /api/trackposition/{citySlug}
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:trackposition }
 
 caldera_criticalmass_getgpsstatus:
