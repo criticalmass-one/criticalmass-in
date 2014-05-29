@@ -32,12 +32,12 @@ LoginPage.prototype.processLogin = function(element)
     var this2 = this;
 
     $.ajax({
-        url : UrlFactory.getUrlPrefix() + 'login_check',
-        type : 'POST',
-        context : this2,
-        dataType : 'json',
-        data : loginData,
-        success : function(data)
+        url: UrlFactory.getUrlPrefix() + 'login_check',
+        type: 'POST',
+        context: this2,
+        dataType: 'json',
+        data: loginData,
+        success: function(data)
         {
             if (data.has_error)
             {
@@ -50,7 +50,7 @@ LoginPage.prototype.processLogin = function(element)
                 this2.switchToLoggedInMode(data);
             }
         },
-        error : function(data)
+        error: function(data)
         {
             alert(JSON.stringify(data));
         }
