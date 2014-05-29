@@ -31,8 +31,6 @@ class RideMarkerMapElement extends BaseMapElement
             $centerPosition = array('latitude' => $this->ride->getCity()->getLatitude(), 'longitude' => $this->ride->getCity()->getLongitude());
         }
 
-
-
 		return array(
 			'id' => $this->getId(),
 			'type' => 'ridemarker',
@@ -43,7 +41,7 @@ class RideMarkerMapElement extends BaseMapElement
             'date' => $this->ride->getDateTime()->format('d.m.Y'),
             'time' => $this->ride->getDateTime()->format('H:i'),
             'hasTime' => $this->ride->getHasTime(),
-            'popup' => !$this->ride->isRideRolling()
+            'citySlug' => $this->ride->getCity()->getMainSlug()->getSlug()
 			);
 	}
 }
