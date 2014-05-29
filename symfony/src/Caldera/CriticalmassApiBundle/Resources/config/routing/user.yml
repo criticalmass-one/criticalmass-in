@@ -1,0 +1,3 @@
+caldera_criticalmass_api_user_userloginstatus:
+    pattern: /userloginstatus
+    defaults: { _controller: CalderaCriticalmassApiBundle:User:userloginstatus }

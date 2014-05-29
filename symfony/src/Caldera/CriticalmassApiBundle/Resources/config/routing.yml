@@ -6,6 +6,10 @@ CalderaCriticalmassApiBundle_Api_Ride:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/ride.yml"
     prefix:   /api/ride
 
+CalderaCriticalmassApiBundle_Api_User:
+    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/user.yml"
+    prefix:   /api/user
+
 caldera_criticalmass_mapdata:
     pattern: /api/completemapdata/{citySlug}
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:completemapdata }
