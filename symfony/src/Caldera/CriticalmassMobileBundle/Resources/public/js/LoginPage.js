@@ -41,7 +41,8 @@ LoginPage.prototype.processLogin = function(element)
         {
             if (data.has_error)
             {
-                alert(data.error);
+                $.mobile.changePage('#loginPageErrorDialog', 'pop', true, true);
+                //$('#loginPageErrorDialog').page({ dialog: true });
             }
             else
             {
