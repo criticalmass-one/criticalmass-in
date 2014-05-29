@@ -10,22 +10,6 @@ AppPage = function(pageIdentifier)
     }
 };
 
-AppPage.prototype.initEventListeners = function()
-{
-    var this2 = this;
-
-    $('a#logoutButton').click(function()
-    {
-        this2.logout();
-    });
-
-    $('#mainpanel').panel({
-        open: function() {
-            _paq.push(['trackEvent', 'main_menu', 'open']);
-        }
-    });
-}
-
 AppPage.prototype.positionSender = null;
 
 AppPage.prototype.pageIdentifier = null;
@@ -43,20 +27,6 @@ AppPage.prototype.getCitySlug = function()
 AppPage.prototype.getUserLoginStatus = function()
 {
     return localStorage.userLoginStatus == 'true';
-}
-
-AppPage.prototype.initMenuUserStatus = function()
-{
-    if (this.getUserLoginStatus() == true)
-    {
-        $('.show-loggedin-only').show();
-        $('.show-loggedout-only').hide();
-    }
-    else
-    {
-        $('.show-loggedout-only').show();
-        $('.show-loggedin-only').hide();
-    }
 }
 
 AppPage.prototype.logout = function()

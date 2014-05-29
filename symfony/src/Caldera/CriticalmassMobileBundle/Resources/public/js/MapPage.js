@@ -2,8 +2,6 @@ MapPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
-    this.initEventListeners();
-    this.initMenuUserStatus();
 
     var this2 = this;
     $(document).on('pageshow', '#' + this.pageIdentifier, function() {

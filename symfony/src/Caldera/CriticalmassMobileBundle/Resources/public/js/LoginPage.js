@@ -2,9 +2,7 @@ LoginPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
 
-    this.initEventListeners();
     this.initLoginPageEventListeners();
-    this.initMenuUserStatus();
 }
 
 LoginPage.prototype = new AppPage();
