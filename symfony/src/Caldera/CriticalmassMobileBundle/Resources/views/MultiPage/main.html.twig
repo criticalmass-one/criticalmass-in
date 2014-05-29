@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/themes/jquery.mobile.icons.min.css" />
     <script>
         var isPageLoaded = false;
-        var citySlug = 'bremen';
+        var citySlug = '{{ citySlug }}';
 
         function getCurrentPageId() {
             return $(":mobile-pagecontainer").pagecontainer( "getActivePage" )[0].id;
