@@ -2,8 +2,3 @@ parameters:
 #    caldera_criticalmass_desktop.example.class: Caldera\CriticalmassDesktopBundle\Example
 
 services:
-    caldera_criticalmasscore_citylistener:
-        class: Caldera\CriticalmassCoreBundle\Listener\CityListener
-        arguments: [@doctrine]
-        tags:
-          - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
