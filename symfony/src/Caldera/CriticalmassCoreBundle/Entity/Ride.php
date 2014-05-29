@@ -309,7 +309,8 @@ class Ride
     public function isRideRolling()
     {
         $rideTimeStamp = $this->getDateTime()->format('U');
-        $nowTimeStamp = (new \DateTime())->getTimeStamp();
+        $tmp = new \DateTime();
+        $nowTimeStamp = $tmp->getTimeStamp();
 
         if ($rideTimeStamp + 900 < $nowTimeStamp)
         {
