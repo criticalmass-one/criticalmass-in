@@ -17,7 +17,7 @@ PositionSender.prototype.startSender = function()
 
   this.interval = window.setInterval(function()
   {
-      if (this2.parentPage.isGpsActivated())
+      if (this2.parentPage.isGpsActivated() && this2.parentPage.isUserLoggedIn())
       {
           this2.catchPosition(this2);
       }
@@ -26,8 +26,9 @@ PositionSender.prototype.startSender = function()
 
 PositionSender.prototype.catchPosition = function(this2)
 {
-    if (navigator.geolocation && this.parentPage.getUserLoginStatus == true)
+    if (navigator.geolocation)
     {
+
         function processError2(positionError)
         {
             this2.processError(positionError);
