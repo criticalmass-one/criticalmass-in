@@ -30,7 +30,7 @@ GlobalPage.prototype.initEventListeners = function()
 
 GlobalPage.prototype.initUserStatus = function()
 {
-    if (this.getUserLoginStatus() == true)
+    if (this.isUserLoggedIn() == true)
     {
         $('.show-loggedin-only').show();
         $('.show-loggedout-only').hide();
