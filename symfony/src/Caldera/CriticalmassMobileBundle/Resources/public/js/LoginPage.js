@@ -43,16 +43,18 @@ LoginPage.prototype.processLogin = function(element)
             {
                 $.mobile.changePage('#loginPageErrorDialog', 'pop', true, true);
                 //$('#loginPageErrorDialog').page({ dialog: true });
+                _paq.push(['trackEvent', 'user_login', 'failed']);
             }
             else
             {
-                _paq.push(['trackEvent', 'userstatus', 'login']);
+                _paq.push(['trackEvent', 'user_login', 'success']);
                 this2.switchToLoggedInMode(data);
             }
         },
         error: function(data)
         {
             alert(JSON.stringify(data));
+            _paq.push(['trackEvent', 'user_login', 'failed']);
         }
     });
 }
