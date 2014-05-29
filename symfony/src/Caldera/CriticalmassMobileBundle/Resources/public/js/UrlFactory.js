@@ -62,8 +62,7 @@ UrlFactory.getUrlPrefix = function(ajaxResponseData)
     return this.getProtocolString() +
         this.getHostName() +
         ':' + this.getPortNumber() +
-        this.getEnvironmentString() +
-        '/';
+        '/' + this.getEnvironmentString();
 }
 
 UrlFactory.getApiPrefix = function()
