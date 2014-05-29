@@ -24,7 +24,7 @@ AppPage.prototype.getCitySlug = function()
     return citySlug;
 }
 
-AppPage.prototype.getUserLoginStatus = function()
+AppPage.prototype.isUserLoggedIn = function()
 {
     return sessionStorage.userLoginStatus == 'true';
 }
