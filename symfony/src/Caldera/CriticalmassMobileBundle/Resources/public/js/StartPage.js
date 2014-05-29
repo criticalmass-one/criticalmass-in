@@ -37,7 +37,6 @@ StartPage.prototype.initCityList = function()
 
             var linkItem = document.createElement('a');
 
-            $(linkItem).append('<img src="http://www.criticalmass.local/bundles/calderacriticalmassmobile/images/criticalmass-bikefist-100.png" />')
             $(linkItem).append('<h3>' + city.title + '</h3>');
 
             if (city.description != null)
