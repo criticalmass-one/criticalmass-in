@@ -26,7 +26,7 @@ AppPage.prototype.getCitySlug = function()
 
 AppPage.prototype.getUserLoginStatus = function()
 {
-    return localStorage.userLoginStatus == 'true';
+    return sessionStorage.userLoginStatus == 'true';
 }
 
 AppPage.prototype.logout = function()
@@ -45,8 +45,8 @@ AppPage.prototype.logout = function()
 
 AppPage.prototype.switchToLoggedInMode = function(data)
 {
-    localStorage.userLoginStatus = true;
-    localStorage.userName = data.username;
+    sessionStorage.userLoginStatus = true;
+    sessionStorage.userName = data.username;
 
     var notificationLayer = new NotificationLayer("Hej " + data.username + ", willkommen zurück!");
     this.showNotificationLayer(notificationLayer);
@@ -58,8 +58,8 @@ AppPage.prototype.switchToLoggedInMode = function(data)
 
 AppPage.prototype.switchToLoggedOutMode = function()
 {
-    localStorage.userLoginStatus = false;
-    localStorage.userName = null;
+    sessionStorage.userLoginStatus = false;
+    sessionStorage.userName = null;
 
     var notificationLayer = new NotificationLayer("Du hast dich gerade abgemeldet. Bis zum nächsten Mal!");
     this.showNotificationLayer(notificationLayer);
