@@ -26,7 +26,7 @@ PositionSender.prototype.startSender = function()
 
 PositionSender.prototype.catchPosition = function(this2)
 {
-    if (navigator.geolocation)
+    if (navigator.geolocation && this.parentPage.getUserLoginStatus == true)
     {
         function processError2(positionError)
         {
@@ -43,8 +43,8 @@ PositionSender.prototype.catchPosition = function(this2)
     }
     else
     {
-        var notificationLayer = new NotificationLayer('Schade: Dein Browser unterstützt leider noch keine Positionsbestimmung.');
-        this.parentPage.showNotificationLayer(notificationLayer);
+        //var notificationLayer = new NotificationLayer('Schade: Dein Browser unterstützt leider noch keine Positionsbestimmung.');
+        //this.parentPage.showNotificationLayer(notificationLayer);
     }
 }
 
