@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassAdminBundle\CalderaCriticalmassAdminBundle(),
             new Sonata\UserBundle\SonataUserBundle("FOSUserBundle"),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Caldera\CriticalmassHeatmapBundle\CalderaCriticalmassHeatmapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
