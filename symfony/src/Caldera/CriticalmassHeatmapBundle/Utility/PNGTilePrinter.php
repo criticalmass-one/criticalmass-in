@@ -29,12 +29,37 @@ class PNGTilePrinter extends AbstractTilePrinter {
         $white = imagecolorallocate($image, 255, 255, 255);
         $black = imagecolorallocate($image, 0, 0, 0);
 
+        $darkblue = imagecolorallocate($image, 0, 0, 255);
+        $lightblue = imagecolorallocate($image, 127, 127, 255);
+        $lightred = imagecolorallocate($image, 255, 127, 127);
+        $darkred = imagecolorallocate($image, 255, 0, 0);
+
         $pixel = $this->tile->popPixel();
 
         while ($pixel != null)
         {
-            //imagesetpixel($image, $pixel->getX(), $pixel->getY(), $black);
-            imageellipse($image, $pixel->getX() - 1, $pixel->getY() - 1, 3, 3, $black);
+            $rgb = imagecolorat($image, $pixel->getX(), $pixel->getY());
+
+            $oldColorIndices = imagecolorsforindex($image, $rgb);
+
+            if (($oldColorIndices['red'] == 0) and ($oldColorIndices['green'] == 0) && ($oldColorIndices['blue'] == 255))
+            {
+                $color = $darkblue;
+            }
+            else if (($oldColorIndices['red'] == 127) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 255))
+            {
+                $color = $lightred;
+            }
+            else if (($oldColorIndices['red'] == 255) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 127))
+            {
+                $color = $darkred;
+            }
+            else
+            {
+                $color = $lightblue;
+            }
+
+            imageellipse($image, $pixel->getX() - 1, $pixel->getY() - 1, 3, 3, $color);
             $pixel = $this->tile->popPixel();
         }
 
