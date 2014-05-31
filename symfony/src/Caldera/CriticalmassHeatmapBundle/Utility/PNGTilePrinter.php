@@ -35,4 +35,16 @@ class PNGTilePrinter extends AbstractTilePrinter {
 
         imagedestroy($image);
     }
+
+    public function saveTile()
+    {
+        $pathname = '/Applications/XAMPP/htdocs/heatmap/'.$this->tile->getOsmZoom().'/'.$this->tile->getOsmXTile().'/';
+        $filename = $this->tile->getOsmYTile().'.png';
+
+        @mkdir($pathname, 0777, true);
+
+        $handle = fopen($pathname.$filename, "a");
+        fwrite($handle, $this->imageFileContent);
+        fclose($handle);
+    }
 }

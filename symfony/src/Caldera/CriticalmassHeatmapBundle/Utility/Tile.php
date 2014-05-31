@@ -29,6 +29,17 @@ class Tile {
         $this->osmZoom = $zoom;
     }
 
+    public function generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom)
+    {
+        $this->osmXTile = $tileX;
+        $this->osmYTile = $tileY;
+
+        $this->latitude = OSMCoordCalculator::osmYTileToLatitude($tileX, $zoom);
+        $this->longitude = OSMCoordCalculator::osmXTileToLongitude($tileY, $zoom);
+
+        $this->osmZoom = $zoom;
+    }
+
     public function getOsmXTile()
     {
         return $this->osmXTile;

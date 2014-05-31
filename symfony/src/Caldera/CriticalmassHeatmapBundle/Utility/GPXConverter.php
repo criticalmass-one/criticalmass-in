@@ -40,11 +40,11 @@ class GPXConverter
         {
             if ($startPosition == null)
             {
-                $startPosition = new Position($trackPoint['lat'], $trackPoint['lon']);
+                $startPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
             }
             else
             {
-                $endPosition = new Position($trackPoint['lat'], $trackPoint['lon']);
+                $endPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
 
                 $path = new Path($startPosition, $endPosition);
 
