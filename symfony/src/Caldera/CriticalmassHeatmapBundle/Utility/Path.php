@@ -28,4 +28,9 @@ class Path {
     {
         return $this->endPosition;
     }
+
+    public function getHash()
+    {
+        return $this->startPosition->getLatitude()."-".$this->startPosition->getLongitude()."-".$this->endPosition->getLatitude()."-".$this->endPosition->getLongitude();
+    }
 } 

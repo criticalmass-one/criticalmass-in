@@ -2172,16 +2172,17 @@ class DefaultController extends Controller
         $pathArray = $gpxc->getPathArray();
 
         $tile = new Tile();
-        $tile->generatePlaceByLatitudeLongitudeZoom(54.3419, 10.1260, 11);
+        $tile->generatePlaceByLatitudeLongitudeZoom(54.3119, 10.1260, 13);
 
         $tile->dropPathArray($pathArray);
+        $tile->sortPixelList();
 
         $tp = new PNGTilePrinter($tile);
+        $tp->printTile();
 
         $response = new Response();
+        $response->setContent($tp->getImageFileContent());
         $response->headers->set('Content-Type', 'image/png');
-
-        $tp->printTile();
         return $response;
     }
 }

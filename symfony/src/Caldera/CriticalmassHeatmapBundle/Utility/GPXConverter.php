@@ -46,11 +46,15 @@ class GPXConverter
             {
                 $endPosition = new Position($trackPoint['lat'], $trackPoint['lon']);
 
-                $pathArray[] = new Path($startPosition, $endPosition);
+                $path = new Path($startPosition, $endPosition);
+
+                $pathArray[$path->getHash()] = $path;
 
                 $startPosition = $endPosition;
             }
         }
+
+        sort($pathArray);
 
         return $pathArray;
     }

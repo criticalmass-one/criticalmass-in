@@ -41,4 +41,9 @@ class Pixel {
     {
         return $this->y;
     }
+
+    public function getHash()
+    {
+        return $this->x."-".$this->y;
+    }
 } 

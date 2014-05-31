@@ -39,6 +39,11 @@ class Tile {
         return $this->osmYTile;
     }
 
+    public function getOsmZoom()
+    {
+        return $this->osmZoom;
+    }
+
     public function getTopLatitude()
     {
         return rad2deg(atan(sinh(pi() * (1 - 2 * $this->osmYTile / pow(2, $this->osmZoom)))));
@@ -74,12 +79,12 @@ class Tile {
         $vector[0] = (float) $path->getEndPosition()->getLatitude() - $path->getStartPosition()->getLatitude();
         $vector[1] = (float) $path->getEndPosition()->getLongitude() - $path->getStartPosition()->getLongitude();
 
-        $n = 100;
+        $n = 5;
 
         for ($i = 0; $i < $n; ++$i)
         {
-            $latitude = $path->getStartPosition()->getLatitude() + $i * $vector[0] * (1 / $n);
-            $longitude = $path->getStartPosition()->getLongitude() + $i * $vector[1] * (1 / $n);
+            $latitude = (float) $path->getStartPosition()->getLatitude() + (float) $i * $vector[0] * (1 / $n);
+            $longitude = (float) $path->getStartPosition()->getLongitude() + (float) $i * $vector[1] * (1.0 / $n);
 
             $x = $this->size / ($this->getRightLongitude() - $this->getLeftLongitude()) * ($longitude - $this->getLeftLongitude());
             $y = $this->size / ($this->getBottomLatitude() - $this->getTopLatitude()) * ($latitude - $this->getTopLatitude());
@@ -96,9 +101,14 @@ class Tile {
         return $this->size;
     }
 
-    protected function addPixel(Pixel $pixel)
+    public function addPixel(Pixel $pixel)
     {
-        $this->pixelList[] = $pixel;
+        $this->pixelList[$pixel->getHash()] = $pixel;
+    }
+
+    public function sortPixelList()
+    {
+        rsort($this->pixelList);
     }
 
     public function popPixel()
