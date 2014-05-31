@@ -99,6 +99,7 @@ Map.prototype.setMapOptions = function(ajaxResultData)
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(this.map);
 
+    L.tileLayer('http://www.criticalmass.local/images/heatmap/{z}/{x}/{y}.png').addTo(this.map);
     var this2 = this;
 
     this.map.on('dragend', function()

@@ -17,31 +17,34 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $gpxc = new GPXConverter();
-        $gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/evening.gpx");
+        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-06-24.gpx");
+        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-08-26.gpx");
+        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-09-30.gpx");
+        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-10-28.gpx");
+        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-11-25.gpx");
+        $gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-12-30.gpx");
         $gpxc->parseContent();
-
-        $zoom = 13;
 
         $pathArray = $gpxc->getPathArray();
 
-        $osmmdc = new OSMMapDimensionCalculator($pathArray, $zoom);
-
-        echo $osmmdc->getLeftTile()." ".$osmmdc->getRightTile();
-        for ($tileX = $osmmdc->getLeftTile(); $tileX <= $osmmdc->getRightTile(); ++$tileX)
+        for ($zoom = 10; $zoom < 16; ++$zoom)
         {
-            for ($tileY = $osmmdc->getTopTile(); $tileY >= $osmmdc->getBottomTile(); --$tileY)
-            {
-                $tile = new Tile();
-                //$tile->generatePlaceByLatitudeLongitudeZoom(53.6632620, 9.7335000, $zoom);
-                $tile->generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom);
-                $tile->dropPathArray($pathArray);
+            $osmmdc = new OSMMapDimensionCalculator($pathArray, $zoom);
 
-                $tp = new PNGTilePrinter($tile);
-                $tp->printTile();
-                $tp->saveTile();
+            for ($tileX = $osmmdc->getLeftTile(); $tileX <= $osmmdc->getRightTile(); ++$tileX)
+            {
+                for ($tileY = $osmmdc->getTopTile(); $tileY >= $osmmdc->getBottomTile(); --$tileY)
+                {
+                    $tile = new Tile();
+                    $tile->generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom);
+                    $tile->dropPathArray($pathArray);
+
+                    $tp = new PNGTilePrinter($tile);
+                    $tp->printTile();
+                    $tp->saveTile();
+                }
             }
         }
-
 
         $response = new Response();
         //$response->setContent($tp->getImageFileContent());

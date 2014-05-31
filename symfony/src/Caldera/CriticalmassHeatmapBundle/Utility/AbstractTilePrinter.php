@@ -23,5 +23,15 @@ abstract class AbstractTilePrinter {
         return $this->imageFileContent;
     }
 
+    public function getPath()
+    {
+        return '/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/heatmap/'.$this->tile->getOsmZoom().'/'.$this->tile->getOsmXTile().'/';
+    }
+
+    public function getFilename()
+    {
+        return $this->tile->getOsmYTile().'.png';
+    }
+
     public abstract function printTile();
 } 

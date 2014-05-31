@@ -36,21 +36,25 @@ class GPXConverter
         $startPosition = null;
         $endPosition = null;
 
-        foreach ($this->gpxXML->trk->trkseg->trkpt as $trackPoint)
+        foreach ($this->gpxXML->trk->trkseg as $trksg)
         {
-            if ($startPosition == null)
+            foreach ($trksg as $trackPoint)
             {
-                $startPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
-            }
-            else
-            {
-                $endPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
+                if ($startPosition == null)
+                {
+                    $startPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
+                }
+                else
+                {
+                    $endPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
 
-                $path = new Path($startPosition, $endPosition);
+                    $path = new Path($startPosition, $endPosition);
 
-                $pathArray[$path->getHash()] = $path;
+                    $pathArray[$path->getHash()] = $path;
 
-                $startPosition = $endPosition;
+                    $startPosition = $endPosition;
+                }
+
             }
         }
 
