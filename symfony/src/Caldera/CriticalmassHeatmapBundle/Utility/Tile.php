@@ -24,8 +24,8 @@ class Tile {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
 
-        $this->osmXTile = floor((($longitude + 180) / 360) * pow(2, $zoom));
-        $this->osmYTile = floor((1 - log(tan(deg2rad($latitude)) + 1 / cos(deg2rad($latitude))) / pi()) /2 * pow(2, $zoom));
+        $this->osmXTile = OSMCoordCalculator::longitudeToOSMXTile($longitude, $zoom);
+        $this->osmYTile = OSMCoordCalculator::latitudeToOSMYTile($latitude, $zoom);
         $this->osmZoom = $zoom;
     }
 
@@ -46,22 +46,22 @@ class Tile {
 
     public function getTopLatitude()
     {
-        return rad2deg(atan(sinh(pi() * (1 - 2 * $this->osmYTile / pow(2, $this->osmZoom)))));
+        return OSMCoordCalculator::osmYTileToLatitude($this->osmYTile, $this->osmZoom);
     }
 
     public function getBottomLatitude()
     {
-        return rad2deg(atan(sinh(pi() * (1 - 2 * ($this->osmYTile + 1)/ pow(2, $this->osmZoom)))));
+        return OSMCoordCalculator::osmYTileToLatitude($this->osmYTile + 1, $this->osmZoom);
     }
 
     public function getLeftLongitude()
     {
-        return $this->osmXTile / pow(2, $this->osmZoom) * 360.0 - 180.0;
+        return OSMCoordCalculator::osmXTileToLongitude($this->osmXTile, $this->osmZoom);
     }
 
     public function getRightLongitude()
     {
-        return ($this->osmXTile + 1) / pow(2, $this->osmZoom) * 360.0 - 180.0;
+        return OSMCoordCalculator::osmXTileToLongitude($this->osmXTile + 1, $this->osmZoom);
     }
 
     public function dropPathArray($pathArray)
@@ -79,15 +79,15 @@ class Tile {
         $vector[0] = (float) $path->getEndPosition()->getLatitude() - $path->getStartPosition()->getLatitude();
         $vector[1] = (float) $path->getEndPosition()->getLongitude() - $path->getStartPosition()->getLongitude();
 
-        $n = 5;
+        $n = 1;
 
         for ($i = 0; $i < $n; ++$i)
         {
             $latitude = (float) $path->getStartPosition()->getLatitude() + (float) $i * $vector[0] * (1 / $n);
-            $longitude = (float) $path->getStartPosition()->getLongitude() + (float) $i * $vector[1] * (1.0 / $n);
+            $longitude = (float) $path->getStartPosition()->getLongitude() + (float) $i * $vector[1] * (1 / $n);
 
-            $x = $this->size / ($this->getRightLongitude() - $this->getLeftLongitude()) * ($longitude - $this->getLeftLongitude());
-            $y = $this->size / ($this->getBottomLatitude() - $this->getTopLatitude()) * ($latitude - $this->getTopLatitude());
+            $x = (float) $this->size / ($this->getRightLongitude() - $this->getLeftLongitude()) * ($longitude - $this->getLeftLongitude());
+            $y = (float) $this->size / ($this->getBottomLatitude() - $this->getTopLatitude()) * ($latitude - $this->getTopLatitude());
 
             if (($x >= 0) and ($x < $this->size) and ($y >= 0) and ($y < $this->size))
             {

@@ -17,15 +17,12 @@ class PNGTilePrinter extends AbstractTilePrinter {
         $image = imagecreatefrompng('http://c.tile.openstreetmap.org/'.$this->tile->getOsmZoom().'/'.$this->tile->getOsmXTile().'/'.$this->tile->getOsmYTile().'.png');
         $white = imagecolorallocate($image, 255, 255, 255);
         $black = imagecolorallocate($image, 0, 0, 0);
-        imagefill($image, 0, 0, $white);
+        //imagefill($image, 0, 0, $white);
 
         $pixel = $this->tile->popPixel();
 
-        $counter = 0;
-        while ($pixel != null && $counter < 10000)
+        while ($pixel != null)
         {
-            ++$counter;
-            //echo $pixel->getX()." ".$pixel->getY()."<br />";
             imagesetpixel($image, $pixel->getX(), $pixel->getY(), $black);
 
             $pixel = $this->tile->popPixel();
