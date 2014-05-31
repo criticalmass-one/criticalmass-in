@@ -12,7 +12,9 @@ namespace Caldera\CriticalmassHeatmapBundle\Utility;
 class PNGTilePrinter extends AbstractTilePrinter {
     public function printTile()
     {
-        $image = imagecreatetruecolor($this->tile->getSize(), $this->tile->getSize());
+        //$image = imagecreatetruecolor($this->tile->getSize(), $this->tile->getSize());
+        $image = imagecreatefrompng('/Applications/XAMPP/htdocs/kachel.png');
+
         $white = imagecolorallocate($image, 255, 255, 255);
         $black = imagecolorallocate($image, 0, 0, 0);
         imagefill($image, 0, 0, $white);
