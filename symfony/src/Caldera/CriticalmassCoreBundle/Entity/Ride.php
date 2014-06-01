@@ -30,6 +30,15 @@ class Ride
 	 */
     protected $city;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $description;
 
     /**
      * Startdatum und -uhrzeit der Tour.
