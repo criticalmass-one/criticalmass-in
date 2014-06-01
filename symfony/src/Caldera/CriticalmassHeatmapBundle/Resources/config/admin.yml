@@ -1,0 +1,11 @@
+services:
+    sonata.admin.heatmap:
+        class: Caldera\CriticalmassHeatmapBundle\Admin\HeatmapAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Heatmap" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassHeatmapBundle\Entity\Heatmap
+            - ~
+        calls:
+            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
