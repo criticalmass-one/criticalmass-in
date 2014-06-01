@@ -17,6 +17,7 @@ class PNGTilePrinter extends AbstractTilePrinter {
 
         if (file_exists($this->getPath().$this->getFilename()))
         {
+            $oldImage = imagecreatefrompng($this->getPath().$this->getFilename());
             $image = imagecreatefrompng($this->getPath().$this->getFilename());
         }
         else
@@ -38,28 +39,35 @@ class PNGTilePrinter extends AbstractTilePrinter {
 
         while ($pixel != null)
         {
-            $rgb = imagecolorat($image, $pixel->getX(), $pixel->getY());
+            if (isset($oldImage))
+            {
+                $rgb = imagecolorat($image, $pixel->getX(), $pixel->getY());
 
-            $oldColorIndices = imagecolorsforindex($image, $rgb);
+                $oldColorIndices = imagecolorsforindex($image, $rgb);
 
-            if (($oldColorIndices['red'] == 0) and ($oldColorIndices['green'] == 0) && ($oldColorIndices['blue'] == 255))
-            {
-                $color = $darkblue;
-            }
-            else if (($oldColorIndices['red'] == 127) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 255))
-            {
-                $color = $lightred;
-            }
-            else if (($oldColorIndices['red'] == 255) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 127))
-            {
-                $color = $darkred;
+                if (($oldColorIndices['red'] == 0) and ($oldColorIndices['green'] == 0) && ($oldColorIndices['blue'] == 255))
+                {
+                    $color = $darkblue;
+                }
+                else if (($oldColorIndices['red'] == 127) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 255))
+                {
+                    $color = $lightred;
+                }
+                else if (($oldColorIndices['red'] == 255) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 127))
+                {
+                    $color = $darkred;
+                }
+                else
+                {
+                    $color = $lightblue;
+                }
             }
             else
             {
                 $color = $lightblue;
             }
 
-            imageellipse($image, $pixel->getX() - 1, $pixel->getY() - 1, 3, 3, $color);
+            imagefilledellipse($image, $pixel->getX() - 1, $pixel->getY() - 1, 3, 3, $color);
             $pixel = $this->tile->popPixel();
         }
 
