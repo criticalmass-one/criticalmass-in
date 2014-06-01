@@ -14,6 +14,23 @@ CityPage.prototype.constructor = CityPage;
 CityPage.prototype.refreshContent = function()
 {
     var city = CityFactory.getCityFromStorageBySlug(this.getCitySlug());
+    
+    this.refreshSocialMediaLinks();
+
+    this.refreshCriticalMassContentLinks();
+
+    $('#' + this.pageIdentifier + ' #cityFullDescription').html(city.getDescripton());
+}
+
+CityPage.prototype.refreshCriticalMassContentLinks = function()
+{
+    $('#' + this.pageIdentifier + ' #cityRideButton').html('37 Touren');
+    $('#' + this.pageIdentifier + ' #cityHeatmapButton').html('43 Heatmaps');
+}
+
+CityPage.prototype.refreshSocialMediaLinks = function()
+{
+    var city = CityFactory.getCityFromStorageBySlug(this.getCitySlug());
 
     var char = 96;
 
@@ -33,7 +50,6 @@ CityPage.prototype.refreshContent = function()
             socialMediaLinksBox.addClass('ui-grid-b');
             break;
     }
-
 
     if (city.getUrl() != '')
     {
@@ -61,4 +77,5 @@ CityPage.prototype.refreshContent = function()
 
         $('#' + this.pageIdentifier + ' #citySocialMediaLinksTwitterButton').button();
     }
+
 }
