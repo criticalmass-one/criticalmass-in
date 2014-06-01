@@ -69,14 +69,6 @@ class Ride
     protected $location;
 
 	/**
-	 * Technische Bezeichnung des Treffpunktes der Tour als Zeichenkette fuer die
-	 * Darstellung der Karte.
-	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
-    protected $mapLocation;
-
-	/**
 	 * Breitengrad des Treffpunktes.
 	 *
 	 * @ORM\Column(type="float")
