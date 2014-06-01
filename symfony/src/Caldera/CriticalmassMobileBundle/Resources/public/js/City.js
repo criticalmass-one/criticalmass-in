@@ -87,3 +87,25 @@ City.prototype.setTwitter = function(twitter)
 {
     this.twitter = twitter;
 };
+
+City.prototype.countSocialMediaLinks = function()
+{
+  var socialMediaCounter = 0;
+
+    if (this.getUrl() != '')
+    {
+        ++socialMediaCounter;
+    }
+
+    if (this.getFacebook() != '')
+    {
+        ++socialMediaCounter;
+    }
+
+    if (this.getTwitter() != '')
+    {
+        ++socialMediaCounter;
+    }
+
+    return socialMediaCounter;
+};
