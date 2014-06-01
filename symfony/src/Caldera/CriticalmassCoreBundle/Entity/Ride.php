@@ -375,5 +375,11 @@ class Ride
             return $this->getDateTime()->format("Y-m-d");
         }
     }
+
+    public function __construct()
+    {
+        $this->dateTime = new \DateTime();
+        $this->latitude = 0.0;
+        $this->longitude = 0.0;
     }
 }
