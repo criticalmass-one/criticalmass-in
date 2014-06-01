@@ -30,7 +30,7 @@ class Heatmap
     protected $title;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
 
@@ -52,6 +52,7 @@ class Heatmap
     public function __construct()
     {
         $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->identifier = md5(microtime());
     }
 
     public function getTitle()
