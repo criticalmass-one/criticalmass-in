@@ -14,34 +14,35 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function generateAction($heatmapId)
     {
-        $gpxc = new GPXConverter();
-        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-06-24.gpx");
-        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-08-26.gpx");
-        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-09-30.gpx");
-        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-10-28.gpx");
-        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-11-25.gpx");
-        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-12-30.gpx");
-        $gpxc->parseContent();
+        $heatmap = $this->getDoctrine()->getRepository('CalderaCriticalmassHeatmapBundle:Heatmap')->findOneById($heatmapId);
 
-        $pathArray = $gpxc->getPathArray();
-
-        for ($zoom = 10; $zoom < 16; ++$zoom)
+        foreach ($heatmap->getRides() as $ride)
         {
-            $osmmdc = new OSMMapDimensionCalculator($pathArray, $zoom);
+            echo $ride->getId()."<br />";
+            $gpxc = new GPXConverter();
+            $gpxc->loadContentFromString($ride->getOptimizedGpxContent());
+            $gpxc->parseContent();
 
-            for ($tileX = $osmmdc->getLeftTile(); $tileX <= $osmmdc->getRightTile(); ++$tileX)
+            $pathArray = $gpxc->getPathArray();
+
+            for ($zoom = 10; $zoom < 16; ++$zoom)
             {
-                for ($tileY = $osmmdc->getTopTile(); $tileY >= $osmmdc->getBottomTile(); --$tileY)
-                {
-                    $tile = new Tile();
-                    $tile->generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom);
-                    $tile->dropPathArray($pathArray);
+                $osmmdc = new OSMMapDimensionCalculator($pathArray, $zoom);
 
-                    $tp = new PNGTilePrinter($tile);
-                    $tp->printTile();
-                    $tp->saveTile();
+                for ($tileX = $osmmdc->getLeftTile(); $tileX <= $osmmdc->getRightTile(); ++$tileX)
+                {
+                    for ($tileY = $osmmdc->getTopTile(); $tileY >= $osmmdc->getBottomTile(); --$tileY)
+                    {
+                        $tile = new Tile();
+                        $tile->generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom);
+                        $tile->dropPathArray($pathArray);
+
+                        $tp = new PNGTilePrinter($tile);
+                        $tp->printTile();
+                        $tp->saveTile();
+                    }
                 }
             }
         }
