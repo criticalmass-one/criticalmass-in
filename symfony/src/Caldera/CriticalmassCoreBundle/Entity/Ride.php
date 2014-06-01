@@ -20,7 +20,7 @@ class Ride
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	private $id;
+    protected $id;
 
 	/**
 	 * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
@@ -28,35 +28,36 @@ class Ride
 	 * @ORM\ManyToOne(targetEntity="City", inversedBy="rides")
 	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
 	 */
-	private $city;
+    protected $city;
+
 
     /**
      * Startdatum und -uhrzeit der Tour.
      *
      * @ORM\Column(type="datetime")
      */
-    private $dateTime;
+    protected $dateTime;
 
 	/**
 	 * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	private $hasTime;
+    protected $hasTime;
 
 	/**
 	 * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	private $hasLocation;
+    protected $hasLocation;
 
 	/**
 	 * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
-	private $location;
+    protected $location;
 
 	/**
 	 * Technische Bezeichnung des Treffpunktes der Tour als Zeichenkette fuer die
@@ -64,21 +65,21 @@ class Ride
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
-	private $mapLocation;
+    protected $mapLocation;
 
 	/**
 	 * Breitengrad des Treffpunktes.
 	 *
 	 * @ORM\Column(type="float")
 	 */
-	private $latitude;
+    protected $latitude;
 
 	/**
 	 * Laengengrad des Treffpunktes.
 	 *
 	 * @ORM\Column(type="float")
 	 */
-	private $longitude;
+    protected $longitude;
 
 	/**
 	 * Schalter fuer den God-Mode dieser Tour. Wenn der Gode-Mode aktiviert ist,
@@ -87,12 +88,12 @@ class Ride
 	 *
 	 * @ORM\Column(type="integer")
 	 */
-	private $godMode = 0;
+    protected $godMode = 0;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $optimizedGpxContent;
+    protected $optimizedGpxContent;
 
     /**
      * Get id
