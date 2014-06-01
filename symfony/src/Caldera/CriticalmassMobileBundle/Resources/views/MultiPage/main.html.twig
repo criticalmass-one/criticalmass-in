@@ -27,6 +27,7 @@
                     var mapPage = new MapPage('mapPage');
                     var startPage = new StartPage('startPage');
                     var loginPage = new LoginPage('loginPage');
+                    var cityPage = new CityPage('cityPage');
                     var globalPage = new GlobalPage();
 
                     var positionSender = new PositionSender(mapPage);
@@ -219,11 +220,11 @@
     <section data-role="content" id="cityPageContent">
         <h1 class="city-full-title"></h1>
         <p>lorem ipsum</p>
-        <div class="ui-grid-b">
+        <section id="citySocialMediaLinks" class="ui-grid-b">
             <div class="ui-block-a"><button type="button" data-theme="a">facebook</button></div>
             <div class="ui-block-b"><button type="button" data-theme="a">twitter</button></div>
             <div class="ui-block-b"><button type="button" data-theme="a">WWW</button></div>
-        </div>
+        </section>
     </section>
 </section>
 
