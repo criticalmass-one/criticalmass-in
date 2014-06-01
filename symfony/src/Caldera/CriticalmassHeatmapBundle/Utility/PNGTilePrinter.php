@@ -27,14 +27,6 @@ class PNGTilePrinter extends AbstractTilePrinter {
             imagefill($image, 0, 0, $transparent);
         }
 
-        $white = imagecolorallocate($image, 255, 255, 255);
-        $black = imagecolorallocate($image, 0, 0, 0);
-
-        $darkblue = imagecolorallocate($image, 0, 0, 255);
-        $lightblue = imagecolorallocate($image, 127, 127, 255);
-        $lightred = imagecolorallocate($image, 255, 127, 127);
-        $darkred = imagecolorallocate($image, 255, 0, 0);
-
         $pixel = $this->tile->popPixel();
 
         while ($pixel != null)
@@ -43,28 +35,30 @@ class PNGTilePrinter extends AbstractTilePrinter {
             {
                 $rgb = imagecolorat($image, $pixel->getX(), $pixel->getY());
 
-                $oldColorIndices = imagecolorsforindex($image, $rgb);
+                $colorIndices = imagecolorsforindex($image, $rgb);
 
-                if (($oldColorIndices['red'] == 0) and ($oldColorIndices['green'] == 0) && ($oldColorIndices['blue'] == 255))
+                $step = 64;
+
+                if (($colorIndices['red'] <= 127) and ($colorIndices['green'] <= 127) && ($colorIndices['blue'] == 255))
                 {
-                    $color = $darkblue;
+                    $color = imagecolorallocate($image, $colorIndices['red'] + $step, $colorIndices['green'] + $step, $colorIndices['blue']);
                 }
-                else if (($oldColorIndices['red'] == 127) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 255))
+                else if (($colorIndices['red'] == 128) and ($colorIndices['green'] == 128) && ($colorIndices['blue'] >= 128))
                 {
-                    $color = $lightred;
+                    $color = imagecolorallocate($image, $colorIndices['red'] + $step, $colorIndices['green'], $colorIndices['blue'] - $step);
                 }
-                else if (($oldColorIndices['red'] == 255) and ($oldColorIndices['green'] == 127) && ($oldColorIndices['blue'] == 127))
+                else if (($colorIndices['red'] >= 128) and ($colorIndices['green'] == 128) && ($colorIndices['blue'] == 128))
                 {
-                    $color = $darkred;
+                    $color = imagecolorallocate($image, $colorIndices['red'] + $step, $colorIndices['green'] - $step, $colorIndices['blue'] - $step);
                 }
                 else
                 {
-                    $color = $lightblue;
+                    $color = imagecolorallocate($image, 0, 0, 255);
                 }
             }
             else
             {
-                $color = $lightblue;
+                $color = imagecolorallocate($image, 0, 0, 255);
             }
 
             imagefilledellipse($image, $pixel->getX() - 1, $pixel->getY() - 1, 3, 3, $color);

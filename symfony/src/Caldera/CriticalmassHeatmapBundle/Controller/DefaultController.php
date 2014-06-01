@@ -22,7 +22,7 @@ class DefaultController extends Controller
         //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-09-30.gpx");
         //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-10-28.gpx");
         //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-11-25.gpx");
-        $gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-12-30.gpx");
+        //$gpxc->loadContentFromFile("/Applications/XAMPP/htdocs/2011-12-30.gpx");
         $gpxc->parseContent();
 
         $pathArray = $gpxc->getPathArray();
