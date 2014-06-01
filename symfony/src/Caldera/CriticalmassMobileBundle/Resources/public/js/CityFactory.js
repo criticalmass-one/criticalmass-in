@@ -18,6 +18,9 @@ CityFactory.convertJSONToCity = function(jsonData)
     city.setCity(cityObject.city);
     city.setTitle(cityObject.title);
     city.setDescription(cityObject.description);
+    city.setUrl(cityObject.url);
+    city.setFacebook(cityObject.facebook);
+    city.setTwitter(cityObject.twitter);
 }
 
 CityFactory.convertObjectToCity = function(objectData)
@@ -29,6 +32,9 @@ CityFactory.convertObjectToCity = function(objectData)
     city.setCity(objectData.city);
     city.setTitle(objectData.title);
     city.setDescription(objectData.description);
+    city.setUrl(objectData.url);
+    city.setFacebook(objectData.facebook);
+    city.setTwitter(objectData.twitter);
 
     return city;
 }

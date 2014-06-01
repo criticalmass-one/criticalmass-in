@@ -65,4 +65,32 @@ City.prototype.parseAjaxResultData = function(ajaxResultData)
     this.setCity(ajaxResultData.city);
     this.setTitle(ajaxResultData.title);
     this.setDescription(ajaxResultData.description);
-}
+}City.prototype.getUrl = function()
+{
+    return this.url;
+};
+
+City.prototype.setUrl = function(url)
+{
+    this.url = url;
+};
+
+City.prototype.getFacebook = function()
+{
+    return this.facebook;
+};
+
+City.prototype.setFacebook = function(facebook)
+{
+    this.facebook = facebook;
+};
+
+City.prototype.getTwitter = function()
+{
+    return this.twitter;
+};
+
+City.prototype.setTwitter = function(twitter)
+{
+    this.twitter = twitter;
+};
