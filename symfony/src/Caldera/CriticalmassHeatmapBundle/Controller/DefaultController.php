@@ -27,7 +27,7 @@ class DefaultController extends Controller
 
             $pathArray = $gpxc->getPathArray();
 
-            for ($zoom = 10; $zoom < 16; ++$zoom)
+            for ($zoom = 0; $zoom < 16; ++$zoom)
             {
                 $osmmdc = new OSMMapDimensionCalculator($pathArray, $zoom);
 
