@@ -26,6 +26,9 @@ class RideAdmin extends Admin
                 ->add('latitude', 'text', array('label' => 'Breitengrad'))
                 ->add('longitude', 'text', array('label' => 'Längengrad'))
             ->end()
+            ->with('GPX-Track', array('class' => 'col-md-6'))
+                ->add('optimizedGpxContent', 'textarea', array('label' => 'GPX-Inhalt'))
+            ->end()
         ;
     }
 
