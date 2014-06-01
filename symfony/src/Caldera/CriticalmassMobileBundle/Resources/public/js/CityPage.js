@@ -17,31 +17,47 @@ CityPage.prototype.refreshContent = function()
 
     var char = 96;
 
-    $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html('');
+    var socialMediaLinksBox = $('#' + this.pageIdentifier + ' #citySocialMediaLinks');
+    socialMediaLinksBox.removeClass('ui-grid-solo ui-grid-a ui-grid-b');
+    socialMediaLinksBox.html(' ');
+
+    switch (city.countSocialMediaLinks())
+    {
+        case 1:
+            socialMediaLinksBox.addClass('ui-grid-solo');
+            break;
+        case 2:
+            socialMediaLinksBox.addClass('ui-grid-a');
+            break;
+        case 3:
+            socialMediaLinksBox.addClass('ui-grid-b');
+            break;
+    }
+
 
     if (city.getUrl() != '')
     {
-        var html = $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html();
+        var html = socialMediaLinksBox.html();
         html += '<div class="ui-block-' + String.fromCharCode(++char) + '"><a id="citySocialMediaLinksUrlButton" href="' + city.getUrl() + '" target="_blank">WWW</a></div>';
-        $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html(html);
+        socialMediaLinksBox.html(html);
 
         $('#' + this.pageIdentifier + ' #citySocialMediaLinksUrlButton').button();
     }
 
     if (city.getFacebook() != '')
     {
-        var html = $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html();
+        var html = socialMediaLinksBox.html();
         html += '<div class="ui-block-' + String.fromCharCode(++char) + '"><a id="citySocialMediaLinksFacebookButton" href="' + city.getFacebook() + '" target="_blank">facebook</a></div>';
-        $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html(html);
+        socialMediaLinksBox.html(html);
 
         $('#' + this.pageIdentifier + ' #citySocialMediaLinksFacebookButton').button();
     }
 
     if (city.getTwitter() != '')
     {
-        var html = $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html();
+        var html = socialMediaLinksBox.html();
         html += '<div class="ui-block-' + String.fromCharCode(++char) + '"><a id="citySocialMediaLinksTwitterButton" href="' + city.getTwitter() + '" target="_blank">twitter</a></div>';
-        $('#' + this.pageIdentifier + ' #citySocialMediaLinks').html(html);
+        socialMediaLinksBox.html(html);
 
         $('#' + this.pageIdentifier + ' #citySocialMediaLinksTwitterButton').button();
     }
