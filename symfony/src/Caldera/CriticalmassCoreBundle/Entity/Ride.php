@@ -366,6 +366,14 @@ class Ride
 
     public function __toString()
     {
-        return $this->city->getTitle()." - ".$this->getDateTime()->format("Y-m-d");
+        if ($this->city)
+        {
+            return $this->city->getTitle()." - ".$this->getDateTime()->format("Y-m-d");
+        }
+        else
+        {
+            return $this->getDateTime()->format("Y-m-d");
+        }
+    }
     }
 }
