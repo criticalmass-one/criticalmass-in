@@ -90,6 +90,11 @@ class Ride
 	private $godMode = 0;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $optimizedGpxContent;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -306,6 +311,16 @@ class Ride
         return $this->godMode;
     }
 
+    public function setOptimizedGpxContent($optimizedGpxContent)
+    {
+        $this->optimizedGpxContent = $optimizedGpxContent;
+    }
+
+    public function getOptimizedGpxContent()
+    {
+        return $this->optimizedGpxContent;
+    }
+
     public function isRideRolling()
     {
         $rideTimeStamp = $this->getDateTime()->format('U');
@@ -347,5 +362,10 @@ class Ride
     public function isEqual(Ride $ride)
     {
         return $ride->getId() == $this->getId();
+    }
+
+    public function __toString()
+    {
+        return $this->city->getTitle()." - ".$this->getDateTime()->format("Y-m-d");
     }
 }
