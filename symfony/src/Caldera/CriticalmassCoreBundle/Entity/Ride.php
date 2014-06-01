@@ -267,27 +267,28 @@ class Ride
         return $this->longitude;
     }
 
-    /**
-     * Set mapLocation
-     *
-     * @param string $mapLocation
-     * @return Ride
-     */
-    public function setMapLocation($mapLocation)
+    public function setTitle($title)
     {
-        $this->mapLocation = $mapLocation;
-    
+        $this->title = $title;
+
         return $this;
     }
 
-    /**
-     * Get mapLocation
-     *
-     * @return string 
-     */
-    public function getMapLocation()
+    public function getTitle()
     {
-        return $this->mapLocation;
+        return $this->title;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
