@@ -14,11 +14,14 @@ class HeatmapAdmin extends Admin
     {
         $formMapper
             ->with('Beschreibung', array('class' => 'col-md-6'))
-                ->add('title', 'text', array('label' => 'Titel'))
-                ->add('description', 'textarea', array('label' => 'Beschreibung'))
+            ->add('title', 'text', array('label' => 'Titel'))
+            ->add('description', 'textarea', array('label' => 'Beschreibung'))
             ->end()
             ->with('Touren', array('class' => 'col-md-6'))
                 ->add('rides', 'sonata_type_model', array('label' => 'Touren', 'multiple' => true, 'btn_add' => false))
+            ->end()
+            ->with('Identifier', array('class' => 'col-md-6'))
+                ->add('Identifier', 'text', array('label' => 'Identifier'))
             ->end();
     }
 
@@ -26,7 +29,7 @@ class HeatmapAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
+            ->add('title')
         ;
     }
 
@@ -34,7 +37,7 @@ class HeatmapAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id')
+            ->addIdentifier('title')
         ;
     }
 }
