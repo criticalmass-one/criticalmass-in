@@ -102,7 +102,7 @@ class Tile {
 
             if (($x >= 0) and ($x < $this->size) and ($y >= 0) and ($y < $this->size))
             {
-                $this->addPixel(new Pixel(round($x), round($y)));
+                $this->addPixel(new Pixel(floor($x), floor($y)));
             }
         }
     }
