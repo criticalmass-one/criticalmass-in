@@ -8,7 +8,6 @@
 
 namespace Caldera\CriticalmassHeatmapBundle\Utility;
 
-
 class GPXConverter
 {
     protected $gpxFileContent;
