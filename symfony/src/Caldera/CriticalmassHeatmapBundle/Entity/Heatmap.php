@@ -37,8 +37,8 @@ class Heatmap
     /**
      * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride")
      * @ORM\JoinTable(name="heatmap_ride",
-     *      joinColumns={@ORM\JoinColumn(name="ride_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="ride_id", referencedColumnName="id")}
      *      )
      */
     protected $rides;
