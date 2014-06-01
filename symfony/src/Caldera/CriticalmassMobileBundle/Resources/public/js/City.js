@@ -58,14 +58,7 @@ City.prototype.setDescription = function(description)
     this.description = description;
 };
 
-City.prototype.parseAjaxResultData = function(ajaxResultData)
-{
-    this.setId(ajaxResultData.id);
-    this.setCitySlug(ajaxResultData.slug);
-    this.setCity(ajaxResultData.city);
-    this.setTitle(ajaxResultData.title);
-    this.setDescription(ajaxResultData.description);
-}City.prototype.getUrl = function()
+City.prototype.getUrl = function()
 {
     return this.url;
 };
