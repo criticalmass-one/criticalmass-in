@@ -39,7 +39,7 @@ class DefaultController extends Controller
                         $tile->generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom);
                         $tile->dropPathArray($pathArray);
 
-                        $tp = new PNGTilePrinter($tile);
+                        $tp = new PNGTilePrinter($tile, $heatmap);
                         $tp->printTile();
                         $tp->saveTile();
                     }

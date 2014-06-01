@@ -8,14 +8,17 @@
 
 namespace Caldera\CriticalmassHeatmapBundle\Utility;
 
+use Caldera\CriticalmassHeatmapBundle\Entity\Heatmap;
 
 abstract class AbstractTilePrinter {
     protected $tile;
     protected $imageFileContent;
+    protected $heatmap;
 
-    public function __construct(Tile $tile)
+    public function __construct(Tile $tile, Heatmap $heatmap)
     {
         $this->tile = $tile;
+        $this->heatmap = $heatmap;
     }
 
     public function getImageFileContent()
@@ -25,7 +28,7 @@ abstract class AbstractTilePrinter {
 
     public function getPath()
     {
-        return '/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/heatmap/'.$this->tile->getOsmZoom().'/'.$this->tile->getOsmXTile().'/';
+        return '/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/heatmap/'.$this->heatmap->getIdentifier().'/'.$this->tile->getOsmZoom().'/'.$this->tile->getOsmXTile().'/';
     }
 
     public function getFilename()
