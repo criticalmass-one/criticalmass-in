@@ -35,6 +35,12 @@ class Heatmap
     protected $description;
 
     /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $identifier;
+
+
+    /**
      * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride")
      * @ORM\JoinTable(name="heatmap_ride",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
@@ -66,6 +72,16 @@ class Heatmap
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
     }
 
     public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride)
