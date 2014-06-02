@@ -41,6 +41,9 @@
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
+    {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/external/*' '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 </head>
 <body id="webapp">
 <!-- Menü -->
@@ -274,11 +277,6 @@
 </script>
 <noscript><p><img src="http://piwik.caldera.cc/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-{% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+
 </body>
 </html>
