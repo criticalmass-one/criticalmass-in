@@ -29,14 +29,26 @@ PageDispatcher.initPage = function(pagename)
 {
     switch (pagename)
     {
-        case 'mapPage': var mapPage = new MapPage('mapPage');
-                        mapPage.initPage();
-                        this.pageArray['mapPage'] = mapPage;
-                        break;
-        case 'startPage': var startPage = new StartPage('startPage');
-                        startPage.initPage();
-                        this.pageArray['startPage'] = startPage;
-                        break;
+        case 'mapPage':
+            var mapPage = new MapPage('mapPage');
+            mapPage.initPage();
+            this.pageArray['mapPage'] = mapPage;
+            break;
+        case 'startPage':
+            var startPage = new StartPage('startPage');
+            startPage.initPage();
+            this.pageArray['startPage'] = startPage;
+            break;
+        case 'loginPage':
+            var loginPage = new LoginPage('loginPage');
+            loginPage.initPage();
+            this.pageArray['loginPage'] = loginPage;
+            break;
+        case 'cityPage':
+            var cityPage = new CityPage('cityPage');
+            cityPage.initPage();
+            this.pageArray['cityPage'] = cityPage;
+            break;
     }
 }
 
