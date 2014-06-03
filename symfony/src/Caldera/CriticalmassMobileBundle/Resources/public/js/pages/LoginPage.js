@@ -1,15 +1,13 @@
 LoginPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
-
-    this.initLoginPageEventListeners();
 }
 
 LoginPage.prototype = new AppPage();
 
 LoginPage.prototype.constructor = LoginPage;
 
-LoginPage.prototype.initLoginPageEventListeners = function()
+LoginPage.prototype.initPage = function()
 {
     var this2 = this;
 
