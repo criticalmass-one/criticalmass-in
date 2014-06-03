@@ -13,17 +13,17 @@ PageDispatcher.registerPageSwitchCallback = function()
     {
         this2.handlePageSwitch();
     });
-}
+};
 
 PageDispatcher.handlePageSwitch = function()
 {
     this.initPage(this.getCurrentPageId());
-}
+};
 
 PageDispatcher.handleCurrentPage = function()
 {
     this.initPage(this.getCurrentPageId());
-}
+};
 
 PageDispatcher.initPage = function(pagename)
 {
@@ -50,10 +50,9 @@ PageDispatcher.initPage = function(pagename)
             this.pageArray['cityPage'] = cityPage;
             break;
     }
-}
+};
 
 PageDispatcher.getCurrentPageId = function()
 {
     return $(':mobile-pagecontainer').pagecontainer('getActivePage')[0].id;
-}
-
+};
