@@ -9,25 +9,24 @@
         var isPageLoaded = false;
         var citySlug = '{{ citySlug }}';
 
-        function getCurrentPageId() {
-            return $(":mobile-pagecontainer").pagecontainer( "getActivePage" )[0].id;
-        }
-
         window.onload = function()
         {
             function loadingCompletedCallback()
             {
                 if (CityFactory.hasCities() && RideFactory.hasRides() && !isPageLoaded)
                 {
+                    PageDispatcher.registerPageSwitchCallback();
+                    PageDispatcher.handleCurrentPage();
+
                     isPageLoaded = true;
 
-                    var mapPage = new MapPage('mapPage');
+                    /*var mapPage = new MapPage('mapPage');
                     var startPage = new StartPage('startPage');
                     var loginPage = new LoginPage('loginPage');
                     var cityPage = new CityPage('cityPage');
                     var globalPage = new GlobalPage();
-
-                    var positionSender = new PositionSender(mapPage);
+*/
+                    var positionSender = new PositionSender(mapPage);s
                 }
             }
 
@@ -41,7 +40,11 @@
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
-    {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/external/*' '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
+    {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/external/*'
+                   '@CalderaCriticalmassMobileBundle/Resources/public/js/factories/*'
+                   '@CalderaCriticalmassMobileBundle/Resources/public/js/pages/*'
+                   '@CalderaCriticalmassMobileBundle/Resources/public/js/entities/*'
+                   '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 </head>
@@ -72,12 +75,6 @@
         <h1 class="city-full-title"></h1>
     </header>
     <section data-role="content" id="mapPageContent">
-
-        <section id="section-force-map-loading"><h2>Hoppla :(</h2>
-            <p>Aus technischen Gründen konnte die Übersichtskarte leider nicht geladen werden. Bitte versuche es noch einmal:</p>
-            <button id="button-force-map-loading" data-icon="star">Karte laden</button>
-        </section>
-
         <div id="map"></div>
 
         <div id="map-control-panel" data-role="collapsible-set">
