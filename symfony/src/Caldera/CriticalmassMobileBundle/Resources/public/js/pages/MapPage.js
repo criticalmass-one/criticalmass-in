@@ -1,8 +1,6 @@
 MapPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
-
-    this.initMapPageEventListeners();
 }
 
 MapPage.prototype = new AppPage();
@@ -11,25 +9,11 @@ MapPage.prototype.constructor = MapPage;
 
 MapPage.prototype.map = null;
 
-MapPage.prototype.initMapPageEventListeners = function()
-{
-    var this2 = this;
-    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
-        this2.initMap();
-    });
-
-    $('#button-force-map-loading').on('click', function()
-    {
-       this2.initMap();
-    });
-}
-
-MapPage.prototype.initMap = function()
+MapPage.prototype.initPage = function()
 {
     if (this.map == null)
     {
         this.map = new Map('map', this.getCitySlug(), this);
-        $('#section-force-map-loading').remove();
     }
 }
 

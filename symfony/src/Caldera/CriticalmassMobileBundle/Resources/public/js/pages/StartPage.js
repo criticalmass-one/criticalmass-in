@@ -8,8 +8,6 @@ StartPage = function(pageIdentifier)
 StartPage.prototype = new AppPage();
 StartPage.prototype.constructor = StartPage;
 
-StartPage.prototype.initPage = false;
-
 StartPage.prototype.initStartPageEventListeners = function()
 {
     var this2 = this;
@@ -18,12 +16,8 @@ StartPage.prototype.initStartPageEventListeners = function()
     });
 }
 
-StartPage.prototype.initCityList = function()
+StartPage.prototype.initPage = function()
 {
-    if (this.initPage == false)
-    {
-        this.initPage = true;
-
         var cities = JSON.parse(localStorage.cityListData).cities;
 
         for (index in cities)
@@ -70,5 +64,4 @@ StartPage.prototype.initCityList = function()
 
             $('#cityList').listview('refresh');
         }
-    }
 }

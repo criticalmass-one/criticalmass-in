@@ -14,7 +14,7 @@ CityPage.prototype.constructor = CityPage;
 CityPage.prototype.refreshContent = function()
 {
     var city = CityFactory.getCityFromStorageBySlug(this.getCitySlug());
-    
+
     this.refreshSocialMediaLinks();
 
     this.refreshCriticalMassContentLinks();
