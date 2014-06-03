@@ -21,7 +21,7 @@ UrlFactory.getHostName = function()
 {
     if (this.getSystem() == 'local')
     {
-        return 'www.criticalmass.local';
+        return 'www.criticalmass.cm';
     }
 
     return 'www.criticalmass.in';
@@ -57,7 +57,7 @@ UrlFactory.getEnvironmentString = function()
     return '';
 }
 
-UrlFactory.getUrlPrefix = function(ajaxResponseData)
+UrlFactory.getUrlPrefix = function()
 {
     return this.getProtocolString() +
         this.getHostName() +
