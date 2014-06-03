@@ -39,6 +39,10 @@ class Heatmap
      */
     protected $identifier;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $public;
 
     /**
      * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride")
@@ -100,5 +104,15 @@ class Heatmap
     public function getRides()
     {
         return $this->rides;
+    }
+
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    public function setPublic($public)
+    {
+        $this->public = $public;
     }
 }

@@ -22,6 +22,10 @@ class HeatmapAdmin extends Admin
             ->end()
             ->with('Identifier', array('class' => 'col-md-6'))
                 ->add('Identifier', 'text', array('label' => 'Identifier'))
+            ->end()
+            ->with('Einstellungen', array('class' => 'col-md-6'))
+                ->add('public', 'checkbox', array('label' => 'Öffentlich sichtbar?'))
+                ->add('cities', 'sonata_type_model', array('label' => 'Verknüpfte Städte', 'multiple' => true, 'btn_add' => false))
             ->end();
     }
 
