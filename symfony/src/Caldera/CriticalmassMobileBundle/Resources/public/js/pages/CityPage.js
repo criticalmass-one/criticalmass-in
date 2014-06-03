@@ -1,17 +1,13 @@
 CityPage = function(pageIdentifier)
 {
     this.pageIdentifier = pageIdentifier;
-
-    //this.initLoginPageEventListeners();
-
-    this.refreshContent();
 }
 
 CityPage.prototype = new AppPage();
 
 CityPage.prototype.constructor = CityPage;
 
-CityPage.prototype.refreshContent = function()
+CityPage.prototype.initPage = function()
 {
     var city = CityFactory.getCityFromStorageBySlug(this.getCitySlug());
 

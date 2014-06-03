@@ -1,15 +1,18 @@
 GlobalPage = function()
 {
     this.pageIdentifier = "webapp";
-
-    this.initUserStatus();
-    this.initEventListeners();
-    this.initPageLayout();
 }
 
 GlobalPage.prototype = new AppPage();
 
 GlobalPage.prototype.constructor = GlobalPage;
+
+GlobalPage.prototype.initPage = function()
+{
+    this.initUserStatus();
+    this.initEventListeners();
+    this.initPageLayout();
+}
 
 GlobalPage.prototype.initEventListeners = function()
 {
