@@ -6,7 +6,7 @@ caldera_criticalmass_standardridegenerator:
     pattern: /standardridegenerator
     defaults: { _controller: CalderaCriticalmassCoreBundle:Default:index }
 
-caldera_criticalmass_ridecompiler:
-    pattern: /ridecompiler
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Default:index2 }
+caldera_criticalmass_gpxexport:
+    pattern: /gpxexport/{rideId}/{userId}
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Default:gpxexport }
 
