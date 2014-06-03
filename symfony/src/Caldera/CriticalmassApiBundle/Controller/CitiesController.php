@@ -50,6 +50,9 @@ class CitiesController extends Controller
                 'city' => $city->getCity(),
                 'title' => $city->getTitle(),
                 'description' => $city->getDescription(),
+                'url' => $city->getUrl(),
+                'facebook' => $city->getFacebook(),
+                'twitter' => $city->getTwitter(),
                 'slug' => $city->getMainSlug()->getSlug()
             );
 
