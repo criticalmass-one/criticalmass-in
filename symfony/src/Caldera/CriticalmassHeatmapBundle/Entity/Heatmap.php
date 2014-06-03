@@ -45,6 +45,15 @@ class Heatmap
     protected $public;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City")
+     * @ORM\JoinTable(name="heatmap_city",
+     *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="city_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $cities;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride")
      * @ORM\JoinTable(name="heatmap_ride",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
@@ -55,6 +64,7 @@ class Heatmap
 
     public function __construct()
     {
+        $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
         $this->identifier = md5(microtime());
     }
@@ -114,5 +124,22 @@ class Heatmap
     public function setPublic($public)
     {
         $this->public = $public;
+    }
+
+    public function addCity(\Caldera\CriticalmassCoreBundle\Entity\City $city)
+    {
+        $this->cities[] = $city;
+
+        return $this;
+    }
+
+    public function removeCity(\Caldera\CriticalmassCoreBundle\Entity\City $city)
+    {
+        $this->cities->removeElement($city);
+    }
+
+    public function getCities()
+    {
+        return $this->cities;
     }
 }
