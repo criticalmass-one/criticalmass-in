@@ -6,6 +6,7 @@ Map = function(mapIdentifier, city, parentPage)
 
     this.initMap();
     this.drawCityMarkers();
+    this.drawPositions();
     /*
     $.ajax({
         type: 'GET',
@@ -22,6 +23,43 @@ Map = function(mapIdentifier, city, parentPage)
         this2.getNewMapData();
     }, 5000);*/
 };
+Map.prototype.positionsArray = [];
+
+Map.prototype.drawPositions = function()
+{
+    function callback(ajaxResultData)
+    {
+        for (index in ajaxResultData)
+        {
+            var user = ajaxResultData[index];
+
+            var circleOptions = {
+                color: 'rgb(255, 0, 0)',
+                fillColor: 'rgb(255, 0, 0)',
+                opacity: 80,
+                fillOpacity: 50,
+                weight: 1
+            };
+
+            var circle = L.circle([user.latitude, user.longitude], 15, circleOptions);
+            circle.addTo(this.map);
+
+            this.positionsArray[user] = circle;
+        }
+    }
+
+    $.support.cors = true;
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetch&rideId=1',
+        cache: false,
+        context: this,
+        crossDomain: true,
+        success: callback
+    });
+}
+
 
 Map.prototype.cityMarkersArray = [];
 
