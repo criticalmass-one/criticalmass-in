@@ -80,7 +80,7 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
     var newCity = CityFactory.getCityFromStorageBySlug(newCitySlug);
 
     this.setAppTitle(newCity.getTitle() + ' — criticalmass.in');
-    this.refreshCityTitles(newCity.getTitle());
+    this.refreshCityTitles(newCity);
     this.setCitySlug(newCitySlug);
 
     _paq.push(['trackEvent', 'switch_city', newCitySlug]);
@@ -91,9 +91,10 @@ AppPage.prototype.setAppTitle = function(newTitle)
     $('title').html(newTitle);
 }
 
-AppPage.prototype.refreshCityTitles = function(newTitle)
+AppPage.prototype.refreshCityTitles = function(city)
 {
-    $('.city-full-title').html(newTitle);
+    $('.city-full-title').html(city.getTitle());
+    $('.city-short-title').html(city.getCity());
 }
 
 AppPage.prototype.showNotificationLayer = function(notificationLayer)
