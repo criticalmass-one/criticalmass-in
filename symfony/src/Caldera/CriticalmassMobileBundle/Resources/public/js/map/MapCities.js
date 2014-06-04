@@ -24,9 +24,20 @@ MapCities.prototype.drawCityMarkers = function()
     for (slug in cities)
     {
         var city = cities[slug];
+        var marker;
+        var ride = RideFactory.getRideFromStorageBySlug(slug);
 
-        var marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-        marker.bindPopup(city.getTitle());
+        if (ride == null)
+        {
+            marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
+            marker.bindPopup(city.getTitle());
+        }
+        else
+        {
+            marker = L.marker([ride.getLatitude(), ride.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
+            marker.bindPopup(city.getTitle());
+        }
+
         marker.addTo(this.map.map);
 
         this.cityMarkersArray[slug] = marker;
