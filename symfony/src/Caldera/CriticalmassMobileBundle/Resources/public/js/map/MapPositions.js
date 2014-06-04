@@ -17,7 +17,7 @@ MapPositions.prototype.startLoop = function()
     this.timer = window.setInterval(function()
     {
         this2.drawPositions();
-    }, 5000);
+    }, 2500);
 };
 
 MapPositions.prototype.clearOldPositions = function(ajaxResultData)
