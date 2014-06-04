@@ -29,13 +29,17 @@ MapCities.prototype.drawCityMarkers = function()
         if (ride != null && ride.getHasLocation())
         {
             latLng = [ride.getLatitude(), ride.getLongitude()];
-            popupHTML += '<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>';
+            popupHTML += '<h3>' + ride.getTitle() + '</h3>';
+            popupHTML += '<p>Nächste Tour: ' + ride.getFormattedDateTime() + '<br />Treffpunkt: ' + ride.getLocation() + '</p>';
+            popupHTML += '<p>' + ride.getDescription() + '</p>';
         }
         else
         if (ride != null)
         {
             latLng = [city.getLatitude(), city.getLongitude()];
-            popupHTML += '<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>';
+            popupHTML += '<h3>' + ride.getTitle() + '</h3>';
+            popupHTML += '<p>Nächste Tour: ' + ride.getFormattedDateTime() + '</p>';
+            popupHTML += '<p>' + ride.getDescription() + '</p>';
         }
         else
         {

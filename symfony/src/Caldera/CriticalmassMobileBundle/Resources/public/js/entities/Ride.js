@@ -101,3 +101,8 @@ Ride.prototype.setDescription = function(description)
 {
     this.description = description;
 }
+
+Ride.prototype.getFormattedDateTime = function()
+{
+    return this.dateTime.getDate() + '.' + (this.dateTime.getMonth() + 1) + '. ' + this.dateTime.getHours() + '.' + (this.dateTime.getMinutes() < 10 ? '0' + this.dateTime.getMinutes() : this.dateTime.getMinutes()) + ' Uhr';
+}
