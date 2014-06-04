@@ -28,14 +28,6 @@ class User extends BaseUser
     protected $description;
 
     /**
-     * Schalter fuer die GPS-Aktivitaet, entscheidet ob der Benutzer GPS-Daten von
-     * der Live-Uebersicht senden moechte.
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $sendGPSInformation = 1;
-
-    /**
      * Vom Benutzer momentan ausgewaehlte Stadt.
      *
      * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City")
@@ -43,20 +35,6 @@ class User extends BaseUser
      */
     protected $currentCity;
 
-    /**
-     * Soll die Position dauerhaft auf der Karte eingeblendet werden?
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $isPermanent = 0;
-
-    /**
-     * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
-     * werden koennen.
-     *
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $pushoverKey = '';
 
     /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
@@ -100,29 +78,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set sendGPSInformation
-     *
-     * @param boolean $sendGPSInformation
-     * @return User
-     */
-    public function setSendGPSInformation($sendGPSInformation)
-    {
-        $this->sendGPSInformation = $sendGPSInformation;
-
-        return $this;
-    }
-
-    /**
-     * Get sendGPSInformation
-     *
-     * @return boolean
-     */
-    public function getSendGPSInformation()
-    {
-        return $this->sendGPSInformation;
-    }
-
-    /**
      * Set currentCity
      *
      * @param \Caldera\CriticalmassCoreBundle\Entity\City $currentCity
@@ -143,52 +98,6 @@ class User extends BaseUser
     public function getCurrentCity()
     {
         return $this->currentCity;
-    }
-
-    /**
-     * Set pushoverKey
-     *
-     * @param string $pushoverKey
-     * @return User
-     */
-    public function setPushoverKey($pushoverKey)
-    {
-        $this->pushoverKey = $pushoverKey;
-
-        return $this;
-    }
-
-    /**
-     * Get pushoverKey
-     *
-     * @return string
-     */
-    public function getPushoverKey()
-    {
-        return $this->pushoverKey;
-    }
-
-    /**
-     * Set isPermanent
-     *
-     * @param boolean $isPermanent
-     * @return User
-     */
-    public function setIsPermanent($isPermanent)
-    {
-        $this->isPermanent = $isPermanent;
-
-        return $this;
-    }
-
-    /**
-     * Get isPermanent
-     *
-     * @return boolean
-     */
-    public function getIsPermanent()
-    {
-        return $this->isPermanent;
     }
 
     /**
