@@ -8,6 +8,7 @@ Ride.prototype.dateTime = null;
 Ride.prototype.location = null;
 Ride.prototype.latitude = null;
 Ride.prototype.longitude = null;
+Ride.prototype.hasLocation = null;
 
 Ride.prototype.getId = function()
 {
@@ -67,4 +68,14 @@ Ride.prototype.getLongitude = function()
 Ride.prototype.setLongitude = function(longitude)
 {
     this.longitude = longitude;
+}
+
+Ride.prototype.getHasLocation = function()
+{
+    return this.hasLocation;
+}
+
+Ride.prototype.setHasLocation = function(hasLocation)
+{
+    this.hasLocation = hasLocation;
 }

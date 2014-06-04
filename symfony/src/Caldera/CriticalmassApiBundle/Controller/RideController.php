@@ -20,14 +20,20 @@ class RideController extends Controller
         {
             foreach ($ride1 as $ride2)
             {
-                $resultArray[$ride2->getCity()->getMainSlug()->getSlug()] = array(
+                $slug = $ride2->getCity()->getMainSlug()->getSlug();
+
+                $resultArray[$slug] = array(
                     'id' => $ride2->getId(),
-                    'slug' => $ride2->getCity()->getMainSlug()->getSlug(),
+                    'slug' => $slug,
                     'dateTime' => $ride2->getDateTime()->format('F d, Y H:i:s'),
-                    'location' => $ride2->getLocation(),
-                    'latitude' => $ride2->getLatitude(),
-                    'longitude' => $ride2->getLongitude()
-                );
+                    'hasLocation' => $ride2->getHasLocation());
+
+                if ($ride2->getHasLocation())
+                {
+                    $resultArray[$slug]['location'] = $ride2->getLocation();
+                    $resultArray[$slug]['latitude'] = $ride2->getLatitude();
+                    $resultArray[$slug]['longitude'] = $ride2->getLongitude();
+                }
             }
         }
 
