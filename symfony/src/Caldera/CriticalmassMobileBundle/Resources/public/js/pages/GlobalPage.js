@@ -50,5 +50,5 @@ GlobalPage.prototype.initPageLayout = function()
     var city = CityFactory.getCityFromStorageBySlug(citySlug);
 
     this.setAppTitle(city.getTitle() + ' — criticalmass.in');
-    this.refreshCityTitles(city.getTitle());
+    this.refreshCityTitles(city);
 }
