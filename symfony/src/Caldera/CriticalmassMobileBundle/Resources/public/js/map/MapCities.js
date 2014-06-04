@@ -30,16 +30,25 @@ MapCities.prototype.drawCityMarkers = function()
         if (ride != null && ride.getHasLocation())
         {
             marker = L.marker([ride.getLatitude(), ride.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-            marker.bindPopup(city.getTitle());
+            marker.bindPopup('<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>');
+        }
+        else
+        if (ride != null)
+        {
+            marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
+            marker.bindPopup('<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>');
         }
         else
         {
             marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-            marker.bindPopup(city.getTitle());
+            marker.bindPopup('<h3>' + city.getTitle() + '</h3><p>' + city.getDescription() + '</p>');
         }
 
+        var this2 = this;
+        marker.slug = slug;
         marker.addTo(this.map.map);
 
         this.cityMarkersArray[slug] = marker;
+        this.cityMarkersArray[slug].on('click', function(e) { alert(e.slug); this2.map.parentPage.switchCityBySlug(e.slug); });
     }
 };

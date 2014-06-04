@@ -19,6 +19,8 @@ RideFactory.convertObjectToRide = function(objectData)
     ride.setLatitude(objectData.latitude);
     ride.setLongitude(objectData.longitude);
     ride.setHasLocation(objectData.hasLocation);
+    ride.setTitle(objectData.title);
+    ride.setDescription(objectData.description);
 
     return ride;
 }

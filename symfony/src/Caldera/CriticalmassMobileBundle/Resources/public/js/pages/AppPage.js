@@ -83,6 +83,7 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
     this.refreshCityTitles(newCity.getTitle());
     this.setCitySlug(newCitySlug);
 
+    alert(newCitySlug);
     _paq.push(['trackEvent', 'switch_city', newCitySlug]);
 }
 

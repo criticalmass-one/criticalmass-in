@@ -7,6 +7,45 @@ MapPositions.prototype.map = null;
 
 MapPositions.prototype.positionsArray = [];
 
+MapPositions.prototype.timer = null;
+
+MapPositions.prototype.startLoop = function()
+{
+    var this2 = this;
+    this.timer = window.setInterval(function()
+    {
+        this2.drawPositions();
+    }, 1000);
+};
+
+MapPositions.prototype.clearOldPositions = function(ajaxResultData)
+{
+    for (existingUsername in this.positionsArray)
+    {
+        var found = false;
+
+        for (index in ajaxResultData)
+        {
+            if (existingUsername == ajaxResultData[index].username)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            this.removeUsernamePosition(existingUsername);
+        }
+    }
+};
+
+MapPositions.prototype.removeUsernamePosition = function(username)
+{
+    this.map.map.removeLayer(this.positionsArray[username]);
+    delete this.positionsArray[username];
+};
+
 MapPositions.prototype.drawPositions = function()
 {
     function callback(ajaxResultData)
@@ -29,8 +68,15 @@ MapPositions.prototype.drawPositions = function()
             circle.addTo(this.map.map);
             circle.bindPopup(position.username);
 
+            if (this.positionsArray[position.username])
+            {
+                this.removeUsernamePosition(position.username);
+            }
+
             this.positionsArray[position.username] = circle;
         }
+
+        this.clearOldPositions(ajaxResultData);
     }
 
     $.support.cors = true;

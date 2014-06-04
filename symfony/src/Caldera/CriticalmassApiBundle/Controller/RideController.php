@@ -26,7 +26,9 @@ class RideController extends Controller
                     'id' => $ride2->getId(),
                     'slug' => $slug,
                     'dateTime' => $ride2->getDateTime()->format('F d, Y H:i:s'),
-                    'hasLocation' => $ride2->getHasLocation());
+                    'hasLocation' => $ride2->getHasLocation(),
+                    'title' => $ride2->getTitle(),
+                    'description' => $ride2->getDescription());
 
                 if ($ride2->getHasLocation())
                 {

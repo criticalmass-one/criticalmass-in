@@ -7,7 +7,7 @@ Map = function(mapIdentifier, city, parentPage)
     this.initMap();
 
     var positions = new MapPositions(this);
-    positions.drawPositions();
+    positions.startLoop();
 
     var cities = new MapCities(this);
     cities.drawCityMarkers();
