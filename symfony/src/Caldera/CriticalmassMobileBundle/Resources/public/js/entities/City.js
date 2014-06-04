@@ -88,6 +88,26 @@ City.prototype.setTwitter = function(twitter)
     this.twitter = twitter;
 };
 
+City.prototype.getLatitude = function()
+{
+    return this.latitude;
+};
+
+City.prototype.setLatitude = function(latitude)
+{
+    this.latitude = latitude;
+};
+
+City.prototype.getLongitude = function()
+{
+    return this.longitude;
+};
+
+City.prototype.setLongitude = function(longitude)
+{
+    this.longitude = longitude;
+};
+
 City.prototype.countSocialMediaLinks = function()
 {
   var socialMediaCounter = 0;

@@ -53,21 +53,12 @@ class CitiesController extends Controller
                 'url' => $city->getUrl(),
                 'facebook' => $city->getFacebook(),
                 'twitter' => $city->getTwitter(),
-                'slug' => $city->getMainSlug()->getSlug()
+                'slug' => $city->getMainSlug()->getSlug(),
+                'latitude' => $city->getLatitude(),
+                'longitude' => $city->getLongitude()
             );
 
-            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
-
-            if ($ride)
-            {
-                $cityResultArray['center'] = array('latitude' => $ride->getLatitude(), 'longitude' => $ride->getLongitude());
-            }
-            else
-            {
-                $cityResultArray['center'] = array('latitude' => $city->getLatitude(), 'longitude' => $city->getLongitude());
-            }
-
-            $citiesResult['city-'.$city->getId()] = $cityResultArray;
+            $citiesResult[$city->getMainSlug()->getSlug()] = $cityResultArray;
         }
 
         $response = new Response();

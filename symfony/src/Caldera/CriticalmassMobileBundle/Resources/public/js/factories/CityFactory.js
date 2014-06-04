@@ -11,16 +11,8 @@ CityFactory.hasCities = function()
 CityFactory.convertJSONToCity = function(jsonData)
 {
     var cityObject = JSON.parse(jsonData);
-    var city = new City();
 
-    city.setId(cityObject.id);
-    city.setCitySlug(cityObject.slug);
-    city.setCity(cityObject.city);
-    city.setTitle(cityObject.title);
-    city.setDescription(cityObject.description);
-    city.setUrl(cityObject.url);
-    city.setFacebook(cityObject.facebook);
-    city.setTwitter(cityObject.twitter);
+    return this.convertObjectToCity(cityObject);
 }
 
 CityFactory.convertObjectToCity = function(objectData)
@@ -35,9 +27,31 @@ CityFactory.convertObjectToCity = function(objectData)
     city.setUrl(objectData.url);
     city.setFacebook(objectData.facebook);
     city.setTwitter(objectData.twitter);
+    city.setLatitude(objectData.latitude);
+    city.setLongitude(objectData.longitude);
 
     return city;
 }
+
+CityFactory.getAllCities = function()
+{
+    if (!localStorage.cityListData)
+    {
+        return null;
+    }
+
+    var cityList = JSON.parse(localStorage.cityListData);
+    var resultList = new Array();
+
+    for (index in cityList.cities)
+    {
+        var city = this.convertObjectToCity(cityList.cities[index]);
+        resultList[city.getCitySlug()] = city;
+    }
+
+    return resultList;
+}
+
 
 CityFactory.getCityFromStorageBySlug = function(citySlug)
 {
