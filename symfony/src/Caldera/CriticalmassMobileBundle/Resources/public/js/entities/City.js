@@ -7,6 +7,8 @@ City.prototype.citySlug = null;
 City.prototype.city = null;
 City.prototype.title = null;
 City.prototype.description = null;
+City.prototype.latitude = null;
+City.prototype.longitude = null;
 
 City.prototype.getId = function()
 {

@@ -44,7 +44,7 @@ Map.prototype.initMap = function()
     }
     else
     {
-        this.map.setView([53.5496385, 9.9625133], 16);
+        this.map.setView([53.5496385, 9.9625133], 10);
     }
 
 

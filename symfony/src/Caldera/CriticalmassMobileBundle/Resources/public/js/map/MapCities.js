@@ -5,8 +5,6 @@ MapCities = function(map)
 
 MapCities.prototype.map = null;
 
-MapCities.prototype.cityMarkersArray = [];
-
 MapCities.prototype.drawCityMarkers = function()
 {
     var criticalmassIcon = L.icon({
@@ -24,31 +22,32 @@ MapCities.prototype.drawCityMarkers = function()
     for (slug in cities)
     {
         var city = cities[slug];
-        var marker;
         var ride = RideFactory.getRideFromStorageBySlug(slug);
+        var popupHTML = '';
+        var latLng = null;
 
         if (ride != null && ride.getHasLocation())
         {
-            marker = L.marker([ride.getLatitude(), ride.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-            marker.bindPopup('<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>');
+            latLng = [ride.getLatitude(), ride.getLongitude()];
+            popupHTML += '<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>';
         }
         else
         if (ride != null)
         {
-            marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-            marker.bindPopup('<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>');
+            latLng = [city.getLatitude(), city.getLongitude()];
+            popupHTML += '<h3>' + ride.getTitle() + '</h3><p>' + ride.getDescription() + '</p>';
         }
         else
         {
-            marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-            marker.bindPopup('<h3>' + city.getTitle() + '</h3><p>' + city.getDescription() + '</p>');
+            latLng = [city.getLatitude(), city.getLongitude()];
+            popupHTML += '<h3>' + city.getTitle() + '</h3><p>' + city.getDescription() + '</p>';
         }
 
-        var this2 = this;
-        marker.slug = slug;
-        marker.addTo(this.map.map);
+        var marker = L.marker(latLng, { riseOnHover: true, icon: criticalmassIcon, citySlug: slug });
+        marker.bindPopup(popupHTML);
 
-        this.cityMarkersArray[slug] = marker;
-        this.cityMarkersArray[slug].on('click', function(e) { alert(e.slug); this2.map.parentPage.switchCityBySlug(e.slug); });
+        var this2 = this;
+        marker.on('click', function(e) { this2.map.parentPage.switchCityBySlug(this.options.citySlug); });
+        marker.addTo(this.map.map);
     }
 };
