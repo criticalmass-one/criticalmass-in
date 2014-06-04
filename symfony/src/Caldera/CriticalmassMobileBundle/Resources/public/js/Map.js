@@ -45,6 +45,7 @@ Map.prototype.drawPositions = function()
 
             var circle = L.circle([user.latitude, user.longitude], 25, circleOptions);
             circle.addTo(this.map);
+            circle.bindPopup(user.username);
 
             this.positionsArray[user] = circle;
         }
