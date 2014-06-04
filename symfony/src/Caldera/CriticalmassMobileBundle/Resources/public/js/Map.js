@@ -4,20 +4,88 @@ Map = function(mapIdentifier, city, parentPage)
     this.city = city;
     this.parentPage = parentPage;
 
+    this.initMap();
+    this.drawCityMarkers();
+    /*
     $.ajax({
         type: 'GET',
         url: UrlFactory.getApiPrefix() + 'completemapdata/' + this.parentPage.getCitySlug(),
         cache: false,
         context: this,
         success: this.setMapOptions
-    });
-
+    });*/
+/*
     var this2 = this;
 
     this.timer = setInterval(function()
     {
         this2.getNewMapData();
-    }, 5000);
+    }, 5000);*/
+};
+
+Map.prototype.cityMarkersArray = [];
+
+Map.prototype.drawCityMarkers = function()
+{
+    var criticalmassIcon = L.icon({
+        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        popupAnchor: [0, -36],
+        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+    });
+
+    var cities = CityFactory.getAllCities();
+
+    for (slug in cities)
+    {
+        var city = cities[slug];
+
+        var marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
+        marker.bindPopup(city.getTitle());
+        marker.addTo(this.map);
+
+        this.cityMarkersArray[slug] = marker;
+        /*
+        this.cityMarkersArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude,
+            markerElement.centerPosition.longitude],
+            { riseOnHover: true }
+        ).addTo(this.map)
+            .bindPopup(markerElement.cityTitle);
+
+        this.elementsArray[markerElement.id].on('click', function(e) {
+            this.switchCity(markerElement.citySlug);
+        }, this);*/
+    }
+};
+
+Map.prototype.initMap = function()
+{
+    this.map = L.map('map');
+
+    if (this.hasOverridingMapPosition())
+    {
+        var mapPositon = this.getOverridingMapPosition();
+
+        this.map.setView([mapPositon.latitude,
+            mapPositon.longitude],
+            mapPositon.zoomFactor);
+
+        $("select#flip-auto-center").val('off').slider('refresh');
+    }
+    else
+    {
+        this.map.setView([53, 10], 5);
+    }
+
+
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
+        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+    }).addTo(this.map);
+
+    //L.tileLayer('http://www.criticalmass.local/images/heatmap/8ef69b5739bc4fb6c06c7ba476bbe004/{z}/{x}/{y}.png').addTo(this.map);
 };
 
 Map.prototype.parentPage = null;
@@ -26,8 +94,6 @@ Map.prototype.mapIdentifier = null;
 Map.prototype.elementsArray = [];
 
 Map.prototype.timer = null;
-
-Map.prototype.tileLayerAddress = 'https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png';
 
 Map.prototype.getOverridingMapPosition = function()
 {
@@ -73,62 +139,20 @@ Map.prototype.refreshOverridingMapPosition = function()
     window.location = '#mapPage@' + positionString;
 }
 
-Map.prototype.setMapOptions = function(ajaxResultData)
+Map.prototype.initMapEventListeners = function(ajaxResultData)
 {
-    this.map = L.map('map');
-
-    if (this.hasOverridingMapPosition())
-    {
-        var mapPositon = this.getOverridingMapPosition();
-
-        this.map.setView([mapPositon.latitude,
-                          mapPositon.longitude],
-                          mapPositon.zoomFactor);
-
-        $("select#flip-auto-center").val('off').slider('refresh');
-    }
-    else
-    {
-        this.map.setView([ajaxResultData.mapCenter.latitude,
-            ajaxResultData.mapCenter.longitude],
-            ajaxResultData.zoomFactor);
-    }
-
-
-    L.tileLayer(this.tileLayerAddress, {
-        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
-    }).addTo(this.map);
-
-    L.tileLayer('http://www.criticalmass.local/images/heatmap/8ef69b5739bc4fb6c06c7ba476bbe004/{z}/{x}/{y}.png').addTo(this.map);
     var this2 = this;
 
     this.map.on('dragend', function()
     {
         this2.refreshOverridingMapPosition();
     });
+
     this.map.on('zoomend', function()
     {
         this2.refreshOverridingMapPosition();
     });
 
-    this.refreshMap(ajaxResultData);
-    this.initMapPageEventListeners();
-
-};
-
-Map.prototype.getNewMapData = function()
-{
-    $.ajax({
-        type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'completemapdata/' + this.parentPage.getCitySlug(),
-        cache: false,
-        context: this,
-        success: this.refreshMap
-    });
-};
-
-Map.prototype.initMapPageEventListeners = function()
-{
     this.map.on('dragstart', function()
     {
         $("select#flip-auto-center").val('off').slider('refresh');
@@ -144,6 +168,20 @@ Map.prototype.initMapPageEventListeners = function()
             cache: false
         });
     } );
+
+    this.initMapPageEventListeners();
+};
+
+Map.prototype.getNewMapData = function()
+{
+    $.ajax({
+        type: 'GET',
+        //url: UrlFactory.getApiPrefix() + 'completemapdata/' + this.parentPage.getCitySlug(),
+        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetch&rideId=1',
+        cache: false,
+        context: this,
+        success: this.refreshMap
+    });
 };
 
 Map.prototype.refreshLabels = function(ajaxResultData)
@@ -168,16 +206,6 @@ Map.prototype.refreshMap = function(ajaxResultData)
     this.refreshMapCenter(ajaxResultData);
 
     this.refreshLabels(ajaxResultData);
-};
-
-Map.prototype.refreshMapCenter = function(ajaxResultData)
-{
-    var autoCenter = $("select#flip-auto-center")[0].selectedIndex;
-
-    if (autoCenter == 1)
-    {
-        this.map.panTo(new L.LatLng(ajaxResultData.mapCenter.latitude, ajaxResultData.mapCenter.longitude));
-    }
 };
 
 Map.prototype.refreshElements = function(elements)
