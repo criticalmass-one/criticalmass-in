@@ -7,6 +7,8 @@ UrlFactory.environment = 'dev';
 UrlFactory.system = 'local';
 UrlFactory.tls = false;
 
+UrlFactory.nodeJSPort = 1337;
+
 UrlFactory.getEnvironment = function()
 {
     return this.environment;
@@ -35,6 +37,11 @@ UrlFactory.getPortNumber = function()
     }
 
     return 80;
+}
+
+UrlFactory.getNodeJSPortNumber = function()
+{
+    return this.nodeJSPort;
 }
 
 UrlFactory.getProtocolString = function()
@@ -68,4 +75,12 @@ UrlFactory.getUrlPrefix = function()
 UrlFactory.getApiPrefix = function()
 {
     return this.getUrlPrefix() + 'api/';
+}
+
+UrlFactory.getNodeJSApiPrefix = function()
+{
+    return this.getProtocolString() +
+        this.getHostName() +
+        ':' + this.getNodeJSPortNumber() +
+        '/';
 }
