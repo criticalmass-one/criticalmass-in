@@ -27,14 +27,14 @@ MapCities.prototype.drawCityMarkers = function()
         var marker;
         var ride = RideFactory.getRideFromStorageBySlug(slug);
 
-        if (ride == null)
+        if (ride != null && ride.getHasLocation())
         {
-            marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
+            marker = L.marker([ride.getLatitude(), ride.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
             marker.bindPopup(city.getTitle());
         }
         else
         {
-            marker = L.marker([ride.getLatitude(), ride.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
+            marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
             marker.bindPopup(city.getTitle());
         }
 
