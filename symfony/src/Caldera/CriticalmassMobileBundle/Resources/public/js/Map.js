@@ -5,10 +5,12 @@ Map = function(mapIdentifier, city, parentPage)
     this.parentPage = parentPage;
 
     this.initMap();
-    this.drawCityMarkers();
 
     var positions = new MapPositions(this);
     positions.drawPositions();
+
+    var cities = new MapCities(this);
+    cities.drawCityMarkers();
     /*
     $.ajax({
         type: 'GET',
@@ -24,44 +26,6 @@ Map = function(mapIdentifier, city, parentPage)
     {
         this2.getNewMapData();
     }, 5000);*/
-};
-
-Map.prototype.cityMarkersArray = [];
-
-Map.prototype.drawCityMarkers = function()
-{
-    var criticalmassIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-
-    var cities = CityFactory.getAllCities();
-
-    for (slug in cities)
-    {
-        var city = cities[slug];
-
-        var marker = L.marker([city.getLatitude(), city.getLongitude()], { riseOnHover: true, icon: criticalmassIcon });
-        marker.bindPopup(city.getTitle());
-        marker.addTo(this.map);
-
-        this.cityMarkersArray[slug] = marker;
-        /*
-        this.cityMarkersArray[markerElement.id] = L.marker([markerElement.centerPosition.latitude,
-            markerElement.centerPosition.longitude],
-            { riseOnHover: true }
-        ).addTo(this.map)
-            .bindPopup(markerElement.cityTitle);
-
-        this.elementsArray[markerElement.id].on('click', function(e) {
-            this.switchCity(markerElement.citySlug);
-        }, this);*/
-    }
 };
 
 Map.prototype.initMap = function()
