@@ -25,7 +25,7 @@ class User extends BaseUser
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * Schalter fuer die GPS-Aktivitaet, entscheidet ob der Benutzer GPS-Daten von
@@ -33,7 +33,7 @@ class User extends BaseUser
      *
      * @ORM\Column(type="boolean")
      */
-    private $sendGPSInformation = 1;
+    protected $sendGPSInformation = 1;
 
     /**
      * Vom Benutzer momentan ausgewaehlte Stadt.
@@ -41,14 +41,14 @@ class User extends BaseUser
      * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    private $currentCity;
+    protected $currentCity;
 
     /**
      * Soll die Position dauerhaft auf der Karte eingeblendet werden?
      *
      * @ORM\Column(type="boolean")
      */
-    private $isPermanent = 0;
+    protected $isPermanent = 0;
 
     /**
      * Benutzer-Token des Pushover-Dienstes, an den Push-Nachrichten adressiert
@@ -56,7 +56,7 @@ class User extends BaseUser
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $pushoverKey = '';
+    protected $pushoverKey = '';
 
     /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
