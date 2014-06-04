@@ -31,9 +31,9 @@ Map.prototype.drawPositions = function()
     {
         for (index in ajaxResultData)
         {
-            var user = ajaxResultData[index];
+            var position = ajaxResultData[index];
 
-            var userColor = 'rgb(' + user.colorRed + ', ' + user.colorGreen + ', ' + user.colorBlue + ')';
+            var userColor = 'rgb(' + position.colorRed + ', ' + position.colorGreen + ', ' + position.colorBlue + ')';
 
             var circleOptions = {
                 color: userColor,
@@ -43,7 +43,7 @@ Map.prototype.drawPositions = function()
                 weight: 1
             };
 
-            var circle = L.circle([user.latitude, user.longitude], 25, circleOptions);
+            var circle = L.circle([position.latitude, position.longitude], 25, circleOptions);
             circle.addTo(this.map);
             circle.bindPopup(user.username);
 
