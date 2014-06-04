@@ -33,15 +33,17 @@ Map.prototype.drawPositions = function()
         {
             var user = ajaxResultData[index];
 
+            var userColor = 'rgb(' + user.colorRed + ', ' + user.colorGreen + ', ' + user.colorBlue + ')';
+
             var circleOptions = {
-                color: 'rgb(255, 0, 0)',
-                fillColor: 'rgb(255, 0, 0)',
+                color: userColor,
+                fillColor: userColor,
                 opacity: 80,
                 fillOpacity: 50,
                 weight: 1
             };
 
-            var circle = L.circle([user.latitude, user.longitude], 15, circleOptions);
+            var circle = L.circle([user.latitude, user.longitude], 25, circleOptions);
             circle.addTo(this.map);
 
             this.positionsArray[user] = circle;
@@ -115,7 +117,7 @@ Map.prototype.initMap = function()
     }
     else
     {
-        this.map.setView([53, 10], 5);
+        this.map.setView([53.5496385, 9.9625133], 16);
     }
 
 
