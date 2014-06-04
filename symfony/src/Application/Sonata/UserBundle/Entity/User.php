@@ -35,6 +35,20 @@ class User extends BaseUser
      */
     protected $currentCity;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorRed = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorGreen = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorBlue = 0;
 
     /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
@@ -121,5 +135,35 @@ class User extends BaseUser
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function getColorRed()
+    {
+        return $this->colorRed;
+    }
+
+    public function setColorRed($colorRed)
+    {
+        $this->colorRed = $colorRed;
+    }
+
+    public function getColorGreen()
+    {
+        return $this->colorGreen;
+    }
+
+    public function setColorGreen($colorGreen)
+    {
+        $this->colorGreen = $colorGreen;
+    }
+
+    public function getColorBlue()
+    {
+        return $this->colorBlue;
+    }
+
+    public function setColorBlue($colorBlue)
+    {
+        $this->colorBlue = $colorBlue;
     }
 }
