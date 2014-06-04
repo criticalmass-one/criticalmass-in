@@ -11,11 +11,13 @@ MapPositions.prototype.timer = null;
 
 MapPositions.prototype.startLoop = function()
 {
+    this.drawPositions();
+
     var this2 = this;
     this.timer = window.setInterval(function()
     {
         this2.drawPositions();
-    }, 1000);
+    }, 5000);
 };
 
 MapPositions.prototype.clearOldPositions = function(ajaxResultData)
