@@ -14,6 +14,7 @@ class CityAdmin extends Admin
     {
         $formMapper
             ->with('Einstellungen', array('class' => 'col-md-6'))
+                ->add('enabled', 'checkbox', array('label' => 'Aktiv'))
                 ->add('city', 'text', array('label' => 'Stadt'))
                 ->add('title', 'text', array('label' => 'Bezeichnung'))
                 ->add('description', 'text', array('label' => 'Beschreibung'))

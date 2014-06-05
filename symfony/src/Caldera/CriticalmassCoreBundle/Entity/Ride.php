@@ -88,6 +88,26 @@ class Ride
     protected $optimizedGpxContent;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $visibleSince;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $visibleUntil;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $expectedStartDateTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enableTracking = true;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -314,5 +334,97 @@ class Ride
         $this->dateTime = new \DateTime();
         $this->latitude = 0.0;
         $this->longitude = 0.0;
+    }
+
+    /**
+     * Set visibleSince
+     *
+     * @param \DateTime $visibleSince
+     * @return Ride
+     */
+    public function setVisibleSince($visibleSince)
+    {
+        $this->visibleSince = $visibleSince;
+
+        return $this;
+    }
+
+    /**
+     * Get visibleSince
+     *
+     * @return \DateTime 
+     */
+    public function getVisibleSince()
+    {
+        return $this->visibleSince;
+    }
+
+    /**
+     * Set visibleUntil
+     *
+     * @param \DateTime $visibleUntil
+     * @return Ride
+     */
+    public function setVisibleUntil($visibleUntil)
+    {
+        $this->visibleUntil = $visibleUntil;
+
+        return $this;
+    }
+
+    /**
+     * Get visibleUntil
+     *
+     * @return \DateTime 
+     */
+    public function getVisibleUntil()
+    {
+        return $this->visibleUntil;
+    }
+
+    /**
+     * Set expectedStartDateTime
+     *
+     * @param \DateTime $expectedStartDateTime
+     * @return Ride
+     */
+    public function setExpectedStartDateTime($expectedStartDateTime)
+    {
+        $this->expectedStartDateTime = $expectedStartDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get expectedStartDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getExpectedStartDateTime()
+    {
+        return $this->expectedStartDateTime;
+    }
+
+    /**
+     * Set enableTracking
+     *
+     * @param boolean $enableTracking
+     * @return Ride
+     */
+    public function setEnableTracking($enableTracking)
+    {
+        $this->enableTracking = $enableTracking;
+
+        return $this;
+    }
+
+    /**
+     * Get enableTracking
+     *
+     * @return boolean 
+     */
+    public function getEnableTracking()
+    {
+        return $this->enableTracking;
     }
 }

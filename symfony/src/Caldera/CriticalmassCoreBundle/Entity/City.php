@@ -79,7 +79,12 @@ class City
 	 */
 	protected $longitude;
 
-	/**
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
+
+    /**
 	 * Array mit den Touren in dieser Stadt.
 	 *
 	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
@@ -386,5 +391,28 @@ class City
     public function isEqual(City $city)
     {
         return $city->getId() == $this->getId();
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return City
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }
