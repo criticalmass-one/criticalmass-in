@@ -21,4 +21,18 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function getcolorsAction()
+    {
+        $response = new Response();
+        $response->setContent(json_encode(array(
+            'red' => $this->getUser()->getColorRed(),
+            'green' => $this->getUser()->getColorGreen(),
+            'blue' => $this->getUser()->getColorBlue()
+        )));
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
 }

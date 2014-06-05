@@ -1,3 +1,7 @@
 caldera_criticalmass_api_user_userloginstatus:
     pattern: /userloginstatus
     defaults: { _controller: CalderaCriticalmassApiBundle:User:userloginstatus }
+
+caldera_criticalmass_api_user_colors:
+    pattern: /getcolors
+    defaults: { _controller: CalderaCriticalmassApiBundle:User:getcolors }
