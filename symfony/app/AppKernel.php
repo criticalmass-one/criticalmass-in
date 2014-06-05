@@ -31,7 +31,6 @@ class AppKernel extends Kernel
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Caldera\CriticalmassAdminBundle\CalderaCriticalmassAdminBundle(),
             new Sonata\UserBundle\SonataUserBundle("FOSUserBundle"),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Caldera\CriticalmassHeatmapBundle\CalderaCriticalmassHeatmapBundle(),
