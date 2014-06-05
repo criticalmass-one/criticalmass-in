@@ -1,5 +1,4 @@
 parameters:
-#    caldera_criticalmass_core.example.class: Caldera\CriticalmassCoreBundle\Example
 
 services:
     caldera_criticalmass_ride_repository:
@@ -7,7 +6,3 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method:  getRepository
         arguments: [CalderaCriticalmassCoreBundle:Ride]
-
-    caldera_criticalmass_distancecalculator:
-        class:           Caldera\CriticalmassCoreBundle\Utility\DistanceCalculator
-        arguments: []
