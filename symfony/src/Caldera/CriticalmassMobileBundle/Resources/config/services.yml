@@ -1,4 +1,3 @@
 parameters:
-#    caldera_criticalmass_mobile.example.class: Caldera\CriticalmassMobileBundle\Example
 
 services:
