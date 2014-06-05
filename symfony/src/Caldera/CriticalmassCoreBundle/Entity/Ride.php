@@ -82,15 +82,6 @@ class Ride
 	 */
     protected $longitude;
 
-	/**
-	 * Schalter fuer den God-Mode dieser Tour. Wenn der Gode-Mode aktiviert ist,
-	 * werden lediglich die Positionsdaten eines Administrators zur Berechnung
-	 * herangezogen.
-	 *
-	 * @ORM\Column(type="integer")
-	 */
-    protected $godMode = 0;
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -291,29 +282,6 @@ class Ride
         return $this->description;
     }
 
-    /**
-     * Set godMode
-     *
-     * @param integer $godMode
-     * @return Ride
-     */
-    public function setGodMode($godMode)
-    {
-        $this->godMode = $godMode;
-    
-        return $this;
-    }
-
-    /**
-     * Get godMode
-     *
-     * @return integer 
-     */
-    public function getGodMode()
-    {
-        return $this->godMode;
-    }
-
     public function setOptimizedGpxContent($optimizedGpxContent)
     {
         $this->optimizedGpxContent = $optimizedGpxContent;
@@ -322,44 +290,6 @@ class Ride
     public function getOptimizedGpxContent()
     {
         return $this->optimizedGpxContent;
-    }
-
-    public function isRideRolling()
-    {
-        $rideTimeStamp = $this->getDateTime()->format('U');
-        $tmp = new \DateTime();
-        $nowTimeStamp = $tmp->getTimeStamp();
-
-        if ($rideTimeStamp + 900 < $nowTimeStamp)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getPublicLatitude()
-    {
-        if ($this->getHasLocation())
-        {
-            return $this->getLatitude();
-        }
-        else
-        {
-            return $this->getCity()->getLatitude();
-        }
-    }
-
-    public function getPublicLongitude()
-    {
-        if ($this->getHasLocation())
-        {
-            return $this->getLongitude();
-        }
-        else
-        {
-            return $this->getCity()->getLongitude();
-        }
     }
 
     public function isEqual(Ride $ride)
