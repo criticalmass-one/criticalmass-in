@@ -51,6 +51,11 @@ PageDispatcher.initPage = function(pagename)
                 cityPage.initPage();
                 this.pageArray['cityPage'] = cityPage;
                 break;
+            case 'colorPage':
+                var colorPage = new ColorPage('colorPage');
+                colorPage.initPage();
+                this.pageArray['colorPage'] = colorPage;
+                break;
         }
     }
 };
