@@ -6,6 +6,8 @@ Map = function(mapIdentifier, city, parentPage)
 
     this.initMap();
 
+    this.initMapEventListeners();
+
     var positions = new MapPositions(this);
     positions.startLoop();
 
@@ -44,11 +46,11 @@ Map.prototype.initMap = function()
     }
     else
     {
-        this.map.setView([53.5496385, 9.9625133], 10);
+        this.map.setView([53.5496385, 9.9625133], 15);
     }
 
 
-    L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(this.map);
 
@@ -61,6 +63,16 @@ Map.prototype.mapIdentifier = null;
 Map.prototype.elementsArray = [];
 
 Map.prototype.timer = null;
+
+Map.prototype.isAutoFollow = function()
+{
+    return
+}
+
+Map.prototype.setViewLatLngZoom = function(latitude, longitude, zoom)
+{
+    this.map.panTo([latitude, longitude]);
+}
 
 Map.prototype.getOverridingMapPosition = function()
 {
@@ -122,21 +134,8 @@ Map.prototype.initMapEventListeners = function(ajaxResultData)
 
     this.map.on('dragstart', function()
     {
-        $("select#flip-auto-center").val('off').slider('refresh');
+        this2.parentPage.setAutoFollow(false);
     });
-
-    $("#flip-gps-sender").on("slidestop", function(event, ui) {
-        $.ajax({
-            type: 'GET',
-            url: UrlFactory.getApiPrefix() + 'gpsstatus',
-            data: {
-                'status': $("select#flip-gps-sender")[0].selectedIndex
-            },
-            cache: false
-        });
-    } );
-
-    this.initMapPageEventListeners();
 };
 
 Map.prototype.getNewMapData = function()

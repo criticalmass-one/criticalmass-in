@@ -9,6 +9,8 @@ MapPositions.prototype.positionsArray = [];
 
 MapPositions.prototype.timer = null;
 
+MapPositions.prototype.autoFollowUsername = null;
+
 MapPositions.prototype.startLoop = function()
 {
     this.drawPositions();
@@ -50,6 +52,7 @@ MapPositions.prototype.removeUsernamePosition = function(username)
 
 MapPositions.prototype.drawPositions = function()
 {
+    var this2 = this;
     function callback(ajaxResultData)
     {
         for (index in ajaxResultData)
@@ -63,12 +66,25 @@ MapPositions.prototype.drawPositions = function()
                 fillColor: userColor,
                 opacity: 80,
                 fillOpacity: 50,
-                weight: 1
+                weight: 1,
+                username: position.username
             };
 
             var circle = L.circle([position.latitude, position.longitude], 25, circleOptions);
             circle.addTo(this.map.map);
             circle.bindPopup(position.username);
+
+            if (position.username == this2.autoFollowUsername && this2.map.parentPage.isAutoFollow())
+            {
+                this2.map.setViewLatLngZoom(position.latitude, position.longitude, 15);
+            }
+
+            circle.on('click', function(element) {
+                var latLng = element.target.getLatLng();
+                this2.map.setViewLatLngZoom(latLng.lat, latLng.lng, 15);
+                this2.autoFollowUsername = element.target.options.username;
+                this2.map.parentPage.setAutoFollow(true);
+            }.bind(this2));
 
             if (this.positionsArray[position.username])
             {

@@ -15,7 +15,7 @@ MapPage.prototype.initPage = function()
     {
         this.map = new Map('map', this.getCitySlug(), this);
     }
-}
+};
 
 MapPage.prototype.refreshGpsGauge = function(quality)
 {
@@ -31,7 +31,7 @@ MapPage.prototype.refreshGpsGauge = function(quality)
     {
         $('#gpsquality').html('unbrauchbar (' + quality + ' Meter)');
     }
-}
+};
 
 MapPage.prototype.isGpsActivated = function()
 {
@@ -43,4 +43,14 @@ MapPage.prototype.isGpsActivated = function()
     }
 
     return false;
-}
+};
+
+MapPage.prototype.isAutoFollow = function()
+{
+    return $('#' + this.pageIdentifier + 'select#autoFollow')[0].selectedIndex;
+};
+
+MapPage.prototype.setAutoFollow = function(autoFollow)
+{
+    $('#' + this.pageIdentifier + 'select#autoFollow').val(autoFollow ? 'on' : 'off').slider('refresh');
+};
