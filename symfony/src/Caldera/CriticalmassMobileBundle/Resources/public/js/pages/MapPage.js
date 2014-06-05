@@ -45,12 +45,14 @@ MapPage.prototype.isGpsActivated = function()
     return false;
 };
 
+MapPage.prototype.autoFollow = false;
+
 MapPage.prototype.isAutoFollow = function()
 {
-    return $('#' + this.pageIdentifier + 'select#autoFollow')[0].selectedIndex;
+    return this.autoFollow;
 };
 
 MapPage.prototype.setAutoFollow = function(autoFollow)
 {
-    $('#' + this.pageIdentifier + 'select#autoFollow').val(autoFollow ? 'on' : 'off').slider('refresh');
+    this.autoFollow = autoFollow;
 };
