@@ -9,24 +9,9 @@ PositionSender = function(parentPage)
 
 PositionSender.prototype.parentPage = null;
 
-PositionSender.prototype.interval = null;
-
 PositionSender.prototype.startSender = function()
 {
-  var this2 = this;
-
-  this.interval = window.setInterval(function()
-  {
-      if (this2.parentPage.isGpsActivated() && this2.parentPage.isUserLoggedIn())
-      {
-          this2.catchPosition(this2);
-      }
-  }, 1000);
-}
-
-PositionSender.prototype.catchPosition = function(this2)
-{
-    if (navigator.geolocation)
+    if (navigator.geolocation && this2.parentPage.isGpsActivated() && this2.parentPage.isUserLoggedIn())
     {
 
         function processError2(positionError)
@@ -39,15 +24,9 @@ PositionSender.prototype.catchPosition = function(this2)
             this2.processPosition(positionResult);
         }
 
-        navigator.geolocation.getCurrentPosition(processPosition2,
-                                                 processError2);
+        navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
     }
-    else
-    {
-        //var notificationLayer = new NotificationLayer('Schade: Dein Browser unterstützt leider noch keine Positionsbestimmung.');
-        //this.parentPage.showNotificationLayer(notificationLayer);
-    }
-}
+};
 
 PositionSender.prototype.processPosition = function(positionResult)
 {
@@ -79,7 +58,7 @@ PositionSender.prototype.processPosition = function(positionResult)
     });
 
     this.setQuality(positionResult.coords.accuracy);
-}
+};
 
 PositionSender.prototype.quality = null;
 
@@ -88,12 +67,12 @@ PositionSender.prototype.setQuality = function(quality)
     this.quality = quality;
 
     this.parentPage.refreshGpsGauge(quality);
-}
+};
 
 PositionSender.prototype.getQuality = function()
 {
     return this.quality;
-}
+};
 
 PositionSender.prototype.processError = function(positionError)
 {
@@ -115,4 +94,4 @@ PositionSender.prototype.processError = function(positionError)
 
     this.setQuality(-1);
     this.parentPage.showNotificationLayer(notificationLayer);
-}
+};
