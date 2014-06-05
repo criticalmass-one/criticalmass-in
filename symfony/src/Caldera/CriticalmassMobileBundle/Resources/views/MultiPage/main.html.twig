@@ -117,16 +117,19 @@
     </section>
 </section>
 
-<!-- Startseite -->
+<!-- Farben-Seite -->
 <section data-role="page" id="colorPage">
     <header data-role="header">
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
         <h1>Deine Lieblingsfarbe</h1>
     </header>
     <section data-role="content" id="colorPageContent">
-        <h2>„Hej! We are traffic!“</h2>
+        <h2>Wähle deine Farbe</h2>
         <p>Überall auf der Welt treffen sich tausende Radfahrer an einem ganz besonderen Tag im Monat zu einer gemeinsamen Radtour. Wähle deine Stadt und sei dabei!</p>
 
+        <input type="range" name="slider-usercolor-red" id="slider-usercolor-red" value="0" min="0" max="255" data-qa-ta="mobile-usercolor-red"/>
+        <input type="range" name="slider-usercolor-green" id="slider-usercolor-green" value="0" min="0" max="255" data-qa-ta="mobile-usercolor-green"/>
+        <input type="range" name="slider-usercolor-blue" id="slider-usercolor-blue" value="0" min="0" max="255" data-qa-ta="mobile-usercolor-blue"/>
 
     </section>
 </section>
