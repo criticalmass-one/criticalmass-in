@@ -3,10 +3,6 @@ div#map
     height: 320px;
 }
 
-/*section#content
-{
-    padding: 0px !important;
-}*/
 
 div.leaflet-popup-content section.ride h2,
 div.leaflet-popup-content section.position h2
@@ -17,13 +13,6 @@ div.leaflet-popup-content section.position h2
 
 div.leaflet-popup-content section.ride time
 {
-    display: block;
-}
-
-img#cmscreenlogo
-{
-    width: 240px;
-    margin: 0 auto;
     display: block;
 }
 
