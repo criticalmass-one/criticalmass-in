@@ -50,48 +50,58 @@ MapPositions.prototype.removeUsernamePosition = function(username)
     delete this.positionsArray[username];
 };
 
-MapPositions.prototype.drawPositions = function()
+MapPositions.prototype.createUsernamePosition = function(position)
 {
     var this2 = this;
+    var userColor = 'rgb(' + position.colorRed + ', ' + position.colorGreen + ', ' + position.colorBlue + ')';
+
+    var circleOptions = {
+        color: userColor,
+        fillColor: userColor,
+        opacity: 80,
+        fillOpacity: 50,
+        weight: 1,
+        username: position.username
+    };
+
+    var circle = L.circle([position.latitude, position.longitude], 25, circleOptions);
+    circle.addTo(this.map.map);
+    circle.bindPopup(position.username);
+
+    if (position.username == this2.autoFollowUsername && this2.map.parentPage.isAutoFollow())
+    {
+        this2.map.setViewLatLngZoom(position.latitude, position.longitude, 15);
+    }
+
+    circle.on('click', function(element) {
+        var latLng = element.target.getLatLng();
+        this2.map.setViewLatLngZoom(latLng.lat, latLng.lng, 15);
+        this2.autoFollowUsername = element.target.options.username;
+        this2.map.parentPage.setAutoFollow(true);
+    }.bind(this2));
+
+    this.positionsArray[position.username] = circle;
+};
+
+MapPositions.prototype.moveUsernamePosition = function(username, latitude, longitude)
+{
+    this.positionsArray[username].setLatLng([latitude, longitude]);
+};
+
+MapPositions.prototype.drawPositions = function()
+{
     function callback(ajaxResultData)
     {
         for (index in ajaxResultData)
         {
-            var position = ajaxResultData[index];
-
-            var userColor = 'rgb(' + position.colorRed + ', ' + position.colorGreen + ', ' + position.colorBlue + ')';
-
-            var circleOptions = {
-                color: userColor,
-                fillColor: userColor,
-                opacity: 80,
-                fillOpacity: 50,
-                weight: 1,
-                username: position.username
-            };
-
-            var circle = L.circle([position.latitude, position.longitude], 25, circleOptions);
-            circle.addTo(this.map.map);
-            circle.bindPopup(position.username);
-
-            if (position.username == this2.autoFollowUsername && this2.map.parentPage.isAutoFollow())
+            if (!this.positionsArray[ajaxResultData[index].username])
             {
-                this2.map.setViewLatLngZoom(position.latitude, position.longitude, 15);
+                this.createUsernamePosition(ajaxResultData[index]);
             }
-
-            circle.on('click', function(element) {
-                var latLng = element.target.getLatLng();
-                this2.map.setViewLatLngZoom(latLng.lat, latLng.lng, 15);
-                this2.autoFollowUsername = element.target.options.username;
-                this2.map.parentPage.setAutoFollow(true);
-            }.bind(this2));
-
-            if (this.positionsArray[position.username])
+            else
             {
-                this.removeUsernamePosition(position.username);
+                this.moveUsernamePosition(ajaxResultData[index].username, ajaxResultData[index].latitude, ajaxResultData[index].longitude);
             }
-
-            this.positionsArray[position.username] = circle;
         }
 
         this.clearOldPositions(ajaxResultData);
