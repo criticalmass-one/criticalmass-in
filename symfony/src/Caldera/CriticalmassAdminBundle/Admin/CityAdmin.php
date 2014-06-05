@@ -17,7 +17,7 @@ class CityAdmin extends Admin
                 ->add('enabled', 'checkbox', array('label' => 'Aktiv'))
                 ->add('city', 'text', array('label' => 'Stadt'))
                 ->add('title', 'text', array('label' => 'Bezeichnung'))
-                ->add('description', 'text', array('label' => 'Beschreibung'))
+                ->add('description', 'textarea', array('label' => 'Beschreibung'))
             ->end()
             ->with('Social Media', array('class' => 'col-md-6'))
                 ->add('url', 'text', array('label' => 'Webseite'))
