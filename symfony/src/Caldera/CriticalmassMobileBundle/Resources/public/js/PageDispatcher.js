@@ -46,6 +46,11 @@ PageDispatcher.initPage = function(pagename)
                 loginPage.initPage();
                 this.pageArray['loginPage'] = loginPage;
                 break;
+            case 'registerPage':
+                var registerPage = new RegisterPage('registerPage');
+                registerPage.initPage();
+                this.pageArray['registerPage'] = registerPage;
+                break;
             case 'cityPage':
                 var cityPage = new CityPage('cityPage');
                 cityPage.initPage();
