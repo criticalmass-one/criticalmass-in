@@ -1,6 +1,6 @@
 services:
     sonata.admin.ride:
-        class: Caldera\CriticalmassAdminBundle\Admin\RideAdmin
+        class: Caldera\CriticalmassCoreBundle\Admin\RideAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Content", label: "Ride" }
         arguments:
@@ -8,10 +8,10 @@ services:
             - Caldera\CriticalmassCoreBundle\Entity\Ride
             - ~
         calls:
-            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
+            - [ setTranslationDomain, [CriticalmassCoreBundle]]
 
     sonata.admin.city:
-        class: Caldera\CriticalmassAdminBundle\Admin\CityAdmin
+        class: Caldera\CriticalmassCoreBundle\Admin\CityAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Content", label: "City" }
         arguments:
@@ -19,10 +19,10 @@ services:
             - Caldera\CriticalmassCoreBundle\Entity\City
             - ~
         calls:
-            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
+            - [ setTranslationDomain, [CriticalmassCoreBundle]]
 
     sonata.admin.cityslug:
-        class: Caldera\CriticalmassAdminBundle\Admin\CitySlugAdmin
+        class: Caldera\CriticalmassCoreBundle\Admin\CitySlugAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Content", label: "CitySlug" }
         arguments:
@@ -30,4 +30,4 @@ services:
             - Caldera\CriticalmassCoreBundle\Entity\CitySlug
             - ~
         calls:
-            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
+            - [ setTranslationDomain, [CriticalmassCoreBundle]]
