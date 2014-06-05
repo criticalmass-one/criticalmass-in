@@ -50,7 +50,7 @@ City.prototype.setTitle = function(title)
     this.title = title;
 };
 
-City.prototype.getDescripton = function()
+City.prototype.getDescription = function()
 {
     return this.description;
 };
