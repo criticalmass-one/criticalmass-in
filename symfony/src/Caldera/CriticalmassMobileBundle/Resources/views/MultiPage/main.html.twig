@@ -62,7 +62,7 @@
             <li><a href="#mapPage" data-ajax="false" data-qa-ta="mobile-mainpanel-mapPage">Karte</a></li>
             <li><a href="#cityPage" data-ajax="false" data-qa-ta="mobile-mainpanel-cityPage">Über</a></li>
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
-            <li><a id="profileButton" class="show-loggedin-only" style="display: none;" href="#profilePage" data-qa-ta="mobile-mainpanel-profile">Dein Profil</a></li>
+            <li><a id="profileButton" class="show-loggedin-only" style="display: none;" href="#colorPage" data-qa-ta="mobile-mainpanel-color">Farbe wählen</a></li>
             <li><a id="logoutButton" class="show-loggedin-only" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
             <li><a id="registerButton" class="show-loggedout-only" style="display: none;" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
             <li><a id="loginButton" class="show-loggedout-only" style="display: none;" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
@@ -113,6 +113,20 @@
         <ul id="cityList" data-role="listview">
 
         </ul>
+
+    </section>
+</section>
+
+<!-- Startseite -->
+<section data-role="page" id="colorPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Deine Lieblingsfarbe</h1>
+    </header>
+    <section data-role="content" id="colorPageContent">
+        <h2>„Hej! We are traffic!“</h2>
+        <p>Überall auf der Welt treffen sich tausende Radfahrer an einem ganz besonderen Tag im Monat zu einer gemeinsamen Radtour. Wähle deine Stadt und sei dabei!</p>
+
 
     </section>
 </section>
@@ -238,7 +252,19 @@
     </header>
     <section data-role="content" id="registerPageContent">
         <h2>Registrierung</h2>
-        <p>Aus technischen Gründen ist momentan leider keine Registrierung über diese App möglich. Bitte <s>rufe die Vollversion von criticalmass.in auf,</s> warte noch ein paar Tage, bis die Desktop-Version von criticalmass.in fertig ist, um ein Benutzerkonto zu erstellen.</p>
+
+        <form action="" method="post" id="form-register" class="show-loggedout-only" style="display: none;">
+            <label for="username">Gewünschter Benutzername:</label>
+            <input type="text" id="username" name="_username" required="required" />
+
+            <label for="password">Dein Kennwort:</label>
+            <input type="password" id="password" name="_password" required="required" />
+
+            <label for="email">Deine E-Mail-Adresse:</label>
+            <input type="email" id="email" name="_email" required="required" />
+
+            <input type="submit" id="_submit" name="_submit" value="Auf geht’s" />
+        </form>
     </section>
 </section>
 
