@@ -20,24 +20,52 @@ OwnPosition.prototype.showOwnPosition = function()
 
         function processPosition2(positionResult)
         {
-            alert('jo');
             this2.drawOwnPosition(positionResult);
         }
 
         navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
     }
+    else
+    if (this.ownPosition != null)
+    {
+        this.removeOwnPosition();
+    }
 };
 
 OwnPosition.prototype.drawOwnPosition = function(positionResult)
 {
+    if (this.ownPosition == null)
+    {
+        this.createOwnPosition([positionResult.coords.latitude, positionResult.coords.longitude], positionResult.coords.accuracy);
+    }
+    else
+    {
+        this.moveOwnPosition([positionResult.coords.latitude, positionResult.coords.longitude], positionResult.coords.accuracy);
+    }
+};
+
+OwnPosition.prototype.createOwnPosition = function(latLng, radius)
+{
     var circleOptions = {
         color: 'red',
         fillColor: 'red',
-        opacity: 80,
-        fillOpacity: 50,
+        opacity: 1.0,
+        fillOpacity: 0.3,
         weight: 1
     };
 
-    this.ownPosition = L.circle([positionResult.coords.latitude, positionResult.coords.longitude], positionResult.coords.accuracy, circleOptions);
+    this.ownPosition = L.circle(latLng, radius, circleOptions);
     this.ownPosition.addTo(this.map.map);
+};
+
+OwnPosition.prototype.moveOwnPosition = function(latLng, radius)
+{
+    this.ownPosition.setLatLng(latLng);
+    this.ownPosition.setRadius(radius);
+};
+
+OwnPosition.prototype.removeOwnPosition = function()
+{
+    this.map.map.removeLayer(this.ownPosition);
+    this.ownPosition = null;
 };
