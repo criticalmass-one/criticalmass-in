@@ -20,6 +20,29 @@ ColorPage.prototype.initPage = function()
     {
         this2.setRandomColor();
     });
+
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: UrlFactory.getApiPrefix() + 'user/getcolors',
+        cache: false,
+        context: this,
+        success: function(data)
+        {
+            this2.initUsercolor(data);
+        }
+    });
+};
+
+ColorPage.prototype.initUsercolor = function(ajaxRequestData)
+{
+    $('#slider-usercolor-red').val(ajaxRequestData.red);
+    $('#slider-usercolor-green').val(ajaxRequestData.green);
+    $('#slider-usercolor-blue').val(ajaxRequestData.blue);
+
+    $('#' + this.pageIdentifier + ' input').slider('refresh');
+
+    $('#colorExample').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 };
 
 ColorPage.prototype.setRandomColor = function()
@@ -34,7 +57,6 @@ ColorPage.prototype.setRandomColor = function()
 
     $('#' + this.pageIdentifier + ' input').slider('refresh');
 
-    //$('#slider-usercolor-red').slider('value', red);
     $('#colorExample').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 };
 
