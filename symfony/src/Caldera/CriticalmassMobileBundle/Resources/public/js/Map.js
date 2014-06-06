@@ -13,6 +13,9 @@ Map = function(mapIdentifier, city, parentPage)
 
     var cities = new MapCities(this);
     cities.drawCityMarkers();
+
+    var ownPosition = new OwnPosition(this);
+    ownPosition.showOwnPosition();
     /*
     $.ajax({
         type: 'GET',
