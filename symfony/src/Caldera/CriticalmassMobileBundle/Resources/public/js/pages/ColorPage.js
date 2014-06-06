@@ -40,8 +40,6 @@ ColorPage.prototype.initUsercolor = function(ajaxRequestData)
     $('#slider-usercolor-blue').val(ajaxRequestData.blue);
 
     $('#' + this.pageIdentifier + ' input').slider('refresh');
-
-    $('#colorExample').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 };
 
 ColorPage.prototype.setRandomColor = function()
