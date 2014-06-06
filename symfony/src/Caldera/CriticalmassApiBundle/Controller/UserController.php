@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Caldera\CriticalmassCoreBundle\Utility as Utility;
@@ -34,5 +35,30 @@ class UserController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    public function setcolorsAction(Request $request)
+    {
+        $colors['red'] = $request->query->get('red');
+        $colors['green'] = $request->query->get('green');
+        $colors['blue'] = $request->query->get('blue');
+
+        foreach ($colors as $color)
+        {
+            if (!($color >= 0 && $color < 256) || !isset($color))
+            {
+                throw $this->createNotFoundException('Impossible.');
+            }
+        }
+
+        $user = $this->getUser();
+
+        $user->setColorRed($colors['red']);
+        $user->setColorGreen($colors['green']);
+        $user->setColorBlue($colors['blue']);
+
+        $this->get('fos_user.user_manager')->updateUser($user);
+
+        return new Response();
     }
 }
