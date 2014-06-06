@@ -23,7 +23,6 @@ ColorPage.prototype.initPage = function()
 
     $.ajax({
         type: 'GET',
-        async: false,
         url: UrlFactory.getApiPrefix() + 'user/getcolors',
         cache: false,
         context: this,
