@@ -23,3 +23,11 @@ div.notification
     padding: 10px;
     margin: -15px -15px 10px -15px;
 }
+
+#colorPage div#colorExample
+{
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    display: inline-block;
+}

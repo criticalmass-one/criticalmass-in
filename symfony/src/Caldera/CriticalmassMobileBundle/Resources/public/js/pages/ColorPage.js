@@ -28,7 +28,13 @@ ColorPage.prototype.setRandomColor = function()
     var green = Math.floor(Math.random() * 255);
     var blue = Math.floor(Math.random() * 255);
 
-    $('#slider-usercolor-red').slider('value', red);
+    $('#slider-usercolor-red').val(red);
+    $('#slider-usercolor-green').val(green);
+    $('#slider-usercolor-blue').val(blue);
+
+    $('#' + this.pageIdentifier + ' input').slider('refresh');
+
+    //$('#slider-usercolor-red').slider('value', red);
     $('#colorExample').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 };
 
