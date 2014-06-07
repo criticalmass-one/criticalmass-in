@@ -5,7 +5,20 @@ Messages = function(map)
 
 Messages.prototype.map = null;
 
-Messages.prototype.drawMessages = function()
+Messages.prototype.commentsArray = [];
+
+Messages.prototype.startLoop = function()
+{
+    this.drawMessages();
+
+    var this2 = this;
+    this.timer = window.setInterval(function()
+    {
+        this2.drawMessages();
+    }, 5000);
+};
+
+Messages.prototype.createComment = function(commentData)
 {
     var criticalmassIcon = L.icon({
         iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
@@ -17,14 +30,45 @@ Messages.prototype.drawMessages = function()
         shadowAnchor: [13, 41]
     });
 
-    var marker = L.marker([53.568376607724424, 9.968891143798828], { icon: criticalmassIcon }).addTo(this.map.map);
+    var marker = L.marker([commentData.latitude, commentData.longitude], { icon: criticalmassIcon });
 
     var popupHTML = '<div class="messagePopup">';
-    popupHTML += '<img src="http://www.gravatar.com/avatar/0cf33267893fa9eb18e8b227dcb05a65?s=32" />';
-    popupHTML += '<strong>maltehuebner</strong> schrieb:';
-    popupHTML += '<time>(20.08 Uhr, 30. Mai 2014)</time>'
-    popupHTML += '<p>Es hat schon wieder jemand meine Kartoffelchips schnabuliert.</p>';
+    popupHTML += '<img src="http://www.gravatar.com/avatar/' + commentData.gravatar + '?s=32" />';
+    popupHTML += '<strong>' + commentData.username + '</strong> schrieb:';
+
+    var dateTime = new Date(commentData.dateTime);
+
+    popupHTML += '<time>(' + (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' + (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr, ' + (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' + ((dateTime.getMonth() + 1) < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' + dateTime.getFullYear() + ')</time>';
+    popupHTML += '<p>' + commentData.message + '</p>';
     popupHTML += '</div>';
 
     marker.bindPopup(popupHTML);
-}
+    marker.addTo(this.map.map);
+
+    this.commentsArray[commentData.id] = marker;
+};
+
+Messages.prototype.drawMessages = function()
+{
+    function callback(ajaxResultData)
+    {
+        for (index in ajaxResultData)
+        {
+            if (!this.commentsArray[ajaxResultData[index].id])
+            {
+                this.createComment(ajaxResultData[index]);
+            }
+        }
+    }
+
+    $.support.cors = true;
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetchComments&citySlug=' + this.map.parentPage.getCitySlug(),
+        cache: false,
+        context: this,
+        crossDomain: true,
+        success: callback
+    });
+};

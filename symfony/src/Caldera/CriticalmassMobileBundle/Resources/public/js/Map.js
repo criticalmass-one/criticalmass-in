@@ -21,7 +21,7 @@ Map = function(mapIdentifier, city, parentPage)
     this.quickLinks.initEventListeners();
 
     this.messages = new Messages(this);
-    this.messages.drawMessages();
+    this.messages.startLoop();
     /*
     $.ajax({
         type: 'GET',
