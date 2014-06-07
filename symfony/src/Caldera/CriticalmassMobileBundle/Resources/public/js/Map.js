@@ -19,6 +19,9 @@ Map = function(mapIdentifier, city, parentPage)
 
     this.quickLinks = new QuickLinks(this);
     this.quickLinks.initEventListeners();
+
+    this.messages = new Messages(this);
+    this.messages.drawMessages();
     /*
     $.ajax({
         type: 'GET',

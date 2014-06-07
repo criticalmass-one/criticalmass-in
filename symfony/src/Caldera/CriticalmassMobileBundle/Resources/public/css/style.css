@@ -31,3 +31,17 @@ div.notification
     border-radius: 16px;
     display: inline-block;
 }
+
+div.messagePopup img
+{
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+div.messagePopup time
+{
+    display: block;
+    font-size: 0.8em;
+    color: #aaaaaa;
+}
