@@ -47,3 +47,8 @@ li.commentItem time
     font-size: 0.8em;
     color: #aaaaaa;
 }
+
+form#writeCommentForm
+{
+    margin-bottom: 25px;
+}
