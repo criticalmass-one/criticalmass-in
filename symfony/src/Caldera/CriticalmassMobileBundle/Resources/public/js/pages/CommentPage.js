@@ -38,6 +38,8 @@ CommentPage.prototype.createComment = function(commentData)
 
     commentList.prepend(commentHTML);
     commentList.listview('refresh');
+
+    this.commentsArray[commentData.id] = commentData;
 };
 
 CommentPage.prototype.drawMessages = function()
