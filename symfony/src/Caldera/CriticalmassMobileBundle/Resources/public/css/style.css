@@ -32,6 +32,7 @@ div.notification
     display: inline-block;
 }
 
+
 div.messagePopup img
 {
     float: left;
@@ -39,7 +40,8 @@ div.messagePopup img
     margin-bottom: 5px;
 }
 
-div.messagePopup time
+div.messagePopup time,
+li.commentItem time
 {
     display: block;
     font-size: 0.8em;
