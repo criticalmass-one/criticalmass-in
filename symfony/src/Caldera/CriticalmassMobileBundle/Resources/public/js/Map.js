@@ -8,14 +8,14 @@ Map = function(mapIdentifier, city, parentPage)
 
     this.initMapEventListeners();
 
-    var positions = new MapPositions(this);
-    positions.startLoop();
+    this.positions = new MapPositions(this);
+    this.positions.startLoop();
 
-    var cities = new MapCities(this);
-    cities.drawCityMarkers();
+    this.cities = new MapCities(this);
+    this.cities.drawCityMarkers();
 
-    var ownPosition = new OwnPosition(this);
-    ownPosition.showOwnPosition();
+    this.ownPosition = new OwnPosition(this);
+    this.ownPosition.showOwnPosition();
 
     this.quickLinks = new QuickLinks(this);
     this.quickLinks.initEventListeners();
