@@ -50,6 +50,11 @@ class Comment
     protected $message;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled = true;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -195,5 +200,28 @@ class Comment
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Comment
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }
