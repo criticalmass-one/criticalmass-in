@@ -27,6 +27,7 @@ CommentPage.prototype.createComment = function(commentData)
     var commentList = $('#commentList');
 
     var commentHTML = '<li class="commentItem">';
+    commentHTML += '<a href="#mapPage@' + commentData.latitude + ',' + commentData.longitude + ',13">';
     commentHTML += '<img src="http://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
     commentHTML += '<strong>' + commentData.username + '</strong> schrieb:';
 
@@ -34,6 +35,7 @@ CommentPage.prototype.createComment = function(commentData)
 
     commentHTML += '<time>(' + (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' + (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr, ' + (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' + ((dateTime.getMonth() + 1) < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' + dateTime.getFullYear() + ')</time>';
     commentHTML += '<p>' + commentData.message + '</p>';
+    commentHTML += '</a>';
     commentHTML += '</li>';
 
     commentList.prepend(commentHTML);
