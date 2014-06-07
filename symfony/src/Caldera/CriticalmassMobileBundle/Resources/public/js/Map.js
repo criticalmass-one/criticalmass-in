@@ -16,6 +16,9 @@ Map = function(mapIdentifier, city, parentPage)
 
     var ownPosition = new OwnPosition(this);
     ownPosition.showOwnPosition();
+
+    this.quickLinks = new QuickLinks(this);
+    this.quickLinks.initEventListeners();
     /*
     $.ajax({
         type: 'GET',
