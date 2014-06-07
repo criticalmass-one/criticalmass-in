@@ -69,11 +69,6 @@ MapPositions.prototype.createUsernamePosition = function(position)
     circle.addTo(this.map.map);
     circle.bindPopup(position.username);
 
-    if (position.username == this2.autoFollowUsername && this2.map.parentPage.isAutoFollow())
-    {
-        this2.map.setViewLatLngZoom(position.latitude, position.longitude, 15);
-    }
-
     circle.on('click', function(element) {
         var latLng = element.target.getLatLng();
         this2.map.setViewLatLngZoom(latLng.lat, latLng.lng, 15);
@@ -87,6 +82,11 @@ MapPositions.prototype.createUsernamePosition = function(position)
 MapPositions.prototype.moveUsernamePosition = function(username, latitude, longitude)
 {
     this.positionsArray[username].setLatLng([latitude, longitude]);
+
+    if (username == this.autoFollowUsername /*&& this2.map.parentPage.isAutoFollow()*/)
+    {
+        this.map.map.panTo([latitude, longitude]);
+    }
 };
 
 MapPositions.prototype.drawPositions = function()
@@ -135,4 +135,6 @@ MapPositions.prototype.panToLatestPosition = function()
     }
 
     this.map.map.panTo(this.positionsArray[maxTimestampIndex].getLatLng());
+
+    this.autoFollowUsername = this.positionsArray[maxTimestampIndex].options.username;
 };
