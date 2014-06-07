@@ -69,3 +69,8 @@ OwnPosition.prototype.removeOwnPosition = function()
     this.map.map.removeLayer(this.ownPosition);
     this.ownPosition = null;
 };
+
+OwnPosition.prototype.panToOwnPosition = function()
+{
+  this.map.map.panTo(this.ownPosition.getLatLng());
+};
