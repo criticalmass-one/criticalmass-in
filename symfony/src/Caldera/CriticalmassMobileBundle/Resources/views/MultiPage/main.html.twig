@@ -60,7 +60,7 @@
             <li data-role="list-divider" data-qa-ta="mainpanel-city-title" class="city-full-title"></li>
             <li><a href="#ridePage" data-ajax="false" data-qa-ta="mobile-mainpanel-ridePage">Tour</a></li>
             <li><a href="#mapPage" data-ajax="false" data-qa-ta="mobile-mainpanel-mapPage">Karte</a></li>
-            <li><a href="#cityPage" data-ajax="false" data-qa-ta="mobile-mainpanel-cityPage">Über</a></li>
+            <li><a href="#commentPage" data-ajax="false" data-qa-ta="mobile-mainpanel-commentPage">Kommentare</a></li>
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
             <li><a id="profileButton" class="show-loggedin-only" style="display: none;" href="#colorPage" data-qa-ta="mobile-mainpanel-color">Farbe wählen</a></li>
             <li><a id="logoutButton" class="show-loggedin-only" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
@@ -140,6 +140,19 @@
         <input type="range" name="slider-usercolor-blue" id="slider-usercolor-blue" value="0" min="0" max="255" data-qa-ta="mobile-usercolor-blue"/>
 
         <button id="randomColorButton">Ich kann mich nicht entscheiden!</button>
+    </section>
+</section>
+
+<!-- Kommentar-Seite -->
+<section data-role="page" id="commentPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Kommentare</h1>
+    </header>
+    <section data-role="content" id="commentPageContent">
+        <ul id="commentList" data-role="listview">
+
+        </ul>
     </section>
 </section>
 
