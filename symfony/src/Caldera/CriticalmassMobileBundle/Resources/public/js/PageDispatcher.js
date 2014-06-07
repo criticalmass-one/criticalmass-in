@@ -61,6 +61,11 @@ PageDispatcher.initPage = function(pagename)
                 colorPage.initPage();
                 this.pageArray['colorPage'] = colorPage;
                 break;
+            case 'commentPage':
+                var commentPage = new CommentPage('commentPage');
+                commentPage.initPage();
+                this.pageArray['commentPage'] = commentPage;
+                break;
         }
     }
 };
