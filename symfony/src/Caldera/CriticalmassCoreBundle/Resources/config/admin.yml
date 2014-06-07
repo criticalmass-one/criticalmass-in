@@ -31,3 +31,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [CriticalmassCoreBundle]]
+
+    sonata.admin.comment:
+        class: Caldera\CriticalmassCoreBundle\Admin\CommentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Comments" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassCoreBundle\Entity\Comment
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassCoreBundle]]
