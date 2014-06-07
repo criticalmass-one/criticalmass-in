@@ -61,7 +61,8 @@ MapPositions.prototype.createUsernamePosition = function(position)
         opacity: 0.8,
         fillOpacity: 0.5,
         weight: 1,
-        username: position.username
+        username: position.username,
+        timestamp: position.timestamp
     };
 
     var circle = L.circle([position.latitude, position.longitude], 25, circleOptions);
@@ -117,4 +118,21 @@ MapPositions.prototype.drawPositions = function()
         crossDomain: true,
         success: callback
     });
+};
+
+MapPositions.prototype.panToLatestPosition = function()
+{
+    var maxTimestamp = 0;
+    var maxTimestampIndex = 0;
+
+    for (index in this.positionsArray)
+    {
+        if (this.positionsArray[index].options.timestamp > maxTimestamp)
+        {
+            maxTimestamp = this.positionsArray[index].options.timestamp;
+            maxTimestampIndex = index;
+        }
+    }
+
+    this.map.map.panTo(this.positionsArray[maxTimestampIndex].getLatLng());
 };
