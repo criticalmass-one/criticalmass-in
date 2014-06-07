@@ -58,8 +58,8 @@ MapPositions.prototype.createUsernamePosition = function(position)
     var circleOptions = {
         color: userColor,
         fillColor: userColor,
-        opacity: 80,
-        fillOpacity: 50,
+        opacity: 0.8,
+        fillOpacity: 0.5,
         weight: 1,
         username: position.username
     };
