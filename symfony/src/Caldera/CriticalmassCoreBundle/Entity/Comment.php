@@ -55,6 +55,11 @@ class Comment
     protected $enabled = true;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $hasCoords = false;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -223,5 +228,28 @@ class Comment
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set hasCoords
+     *
+     * @param boolean $hasCoords
+     * @return Comment
+     */
+    public function setHasCoords($hasCoords)
+    {
+        $this->hasCoords = $hasCoords;
+
+        return $this;
+    }
+
+    /**
+     * Get hasCoords
+     *
+     * @return boolean 
+     */
+    public function getHasCoords()
+    {
+        return $this->hasCoords;
     }
 }
