@@ -41,7 +41,7 @@ CommentPage.prototype.createComment = function(commentData)
     commentList.prepend(commentHTML);
     commentList.listview('refresh');
 
-    this.commentsArray[commentData.id] = commentData;
+    this.commentsArray[commentData.commentId] = commentData;
 };
 
 CommentPage.prototype.drawMessages = function()
@@ -50,7 +50,7 @@ CommentPage.prototype.drawMessages = function()
     {
         for (index in ajaxResultData)
         {
-            if (!this.commentsArray[ajaxResultData[index].id])
+            if (!this.commentsArray[ajaxResultData[index].commentId])
             {
                 this.createComment(ajaxResultData[index]);
             }
