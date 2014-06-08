@@ -276,6 +276,23 @@
 </section>
 
 <!-- Registrierung -->
+<div id="registerPageErrorDialog" data-role="page" data-dialog="true">
+    <div data-role="header">
+        <h2>Fehler</h2>
+    </div>
+    <div class="ui-content" role="main">
+        <h2>Registrierung fehlgeschlagen</h2>
+        <p>Vermutlich ist dein gewünschter Benutzername oder deine E-Mail-Adresse schon mit einem Konto verknüpft.</p>
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <a href="#startPage" id="exit-button" class="ui-btn ui-btn-b ui-shadow ui-corner-all">Startseite</a>
+            </div>
+            <div class="ui-block-b">
+                <a href="#registerPage" id="cancel-button" class="ui-btn ui-shadow ui-corner-all">Nochmal</a>
+            </div>
+        </div>
+    </div>
+</div>
 <section data-role="page" id="registerPage">
     <header data-role="header">
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
