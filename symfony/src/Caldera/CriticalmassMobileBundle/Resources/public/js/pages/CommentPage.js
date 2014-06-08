@@ -84,6 +84,7 @@ CommentPage.prototype.submitComment = function()
     {
         $('#submitCommentButton').attr('disabled', false);
         $('#commentText').val('');
+        this2.drawMessages();
     }
 
     function submit(commentData)
