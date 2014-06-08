@@ -44,10 +44,10 @@ class CommentAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('user')
-            ->add('ride')
-            ->add('message')
-            ->add('dateTime')
+            ->addIdentifier('user')
+            ->addIdentifier('ride')
+            ->addIdentifier('message')
+            ->addIdentifier('dateTime')
         ;
     }
 }
