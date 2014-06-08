@@ -19,6 +19,7 @@ class CommentAdmin extends Admin
                 ->add('enabled', 'checkbox', array('label' => 'aktiviert'))
             ->end()
             ->with('Geografie', array('class' => 'col-md-6'))
+                ->add('hasCoords', 'checkbox', array('label' => 'Koordinaten vorhanden?'))
                 ->add('latitude', 'text', array('label' => 'Breitengrad'))
                 ->add('longitude', 'text', array('label' => 'Längengrad'))
             ->end()
