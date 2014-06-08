@@ -20,6 +20,13 @@ CommentPage.prototype.initPage = function()
     {
         this2.drawMessages();
     }, 5000);
+
+    $('#submitCommentButton').on('click', function(element)
+    {
+        element.preventDefault();
+
+        this2.submitComment();
+    });
 };
 
 CommentPage.prototype.createComment = function(commentData)
@@ -67,4 +74,69 @@ CommentPage.prototype.drawMessages = function()
         crossDomain: true,
         success: callback
     });
+};
+
+CommentPage.prototype.submitComment = function()
+{
+    var this2 = this;
+
+    function callback(data)
+    {
+        alert(data);
+    }
+
+    function submit(commentData)
+    {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: UrlFactory.getApiPrefix() + 'ride/writecomment',
+            cache: false,
+            context: this,
+            data: commentData,
+            success: callback
+        });
+    }
+
+    if (navigator.geolocation)
+    {
+        function processError2(positionError)
+        {
+            var commentData = {
+                citySlug: this2.getCitySlug(),
+                message: $('#commentText').val(),
+                latitude: 0,
+                longitude: 0
+            };
+
+            submit(commentData);
+        }
+
+        function processPosition2(positionResult)
+        {
+            var commentData = {
+                citySlug: this2.getCitySlug(),
+                message: $('#commentText').val(),
+                latitude: positionResult.coords.latitude,
+                longitude: positionResult.coords.longitude
+            };
+
+            submit(commentData);
+        }
+
+        navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: false });
+    }
+    else
+    {
+        var commentData = {
+            citySlug: this2.getCitySlug(),
+            message: $('#commentText').val(),
+            latitude: 0,
+            longitude: 0
+        };
+
+        submit(commentData);
+    }
+
+
 };
