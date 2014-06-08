@@ -48,6 +48,11 @@ li.commentItem time
     color: #aaaaaa;
 }
 
+li.commentItem p
+{
+    white-space: normal;
+}
+
 form#writeCommentForm
 {
     margin-bottom: 25px;
