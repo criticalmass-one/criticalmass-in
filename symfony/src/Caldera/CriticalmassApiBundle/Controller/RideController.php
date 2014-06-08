@@ -3,9 +3,9 @@
 namespace Caldera\CriticalmassApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Caldera\CriticalmassCoreBundle\Utility as Utility;
 use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
 class RideController extends Controller
@@ -47,5 +47,26 @@ class RideController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    public function writecommentAction(Request $request)
+    {
+        $request = $request->request;
+
+        $comment = new Entity\Comment();
+
+        $comment->setUser($this->getUser());
+        $comment->setRide($this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findLatestForCitySlug($request->get('citySlug')));
+
+        $comment->setDateTime(new \DateTime());
+        $comment->setLatitude($request->get('latitude'));
+        $comment->setLongitude($request->get('longitude'));
+        $comment->setMessage($request->get('message'));
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($comment);
+        $manager->flush();
+
+        return new Response($comment->getId());
     }
 }
