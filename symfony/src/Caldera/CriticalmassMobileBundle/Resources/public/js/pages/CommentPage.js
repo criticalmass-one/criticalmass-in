@@ -110,7 +110,8 @@ CommentPage.prototype.submitComment = function()
                 citySlug: this2.getCitySlug(),
                 message: $('#commentText').val(),
                 latitude: 0,
-                longitude: 0
+                longitude: 0,
+                hasCoords: false
             };
 
             submit(commentData);
@@ -122,7 +123,8 @@ CommentPage.prototype.submitComment = function()
                 citySlug: this2.getCitySlug(),
                 message: $('#commentText').val(),
                 latitude: positionResult.coords.latitude,
-                longitude: positionResult.coords.longitude
+                longitude: positionResult.coords.longitude,
+                hasCoords: true
             };
 
             submit(commentData);
@@ -136,7 +138,8 @@ CommentPage.prototype.submitComment = function()
             citySlug: this2.getCitySlug(),
             message: $('#commentText').val(),
             latitude: 0,
-            longitude: 0
+            longitude: 0,
+            hasCoords: false
         };
 
         submit(commentData);

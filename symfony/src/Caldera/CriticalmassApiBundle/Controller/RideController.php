@@ -61,6 +61,7 @@ class RideController extends Controller
         $comment->setDateTime(new \DateTime());
         $comment->setLatitude($request->get('latitude'));
         $comment->setLongitude($request->get('longitude'));
+        $comment->setHasCoords($request->get('hasCoords') == 'true');
         $comment->setMessage($request->get('message'));
 
         $manager = $this->getDoctrine()->getManager();
