@@ -82,7 +82,8 @@ CommentPage.prototype.submitComment = function()
 
     function callback(data)
     {
-        alert(data);
+        $('#submitCommentButton').attr('disabled', false);
+        $('#commentText').val('');
     }
 
     function submit(commentData)
@@ -97,6 +98,8 @@ CommentPage.prototype.submitComment = function()
             success: callback
         });
     }
+
+    $('#submitCommentButton').attr('disabled', true);
 
     if (navigator.geolocation)
     {
