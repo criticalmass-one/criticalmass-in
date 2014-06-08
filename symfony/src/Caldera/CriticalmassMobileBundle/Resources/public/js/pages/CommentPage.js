@@ -130,7 +130,7 @@ CommentPage.prototype.submitComment = function()
             submit(commentData);
         }
 
-        navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: false });
+        navigator.geolocation.getCurrentPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: false });
     }
     else
     {
