@@ -11,6 +11,7 @@ QuickLinks.prototype.initEventListeners = function()
 
     $('#quicklinkOwnPosition').on('click', function()
     {
+        this2.map.positions.stopAutoFollowing();
         this2.map.ownPosition.panToOwnPosition();
     });
 
@@ -21,6 +22,7 @@ QuickLinks.prototype.initEventListeners = function()
 
     $('#quicklinkLocation').on('click', function()
     {
+        this2.map.positions.stopAutoFollowing();
         this2.map.cities.panToRideLocation();
     });
 };
