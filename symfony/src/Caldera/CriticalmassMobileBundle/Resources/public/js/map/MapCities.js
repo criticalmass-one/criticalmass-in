@@ -55,3 +55,20 @@ MapCities.prototype.drawCityMarkers = function()
         marker.addTo(this.map.map);
     }
 };
+
+MapCities.prototype.panToRideLocation = function()
+{
+    var slug = this.map.parentPage.getCitySlug();
+
+    var city = CityFactory.getCityFromStorageBySlug(slug);
+    var ride = RideFactory.getRideFromStorageBySlug(slug);
+
+    if (ride != null)
+    {
+        this.map.map.panTo(ride.getLatLng());
+    }
+    else
+    {
+        this.map.map.panTo(city.getLatLng());
+    }
+};

@@ -18,4 +18,9 @@ QuickLinks.prototype.initEventListeners = function()
     {
         this2.map.positions.panToLatestPosition();
     });
+
+    $('#quicklinkLocation').on('click', function()
+    {
+        this2.map.cities.panToRideLocation();
+    });
 };
