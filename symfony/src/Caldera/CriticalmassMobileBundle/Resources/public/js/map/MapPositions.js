@@ -69,14 +69,14 @@ MapPositions.prototype.createUsernamePosition = function(position)
     var circleOptions = {
         color: userColor,
         fillColor: userColor,
-        opacity: 0.8,
+        opacity: 1,
         fillOpacity: 0.5,
-        weight: 1,
+        weight: 3,
         username: position.username,
         timestamp: position.timestamp
     };
 
-    var circle = L.circle([position.latitude, position.longitude], 25, circleOptions);
+    var circle = L.circle([position.latitude, position.longitude], 35, circleOptions);
     circle.addTo(this.map.map);
     circle.bindPopup(position.username);
 
