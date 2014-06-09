@@ -106,3 +106,7 @@ Ride.prototype.getFormattedDateTime = function()
 {
     return this.dateTime.getDate() + '.' + (this.dateTime.getMonth() + 1) + '. ' + this.dateTime.getHours() + '.' + (this.dateTime.getMinutes() < 10 ? '0' + this.dateTime.getMinutes() : this.dateTime.getMinutes()) + ' Uhr';
 }
+Ride.prototype.getLatLng = function()
+{
+    return L.latLng(this.latitude, this.longitude);
+};
