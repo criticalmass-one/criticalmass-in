@@ -70,7 +70,7 @@ MapPositions.prototype.createUsernamePosition = function(position)
         color: userColor,
         fillColor: userColor,
         opacity: 1,
-        fillOpacity: 0.5,
+        fillOpacity: 0.75,
         weight: 3,
         username: position.username,
         timestamp: position.timestamp
