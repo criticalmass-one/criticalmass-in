@@ -15,11 +15,13 @@ OwnPosition.prototype.showOwnPosition = function()
 
         function processError2(positionError)
         {
-
+            this2.setQuickLinkButtonStatus(false);
+            this2.removeOwnPosition();
         }
 
         function processPosition2(positionResult)
         {
+            this2.setQuickLinkButtonStatus(true);
             this2.drawOwnPosition(positionResult);
         }
 
@@ -72,5 +74,13 @@ OwnPosition.prototype.removeOwnPosition = function()
 
 OwnPosition.prototype.panToOwnPosition = function()
 {
-  this.map.map.panTo(this.ownPosition.getLatLng());
+    if (this.ownPosition)
+    {
+        this.map.map.panTo(this.ownPosition.getLatLng());
+    }
+};
+
+OwnPosition.prototype.setQuickLinkButtonStatus = function(status)
+{
+    $('#quicklinkOwnPosition').attr('disabled', !status);
 };
