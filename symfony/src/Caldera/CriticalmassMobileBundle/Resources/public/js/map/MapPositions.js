@@ -138,3 +138,8 @@ MapPositions.prototype.panToLatestPosition = function()
 
     this.autoFollowUsername = this.positionsArray[maxTimestampIndex].options.username;
 };
+
+MapPositions.prototype.stopAutoFollowing = function()
+{
+    this.autoFollowUsername = null;
+};

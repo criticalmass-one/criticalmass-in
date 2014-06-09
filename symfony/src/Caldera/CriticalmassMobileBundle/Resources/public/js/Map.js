@@ -143,7 +143,7 @@ Map.prototype.initMapEventListeners = function(ajaxResultData)
 
     this.map.on('dragstart', function()
     {
-        this2.parentPage.setAutoFollow(false);
+        this2.positions.stopAutoFollowing();
     });
 };
 
