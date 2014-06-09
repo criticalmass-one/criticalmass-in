@@ -131,3 +131,8 @@ City.prototype.countSocialMediaLinks = function()
 
     return socialMediaCounter;
 };
+
+City.prototype.getLatLng = function()
+{
+    return L.latLng(this.latitude, this.longitude);
+};
