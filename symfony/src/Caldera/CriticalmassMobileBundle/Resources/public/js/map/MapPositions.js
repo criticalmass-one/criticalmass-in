@@ -114,7 +114,11 @@ MapPositions.prototype.drawPositions = function()
             else
             {
                 this.moveUsernamePosition(ajaxResultData[index].username, ajaxResultData[index].latitude, ajaxResultData[index].longitude);
-                //this.setUsernameColor(ajaxResultData[index].username, ajaxResultData[index].colorRed, ajaxResultData[index].colorGreen, ajaxResultData[index].colorBlue);
+
+                if (!this.isUserPositionColor(ajaxResultData[index].username, ajaxResultData[index].colorRed, ajaxResultData[index].colorGreen, ajaxResultData[index].colorBlue))
+                {
+                    this.setUserPositionColor(ajaxResultData[index].username, ajaxResultData[index].colorRed, ajaxResultData[index].colorGreen, ajaxResultData[index].colorBlue);
+                }
             }
         }
 
@@ -161,4 +165,20 @@ MapPositions.prototype.stopAutoFollowing = function()
 MapPositions.prototype.setQuickLinkButtonStatus = function(status)
 {
     $('#quicklinkLatestPosition').attr('disabled', !status);
+};
+
+MapPositions.prototype.isUserPositionColor = function(username, colorRed, colorGreen, colorBlue)
+{
+    return this.positionsArray[username].options.color == 'rgb(' + colorRed + ', ' + colorGreen + ', ' + colorBlue + ')';
+};
+
+MapPositions.prototype.setUserPositionColor = function(username, colorRed, colorGreen, colorBlue)
+{
+    var userColor = 'rgb(' + colorRed + ', ' + colorGreen + ', ' + colorBlue + ')';
+    var circleOptions = {
+        color: userColor,
+        fillColor: userColor
+    };
+
+    this.positionsArray[username].setStyle(circleOptions);
 };
