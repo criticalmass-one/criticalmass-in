@@ -5,7 +5,16 @@ MapPositions = function(map)
 
 MapPositions.prototype.map = null;
 
-MapPositions.prototype.positionsArray = [];
+MapPositions.prototype.positionsArray = new Array();
+
+/**
+ * Assoziative Arrays in JavaScript funktionieren nicht wie ein Array, sondern
+ * wie ein Objekt mit zusätzlichen Eigenschaften. Die Länge eines assoziativen
+ * Arrays ist darum immer null, also muss die tatsächliche Anzahl der Position-
+ * en bedauerlicherweise in einer zweiten Eigenschaft gespeichert werden.
+ * @type {number}
+ */
+MapPositions.prototype.positionsCounter = 0;
 
 MapPositions.prototype.timer = null;
 
@@ -19,6 +28,7 @@ MapPositions.prototype.startLoop = function()
     this.timer = window.setInterval(function()
     {
         this2.drawPositions();
+
     }, 2500);
 };
 
@@ -48,6 +58,7 @@ MapPositions.prototype.removeUsernamePosition = function(username)
 {
     this.map.map.removeLayer(this.positionsArray[username]);
     delete this.positionsArray[username];
+    --this.positionsCounter;
 };
 
 MapPositions.prototype.createUsernamePosition = function(position)
@@ -77,6 +88,7 @@ MapPositions.prototype.createUsernamePosition = function(position)
     }.bind(this2));
 
     this.positionsArray[position.username] = circle;
+    ++this.positionsCounter;
 };
 
 MapPositions.prototype.moveUsernamePosition = function(username, latitude, longitude)
@@ -102,10 +114,12 @@ MapPositions.prototype.drawPositions = function()
             else
             {
                 this.moveUsernamePosition(ajaxResultData[index].username, ajaxResultData[index].latitude, ajaxResultData[index].longitude);
+                //this.setUsernameColor(ajaxResultData[index].username, ajaxResultData[index].colorRed, ajaxResultData[index].colorGreen, ajaxResultData[index].colorBlue);
             }
         }
 
         this.clearOldPositions(ajaxResultData);
+        this.setQuickLinkButtonStatus(this.positionsCounter > 0);
     }
 
     $.support.cors = true;
@@ -142,4 +156,9 @@ MapPositions.prototype.panToLatestPosition = function()
 MapPositions.prototype.stopAutoFollowing = function()
 {
     this.autoFollowUsername = null;
+};
+
+MapPositions.prototype.setQuickLinkButtonStatus = function(status)
+{
+    $('#quicklinkLatestPosition').attr('disabled', !status);
 };
