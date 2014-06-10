@@ -70,6 +70,11 @@ PageDispatcher.initPage = function(pagename)
     }
 };
 
+PageDispatcher.getPage = function(pageId)
+{
+    return this.pageArray[pageId];
+};
+
 PageDispatcher.getCurrentPageId = function()
 {
     return $(':mobile-pagecontainer').pagecontainer('getActivePage')[0].id;
