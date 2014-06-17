@@ -9,3 +9,7 @@ caldera_criticalmass_api_user_getcolors:
 caldera_criticalmass_api_user_setcolors:
     pattern: /setcolors
     defaults: { _controller: CalderaCriticalmassApiBundle:User:setcolors }
+
+caldera_criticalmass_api_user_setcolors:
+    pattern: /getpingtoken
+    defaults: { _controller: CalderaCriticalmassApiBundle:User:getpingtoken }

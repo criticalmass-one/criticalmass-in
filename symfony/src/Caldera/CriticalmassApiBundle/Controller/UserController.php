@@ -23,6 +23,19 @@ class UserController extends Controller
         return $response;
     }
 
+
+    public function getpingtokenAction()
+    {
+        $response = new Response();
+        $response->setContent(json_encode(array(
+            'pingToken' => $this->getUser()->getPingToken()
+        )));
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     public function getcolorsAction()
     {
         $response = new Response();
