@@ -51,11 +51,18 @@ class User extends BaseUser
     protected $colorBlue = 0;
 
     /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $pingToken;
+
+    /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
      */
     public function __construct()
     {
         parent::__construct();
+
+        $this->pingToken = md5(microtime());
     }
 
     /**
@@ -165,5 +172,15 @@ class User extends BaseUser
     public function setColorBlue($colorBlue)
     {
         $this->colorBlue = $colorBlue;
+    }
+
+    public function setPingToken($pingToken)
+    {
+        $this->pingToken = $pingToken;
+    }
+
+    public function getPingToken()
+    {
+        return $this->pingToken;
     }
 }
