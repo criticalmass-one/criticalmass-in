@@ -23,10 +23,10 @@ UrlFactory.getHostName = function()
 {
     if (this.getSystem() == 'local')
     {
-        return 'www.criticalmass.cm';
+        return 'criticalmass.cm';
     }
 
-    return 'www.criticalmass.in';
+    return 'criticalmass.in';
 }
 
 UrlFactory.getPortNumber = function()
