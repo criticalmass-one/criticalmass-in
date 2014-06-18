@@ -33,8 +33,8 @@ CommentPage.prototype.createComment = function(commentData)
 {
     var commentList = $('#commentList');
 
-    var commentHTML = '<li class="commentItem">';
-    commentHTML += '<a href="#mapPage@' + commentData.latitude + ',' + commentData.longitude + ',13">';
+    var commentHTML = '<li id="rideComment' + commentData.commentId + '" class="commentItem">';
+    commentHTML += '<a href="">';
     commentHTML += '<img src="http://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
     commentHTML += '<strong>' + commentData.username + '</strong> schrieb:';
 
@@ -49,6 +49,13 @@ CommentPage.prototype.createComment = function(commentData)
     commentList.listview('refresh');
 
     this.commentsArray[commentData.commentId] = commentData;
+
+    $('#rideComment' + commentData.commentId).on('click', function()
+    {
+        window.location = '#mapPage';
+        // hier muss es nun noch zur position des kommentares gehen!
+        // @' + commentData.latitude + ',' + commentData.longitude + ',14';
+    })
 };
 
 CommentPage.prototype.drawMessages = function()
