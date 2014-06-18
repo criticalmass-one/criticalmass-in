@@ -36,6 +36,7 @@ CommentPage.prototype.createComment = function(commentData)
     var commentHTML = '<li id="rideComment' + commentData.commentId + '" class="commentItem">';
     commentHTML += '<a href="">';
     commentHTML += '<img src="http://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
+    commentHTML += '<img src="https://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
     commentHTML += '<strong>' + commentData.username + '</strong> schrieb:';
 
     var dateTime = new Date(commentData.dateTime);
