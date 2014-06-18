@@ -72,3 +72,8 @@ Messages.prototype.drawMessages = function()
         success: callback
     });
 };
+
+Messages.prototype.openPopup = function(commentId)
+{
+    this.commentsArray[commentId].openPopup();
+};
