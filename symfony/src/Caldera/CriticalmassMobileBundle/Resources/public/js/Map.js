@@ -1,12 +1,13 @@
 Map = function(mapIdentifier, city, parentPage)
 {
     this.mapIdentifier = mapIdentifier;
-    this.city = city;
-    this.parentPage = parentPage;
+
+    this.mapView = new MapView(this);
 
     this.initMap();
 
-    this.initMapEventListeners();
+    this.city = city;
+    this.parentPage = parentPage;
 
     this.positions = new MapPositions(this);
     this.positions.startLoop();
@@ -23,15 +24,18 @@ Map = function(mapIdentifier, city, parentPage)
     this.messages = new Messages(this);
     this.messages.startLoop();
 
+
+    this.mapView.initEventListeners();
+    this.initMapEventListeners();
 };
 
 Map.prototype.initMap = function()
 {
     this.map = L.map('map');
 
-    if (this.hasOverridingMapPosition())
+    if (this.mapView.hasOverridingMapPosition())
     {
-        var mapPositon = this.getOverridingMapPosition();
+        var mapPositon = this.mapView.getOverridingMapPosition();
 
         this.map.setView([mapPositon.latitude,
             mapPositon.longitude],
