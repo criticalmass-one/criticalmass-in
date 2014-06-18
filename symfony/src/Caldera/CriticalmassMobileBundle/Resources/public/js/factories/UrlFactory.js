@@ -5,7 +5,7 @@ UrlFactory = function()
 
 UrlFactory.environment = 'dev';
 UrlFactory.system = 'local';
-UrlFactory.tls = false;
+UrlFactory.tls = true;
 
 UrlFactory.nodeJSPort = 1337;
 
@@ -79,8 +79,5 @@ UrlFactory.getApiPrefix = function()
 
 UrlFactory.getNodeJSApiPrefix = function()
 {
-    return this.getProtocolString() +
-        this.getHostName() +
-        ':' + this.getNodeJSPortNumber() +
-        '/';
+    return 'https://criticalmass.in:1337/';
 }
