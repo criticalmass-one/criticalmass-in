@@ -10,7 +10,7 @@ RegisterPage.prototype.constructor = RegisterPage;
 RegisterPage.prototype.initPage = function()
 {
     var this2 = this;
-    $('form#form-register').submit(function(element)
+    $('form#form-register').on('submit', function(element)
     {
         this2.processRegistration(element);
     });
@@ -25,18 +25,24 @@ RegisterPage.prototype.processRegistration = function (element) {
     registerData['sonata_user_registration_form[plainPassword][second]'] = $('#form-register input[name="_password"]').val();
     registerData['sonata_user_registration_form[email]'] = $('#form-register input[name="_email"]').val();
 
-    alert(JSON.stringify(registerData));
     $.ajax({
         type: 'POST',
         url: 'http://www.criticalmass.cm/app_dev.php/register/',
-        asyn: false,
+        context: this,
         data: registerData,
-        dataType: "json",
+        dataType: 'json',
         success: function (res) {
 
             alert('OK: ' + JSON.stringify(res)); // JUST FOR TEST
         },
-        error: function (res) {
-            alert('Fehler: ' + JSON.stringify(res));
+        error: function (res)
+        {
+            alert(JSON.stringify(res));
+            this.presentErrorMessage('Nee');
         }});
 };
+
+RegisterPage.prototype.presentErrorMessage = function(errorMessage)
+{
+    $.mobile.changePage('#registerPageErrorDialog', 'pop', true, true);
+}
