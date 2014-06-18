@@ -9,11 +9,16 @@ MapPage.prototype.constructor = MapPage;
 
 MapPage.prototype.map = null;
 
-MapPage.prototype.initPage = function()
+MapPage.prototype.initPage = function(callback)
 {
     if (this.map == null)
     {
         this.map = new Map('map', this.getCitySlug(), this);
+    }
+
+    if (callback)
+    {
+        callback(this);
     }
 };
 
