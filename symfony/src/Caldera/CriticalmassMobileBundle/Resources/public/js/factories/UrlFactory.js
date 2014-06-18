@@ -79,5 +79,5 @@ UrlFactory.getApiPrefix = function()
 
 UrlFactory.getNodeJSApiPrefix = function()
 {
-    return 'https://criticalmass.in:1337/';
+    return this.getProtocolString() + this.getHostName() + ':' + this.getNodeJSPortNumber() + '/';
 }
