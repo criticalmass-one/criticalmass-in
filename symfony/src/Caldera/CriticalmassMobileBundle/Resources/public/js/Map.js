@@ -60,6 +60,7 @@ Map.prototype.mapIdentifier = null;
 Map.prototype.setViewLatLngZoom = function(latitude, longitude, zoom)
 {
     this.map.panTo([latitude, longitude]);
+    this.mapView.refreshOverridingMapPosition();
 }
 
 Map.prototype.initMapPosition = function()
