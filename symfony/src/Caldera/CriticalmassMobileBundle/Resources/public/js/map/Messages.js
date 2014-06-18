@@ -45,7 +45,7 @@ Messages.prototype.createComment = function(commentData)
     marker.bindPopup(popupHTML);
     marker.addTo(this.map.map);
 
-    this.commentsArray[commentData.id] = marker;
+    this.commentsArray[commentData.commentId] = marker;
 };
 
 Messages.prototype.drawMessages = function()
@@ -54,7 +54,7 @@ Messages.prototype.drawMessages = function()
     {
         for (index in ajaxResultData)
         {
-            if (!this.commentsArray[ajaxResultData[index].id])
+            if (!this.commentsArray[ajaxResultData[index].commentId])
             {
                 this.createComment(ajaxResultData[index]);
             }
