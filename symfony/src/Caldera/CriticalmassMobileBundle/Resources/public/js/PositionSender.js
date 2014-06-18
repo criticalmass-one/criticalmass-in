@@ -11,8 +11,9 @@ PositionSender.prototype.parentPage = null;
 
 PositionSender.prototype.startSender = function()
 {
+
     var this2 = this;
-    if (navigator.geolocation /*&& this.parentPage.isGpsActivated() && this.parentPage.isUserLoggedIn()*/)
+    if (navigator.geolocation && this.parentPage.isGpsActivated() && this.parentPage.isUserLoggedIn())
     {
         function processError2(positionError)
         {
