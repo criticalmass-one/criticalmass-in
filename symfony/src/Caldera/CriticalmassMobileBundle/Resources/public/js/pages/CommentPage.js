@@ -34,8 +34,7 @@ CommentPage.prototype.createComment = function(commentData)
     var commentList = $('#commentList');
 
     var commentHTML = '<li id="rideComment' + commentData.commentId + '" class="commentItem">';
-    commentHTML += '<a href="">';
-    commentHTML += '<img src="http://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
+    commentHTML += '<a href="#">';
     commentHTML += '<img src="https://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
     commentHTML += '<strong>' + commentData.username + '</strong> schrieb:';
 
