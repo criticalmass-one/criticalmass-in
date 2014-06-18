@@ -60,7 +60,7 @@ class UserController extends Controller
         {
             if (!($color >= 0 && $color < 256) || !isset($color))
             {
-                throw $this->createNotFoundException('Impossible.');
+                throw $this->createNotFoundException('Please make sure to set the right range for each color value.');
             }
         }
 
