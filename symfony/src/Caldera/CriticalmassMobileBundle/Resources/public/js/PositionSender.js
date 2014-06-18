@@ -11,9 +11,9 @@ PositionSender.prototype.parentPage = null;
 
 PositionSender.prototype.startSender = function()
 {
-    if (navigator.geolocation && this2.parentPage.isGpsActivated() && this2.parentPage.isUserLoggedIn())
+    var this2 = this;
+    if (navigator.geolocation /*&& this.parentPage.isGpsActivated() && this.parentPage.isUserLoggedIn()*/)
     {
-
         function processError2(positionError)
         {
             this2.processError(positionError);
@@ -32,14 +32,16 @@ PositionSender.prototype.processPosition = function(positionResult)
 {
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'trackposition/' + this.parentPage.getCitySlug(),
+        url: UrlFactory.getNodeJSApiPrefix(),
         context: this,
         data: {
+            action: 'trackPosition',
+            citySlug: this.parentPage.getCitySlug(),
             latitude: positionResult.coords.latitude,
             longitude: positionResult.coords.longitude,
             accuracy: positionResult.coords.accuracy,
             altitude: positionResult.coords.altitude,
-            altitudeaccuracy: positionResult.coords.altitudeAccurary,
+            altitudeAccuracy: positionResult.coords.altitudeAccuracy,
             speed: positionResult.coords.speed,
             heading: positionResult.coords.heading,
             timestamp: positionResult.timestamp
