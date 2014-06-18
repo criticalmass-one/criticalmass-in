@@ -55,7 +55,7 @@ Map.prototype.initMap = function()
     }
     else
     {
-        this.map.setView([53.5496385, 9.9625133], 15);
+        this.initMapPosition();
     }
 
 
@@ -82,6 +82,11 @@ Map.prototype.setViewLatLngZoom = function(latitude, longitude, zoom)
 {
     this.map.panTo([latitude, longitude]);
 }
+
+Map.prototype.initMapPosition = function()
+{
+    this.map.setView([53.5496385, 9.9625133], 15);
+};
 
 Map.prototype.getOverridingMapPosition = function()
 {
