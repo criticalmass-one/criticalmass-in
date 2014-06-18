@@ -52,9 +52,19 @@ CommentPage.prototype.createComment = function(commentData)
 
     $('#rideComment' + commentData.commentId).on('click', function()
     {
-        window.location = '#mapPage';
-        // hier muss es nun noch zur position des kommentares gehen!
-        // @' + commentData.latitude + ',' + commentData.longitude + ',14';
+        var this2 = this;
+
+        var afterSwitchCallback = function(mapPage)
+        {
+            if (commentData.hasCoords)
+            {
+                mapPage.map.setViewLatLngZoom(commentData.latitude, commentData.longitude, 10);
+
+                mapPage.map.messages.openPopup(commentData.commentId);
+            }
+        };
+
+        PageDispatcher.switchPage('mapPage', afterSwitchCallback);
     })
 };
 
