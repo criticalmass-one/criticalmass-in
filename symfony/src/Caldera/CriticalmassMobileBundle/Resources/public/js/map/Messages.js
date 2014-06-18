@@ -33,7 +33,7 @@ Messages.prototype.createComment = function(commentData)
     var marker = L.marker([commentData.latitude, commentData.longitude], { icon: criticalmassIcon });
 
     var popupHTML = '<div class="messagePopup">';
-    popupHTML += '<img src="http://www.gravatar.com/avatar/' + commentData.gravatar + '?s=32" />';
+    popupHTML += '<img src="https://www.gravatar.com/avatar/' + commentData.gravatar + '?s=32" />';
     popupHTML += '<strong>' + commentData.username + '</strong> schrieb:';
 
     var dateTime = new Date(commentData.dateTime);
