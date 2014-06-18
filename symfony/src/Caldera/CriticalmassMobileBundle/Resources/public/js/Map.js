@@ -156,7 +156,6 @@ Map.prototype.getNewMapData = function()
 {
     $.ajax({
         type: 'GET',
-        //url: UrlFactory.getApiPrefix() + 'completemapdata/' + this.parentPage.getCitySlug(),
         url: UrlFactory.getNodeJSApiPrefix() + '?action=fetch&rideId=1',
         cache: false,
         context: this,
