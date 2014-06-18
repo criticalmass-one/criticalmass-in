@@ -79,7 +79,10 @@ PageDispatcher.initPage = function(pagename)
     }
     else
     {
-        this.waitingCallback(this.pageArray[pagename]);
+        if (this.waitingCallback)
+        {
+            this.waitingCallback(this.pageArray[pagename]);
+        }
     }
 
     this.waitingCallback = null;
