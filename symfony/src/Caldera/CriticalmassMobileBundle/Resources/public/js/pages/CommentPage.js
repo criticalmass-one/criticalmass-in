@@ -34,7 +34,12 @@ CommentPage.prototype.createComment = function(commentData)
     var commentList = $('#commentList');
 
     var commentHTML = '<li id="rideComment' + commentData.commentId + '" class="commentItem">';
-    commentHTML += '<a href="#">';
+
+    if (commentData.hasCoords)
+    {
+        commentHTML += '<a href="#">';
+    }
+
     commentHTML += '<img src="https://www.gravatar.com/avatar/' + commentData.gravatar + '" />';
     commentHTML += '<strong>' + commentData.username + '</strong> schrieb:';
 
@@ -42,7 +47,12 @@ CommentPage.prototype.createComment = function(commentData)
 
     commentHTML += '<time>(' + (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' + (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr, ' + (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' + ((dateTime.getMonth() + 1) < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' + dateTime.getFullYear() + ')</time>';
     commentHTML += '<p>' + commentData.message + '</p>';
-    commentHTML += '</a>';
+
+    if (commentData.hasCoords)
+    {
+        commentHTML += '</a>';
+    }
+
     commentHTML += '</li>';
 
     commentList.prepend(commentHTML);
@@ -50,22 +60,25 @@ CommentPage.prototype.createComment = function(commentData)
 
     this.commentsArray[commentData.commentId] = commentData;
 
-    $('#rideComment' + commentData.commentId).on('click', function()
+    if (commentData.hasCoords)
     {
-        var this2 = this;
-
-        var afterSwitchCallback = function(mapPage)
+        $('#rideComment' + commentData.commentId).on('click', function()
         {
-            if (commentData.hasCoords)
+            var this2 = this;
+
+            var afterSwitchCallback = function(mapPage)
             {
-                mapPage.map.setViewLatLngZoom(commentData.latitude, commentData.longitude, 10);
+                if (commentData.hasCoords)
+                {
+                    mapPage.map.setViewLatLngZoom(commentData.latitude, commentData.longitude, 10);
 
-                mapPage.map.messages.openPopup(commentData.commentId);
-            }
-        };
+                    mapPage.map.messages.openPopup(commentData.commentId);
+                }
+            };
 
-        PageDispatcher.switchPage('mapPage', afterSwitchCallback);
-    })
+            PageDispatcher.switchPage('mapPage', afterSwitchCallback);
+        });
+    }
 };
 
 CommentPage.prototype.drawMessages = function()
