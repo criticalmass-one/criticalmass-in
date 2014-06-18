@@ -20,14 +20,13 @@
 
                     isPageLoaded = true;
 
-                    /*var mapPage = new MapPage('mapPage');
-                    var startPage = new StartPage('startPage');
-                    var loginPage = new LoginPage('loginPage');
-                    var cityPage = new CityPage('cityPage');*/
                     var globalPage = new GlobalPage();
+
                     globalPage.initPage();
-                     /*var positionSender = new PositionSender(mapPage);
-*/
+
+                    /* das muss noch anders! TODO */
+                    var positionSender = new PositionSender(PageDispatcher.getPage('mapPage'));
+
 
                 }
             }
