@@ -60,6 +60,8 @@ ColorPage.prototype.setRandomColor = function()
     $('#' + this.pageIdentifier + ' input').slider('refresh');
 
     $('#colorExample').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
+
+    this.saveUserColor();
 };
 
 ColorPage.prototype.updateUserColor = function()
