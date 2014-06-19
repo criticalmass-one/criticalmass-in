@@ -13,3 +13,7 @@ caldera_criticalmass_api_user_setcolors:
 caldera_criticalmass_api_user_getpingtoken:
     pattern: /getpingtoken
     defaults: { _controller: CalderaCriticalmassApiBundle:User:getpingtoken }
+
+caldera_criticalmass_api_user_switchcity:
+    pattern: /switchcity/{citySlug}
+    defaults: { _controller: CalderaCriticalmassApiBundle:User:switchcity }
