@@ -83,6 +83,15 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
     this.refreshCityTitles(newCity);
     this.setCitySlug(newCitySlug);
 
+    $.ajax({
+        type : 'GET',
+        context : this,
+        url : UrlFactory.getApiPrefix() + 'user/switchcity/' + newCitySlug,
+        success : function(data)
+        {
+        }
+    });
+
     _paq.push(['trackEvent', 'switch_city', newCitySlug]);
 }
 
