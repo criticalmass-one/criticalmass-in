@@ -48,8 +48,9 @@ Map.prototype.initMap = function()
         this.initMapPosition();
     }
 
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png
+    //https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png', {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
     }).addTo(this.map);
 };
