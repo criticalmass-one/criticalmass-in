@@ -74,4 +74,17 @@ class UserController extends Controller
 
         return new Response();
     }
+
+    public function switchcityAction($citySlug)
+    {
+        $citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        $user = $this->getUser();
+
+        $user->setCurrentCity($citySlug->getCity());
+
+        $this->get('fos_user.user_manager')->updateUser($user);
+
+        return new Response($citySlug->getCity()->getId());
+    }
 }
