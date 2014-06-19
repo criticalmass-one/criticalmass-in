@@ -62,6 +62,10 @@ class User extends BaseUser
     {
         parent::__construct();
 
+        $this->colorRed = rand(0, 255);
+        $this->colorGreen = rand(0, 255);
+        $this->colorBlue = rand(0, 255);
+
         $this->pingToken = md5(microtime());
     }
 
