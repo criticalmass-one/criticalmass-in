@@ -42,3 +42,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [CriticalmassCoreBundle]]
+
+    sonata.admin.tilelayer:
+        class: Caldera\CriticalmassCoreBundle\Admin\TileLayerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "TileLayer" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassCoreBundle\Entity\TileLayer
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassCoreBundle]]
