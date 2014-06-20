@@ -26,15 +26,20 @@ Map = function(mapIdentifier, city, parentPage)
     this.initMapEventListeners();
 };
 
+Map.prototype.map = null;
+Map.prototype.tileLayer = null;
+
 Map.prototype.initMap = function()
 {
     this.map = L.map(this.mapIdentifier);
 
     //https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png
     //https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-    L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png', {
+    this.tileLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png', {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
-    }).addTo(this.map);
+    });
+
+    this.tileLayer.addTo(this.map);
 };
 
 Map.prototype.parentPage = null;
@@ -58,5 +63,24 @@ Map.prototype.initMapEventListeners = function(ajaxResultData)
 
 Map.prototype.switchCity = function(newCitySlug)
 {
+    this.switchTileLayer(this.parentPage.getCitySlug(), newCitySlug);
+
     this.parentPage.switchCityBySlug(newCitySlug);
+};
+
+Map.prototype.switchTileLayer = function(oldCitySlug, newCitySlug)
+{
+    var oldCity = CityFactory.getCityFromStorageBySlug(oldCitySlug);
+    var newCity = CityFactory.getCityFromStorageBySlug(newCitySlug);
+
+    if (oldCity.getTileLayerAddress() != newCity.getTileLayerAddress())
+    {
+        this.map.removeLayer(this.tileLayer);
+
+        this.tileLayer = L.tileLayer(newCity.getTileLayerAddress(), {
+            attribution: newCity.getTileLayerAttributation()
+        });
+
+        this.tileLayer.addTo(this.map);
+    }
 };
