@@ -20,8 +20,11 @@ RegisterPage.prototype.initPage = function()
  * Das hier ist richtig übel.
  * @param element
  */
-RegisterPage.prototype.processRegistration = function (element) {
+RegisterPage.prototype.processRegistration = function(element)
+{
     element.preventDefault();
+
+    $('#submitRegistrationButton').attr('disabled', true);
 
     $.ajax({
         type: 'GET',
@@ -74,7 +77,12 @@ RegisterPage.prototype.processRegistration = function (element) {
                     this2.clearErrorMessage('#registrationPasswordError');
                 }
 
+                if (JSON.stringify(formResultData).match('Eine E-Mail wurde an (.*)@(.*).(.*) gesendet. Sie enthält einen Link, den Du anklicken musst, um Dein Benutzerkonto zu bestätigen.'))
+                {
+                    PageDispatcher.switchPage('registerSuccessPage');
+                }
 
+                $('#submitRegistrationButton').attr('disabled', false);
             }
 
             var registerData = {};
@@ -92,13 +100,10 @@ RegisterPage.prototype.processRegistration = function (element) {
                 dataType: 'json',
                 success: function (res) {
 
-                    alert('OK: ' + JSON.stringify(res)); // JUST FOR TEST
+                    processValidation(res);
                 },
                 error: function (res)
-                {/*
-                    alert('ERROR: ' + JSON.stringify(res));
-                    this.presentErrorMessage('Nee');*/
-
+                {
                     processValidation(res);
                 }});
         }
