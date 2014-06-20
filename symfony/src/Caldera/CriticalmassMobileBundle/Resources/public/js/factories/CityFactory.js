@@ -29,6 +29,8 @@ CityFactory.convertObjectToCity = function(objectData)
     city.setTwitter(objectData.twitter);
     city.setLatitude(objectData.latitude);
     city.setLongitude(objectData.longitude);
+    city.setTileLayerAddress(objectData.tileLayerAddress);
+    city.setTileLayerAttributation(objectData.tileLayerAttributation);
 
     return city;
 }
