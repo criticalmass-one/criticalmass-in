@@ -58,7 +58,7 @@ form#writeCommentForm
     margin-bottom: 25px;
 }
 
-form span.errorMessage
+span.errorMessage
 {
     color: red;
 }
