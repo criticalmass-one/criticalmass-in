@@ -60,7 +60,8 @@
             <li><a id="logoutButton" class="show-loggedin-only" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
             <li><a id="registerButton" class="show-loggedout-only" style="display: none;" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
             <li><a id="loginButton" class="show-loggedout-only" style="display: none;" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
-        <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
+            <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
+            <li><a href="#privacyPage" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
     </ul>
 </section>
 
@@ -277,6 +278,27 @@
 
         <label for="pingToken">Dein Token:</label>
         <input type="text" name="pingToken" id="pingToken" readonly="true" />
+    </section>
+</section>
+
+<!-- Datensicherheit -->
+<section data-role="page" id="privacyPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Datensicherheit</h1>
+    </header>
+    <section data-role="content" id="privacyPageContent">
+        <h2>Datensicherheit</h2>
+
+        <p>Positionsdaten sind recht kritische Daten, darum behandeln wir sie äußerst vorsichtig. Wenn du die Übermittlung deines Aufenthaltsortes einschaltest, werden deine Positionsdaten über eine gesicherte Verbindung zusammen mit deinem Benutzernamen an unseren Server übertragen. Von dort aus können andere Teilnehmer deinen Aufenthaltsort auf einer Karte eingezeichnet abrufen. Nach dem Ende einer Critical Mass werden deine Positionsdaten anonymisiert und mit den Daten anderer Benutzer verrrechnet, um eine Übersicht der gefahrenen Route zu erhalten.</p>
+        <h2>Analysedienste</h2>
+        <p>Unsere Website verwendet Piwik, dabei handelt es sich um einen sogenannten Webanalysedienst. Piwik verwendet sog. “Cookies”, das sind Textdateien, die auf Ihrem Computer gespeichert werden und die unsererseits eine Analyse der Benutzung der Webseite ermöglichen. Zu diesem Zweck werden die durch den Cookie erzeugten Nutzungsinformationen (einschließlich Ihrer gekürzten IP-Adresse) an unseren Server übertragen und zu Nutzungsanalysezwecken gespeichert, was der Webseitenoptimierung unsererseits dient. Ihre IP-Adresse wird bei diesem Vorgang umge­hend anony­mi­siert, so dass Sie als Nutzer für uns anonym bleiben. Die durch den Cookie erzeugten Informationen über Ihre Benutzung dieser Webseite werden nicht an Dritte weitergegeben. Sie können die Verwendung der Cookies durch eine entsprechende Einstellung Ihrer Browser Software verhindern, es kann jedoch sein, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website voll umfänglich nutzen können.</p>
+        <p>Wenn Sie mit der Spei­che­rung und Aus­wer­tung die­ser Daten aus Ihrem Besuch nicht ein­ver­stan­den sind, dann kön­nen Sie der Spei­che­rung und Nut­zung nachfolgend per Maus­klick jederzeit wider­spre­chen. In diesem Fall wird in Ihrem Browser ein sog. Opt-Out-Cookie abgelegt, was zur Folge hat, dass Piwik kei­ner­lei Sit­zungs­da­ten erhebt. Achtung: Wenn Sie Ihre Cookies löschen, so hat dies zur Folge, dass auch das Opt-Out-Cookie gelöscht wird und ggf. von Ihnen erneut aktiviert werden muss.</p>
+
+        <p>(Hinweis übernommen mit freundlicher Genehmigung von <a href="http://www.datenschutzbeauftragter-info.de/fachbeitraege/">www.datenschutzbeauftragter-info.de</a>)</p>
+        <h3>Widerspruch</h3>
+
+        <iframe style="border: 0; height: 200px; width: 600px;" src="https://piwik.caldera.cc/index.php?module=CoreAdminHome&action=optOut&language=de"></iframe>
     </section>
 </section>
 
