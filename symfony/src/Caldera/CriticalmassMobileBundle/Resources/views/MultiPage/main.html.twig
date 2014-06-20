@@ -75,6 +75,14 @@
         <div id="map"></div>
 
         <div id="map-control-panel" data-role="collapsible-set">
+            <div data-role="collapsible" id="mapSettings">
+                <h3 data-qa-ta="mobile-map-settings">Einstellungen</h3>
+                <label for="flip-gps-sender">GPS-Übertragung:</label>
+                <select name="flip-gps-sender" id="flip-gps-sender" data-role="slider" data-qa-ta="mobile-map-gpssender">
+                    <option value="off">Aus</option>
+                    <option value="on" selected="selected">An</option>
+                </select>
+            </div>
             <div data-role="collapsible" id="quickLinks">
                 <h3 data-qa-ta="mobile-map-statistic">Schnellzugriff</h3>
 
@@ -159,7 +167,7 @@
         <h2>Impressum</h2>
 
         <p>Angaben nach § 5 TMG:</p>
-        <p>Malte Hübner<br />Fritz-Reuter-Straße 57<br />24782 Büdelsdorf</p>
+        <p>Malte Hübner<br />Fachhochschule Wedel<br />Feldstraße 143<br />22880 Wedel</p>
         <p><a href="mailto:malte@criticalmass.in">malte@criticalmass.in</a><br />0700 11 864 833</p>
     </section>
 </section>

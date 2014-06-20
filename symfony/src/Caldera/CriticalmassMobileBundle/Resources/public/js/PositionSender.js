@@ -11,21 +11,27 @@ PositionSender.prototype.parentPage = null;
 
 PositionSender.prototype.startSender = function()
 {
-
-    var this2 = this;
-    if (navigator.geolocation && this.parentPage.isGpsActivated() && this.parentPage.isUserLoggedIn())
+    if (navigator.geolocation)
     {
+        var this2 = this;
+
+        navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
+
         function processError2(positionError)
         {
-            this2.processError(positionError);
+            if (this2.parentPage.isGpsActivated() && this2.parentPage.isUserLoggedIn())
+            {
+                this2.processError(positionError);
+            }
         }
 
         function processPosition2(positionResult)
         {
-            this2.processPosition(positionResult);
+            if (this2.parentPage.isGpsActivated() && this2.parentPage.isUserLoggedIn())
+            {
+                this2.processPosition(positionResult);
+            }
         }
-
-        navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
     }
 };
 
@@ -37,6 +43,7 @@ PositionSender.prototype.processPosition = function(positionResult)
         context: this,
         data: {
             action: 'trackPosition',
+            token: this.userToken,
             citySlug: this.parentPage.getCitySlug(),
             latitude: positionResult.coords.latitude,
             longitude: positionResult.coords.longitude,

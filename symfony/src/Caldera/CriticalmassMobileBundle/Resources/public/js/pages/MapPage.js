@@ -9,17 +9,16 @@ MapPage.prototype.constructor = MapPage;
 
 MapPage.prototype.map = null;
 
-MapPage.prototype.initPage = function(callback)
+MapPage.prototype.positionSender = null;
+
+MapPage.prototype.initPage = function()
 {
     if (this.map == null)
     {
         this.map = new Map('map', this.getCitySlug(), this);
     }
 
-    if (callback)
-    {
-        callback(this);
-    }
+    this.positionSender = new PositionSender(this);
 };
 
 MapPage.prototype.refreshGpsGauge = function(quality)
@@ -40,7 +39,7 @@ MapPage.prototype.refreshGpsGauge = function(quality)
 
 MapPage.prototype.isGpsActivated = function()
 {
-    return $("select#flip-gps-sender")[0].selectedIndex;
+    return true; //return $("select#flip-gps-sender")[0].selectedIndex;
 };
 
 MapPage.prototype.autoFollow = false;
