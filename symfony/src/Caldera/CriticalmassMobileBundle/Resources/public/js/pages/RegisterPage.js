@@ -19,27 +19,35 @@ RegisterPage.prototype.initPage = function()
 RegisterPage.prototype.processRegistration = function (element) {
     element.preventDefault();
 
-    var registerData = {};
-    registerData['sonata_user_registration_form[username]'] = $('#form-register input[name="_username"]').val();
-    registerData['sonata_user_registration_form[plainPassword][first]'] = $('#form-register input[name="_password"]').val();
-    registerData['sonata_user_registration_form[plainPassword][second]'] = $('#form-register input[name="_password"]').val();
-    registerData['sonata_user_registration_form[email]'] = $('#form-register input[name="_email"]').val();
-
     $.ajax({
-        type: 'POST',
-        url: 'http://www.criticalmass.cm/app_dev.php/register/',
+        type: 'GET',
+        url: 'https://criticalmass.cm/app_dev.php/register/',
         context: this,
-        data: registerData,
-        dataType: 'json',
-        success: function (res) {
+        success: function (data) {
+            var registerData = {};
+            registerData['sonata_user_registration_form[username]'] = $('#form-register input[name="_username"]').val();
+            registerData['sonata_user_registration_form[plainPassword][first]'] = $('#form-register input[name="_password"]').val();
+            registerData['sonata_user_registration_form[plainPassword][second]'] = $('#form-register input[name="_password"]').val();
+            registerData['sonata_user_registration_form[email]'] = $('#form-register input[name="_email"]').val();
+            registerData['sonata_user_registration_form[_token]'] = $(data).find('#sonata_user_registration_form__token').val();
 
-            alert('OK: ' + JSON.stringify(res)); // JUST FOR TEST
-        },
-        error: function (res)
-        {
-            alert(JSON.stringify(res));
-            this.presentErrorMessage('Nee');
-        }});
+            $.ajax({
+                type: 'POST',
+                url: 'https://criticalmass.cm/app_dev.php/register/',
+                context: this,
+                data: registerData,
+                dataType: 'json',
+                success: function (res) {
+
+                    alert('OK: ' + JSON.stringify(res)); // JUST FOR TEST
+                },
+                error: function (res)
+                {
+                    alert('ERROR: ' + JSON.stringify(res));
+                    this.presentErrorMessage('Nee');
+                }});
+        }
+    });
 };
 
 RegisterPage.prototype.presentErrorMessage = function(errorMessage)
