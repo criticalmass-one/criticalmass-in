@@ -164,43 +164,34 @@
 </section>
 
 <!-- Login -->
-<div id="loginPageErrorDialog" data-role="page" data-dialog="true">
-    <div data-role="header">
-        <h2>Login fehlgeschlagen</h2>
-    </div>
-    <div class="ui-content" role="main">
-        <h2>Dein Benutzername oder dein Kennwort waren nicht korrekt</h2>
-        <p>Bitte versuche es noch einmal. Wenn du dein Kennwort oder deinen Benutzernamen vergessen haben solltest, musst du leider bis zur Vollversion von criticalmass.in warten, die in einigen Tagen erscheint.</p>
-        <div class="ui-grid-a">
-            <div class="ui-block-a">
-                <a href="#startPage" id="exit-button" class="ui-btn ui-btn-b ui-shadow ui-corner-all">Zurück zur Startseite</a>
-            </div>
-            <div class="ui-block-b">
-                <a href="#loginPage" id="cancel-button" class="ui-btn ui-shadow ui-corner-all">Nächster Versuch</a>
-            </div>
-        </div>
-    </div>
-</div>
 <section data-role="page" id="loginPage">
     <header data-role="header">
         <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
         <h1>Login</h1>
     </header>
     <section data-role="content" id="loginPageContent">
+        <span id="loginErrorMessage" class="errorMessage"></span>
         <form action="" method="post" id="form-login" class="show-loggedout-only" style="display: none;">
             <label for="username">Dein Benutzername:</label>
-            <input type="text" id="username" name="_username" required="required" />
+            <input type="text" id="loginUsernameInput" name="_username" required="required" />
 
             <label for="password">Dein Kennwort:</label>
-            <input type="password" id="password" name="_password" required="required" />
+            <input type="password" id="loginPasswordInput" name="_password" required="required" />
 
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-            <label for="remember_me">Eingeloggt bleiben?</label>
-
-            <input type="submit" id="_submit" name="_submit" value="Aufsatteln!" />
+            <button id="loginSubmitButton" name="_submit">Aufsatteln!</button>
         </form>
 
         <section class="show-loggedin-only"><h2>Stop!</h2><p>Du bist doch schon eingeloggt.</p></section>
+    </section>
+</section>
+
+<section data-role="page" id="loginSuccessPage">
+    <header data-role="header">
+        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
+        <h1>Login</h1>
+    </header>
+    <section data-role="content" id="loginSuccessPageContent">
+       Hui! Willkommen zurück!
     </section>
 </section>
 

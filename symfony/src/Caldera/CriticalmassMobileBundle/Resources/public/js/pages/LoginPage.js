@@ -21,37 +21,54 @@ LoginPage.prototype.processLogin = function(element)
 {
     element.preventDefault();
 
-    var loginData = {};
-    loginData['_username'] = $('input[name="_username"]').val();
-    loginData['_password'] = $('input[name="_password"]').val();
-    loginData['_remember_me'] = $('input[name="_remember_me"]').val();
-    loginData['_submit'] = $('input[name="_submit"]').val();
-
-    var this2 = this;
-
     $.ajax({
-        url: UrlFactory.getUrlPrefix() + 'login_check',
-        type: 'POST',
-        context: this2,
-        dataType: 'json',
-        data: loginData,
-        success: function(data)
-        {
-            if (data.has_error)
+        type: 'GET',
+        url: 'https://criticalmass.cm/app_dev.php/login',
+        context: this,
+        success: function (data) {
+            var this2 = this;
+
+            function processValidation(formResultData)
             {
-                $.mobile.changePage('#loginPageErrorDialog', 'pop', true, true);
-                _paq.push(['trackEvent', 'user_login', 'failed']);
+                if (JSON.stringify(formResultData).match('Benutzername oder Passwort ungültig'))
+                {
+                    this2.showErrorMessage('Dein Benutzername oder dein Kennwort sind leider nicht korrekt');
+                }
+                else
+                {
+                    PageDispatcher.switchPage('loginSuccessPage');
+                }
             }
-            else
-            {
-                _paq.push(['trackEvent', 'user_login', 'success']);
-                this2.switchToLoggedInMode(data);
-            }
-        },
-        error: function(data)
-        {
-            $.mobile.changePage('#loginPageErrorDialog', 'pop', true, true);
-            _paq.push(['trackEvent', 'user_login', 'failed']);
+
+            var loginData = {};
+            loginData['_username'] = $('input[name="_username"]').val();
+            loginData['_password'] = $('input[name="_password"]').val();
+            loginData['_remember_me'] = 'on';
+            loginData['_submit'] = '';
+            loginData['_csrf_token'] = $(data).find('input[name="_csrf_token"]').val();
+
+            $.ajax({
+                url: UrlFactory.getUrlPrefix() + 'login_check',
+                type: 'POST',
+                context: this2,
+                dataType: 'json',
+                data: loginData,
+                success: function(data)
+                {
+                    processValidation(data);
+                },
+                error: function(data)
+                {
+                    processValidation(data);
+                }
+            });
         }
     });
-}
+};
+
+LoginPage.prototype.showErrorMessage = function(errorMessage)
+{
+    $('#loginErrorMessage').html(errorMessage);
+    $('#loginUsernameInput').addClass('validationError');
+    $('#loginPasswordInput').addClass('validationError');
+};
