@@ -54,7 +54,7 @@ MapCities.prototype.drawCityMarkers = function()
         marker.on('click', function(e)
         {
             this2.map.positions.stopAutoFollowing();
-            this2.map.parentPage.switchCityBySlug(this.options.citySlug);
+            this2.map.switchCity(this.options.citySlug);
         });
 
         marker.addTo(this.map.map);
