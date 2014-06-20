@@ -23,7 +23,7 @@ LoginPage.prototype.processLogin = function(element)
 
     $.ajax({
         type: 'GET',
-        url: 'https://criticalmass.cm/app_dev.php/login',
+        url: UrlFactory.getUrlPrefix() + 'login',
         context: this,
         success: function (data) {
             var this2 = this;
