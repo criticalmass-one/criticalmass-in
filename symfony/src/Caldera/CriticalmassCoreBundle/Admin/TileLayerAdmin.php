@@ -28,6 +28,9 @@ class TileLayerAdmin extends Admin
     {
         $datagridMapper
             ->add('title')
+            ->add('description')
+            ->add('address')
+            ->add('attributation')
         ;
     }
 
@@ -36,6 +39,7 @@ class TileLayerAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title')
+            ->addIdentifier('address')
         ;
     }
 }
