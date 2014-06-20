@@ -34,7 +34,7 @@ Map = function(mapIdentifier, city, parentPage)
 
 Map.prototype.initMap = function()
 {
-    this.map = L.map('map');
+    this.map = L.map(this.mapIdentifier);
 
     //https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png
     //https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
