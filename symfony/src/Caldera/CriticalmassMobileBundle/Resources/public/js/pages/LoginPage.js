@@ -36,6 +36,7 @@ LoginPage.prototype.processLogin = function(element)
                 }
                 else
                 {
+                    this2.switchToLoggedInMode(loginData['_username']);
                     PageDispatcher.switchPage('loginSuccessPage');
                 }
             }
