@@ -46,8 +46,6 @@ AppPage.prototype.logout = function()
 AppPage.prototype.switchToLoggedInMode = function(username)
 {
     sessionStorage.userLoginStatus = true;
-    var notificationLayer = new NotificationLayer("Hej " + data.username + ", willkommen zurück!");
-    this.showNotificationLayer(notificationLayer);
     sessionStorage.userName = username;
 
     this.toggleMenuItems();
