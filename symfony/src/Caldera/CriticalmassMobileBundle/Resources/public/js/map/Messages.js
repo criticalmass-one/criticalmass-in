@@ -50,6 +50,8 @@ Messages.prototype.createComment = function(commentData)
 
 Messages.prototype.drawMessages = function()
 {
+    var this2 = this;
+
     function callback(ajaxResultData)
     {
         for (index in ajaxResultData)
@@ -59,6 +61,8 @@ Messages.prototype.drawMessages = function()
                 this.createComment(ajaxResultData[index]);
             }
         }
+
+        CallbackHell.executeEventListener('messagesDrawnAtMap', this2);
     }
 
     $.support.cors = true;
