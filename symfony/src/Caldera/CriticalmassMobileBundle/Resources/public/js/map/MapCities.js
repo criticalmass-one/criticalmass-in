@@ -63,12 +63,12 @@ MapCities.prototype.drawCityMarkers = function()
 
 MapCities.prototype.panToRideLocation = function()
 {
-    var slug = this.map.parentPage.getCitySlug();
+    var citySlug = this.map.parentPage.getCitySlug();
 
-    var city = CityFactory.getCityFromStorageBySlug(slug);
-    var ride = RideFactory.getRideFromStorageBySlug(slug);
+    var city = CityFactory.getCityFromStorageBySlug(citySlug);
+    var ride = RideFactory.getRideFromStorageBySlug(citySlug);
 
-    if (ride != null)
+    if (ride != null && ride.getHasLocation())
     {
         this.map.map.panTo(ride.getLatLng());
     }
