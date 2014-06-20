@@ -31,61 +31,50 @@ PageDispatcher.initPage = function(pagename)
 {
     if (!this.pageArray[pagename])
     {
-        var callback = this.waitingCallback;
-
         switch (pagename)
         {
             case 'mapPage':
                 var mapPage = new MapPage('mapPage');
-                mapPage.initPage(callback);
+                mapPage.initPage();
                 this.pageArray['mapPage'] = mapPage;
                 break;
             case 'startPage':
                 var startPage = new StartPage('startPage');
-                startPage.initPage(callback);
+                startPage.initPage();
                 this.pageArray['startPage'] = startPage;
                 break;
             case 'loginPage':
                 var loginPage = new LoginPage('loginPage');
-                loginPage.initPage(callback);
+                loginPage.initPage();
                 this.pageArray['loginPage'] = loginPage;
                 break;
             case 'registerPage':
                 var registerPage = new RegisterPage('registerPage');
-                registerPage.initPage(callback);
+                registerPage.initPage();
                 this.pageArray['registerPage'] = registerPage;
                 break;
             case 'cityPage':
                 var cityPage = new CityPage('cityPage');
-                cityPage.initPage(callback);
+                cityPage.initPage();
                 this.pageArray['cityPage'] = cityPage;
                 break;
             case 'colorPage':
                 var colorPage = new ColorPage('colorPage');
-                colorPage.initPage(callback);
+                colorPage.initPage();
                 this.pageArray['colorPage'] = colorPage;
                 break;
             case 'commentPage':
                 var commentPage = new CommentPage('commentPage');
-                commentPage.initPage(callback);
+                commentPage.initPage();
                 this.pageArray['commentPage'] = commentPage;
                 break;
             case 'tokenPage':
                 var tokenPage = new TokenPage('tokenPage');
-                tokenPage.initPage(callback);
+                tokenPage.initPage();
                 this.pageArray['tokenPage'] = tokenPage;
                 break;
         }
     }
-    else
-    {
-        if (this.waitingCallback)
-        {
-            this.waitingCallback(this.pageArray[pagename]);
-        }
-    }
-
-    this.waitingCallback = null;
 };
 
 PageDispatcher.getPage = function(pageId)
@@ -93,17 +82,19 @@ PageDispatcher.getPage = function(pageId)
     return this.pageArray[pageId];
 };
 
+PageDispatcher.isPageInitialized = function(pageId)
+{
+    return this.pageArray[pageId] != null;
+};
+
 PageDispatcher.getCurrentPageId = function()
 {
     return $(':mobile-pagecontainer').pagecontainer('getActivePage')[0].id;
 };
 
-PageDispatcher.switchPage = function(newPageId, callback)
+PageDispatcher.switchPage = function(newPageId)
 {
-    if (callback)
-    {
-        this.waitingCallback = callback;
-    }
-
     $(':mobile-pagecontainer').pagecontainer('change', '#' + newPageId);
+
+    CallbackHell.executeEventListener('pageSwitch', this.pageArray[newPageId]);
 };
