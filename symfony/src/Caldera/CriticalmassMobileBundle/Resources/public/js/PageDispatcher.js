@@ -3,7 +3,7 @@ PageDispatcher = function()
 
 };
 
-PageDispatcher.pageArray = Array();
+PageDispatcher.pageArray = new Array();
 PageDispatcher.waitingCallback = null;
 
 PageDispatcher.registerPageSwitchCallback = function()

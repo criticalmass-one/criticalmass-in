@@ -31,9 +31,7 @@ MapView.prototype.getOverridingMapPosition = function()
         var positionString = tail.split('@').pop();
         var positionArray = positionString.split(',');
 
-        var mapPosition = { latitude: positionArray.shift(), longitude: positionArray.shift(), zoomFactor: positionArray.shift() };
-
-        return mapPosition;
+        return { latitude: positionArray.shift(), longitude: positionArray.shift(), zoomFactor: positionArray.shift() };
     }
 
     return null;
