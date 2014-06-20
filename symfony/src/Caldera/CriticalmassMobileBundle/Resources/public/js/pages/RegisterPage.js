@@ -28,7 +28,7 @@ RegisterPage.prototype.processRegistration = function(element)
 
     $.ajax({
         type: 'GET',
-        url: 'https://criticalmass.cm/app_dev.php/register/',
+        url: UrlFactory.getUrlPrefix() + 'register/',
         context: this,
         success: function (data) {
             var this2 = this;
@@ -68,6 +68,7 @@ RegisterPage.prototype.processRegistration = function(element)
                     this2.clearErrorMessage('#registrationAddressError');
                 }
 
+
                 if (JSON.stringify(formResultData).match('Bitte geben Sie ein Passwort an'))
                 {
                     this2.showErrorMessage('#registrationPasswordError', 'Bitte wähle ein Kennwort für dein Benutzerkonto');
@@ -94,12 +95,11 @@ RegisterPage.prototype.processRegistration = function(element)
 
             $.ajax({
                 type: 'POST',
-                url: 'https://criticalmass.cm/app_dev.php/register/',
+                url: UrlFactory.getUrlPrefix() + 'register/',
                 context: this,
                 data: registerData,
                 dataType: 'json',
                 success: function (res) {
-
                     processValidation(res);
                 },
                 error: function (res)
