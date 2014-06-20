@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
             new Caldera\CriticalmassApiBundle\CalderaCriticalmassApiBundle(),
             //new SunCat\MobileDetectBundle\MobileDetectBundle(),
-            new Divi\AjaxLoginBundle\DiviAjaxLoginBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
