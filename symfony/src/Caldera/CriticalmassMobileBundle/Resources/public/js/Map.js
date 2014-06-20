@@ -62,20 +62,7 @@ Map.prototype.initMapEventListeners = function(ajaxResultData)
     });
 };
 
-Map.prototype.getNewMapData = function()
-{
-    $.ajax({
-        type: 'GET',
-        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetch&rideId=1',
-        cache: false,
-        context: this,
-        success: this.refreshMap
-    });
-};
-
 Map.prototype.switchCity = function(newCitySlug)
 {
     this.parentPage.switchCityBySlug(newCitySlug);
-
-    this.getNewMapData();
 };
