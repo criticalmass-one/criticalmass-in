@@ -66,17 +66,31 @@ CommentPage.prototype.createComment = function(commentData)
         {
             var this2 = this;
 
-            var afterSwitchCallback = function(mapPage)
+
+            var afterSwitchCallback = function(comments)
             {
                 if (commentData.hasCoords)
                 {
-                    mapPage.map.setViewLatLngZoom(commentData.latitude, commentData.longitude, 10);
+                    comments.map.setViewLatLngZoom(commentData.latitude, commentData.longitude, 10);
 
-                    mapPage.map.messages.openPopup(commentData.commentId);
+                    comments.map.messages.openPopup(commentData.commentId);
                 }
             };
 
-            PageDispatcher.switchPage('mapPage', afterSwitchCallback);
+            var eventName;
+
+            if (PageDispatcher.isPageInitialized('mapPage'))
+            {
+                eventName = 'pageSwitch';
+            }
+            else
+            {
+                eventName = 'messagesDrawnAtMap';
+            }
+
+            CallbackHell.registerOneTimeEventListener(eventName, afterSwitchCallback);
+
+            PageDispatcher.switchPage('mapPage');
         });
     }
 };
@@ -174,6 +188,4 @@ CommentPage.prototype.submitComment = function()
 
         submit(commentData);
     }
-
-
 };
