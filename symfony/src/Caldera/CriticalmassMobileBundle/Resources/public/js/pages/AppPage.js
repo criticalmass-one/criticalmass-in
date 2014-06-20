@@ -43,13 +43,12 @@ AppPage.prototype.logout = function()
     });
 }
 
-AppPage.prototype.switchToLoggedInMode = function(data)
+AppPage.prototype.switchToLoggedInMode = function(username)
 {
     sessionStorage.userLoginStatus = true;
-    sessionStorage.userName = data.username;
-
     var notificationLayer = new NotificationLayer("Hej " + data.username + ", willkommen zurück!");
     this.showNotificationLayer(notificationLayer);
+    sessionStorage.userName = username;
 
     this.toggleMenuItems();
 }
