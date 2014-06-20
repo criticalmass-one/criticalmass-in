@@ -28,15 +28,18 @@ CallbackHell.registerOneTimeEventListener = function(eventName, callbackFunction
 
 CallbackHell.executeEventListener = function(eventName, argument)
 {
-    var callbackFunction;
-
-    for (callbackFunction in this.eventListeners[eventName])
+    if (this.oneTimeEventListeners[eventName] != null)
     {
-        this.eventListeners[eventName][callbackFunction](argument);
-    }
+        var callbackFunction;
 
-    while (callbackFunction = this.oneTimeEventListeners[eventName].pop())
-    {
-        callbackFunction(argument);
+        for (callbackFunction in this.eventListeners[eventName])
+        {
+            this.eventListeners[eventName][callbackFunction](argument);
+        }
+
+        while (callbackFunction = this.oneTimeEventListeners[eventName].pop())
+        {
+            callbackFunction(argument);
+        }
     }
 };
