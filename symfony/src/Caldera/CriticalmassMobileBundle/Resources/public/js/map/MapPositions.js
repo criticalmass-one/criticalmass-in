@@ -124,6 +124,7 @@ MapPositions.prototype.drawPositions = function()
 
         this.clearOldPositions(ajaxResultData);
         this.setQuickLinkButtonStatus(this.positionsCounter > 0);
+        this.callEventListeners();
     }
 
     $.support.cors = true;
@@ -181,4 +182,30 @@ MapPositions.prototype.setUserPositionColor = function(username, colorRed, color
     };
 
     this.positionsArray[username].setStyle(circleOptions);
+};
+
+MapPositions.prototype.eventListeners = new Array();
+MapPositions.prototype.oneTimeEventListeners = new Array();
+
+MapPositions.prototype.callEventListeners = function()
+{
+    for (index in this.eventListeners)
+    {
+        this.eventListeners[index]();
+    }
+
+    while (callback = this.oneTimeEventListeners.pop())
+    {
+        callback();
+    }
+};
+
+MapPositions.prototype.registerEventListener = function(callbackFunction)
+{
+    this.eventListeners.push(callbackFunction);
+};
+
+MapPositions.prototype.registerOneTimeEventListener = function(callbackFunction)
+{
+    this.oneTimeEventListeners.push(callbackFunction);
 };

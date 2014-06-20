@@ -1,19 +1,23 @@
 Map = function(mapIdentifier, city, parentPage)
 {
     this.mapIdentifier = mapIdentifier;
+    this.city = city;
+    this.parentPage = parentPage;
 
     this.mapView = new MapView(this);
 
     this.initMap();
 
-    this.city = city;
-    this.parentPage = parentPage;
-
     this.positions = new MapPositions(this);
+
+    this.positions.registerOneTimeEventListener(function() { alert('foobarbaz123'); });
     this.positions.startLoop();
 
     this.cities = new MapCities(this);
     this.cities.drawCityMarkers();
+
+    this.initMapView = new InitMapView(this);
+    this.initMapView.initView();
 
     this.ownPosition = new OwnPosition(this);
     this.ownPosition.showOwnPosition();
@@ -24,7 +28,6 @@ Map = function(mapIdentifier, city, parentPage)
     this.messages = new Messages(this);
     this.messages.startLoop();
 
-
     this.mapView.initEventListeners();
     this.initMapEventListeners();
 };
@@ -32,21 +35,6 @@ Map = function(mapIdentifier, city, parentPage)
 Map.prototype.initMap = function()
 {
     this.map = L.map('map');
-
-    if (this.mapView.hasOverridingMapPosition())
-    {
-        var mapPositon = this.mapView.getOverridingMapPosition();
-
-        this.map.setView([mapPositon.latitude,
-            mapPositon.longitude],
-            mapPositon.zoomFactor);
-
-        $("select#flip-auto-center").val('off').slider('refresh');
-    }
-    else
-    {
-        this.initMapPosition();
-    }
 
     //https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png
     //https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
@@ -63,11 +51,6 @@ Map.prototype.setViewLatLngZoom = function(latitude, longitude, zoom)
     this.map.panTo([latitude, longitude]);
     this.mapView.refreshOverridingMapPosition();
 }
-
-Map.prototype.initMapPosition = function()
-{
-    this.map.setView([53.5496385, 9.9625133], 15);
-};
 
 Map.prototype.initMapEventListeners = function(ajaxResultData)
 {
