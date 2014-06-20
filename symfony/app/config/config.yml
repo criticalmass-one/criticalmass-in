@@ -13,7 +13,8 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form: ~
-    csrf_protection: true
+    csrf_protection:
+        enabled: true
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -118,4 +119,3 @@ sonata_block:
 sonata_user:
     security_acl: true
     manager_type: orm # can be orm or mongodb
-
