@@ -9,6 +9,8 @@ City.prototype.title = null;
 City.prototype.description = null;
 City.prototype.latitude = null;
 City.prototype.longitude = null;
+City.prototype.tileLayerAddress = null;
+City.prototype.tileLayerAttributation = null;
 
 City.prototype.getId = function()
 {
@@ -109,6 +111,26 @@ City.prototype.setLongitude = function(longitude)
 {
     this.longitude = longitude;
 };
+
+City.prototype.getTileLayerAddress = function()
+{
+    return this.tileLayerAddress;
+};
+
+City.prototype.setTileLayerAddress = function(tileLayerAddress)
+{
+    this.tileLayerAddress = tileLayerAddress;
+};
+
+City.prototype.getTileLayerAttributation = function()
+{
+    return this.tileLayerAttributation;
+}
+
+City.prototype.setTileLayerAttributation = function(tileLayerAttributation)
+{
+    this.tileLayerAttributation = tileLayerAttributation;
+}
 
 City.prototype.countSocialMediaLinks = function()
 {
