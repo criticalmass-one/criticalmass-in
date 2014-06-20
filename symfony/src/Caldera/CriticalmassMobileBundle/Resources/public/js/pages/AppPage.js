@@ -52,8 +52,6 @@ AppPage.prototype.switchToLoggedInMode = function(data)
     this.showNotificationLayer(notificationLayer);
 
     this.toggleMenuItems();
-
-    $(":mobile-pagecontainer").pagecontainer("change", "#startPage");
 }
 
 AppPage.prototype.switchToLoggedOutMode = function()
