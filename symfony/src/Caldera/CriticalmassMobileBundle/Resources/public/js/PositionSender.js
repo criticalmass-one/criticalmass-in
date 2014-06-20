@@ -9,7 +9,24 @@ PositionSender = function(parentPage)
 
 PositionSender.prototype.parentPage = null;
 
+PositionSender.prototype.pingToken = null;
+
 PositionSender.prototype.startSender = function()
+{
+    $.ajax({
+        type: 'GET',
+        url: UrlFactory.getApiPrefix() + 'user/getpingtoken',
+        context: this,
+        dataType: 'json',
+        success: function (res) {
+            this.pingToken = res.pingToken;
+
+            this.startLoop();
+        }
+    });
+};
+
+PositionSender.prototype.startLoop = function()
 {
     if (navigator.geolocation)
     {
@@ -37,23 +54,25 @@ PositionSender.prototype.startSender = function()
 
 PositionSender.prototype.processPosition = function(positionResult)
 {
+    var positionData = {
+        action: 'trackPosition',
+        token: this.pingToken,
+        citySlug: this.parentPage.getCitySlug(),
+        latitude: positionResult.coords.latitude,
+        longitude: positionResult.coords.longitude,
+        accuracy: positionResult.coords.accuracy,
+        altitude: positionResult.coords.altitude,
+        altitudeAccuracy: positionResult.coords.altitudeAccuracy,
+        speed: positionResult.coords.speed,
+        heading: positionResult.coords.heading,
+        timestamp: positionResult.timestamp
+    };
+
     $.ajax({
         type: 'GET',
         url: UrlFactory.getNodeJSApiPrefix(),
         context: this,
-        data: {
-            action: 'trackPosition',
-            token: this.userToken,
-            citySlug: this.parentPage.getCitySlug(),
-            latitude: positionResult.coords.latitude,
-            longitude: positionResult.coords.longitude,
-            accuracy: positionResult.coords.accuracy,
-            altitude: positionResult.coords.altitude,
-            altitudeAccuracy: positionResult.coords.altitudeAccuracy,
-            speed: positionResult.coords.speed,
-            heading: positionResult.coords.heading,
-            timestamp: positionResult.timestamp
-        },
+        data: positionData,
         cache: false,
         success: function(result) {
             _paq.push(['trackEvent', 'sendPosition', 'success']);
