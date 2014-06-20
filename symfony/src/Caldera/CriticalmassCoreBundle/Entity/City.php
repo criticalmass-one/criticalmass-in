@@ -96,6 +96,14 @@ class City
 	 */
 	protected $slugs;
 
+    /**
+     * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
+     *
+     * @ORM\ManyToOne(targetEntity="TileLayer", inversedBy="tile_layers")
+     * @ORM\JoinColumn(name="tile_layer", referencedColumnName="id")
+     */
+    protected $tileLayer;
+
 	/**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
 	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
@@ -414,5 +422,15 @@ class City
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    public function getTileLayer()
+    {
+        return $this->tileLayer;
+    }
+
+    public function setTileLayer($tileLayer)
+    {
+        $this->tileLayer = $tileLayer;
     }
 }
