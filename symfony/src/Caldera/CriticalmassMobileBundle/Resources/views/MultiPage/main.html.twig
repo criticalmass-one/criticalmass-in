@@ -260,13 +260,16 @@
 
         <form action="" method="post" id="form-register" class="show-loggedout-only" style="display: none;">
             <label for="username">Dein Benutzername:</label>
-            <input type="text" id="username" name="_username" required="required" />
+            <span class="errorMessage" id="registrationUsernameError"></span>
+            <input type="text" id="username" name="_username" required="required" value="testusername" />
 
             <label for="password">Dein Kennwort:</label>
-            <input type="password" id="password" name="_password" required="required" />
+            <span class="errorMessage" id="registrationPasswordError"></span>
+            <input type="password" id="password" name="_password" required="required" value="123123" />
 
             <label for="email">Deine E-Mail-Adresse:</label>
-            <input type="email" id="email" name="_email" required="required" />
+            <span class="errorMessage" id="registrationAddressError"></span>
+            <input type="email" id="email" name="_email" required="required" value="testusername@caldera.cc" />
 
             <input type="submit" id="_submit" name="_submit" value="Auf geht’s" />
         </form>

@@ -16,6 +16,10 @@ RegisterPage.prototype.initPage = function()
     });
 };
 
+/**
+ * Das hier ist richtig übel.
+ * @param element
+ */
 RegisterPage.prototype.processRegistration = function (element) {
     element.preventDefault();
 
@@ -24,6 +28,55 @@ RegisterPage.prototype.processRegistration = function (element) {
         url: 'https://criticalmass.cm/app_dev.php/register/',
         context: this,
         success: function (data) {
+            var this2 = this;
+            function processValidation(formResultData)
+            {
+                if (JSON.stringify(formResultData).match('Dieser Benutzername wird bereits verwendet'))
+                {
+                    this2.showErrorMessage('#registrationUsernameError', 'Dieser Benutzername ist leider bereits vergeben');
+                }
+                else
+                if (JSON.stringify(formResultData).match('Bitte geben Sie einen Benutzernamen an'))
+                {
+                    this2.showErrorMessage('#registrationUsernameError', 'Du hast leider vergessen, einen Benutzernamen einzugeben');
+                }
+                else
+                {
+                    this2.clearErrorMessage('#registrationUsernameError');
+                }
+
+
+                if (JSON.stringify(formResultData).match('Diese E-Mail-Adresse wird bereits verwendet'))
+                {
+                    this2.showErrorMessage('#registrationAddressError', 'Mit dieser E-Mail-Adresse ist bereits ein Benutzerkonto registriert worden');
+                }
+                else
+                if (JSON.stringify(formResultData).match('Diese E-Mail-Adresse ist ungültig'))
+                {
+                    this2.showErrorMessage('#registrationAddressError', 'Du hast leider eine ungültige E-Mail-Adresse eingegeben');
+                }
+                else
+                if (JSON.stringify(formResultData).match('Bitte geben Sie eine E-Mail-Adresse an'))
+                {
+                    this2.showErrorMessage('#registrationAddressError', 'Bitte gib eine E-Mail-Adresse ein');
+                }
+                else
+                {
+                    this2.clearErrorMessage('#registrationAddressError');
+                }
+
+                if (JSON.stringify(formResultData).match('Bitte geben Sie ein Passwort an'))
+                {
+                    this2.showErrorMessage('#registrationPasswordError', 'Bitte wähle ein Kennwort für dein Benutzerkonto');
+                }
+                else
+                {
+                    this2.clearErrorMessage('#registrationPasswordError');
+                }
+
+
+            }
+
             var registerData = {};
             registerData['sonata_user_registration_form[username]'] = $('#form-register input[name="_username"]').val();
             registerData['sonata_user_registration_form[plainPassword][first]'] = $('#form-register input[name="_password"]').val();
@@ -42,9 +95,11 @@ RegisterPage.prototype.processRegistration = function (element) {
                     alert('OK: ' + JSON.stringify(res)); // JUST FOR TEST
                 },
                 error: function (res)
-                {
+                {/*
                     alert('ERROR: ' + JSON.stringify(res));
-                    this.presentErrorMessage('Nee');
+                    this.presentErrorMessage('Nee');*/
+
+                    processValidation(res);
                 }});
         }
     });
@@ -53,4 +108,16 @@ RegisterPage.prototype.processRegistration = function (element) {
 RegisterPage.prototype.presentErrorMessage = function(errorMessage)
 {
     $.mobile.changePage('#registerPageErrorDialog', 'pop', true, true);
-}
+};
+
+RegisterPage.prototype.showErrorMessage = function(identifier, errorMessage)
+{
+    $(identifier).html(errorMessage);
+    $(identifier + ' + div input').addClass('validationError');
+};
+
+RegisterPage.prototype.clearErrorMessage = function(identifier)
+{
+    $(identifier).html('');
+    $(identifier + ' + div input').addClass('validationSuccess');
+};

@@ -57,3 +57,18 @@ form#writeCommentForm
 {
     margin-bottom: 25px;
 }
+
+form span.errorMessage
+{
+    color: red;
+}
+
+form input.validationError
+{
+    background-color: #ffeeee;
+}
+
+form input.validationSuccess
+{
+    background-color: #eeffee;
+}
