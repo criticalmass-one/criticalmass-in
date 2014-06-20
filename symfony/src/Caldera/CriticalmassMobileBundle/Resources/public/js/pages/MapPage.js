@@ -39,7 +39,7 @@ MapPage.prototype.refreshGpsGauge = function(quality)
 
 MapPage.prototype.isGpsActivated = function()
 {
-    return true; //return $("select#flip-gps-sender")[0].selectedIndex;
+    return $("select#flip-gps-sender")[0].selectedIndex;
 };
 
 MapPage.prototype.autoFollow = false;
