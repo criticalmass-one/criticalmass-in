@@ -5,29 +5,23 @@ Map = function(mapIdentifier, city, parentPage)
     this.parentPage = parentPage;
 
     this.mapView = new MapView(this);
+    this.positions = new MapPositions(this);
+    this.cities = new MapCities(this);
+    this.initMapView = new InitMapView(this);
+    this.ownPosition = new OwnPosition(this);
+    this.quickLinks = new QuickLinks(this);
+    this.messages = new Messages(this);
+
+    var this2 = this;
+    CallbackHell.registerOneTimeEventListener('positionLoopStarted', function() { this2.initMapView.initView(); });
 
     this.initMap();
-
-    this.positions = new MapPositions(this);
-
-    this.positions.registerOneTimeEventListener(function() { alert('foobarbaz123'); });
     this.positions.startLoop();
-
-    this.cities = new MapCities(this);
     this.cities.drawCityMarkers();
 
-    this.initMapView = new InitMapView(this);
-    this.initMapView.initView();
-
-    this.ownPosition = new OwnPosition(this);
     this.ownPosition.showOwnPosition();
-
-    this.quickLinks = new QuickLinks(this);
     this.quickLinks.initEventListeners();
-
-    this.messages = new Messages(this);
     this.messages.startLoop();
-
     this.mapView.initEventListeners();
     this.initMapEventListeners();
 };
