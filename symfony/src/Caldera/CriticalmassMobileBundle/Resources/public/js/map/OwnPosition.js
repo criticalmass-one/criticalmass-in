@@ -9,7 +9,7 @@ OwnPosition.prototype.ownPosition = null;
 
 OwnPosition.prototype.showOwnPosition = function()
 {
-    if (navigator.geolocation && !this.map.parentPage.isUserLoggedIn())
+    if (navigator.geolocation)
     {
         var this2 = this;
 
@@ -21,14 +21,20 @@ OwnPosition.prototype.showOwnPosition = function()
 
         function processPosition2(positionResult)
         {
-            this2.setQuickLinkButtonStatus(true);
-            this2.drawOwnPosition(positionResult);
+            if (this2.map.parentPage.isOwnPositionActivated())
+            {
+                this2.setQuickLinkButtonStatus(true);
+                this2.drawOwnPosition(positionResult);
+            }
+            else
+            {
+                processError2();
+            }
         }
 
         navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
     }
     else
-    if (this.ownPosition != null)
     {
         this.removeOwnPosition();
     }
