@@ -17,3 +17,7 @@ caldera_criticalmass_api_user_getpingtoken:
 caldera_criticalmass_api_user_switchcity:
     pattern: /switchcity/{citySlug}
     defaults: { _controller: CalderaCriticalmassApiBundle:User:switchcity }
+
+caldera_criticalmass_api_user_getownuserdata:
+    pattern: /getownuserdata
+    defaults: { _controller: CalderaCriticalmassApiBundle:User:getownuserdata }
