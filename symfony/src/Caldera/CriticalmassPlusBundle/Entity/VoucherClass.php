@@ -42,6 +42,11 @@ class VoucherClass
      */
     protected $codePrefix;
 
+    public function __construct()
+    {
+        $this->validSince = new \DateTime();
+        $this->validUntil = new \DateTime();
+    }
 
     /**
      * Get id
