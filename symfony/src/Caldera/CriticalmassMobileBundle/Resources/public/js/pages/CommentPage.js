@@ -142,6 +142,8 @@ CommentPage.prototype.submitComment = function()
             data: commentData,
             success: callback
         });
+
+        _paq.push(['trackEvent', 'comment', 'write']);
     }
 
     $('#submitCommentButton').attr('disabled', true);
@@ -158,6 +160,7 @@ CommentPage.prototype.submitComment = function()
                 hasCoords: false
             };
 
+            _paq.push(['trackEvent', 'comment', 'geolocationFailure']);
             submit(commentData);
         }
 
@@ -171,6 +174,7 @@ CommentPage.prototype.submitComment = function()
                 hasCoords: true
             };
 
+            _paq.push(['trackEvent', 'comment', 'geolocationSuccess']);
             submit(commentData);
         }
 
@@ -186,6 +190,7 @@ CommentPage.prototype.submitComment = function()
             hasCoords: false
         };
 
+        _paq.push(['trackEvent', 'comment', 'geolocationFailure']);
         submit(commentData);
     }
 };

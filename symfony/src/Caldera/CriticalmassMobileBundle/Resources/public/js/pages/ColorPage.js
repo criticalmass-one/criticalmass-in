@@ -61,6 +61,8 @@ ColorPage.prototype.setRandomColor = function()
 
     $('#colorExample').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 
+    _paq.push(['trackEvent', 'color', 'random']);
+
     this.saveUserColor();
 };
 
@@ -89,7 +91,7 @@ ColorPage.prototype.saveUserColor = function()
         data: colorData,
         success: function(data)
         {
-
+            _paq.push(['trackEvent', 'color', 'save']);
         }
     });
 };

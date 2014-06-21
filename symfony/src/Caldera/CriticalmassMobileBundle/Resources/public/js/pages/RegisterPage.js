@@ -37,11 +37,15 @@ RegisterPage.prototype.processRegistration = function(element)
                 if (JSON.stringify(formResultData).match('Dieser Benutzername wird bereits verwendet'))
                 {
                     this2.showErrorMessage('#registrationUsernameError', 'Dieser Benutzername ist leider bereits vergeben');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'failureUsernameDuplicate']);
                 }
                 else
                 if (JSON.stringify(formResultData).match('Bitte geben Sie einen Benutzernamen an'))
                 {
                     this2.showErrorMessage('#registrationUsernameError', 'Du hast leider vergessen, einen Benutzernamen einzugeben');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'failureUsernameMissing']);
                 }
                 else
                 {
@@ -52,16 +56,22 @@ RegisterPage.prototype.processRegistration = function(element)
                 if (JSON.stringify(formResultData).match('Diese E-Mail-Adresse wird bereits verwendet'))
                 {
                     this2.showErrorMessage('#registrationAddressError', 'Mit dieser E-Mail-Adresse ist bereits ein Benutzerkonto registriert worden');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'failureAddressDuplicate']);
                 }
                 else
                 if (JSON.stringify(formResultData).match('Diese E-Mail-Adresse ist ungültig'))
                 {
                     this2.showErrorMessage('#registrationAddressError', 'Du hast leider eine ungültige E-Mail-Adresse eingegeben');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'failureAddressInvalid']);
                 }
                 else
                 if (JSON.stringify(formResultData).match('Bitte geben Sie eine E-Mail-Adresse an'))
                 {
                     this2.showErrorMessage('#registrationAddressError', 'Bitte gib eine E-Mail-Adresse ein');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'failureAddressMissing']);
                 }
                 else
                 {
@@ -72,6 +82,8 @@ RegisterPage.prototype.processRegistration = function(element)
                 if (JSON.stringify(formResultData).match('Bitte geben Sie ein Passwort an'))
                 {
                     this2.showErrorMessage('#registrationPasswordError', 'Bitte wähle ein Kennwort für dein Benutzerkonto');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'failurePasswordMissing']);
                 }
                 else
                 {
@@ -81,6 +93,8 @@ RegisterPage.prototype.processRegistration = function(element)
                 if (JSON.stringify(formResultData).match('Eine E-Mail wurde an (.*)@(.*).(.*) gesendet. Sie enthält einen Link, den Du anklicken musst, um Dein Benutzerkonto zu bestätigen.'))
                 {
                     PageDispatcher.switchPage('registerSuccessPage');
+
+                    _paq.push(['trackEvent', 'registerValidation', 'success']);
                 }
 
                 $('#submitRegistrationButton').attr('disabled', false);

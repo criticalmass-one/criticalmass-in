@@ -33,11 +33,15 @@ LoginPage.prototype.processLogin = function(element)
                 if (JSON.stringify(formResultData).match('Benutzername oder Passwort ungültig'))
                 {
                     this2.showErrorMessage('Dein Benutzername oder dein Kennwort sind leider nicht korrekt');
+
+                    _paq.push(['trackEvent', 'loginValidation', 'failureUsernamePasswordWrong']);
                 }
                 else
                 {
                     this2.switchToLoggedInMode(loginData['_username']);
                     PageDispatcher.switchPage('loginSuccessPage');
+
+                    _paq.push(['trackEvent', 'loginValidation', 'success']);
                 }
             }
 

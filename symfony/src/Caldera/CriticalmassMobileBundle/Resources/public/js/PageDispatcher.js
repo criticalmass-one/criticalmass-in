@@ -31,6 +31,8 @@ PageDispatcher.initPage = function(pagename)
 {
     if (!this.pageArray[pagename])
     {
+        _paq.push(['trackEvent', 'initPage', pageName]);
+
         switch (pagename)
         {
             case 'mapPage':

@@ -38,7 +38,7 @@ AppPage.prototype.logout = function()
         success : function(data)
         {
             this.switchToLoggedOutMode();
-            _paq.push(['trackEvent', 'userstatus', 'logout']);
+            _paq.push(['trackEvent', 'logout', 'success']);
         }
     });
 }
@@ -87,7 +87,7 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
         }
     });
 
-    _paq.push(['trackEvent', 'switch_city', newCitySlug]);
+    _paq.push(['trackEvent', 'switchCity', newCitySlug]);
 }
 
 AppPage.prototype.setAppTitle = function(newTitle)

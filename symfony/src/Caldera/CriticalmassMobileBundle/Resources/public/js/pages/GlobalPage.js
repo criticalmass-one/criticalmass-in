@@ -25,7 +25,7 @@ GlobalPage.prototype.initEventListeners = function()
 
     $('#mainpanel').panel({
         open: function() {
-            _paq.push(['trackEvent', 'main_menu', 'open']);
+            _paq.push(['trackEvent', 'mainMenu', 'open']);
         }
     });
 }

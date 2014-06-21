@@ -79,7 +79,7 @@ PositionSender.prototype.processPosition = function(positionResult)
         },
         error: function()
         {
-            _paq.push(['trackEvent', 'sendPosition', 'error']);
+            _paq.push(['trackEvent', 'sendPosition', 'failureServerError']);
 
             var notificationLayer = new NotificationLayer('Deine Position konnte nicht an den Server übertragen werden.');
             this.parentPage.showNotificationLayer(notificationLayer);
@@ -109,15 +109,23 @@ PositionSender.prototype.processError = function(positionError)
     {
         case positionError.PERMISSION_DENIED:
             var notificationLayer = new NotificationLayer('Wir kommen leider nicht an deine Positionsdaten ran. Bitte erlaube dieser App den Zugriff auf deine Positionsdaten.');
+
+            _paq.push(['trackEvent', 'sendPosition', 'failureDeviceError']);
             break;
         case positionError.POSITION_UNAVAILABLE:
             var notificationLayer = new NotificationLayer('Dein Gerät hat leider keine brauchbaren Positionsdaten zurückgeliefert.');
+
+            _paq.push(['trackEvent', 'sendPosition', 'failurePositionError']);
             break;
         case positionError.TIMEOUT:
             var notificationLayer = new NotificationLayer('Dein Gerät konnte die Anfrage an deine Positionsdaten leider nicht bearbeiten.');
+
+            _paq.push(['trackEvent', 'sendPosition', 'failureTimeoutError']);
             break;
         case positionError.UNKNOWN_ERROR:
             var notificationLayer = new NotificationLayer('Hmm, es ist ein unbekannter Fehler aufgetreten — mehr wissen wir leider auch nicht.');
+
+            _paq.push(['trackEvent', 'sendPosition', 'failureUnknownError']);
             break;
     }
 
