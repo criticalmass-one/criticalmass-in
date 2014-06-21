@@ -39,6 +39,21 @@ class TileLayer
     protected $attributation;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $plusOnly;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $public;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $active;
+
+    /**
      * @return integer 
      */
     public function getId()
@@ -88,5 +103,74 @@ class TileLayer
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * Set plusOnly
+     *
+     * @param boolean $plusOnly
+     * @return TileLayer
+     */
+    public function setPlusOnly($plusOnly)
+    {
+        $this->plusOnly = $plusOnly;
+
+        return $this;
+    }
+
+    /**
+     * Get plusOnly
+     *
+     * @return boolean 
+     */
+    public function getPlusOnly()
+    {
+        return $this->plusOnly;
+    }
+
+    /**
+     * Set public
+     *
+     * @param boolean $public
+     * @return TileLayer
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Get public
+     *
+     * @return boolean 
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return TileLayer
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }
