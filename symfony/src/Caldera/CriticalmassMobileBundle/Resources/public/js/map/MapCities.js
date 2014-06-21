@@ -53,6 +53,8 @@ MapCities.prototype.drawCityMarkers = function()
         var this2 = this;
         marker.on('click', function(e)
         {
+            _paq.push(['trackEvent', 'markerCityRide', 'click']);
+
             this2.map.positions.stopAutoFollowing();
             this2.map.switchCity(this.options.citySlug);
         });
@@ -71,9 +73,13 @@ MapCities.prototype.panToRideLocation = function()
     if (ride != null && ride.getHasLocation())
     {
         this.map.map.panTo(ride.getLatLng());
+
+        _paq.push(['trackEvent', 'panTo', 'ride']);
     }
     else
     {
         this.map.map.panTo(city.getLatLng());
+
+        _paq.push(['trackEvent', 'panTo', 'city']);
     }
 };

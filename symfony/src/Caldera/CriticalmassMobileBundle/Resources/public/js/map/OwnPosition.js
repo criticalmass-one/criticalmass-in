@@ -77,6 +77,8 @@ OwnPosition.prototype.panToOwnPosition = function()
     if (this.ownPosition)
     {
         this.map.map.panTo(this.ownPosition.getLatLng());
+
+        _paq.push(['trackEvent', 'panTo', 'ownPosition']);
     }
 };
 

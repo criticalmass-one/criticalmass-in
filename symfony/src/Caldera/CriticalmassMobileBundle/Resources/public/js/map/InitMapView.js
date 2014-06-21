@@ -30,16 +30,22 @@ InitMapView.prototype.initWithOverride = function()
 {
     var mapPositon = this.map.mapView.getOverridingMapPosition();
     this.map.map.setView([mapPositon.latitude, mapPositon.longitude], mapPositon.zoomFactor);
+
+    _paq.push(['trackEvent', 'initView', 'override']);
 };
 
 InitMapView.prototype.initWithRide = function(ride)
 {
     var latLng = [ride.getLatitude(), ride.getLongitude()];
     this.map.map.setView(latLng, 12);
+
+    _paq.push(['trackEvent', 'initView', 'ride']);
 };
 
 InitMapView.prototype.initWithCity = function(city)
 {
     var latLng = [city.getLatitude(), city.getLongitude()];
     this.map.map.setView(latLng, 10);
+
+    _paq.push(['trackEvent', 'initView', 'city']);
 };

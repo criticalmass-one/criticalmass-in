@@ -84,6 +84,7 @@ MapPositions.prototype.createUsernamePosition = function(position)
         var latLng = element.target.getLatLng();
         this2.map.setViewLatLngZoom(latLng.lat, latLng.lng, 15);
         this2.autoFollowUsername = element.target.options.username;
+        _paq.push(['trackEvent', 'autoFollow', 'start']);
         this2.map.parentPage.setAutoFollow(true);
     }.bind(this2));
 
@@ -157,11 +158,15 @@ MapPositions.prototype.panToLatestPosition = function()
     this.map.map.panTo(this.positionsArray[maxTimestampIndex].getLatLng());
 
     this.autoFollowUsername = this.positionsArray[maxTimestampIndex].options.username;
+
+    _paq.push(['trackEvent', 'panTo', 'latestPosition']);
 };
 
 MapPositions.prototype.stopAutoFollowing = function()
 {
     this.autoFollowUsername = null;
+
+    _paq.push(['trackEvent', 'autoFollow', 'start']);
 };
 
 MapPositions.prototype.setQuickLinkButtonStatus = function(status)

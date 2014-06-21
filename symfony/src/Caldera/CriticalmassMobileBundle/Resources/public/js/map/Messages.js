@@ -80,4 +80,6 @@ Messages.prototype.drawMessages = function()
 Messages.prototype.openPopup = function(commentId)
 {
     this.commentsArray[commentId].openPopup();
+
+    _paq.push(['trackEvent', 'commentPopup', 'open']);
 };
