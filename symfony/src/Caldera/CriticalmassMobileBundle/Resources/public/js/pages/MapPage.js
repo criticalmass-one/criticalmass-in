@@ -42,6 +42,11 @@ MapPage.prototype.isGpsActivated = function()
     return $("select#flip-gps-sender")[0].selectedIndex;
 };
 
+MapPage.prototype.isOwnPositionActivated = function()
+{
+    return $("select#flip-show-ownPosition")[0].selectedIndex;
+};
+
 MapPage.prototype.autoFollow = false;
 
 MapPage.prototype.isAutoFollow = function()
