@@ -87,4 +87,24 @@ class UserController extends Controller
 
         return new Response($citySlug->getCity()->getId());
     }
+
+    public function getownuserdataAction()
+    {
+        $user = $this->getUser();
+
+        $response = new Response();
+        $response->setContent(json_encode(array(
+            'id' => $user->getId(),
+            'gravatarHash' => $user->getGravatarHash(),
+            'username' => $user->getUsername(),
+            'colorRed' => $user->getColorRed(),
+            'colorGreen' => $user->getColorGreen(),
+            'colorBlue' => $user->getColorBlue(),
+            'plus' => true
+        )));
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
 }
