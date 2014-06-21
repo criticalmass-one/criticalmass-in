@@ -17,9 +17,14 @@ class TileLayerAdmin extends Admin
                 ->add('title', 'text', array('label' => 'Titel'))
                 ->add('description', 'textarea', array('label' => 'Beschreibung'))
             ->end()
-            ->with('Einstellungen', array('class' => 'col-md-6'))
+            ->with('Karte', array('class' => 'col-md-6'))
                 ->add('address', 'text', array('label' => 'Adresse'))
                 ->add('attributation', 'text', array('label' => 'Attributation'))
+            ->end()
+            ->with('Einstellungen', array('class' => 'col-md-6'))
+                ->add('active', 'checkbox', array('label' => 'aktiv'))
+                ->add('public', 'checkbox', array('label' => 'öffentlich sichtbar'))
+                ->add('plusOnly', 'checkbox', array('label' => 'nur für Plus-Mitglieder'))
             ->end();
     }
 
@@ -31,6 +36,9 @@ class TileLayerAdmin extends Admin
             ->add('description')
             ->add('address')
             ->add('attributation')
+            ->add('public')
+            ->add('active')
+            ->add('plusOnly')
         ;
     }
 
@@ -40,6 +48,9 @@ class TileLayerAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->addIdentifier('address')
+            ->add('public')
+            ->add('active')
+            ->add('plusOnly')
         ;
     }
 }
