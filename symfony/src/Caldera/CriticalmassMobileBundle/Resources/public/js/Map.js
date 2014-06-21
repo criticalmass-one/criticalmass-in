@@ -19,7 +19,7 @@ Map = function(mapIdentifier, city, parentPage)
     this.positions.startLoop();
     this.cities.drawCityMarkers();
 
-    this.ownPosition.showOwnPosition();
+    this.ownPosition.initOwnPosition();
     this.quickLinks.initEventListeners();
     this.messages.startLoop();
     this.mapView.initEventListeners();

@@ -7,7 +7,32 @@ OwnPosition.prototype.map = null;
 
 OwnPosition.prototype.ownPosition = null;
 
-OwnPosition.prototype.showOwnPosition = function()
+OwnPosition.prototype.geolocationWatcher = null;
+
+OwnPosition.prototype.initOwnPosition = function()
+{
+    var this2 = this;
+
+    $('select#flip-show-ownPosition').on('change', function() {
+        this2.toggle();
+    });
+
+    this.toggle();
+};
+
+OwnPosition.prototype.toggle = function()
+{
+    if (this.map.parentPage.isOwnPositionActivated())
+    {
+        this.start();
+    }
+    else
+    {
+        this.stop();
+    }
+};
+
+OwnPosition.prototype.start = function()
 {
     if (navigator.geolocation)
     {
@@ -21,23 +46,19 @@ OwnPosition.prototype.showOwnPosition = function()
 
         function processPosition2(positionResult)
         {
-            if (this2.map.parentPage.isOwnPositionActivated())
-            {
-                this2.setQuickLinkButtonStatus(true);
-                this2.drawOwnPosition(positionResult);
-            }
-            else
-            {
-                processError2();
-            }
+            this2.setQuickLinkButtonStatus(true);
+            this2.drawOwnPosition(positionResult);
         }
 
-        navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
+        this.geolocationWatcher = navigator.geolocation.watchPosition(processPosition2, processError2, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: true });
     }
-    else
-    {
-        this.removeOwnPosition();
-    }
+};
+
+OwnPosition.prototype.stop = function()
+{
+    navigator.geolocation.clearWatch(this.geolocationWatcher);
+    
+    this.removeOwnPosition();
 };
 
 OwnPosition.prototype.drawOwnPosition = function(positionResult)
