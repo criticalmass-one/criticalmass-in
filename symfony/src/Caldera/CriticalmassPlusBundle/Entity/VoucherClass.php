@@ -17,7 +17,7 @@ class VoucherClass
 	 */
     protected $id;
 
-    /*
+    /**
 	 * @ORM\Column(type="string", length=255)
 	 */
     protected $title;
@@ -143,5 +143,28 @@ class VoucherClass
     public function getCodePrefix()
     {
         return $this->codePrefix;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return VoucherClass
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }
