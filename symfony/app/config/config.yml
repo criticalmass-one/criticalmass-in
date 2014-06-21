@@ -4,6 +4,7 @@ imports:
     - { resource: security.yml }
     - { resource: @CalderaCriticalmassCoreBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassHeatmapBundle/Resources/config/admin.yml }
+    - { resource: @CalderaCriticalmassPlusBundle/Resources/config/admin.yml }
 
 framework:
     #esi:             ~
