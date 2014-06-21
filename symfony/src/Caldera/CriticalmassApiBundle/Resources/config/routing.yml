@@ -10,6 +10,10 @@ CalderaCriticalmassApiBundle_Api_User:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/user.yml"
     prefix:   /api/user
 
+CalderaCriticalmassApiBundle_Api_TileLayer:
+    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/tilelayer.yml"
+    prefix:   /api/tilelayer
+
 caldera_criticalmass_mapdata:
     pattern: /api/completemapdata/{citySlug}
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:completemapdata }
