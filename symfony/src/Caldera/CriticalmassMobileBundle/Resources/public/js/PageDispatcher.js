@@ -31,7 +31,7 @@ PageDispatcher.initPage = function(pagename)
 {
     if (!this.pageArray[pagename])
     {
-        _paq.push(['trackEvent', 'initPage', pageName]);
+        _paq.push(['trackEvent', 'initPage', pagename]);
 
         switch (pagename)
         {
