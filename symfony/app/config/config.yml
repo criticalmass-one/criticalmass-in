@@ -87,10 +87,10 @@ fos_user:
         user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
     registration:
         confirmation:
-            enabled:    true
-            from_email:
-                address:        malte@criticalmass.in
-                sender_name:    Malte Hübner, criticalmass.in
+            enabled:    false
+#            from_email:
+#                address:        malte@criticalmass.in
+#                sender_name:    Malte Hübner, criticalmass.in
     resetting:
         email:
             from_email:
