@@ -24,7 +24,7 @@ class VoucherCode
     protected $voucherClass;
 
     /**
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, unique=true)
 	 */
     protected $code;
 
@@ -35,7 +35,7 @@ class VoucherCode
 	protected $user;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $activationDateTime;
 
