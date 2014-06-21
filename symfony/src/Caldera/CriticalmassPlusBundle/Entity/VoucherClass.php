@@ -172,4 +172,9 @@ class VoucherClass
     {
         return $this->title;
     }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

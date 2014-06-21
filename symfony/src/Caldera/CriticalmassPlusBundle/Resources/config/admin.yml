@@ -9,3 +9,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [CriticalmassPlusBundle]]
+
+    sonata.admin.vouchercode:
+        class: Caldera\CriticalmassPlusBundle\Admin\VoucherCodeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Plus", label: "Voucher Code" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassPlusBundle\Entity\VoucherCode
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassPlusBundle]]
