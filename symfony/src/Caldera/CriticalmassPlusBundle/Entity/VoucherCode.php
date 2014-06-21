@@ -23,7 +23,7 @@ class VoucherCode
      */
     protected $voucherClass;
 
-    /*
+    /**
 	 * @ORM\Column(type="string", length=255)
 	 */
     protected $code;
@@ -116,5 +116,28 @@ class VoucherCode
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return VoucherCode
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }
