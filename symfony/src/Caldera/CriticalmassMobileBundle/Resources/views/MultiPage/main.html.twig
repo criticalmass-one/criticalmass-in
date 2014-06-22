@@ -19,6 +19,9 @@
                 {
                     PageDispatcher.registerPageSwitchCallback();
                     PageDispatcher.handleCurrentPage();
+                    UserFactory.saveOwnUserDataInStorage();
+
+                    TileLayerFactory.storeAllTileLayers();
 
                     isPageLoaded = true;
 
@@ -32,6 +35,7 @@
 
             CityFactory.refreshAllStoredCities(loadingCompletedCallback);
             RideFactory.refreshAllStoredRides(loadingCompletedCallback);
+
         };
 
     </script>
@@ -91,10 +95,7 @@
                 </select>
                 <label for="select-tilelayer" class="select">Karte:</label>
                 <select name="select-tilelayer" id="select-tilelayer">
-                    <option value="standard">Open Street Map</option>
-                    <option value="rush">Open Cycle Map</option>
-                    <option value="express" disabled="true">criticalmass.in Standard</option>
-                    <option value="overnight" disabled="true">criticalmass.in Light</option>
+
                 </select>
             </div>
             <div data-role="collapsible" id="quickLinks">

@@ -19,6 +19,13 @@ MapPage.prototype.initPage = function()
     }
 
     this.positionSender = new PositionSender(this);
+
+    var tileLayers = TileLayerFactory.getTileLayers();
+
+    for (var index in tileLayers)
+    {
+        $('#select-tilelayer').append('<option value="' + index + '"' + (!tileLayers[index].isAvailable() ? ' disabled="true"' : '') + '">' + tileLayers[index].getTitle() + '</option>');
+    }
 };
 
 MapPage.prototype.refreshGpsGauge = function(quality)
