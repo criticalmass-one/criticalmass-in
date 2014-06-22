@@ -55,9 +55,7 @@ class CitiesController extends Controller
                 'twitter' => $city->getTwitter(),
                 'slug' => $city->getMainSlug()->getSlug(),
                 'latitude' => $city->getLatitude(),
-                'longitude' => $city->getLongitude(),
-                'tileLayerAddress' => $city->getTileLayer()->getAddress(),
-                'tileLayerAttributation' => $city->getTileLayer()->getAttributation()
+                'longitude' => $city->getLongitude()
             );
 
             $citiesResult[$city->getMainSlug()->getSlug()] = $cityResultArray;

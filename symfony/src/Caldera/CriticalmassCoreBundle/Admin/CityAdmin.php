@@ -18,7 +18,6 @@ class CityAdmin extends Admin
                 ->add('city', 'text', array('label' => 'Stadt'))
                 ->add('title', 'text', array('label' => 'Bezeichnung'))
                 ->add('description', 'textarea', array('label' => 'Beschreibung'))
-                ->add('tileLayer', null, array('label' => 'TileLayer'))
             ->end()
             ->with('Social Media', array('class' => 'col-md-6'))
                 ->add('url', 'text', array('label' => 'Webseite'))
