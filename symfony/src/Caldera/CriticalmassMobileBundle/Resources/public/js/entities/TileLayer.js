@@ -46,3 +46,8 @@ TileLayer.prototype.setAttributation = function(attributation)
 {
     this.attributation = attributation;
 };
+
+TileLayer.prototype.isAvailable = function()
+{
+    return this.address.length > 0;
+};
