@@ -15,24 +15,22 @@ TileLayerFactory.convertObjectToTileLayer = function(objectData)
     return tileLayer;
 };
 
-CityFactory.getCityFromStorageBySlug = function(citySlug)
+TileLayerFactory.getTileLayers = function()
 {
-    if (!localStorage.cityListData)
+    if (!localStorage.tileLayerListData)
     {
         return null;
     }
 
-    var cityList = JSON.parse(localStorage.cityListData);
+    var tileLayerList = JSON.parse(localStorage.tileLayerListData);
+    var resultArray = new Array();
 
-    for (index in cityList.cities)
+    for (var index in tileLayerList)
     {
-        if (cityList.cities[index].slug == citySlug)
-        {
-            return this.convertObjectToCity(cityList.cities[index]);
-        }
+        resultArray.push(this.convertObjectToTileLayer(tileLayerList[index]));
     }
 
-    return null;
+    return resultArray;
 }
 
 TileLayerFactory.storeAllTileLayers = function()
