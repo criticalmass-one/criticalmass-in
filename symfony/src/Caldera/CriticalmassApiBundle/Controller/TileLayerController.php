@@ -20,7 +20,9 @@ class TileLayerController extends Controller
 
         foreach ($tileLayers as $tileLayer)
         {
-            $resultArray[$tileLayer->getId()] = array('title' => $tileLayer->getTitle(),
+            $resultArray[$tileLayer->getId()] = array(
+                                   'id' => $tileLayer->getId(),
+                                   'title' => $tileLayer->getTitle(),
                                    'address' => ($tileLayer->getPlusOnly() && !$user ? '' : $tileLayer->getAddress()),
                                    'attributation' => $tileLayer->getAttributation());
         }
