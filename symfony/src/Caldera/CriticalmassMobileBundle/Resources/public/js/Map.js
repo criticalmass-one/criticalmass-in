@@ -33,13 +33,8 @@ Map.prototype.initMap = function()
 {
     this.map = L.map(this.mapIdentifier);
 
-    //https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png
-    //https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-    this.tileLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png', {
-        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
-    });
-
-    this.tileLayer.addTo(this.map);
+    var tileLayer = TileLayerFactory.getStandardTileLayer();
+    this.setTileLayer(tileLayer);
 };
 
 Map.prototype.parentPage = null;
@@ -83,4 +78,18 @@ Map.prototype.switchTileLayer = function(oldCitySlug, newCitySlug)
 
         this.tileLayer.addTo(this.map);
     }
+};
+
+Map.prototype.setTileLayer = function(tileLayer)
+{
+    if (this.tileLayer)
+    {
+        this.map.removeLayer(this.tileLayer);
+    }
+
+    this.tileLayer = L.tileLayer(tileLayer.getAddress(), {
+        attribition: tileLayer.getAttributation()
+    });
+
+    this.tileLayer.addTo(this.map);
 };
