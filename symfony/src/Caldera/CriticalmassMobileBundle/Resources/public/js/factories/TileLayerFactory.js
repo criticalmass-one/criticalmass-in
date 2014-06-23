@@ -31,7 +31,47 @@ TileLayerFactory.getTileLayers = function()
     }
 
     return resultArray;
-}
+};
+
+TileLayerFactory.getTileLayerById = function(tileLayerId)
+{
+    if (!localStorage.tileLayerListData)
+    {
+        return null;
+    }
+
+    var tileLayerList = this.getTileLayers();
+
+    for (var index in tileLayerList)
+    {
+        if (tileLayerList[index].getId() == tileLayerId)
+        {
+            return tileLayerList[index];
+        }
+    }
+
+    return null;
+};
+
+TileLayerFactory.getStandardTileLayer = function()
+{
+    if (!localStorage.tileLayerListData)
+    {
+        return null;
+    }
+
+    var tileLayerList = this.getTileLayers();
+
+    for (var index in tileLayerList)
+    {
+        if (tileLayerList[index].getId() == 2)
+        {
+            return tileLayerList[index];
+        }
+    }
+
+    return null;
+};
 
 TileLayerFactory.storeAllTileLayers = function()
 {
