@@ -26,6 +26,13 @@ MapPage.prototype.initPage = function()
     {
         $('#select-tilelayer').append('<option value="' + index + '"' + (!tileLayers[index].isAvailable() ? ' disabled="true"' : '') + '">' + tileLayers[index].getTitle() + '</option>');
     }
+    var this2 = this;
+    $('#select-tilelayer').on('change', function() {
+        var tileLayerId = $('#select-tilelayer option:selected').val();
+
+        var tileLayer = TileLayerFactory.getTileLayerById(tileLayerId);
+        this2.map.setTileLayer(tileLayer);
+    });
 };
 
 MapPage.prototype.refreshGpsGauge = function(quality)
