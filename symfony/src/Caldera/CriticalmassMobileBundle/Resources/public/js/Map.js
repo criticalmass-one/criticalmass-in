@@ -91,5 +91,7 @@ Map.prototype.setTileLayer = function(tileLayer)
         attribition: tileLayer.getAttributation()
     });
 
+    _paq.push(['trackEvent', 'switchTileLayer', tileLayer.getTitle()]);
+
     this.tileLayer.addTo(this.map);
 };
