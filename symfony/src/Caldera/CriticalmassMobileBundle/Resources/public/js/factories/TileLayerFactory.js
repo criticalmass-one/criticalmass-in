@@ -65,7 +65,7 @@ TileLayerFactory.getStandardTileLayer = function()
 
     for (var index in tileLayerList)
     {
-        if (tileLayerList[index].getId() == 2)
+        if (tileLayerList[index].getStandard() == true)
         {
             return tileLayerList[index];
         }
