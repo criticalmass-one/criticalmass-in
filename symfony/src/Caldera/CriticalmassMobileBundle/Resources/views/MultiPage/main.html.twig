@@ -17,13 +17,12 @@
             {
                 if (CityFactory.hasCities() && RideFactory.hasRides() && !isPageLoaded)
                 {
-                    PageDispatcher.registerPageSwitchCallback();
-                    PageDispatcher.handleCurrentPage();
+                    isPageLoaded = true;
                     UserFactory.saveOwnUserDataInStorage();
-
                     TileLayerFactory.storeAllTileLayers();
 
-                    isPageLoaded = true;
+                    PageDispatcher.registerPageSwitchCallback();
+                    PageDispatcher.handleCurrentPage();
 
                     var globalPage = new GlobalPage();
 
