@@ -26,6 +26,9 @@ MapPage.prototype.initPage = function()
     {
         $('#select-tilelayer').append('<option value="' + index + '"' + (!tileLayers[index].isAvailable() ? ' disabled="true"' : '') + '">' + tileLayers[index].getTitle() + '</option>');
     }
+
+    $('#select-tilelayer').selectmenu('refresh');
+
     var this2 = this;
     $('#select-tilelayer').on('change', function() {
         var tileLayerId = $('#select-tilelayer option:selected').val();
