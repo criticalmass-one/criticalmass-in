@@ -24,7 +24,8 @@ class TileLayerController extends Controller
                                    'id' => $tileLayer->getId(),
                                    'title' => $tileLayer->getTitle(),
                                    'address' => ($tileLayer->getPlusOnly() && !$user ? '' : $tileLayer->getAddress()),
-                                   'attributation' => $tileLayer->getAttributation());
+                                   'attributation' => $tileLayer->getAttributation(),
+                                   'standard' => $tileLayer->getStandard());
         }
 
         // neue Antwort zusammensetzen und als JSON klassifizieren

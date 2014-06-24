@@ -47,6 +47,16 @@ TileLayer.prototype.setAttributation = function(attributation)
     this.attributation = attributation;
 };
 
+TileLayer.prototype.getStandard = function()
+{
+    return this.standard;
+};
+
+TileLayer.prototype.setStandard = function(standard)
+{
+    this.standard = standard;
+};
+
 TileLayer.prototype.isAvailable = function()
 {
     return this.address.length > 0;

@@ -54,6 +54,11 @@ class TileLayer
     protected $active;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $standard;
+
+    /**
      * @return integer 
      */
     public function getId()
@@ -172,5 +177,28 @@ class TileLayer
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Set standard
+     *
+     * @param boolean $standard
+     * @return TileLayer
+     */
+    public function setStandard($standard)
+    {
+        $this->standard = $standard;
+
+        return $this;
+    }
+
+    /**
+     * Get standard
+     *
+     * @return boolean 
+     */
+    public function getStandard()
+    {
+        return $this->standard;
     }
 }
