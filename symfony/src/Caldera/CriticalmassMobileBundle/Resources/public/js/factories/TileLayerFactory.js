@@ -62,16 +62,23 @@ TileLayerFactory.getStandardTileLayer = function()
     }
 
     var tileLayerList = this.getTileLayers();
+    var standardTileLayer = null;
+    var index;
 
-    for (var index in tileLayerList)
+    for (index in tileLayerList)
     {
         if (tileLayerList[index].getStandard() == true)
         {
-            return tileLayerList[index];
+            standardTileLayer = tileLayerList[index];
         }
     }
 
-    return null;
+    if (!standardTileLayer)
+    {
+        standardTileLayer = tileLayerList[index];
+    }
+
+    return standardTileLayer;
 };
 
 TileLayerFactory.storeAllTileLayers = function()
