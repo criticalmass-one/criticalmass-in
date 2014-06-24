@@ -25,6 +25,7 @@ class TileLayerAdmin extends Admin
                 ->add('active', 'checkbox', array('label' => 'aktiv'))
                 ->add('public', 'checkbox', array('label' => 'öffentlich sichtbar'))
                 ->add('plusOnly', 'checkbox', array('label' => 'nur für Plus-Mitglieder'))
+                ->add('standard', 'checkbox', array('label' => 'Standard-Karte'))
             ->end();
     }
 
@@ -39,6 +40,7 @@ class TileLayerAdmin extends Admin
             ->add('public')
             ->add('active')
             ->add('plusOnly')
+            ->add('standard')
         ;
     }
 
@@ -51,6 +53,7 @@ class TileLayerAdmin extends Admin
             ->add('public')
             ->add('active')
             ->add('plusOnly')
+            ->add('standard')
         ;
     }
 }
