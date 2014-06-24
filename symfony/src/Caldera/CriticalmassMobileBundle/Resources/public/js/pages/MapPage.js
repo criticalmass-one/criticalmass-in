@@ -24,7 +24,7 @@ MapPage.prototype.initPage = function()
 
     for (var index in tileLayers)
     {
-        $('#select-tilelayer').append('<option value="' + index + '"' + (!tileLayers[index].isAvailable() ? ' disabled="true"' : '') + '">' + tileLayers[index].getTitle() + '</option>');
+        $('#select-tilelayer').append('<option value="' + tileLayers[index].getId() + '" ' + (tileLayers[index].getStandard() ? ' selected="true"' : '') + (!tileLayers[index].isAvailable() ? ' disabled="true"' : '') + '>' + tileLayers[index].getTitle() + '</option>');
     }
 
     $('#select-tilelayer').selectmenu('refresh');
