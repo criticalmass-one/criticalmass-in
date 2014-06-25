@@ -94,6 +94,7 @@ TileLayerFactory.storeAllTileLayers = function()
             success: function(data)
             {
                 localStorage.tileLayerListData = JSON.stringify(data);
+                CallbackHell.executeEventListener('tileLayerListRefreshed');
             }
         });
     }
