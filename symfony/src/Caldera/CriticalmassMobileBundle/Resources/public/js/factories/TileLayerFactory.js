@@ -99,3 +99,9 @@ TileLayerFactory.storeAllTileLayers = function()
         });
     }
 };
+
+TileLayerFactory.refreshAllStoredTileLayers = function()
+{
+    sessionStorage.tileLayerListData = null;
+    this.storeAllTileLayers();
+}
