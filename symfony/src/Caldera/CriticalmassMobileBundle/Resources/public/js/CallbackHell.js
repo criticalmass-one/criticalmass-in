@@ -33,6 +33,7 @@ CallbackHell.executeEventListener = function(eventName, argument)
 {
     if (this.oneTimeEventListeners[eventName] != null)
     {
+        this.countFiredEventListener(eventName);
 
         var callbackFunction = null;
 
@@ -42,7 +43,6 @@ CallbackHell.executeEventListener = function(eventName, argument)
         }
     }
 
-        countFiredEventListener(eventName);
     if (this.eventListeners[eventName] != null)
     {
         this.countFiredEventListener(eventName);
