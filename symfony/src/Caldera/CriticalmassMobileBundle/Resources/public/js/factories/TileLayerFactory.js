@@ -3,6 +3,8 @@ TileLayerFactory = function()
 
 };
 
+TileLayerFactory.storage = sessionStorage.tileLayerListData;
+
 TileLayerFactory.convertObjectToTileLayer = function(objectData)
 {
     var tileLayer = new TileLayer();
@@ -18,12 +20,12 @@ TileLayerFactory.convertObjectToTileLayer = function(objectData)
 
 TileLayerFactory.getTileLayers = function()
 {
-    if (!sessionStorage.tileLayerListData)
+    if (!this.storage)
     {
         return null;
     }
 
-    var tileLayerList = JSON.parse(sessionStorage.tileLayerListData);
+    var tileLayerList = JSON.parse(this.storage);
     var resultArray = new Array();
 
     for (var index in tileLayerList)
@@ -36,7 +38,7 @@ TileLayerFactory.getTileLayers = function()
 
 TileLayerFactory.getTileLayerById = function(tileLayerId)
 {
-    if (!sessionStorage.tileLayerListData)
+    if (!this.storage)
     {
         return null;
     }
@@ -56,7 +58,7 @@ TileLayerFactory.getTileLayerById = function(tileLayerId)
 
 TileLayerFactory.getStandardTileLayer = function()
 {
-    if (!sessionStorage.tileLayerListData)
+    if (!this.storage)
     {
         return null;
     }
@@ -83,7 +85,7 @@ TileLayerFactory.getStandardTileLayer = function()
 
 TileLayerFactory.storeAllTileLayers = function()
 {
-    if (!sessionStorage.tileLayerListData) or (sessionStorage.tileLayerListData == null)
+    if (!this.storage || this.storage == null)
     {
         $.ajax({
             type: 'GET',
@@ -93,7 +95,7 @@ TileLayerFactory.storeAllTileLayers = function()
             context: this,
             success: function(data)
             {
-                sessionStorage.tileLayerListData = JSON.stringify(data);
+                this.storage = JSON.stringify(data);
                 CallbackHell.executeEventListener('tileLayerListRefreshed');
             }
         });
@@ -102,6 +104,6 @@ TileLayerFactory.storeAllTileLayers = function()
 
 TileLayerFactory.refreshAllStoredTileLayers = function()
 {
-    sessionStorage.tileLayerListData = null;
+    this.storage = null;
     this.storeAllTileLayers();
 }
