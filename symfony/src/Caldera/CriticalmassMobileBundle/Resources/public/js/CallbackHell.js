@@ -46,6 +46,14 @@ CallbackHell.executeEventListener = function(eventName, argument)
         }
 
         countFiredEventListener(eventName);
+    if (this.eventListeners[eventName] != null)
+    {
+        this.countFiredEventListener(eventName);
+
+        for (var callbackFunction in this.eventListeners[eventName])
+        {
+            this.eventListeners[eventName][callbackFunction](argument);
+        }
     }
 };
 
