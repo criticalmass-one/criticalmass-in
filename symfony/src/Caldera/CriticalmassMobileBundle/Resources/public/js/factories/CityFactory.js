@@ -1,19 +1,21 @@
 CityFactory = function()
 {
 
-}
+};
+
+CityFactory.storage = sessionStorage.cityListData;
 
 CityFactory.hasCities = function()
 {
-    return (localStorage.cityListData != null) && (localStorage.cityListData != '');
-}
+    return (this.storage != null) && (this.storage != '');
+};
 
 CityFactory.convertJSONToCity = function(jsonData)
 {
     var cityObject = JSON.parse(jsonData);
 
     return this.convertObjectToCity(cityObject);
-}
+};
 
 CityFactory.convertObjectToCity = function(objectData)
 {
@@ -31,16 +33,16 @@ CityFactory.convertObjectToCity = function(objectData)
     city.setLongitude(objectData.longitude);
 
     return city;
-}
+};
 
 CityFactory.getAllCities = function()
 {
-    if (!localStorage.cityListData)
+    if (!this.storage)
     {
         return null;
     }
 
-    var cityList = JSON.parse(localStorage.cityListData);
+    var cityList = JSON.parse(this.storage);
     var resultList = new Array();
 
     for (index in cityList.cities)
@@ -50,17 +52,17 @@ CityFactory.getAllCities = function()
     }
 
     return resultList;
-}
+};
 
 
 CityFactory.getCityFromStorageBySlug = function(citySlug)
 {
-    if (!localStorage.cityListData)
+    if (!this.storage)
     {
         return null;
     }
 
-    var cityList = JSON.parse(localStorage.cityListData);
+    var cityList = JSON.parse(this.storage);
 
     for (index in cityList.cities)
     {
@@ -71,15 +73,15 @@ CityFactory.getCityFromStorageBySlug = function(citySlug)
     }
 
     return null;
-}
+};
 
 CityFactory.getCityBySlug = function(citySlug)
 {
     var city = null;
 
-    if (localStorage.city)
+    if (sessionStorage.city)
     {
-        city = localStorage.city;
+        city = sessionStorage.city;
     }
     else
     {
@@ -94,17 +96,17 @@ CityFactory.getCityBySlug = function(citySlug)
                 city = new City();
                 city.parseAjaxResultData(ajaxResultData.city);
 
-                localStorage.city = city;
+                sessionStorage.city = city;
             }
         });
     }
 
     return city;
-}
+};
 
 CityFactory.storeAllCities = function()
 {
-    if (!localStorage.cityListData) or (localStorage.cityListData == null)
+    if (!this.storage || this.storage == null)
     {
         $.ajax({
             type: 'GET',
@@ -114,15 +116,15 @@ CityFactory.storeAllCities = function()
             context: this,
             success: function(data)
             {
-                localStorage.cityListData = JSON.stringify(data);
+                this.storage = JSON.stringify(data);
                 CallbackHell.executeEventListener('cityListRefreshed');
             }
         });
     }
-}
+};
 
 CityFactory.refreshAllStoredCities = function()
 {
-    localStorage.cityListData = null;
+    this.storage = null;
     this.storeAllCities();
-}
+};
