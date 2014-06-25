@@ -18,12 +18,12 @@ TileLayerFactory.convertObjectToTileLayer = function(objectData)
 
 TileLayerFactory.getTileLayers = function()
 {
-    if (!localStorage.tileLayerListData)
+    if (!sessionStorage.tileLayerListData)
     {
         return null;
     }
 
-    var tileLayerList = JSON.parse(localStorage.tileLayerListData);
+    var tileLayerList = JSON.parse(sessionStorage.tileLayerListData);
     var resultArray = new Array();
 
     for (var index in tileLayerList)
@@ -36,7 +36,7 @@ TileLayerFactory.getTileLayers = function()
 
 TileLayerFactory.getTileLayerById = function(tileLayerId)
 {
-    if (!localStorage.tileLayerListData)
+    if (!sessionStorage.tileLayerListData)
     {
         return null;
     }
@@ -56,7 +56,7 @@ TileLayerFactory.getTileLayerById = function(tileLayerId)
 
 TileLayerFactory.getStandardTileLayer = function()
 {
-    if (!localStorage.tileLayerListData)
+    if (!sessionStorage.tileLayerListData)
     {
         return null;
     }
@@ -83,7 +83,7 @@ TileLayerFactory.getStandardTileLayer = function()
 
 TileLayerFactory.storeAllTileLayers = function()
 {
-    if (!localStorage.tileLayerListData)
+    if (!sessionStorage.tileLayerListData) or (sessionStorage.tileLayerListData == null)
     {
         $.ajax({
             type: 'GET',
