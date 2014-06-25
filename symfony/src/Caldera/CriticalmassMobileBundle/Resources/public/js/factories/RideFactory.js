@@ -1,12 +1,14 @@
 RideFactory = function()
 {
 
-}
+};
+
+RideFactory.storage = sessionStorage.rideListData;
 
 RideFactory.hasRides = function()
 {
-    return (localStorage.rideListData != null) && (localStorage.rideListData != '');
-}
+    return (this.storage != null) && (this.storage != '');
+};
 
 RideFactory.convertObjectToRide = function(objectData)
 {
@@ -23,17 +25,16 @@ RideFactory.convertObjectToRide = function(objectData)
     ride.setDescription(objectData.description);
 
     return ride;
-}
+};
 
 RideFactory.getRideFromStorageBySlug = function(citySlug)
 {
-    if (!localStorage.rideListData)
+    if (!this.storage)
     {
-        //alert("STORAGE IST LEER");
         return null;
     }
 
-    var rideList = JSON.parse(localStorage.rideListData);
+    var rideList = JSON.parse(this.storage);
 
     for (index in rideList.rides)
     {
@@ -44,11 +45,11 @@ RideFactory.getRideFromStorageBySlug = function(citySlug)
     }
 
     return null;
-}
+};
 
 RideFactory.storeAllRides = function()
 {
-    if (!localStorage.rideListData) or (localStorage.rideListData == null)
+    if (!this.storage || this.storage == null)
     {
         $.ajax({
             type: 'GET',
@@ -58,15 +59,15 @@ RideFactory.storeAllRides = function()
             context: this,
             success: function(data)
             {
-                localStorage.rideListData = JSON.stringify(data);
+                this.storage = JSON.stringify(data);
                 CallbackHell.executeEventListener('rideListRefreshed');
             }
         });
     }
-}
+};
 
 RideFactory.refreshAllStoredRides = function()
 {
-    localStorage.rideListData = null;
+    this.storage = null;
     this.storeAllRides();
-}
+};
