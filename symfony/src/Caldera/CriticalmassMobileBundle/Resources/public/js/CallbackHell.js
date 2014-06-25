@@ -5,6 +5,7 @@ CallbackHell = function()
 
 CallbackHell.eventListeners = new Array();
 CallbackHell.oneTimeEventListeners = new Array();
+CallbackHell.firedEventListeners = new Array();
 
 CallbackHell.registerEventListener = function(eventName, callbackFunction)
 {
@@ -14,6 +15,7 @@ CallbackHell.registerEventListener = function(eventName, callbackFunction)
     }
 
     this.eventListeners[eventName].push(callbackFunction);
+    this.initFiredEventListenerCounter(eventName);
 };
 
 CallbackHell.registerOneTimeEventListener = function(eventName, callbackFunction)
@@ -24,6 +26,7 @@ CallbackHell.registerOneTimeEventListener = function(eventName, callbackFunction
     }
 
     this.oneTimeEventListeners[eventName].push(callbackFunction);
+    this.initFiredEventListenerCounter(eventName);
 };
 
 CallbackHell.executeEventListener = function(eventName, argument)
@@ -41,5 +44,29 @@ CallbackHell.executeEventListener = function(eventName, argument)
         {
             callbackFunction(argument);
         }
+
+        countFiredEventListener(eventName);
     }
+};
+
+CallbackHell.initFiredEventListenerCounter = function(eventName)
+{
+    this.firedEventListeners[eventName] = 0;
+};
+
+CallbackHell.countFiredEventListener = function(eventName)
+{
+    if (this.firedEventListeners[eventName])
+    {
+        ++this.firedEventListeners[eventName];
+    }
+    else
+    {
+        this.firedEventListeners[eventName] = 1;
+    }
+};
+
+CallbackHell.hasEventListenerBeenFired = function(eventName)
+{
+    return this.firedEventListeners[eventName] != null && this.firedEventListeners[eventName] > 0;
 };
