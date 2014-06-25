@@ -93,7 +93,7 @@ TileLayerFactory.storeAllTileLayers = function()
             context: this,
             success: function(data)
             {
-                localStorage.tileLayerListData = JSON.stringify(data);
+                sessionStorage.tileLayerListData = JSON.stringify(data);
                 CallbackHell.executeEventListener('tileLayerListRefreshed');
             }
         });
