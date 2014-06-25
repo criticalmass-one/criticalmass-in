@@ -15,11 +15,13 @@
         {
             function loadingCompletedCallback()
             {
-                if (CityFactory.hasCities() && RideFactory.hasRides() && !isPageLoaded)
+                if (CallbackHell.hasEventListenerBeenFired('cityListRefreshed') &&
+                        CallbackHell.hasEventListenerBeenFired('rideListRefreshed') &&
+                        CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
+                   )
                 {
                     isPageLoaded = true;
                     UserFactory.saveOwnUserDataInStorage();
-                    TileLayerFactory.storeAllTileLayers();
 
                     PageDispatcher.registerPageSwitchCallback();
                     PageDispatcher.handleCurrentPage();
@@ -30,10 +32,13 @@
                 }
             }
 
+            CallbackHell.registerEventListener('cityListRefreshed', loadingCompletedCallback);
+            CallbackHell.registerEventListener('rideListRefreshed', loadingCompletedCallback);
+            CallbackHell.registerEventListener('tileLayerListRefreshed', loadingCompletedCallback);
 
-            CityFactory.refreshAllStoredCities(loadingCompletedCallback);
-            RideFactory.refreshAllStoredRides(loadingCompletedCallback);
-
+            CityFactory.refreshAllStoredCities();
+            RideFactory.refreshAllStoredRides();
+            TileLayerFactory.refreshAllStoredTileLayers();
         };
 
     </script>
