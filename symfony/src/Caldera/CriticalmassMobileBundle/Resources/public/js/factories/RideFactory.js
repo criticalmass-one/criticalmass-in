@@ -46,7 +46,7 @@ RideFactory.getRideFromStorageBySlug = function(citySlug)
     return null;
 }
 
-RideFactory.storeAllRides = function(callback)
+RideFactory.storeAllRides = function()
 {
     if (!localStorage.rideListData) or (localStorage.rideListData == null)
     {
@@ -59,14 +59,14 @@ RideFactory.storeAllRides = function(callback)
             success: function(data)
             {
                 localStorage.rideListData = JSON.stringify(data);
-                callback();
+                CallbackHell.executeEventListener('rideListRefreshed');
             }
         });
     }
 }
 
-RideFactory.refreshAllStoredRides = function(callback)
+RideFactory.refreshAllStoredRides = function()
 {
     localStorage.rideListData = null;
-    this.storeAllRides(callback);
+    this.storeAllRides();
 }

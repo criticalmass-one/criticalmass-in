@@ -102,7 +102,7 @@ CityFactory.getCityBySlug = function(citySlug)
     return city;
 }
 
-CityFactory.storeAllCities = function(callback)
+CityFactory.storeAllCities = function()
 {
     if (!localStorage.cityListData) or (localStorage.cityListData == null)
     {
@@ -115,14 +115,14 @@ CityFactory.storeAllCities = function(callback)
             success: function(data)
             {
                 localStorage.cityListData = JSON.stringify(data);
-                callback();
+                CallbackHell.executeEventListener('cityListRefreshed');
             }
         });
     }
 }
 
-CityFactory.refreshAllStoredCities = function(callback)
+CityFactory.refreshAllStoredCities = function()
 {
     localStorage.cityListData = null;
-    this.storeAllCities(callback);
+    this.storeAllCities();
 }
