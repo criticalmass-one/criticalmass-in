@@ -9,6 +9,8 @@ GlobalPage.prototype.constructor = GlobalPage;
 
 GlobalPage.prototype.initPage = function()
 {
+    $(function() { $( "body>[data-role='panel']" ).panel().enhanceWithin(); });
+
     this.initUserStatus();
     this.initEventListeners();
     this.initPageLayout();
