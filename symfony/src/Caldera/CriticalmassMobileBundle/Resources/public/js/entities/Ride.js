@@ -111,3 +111,8 @@ Ride.prototype.getLatLng = function()
 {
     return L.latLng(this.latitude, this.longitude);
 };
+
+Ride.prototype.isRolling = function()
+{
+    return true;
+};
