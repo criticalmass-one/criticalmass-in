@@ -21,6 +21,8 @@ LoginPage.prototype.processLogin = function(element)
 {
     element.preventDefault();
 
+    $('#loginSubmitButton').attr('disabled', true);
+
     $.ajax({
         type: 'GET',
         url: UrlFactory.getUrlPrefix() + 'login',
@@ -73,6 +75,8 @@ LoginPage.prototype.processLogin = function(element)
 
 LoginPage.prototype.showErrorMessage = function(errorMessage)
 {
+    $('#loginSubmitButton').attr('disabled', false);
+
     $('#loginErrorMessage').html(errorMessage);
     $('#loginUsernameInput').addClass('validationError');
     $('#loginPasswordInput').addClass('validationError');
