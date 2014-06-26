@@ -19,10 +19,12 @@ InitMapView.prototype.initView = function()
     if (ride != null && ride.getHasLocation())
     {
         this.initWithRide(ride);
+        this.map.cities.openRideCityPopup(citySlug);
     }
     else
     {
         this.initWithCity(city);
+        this.map.cities.openRideCityPopup(citySlug);
     }
 };
 
