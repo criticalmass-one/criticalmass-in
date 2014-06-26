@@ -88,3 +88,8 @@ MapCities.prototype.panToRideLocation = function()
         _paq.push(['trackEvent', 'panTo', 'city']);
     }
 };
+
+MapCities.prototype.openRideCityPopup = function(citySlug)
+{
+    this.markersArray[citySlug].openPopup();
+};
