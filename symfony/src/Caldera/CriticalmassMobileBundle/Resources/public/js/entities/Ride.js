@@ -114,5 +114,8 @@ Ride.prototype.getLatLng = function()
 
 Ride.prototype.isRolling = function()
 {
-    return true;
+    var currentDateTime = new Date();
+    var timeDiff = currentDateTime.getTime() - this.dateTime.getTime();
+
+    return timeDiff > 900;
 };
