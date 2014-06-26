@@ -53,4 +53,6 @@ GlobalPage.prototype.initPageLayout = function()
 
     this.setAppTitle(city.getTitle() + ' — criticalmass.in');
     this.refreshCityTitles(city);
+
+    this.storeCurrentCity();
 }

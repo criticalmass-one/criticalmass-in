@@ -48,6 +48,7 @@ AppPage.prototype.switchToLoggedInMode = function(username)
     sessionStorage.userLoginStatus = true;
     sessionStorage.userName = username;
 
+    this.storeCurrentCity();
     this.toggleMenuItems();
 }
 
@@ -77,17 +78,21 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
     this.setAppTitle(newCity.getTitle() + ' — criticalmass.in');
     this.refreshCityTitles(newCity);
     this.setCitySlug(newCitySlug);
+    this.storeCurrentCity(newCitySlug);
 
+    _paq.push(['trackEvent', 'switchCity', newCitySlug]);
+}
+
+AppPage.prototype.storeCurrentCity = function()
+{
     $.ajax({
         type : 'GET',
         context : this,
-        url : UrlFactory.getApiPrefix() + 'user/switchcity/' + newCitySlug,
+        url : UrlFactory.getApiPrefix() + 'user/switchcity/' + this.getCitySlug(),
         success : function(data)
         {
         }
     });
-
-    _paq.push(['trackEvent', 'switchCity', newCitySlug]);
 }
 
 AppPage.prototype.setAppTitle = function(newTitle)
