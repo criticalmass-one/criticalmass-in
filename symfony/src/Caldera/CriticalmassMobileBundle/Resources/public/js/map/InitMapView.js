@@ -61,5 +61,5 @@ InitMapView.prototype.initWithPosition = function()
 {
     var latestPosition = this.map.positions.getLatestPosition();
 
-    this.map.map.setView(latestPosition.getLatLng(), 15);
+    this.map.map.setView(latestPosition.getLatLng(), 14);
 };
