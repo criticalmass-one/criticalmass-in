@@ -141,7 +141,7 @@ MapPositions.prototype.drawPositions = function()
     });
 };
 
-MapPositions.prototype.panToLatestPosition = function()
+MapPositions.prototype.getLatestPosition = function()
 {
     var maxTimestamp = 0;
     var maxTimestampIndex = 0;
@@ -155,9 +155,16 @@ MapPositions.prototype.panToLatestPosition = function()
         }
     }
 
-    this.map.map.panTo(this.positionsArray[maxTimestampIndex].getLatLng());
+    return this.positionsArray[maxTimestampIndex];
+};
 
-    this.autoFollowUsername = this.positionsArray[maxTimestampIndex].options.username;
+MapPositions.prototype.panToLatestPosition = function()
+{
+    var latestPosition = this.getLatestPosition();
+
+    this.map.map.panTo(latestPosition.getLatLng());
+
+    this.autoFollowUsername = latestPosition.options.username;
 
     _paq.push(['trackEvent', 'panTo', 'latestPosition']);
 };
