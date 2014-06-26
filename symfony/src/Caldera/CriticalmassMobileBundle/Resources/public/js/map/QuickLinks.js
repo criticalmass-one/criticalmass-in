@@ -24,5 +24,6 @@ QuickLinks.prototype.initEventListeners = function()
     {
         this2.map.positions.stopAutoFollowing();
         this2.map.cities.panToRideLocation();
+        this2.map.cities.openRideCityPopup(this2.map.parentPage.getCitySlug());
     });
 };
