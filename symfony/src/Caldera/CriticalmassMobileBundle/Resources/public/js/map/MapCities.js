@@ -61,6 +61,8 @@ MapCities.prototype.drawCityMarkers = function()
 
         marker.addTo(this.map.map);
     }
+
+    CallbackHell.executeEventListener('cityRideMarkersDrawn');
 };
 
 MapCities.prototype.panToRideLocation = function()

@@ -1,5 +1,20 @@
 Map = function(mapIdentifier, city, parentPage)
 {
+    var this2 = this;
+
+    function initMapView()
+    {
+        if (CallbackHell.hasEventListenerBeenFired('mapPositionsMarkersDrawn') &&
+            CallbackHell.hasEventListenerBeenFired('cityRideMarkersDrawn'))
+        {
+            this2.initMapView.initView();
+        }
+    }
+
+    CallbackHell.registerOneTimeEventListener('mapPositionsMarkersDrawn', initMapView);
+    CallbackHell.registerOneTimeEventListener('cityRideMarkersDrawn', initMapView);
+
+
     this.mapIdentifier = mapIdentifier;
     this.city = city;
     this.parentPage = parentPage;
@@ -12,13 +27,10 @@ Map = function(mapIdentifier, city, parentPage)
     this.quickLinks = new QuickLinks(this);
     this.messages = new Messages(this);
 
-    var this2 = this;
-    CallbackHell.registerOneTimeEventListener('positionLoopStarted', function() { this2.initMapView.initView(); });
 
     this.initMap();
     this.positions.startLoop();
     this.cities.drawCityMarkers();
-
     this.ownPosition.initOwnPosition();
     this.quickLinks.initEventListeners();
     this.messages.startLoop();

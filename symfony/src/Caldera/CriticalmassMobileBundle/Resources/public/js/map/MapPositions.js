@@ -126,7 +126,7 @@ MapPositions.prototype.drawPositions = function()
         this.clearOldPositions(ajaxResultData);
         this.setQuickLinkButtonStatus(this.positionsCounter > 0);
 
-        CallbackHell.executeEventListener('positionLoopStarted');
+        CallbackHell.executeEventListener('mapPositionsMarkersDrawn');
     }
 
     $.support.cors = true;
