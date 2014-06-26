@@ -30,17 +30,27 @@ MapCities.prototype.drawCityMarkers = function()
         if (ride != null && ride.getHasLocation())
         {
             latLng = [ride.getLatitude(), ride.getLongitude()];
-            popupHTML += '<h3>' + ride.getTitle() + '</h3>';
+
+            popupHTML += '<h3>' + (ride.getTitle() ? ride.getTitle() : city.getTitle()) + '</h3>';
             popupHTML += '<p>Nächste Tour: ' + ride.getFormattedDateTime() + '<br />Treffpunkt: ' + ride.getLocation() + '</p>';
-            popupHTML += '<p>' + ride.getDescription() + '</p>';
+
+            if (ride.getDescription())
+            {
+                popupHTML += '<p>' + ride.getDescription() + '</p>';
+            }
         }
         else
         if (ride != null)
         {
             latLng = [city.getLatitude(), city.getLongitude()];
-            popupHTML += '<h3>' + ride.getTitle() + '</h3>';
-            popupHTML += '<p>Nächste Tour: ' + ride.getFormattedDateTime() + '</p>';
-            popupHTML += '<p>' + ride.getDescription() + '</p>';
+
+            popupHTML += '<h3>' + (ride.getTitle() ? ride.getTitle() : city.getTitle()) + '</h3>';
+            popupHTML += '<p>Nächste Tour: ' + ride.getFormattedDateTime() + '<br /><em>Der Treffpunkt ist noch nicht bekannt.</em></p>';
+
+            if (ride.getDescription())
+            {
+                popupHTML += '<p>' + ride.getDescription() + '</p>';
+            }
         }
         else
         {
