@@ -16,6 +16,11 @@ InitMapView.prototype.initView = function()
         this.initWithOverride();
     }
     else
+    if (ride != null && ride.isRolling())
+    {
+        this.initWithPosition();
+    }
+    else
     if (ride != null && ride.getHasLocation())
     {
         this.initWithRide(ride);
@@ -50,4 +55,11 @@ InitMapView.prototype.initWithCity = function(city)
     this.map.map.setView(latLng, 10);
 
     _paq.push(['trackEvent', 'initView', 'city']);
+};
+
+InitMapView.prototype.initWithPosition = function()
+{
+    var latestPosition = this.map.positions.getLatestPosition();
+
+    this.map.map.setView(latestPosition.getLatLng(), 15);
 };
