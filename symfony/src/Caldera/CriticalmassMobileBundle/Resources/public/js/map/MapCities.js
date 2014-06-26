@@ -4,6 +4,7 @@ MapCities = function(map)
 };
 
 MapCities.prototype.map = null;
+MapCities.prototype.markersArray = new Array();
 
 MapCities.prototype.drawCityMarkers = function()
 {
@@ -60,6 +61,8 @@ MapCities.prototype.drawCityMarkers = function()
         });
 
         marker.addTo(this.map.map);
+
+        this.markersArray[slug] = marker;
     }
 
     CallbackHell.executeEventListener('cityRideMarkersDrawn');
