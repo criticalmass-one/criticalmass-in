@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassCoreBundle\CalderaCriticalmassCoreBundle(),
             new Caldera\CriticalmassMobileBundle\CalderaCriticalmassMobileBundle(),
             new Caldera\CriticalmassApiBundle\CalderaCriticalmassApiBundle(),
-            //new SunCat\MobileDetectBundle\MobileDetectBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
