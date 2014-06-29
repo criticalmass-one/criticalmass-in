@@ -75,6 +75,11 @@ CityFactory.getCityFromStorageBySlug = function(citySlug)
     return null;
 };
 
+CityFactory.getCurrentCity = function()
+{
+    return this.convertJSONToCity(localStorage.currentCity);
+};
+
 CityFactory.getCityBySlug = function(citySlug)
 {
     var city = null;
@@ -127,4 +132,47 @@ CityFactory.refreshAllStoredCities = function()
 {
     this.storage = null;
     this.storeAllCities();
+};
+
+CityFactory.getNearestCity = function()
+{
+    var this2 = this;
+
+    function successCallback(resultData)
+    {
+        var latitude = resultData.coords.latitude;
+        var longitude = resultData.coords.longitude;
+        var minDistance = null;
+        var nearestCityIndex = null;
+        var index;
+
+        var cityList = JSON.parse(this2.storage);
+
+        for (index in cityList.cities)
+        {
+            var city = cityList.cities[index];
+            var distance = Math.sqrt(Math.pow(city.latitude - latitude, 2) + Math.pow(city.longitude - longitude, 2));
+
+            if (!minDistance || distance < minDistance)
+            {
+                minDistance = distance
+                nearestCityIndex = index;
+            }
+        }
+
+        localStorage.currentCity = JSON.stringify(cityList.cities[index]);
+        CallbackHell.executeEventListener('nearestCityFound');
+    }
+
+    function errorCallback(resultData)
+    {
+
+    }
+
+    if (!this.storage)
+    {
+        return null;
+    }
+
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: false });
 };
