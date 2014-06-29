@@ -10,14 +10,26 @@
         var citySlug = '{{ citySlug }}';
 
 
+        var citySlug = null;
 
         window.onload = function()
         {
+            function findNearestCity()
+            {
+                CityFactory.getNearestCity();
+            }
+
+            function nearestCityFound()
+            {
+                var city = CityFactory.getCurrentCity();
+                alert('found!' + city.getTitle());
+            }
+
             function loadingCompletedCallback()
             {
                 if (CallbackHell.hasEventListenerBeenFired('cityListRefreshed') &&
-                        CallbackHell.hasEventListenerBeenFired('rideListRefreshed') &&
-                        CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
+                    CallbackHell.hasEventListenerBeenFired('rideListRefreshed') &&
+                    CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
                    )
                 {
                     isPageLoaded = true;
@@ -33,8 +45,10 @@
             }
 
             CallbackHell.registerEventListener('cityListRefreshed', loadingCompletedCallback);
+            CallbackHell.registerEventListener('cityListRefreshed', findNearestCity);
             CallbackHell.registerEventListener('rideListRefreshed', loadingCompletedCallback);
             CallbackHell.registerEventListener('tileLayerListRefreshed', loadingCompletedCallback);
+            CallbackHell.registerEventListener('nearestCityFound', nearestCityFound);
 
             CityFactory.refreshAllStoredCities();
             RideFactory.refreshAllStoredRides();
