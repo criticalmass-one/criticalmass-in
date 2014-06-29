@@ -174,5 +174,5 @@ CityFactory.getNearestCity = function()
         return null;
     }
 
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 15000, timeout: 5000, enableHighAccuracy: false });
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 15000, timeout: 2500, enableHighAccuracy: false });
 };
