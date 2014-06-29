@@ -161,12 +161,14 @@ CityFactory.getNearestCity = function()
         }
 
         localStorage.currentCity = JSON.stringify(cityList.cities[index]);
-        CallbackHell.executeEventListener('nearestCityFound');
+        CallbackHell.executeEventListener('findNearestCityFinished');
+        CallbackHell.executeEventListener('findNearestCitySuccess');
     }
 
     function errorCallback(resultData)
     {
-
+        CallbackHell.executeEventListener('findNearestCityFinished');
+        CallbackHell.executeEventListener('findNearestCityFailure');
     }
 
     if (!this.storage)
