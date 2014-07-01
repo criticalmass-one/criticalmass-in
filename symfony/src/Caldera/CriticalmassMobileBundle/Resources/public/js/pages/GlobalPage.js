@@ -49,7 +49,7 @@ GlobalPage.prototype.initUserStatus = function()
 
 GlobalPage.prototype.initPageLayout = function()
 {
-    var city = CityFactory.getCityFromStorageBySlug(citySlug);
+    var city = CityFactory.getCityFromStorageBySlug(this.getCitySlug());
 
     this.setAppTitle(city.getTitle() + ' — criticalmass.in');
     this.refreshCityTitles(city);
