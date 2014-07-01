@@ -18,7 +18,7 @@ StartPage.prototype.initStartPageEventListeners = function()
 
 StartPage.prototype.initPage = function()
 {
-        var cities = JSON.parse(localStorage.cityListData).cities;
+        var cities = CityFactory.getAllCities();
 
         for (index in cities)
         {
