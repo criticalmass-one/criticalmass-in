@@ -14,6 +14,11 @@ AppPage.prototype.positionSender = null;
 
 AppPage.prototype.pageIdentifier = null;
 
+AppPage.prototype.hasCityslug = function()
+{
+    return sessionStorage.citySlug && sessionStorage.citySlug != null;
+}
+
 AppPage.prototype.setCitySlug = function(newCitySlug)
 {
     sessionStorage.citySlug = newCitySlug;
