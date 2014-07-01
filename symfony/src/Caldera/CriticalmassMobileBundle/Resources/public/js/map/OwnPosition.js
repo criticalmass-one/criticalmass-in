@@ -95,8 +95,11 @@ OwnPosition.prototype.moveOwnPosition = function(latLng, radius)
 
 OwnPosition.prototype.removeOwnPosition = function()
 {
-    this.map.map.removeLayer(this.ownPosition);
-    this.ownPosition = null;
+    if (this.ownPosition)
+    {
+        this.map.map.removeLayer(this.ownPosition);
+        this.ownPosition = null;
+    }
 };
 
 OwnPosition.prototype.panToOwnPosition = function()
