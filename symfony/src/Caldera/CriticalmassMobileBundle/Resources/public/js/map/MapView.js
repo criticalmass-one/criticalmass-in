@@ -22,16 +22,9 @@ MapView.prototype.initEventListeners = function()
 
 MapView.prototype.getOverridingMapPosition = function()
 {
-    var address = new String(window.location);
-    var addressArray = address.split('/');
-    var tail = addressArray.pop();
-
-    if (tail.indexOf('@') > 0)
+    if (this.hasOverridingMapPosition())
     {
-        var positionString = tail.split('@').pop();
-        var positionArray = positionString.split(',');
-
-        return { latitude: positionArray.shift(), longitude: positionArray.shift(), zoomFactor: positionArray.shift() };
+        return JSON.parse(sessionStorage.mapView);
     }
 
     return null;
@@ -39,25 +32,14 @@ MapView.prototype.getOverridingMapPosition = function()
 
 MapView.prototype.hasOverridingMapPosition = function()
 {
-    var address = new String(window.location);
-
-    return address.indexOf('@') > 0;
+    return sessionStorage.mapView && sessionStorage.mapView != null;
 };
 
 MapView.prototype.refreshOverridingMapPosition = function()
 {
-    var address = new String(window.location);
-    var addressArray = address.split('/');
-    var tail = addressArray.pop();
+    var view = { latitude: this.map.map.getCenter().lat,
+                 longitude: this.map.map.getCenter().lng,
+                 zoomFactor: this.map.map.getZoom() };
 
-    tail = tail.slice(tail.indexOf('@'), tail.indexOf('#'));
-
-    var positionString = this.map.map.getCenter().lat + "," + this.map.map.getCenter().lng + "," + this.map.map.getZoom();
-    tail = positionString + tail;
-
-    addressArray.push(tail);
-
-    address = addressArray.join();
-
-    window.location = '#mapPage@' + positionString;
+    sessionStorage.mapView = JSON.stringify(view);
 };
