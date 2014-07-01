@@ -32,7 +32,8 @@ ArticleFactory.getArticles = function()
 
     for (var index in articleList)
     {
-        resultArray.push(this.convertObjectToArticle(articleList[index]));
+        var dateTime = new Date(articleList[index].dateTime);
+        resultArray[dateTime.getTime()] = this.convertObjectToArticle(articleList[index]);
     }
 
     return resultArray;
