@@ -24,7 +24,7 @@ BlogPage.prototype.initPage = function()
             html += '<p>' + article.getFormattedText() + '</p></div>';
             html += '</li>';
 
-            $('ul#blogArticleList').append(html);
+            $('ul#blogArticleList').prepend(html);
         }
     }
 
