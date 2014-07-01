@@ -75,6 +75,11 @@ PageDispatcher.initPage = function(pagename)
                 tokenPage.initPage();
                 this.pageArray['tokenPage'] = tokenPage;
                 break;
+            case 'blogPage':
+                var blogPage = new BlogPage('blogPage');
+                blogPage.initPage();
+                this.pageArray['blogPage'] = blogPage;
+                break;
         }
     }
 };
