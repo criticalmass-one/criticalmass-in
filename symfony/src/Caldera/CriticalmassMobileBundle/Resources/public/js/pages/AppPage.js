@@ -16,12 +16,12 @@ AppPage.prototype.pageIdentifier = null;
 
 AppPage.prototype.setCitySlug = function(newCitySlug)
 {
-    citySlug = newCitySlug;
+    sessionStorage.citySlug = newCitySlug;
 }
 
 AppPage.prototype.getCitySlug = function()
 {
-    return citySlug;
+    return sessionStorage.citySlug;
 }
 
 AppPage.prototype.isUserLoggedIn = function()
