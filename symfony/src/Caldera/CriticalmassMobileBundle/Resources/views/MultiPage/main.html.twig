@@ -38,7 +38,6 @@
                     CallbackHell.hasEventListenerBeenFired('findNearestCityFinished')
                    )
                 {
-                    isPageLoaded = true;
                     UserFactory.saveOwnUserDataInStorage();
 
                     PageDispatcher.registerPageSwitchCallback();
@@ -54,7 +53,6 @@
             CallbackHell.registerEventListener('cityListRefreshed', findNearestCity);
             CallbackHell.registerEventListener('rideListRefreshed', loadingCompletedCallback);
             CallbackHell.registerEventListener('tileLayerListRefreshed', loadingCompletedCallback);
-            CallbackHell.registerEventListener('findNearestCityFinished', nearestCityFound);
             CallbackHell.registerEventListener('findNearestCityFinished', loadingCompletedCallback);
 
             CityFactory.refreshAllStoredCities();
