@@ -10,10 +10,7 @@ StartPage.prototype.constructor = StartPage;
 
 StartPage.prototype.initStartPageEventListeners = function()
 {
-    var this2 = this;
-    $(document).on('pageshow', '#' + this.pageIdentifier, function() {
-        this2.initCityList();
-    });
+
 }
 
 StartPage.prototype.initPage = function()
