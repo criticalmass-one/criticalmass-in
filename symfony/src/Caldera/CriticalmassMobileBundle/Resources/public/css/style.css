@@ -72,3 +72,14 @@ form input.validationSuccess
 {
     background-color: #eeffee;
 }
+
+#mainmenu .show-loggedin-only,
+#mainmenu .show-currentcity-only
+{
+    display: none;
+}
+
+.show-loggedout-only
+{
+
+}

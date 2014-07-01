@@ -7,29 +7,30 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <script>
         var isPageLoaded = false;
-        var citySlug = '{{ citySlug }}';
-
-
         var citySlug = null;
 
         window.onload = function()
         {
             function findNearestCity()
             {
+                alert('find!');
                 CityFactory.getNearestCity();
             }
 
             function nearestCityFound()
             {
+                alert('found');
                 var city = CityFactory.getCurrentCity();
-                alert('found!' + city.getTitle());
+                citySlug = city.getCitySlug();
+                $('.show-currentcity-only').toggle();
             }
 
             function loadingCompletedCallback()
             {
                 if (CallbackHell.hasEventListenerBeenFired('cityListRefreshed') &&
                     CallbackHell.hasEventListenerBeenFired('rideListRefreshed') &&
-                    CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
+                    CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed') &&
+                    CallbackHell.hasEventListenerBeenFired('findNearestCityFinished')
                    )
                 {
                     isPageLoaded = true;
@@ -48,7 +49,8 @@
             CallbackHell.registerEventListener('cityListRefreshed', findNearestCity);
             CallbackHell.registerEventListener('rideListRefreshed', loadingCompletedCallback);
             CallbackHell.registerEventListener('tileLayerListRefreshed', loadingCompletedCallback);
-            CallbackHell.registerEventListener('nearestCityFound', nearestCityFound);
+            CallbackHell.registerEventListener('findNearestCityFinished', nearestCityFound);
+            CallbackHell.registerEventListener('findNearestCityFinished', loadingCompletedCallback);
 
             CityFactory.refreshAllStoredCities();
             RideFactory.refreshAllStoredRides();
@@ -71,18 +73,18 @@
 <body id="webapp">
 <!-- Menü -->
 <section data-role="panel" id="mainpanel" data-position="left" data-qa-ta="mainpanel">
-    <ul data-role="listview" data-theme="a">
+    <ul id="mainmenu" data-role="listview" data-theme="a">
         <li data-icon="delete"><a href="#" data-rel="close" data-qa-ta="mobile-mainpanel-close">Menü schließen</a></li>
             <li><a href="#startPage" data-qa-ta="mobile-mainpanel-startpage">Startseite</a></li>
-            <li data-role="list-divider" data-qa-ta="mainpanel-city-title" class="city-full-title"></li>
-            <li><a href="#mapPage" data-qa-ta="mobile-mainpanel-mapPage">Karte</a></li>
-            <li><a href="#commentPage" data-qa-ta="mobile-mainpanel-commentPage">Kommentare</a></li>
+            <li class="show-currentcity-only city-full-title" data-role="list-divider" data-qa-ta="mainpanel-city-title"></li>
+            <li class="show-currentcity-only"><a href="#mapPage" data-qa-ta="mobile-mainpanel-mapPage">Karte</a></li>
+            <li class="show-currentcity-only"><a href="#commentPage" data-qa-ta="mobile-mainpanel-commentPage">Kommentare</a></li>
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
-            <li><a id="tokenButton" class="show-loggedin-only" href="#tokenPage" data-qa-ta="mobile-mainpanel-token">Ping</a></li>
-            <li><a id="profileButton" class="show-loggedin-only" style="display: none;" href="#colorPage" data-qa-ta="mobile-mainpanel-color">Farbe wählen</a></li>
-            <li><a id="logoutButton" class="show-loggedin-only" style="display: none;" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
-            <li><a id="registerButton" class="show-loggedout-only" style="display: none;" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
-            <li><a id="loginButton" class="show-loggedout-only" style="display: none;" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
+            <li class="show-loggedin-only" ><a id="tokenButton" href="#tokenPage" data-qa-ta="mobile-mainpanel-token">Ping</a></li>
+            <li class="show-loggedin-only"><a id="profileButton" href="#colorPage" data-qa-ta="mobile-mainpanel-color">Farbe wählen</a></li>
+            <li class="show-loggedin-only"><a id="logoutButton" href="#" data-ajax="false" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
+            <li class="show-loggedout-only"><a id="registerButton" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
+            <li class="show-loggedout-only"><a id="loginButton" href="#loginPage" data-qa-ta="mobile-mainpanel-login">Login</a></li>
             <li><a href="#impressPage" data-qa-ta="mobile-mainpanel-impress">Impressum</a></li>
             <li><a href="#privacyPage" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
     </ul>
@@ -169,7 +171,7 @@
         <h1>Kommentare</h1>
     </header>
     <section data-role="content" id="commentPageContent">
-        <form id="writeCommentForm" style="display: none;" class="show-loggedin-only">
+        <form id="writeCommentForm" class="show-loggedin-only">
             <label for="commentText">Schreib etwas:</label>
             <textarea name="commentText" id="commentText"></textarea>
             <button id="submitCommentButton">Abschicken</button>
@@ -205,7 +207,7 @@
     </header>
     <section data-role="content" id="loginPageContent">
         <span id="loginErrorMessage" class="errorMessage"></span>
-        <form action="" method="post" id="form-login" class="show-loggedout-only" style="display: none;">
+        <form action="" method="post" id="form-login" class="show-loggedout-only">
             <label for="username">Dein Benutzername:</label>
             <input type="text" id="loginUsernameInput" name="_username" required="required" />
 
@@ -269,7 +271,7 @@
 
         <p>Hier bekommst du dein Benutzerkonto, mit dem du während der Fahrt deine Positionsdaten und Kommentare senden kannst (und in naher Zukunft noch weitere Vorteile hast, aber daran arbeiten wir noch).</p>
 
-        <form action="" method="post" id="form-register" class="show-loggedout-only" style="display: none;">
+        <form action="" method="post" id="form-register" class="show-loggedout-only">
             <label for="username">Dein Benutzername:</label>
             <span class="errorMessage" id="registrationUsernameError"></span>
             <input type="text" id="username" name="_username" required="required" value="" />
