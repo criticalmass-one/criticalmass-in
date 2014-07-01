@@ -110,3 +110,8 @@ ul#blogArticleList li.blogArticle img.gravatarIcon
     float: left;
     margin-right: 5px;
 }
+
+ul#blogArticleList li.blogArticle + li.blogArticle
+{
+    margin-top: 20px;
+}
