@@ -6,22 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <script>
-        var isPageLoaded = false;
-        var citySlug = null;
-
         window.onload = function()
         {
             function findNearestCity()
             {
-                alert('find!');
-                CityFactory.getNearestCity();
+                if (!sessionStorage.citySlug)
+                {
+                    CityFactory.getNearestCity();
+                    CallbackHell.registerEventListener('findNearestCityFinished', nearestCityFound);
+                }
+                else
+                {
+                    CallbackHell.executeEventListener('findNearestCityFinished');
+                    $('.show-currentcity-only').toggle();
+                    alert('Fooobbar!');
+                }
             }
 
             function nearestCityFound()
             {
-                alert('found');
                 var city = CityFactory.getCurrentCity();
-                citySlug = city.getCitySlug();
+                sessionStorage.citySlug = city.getCitySlug();
                 $('.show-currentcity-only').toggle();
             }
 
