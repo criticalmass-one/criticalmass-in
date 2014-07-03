@@ -51,9 +51,21 @@ StartPage.prototype.initPage = function()
 
             $(":mobile-pagecontainer").pagecontainer("change", "#mapPage");
 
-            var mapPage = PageDispatcher.getPage('mapPage');
-            mapPage.map.cities.panToRideLocation();
-            mapPage.map.cities.openRideCityPopup(newCitySlug);
+            function mapSwitchCallback()
+            {
+                var mapPage = PageDispatcher.getPage('mapPage');
+                mapPage.map.cities.panToRideLocation();
+                mapPage.map.cities.openRideCityPopup(newCitySlug);
+            }
+
+            if (!CallbackHell.hasEventListenerBeenFired('mapViewInitialised'))
+            {
+                CallbackHell.registerEventListener('mapViewInitialised', mapSwitchCallback);
+            }
+            else
+            {
+                mapSwitchCallback();
+            }
         });
 
 
