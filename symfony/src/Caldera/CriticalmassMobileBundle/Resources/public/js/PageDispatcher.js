@@ -70,11 +70,6 @@ PageDispatcher.initPage = function(pagename)
                 commentPage.initPage();
                 this.pageArray['commentPage'] = commentPage;
                 break;
-            case 'tokenPage':
-                var tokenPage = new TokenPage('tokenPage');
-                tokenPage.initPage();
-                this.pageArray['tokenPage'] = tokenPage;
-                break;
             case 'blogPage':
                 var blogPage = new BlogPage('blogPage');
                 blogPage.initPage();

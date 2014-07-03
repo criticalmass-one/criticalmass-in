@@ -86,7 +86,6 @@
             <li class="show-currentcity-only"><a href="#mapPage" data-qa-ta="mobile-mainpanel-mapPage">Karte</a></li>
             <li class="show-currentcity-only"><a href="#commentPage" data-qa-ta="mobile-mainpanel-commentPage">Kommentare</a></li>
         <li data-role="list-divider" data-qa-ta="mainpanel-city-title">criticalmass.in</li>
-            <li class="show-loggedin-only" ><a id="tokenButton" href="#tokenPage" data-qa-ta="mobile-mainpanel-token">Ping</a></li>
             <li class="show-loggedin-only"><a id="profileButton" href="#colorPage" data-qa-ta="mobile-mainpanel-color">Farbe wählen</a></li>
             <li class="show-loggedin-only"><a id="logoutButton" href="#" data-qa-ta="mobile-mainpanel-logout">Logout</a></li>
             <li class="show-loggedout-only"><a id="registerButton" href="#registerPage" data-qa-ta="mobile-mainpanel-register">Registrierung</a></li>
@@ -297,22 +296,6 @@
     </header>
     <section data-role="content" id="registerSuccessPageContent">
         <p>Prima, herzlich willkommen! Du kannst dich jetzt auf der <a href="#loginPage">Login-Seite</a> anmelden.</p>
-    </section>
-</section>
-
-<!-- TokenPage -->
-<section data-role="page" id="tokenPage">
-    <header data-role="header">
-        <a class="openmenubutton" href="#mainpanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-qa-ta="mobile-mainpanel-open">Menü</a>
-        <h1>Ping</h1>
-    </header>
-    <section data-role="content" id="tokenPageContent">
-        <h2>Unsere App: Ping</h2>
-
-        <p>Eine Web-App läuft zwar ohne Installation und superschnell im Browser, hat aber einen großen Nachteil: Sie wird beendet, sobald der Browser geschlossen wird oder das Smartphone in den Ruhezustand wechselt. Um regelmäßig während einer Critical Mass Positionsdaten zu senden, müsste das Smartphone regelmäßig aufgeweckt werden. Unsere Ping-App gibt’s hoffentlich bald für iOS und sammelt auch im Hintergrund deine Positionsdaten. Bitte lade dir Ping herunter und kopiere den folgenden Code in die App:</p>
-
-        <label for="pingToken">Dein Token:</label>
-        <input type="text" name="pingToken" id="pingToken" readonly="true" />
     </section>
 </section>
 
