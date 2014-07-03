@@ -13,21 +13,24 @@
                 if (!sessionStorage.citySlug)
                 {
                     CityFactory.getNearestCity();
-                    CallbackHell.registerEventListener('findNearestCityFinished', nearestCityFound);
+                    CallbackHell.registerEventListener('findNearestCitySuccess', nearestCityFound);
+                    CallbackHell.registerEventListener('findNearestCityFailure', nearestCityNotFound);
                 }
                 else
                 {
                     CallbackHell.executeEventListener('findNearestCityFinished');
                     $('.show-currentcity-only').toggle();
-                    alert('Fooobbar!');
                 }
             }
 
             function nearestCityFound()
             {
-                var city = CityFactory.getCurrentCity();
-                sessionStorage.citySlug = city.getCitySlug();
                 $('.show-currentcity-only').toggle();
+            }
+
+            function nearestCityNotFound()
+            {
+                PageDispatcher.switchPage('startPage');
             }
 
             function loadingCompletedCallback()
