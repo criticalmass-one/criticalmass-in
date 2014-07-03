@@ -20,33 +20,27 @@ StartPage.prototype.initPage = function()
     for (index in cities)
     {
         var city = cities[index];
-        var cityId = 'city-' + city.id + '-' + city.slug;
-        var listItem = document.createElement('li');
+        var cityId = 'city-' + city.getId() + '-' + city.getCitySlug();
 
-        $(listItem).attr('data-cityslug', city.slug);
-        $(listItem).attr('id', cityId);
-
-        var linkItem = document.createElement('a');
-
-        $(linkItem).append('<h3>' + city.title + '</h3>');
+        var cityHTML = '<li id="' + cityId + '" data-citySlug="' + city.getCitySlug() + '">';
+        cityHTML += '<a>';
+        cityHTML += '<h3>' + city.getTitle() + '</h3>';
 
         if (city.description != null)
         {
-            $(linkItem).append('<p>' + city.description + '</p>');
+            cityHTML += '<p>' + city.getDescription() + '</p>';
         }
 
-        var ride = RideFactory.getRideFromStorageBySlug(city.slug);
+        var ride = RideFactory.getRideFromStorageBySlug(city.getCitySlug());
 
         if (ride)
         {
-            var dateTime = ride.getDateTime();
-
-            $(linkItem).append('<p class="ui-li-aside">' + dateTime.getDate() + '.' + (dateTime.getMonth() + 1) + '.' + dateTime.getFullYear() + ' ' + dateTime.getHours() + '.' + (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr</p>');
+            cityHTML += '<p class="ui-li-aside">' + ride.getFormattedDateTime() + '</p>';
         }
 
-        $(listItem).append(linkItem);
+        cityHTML += '</a></li>';
 
-        $('#cityList').append(listItem);
+        $('#cityList').append(cityHTML);
 
         var this2 = this;
 
