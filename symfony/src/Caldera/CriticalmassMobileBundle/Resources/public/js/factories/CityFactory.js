@@ -64,11 +64,12 @@ CityFactory.getCityFromStorageBySlug = function(citySlug)
 
     var cityList = JSON.parse(this.storage);
 
-    for (index in cityList.cities)
+    for (var index in cityList.cities)
     {
         if (cityList.cities[index].slug == citySlug)
         {
-            return this.convertObjectToCity(cityList.cities[index]);
+            var city = this.convertObjectToCity(cityList.cities[index]);
+            return city;
         }
     }
 
@@ -148,7 +149,7 @@ CityFactory.getNearestCity = function()
 
         var cityList = JSON.parse(this2.storage);
 
-        for (index in cityList.cities)
+        for (var index in cityList.cities)
         {
             var city = cityList.cities[index];
             var distance = Math.sqrt(Math.pow(city.latitude - latitude, 2) + Math.pow(city.longitude - longitude, 2));
@@ -160,15 +161,17 @@ CityFactory.getNearestCity = function()
             }
         }
 
-        localStorage.currentCity = JSON.stringify(cityList.cities[index]);
-        CallbackHell.executeEventListener('findNearestCityFinished');
+        sessionStorage.currentCity = JSON.stringify(cityList.cities[index]);
+        sessionStorage.citySlug = index;
+
         CallbackHell.executeEventListener('findNearestCitySuccess');
+        CallbackHell.executeEventListener('findNearestCityFinished');
     }
 
     function errorCallback(resultData)
     {
-        CallbackHell.executeEventListener('findNearestCityFinished');
         CallbackHell.executeEventListener('findNearestCityFailure');
+        CallbackHell.executeEventListener('findNearestCityFinished');
     }
 
     if (!this.storage)
