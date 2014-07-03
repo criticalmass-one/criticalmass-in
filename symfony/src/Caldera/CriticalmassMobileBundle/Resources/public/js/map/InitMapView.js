@@ -31,6 +31,8 @@ InitMapView.prototype.initView = function()
         this.initWithCity(city);
         this.map.cities.openRideCityPopup(citySlug);
     }
+
+    CallbackHell.executeEventListener('mapViewInitialised');
 };
 
 InitMapView.prototype.initWithOverride = function()
