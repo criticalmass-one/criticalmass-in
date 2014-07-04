@@ -1,25 +1,25 @@
-UrlFactory = function()
+Url = function()
 {
 
 }
 
-UrlFactory.environment = 'dev';
-UrlFactory.system = 'local';
-UrlFactory.tls = true;
+Url.environment = 'dev';
+Url.system = 'local';
+Url.tls = true;
 
-UrlFactory.nodeJSPort = 1337;
+Url.nodeJSPort = 1337;
 
-UrlFactory.getEnvironment = function()
+Url.getEnvironment = function()
 {
     return this.environment;
 }
 
-UrlFactory.getSystem = function()
+Url.getSystem = function()
 {
     return this.system;
 }
 
-UrlFactory.getHostName = function()
+Url.getHostName = function()
 {
     if (this.getSystem() == 'local')
     {
@@ -29,7 +29,7 @@ UrlFactory.getHostName = function()
     return 'criticalmass.in';
 }
 
-UrlFactory.getPortNumber = function()
+Url.getPortNumber = function()
 {
     if (this.tls)
     {
@@ -39,12 +39,12 @@ UrlFactory.getPortNumber = function()
     return 80;
 }
 
-UrlFactory.getNodeJSPortNumber = function()
+Url.getNodeJSPortNumber = function()
 {
     return this.nodeJSPort;
 }
 
-UrlFactory.getProtocolString = function()
+Url.getProtocolString = function()
 {
     if (this.tls)
     {
@@ -54,7 +54,7 @@ UrlFactory.getProtocolString = function()
     return 'http://';
 }
 
-UrlFactory.getEnvironmentString = function()
+Url.getEnvironmentString = function()
 {
     if (this.getEnvironment() == 'dev')
     {
@@ -64,7 +64,7 @@ UrlFactory.getEnvironmentString = function()
     return '';
 }
 
-UrlFactory.getUrlPrefix = function()
+Url.getUrlPrefix = function()
 {
     return this.getProtocolString() +
         this.getHostName() +
@@ -72,12 +72,12 @@ UrlFactory.getUrlPrefix = function()
         '/' + this.getEnvironmentString();
 }
 
-UrlFactory.getApiPrefix = function()
+Url.getApiPrefix = function()
 {
     return this.getUrlPrefix() + 'api/';
 }
 
-UrlFactory.getNodeJSApiPrefix = function()
+Url.getNodeJSApiPrefix = function()
 {
     return this.getProtocolString() + this.getHostName() + ':' + this.getNodeJSPortNumber() + '/';
 }

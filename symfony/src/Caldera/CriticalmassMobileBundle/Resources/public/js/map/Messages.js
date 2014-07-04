@@ -69,7 +69,7 @@ Messages.prototype.drawMessages = function()
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetchComments&citySlug=' + this.map.parentPage.getCitySlug(),
+        url: Url.getNodeJSApiPrefix() + '?action=fetchComments&citySlug=' + this.map.parentPage.getCitySlug(),
         cache: false,
         context: this,
         crossDomain: true,

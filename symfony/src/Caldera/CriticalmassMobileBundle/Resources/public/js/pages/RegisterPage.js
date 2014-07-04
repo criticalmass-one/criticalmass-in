@@ -28,7 +28,7 @@ RegisterPage.prototype.processRegistration = function(element)
 
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getUrlPrefix() + 'register/',
+        url: Url.getUrlPrefix() + 'register/',
         context: this,
         success: function (data) {
             var this2 = this;
@@ -111,7 +111,7 @@ RegisterPage.prototype.processRegistration = function(element)
 
             $.ajax({
                 type: 'POST',
-                url: UrlFactory.getUrlPrefix() + 'register/',
+                url: Url.getUrlPrefix() + 'register/',
                 context: this,
                 data: registerData,
                 dataType: 'json',

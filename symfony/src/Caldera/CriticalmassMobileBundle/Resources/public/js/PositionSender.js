@@ -15,7 +15,7 @@ PositionSender.prototype.startSender = function()
 {
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'user/getpingtoken',
+        url: Url.getApiPrefix() + 'user/getpingtoken',
         context: this,
         dataType: 'json',
         success: function (res) {
@@ -70,7 +70,7 @@ PositionSender.prototype.processPosition = function(positionResult)
 
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getNodeJSApiPrefix(),
+        url: Url.getNodeJSApiPrefix(),
         context: this,
         data: positionData,
         cache: false,

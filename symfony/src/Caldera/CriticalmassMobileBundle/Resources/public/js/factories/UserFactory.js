@@ -37,7 +37,7 @@ UserFactory.saveOwnUserDataInStorage = function()
     $.ajax({
         type: 'GET',
         async: false,
-        url: UrlFactory.getApiPrefix() + 'user/getownuserdata',
+        url: Url.getApiPrefix() + 'user/getownuserdata',
         cache: false,
         context: this,
         success: function(data)

@@ -112,7 +112,7 @@ CommentPage.prototype.drawMessages = function()
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetchComments&citySlug=' + this.getCitySlug(),
+        url: Url.getNodeJSApiPrefix() + '?action=fetchComments&citySlug=' + this.getCitySlug(),
         cache: false,
         context: this,
         crossDomain: true,
@@ -136,7 +136,7 @@ CommentPage.prototype.submitComment = function()
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: UrlFactory.getApiPrefix() + 'ride/writecomment',
+            url: Url.getApiPrefix() + 'ride/writecomment',
             cache: false,
             context: this,
             data: commentData,

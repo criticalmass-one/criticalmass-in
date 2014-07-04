@@ -94,7 +94,7 @@ CityFactory.getCityBySlug = function(citySlug)
         $.ajax({
             type: 'GET',
             async: false,
-            url: UrlFactory.getApiPrefix() + 'cities/getbyslug/' + citySlug,
+            url: Url.getApiPrefix() + 'cities/getbyslug/' + citySlug,
             cache: false,
             context: this,
             success: function(ajaxResultData)
@@ -117,7 +117,7 @@ CityFactory.storeAllCities = function()
         $.ajax({
             type: 'GET',
             async: false,
-            url: UrlFactory.getApiPrefix() + 'cities/listall',
+            url: Url.getApiPrefix() + 'cities/listall',
             cache: false,
             context: this,
             success: function(data)

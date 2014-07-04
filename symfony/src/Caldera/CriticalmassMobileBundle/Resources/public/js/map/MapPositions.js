@@ -133,7 +133,7 @@ MapPositions.prototype.drawPositions = function()
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: UrlFactory.getNodeJSApiPrefix() + '?action=fetchPositions&citySlug=' + this.map.parentPage.getCitySlug(),
+        url: Url.getNodeJSApiPrefix() + '?action=fetchPositions&citySlug=' + this.map.parentPage.getCitySlug(),
         cache: false,
         context: this,
         crossDomain: true,

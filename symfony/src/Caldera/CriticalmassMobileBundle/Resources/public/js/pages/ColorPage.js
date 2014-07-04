@@ -28,7 +28,7 @@ ColorPage.prototype.initPage = function()
 
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'user/getcolors',
+        url: Url.getApiPrefix() + 'user/getcolors',
         cache: false,
         context: this,
         success: function(data)
@@ -85,7 +85,7 @@ ColorPage.prototype.saveUserColor = function()
 
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getApiPrefix() + 'user/setcolors',
+        url: Url.getApiPrefix() + 'user/setcolors',
         cache: false,
         context: this,
         data: colorData,

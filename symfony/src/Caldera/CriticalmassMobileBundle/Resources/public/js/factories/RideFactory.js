@@ -54,7 +54,7 @@ RideFactory.storeAllRides = function()
         $.ajax({
             type: 'GET',
             async: false,
-            url: UrlFactory.getApiPrefix() + 'ride/getcurrent',
+            url: Url.getApiPrefix() + 'ride/getcurrent',
             cache: false,
             context: this,
             success: function(data)

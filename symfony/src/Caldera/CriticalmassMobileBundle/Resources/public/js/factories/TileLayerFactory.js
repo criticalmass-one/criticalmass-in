@@ -90,7 +90,7 @@ TileLayerFactory.storeAllTileLayers = function()
         $.ajax({
             type: 'GET',
             async: false,
-            url: UrlFactory.getApiPrefix() + 'tilelayer/listtilelayers',
+            url: Url.getApiPrefix() + 'tilelayer/listtilelayers',
             cache: false,
             context: this,
             success: function(data)

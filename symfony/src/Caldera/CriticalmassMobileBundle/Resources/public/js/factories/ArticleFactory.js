@@ -53,7 +53,7 @@ ArticleFactory.storeAllArticles = function()
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: UrlFactory.getNodeJSApiPrefix() + '?action=fetchArticles',
+            url: Url.getNodeJSApiPrefix() + '?action=fetchArticles',
             cache: false,
             context: this,
             crossDomain: true,

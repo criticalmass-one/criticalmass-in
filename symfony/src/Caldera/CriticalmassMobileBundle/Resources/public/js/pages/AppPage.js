@@ -39,7 +39,7 @@ AppPage.prototype.logout = function()
     $.ajax({
         type : 'GET',
         context : this,
-        url : UrlFactory.getUrlPrefix() + 'logout',
+        url : Url.getUrlPrefix() + 'logout',
         success : function(data)
         {
             this.switchToLoggedOutMode();
@@ -93,7 +93,7 @@ AppPage.prototype.storeCurrentCity = function()
     $.ajax({
         type : 'GET',
         context : this,
-        url : UrlFactory.getApiPrefix() + 'user/switchcity/' + this.getCitySlug(),
+        url : Url.getApiPrefix() + 'user/switchcity/' + this.getCitySlug(),
         success : function(data)
         {
         }

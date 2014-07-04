@@ -25,7 +25,7 @@ LoginPage.prototype.processLogin = function(element)
 
     $.ajax({
         type: 'GET',
-        url: UrlFactory.getUrlPrefix() + 'login',
+        url: Url.getUrlPrefix() + 'login',
         context: this,
         success: function (data) {
             var this2 = this;
@@ -55,7 +55,7 @@ LoginPage.prototype.processLogin = function(element)
             loginData['_csrf_token'] = $(data).find('input[name="_csrf_token"]').val();
 
             $.ajax({
-                url: UrlFactory.getUrlPrefix() + 'login_check',
+                url: Url.getUrlPrefix() + 'login_check',
                 type: 'POST',
                 context: this2,
                 dataType: 'json',
