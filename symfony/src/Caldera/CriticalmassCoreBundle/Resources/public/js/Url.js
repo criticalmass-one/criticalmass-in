@@ -1,7 +1,7 @@
 Url = function()
 {
 
-}
+};
 
 Url.environment = 'dev';
 Url.system = 'local';
@@ -12,12 +12,12 @@ Url.nodeJSPort = 1337;
 Url.getEnvironment = function()
 {
     return this.environment;
-}
+};
 
 Url.getSystem = function()
 {
     return this.system;
-}
+};
 
 Url.getHostName = function()
 {
@@ -27,7 +27,7 @@ Url.getHostName = function()
     }
 
     return 'criticalmass.in';
-}
+};
 
 Url.getPortNumber = function()
 {
@@ -37,12 +37,12 @@ Url.getPortNumber = function()
     }
 
     return 80;
-}
+};
 
 Url.getNodeJSPortNumber = function()
 {
     return this.nodeJSPort;
-}
+};
 
 Url.getProtocolString = function()
 {
@@ -52,7 +52,7 @@ Url.getProtocolString = function()
     }
 
     return 'http://';
-}
+};
 
 Url.getEnvironmentString = function()
 {
@@ -62,7 +62,7 @@ Url.getEnvironmentString = function()
     }
 
     return '';
-}
+};
 
 Url.getUrlPrefix = function()
 {
@@ -70,14 +70,14 @@ Url.getUrlPrefix = function()
         this.getHostName() +
         ':' + this.getPortNumber() +
         '/' + this.getEnvironmentString();
-}
+};
 
 Url.getApiPrefix = function()
 {
     return this.getUrlPrefix() + 'api/';
-}
+};
 
 Url.getNodeJSApiPrefix = function()
 {
     return this.getProtocolString() + this.getHostName() + ':' + this.getNodeJSPortNumber() + '/';
-}
+};

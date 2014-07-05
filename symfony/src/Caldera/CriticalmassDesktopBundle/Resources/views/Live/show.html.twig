@@ -10,8 +10,12 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
-
-    {% javascripts '@CalderaCriticalmassDesktopBundle/Resources/public/js/*' %}
+    {% javascripts '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/*'
+    '@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
+    %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
@@ -20,8 +24,6 @@
     {% endstylesheets %}
 
     <script>
-        var map = new Map('map', new City('hamburg'));
-
         function setElementHeight(elementLocator, height)
         {
             $(elementLocator).height(height);
@@ -44,6 +46,11 @@
         {
             refreshHeight();
         });
+
+        window.onload = function()
+        {
+            var map = new DesktopMap('map');
+        }
     </script>
 </head>
 <body>
@@ -90,7 +97,7 @@
     </section>
 
     <footer id="footer">
-        Ride on. Impressum? Datenschutz! criticalmass.in by United Caldera
+        Ride on. Impressum? Datenschutz!
     </footer>
 </body>
 </html>

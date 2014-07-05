@@ -15,7 +15,7 @@ MapPage.prototype.initPage = function()
 {
     if (this.map == null)
     {
-        this.map = new Map('map', this.getCitySlug(), this);
+        this.map = new MobileMap('map', this.getCitySlug(), this);
     }
 
     this.positionSender = new PositionSender(this);
