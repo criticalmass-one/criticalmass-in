@@ -47,21 +47,21 @@ class City
     /**
 	 * Adresse der Webseite der Critical Mass in dieser Stadt.
 	 *
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $url;
 
 	/**
 	 * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
 	 *
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $facebook;
 
 	/**
 	 * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
 	 *
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $twitter;
 
@@ -82,7 +82,7 @@ class City
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enabled;
+    protected $enabled = true;
 
     /**
 	 * Array mit den Touren in dieser Stadt.
@@ -95,6 +95,41 @@ class City
 	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
 	 */
 	protected $slugs;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isStandardable = false;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $standardDayOfWeek;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $standardWeekOfMonth;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    protected $standardTime;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $standardLocation;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $standardLatitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $standardLongitude;
 
 	/**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
@@ -414,5 +449,166 @@ class City
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set isStandardable
+     *
+     * @param boolean $isStandardable
+     * @return City
+     */
+    public function setIsStandardable($isStandardable)
+    {
+        $this->isStandardable = $isStandardable;
+
+        return $this;
+    }
+
+    /**
+     * Get isStandardable
+     *
+     * @return boolean 
+     */
+    public function getIsStandardable()
+    {
+        return $this->isStandardable;
+    }
+
+    /**
+     * Set standardDayOfWeek
+     *
+     * @param integer $standardDayOfWeek
+     * @return City
+     */
+    public function setStandardDayOfWeek($standardDayOfWeek)
+    {
+        $this->standardDayOfWeek = $standardDayOfWeek;
+
+        return $this;
+    }
+
+    /**
+     * Get standardDayOfWeek
+     *
+     * @return integer 
+     */
+    public function getStandardDayOfWeek()
+    {
+        return $this->standardDayOfWeek;
+    }
+
+    /**
+     * Set standardWeekOfMonth
+     *
+     * @param integer $standardWeekOfMonth
+     * @return City
+     */
+    public function setStandardWeekOfMonth($standardWeekOfMonth)
+    {
+        $this->standardWeekOfMonth = $standardWeekOfMonth;
+
+        return $this;
+    }
+
+    /**
+     * Get standardWeekOfMonth
+     *
+     * @return integer 
+     */
+    public function getStandardWeekOfMonth()
+    {
+        return $this->standardWeekOfMonth;
+    }
+
+    /**
+     * Set standardTime
+     *
+     * @param \DateTime $standardTime
+     * @return City
+     */
+    public function setStandardTime($standardTime)
+    {
+        $this->standardTime = $standardTime;
+
+        return $this;
+    }
+
+    /**
+     * Get standardTime
+     *
+     * @return \DateTime 
+     */
+    public function getStandardTime()
+    {
+        return $this->standardTime;
+    }
+
+    /**
+     * Set standardLocation
+     *
+     * @param string $standardLocation
+     * @return City
+     */
+    public function setStandardLocation($standardLocation)
+    {
+        $this->standardLocation = $standardLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get standardLocation
+     *
+     * @return string 
+     */
+    public function getStandardLocation()
+    {
+        return $this->standardLocation;
+    }
+
+    /**
+     * Set standardLatitude
+     *
+     * @param float $standardLatitude
+     * @return City
+     */
+    public function setStandardLatitude($standardLatitude)
+    {
+        $this->standardLatitude = $standardLatitude;
+
+        return $this;
+    }
+
+    /**
+     * Get standardLatitude
+     *
+     * @return float 
+     */
+    public function getStandardLatitude()
+    {
+        return $this->standardLatitude;
+    }
+
+    /**
+     * Set standardLongitude
+     *
+     * @param float $standardLongitude
+     * @return City
+     */
+    public function setStandardLongitude($standardLongitude)
+    {
+        $this->standardLongitude = $standardLongitude;
+
+        return $this;
+    }
+
+    /**
+     * Get standardLongitude
+     *
+     * @return float 
+     */
+    public function getStandardLongitude()
+    {
+        return $this->standardLongitude;
     }
 }
