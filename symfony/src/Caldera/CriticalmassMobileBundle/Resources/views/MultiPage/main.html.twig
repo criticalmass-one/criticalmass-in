@@ -67,12 +67,14 @@
     {% stylesheets '@CalderaCriticalmassMobileBundle/Resources/public/css/*.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
-    {% javascripts '@CalderaCriticalmassMobileBundle/Resources/public/js/external/*'
-                   '@CalderaCriticalmassMobileBundle/Resources/public/js/factories/*'
+    {% javascripts '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+                   '@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
                    '@CalderaCriticalmassMobileBundle/Resources/public/js/pages/*'
-                   '@CalderaCriticalmassMobileBundle/Resources/public/js/entities/*'
-                   '@CalderaCriticalmassMobileBundle/Resources/public/js/map/*'
-                   '@CalderaCriticalmassMobileBundle/Resources/public/js/*' %}
+                   '@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
+                   '@CalderaCriticalmassCoreBundle/Resources/public/js/map/*'
+                   '@CalderaCriticalmassCoreBundle/Resources/public/js/*'
+                   '@CalderaCriticalmassMobileBundle/Resources/public/js/*'
+    %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 </head>
@@ -94,6 +96,7 @@
             <li><a href="#privacyPage" data-qa-ta="mobile-mainpanel-privacy">Datenschutz</a></li>
         <li data-role="list-divider">Neuigkeiten</li>
             <li><a href="#blogPage">Blog</a></li>
+            <li><a href="#helpPage">Hilfe</a></li>
     </ul>
 </section>
 
