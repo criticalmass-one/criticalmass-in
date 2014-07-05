@@ -147,7 +147,7 @@ class City
 	 * Diese Methode gibt den ersten Slug dieser Stadt zurueck, mit dem unter an-
 	 * derem Verlinkungen innerhalb der Web-App-Routen konstruiert werden.
 	 *
-	 * @return Entity\CitySlug: Beliebiger Slug dieser Stadt
+	 * @return CitySlug: Beliebiger Slug dieser Stadt
 	 */
 	public function getMainSlug()
 	{
@@ -610,5 +610,30 @@ class City
     public function getStandardLongitude()
     {
         return $this->standardLongitude;
+    }
+
+    public function getEventDateTimeLocationString()
+    {
+        $weekDays = array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag');
+        $monthWeeks = array(1 => 'ersten', 2 => 'zweiten', 3 => 'dritten', 4 => 'vierten', 0 => 'letzten');
+
+        $result = '';
+
+        if ($this->isStandardable)
+        {
+            $result = 'jeweils am '.$monthWeeks[$this->standardWeekOfMonth].' '.$weekDays[$this->standardDayOfWeek];
+
+            if ($this->standardTime)
+            {
+                $result.= ' um '.$this->standardTime->format('H.i').' Uhr';
+            }
+
+            if ($this->standardLocation)
+            {
+                $result.= ': '.$this->standardLocation;
+            }
+        }
+
+        return $result;
     }
 }
