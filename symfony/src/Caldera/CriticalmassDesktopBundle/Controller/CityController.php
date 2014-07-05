@@ -8,6 +8,8 @@ class CityController extends Controller
 {
     public function listAction()
     {
-        return $this->render('CalderaCriticalmassDesktopBundle:City:list.html.twig');
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array(), array('city' => 'ASC'));
+
+        return $this->render('CalderaCriticalmassDesktopBundle:City:list.html.twig', array('cities' => $cities));
     }
 }
