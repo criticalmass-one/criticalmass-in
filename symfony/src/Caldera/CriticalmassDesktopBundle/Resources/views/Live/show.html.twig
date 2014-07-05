@@ -13,6 +13,7 @@
     {% javascripts '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/map/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/*'
     '@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
     %}
@@ -50,6 +51,8 @@
         window.onload = function()
         {
             var map = new DesktopMap('map');
+
+            CityFactory.refreshAllStoredCities();
         }
     </script>
 </head>
