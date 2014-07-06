@@ -20,12 +20,12 @@
         window.onload = function() {
             $('#sortByCity').on('click', function()
             {
-                var sortFunction = function (a, b)
+                var sortFunction = function(a, b)
                 {
-                    return $(a).data('latitude') - $(b).data('latitude');
+                    return ($(a).data('cityname') > $(b).data('cityname') ? 1 : -1);
                 };
 
-                sortCityList(sortFunction());
+                sortCityList(sortFunction);
             });
 
 
@@ -42,7 +42,7 @@
                     var latitude = geolocationResult.coords.latitude;
                     var longitude = geolocationResult.coords.longitude;
 
-                    var sortFunction = function (a, b)
+                    var sortFunction = function(a, b)
                     {
                         var distanceA = Math.sqrt(Math.pow(latitude - $(a).data('latitude'), 2) + Math.pow(longitude - $(a).data('longitude'), 2));
                         var distanceB = Math.sqrt(Math.pow(latitude - $(b).data('latitude'), 2) + Math.pow(longitude - $(b).data('longitude'), 2));
