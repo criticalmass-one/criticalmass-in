@@ -23,14 +23,15 @@
         <p>Die Critical Mass findet überall statt. Auch in deiner Nähe.</p>
     </div>
 
-        <div class="row">
+    <div class="container">
+        <ul class="row">
             {% for city in cities %}
-                <div class="col-md-4">
+                <li class="col-md-4">
                     <a href="#"><h2>{{ city.getCity() }}</h2></a>
                     <p>{{ city.getDescription() }}</p>
                     <p>{{ city.getEventDateTimeLocationString() }}</p>
-                </div>
+                </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
 {% endblock %}
