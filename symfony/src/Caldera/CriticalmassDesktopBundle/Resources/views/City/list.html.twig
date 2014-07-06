@@ -7,10 +7,80 @@
         <p>Die Critical Mass findet überall statt. Auch in deiner Nähe.</p>
     </div>
 
+    <script>
+        function sortCityList(sortFunction)
+        {
+            $('#cityList li').sort(sortFunction).map(function () {
+                return $(this).closest('#cityList li');
+            }).each(function (_, container) {
+                $(container).parent().append(container);
+            });
+        }
+
+        window.onload = function() {
+            $('#sortByCity').on('click', function()
+            {
+                var sortFunction = function (a, b)
+                {
+                    return $(a).data('latitude') - $(b).data('latitude');
+                };
+
+                sortCityList(sortFunction());
+            });
+
+
+            $('#sortByParticipants').on('click', function()
+            {
+                alert('jo!');
+            });
+
+
+            $('#sortByDistance').on('click', function()
+            {
+                function successCallback(geolocationResult)
+                {
+                    var latitude = geolocationResult.coords.latitude;
+                    var longitude = geolocationResult.coords.longitude;
+
+                    var sortFunction = function (a, b)
+                    {
+                        var distanceA = Math.sqrt(Math.pow(latitude - $(a).data('latitude'), 2) + Math.pow(longitude - $(a).data('longitude'), 2));
+                        var distanceB = Math.sqrt(Math.pow(latitude - $(b).data('latitude'), 2) + Math.pow(longitude - $(b).data('longitude'), 2));
+
+                        return distanceA - distanceB;
+                    };
+
+                    sortCityList(sortFunction);
+                }
+
+                navigator.geolocation.getCurrentPosition(successCallback);
+            });
+
+
+            $('#sortByNextRide').on('click', function()
+            {
+                alert('jo!');
+            });
+        }
+    </script>
     <div class="container">
-        <ul class="row">
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Sortierung
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li id="sortByCity" role="presentation"><a role="menuitem" tabindex="-1" href="#">Stadt</a></li>
+                <li id="sortByParticipants" role="presentation"><a role="menuitem" tabindex="-1" href="#">Teilnehmerzahl</a></li>
+                <li id="sortByDistance" role="presentation"><a role="menuitem" tabindex="-1" href="#">Entfernung</a></li>
+                <li id="sortByNextRide" role="presentation"><a role="menuitem" tabindex="-1" href="#">nächster Tour</a></li>
+            </ul>
+        </div>
+
+        <ul class="row" id="cityList">
             {% for city in cities %}
-                <li class="col-md-4" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
+                <li class="col-md-4 city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
                     <a href="#"><h2>{{ city.getCity() }}</h2></a>
                     <p>{{ city.getDescription() }}</p>
                     <p>{{ city.getEventDateTimeLocationString() }}</p>
