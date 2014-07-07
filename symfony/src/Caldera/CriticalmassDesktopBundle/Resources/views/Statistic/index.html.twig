@@ -15,7 +15,7 @@
             {% for city in cities %}
             <tr>
                 <td></td>
-                <td>{{ city.getCity() }}</td>
+                <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
                 <td></td>
                 <td>
                     {% if city.getMainSlugString() in rides|keys %}
