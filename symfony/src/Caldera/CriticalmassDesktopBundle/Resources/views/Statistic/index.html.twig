@@ -4,10 +4,12 @@
     <script>
         function sortCityList(sortFunction, reverse)
         {
-            $('#participantTable tr').sort(sortFunction).map(function () {
-                return $(this).closest('#participantTable tr');
+            var headRowContent = $('#participantTable tr:first-child').html();
+            $('#participantTable tr:first-child').remove();
+
+            $('#participantTable tr.sortable').sort(sortFunction).map(function () {
+                return $(this).closest('#participantTable tr.sortable');
             }).each(function (_, container) {
-                $(container).parent().append(container);
                 if (reverse)
                 {
                     $(container).parent().prepend(container);
@@ -17,6 +19,8 @@
                     $(container).parent().append(container);
                 }
             });
+
+            $('#participantTable').prepend('<tr>' + headRowContent + '</tr>');
         }
 
         window.onload = function() {
