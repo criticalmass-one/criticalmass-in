@@ -25,6 +25,6 @@ class StatisticController extends Controller
             $totalParticipants += $ride->getEstimatedParticipants();
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Statistic:index.html.twig', array('cities' => $cities, 'rides' => $rides, 'maxParticipants' => $maxParticipants, 'totalParticipants' => $totalParticipants));
+        return $this->render('CalderaCriticalmassDesktopBundle:Statistic:participants.html.twig', array('cities' => $cities, 'rides' => $rides, 'maxParticipants' => $maxParticipants, 'totalParticipants' => $totalParticipants));
     }
 }
