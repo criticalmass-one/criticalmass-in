@@ -30,9 +30,17 @@ class RideRepository extends EntityRepository
     {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.dateTime >= \''.$startDateTime->format('Y-m-d H:i:s').'\' AND r.dateTime <= \''.$endDateTime->format('Y-m-d H:i:s').'\' ORDER BY r.estimatedParticipants DESC');
 
-        $result = $query->getResult();
-        $result = array_pop($result);
+        $result = array();
 
+        $tmp1 = $query->getResult();
+
+        foreach ($tmp1 as $tmp2)
+        {
+            foreach ($tmp2 as $ride)
+            {
+                $result[$ride->getCity()->getMainSlugString()] = $ride;
+            }
+        }
         return $result;
     }
 }
