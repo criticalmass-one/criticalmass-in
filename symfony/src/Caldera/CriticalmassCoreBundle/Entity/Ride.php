@@ -108,6 +108,11 @@ class Ride
     protected $enableTracking = true;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $estimatedParticipants;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -426,5 +431,28 @@ class Ride
     public function getEnableTracking()
     {
         return $this->enableTracking;
+    }
+
+    /**
+     * Set estimatedParticipants
+     *
+     * @param integer $estimatedParticipants
+     * @return Ride
+     */
+    public function setEstimatedParticipants($estimatedParticipants)
+    {
+        $this->estimatedParticipants = $estimatedParticipants;
+
+        return $this;
+    }
+
+    /**
+     * Get estimatedParticipants
+     *
+     * @return integer 
+     */
+    public function getEstimatedParticipants()
+    {
+        return $this->estimatedParticipants;
     }
 }
