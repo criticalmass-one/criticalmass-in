@@ -2,9 +2,9 @@ caldera_criticalmass_desktop_homepage:
     pattern:  /hamburg
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Live:show }
 
-caldera_criticalmass_desktop_showride:
-    pattern:  /hamburg/{rideId}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Track:showride }
+caldera_criticalmass_desktop_ride_show:
+    pattern:  /{citySlug}/{rideId}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:show }
 
 caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
