@@ -1,6 +1,38 @@
 {% extends 'CalderaCriticalmassDesktopBundle::BaseTemplate.html.twig' %}
 
 {% block body %}
+    <script>
+        function sortCityList(sortFunction)
+        {
+            $('#participantTable tr').sort(sortFunction).map(function () {
+                return $(this).closest('#participantTable tr');
+            }).each(function (_, container) {
+                $(container).parent().append(container);
+            });
+        }
+
+        window.onload = function() {
+            $('#sortByCity').on('click', function()
+            {
+                var sortFunction = function(a, b)
+                {
+                    return ($(a).data('cityname') > $(b).data('cityname') ? 1 : -1);
+                };
+
+                sortCityList(sortFunction);
+            });
+
+            $('#sortByParticipants').on('click', function()
+            {
+                var sortFunction = function(a, b)
+                {
+                    return $(a).data('participants') - $(b).data('participants');
+                };
+
+                sortCityList(sortFunction);
+            });
+        }
+    </script>
     <div class="container">
         <h1>Zahlen, bitte!</h1>
 
