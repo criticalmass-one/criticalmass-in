@@ -2,7 +2,7 @@
 
 {% block body %}
     <script>
-        function sortCityList(sortFunction, reverse)
+        function sortCityList(sortFunction)
         {
             var headRowContent = $('#participantTable tr:first-child').html();
             $('#participantTable tr:first-child').remove();
@@ -10,14 +10,7 @@
             $('#participantTable tr.sortable').sort(sortFunction).map(function () {
                 return $(this).closest('#participantTable tr.sortable');
             }).each(function (_, container) {
-                if (reverse)
-                {
-                    $(container).parent().prepend(container);
-                }
-                else
-                {
-                    $(container).parent().append(container);
-                }
+                $(container).parent().append(container);
             });
 
             $('#participantTable').prepend('<tr>' + headRowContent + '</tr>');
@@ -31,17 +24,17 @@
                     return ($(a).data('cityname') > $(b).data('cityname') ? 1 : -1);
                 };
 
-                sortCityList(sortFunction, true);
+                sortCityList(sortFunction);
             });
 
             $('#sortByParticipants').on('click', function()
             {
                 var sortFunction = function(a, b)
                 {
-                    return $(a).data('participants') - $(b).data('participants');
+                    return $(b).data('participants') - $(a).data('participants');
                 };
 
-                sortCityList(sortFunction, true);
+                sortCityList(sortFunction);
             });
         }
     </script>
