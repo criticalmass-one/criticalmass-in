@@ -36,6 +36,16 @@
 
                 sortCityList(sortFunction);
             });
+
+            $('#sortByRide').on('click', function()
+            {
+                var sortFunction = function(a, b)
+                {
+                    return $(b).data('ridedatetime') - $(a).data('ridedatetime');
+                };
+
+                sortCityList(sortFunction);
+            });
         }
     </script>
     <div class="container">
@@ -43,7 +53,6 @@
 
         <h2>Teilnehmer im Juni 2014</h2>
         <p>Im Juni 2014 waren bundesweit {{ totalParticipants }} Radfahrer unterwegs.</p>
-
 
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
@@ -66,7 +75,7 @@
                 <th style="width: 50%;"></th>
             </tr>
             {% for city in cities %}
-            <tr class="sortable" data-cityname="{{ city.getcity() }}" data-participants="{% if city.getMainSlugString() in rides|keys %}{{ rides[city.getMainSlugString()].getEstimatedParticipants() }}{% else %}0{% endif %}">
+            <tr class="sortable" data-ridedatetime="{% if city.getMainSlugString() in rides|keys %}{{ rides[city.getMainSlugString()].getDateTime().format('U') }}{% else %}0{% endif %}" data-cityname="{{ city.getcity() }}" data-participants="{% if city.getMainSlugString() in rides|keys %}{{ rides[city.getMainSlugString()].getEstimatedParticipants() }}{% else %}0{% endif %}">
                 <td></td>
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
                 <td>
