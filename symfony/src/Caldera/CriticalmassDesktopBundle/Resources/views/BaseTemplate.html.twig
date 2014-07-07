@@ -66,7 +66,14 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#">Städte</a></li>
                     <li><a href="#">Live</a></li>
-                    <li><a href="{{ path('caldera_criticalmass_desktop_statistic_participants') }}">Statistik</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistik<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('caldera_criticalmass_desktop_statistic_participants') }}">Teilnehmerzahlen</a></li>
+                            <li><a href="#">Streckenlängen</a></li>
+                            <li><a href="#">Heatmaps</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hilfe<b class="caret"></b></a>
                         <ul class="dropdown-menu">
