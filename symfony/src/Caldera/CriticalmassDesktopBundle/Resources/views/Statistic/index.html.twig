@@ -50,12 +50,26 @@
 
         <h2>Teilnehmer im Juni 2014</h2>
         <p>Im Juni 2014 waren bundesweit {{ totalParticipants }} Radfahrer unterwegs.</p>
+
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Sortierung
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li id="sortByCity" role="presentation"><a role="menuitem" tabindex="-1" href="#">Stadt</a></li>
+                <li id="sortByParticipants" role="presentation"><a role="menuitem" tabindex="-1" href="#">Teilnehmerzahl</a></li>
+                <li id="sortByRide" role="presentation"><a role="menuitem" tabindex="-1" href="#">Datum</a></li>
+            </ul>
+        </div>
+
         <table id="participantTable" class="table table-striped">
             <tr>
                 <th>#</th>
-                <th id="sortByCity">Stadt</th>
-                <th id="sortByRide">Datum</th>
-                <th id="sortByParticipants">Teilnehmer</th>
+                <th>Stadt</th>
+                <th>Datum</th>
+                <th>Teilnehmer</th>
                 <th style="width: 50%;"></th>
             </tr>
             {% for city in cities %}
