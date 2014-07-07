@@ -9,3 +9,11 @@ caldera_criticalmass_desktop_showride:
 caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:list }
+
+caldera_criticalmass_desktop_statistic_index:
+    pattern: /statistic
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Statistic:index }
+
+caldera_criticalmass_desktop_city_show:
+    pattern: /{citySlug}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
