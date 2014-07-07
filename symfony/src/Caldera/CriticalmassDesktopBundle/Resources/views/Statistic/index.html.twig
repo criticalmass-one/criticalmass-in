@@ -46,7 +46,7 @@
 
         <h2>Teilnehmer im Juni 2014</h2>
         <p>Im Juni 2014 waren bundesweit {{ totalParticipants }} Radfahrer unterwegs.</p>
-        <table class="table table-striped">
+        <table id="participantTable" class="table table-striped">
             <tr>
                 <th>#</th>
                 <th>Stadt</th>
@@ -55,7 +55,7 @@
                 <th style="width: 50%;"></th>
             </tr>
             {% for city in cities %}
-            <tr>
+            <tr class="sortable" data-cityname="{{ city.getcity() }}" data-participants="{% if city.getMainSlugString() in rides|keys %}{{ rides[city.getMainSlugString()].getEstimatedParticipants() }}{% else %}0{% endif %}">
                 <td></td>
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
                 <td>
