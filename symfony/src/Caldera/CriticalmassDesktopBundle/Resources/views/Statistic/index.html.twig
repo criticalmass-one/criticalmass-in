@@ -2,12 +2,20 @@
 
 {% block body %}
     <script>
-        function sortCityList(sortFunction)
+        function sortCityList(sortFunction, reverse)
         {
             $('#participantTable tr').sort(sortFunction).map(function () {
                 return $(this).closest('#participantTable tr');
             }).each(function (_, container) {
                 $(container).parent().append(container);
+                if (reverse)
+                {
+                    $(container).parent().prepend(container);
+                }
+                else
+                {
+                    $(container).parent().append(container);
+                }
             });
         }
 
@@ -19,7 +27,7 @@
                     return ($(a).data('cityname') > $(b).data('cityname') ? 1 : -1);
                 };
 
-                sortCityList(sortFunction);
+                sortCityList(sortFunction, true);
             });
 
             $('#sortByParticipants').on('click', function()
@@ -29,7 +37,7 @@
                     return $(a).data('participants') - $(b).data('participants');
                 };
 
-                sortCityList(sortFunction);
+                sortCityList(sortFunction, true);
             });
         }
     </script>
