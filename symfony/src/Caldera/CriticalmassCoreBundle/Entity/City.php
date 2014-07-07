@@ -154,6 +154,10 @@ class City
 		return $this->slugs[0];
 	}
 
+    public function getMainSlugString()
+    {
+        return $this->getMainSlug()->getSlug();
+    }
     /**
      * Constructor
      */
