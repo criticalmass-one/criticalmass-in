@@ -12,4 +12,11 @@ class RideController extends Controller
 
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:showcurrent.html.twig', array('ride' => $ride));
     }
+
+    public function proposeAction($citySlug)
+    {
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findLatestForCitySlug($citySlug);
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:propose.html.twig', array('ride' => $ride));
+    }
 }
