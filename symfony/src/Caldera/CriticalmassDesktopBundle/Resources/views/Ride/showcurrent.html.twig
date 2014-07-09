@@ -1,0 +1,9 @@
+{% extends 'CalderaCriticalmassDesktopBundle::BaseTemplate.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ ride.getTitle() }}</h1>
+        <p>{{ ride.getDescription() }}</p>
+        <p>{{ ride.getDateTime.format('d.m.Y H:i') }}</p>
+    </div>
+{% endblock %}
