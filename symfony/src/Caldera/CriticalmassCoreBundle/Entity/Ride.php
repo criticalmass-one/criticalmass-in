@@ -113,6 +113,21 @@ class Ride
     protected $estimatedParticipants;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $facebook;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $twitter;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $website;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -454,5 +469,74 @@ class Ride
     public function getEstimatedParticipants()
     {
         return $this->estimatedParticipants;
+    }
+
+    /**
+     * Set facebook
+     *
+     * @param string $facebook
+     * @return Ride
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook
+     *
+     * @return string 
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * Set twitter
+     *
+     * @param string $twitter
+     * @return Ride
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     * @return Ride
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
     }
 }
