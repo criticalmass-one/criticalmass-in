@@ -1,0 +1,44 @@
+{% extends 'CalderaCriticalmassDesktopBundle::BaseTemplate.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Tour-Details korrigieren</h1>
+        <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
+
+        <h2>{{ ride.getTitle() }}</h2>
+        <p>{{ ride.getDescription() }}</p>
+        <p>{{ ride.getDateTime.format('d.m.Y H:i') }}</p>
+
+        <form id="proposal" action="" method="post" role="form">
+            <div class="form-group">
+                <label for="title">Titel</label>
+                <input class="form-control" type="text" name="title" value="{{ ride.getTitle() }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Beschreibung</label>
+                <textarea class="form-control" name="description">{{ ride.getDescription() }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Datum:</label>
+                <input class="form-control" type="text" name="date" value="{{ ride.getDateTime().format('d.m.Y') }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="time">Uhrzeit:</label>
+                <input class="form-control" type="text" name="time" value="{{ ride.getDateTime().format('H:i') }}" />
+            </div>
+
+            <div class="form-group">
+                <label for="location">Treffpunkt:</label>
+                <input class="form-control" type="text" name="location" value="{{ ride.getLocation() }}" />
+            </div>
+
+            <div class="form-group">
+                <button class="form-control" name="submit">Speichern</button>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
