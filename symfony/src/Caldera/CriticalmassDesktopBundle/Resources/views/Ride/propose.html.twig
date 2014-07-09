@@ -5,21 +5,20 @@
         <h1>Tour-Details korrigieren</h1>
         <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
 
-        <h2>{{ ride.getTitle() }}</h2>
-        <p>{{ ride.getDescription() }}</p>
-        <p>{{ ride.getDateTime.format('d.m.Y H:i') }}</p>
-
         <form id="proposal" action="" method="post" role="form">
-            <div class="form-group">
-                <label for="title">Titel</label>
-                <input class="form-control" type="text" name="title" value="{{ ride.getTitle() }}" />
+            <div class="row">
+                <div class="form-group">
+                    <label for="title">Titel</label>
+                    <input class="form-control" type="text" name="title" value="{{ ride.getTitle() }}" />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="description">Beschreibung</label>
-                <textarea class="form-control" name="description">{{ ride.getDescription() }}</textarea>
+            <div class="row">
+                <div class="form-group">
+                    <label for="description">Beschreibung</label>
+                    <textarea class="form-control" name="description">{{ ride.getDescription() }}</textarea>
+                </div>
             </div>
-
 
             <div class="row">
                 <div class="col-lg-6">
@@ -32,9 +31,9 @@
                     <label for="time">Uhrzeit:</label>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="checkbox" name="hasTime" checked="{{ ride.getHasTime() }}">
+                            <input type="checkbox" name="hasTime" checked="{{ ride.getHasTime() }}" />
                         </span>
-                        <input type="text" class="form-control" name="time" value="{{ ride.getDateTime().format('H:i') }}">
+                        <input type="text" class="form-control" name="time" value="{{ ride.getDateTime().format('H:i') }}" />
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div>
@@ -44,15 +43,17 @@
                     <label for="location">Treffpunkt:</label>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="checkbox" name="hasLocation" checked="{{ ride.getHasLocation() }}">
+                            <input type="checkbox" name="hasLocation" checked="{{ ride.getHasLocation() }}" />
                         </span>
-                        <input type="text" class="form-control" name="location" value="{{ ride.getLocation() }}">
+                        <input type="text" class="form-control" name="location" value="{{ ride.getLocation() }}" />
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div>
 
-            <div class="form-group">
-                <button class="form-control" name="submit">Speichern</button>
+            <div class="row">
+                <div class="form-group">
+                    <button class="form-control" name="submit">Speichern</button>
+                </div>
             </div>
         </form>
 
