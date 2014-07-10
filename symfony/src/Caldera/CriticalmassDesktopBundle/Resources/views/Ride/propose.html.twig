@@ -5,6 +5,8 @@
         <h1>Tour-Details korrigieren</h1>
         <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
 
+        <div class="row">
+        <div class="col-lg-4">
         <form id="proposal" action="" method="post" role="form">
             <div class="row">
                 <div class="col-lg-12">
@@ -62,6 +64,29 @@
                 </div>
             </div>
         </form>
+        </div>
+            <div class="col-lg-8">
+                <div id="map" style="width: 100%; height: 300px;"></div>
+            </div>
+            <script>
+                {% if ride.hasLocation() %}
+                var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+                {% else %}
+                var mapCenter = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+                {% endif %}
+                var map = L.map('map');
+                var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                });
 
+                tileLayer.addTo(map);
+                map.setView(mapCenter, 10);
+
+                var marker = L.marker(mapCenter);
+                marker.addTo(map);
+                marker.bindPopup('<strong>Treffpunkt:</strong> {{ ride.getLocation() }}');
+                marker.openPopup();
+            </script>
+        </div>
     </div>
 {% endblock %}
