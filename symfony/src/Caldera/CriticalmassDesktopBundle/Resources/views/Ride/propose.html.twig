@@ -85,10 +85,18 @@
                 tileLayer.addTo(map);
                 map.setView(mapCenter, 12);
 
-                var marker = L.marker(mapCenter);
+                var marker = L.marker(mapCenter, { draggable: 'true' });
                 marker.addTo(map);
-                marker.bindPopup('<strong>Treffpunkt:</strong> {{ ride.getLocation() }}');
+                marker.bindPopup('Schieb mich auf den Treffpunkt!');
                 marker.openPopup();
+
+                marker.on('dragend', function(event){
+                    var marker = event.target;
+                    var position = marker.getLatLng();
+
+                    $('#latitudeInput').val(position.lat);
+                    $('#longitudeInput').val(position.lng);
+                });
             </script>
         </div>
     </div>
