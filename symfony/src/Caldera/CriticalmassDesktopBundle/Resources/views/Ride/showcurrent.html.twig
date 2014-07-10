@@ -2,8 +2,23 @@
 
 {% block body %}
     <div class="container">
-        <h1>{{ ride.getTitle() }}</h1>
-        <p>{{ ride.getDescription() }}</p>
-        <p>{{ ride.getDateTime.format('d.m.Y H:i') }}</p>
+        {% if ride.getTitle() %}
+            <h1>{{ ride.getTitle() }}</h1>
+        {% else %}
+            <h1>{{ ride.getCity().getTitle() }}</h1>
+        {% endif %}
+        {% if ride.getDescription() %}
+            <p>{{ ride.getDescription() }}</p>
+        {% endif %}
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Datum:</label>
+                <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
+            </div>
+            <div class="col-lg-6">
+                <label>Uhrzeit:</label>
+                <span>{{ ride.getDateTime.format('H:i') }}</span>
+            </div>
+        </div>
     </div>
 {% endblock %}
