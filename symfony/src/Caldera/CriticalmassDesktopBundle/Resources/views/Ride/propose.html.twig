@@ -7,16 +7,20 @@
 
         <form id="proposal" action="" method="post" role="form">
             <div class="row">
-                <div class="form-group">
-                    <label for="title">Titel</label>
-                    <input class="form-control" type="text" name="title" value="{{ ride.getTitle() }}" />
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="title">Titel</label>
+                        <input class="form-control" type="text" name="title" value="{{ ride.getTitle() }}" />
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group">
-                    <label for="description">Beschreibung</label>
-                    <textarea class="form-control" name="description">{{ ride.getDescription() }}</textarea>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="description">Beschreibung</label>
+                        <textarea class="form-control" name="description">{{ ride.getDescription() }}</textarea>
+                    </div>
                 </div>
             </div>
 
@@ -51,8 +55,10 @@
             </div>
 
             <div class="row">
-                <div class="form-group">
-                    <button class="form-control" name="submit">Speichern</button>
+                <div class=".col-lg-2 .col-lg-offset-10">
+                    <div class="form-group">
+                        <button class="form-control" name="submit">Speichern</button>
+                    </div>
                 </div>
             </div>
         </form>
