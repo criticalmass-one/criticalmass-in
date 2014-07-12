@@ -15,9 +15,10 @@ class ContentItemAdmin extends Admin
         $formMapper
             ->with('Inhalt', array('class' => 'col-md-6'))
                 ->add('title', 'text', array('label' => 'Titel'))
-                ->add('slug', 'text', array('label' => 'Titel'))
+                ->add('slug', 'text', array('label' => 'Slug'))
                 ->add('text', 'textarea', array('label' => 'Inhalt'))
                 ->add('enabled', 'checkbox', array('label' => 'Aktiviert'))
+                ->add('positionOrder', 'text', array('label' => 'Position'))
                 ->add('contentClass', null, array('label' => 'Content-Klasse'))
             ->end()
         ;
