@@ -1,26 +1,20 @@
 <html>
 <head>
     <title>criticalmass.in</title>
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-
     {% javascripts '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/map/*'
     '@CalderaCriticalmassCoreBundle/Resources/public/js/*'
     '@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
+    '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/*'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    {% stylesheets '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css' %}
+    {% stylesheets '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css'
+    '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
+    %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 
