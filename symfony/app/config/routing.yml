@@ -2,6 +2,10 @@ caldera_criticalmass_statistic:
     resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing.yml"
     prefix:   /
 
+caldera_criticalmass_content:
+    resource: "@CalderaCriticalmassContentBundle/Resources/config/routing.yml"
+    prefix:   /
+
 caldera_criticalmass_plus:
     resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
     prefix:   /

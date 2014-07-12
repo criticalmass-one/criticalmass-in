@@ -5,6 +5,7 @@ imports:
     - { resource: @CalderaCriticalmassCoreBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassHeatmapBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassPlusBundle/Resources/config/admin.yml }
+    - { resource: @CalderaCriticalmassContentBundle/Resources/config/admin.yml }
 
 framework:
     #esi:             ~
