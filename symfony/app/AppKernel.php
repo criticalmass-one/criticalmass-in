@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Caldera\CriticalmassHeatmapBundle\CalderaCriticalmassHeatmapBundle(),
             new Caldera\CriticalmassPlusBundle\CalderaCriticalmassPlusBundle(),
+            new Caldera\CriticalmassContentBundle\CalderaCriticalmassContentBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
