@@ -1,21 +1,5 @@
-caldera_criticalmass_statistic:
-    resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_content:
-    resource: "@CalderaCriticalmassContentBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_plus:
-    resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_heatmap:
-    resource: "@CalderaCriticalmassHeatmapBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_api:
-    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
+caldera_criticalmass_glympse:
+    resource: "@CalderaCriticalmassGlympseBundle/Resources/config/routing.yml"
     prefix:   /
 
 sonata_user_security:
@@ -42,14 +26,6 @@ sonata_user_change_password:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_change_password_1.xml"
     prefix: /profile
 
-caldera_criticalmass_core:
-    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_mobile:
-    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
-    prefix:   /
-
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -62,3 +38,31 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+caldera_criticalmass_core:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_mobile:
+    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_statistic:
+    resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_content:
+    resource: "@CalderaCriticalmassContentBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_plus:
+    resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_heatmap:
+    resource: "@CalderaCriticalmassHeatmapBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_api:
+    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
+    prefix:   /

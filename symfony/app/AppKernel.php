@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassHeatmapBundle\CalderaCriticalmassHeatmapBundle(),
             new Caldera\CriticalmassPlusBundle\CalderaCriticalmassPlusBundle(),
             new Caldera\CriticalmassContentBundle\CalderaCriticalmassContentBundle(),
+            new Caldera\CriticalmassGlympseBundle\CalderaCriticalmassGlympseBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
