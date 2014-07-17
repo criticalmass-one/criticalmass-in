@@ -9,7 +9,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $mbox = imap_open("{mail.caldera.cc:993/imap/ssl/novalidate-cert}", "malte@maltehuebner.com", "");
+        $mbox = @imap_open("{mail.caldera.cc:993/imap/ssl/novalidate-cert}", "glympse-invitations@criticalmass.in", "qwd32rf") or die(imap_last_error());
 
         echo "<h1>Postfächer</h1>\n";
         $folders = imap_listmailbox($mbox, "{mail.caldera.cc:993}", "*");
@@ -34,11 +34,22 @@ class DefaultController extends Controller
                 ++$counter;
                 $status = $val[1];
 
-                if ($status == "D")
+                if (true)
                 {
+                    echo "ID: ".$counter."<br />";
                     $body = imap_body($mbox, $counter);
 
-                    echo imap_qprint($body);
+                    preg_match_all('|----(.*) base64 (.*)==|U', $body, $results);
+
+                    foreach ($results as $result)
+                    {
+                        preg_match('|http:\/\/glympse.com\/([A-Z0-9]{4,4})-([A-Z0-9]{4,4})|U', base64_decode($result[1]), $results2);
+
+                        $inviteId = $results2[1].'-'.$results2[2];
+
+                        echo $inviteId;
+                        break;
+                    }
                 }
             }
         }
