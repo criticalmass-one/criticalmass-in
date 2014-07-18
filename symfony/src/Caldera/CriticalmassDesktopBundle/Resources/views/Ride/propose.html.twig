@@ -9,34 +9,27 @@
         <div class="col-lg-4">
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="title">Titel:</label>
                         {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description">Beschreibung:</label>
                         {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <label for="date">Datum:</label>
                     <div class="form-group">
                         {{ form_widget(form.date, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <label for="time">Uhrzeit:</label>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -44,11 +37,9 @@
                         </span>
                         {{ form_widget(form.time, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <label for="location">Treffpunkt:</label>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -56,42 +47,33 @@
                         </span>
                         {{ form_widget(form.location, { 'attr' : { 'class': 'form-control'} }) }}
                     </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description">Link zu einer Veranstaltung auf facebook:</label>
                         {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description">Link zu einem Tweet:</label>
                         {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description">Link zu einer Webseite:</label>
                         {{ form_widget(form.website, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
                     <div class="form-group">
                         {{ form_widget(form.save, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
-                </div>
             </div>
             {{ form_widget(form.latitude) }}
             {{ form_widget(form.longitude) }}
