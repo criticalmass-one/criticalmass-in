@@ -554,7 +554,7 @@ class Ride
     {
         return $this->dateTime;
     }
-    
+
     public function setTime(\DateTime $time)
     {
         $this->dateTime->add($this->dateTime->diff($time));
