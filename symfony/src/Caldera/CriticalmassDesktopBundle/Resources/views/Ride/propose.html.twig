@@ -7,12 +7,12 @@
 
         <div class="row">
         <div class="col-lg-4">
-        <form id="proposal" action="" method="post" role="form">
+            {{ form_start(form) }}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="title">Titel:</label>
-                        <input class="form-control" type="text" name="title" value="{{ ride.getTitle() }}" />
+                        {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description">Beschreibung:</label>
-                        <textarea class="form-control" name="description">{{ ride.getDescription() }}</textarea>
+                        {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
             </div>
@@ -30,43 +30,70 @@
                 <div class="col-lg-6">
                     <label for="date">Datum:</label>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="date" value="{{ ride.getDateTime().format('d.m.Y') }}" />
+                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control'} }) }}
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
                 <div class="col-lg-6">
                     <label for="time">Uhrzeit:</label>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="checkbox" name="hasTime" checked="{{ ride.getHasTime() }}" />
+                            {{ form_widget(form.hasTime) }}
                         </span>
-                        <input type="text" class="form-control" name="time" value="{{ ride.getDateTime().format('H:i') }}" />
+                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control'} }) }}
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <label for="location">Treffpunkt:</label>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="checkbox" name="hasLocation" checked="{{ ride.getHasLocation() }}" />
+                            {{ form_widget(form.hasLocation) }}
                         </span>
-                        <input type="text" class="form-control" name="location" value="{{ ride.getLocation() }}" />
+                        {{ form_widget(form.location, { 'attr' : { 'class': 'form-control'} }) }}
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div>
 
             <div class="row">
-                <div class=".col-lg-2 .col-lg-offset-10">
+                <div class="col-lg-12">
                     <div class="form-group">
-                        <button class="form-control" name="submit">Speichern</button>
+                        <label for="description">Link zu einer Veranstaltung auf facebook:</label>
+                        {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
             </div>
-            <input id="latitudeInput" type="text" name="latitude" value="{{ ride.getLatitude() }}" />
-            <input id="longitudeInput" type="text" name="longitude" value="{{ ride.getLongitude() }}" />
 
-        </form>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="description">Link zu einem Tweet:</label>
+                        {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="description">Link zu einer Webseite:</label>
+                        {{ form_widget(form.website, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        {{ form_widget(form.save, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+
+            {{ form_end(form) }}
         </div>
             <div class="col-lg-8">
                 <div id="map" style="width: 100%; height: 300px;"></div>

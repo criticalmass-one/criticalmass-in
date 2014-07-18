@@ -17,6 +17,24 @@ class RideController extends Controller
     {
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findLatestForCitySlug($citySlug);
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:propose.html.twig', array('ride' => $ride));
+        $form = $this->createFormBuilder($ride)
+            ->add('title', 'text')
+            ->add('description', 'text')
+            ->add('date', 'date')
+            ->add('time', 'time')
+            ->add('location', 'text')
+            ->add('latitude', 'hidden')
+            ->add('longitude', 'hidden')
+            ->add('facebook', 'text')
+            ->add('twitter', 'text')
+            ->add('website', 'text')
+            ->add('hasLocation', 'checkbox')
+            ->add('hasTime', 'checkbox')
+            ->add('save', 'submit')
+            ->getForm();
+
+        $form->handleRequest($this->getRequest());
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:propose.html.twig', array('ride' => $ride, 'form' => $form->createView()));
     }
 }
