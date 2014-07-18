@@ -61,11 +61,11 @@
                     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städte</a></li>
                     <li><a href="#">Live</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistik<b class="caret"></b></a>
+                        <a href="{{ path('caldera_criticalmass_desktop_content_show', { classSlug: 'statistic', itemSlug: 'under-construction' }) }}" class="dropdown-toggle" data-toggle="dropdown">Statistik<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('caldera_criticalmass_desktop_statistic_participants') }}">Teilnehmerzahlen</a></li>
-                            <li><a href="#">Streckenlängen</a></li>
-                            <li><a href="#">Heatmaps</a></li>
+                            <li><a href="{{ path('caldera_criticalmass_desktop_content_show', { classSlug: 'statistic', itemSlug: 'under-construction' }) }}">Teilnehmerzahlen</a></li>
+                            <li><a href="{{ path('caldera_criticalmass_desktop_content_show', { classSlug: 'statistic', itemSlug: 'under-construction' }) }}">Streckenlängen</a></li>
+                            <li><a href="{{ path('caldera_criticalmass_desktop_content_show', { classSlug: 'statistic', itemSlug: 'under-construction' }) }}">Heatmaps</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
