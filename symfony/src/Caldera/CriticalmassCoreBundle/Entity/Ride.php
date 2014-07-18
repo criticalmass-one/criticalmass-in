@@ -539,4 +539,24 @@ class Ride
     {
         return $this->website;
     }
+
+    public function getDate()
+    {
+        return $this->dateTime;
+    }
+
+    public function setDate(\DateTime $date)
+    {
+        $this->dateTime->add($this->dateTime->diff($date));
+    }
+
+    public function getTime()
+    {
+        return $this->dateTime;
+    }
+    
+    public function setTime(\DateTime $time)
+    {
+        $this->dateTime->add($this->dateTime->diff($time));
+    }
 }
