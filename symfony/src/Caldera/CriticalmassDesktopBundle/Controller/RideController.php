@@ -35,6 +35,13 @@ class RideController extends Controller
 
         $form->handleRequest($this->getRequest());
 
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+        }
+
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:propose.html.twig', array('ride' => $ride, 'form' => $form->createView()));
     }
 }
