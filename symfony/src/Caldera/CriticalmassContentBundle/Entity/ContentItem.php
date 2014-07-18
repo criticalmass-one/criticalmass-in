@@ -196,4 +196,13 @@ class ContentItem
     {
         return $this->slug;
     }
+
+    public function getParsedText()
+    {
+        $text = $this->getText();
+
+        $text = str_replace(array("&lt;", "&gt;", "&quot;"), array("<", ">", "\""), $text);
+
+        return $text;
+    }
 }
