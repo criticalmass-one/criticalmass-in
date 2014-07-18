@@ -2,3 +2,7 @@ caldera_criticalmass_gpxexport:
     pattern: /gpxexport/{rideId}/{userId}
     defaults: { _controller: CalderaCriticalmassCoreBundle:Default:gpxexport }
 
+caldera_criticalmass_standardrides:
+    pattern: /standardrides/{year}/{month}
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Default:standardrides }
+

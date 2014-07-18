@@ -77,4 +77,20 @@ class DefaultController extends Controller
 
         return new Response();
     }
+
+    public function standardridesAction($year, $month)
+    {
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array(), array('city' => 'ASC'));
+
+        echo '<ul>';
+
+        foreach ($cities as $city)
+        {
+            echo '<li>'.$city->getTitle().'</li>';
+        }
+
+        echo '</ul>';
+
+        return new Response();
+    }
 }
