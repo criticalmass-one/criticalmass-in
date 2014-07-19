@@ -28,6 +28,7 @@ class StandardRideGenerator {
         $this->calculateTime();
         $this->calculateLocation();
         $this->calculateVisibility();
+        $this->calculateExpectedStartDateTime();
 
         return $this->ride;
     }
@@ -111,5 +112,17 @@ class StandardRideGenerator {
 
         $this->ride->setVisibleSince($visibleSince);
         $this->ride->setVisibleUntil($visibleUntil);
+    }
+
+    protected  function calculateExpectedStartDateTime()
+    {
+        $interval = new \DateInterval('PT15M');
+        $timestamp = $this->ride->getDateTime()->format('U');
+
+        $expectedStartDateTime = new \DateTime();
+        $expectedStartDateTime->setTimestamp($timestamp);
+        $expectedStartDateTime->add($interval);
+
+        $this->ride->setExpectedStartDateTime($expectedStartDateTime);
     }
 } 
