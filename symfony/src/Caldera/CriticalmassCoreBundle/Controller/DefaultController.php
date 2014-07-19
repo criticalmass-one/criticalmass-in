@@ -117,6 +117,10 @@ class DefaultController extends Controller
 
                 echo '<li>sichtbar von '.$ride->getVisibleSince()->format('Y-m-d H:i').' bis '.$ride->getVisibleUntil()->format('Y-m-d H:i').'</li>';
                 echo '</ul>';
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($ride);
+                $em->flush();
             }
             else
             {
