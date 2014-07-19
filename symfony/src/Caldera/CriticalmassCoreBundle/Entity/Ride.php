@@ -108,7 +108,7 @@ class Ride
     protected $enableTracking = true;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $estimatedParticipants;
 
