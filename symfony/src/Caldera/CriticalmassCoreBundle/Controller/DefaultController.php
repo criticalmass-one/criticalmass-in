@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassCoreBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -84,7 +85,100 @@ class DefaultController extends Controller
 
         foreach ($cities as $city)
         {
-            echo '<li>'.$city->getTitle().'</li>';
+            echo '<li>';
+            echo '<strong>'.$city->getTitle().'</strong>';
+
+            if ($city->getIsStandardable())
+            {
+                $ride = new Ride();
+                $ride->setCity($city);
+
+                $firstMonthDay = new \DateTime($year.'-'.$month.'-01 00:00:00');
+
+                $nextDateTime = $firstMonthDay;
+
+                $dayInterval = new \DateInterval('P1D');
+
+                while ($firstMonthDay->format('w') != $city->getStandardDayOfWeek())
+                {
+                    $nextDateTime->add($dayInterval);
+                }
+
+                if ($city->getStandardWeekOfMonth() > 0)
+                {
+                    $weekInterval = new \DateInterval('P7D');
+
+                    for ($weekOfMonth = 1; $weekOfMonth < $city->getStandardWeekOfMonth(); ++$weekOfMonth)
+                    {
+                        $nextDateTime->add($weekInterval);
+                    }
+                }
+                else
+                {
+                    $weekInterval = new \DateInterval('P7D');
+
+                    while ($nextDateTime->format('m') == $month)
+                    {
+                        $nextDateTime->add($weekInterval);
+                    }
+
+                    $nextDateTime->sub($weekInterval);
+                }
+
+                if ($city->getStandardTime())
+                {
+                    $timeInterval = new \DateInterval('PT'.$city->getStandardTime()->format('H').'H'.$city->getStandardTime()->format('i').'M');
+                    $nextDateTime->add($timeInterval);
+                    $ride->setDateTime($nextDateTime);
+                    $ride->setHasTime(true);
+                }
+                else
+                {
+                    $ride->setDateTime($nextDateTime);
+                    $ride->setHasTime(false);
+                }
+
+                if ($city->getStandardLocation())
+                {
+                    $ride->setLocation($city->getStandardLocation());
+                    $ride->setLatitude($city->getStandardLatitude());
+                    $ride->setLongitude($city->getStandardLongitude());
+                    $ride->setHasLocation(true);
+                }
+                else
+                {
+                    $ride->setHasLocation(false);
+                }
+
+                echo '<br />Lege folgende Tour an:';
+                echo '<ul>';
+
+                if ($ride->getHasTime())
+                {
+                    echo '<li>Datum und Uhrzeit: '.$ride->getDateTime()->format('Y-m-d H:i').'</li>';
+                }
+                else
+                {
+                    echo '<li>Datum: '.$ride->getDateTime()->format('Y-m-d').', Uhrzeit ist bislang unbekannt</li>';
+                }
+
+                if ($ride->getHasLocation())
+                {
+                    echo '<li>Treffpunkt: '.$ride->getLocation().' ('.$ride->getLatitude().'/'.$ride->getLongitude().')</li>';
+                }
+                else
+                {
+                    echo '<li>Treffpunkt ist bislang unbekannt</li>';
+                }
+
+                echo '</ul>';
+            }
+            else
+            {
+                echo '<br />Lege keine Tourdaten für diese Stadt an.';
+            }
+
+            echo '</li>';
         }
 
         echo '</ul>';
