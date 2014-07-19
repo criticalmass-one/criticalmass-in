@@ -30,6 +30,12 @@ class Position
 	 */
 	protected $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGlympseBundle\Entity\Ticket", inversedBy="positions")
+     * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
+     */
+    protected $ticket;
+
 	/**
 	 * Tour, zu der diese Entitaet abgespeichert wurde.
 	 *
@@ -405,5 +411,28 @@ class Position
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set ticket
+     *
+     * @param \Caldera\CriticalmassGlympseBundle\Entity\Ticket $ticket
+     * @return Position
+     */
+    public function setTicket(\Caldera\CriticalmassGlympseBundle\Entity\Ticket $ticket = null)
+    {
+        $this->ticket = $ticket;
+
+        return $this;
+    }
+
+    /**
+     * Get ticket
+     *
+     * @return \Caldera\CriticalmassGlympseBundle\Entity\Ticket 
+     */
+    public function getTicket()
+    {
+        return $this->ticket;
     }
 }
