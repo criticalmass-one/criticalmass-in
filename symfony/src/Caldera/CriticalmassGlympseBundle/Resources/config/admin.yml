@@ -1,0 +1,11 @@
+services:
+    sonata.admin.ticket:
+        class: Caldera\CriticalmassGlympseBundle\Admin\TicketAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Glympse", label: "Ticket" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassGlympseBundle\Entity\Ticket
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassGlympseBundle]]
