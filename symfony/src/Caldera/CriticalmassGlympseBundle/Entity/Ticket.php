@@ -17,6 +17,12 @@ class Ticket
 	 */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="tickets")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected $city;
+
 	/**
 	 * @ORM\Column(type="string", length=9, nullable=false)
 	 */
@@ -31,6 +37,11 @@ class Ticket
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $runtime;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $counter;
 
     /**
      * Get id
@@ -109,5 +120,51 @@ class Ticket
     public function getRuntime()
     {
         return $this->runtime;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @return Ticket
+     */
+    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set counter
+     *
+     * @param integer $counter
+     * @return Ticket
+     */
+    public function setCounter($counter)
+    {
+        $this->counter = $counter;
+
+        return $this;
+    }
+
+    /**
+     * Get counter
+     *
+     * @return integer 
+     */
+    public function getCounter()
+    {
+        return $this->counter;
     }
 }
