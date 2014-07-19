@@ -115,6 +115,7 @@ class DefaultController extends Controller
                     echo '<li>Treffpunkt ist bislang unbekannt</li>';
                 }
 
+                echo '<li>sichtbar von '.$ride->getVisibleSince()->format('Y-m-d H:i').' bis '.$ride->getVisibleUntil()->format('Y-m-d H:i').'</li>';
                 echo '</ul>';
             }
             else
