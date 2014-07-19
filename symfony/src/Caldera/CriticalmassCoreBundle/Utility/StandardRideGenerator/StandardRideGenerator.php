@@ -27,6 +27,7 @@ class StandardRideGenerator {
         $this->calculateDate();
         $this->calculateTime();
         $this->calculateLocation();
+        $this->calculateVisibility();
 
         return $this->ride;
     }
@@ -90,5 +91,25 @@ class StandardRideGenerator {
         {
             $this->ride->setHasLocation(false);
         }
+    }
+
+    protected function calculateVisibility()
+    {
+        $intervalOneWeek = new \DateInterval('P1W');
+        $intervalThreeWeeks = new \DateInterval('P3W');
+
+        $timestamp = $this->ride->getDateTime()->format('U');
+
+        $visibleSince = new \DateTime();
+        $visibleSince->setTimestamp($timestamp);
+
+        $visibleUntil = new \DateTime();
+        $visibleUntil->setTimestamp($timestamp);
+
+        $visibleSince->sub($intervalThreeWeeks);
+        $visibleUntil->add($intervalOneWeek);
+
+        $this->ride->setVisibleSince($visibleSince);
+        $this->ride->setVisibleUntil($visibleUntil);
     }
 } 
