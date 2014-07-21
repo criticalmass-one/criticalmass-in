@@ -24,7 +24,7 @@ class TicketAdmin extends Admin
                 ->add('username', 'text', array('label' => 'Benutzerkennung'))
                 ->add('colorRed', 'text', array('label' => 'Rot'))
                 ->add('colorGreen', 'text', array('label' => 'Grün'))
-                ->add('colorRed', 'text', array('label' => 'Blau'))
+                ->add('colorBlue', 'text', array('label' => 'Blau'))
             ->end()
         ;
     }
