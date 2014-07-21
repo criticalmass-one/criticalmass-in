@@ -20,6 +20,12 @@ class TicketAdmin extends Admin
                 ->add('runtime', 'text', array('label' => 'Laufzeit'))
                 ->add('counter', 'text', array('label' => 'Zähler'))
             ->end()
+            ->with('Zusätzliche Optionen', array('class' => 'col-md-6'))
+                ->add('username', 'text', array('label' => 'Benutzerkennung'))
+                ->add('colorRed', 'text', array('label' => 'Rot'))
+                ->add('colorGreen', 'text', array('label' => 'Grün'))
+                ->add('colorRed', 'text', array('label' => 'Blau'))
+            ->end()
         ;
     }
 
@@ -29,6 +35,8 @@ class TicketAdmin extends Admin
         $datagridMapper
             ->add('inviteId')
             ->add('city')
+            ->add('username')
+            ->add('runtime')
             ->add('creationDateTime')
         ;
     }
@@ -38,8 +46,10 @@ class TicketAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('inviteId')
-            ->add('city')
+            ->addIdentifier('username')
+            ->addIdentifier('city')
             ->add('creationDateTime')
+            ->add('runtime')
         ;
     }
 }
