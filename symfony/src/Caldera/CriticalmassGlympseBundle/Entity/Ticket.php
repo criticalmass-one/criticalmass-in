@@ -44,6 +44,26 @@ class Ticket
     protected $counter;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $username;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorRed = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorGreen = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorBlue = 0;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -166,5 +186,97 @@ class Ticket
     public function getCounter()
     {
         return $this->counter;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Ticket
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set colorRed
+     *
+     * @param integer $colorRed
+     * @return Ticket
+     */
+    public function setColorRed($colorRed)
+    {
+        $this->colorRed = $colorRed;
+
+        return $this;
+    }
+
+    /**
+     * Get colorRed
+     *
+     * @return integer 
+     */
+    public function getColorRed()
+    {
+        return $this->colorRed;
+    }
+
+    /**
+     * Set colorGreen
+     *
+     * @param integer $colorGreen
+     * @return Ticket
+     */
+    public function setColorGreen($colorGreen)
+    {
+        $this->colorGreen = $colorGreen;
+
+        return $this;
+    }
+
+    /**
+     * Get colorGreen
+     *
+     * @return integer 
+     */
+    public function getColorGreen()
+    {
+        return $this->colorGreen;
+    }
+
+    /**
+     * Set colorBlue
+     *
+     * @param integer $colorBlue
+     * @return Ticket
+     */
+    public function setColorBlue($colorBlue)
+    {
+        $this->colorBlue = $colorBlue;
+
+        return $this;
+    }
+
+    /**
+     * Get colorBlue
+     *
+     * @return integer 
+     */
+    public function getColorBlue()
+    {
+        return $this->colorBlue;
     }
 }
