@@ -16,8 +16,6 @@ class TicketAdmin extends Admin
             ->with('Ticket', array('class' => 'col-md-6'))
                 ->add('inviteId', 'text', array('label' => 'Invite-ID'))
                 ->add('city', null, array('label' => 'Stadt'))
-                ->add('creationDateTime', 'datetime', array('label' => 'Datum'))
-                ->add('runtime', 'text', array('label' => 'Laufzeit'))
                 ->add('counter', 'text', array('label' => 'Zähler'))
             ->end()
             ->with('Zusätzliche Optionen', array('class' => 'col-md-6'))
@@ -26,6 +24,11 @@ class TicketAdmin extends Admin
                 ->add('colorGreen', 'text', array('label' => 'Grün'))
                 ->add('colorBlue', 'text', array('label' => 'Blau'))
             ->end()
+            ->with('Laufzeit', array('class' => 'col-md-6'))
+                ->add('startDateTime', 'datetime', array('label' => 'Startzeitpunkt'))
+                ->add('endDateTime', 'datetime', array('label' => 'Endzeitpunkt'))
+            ->end()
+
         ;
     }
 
@@ -36,7 +39,6 @@ class TicketAdmin extends Admin
             ->add('inviteId')
             ->add('city')
             ->add('username')
-            ->add('runtime')
             ->add('creationDateTime')
         ;
     }
@@ -49,7 +51,6 @@ class TicketAdmin extends Admin
             ->addIdentifier('username')
             ->addIdentifier('city')
             ->add('creationDateTime')
-            ->add('runtime')
         ;
     }
 }

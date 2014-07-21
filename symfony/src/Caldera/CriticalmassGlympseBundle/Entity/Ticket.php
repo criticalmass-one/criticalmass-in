@@ -36,11 +36,6 @@ class Ticket
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $runtime;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
     protected $counter;
 
     /**
@@ -62,6 +57,17 @@ class Ticket
      * @ORM\Column(type="smallint")
      */
     protected $colorBlue = 0;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $startDateTime;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $endDateTime;
+
 
     /**
      * Get id
@@ -117,29 +123,6 @@ class Ticket
     public function getCreationDateTime()
     {
         return $this->creationDateTime;
-    }
-
-    /**
-     * Set runtime
-     *
-     * @param integer $runtime
-     * @return Ticket
-     */
-    public function setRuntime($runtime)
-    {
-        $this->runtime = $runtime;
-
-        return $this;
-    }
-
-    /**
-     * Get runtime
-     *
-     * @return integer 
-     */
-    public function getRuntime()
-    {
-        return $this->runtime;
     }
 
     /**
@@ -278,5 +261,51 @@ class Ticket
     public function getColorBlue()
     {
         return $this->colorBlue;
+    }
+
+    /**
+     * Set startDateTime
+     *
+     * @param \DateTime $startDateTime
+     * @return Ticket
+     */
+    public function setStartDateTime($startDateTime)
+    {
+        $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get startDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getStartDateTime()
+    {
+        return $this->startDateTime;
+    }
+
+    /**
+     * Set endDateTime
+     *
+     * @param \DateTime $endDateTime
+     * @return Ticket
+     */
+    public function setEndDateTime($endDateTime)
+    {
+        $this->endDateTime = $endDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get endDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndDateTime()
+    {
+        return $this->endDateTime;
     }
 }
