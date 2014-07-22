@@ -44,7 +44,7 @@ caldera_criticalmass_core:
     prefix:   /
 
 caldera_criticalmass_mobile:
-    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
+    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
     prefix:   /
 
 caldera_criticalmass_statistic:
