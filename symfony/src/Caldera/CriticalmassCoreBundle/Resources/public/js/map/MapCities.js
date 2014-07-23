@@ -55,7 +55,16 @@ MapCities.prototype.drawCityMarkers = function()
         else
         {
             latLng = [city.getLatitude(), city.getLongitude()];
-            popupHTML += '<h3>' + city.getTitle() + '</h3><p>' + city.getDescription() + '</p>';
+            popupHTML += '<h3>' + city.getTitle() + '</h3>';
+
+            if (city.getDescription())
+            {
+                popupHTML += '<p>' + city.getDescription() + '</p>';
+            }
+            else
+            {
+                popupHTML += '<p>Für diese Stadt liegen momentan keine weiteren Informationen vor :(</p>';
+            }
         }
 
         var marker = L.marker(latLng, { riseOnHover: true, icon: criticalmassIcon, citySlug: slug });
