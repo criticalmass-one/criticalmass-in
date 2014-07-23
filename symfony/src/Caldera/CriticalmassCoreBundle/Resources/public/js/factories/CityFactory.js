@@ -149,20 +149,20 @@ CityFactory.getNearestCity = function()
 
         var cityList = JSON.parse(this2.storage);
 
-        for (var index in cityList.cities)
+        for (index in cityList.cities)
         {
             var city = cityList.cities[index];
             var distance = Math.sqrt(Math.pow(city.latitude - latitude, 2) + Math.pow(city.longitude - longitude, 2));
 
             if (!minDistance || distance < minDistance)
             {
-                minDistance = distance
+                minDistance = distance;
                 nearestCityIndex = index;
             }
         }
 
-        sessionStorage.currentCity = JSON.stringify(cityList.cities[index]);
-        sessionStorage.citySlug = index;
+        sessionStorage.currentCity = JSON.stringify(cityList.cities[nearestCityIndex]);
+        sessionStorage.citySlug = nearestCityIndex;
 
         CallbackHell.executeEventListener('findNearestCitySuccess');
         CallbackHell.executeEventListener('findNearestCityFinished');
