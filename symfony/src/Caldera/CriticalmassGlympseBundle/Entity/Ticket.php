@@ -68,6 +68,15 @@ class Ticket
      */
     protected $endDateTime;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $displayName;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $active;
 
     /**
      * Get id
@@ -307,5 +316,51 @@ class Ticket
     public function getEndDateTime()
     {
         return $this->endDateTime;
+    }
+
+    /**
+     * Set displayName
+     *
+     * @param string $displayName
+     * @return Ticket
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * Get displayName
+     *
+     * @return string 
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Ticket
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }
