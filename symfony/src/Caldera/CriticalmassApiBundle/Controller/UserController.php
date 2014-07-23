@@ -43,71 +43,92 @@ class UserController extends Controller
     public function getcolorsAction()
     {
         $response = new Response();
-        $response->setContent(json_encode(array(
-            'red' => $this->getUser()->getColorRed(),
-            'green' => $this->getUser()->getColorGreen(),
-            'blue' => $this->getUser()->getColorBlue()
-        )));
 
-        $response->headers->set('Content-Type', 'application/json');
+        if ($this->getUser())
+        {
+            $response->setContent(json_encode(array(
+                'red' => $this->getUser()->getColorRed(),
+                'green' => $this->getUser()->getColorGreen(),
+                'blue' => $this->getUser()->getColorBlue()
+            )));
+
+            $response->headers->set('Content-Type', 'application/json');
+        }
 
         return $response;
     }
 
     public function setcolorsAction(Request $request)
     {
-        $colors['red'] = $request->query->get('red');
-        $colors['green'] = $request->query->get('green');
-        $colors['blue'] = $request->query->get('blue');
-
-        foreach ($colors as $color)
+        if ($this->getUser())
         {
-            if (!($color >= 0 && $color < 256) || !isset($color))
+            $colors['red'] = $request->query->get('red');
+            $colors['green'] = $request->query->get('green');
+            $colors['blue'] = $request->query->get('blue');
+
+            foreach ($colors as $color)
             {
-                throw $this->createNotFoundException('Please make sure to set the right range for each color value.');
+                if (!($color >= 0 && $color < 256) || !isset($color))
+                {
+                    throw $this->createNotFoundException('Please make sure to set the right range for each color value.');
+                }
             }
+
+            $user = $this->getUser();
+
+            $user->setColorRed($colors['red']);
+            $user->setColorGreen($colors['green']);
+            $user->setColorBlue($colors['blue']);
+
+            $this->get('fos_user.user_manager')->updateUser($user);
         }
-
-        $user = $this->getUser();
-
-        $user->setColorRed($colors['red']);
-        $user->setColorGreen($colors['green']);
-        $user->setColorBlue($colors['blue']);
-
-        $this->get('fos_user.user_manager')->updateUser($user);
 
         return new Response();
     }
 
     public function switchcityAction($citySlug)
     {
-        $citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+        if ($this->getUser())
+        {
+            $citySlug = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
-        $user = $this->getUser();
+            $user = $this->getUser();
 
-        $user->setCurrentCity($citySlug->getCity());
+            $user->setCurrentCity($citySlug->getCity());
 
-        $this->get('fos_user.user_manager')->updateUser($user);
+            $this->get('fos_user.user_manager')->updateUser($user);
 
-        return new Response($citySlug->getCity()->getId());
+            return new Response($citySlug->getCity()->getId());
+        }
+        else
+        {
+            return new Response();
+        }
     }
 
     public function getownuserdataAction()
     {
-        $user = $this->getUser();
+        if ($this->getUser())
+        {
+            $user = $this->getUser();
 
-        $response = new Response();
-        $response->setContent(json_encode(array(
-            'id' => $user->getId(),
-            'gravatarHash' => $user->getGravatarHash(),
-            'username' => $user->getUsername(),
-            'colorRed' => $user->getColorRed(),
-            'colorGreen' => $user->getColorGreen(),
-            'colorBlue' => $user->getColorBlue(),
-            'plus' => true
-        )));
+            $response = new Response();
+            $response->setContent(json_encode(array(
+                'id' => $user->getId(),
+                'gravatarHash' => $user->getGravatarHash(),
+                'username' => $user->getUsername(),
+                'colorRed' => $user->getColorRed(),
+                'colorGreen' => $user->getColorGreen(),
+                'colorBlue' => $user->getColorBlue(),
+                'plus' => true
+            )));
 
-        $response->headers->set('Content-Type', 'application/json');
+            $response->headers->set('Content-Type', 'application/json');
+        }
+        else
+        {
+            $response = new Response();
+        }
 
         return $response;
     }
