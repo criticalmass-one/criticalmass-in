@@ -27,11 +27,15 @@ class UserController extends Controller
     public function getpingtokenAction()
     {
         $response = new Response();
-        $response->setContent(json_encode(array(
-            'pingToken' => $this->getUser()->getPingToken()
-        )));
 
-        $response->headers->set('Content-Type', 'application/json');
+        if ($this->getUser())
+        {
+            $response->setContent(json_encode(array(
+                'pingToken' => $this->getUser()->getPingToken()
+            )));
+
+            $response->headers->set('Content-Type', 'application/json');
+        }
 
         return $response;
     }
