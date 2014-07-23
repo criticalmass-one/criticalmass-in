@@ -115,3 +115,14 @@ ul#blogArticleList li.blogArticle + li.blogArticle
 {
     margin-top: 20px;
 }
+
+div#map div#glympseLogoContainer
+{
+    position: relative;
+    top: 275px;
+    left: 5px;
+    height: 40px;
+    width: 150px;
+    z-index: 50000;
+    opacity: 0.8;
+}
