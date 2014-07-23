@@ -17,9 +17,13 @@ class TicketAdmin extends Admin
                 ->add('inviteId', 'text', array('label' => 'Invite-ID'))
                 ->add('city', null, array('label' => 'Stadt'))
                 ->add('counter', 'text', array('label' => 'Zähler'))
+                ->add('active', 'checkbox', array('label' => 'Aktiv'))
             ->end()
-            ->with('Zusätzliche Optionen', array('class' => 'col-md-6'))
+            ->with('Benutzer', array('class' => 'col-md-6'))
                 ->add('username', 'text', array('label' => 'Benutzerkennung'))
+                ->add('displayName', 'text', array('label' => 'Anzeigename'))
+            ->end()
+            ->with('Farben', array('class' => 'col-md-6'))
                 ->add('colorRed', 'text', array('label' => 'Rot'))
                 ->add('colorGreen', 'text', array('label' => 'Grün'))
                 ->add('colorBlue', 'text', array('label' => 'Blau'))
@@ -40,6 +44,8 @@ class TicketAdmin extends Admin
             ->add('city')
             ->add('username')
             ->add('creationDateTime')
+            ->add('displayName')
+            ->add('active')
         ;
     }
 
@@ -51,6 +57,8 @@ class TicketAdmin extends Admin
             ->addIdentifier('username')
             ->addIdentifier('city')
             ->add('creationDateTime')
+            ->addIdentifier('displayName')
+            ->addIdentifier('active')
         ;
     }
 }
