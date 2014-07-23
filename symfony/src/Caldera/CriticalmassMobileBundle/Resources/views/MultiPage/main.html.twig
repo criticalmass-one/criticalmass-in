@@ -315,26 +315,28 @@
     </header>
     <section data-role="content" id="glympsePageContent">
         <h2>Live-Tracking mit Glympse</h2>
-        Sende uns deine Position über Glympse — so geht’s:
+
+        <p>Dank der Hilfe der großartigen Leute von <a href="http://www.glympse.com/">Glympse</a> funktioniert unser Live-Tracking endlich. Glympse ermöglicht es dir, deinen Standort mit deinen Freunden zu teilen — und natürlich mit criticalmas.in! So funktioniert’s:</p>
 
         <ol>
-            <li>Lade dir die Glympse-App herunter. Glympse gibt’s für iOS und Android und ist natürlich kostenlos.</li>
-            <li>Erstelle einen neuen Glympse über drei oder vier Stunden — länger dauert eine Critical Mass meistens nicht. Du kannst den Zeitraum später noch verlängern oder deinen Glympse vorzeitig beenden.</li>
+            <li>Lade dir die Glympse-App herunter. Glympse gibt’s für <a href="https://itunes.apple.com/de/app/glympse-zeig-deinen-freunden/id330316698?mt=8">iOS</a> und <a href="https://play.google.com/store/apps/details?id=com.glympse.android.glympse&hl=de">Android</a> und ist natürlich kostenlos.</li>
+            <li>Erstelle einen neuen Glympse über drei oder vier Stunden — länger dauert eine Critical Mass meistens nicht. Du kannst den Zeitraum später noch verlängern oder deinen Glympse vorzeitig beenden.</li>
             <li>Lade uns ein! Sende über die Glympse-App eine Einladung an <code>hamburg@criticalmass.in</code>.</li>
             <li>Fahr los: Glympse protokolliert deine Position für deinen ausgewählten Zeitraum und wir fragen den Glympse-Server in regelmäßigen Abständen nach deinen Aufenthaltsort, um ihn in der Karte darzustellen.</li>
             <li>Sobald der von dir festgelegte Zeitrahmen abgelaufen ist, bekommen wir von Glympse keine Positionsdaten mehr. Falls dein Glympse zum Ende der Tour noch nicht abgelaufen ist, solltest du ihn sicherheitshalber manuell in der App beenden, sonst folgt dir noch jemand nach Hause und klaut dein Bike ;-)</li>
         </ol>
+        <!--
+                <h2>Wozu das alles?</h2>
 
-        <h2>Wozu das alles?</h2>
+                <p>Den Umweg über Glympse gehen wir, weil wir zu blöd für eine eigene iOS- oder Android-App sind. Was das angeht, haben wir es einfach nicht drauf: Wir haben uns zwar schon einmal an einer App für iOS versucht, die dann aber zwei Mal krachend zurückgewiesen wurde. Die bittere Erkenntnis: Wir sind einfach keine App-Entwickler. Dafür können wir einigermaßen gut so genannte Web-Apps konstruieren. Eine Web-App ist eigentlich nicht viel mehr als eine Webseite, die wie eine „echte App“ aussieht und sich auch so ähnlich verhält. Und dank HTML5 kann eine Web-App inzwischen unter anderem auf die Geolocation-Daten deines Smartphones zugreifen, sofern du denn der Webseite den Zugriff erlaubst. Diese Daten greifen wir auch mit unserer Web-App ab, um deinen Aufenthaltsort in der Karte einzuzeichnen.</p>
+                <p>Das Problem daran ist nur: Unsere Web-App läuft nur solange sie im Browser geöffnet ist. Sobald du also eine andere Seite aufrufst, den Browser schließt oder den Ruhezustand deines Smartphones aktivierst, um es in die Hosentasche zu stecken, werden auch keine Positionsdaten mehr gesendet. Das ist natürlich recht witzlos, weil nicht jeder eine passende Smartphone-Halterung am Lenker herumfährt, um das Gerät nicht in der Hand halten zu müssen. Eine „richtige App“ hingegen kann auch als Hintergrundprozess auf deinem Smartphone laufen und von dort aus Positionsdaten senden — nur haben wir das mit der eigenen App halt noch nicht so richtig geregelt bekommen.</p>
+                <p>Darum nehmen wir den Umweg über Glympse: Mit Glympse kannst du uns für einen vorher festgelegten Zeitraum deine Positionsdaten senden und dein Smartphone getrost in die Tasche stecken, denn Glympse läuft natürlich auch im Hintergrund weiter. Wir fragen dann Glympse regelmäßig nach deinem Aufenthaltsort und zeichnen deine Position auf unserer Karte ein. So einfach ist das.</p>
 
-        <p>Den Umweg über Glympse gehen wir, weil wir zu blöd für eine eigene iOS- oder Android-App sind. Was das angeht, haben wir es einfach nicht drauf: Wir haben uns zwar schon einmal an einer App für iOS versucht, die dann aber zwei Mal krachend zurückgewiesen wurde. Die bittere Erkenntnis: Wir sind einfach keine App-Entwickler. Dafür können wir einigermaßen gut so genannte Web-Apps konstruieren. Eine Web-App ist eigentlich nicht viel mehr als eine Webseite, die wie eine „echte App“ aussieht und sich auch so ähnlich verhält. Und dank HTML5 kann eine Web-App inzwischen unter anderem auf die Geolocation-Daten deines Smartphones zugreifen, sofern du denn der Webseite den Zugriff erlaubst. Diese Daten greifen wir auch mit unserer Web-App ab, um deinen Aufenthaltsort in der Karte einzuzeichnen.</p>
-        <p>Das Problem daran ist nur: Unsere Web-App läuft nur solange sie im Browser geöffnet ist. Sobald du also eine andere Seite aufrufst, den Browser schließt oder den Ruhezustand deines Smartphones aktivierst, um es in die Hosentasche zu stecken, werden auch keine Positionsdaten mehr gesendet. Das ist natürlich recht witzlos, weil nicht jeder eine passende Smartphone-Halterung am Lenker herumfährt, um das Gerät nicht in der Hand halten zu müssen. Eine „richtige App“ hingegen kann auch als Hintergrundprozess auf deinem Smartphone laufen und von dort aus Positionsdaten senden — nur haben wir das mit der eigenen App halt noch nicht so richtig geregelt bekommen.</p>
-        <p>Darum nehmen wir den Umweg über Glympse: Mit Glympse kannst du uns für einen vorher festgelegten Zeitraum deine Positionsdaten senden und dein Smartphone getrost in die Tasche stecken, denn Glympse läuft natürlich auch im Hintergrund weiter. Wir fragen dann Glympse regelmäßig nach deinem Aufenthaltsort und zeichnen deine Position auf unserer Karte ein. So einfach ist das.</p>
+                <h2>Und wozu überhaupt dieses Tracking?</h2>
 
-        <h2>Und wozu überhaupt dieses Tracking?</h2>
-
-        <p>Einerseits entstand die Idee zu criticalmass.in aus der monatlichen Frage, wen man denn anrufen könnte, wenn man noch bis 19 Uhr im Bureau sitzt und sich erst später der Critical Mass anschließen möchte. Und natürlich gibt’s auch welche, die an einer Tankstelle ihren Proviant auffüllen möchtern oder nach dem Corken über eine Abkürzung wieder an die Spitze sauen wollen, die müssen natürlich auch wissen, wo wir uns gerade herumtreiben.</p>
-        <p>Andererseits brauchen wir deine Fahrstrecke, um daraus tolle und interessante Statistiken generieren zu können, etwa über die gefahrenen Kilometer einer Tour oder wo die Critical Mass in einer Stadt ganz besonders häufig entlanggefahren ist. Diese Statistiken sind noch nicht ganz fertig, wir geben uns aber Mühe und hoffen, da in den nächsten Wochen etwas vorzeigen zu können.</p>
+                <p>Einerseits entstand die Idee zu criticalmass.in aus der monatlichen Frage, wen man denn anrufen könnte, wenn man noch bis 19 Uhr im Bureau sitzt und sich erst später der Critical Mass anschließen möchte. Und natürlich gibt’s auch welche, die an einer Tankstelle ihren Proviant auffüllen möchtern oder nach dem Corken über eine Abkürzung wieder an die Spitze sauen wollen, die müssen natürlich auch wissen, wo wir uns gerade herumtreiben.</p>
+                <p>Andererseits brauchen wir deine Fahrstrecke, um daraus tolle und interessante Statistiken generieren zu können, etwa über die gefahrenen Kilometer einer Tour oder wo die Critical Mass in einer Stadt ganz besonders häufig entlanggefahren ist. Diese Statistiken sind noch nicht ganz fertig, wir geben uns aber Mühe und hoffen, da in den nächsten Wochen etwas vorzeigen zu können.</p>
+        -->
     </section>
 </section>
 
