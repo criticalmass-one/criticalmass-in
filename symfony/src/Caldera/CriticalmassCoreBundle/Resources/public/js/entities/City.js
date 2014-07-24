@@ -11,6 +11,7 @@ City.prototype.latitude = null;
 City.prototype.longitude = null;
 City.prototype.tileLayerAddress = null;
 City.prototype.tileLayerAttributation = null;
+City.prototype.autoDetect = null;
 
 City.prototype.getId = function()
 {
@@ -131,6 +132,16 @@ City.prototype.setTileLayerAttributation = function(tileLayerAttributation)
 {
     this.tileLayerAttributation = tileLayerAttributation;
 }
+
+City.prototype.getAutoDetect = function()
+{
+    return this.autoDetect;
+};
+
+City.prototype.setAutoDetect = function(autoDetect)
+{
+    this.autoDetect = autoDetect;
+};
 
 City.prototype.countSocialMediaLinks = function()
 {
