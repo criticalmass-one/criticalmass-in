@@ -18,6 +18,7 @@ class CityAdmin extends Admin
                 ->add('city', 'text', array('label' => 'Stadt', 'required' => true))
                 ->add('title', 'text', array('label' => 'Bezeichnung', 'required' => true))
                 ->add('description', 'textarea', array('label' => 'Beschreibung', 'required' => false))
+                ->add('autoDetect', 'checkbox', array('label' => 'Autodetection', 'required' => true))
             ->end()
             ->with('Social Media', array('class' => 'col-md-6'))
                 ->add('url', 'text', array('label' => 'Webseite', 'required' => false))
