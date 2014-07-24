@@ -131,6 +131,11 @@ class City
      */
     protected $standardLongitude;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $autoDetect = true;
+
 	/**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
 	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
@@ -639,5 +644,28 @@ class City
         }
 
         return $result;
+    }
+
+    /**
+     * Set autoDetect
+     *
+     * @param boolean $autoDetect
+     * @return City
+     */
+    public function setAutoDetect($autoDetect)
+    {
+        $this->autoDetect = $autoDetect;
+
+        return $this;
+    }
+
+    /**
+     * Get autoDetect
+     *
+     * @return boolean 
+     */
+    public function getAutoDetect()
+    {
+        return $this->autoDetect;
     }
 }
