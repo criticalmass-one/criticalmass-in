@@ -21,12 +21,7 @@ Url.getSystem = function()
 
 Url.getHostName = function()
 {
-    if (this.getSystem() == 'local')
-    {
-        return 'criticalmass.cm';
-    }
-
-    return 'criticalmass.in';
+    return window.location.host;
 };
 
 Url.getPortNumber = function()
