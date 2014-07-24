@@ -74,9 +74,15 @@ class Ticket
     protected $displayName;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $message;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $active;
+
 
     /**
      * Get id
@@ -362,5 +368,28 @@ class Ticket
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Set message
+     *
+     * @param string $message
+     * @return Ticket
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string 
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 }
