@@ -10,6 +10,10 @@
         {
             function findNearestCity()
             {
+                {% if citySlug is defined %}
+                    sessionStorage.citySlug = '{{ citySlug }}';
+
+                {% endif %}
                 if (!sessionStorage.citySlug)
                 {
                     CityFactory.getNearestCity();
