@@ -55,7 +55,8 @@ class CitiesController extends Controller
                 'twitter' => $city->getTwitter(),
                 'slug' => $city->getMainSlug()->getSlug(),
                 'latitude' => $city->getLatitude(),
-                'longitude' => $city->getLongitude()
+                'longitude' => $city->getLongitude(),
+                'autoDetect' => $city->getAutoDetect()
             );
 
             $citiesResult[$city->getMainSlug()->getSlug()] = $cityResultArray;
