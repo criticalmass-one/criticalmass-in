@@ -155,7 +155,7 @@ CityFactory.getNearestCity = function()
             var city = cityList.cities[index];
             var distance = Math.sqrt(Math.pow(city.latitude - latitude, 2) + Math.pow(city.longitude - longitude, 2));
 
-            if (!minDistance || distance < minDistance)
+            if (!minDistance || (distance < minDistance && city.autoDetect == true))
             {
                 minDistance = distance;
                 nearestCityIndex = index;
