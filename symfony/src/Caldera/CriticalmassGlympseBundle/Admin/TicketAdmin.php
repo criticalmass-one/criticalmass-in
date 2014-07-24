@@ -22,6 +22,7 @@ class TicketAdmin extends Admin
             ->with('Benutzer', array('class' => 'col-md-6'))
                 ->add('username', 'text', array('label' => 'Benutzerkennung'))
                 ->add('displayName', 'text', array('label' => 'Anzeigename'))
+                ->add('message', 'text', array('label' => 'Mitteilung'))
             ->end()
             ->with('Farben', array('class' => 'col-md-6'))
                 ->add('colorRed', 'text', array('label' => 'Rot'))
@@ -32,7 +33,6 @@ class TicketAdmin extends Admin
                 ->add('startDateTime', 'datetime', array('label' => 'Startzeitpunkt'))
                 ->add('endDateTime', 'datetime', array('label' => 'Endzeitpunkt'))
             ->end()
-
         ;
     }
 
