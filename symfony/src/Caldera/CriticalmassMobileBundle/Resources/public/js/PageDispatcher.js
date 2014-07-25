@@ -75,6 +75,11 @@ PageDispatcher.initPage = function(pagename)
                 blogPage.initPage();
                 this.pageArray['blogPage'] = blogPage;
                 break;
+            case 'glympsePage':
+                var glympsePage = new GlympsePage('glympsePage');
+                glympsePage.initPage();
+                this.pageArray['glympsePage'] = glympsePage;
+                break;
         }
     }
 };
