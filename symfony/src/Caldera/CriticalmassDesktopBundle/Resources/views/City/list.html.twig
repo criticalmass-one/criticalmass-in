@@ -65,6 +65,7 @@
     </script>
     <div class="container">
 
+        <p>Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cities|length }} Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.</p>
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                 Sortierung
@@ -81,7 +82,7 @@
         <ul class="row" id="cityList">
             {% for city in cities %}
                 <li class="col-md-4 city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
-                    <a href="#"><h2>{{ city.getCity() }}</h2></a>
+                    <a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}"><h2>{{ city.getCity() }}</h2></a>
                     <p>{{ city.getDescription() }}</p>
                     <p>{{ city.getEventDateTimeLocationString() }}</p>
                 </li>

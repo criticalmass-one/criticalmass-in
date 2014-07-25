@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassGlympseBundle\Controller;
 
+use Caldera\CriticalmassGlympseBundle\Entity\Ticket;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,19 +37,37 @@ class DefaultController extends Controller
 
                 if (true)
                 {
-                    echo "ID: ".$counter."<br />";
+                    echo "<br /><br />ID: ".$counter."<br />";
                     $body = imap_body($mbox, $counter);
 
-                    preg_match_all('|----(.*) base64 (.*)==|U', $body, $results);
+                    $results = explode('----boundary', $body);
 
                     foreach ($results as $result)
                     {
-                        preg_match('|http:\/\/glympse.com\/([A-Z0-9]{4,4})-([A-Z0-9]{4,4})|U', base64_decode($result[1]), $results2);
+                        if (strlen($result) > 0)
+                        {
+                            $result = '----boundary'.$result;
 
-                        $inviteId = $results2[1].'-'.$results2[2];
+                            $string = base64_decode('----boundary'.$result);
 
-                        echo $inviteId;
-                        break;
+                            //preg_match('/http:\/\/glympse.com\/([A-Z0-9]{4,4})-([A-Z0-9]{4,4})/U', $string, $results2);
+                            preg_match('/([A-Z0-9]{4,4})-([A-Z0-9]{4,4})/U', $string, $results2);
+                            if (count($results2) > 2)
+                            {
+                                $inviteId = $results2[1].'-'.$results2[2];
+
+                                $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug('hamburg')->getCity();
+
+                                $ticket = new Ticket();
+                                $ticket->setCreationDateTime(new \DateTime());
+                                $ticket->setInviteId($inviteId);
+                                $ticket->setCity($city);
+
+                                imap_mail_move($mbox, $counter, "INBOX.Done");
+
+                                break;
+                            }
+                        }
                     }
                 }
             }
