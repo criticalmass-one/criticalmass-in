@@ -85,6 +85,8 @@ AppPage.prototype.switchCityBySlug = function(newCitySlug)
     this.setCitySlug(newCitySlug);
     this.storeCurrentCity(newCitySlug);
 
+    $('#glympseInviteEmailAddress').html(newCitySlug + '@criticalmass.in');
+
     _paq.push(['trackEvent', 'switchCity', newCitySlug]);
 }
 
