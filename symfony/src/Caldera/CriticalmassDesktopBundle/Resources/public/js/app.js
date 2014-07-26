@@ -1,5 +1,5 @@
 var map, boroughSearch = [], theaterSearch = [], museumSearch = [];
-
+/*
 $(document).ready(function() {
   getViewport();
 });
@@ -23,22 +23,27 @@ function getViewport() {
     });
   }
 }
-
+*/
+/*
 function sidebarClick(id) {
-  /* If sidebar takes up entire screen, hide it and go to the map */
+    alert(id);
+  /* If sidebar takes up entire screen, hide it and go to the map *
   if (document.body.clientWidth <= 767) {
     sidebar.hide();
     getViewport();
   }
+
+
   map.addLayer(theaterLayer).addLayer(museumLayer);
   var layer = markerClusters.getLayer(id);
   markerClusters.zoomToShowLayer(layer, function() {
     map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
     layer.fire("click");
   });
-}
+}*/
 
 /* Basemap Layers */
+/*
 var mapquestOSM = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
   maxZoom: 19,
   subdomains: ["otile1", "otile2", "otile3", "otile4"],
@@ -59,14 +64,9 @@ var mapquestHYB = L.layerGroup([L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sa
 })]);
 
 
-var map = L.map('map').setView([53.5554952, 9.9436765], 13);
 
-L.tileLayer('http://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18
-}).addTo(map);
 
-/* Attribution control */
+/* Attribution control *//*
 function updateAttribution(e) {
   $.each(map._layers, function(index, layer) {
     if (layer.getAttribution) {
@@ -98,22 +98,22 @@ var sidebar = L.control.sidebar("sidebar", {
   getViewport();
 }).on("hidden", function () {
   getViewport();
-}).addTo(map);
+}).addTo(map);*/
 
 /* Larger screens get expanded layer control and visible sidebar */
-if (document.body.clientWidth <= 767) {
+/*if (document.body.clientWidth <= 767) {
   var isCollapsed = true;
 } else {
   var isCollapsed = false;
   sidebar.show();
 }
-
+*//*
 var baseLayers = {
   "Street Map": mapquestOSM,
   "Aerial Imagery": mapquestOAM,
   "Imagery with Streets": mapquestHYB
-};
-
+};*/
+/*
 $('.cityRow').each(function(element)
 {
     var latitude = $(this).data('latitude');
@@ -136,7 +136,7 @@ $('.cityRow').each(function(element)
     {
         showCityInfo(this.options.citySlug);
     });
-});
+});*/
 
 $('.cityRow').on('click', function()
 {
@@ -157,9 +157,9 @@ if (document.body.clientWidth <= 767) {
     var isCollapsed = true;
 } else {
     var isCollapsed = false;
-    sidebar.show();
+    /*sidebar.show();*/
 }
-
+/*
 var mapquestOSM = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
     maxZoom: 19,
     subdomains: ["otile1", "otile2", "otile3", "otile4"],
@@ -177,7 +177,7 @@ var mapquestHYB = L.layerGroup([L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sa
     maxZoom: 19,
     subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"],
     attribution: 'Labels courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">. Map data (c) <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> contributors, CC-BY-SA. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
-})]);
+})]);*/
 
 CallbackHell.registerEventListener('tileLayerListRefreshed', function()
 {
@@ -192,7 +192,11 @@ CallbackHell.registerEventListener('tileLayerListRefreshed', function()
         tileLayers[tileLayerObject.getTitle()] = tileLayer;
     }
 
+    map = L.map('map', { zoomControl: false, attributionControl: false});
+    map.setView([53.5554952, 9.9436765], 13);
+
     var layerControl = L.control.groupedLayers(tileLayers, {
         collapsed: true
-    }).addTo(map);
+    });
+    layerControl.addTo(map);
 });
