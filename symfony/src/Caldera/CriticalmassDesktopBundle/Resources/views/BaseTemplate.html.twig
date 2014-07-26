@@ -48,26 +48,8 @@
             </div>
         </form>
         <ul class="nav navbar-nav">
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;About</a></li>
-            <li class="dropdown">
-                <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe" style="color: white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="map.fitBounds(boroughs.getBounds()); return false;"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
-                    <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#legendModal').modal('show'); return false;"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>
-                    <li class="divider hidden-xs"></li>
-                    <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#loginModal').modal('show'); return false;"><i class="fa fa-user"></i>&nbsp;&nbsp;Login</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-cloud-download" style="color: white"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="data/boroughs.geojson" download="boroughs.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Boroughs</a></li>
-                    <li><a href="data/subways.geojson" download="subways.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Subway Lines</a></li>
-                    <li><a href="data/DOITT_THEATER_01_13SEPT2010.geojson" download="theaters.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Theaters</a></li>
-                    <li><a href="data/DOITT_MUSEUM_01_13SEPT2010.geojson" download="museums.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Museums</a></li>
-                </ul>
-            </li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="sidebar.toggle(); return false;"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;POI List</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="sidebar.toggle(); return false;"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;Städte</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;Über uns</a></li>
         </ul>
     </div><!--/.navbar-collapse -->
 </div>
@@ -84,9 +66,8 @@
                     <table class="table table-hover" id="theater-table">
                         <tbody class="list">
                         {% for city in cities %}
-                            <tr style="cursor: pointer;" onclick="sidebarClick(41); return false;"><td class="cityName">{{ city.getCity() }}<i class="fa fa-chevron-right pull-right"></i></td></tr>
+                            <tr style="cursor: pointer;" onclick="sidebarClick({{ city.getId() }}); return false;"><td class="cityName">{{ city.getCity() }}<i class="fa fa-chevron-right pull-right"></i></td></tr>
                         {% endfor %}
-
                         </tbody>
                     </table>
                 </div>
@@ -100,22 +81,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Welcome to the BootLeaf template!</h4>
+                <h4 class="modal-title">Willkommen auf criticalmass.in!</h4>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="aboutTabs">
-                    <li class="active"><a href="#about" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;About the project</a></li>
-                    <li><a href="#contact" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Contact us</a></li>
-                    <li><a href="#disclaimer" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Disclaimer</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i>&nbsp;Metadata <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#boroughs-tab" data-toggle="tab">Boroughs</a></li>
-                            <li><a href="#subway-lines-tab" data-toggle="tab">Subway Lines</a></li>
-                            <li><a href="#theaters-tab" data-toggle="tab">Theaters</a></li>
-                            <li><a href="#museums-tab" data-toggle="tab">Museums</a></li>
-                        </ul>
-                    </li>
+                    <li class="active"><a href="#about" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;Über uns</a></li>
+                    <li><a href="#contact" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Kontakt</a></li>
+                    <li><a href="#disclaimer" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Impressum</a></li>
                 </ul>
                 <div class="tab-content" id="aboutTabsContent" style="padding-top: 10px;">
                     <div class="tab-pane fade active in" id="about">
@@ -132,9 +104,10 @@
                             </ul>
                         </div>
                     </div>
-                    <div id="disclaimer" class="tab-pane fade text-danger">
-                        <p>The data provided on this site is for informational and planning purposes only.</p>
-                        <p>Absolutely no accuracy or completeness guarantee is implied or intended. All information on this map is subject to such variations and corrections as might result from a complete title search and/or accurate field survey.</p>
+                    <div id="disclaimer" class="tab-pane fade">
+                        <p>criticalmass.in ist ein Projekt an der Fachhochschule Wedel.</p>
+                        <p>Fachhochschule Wedel<br />Feldstraße 143<br />22880 Wedel</p>
+                        <p><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:malte@criticalmass.in">malte@criticalmass.in</a><br /><span class="glyphicon glyphicon-earphone"></span> 0700 11 864 833</p>
                     </div>
                     <div class="tab-pane fade" id="contact">
                         <form id="contact-form">
