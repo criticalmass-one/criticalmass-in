@@ -150,4 +150,5 @@ function showCityInfo(citySlug)
     $("#feature-info").html(city.getDescription());
     $("#featureModal").modal("show");
     map.panTo([city.getLatitude(), city.getLongitude()]);
+    map.setZoom(15);
 }
