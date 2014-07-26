@@ -183,6 +183,7 @@ CallbackHell.registerEventListener('tileLayerListRefreshed', function()
 {
     var tileLayerObjects = TileLayerFactory.getTileLayers();
     var tileLayers = new Array();
+    var standardTileLayer = null;
 
     for (var index in tileLayerObjects)
     {
@@ -190,10 +191,17 @@ CallbackHell.registerEventListener('tileLayerListRefreshed', function()
         var tileLayer = L.tileLayer(tileLayerObject.getAddress(), {foo: 'bar'});
 
         tileLayers[tileLayerObject.getTitle()] = tileLayer;
+
+        if (tileLayerObject.getStandard())
+        {
+            standardTileLayer = tileLayer;
+        }
     }
 
     map = L.map('map', { zoomControl: false, attributionControl: false});
     map.setView([53.5554952, 9.9436765], 13);
+
+    standardTileLayer.addTo(map);
 
     var layerControl = L.control.groupedLayers(tileLayers, {
         collapsed: true
