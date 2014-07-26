@@ -6,6 +6,7 @@ TileLayer.prototype.id = null;
 TileLayer.prototype.title = null;
 TileLayer.prototype.address = null;
 TileLayer.prototype.attributation = null;
+TileLayer.prototype.standard = null;
 
 TileLayer.prototype.getId = function()
 {
