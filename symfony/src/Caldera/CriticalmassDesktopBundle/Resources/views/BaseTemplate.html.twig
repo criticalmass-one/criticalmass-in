@@ -28,6 +28,15 @@
     <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
     <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <script>
+        window.onload = function()
+        {
+            CityFactory.refreshAllStoredCities();
+            RideFactory.refreshAllStoredRides();
+            TileLayerFactory.refreshAllStoredTileLayers();
+        };
+    </script>
 </head>
 
 <body>
@@ -249,6 +258,9 @@
 <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js"></script>
 
 {% javascripts '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassCoreBundle/Resources/public/js/*'
+'@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
+'@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/bootstrap.min.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.activearea.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
