@@ -16,7 +16,7 @@ InitMapView.prototype.initView = function()
         this.initWithOverride();
     }
     else
-    if (ride != null && ride.isRolling())
+    if (ride != null && ride.isRolling() && this.map.positions.getLatestPosition())
     {
         this.initWithPosition();
     }
