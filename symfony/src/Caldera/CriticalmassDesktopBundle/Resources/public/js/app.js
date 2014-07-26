@@ -129,11 +129,13 @@ $('.cityRow').each(function(element)
 
 $('.cityRow').on('click', function()
 {
-    alert($(this).data('cityslug'));
+    showCityInfo($(this).data('cityslug'));
 });
 function showCityInfo(citySlug)
 {
-    $("#feature-title").html('foobar');
-    $("#feature-info").html('bazbaz');
+    var city = CityFactory.getCityFromStorageBySlug(citySlug);
+
+    $("#feature-title").html(city.getTitle());
+    $("#feature-info").html(city.getDescription());
     $("#featureModal").modal("show");
 }
