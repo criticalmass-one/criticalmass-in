@@ -118,3 +118,11 @@ var baseLayers = {
   "Aerial Imagery": mapquestOAM,
   "Imagery with Streets": mapquestHYB
 };
+
+$('.cityRow').each(function(element)
+{
+  var latitude = $(this).data('latitude');
+  var longitude = $(this).data('longitude');
+  console.log(latitude, longitude);
+  L.marker([latitude, longitude]).addTo(map);
+});
