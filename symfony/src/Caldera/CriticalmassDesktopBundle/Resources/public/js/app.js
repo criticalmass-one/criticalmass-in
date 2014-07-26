@@ -66,11 +66,6 @@ L.tileLayer('http://{s}.tiles.mapbox.com/v3/maltehuebner.ii27p08l/{z}/{x}/{y}.pn
     maxZoom: 18
 }).addTo(map);
 
-/* Clear feature highlight when map is clicked */
-map.on("click", function(e) {
-  highlight.clearLayers();
-});
-
 /* Attribution control */
 function updateAttribution(e) {
   $.each(map._layers, function(index, layer) {
