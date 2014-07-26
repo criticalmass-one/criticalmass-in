@@ -125,4 +125,13 @@ $('.cityRow').each(function(element)
   var longitude = $(this).data('longitude');
   console.log(latitude, longitude);
   L.marker([latitude, longitude]).addTo(map);
+});$('.cityRow').on('click', function()
+{
+    alert($(this).data('cityslug'));
 });
+function showCityInfo(citySlug)
+{
+    $("#feature-title").html('foobar');
+    $("#feature-info").html('bazbaz');
+    $("#featureModal").modal("show");
+}
