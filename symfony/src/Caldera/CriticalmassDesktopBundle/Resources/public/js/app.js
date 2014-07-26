@@ -121,10 +121,26 @@ var baseLayers = {
 
 $('.cityRow').each(function(element)
 {
-  var latitude = $(this).data('latitude');
-  var longitude = $(this).data('longitude');
-  console.log(latitude, longitude);
-  L.marker([latitude, longitude]).addTo(map).on('click', showCityInfo);
+    var latitude = $(this).data('latitude');
+    var longitude = $(this).data('longitude');
+    var citySlug = $(this).data('cityslug');
+
+    var criticalmassIcon = L.icon({
+        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        popupAnchor: [0, -36],
+        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+    });
+
+    var marker = L.marker([latitude, longitude], { icon: criticalmassIcon, citySlug: citySlug });
+    marker.addTo(map);
+    marker.on('click', function()
+    {
+        showCityInfo(this.options.citySlug);
+    });
 });
 
 $('.cityRow').on('click', function()
