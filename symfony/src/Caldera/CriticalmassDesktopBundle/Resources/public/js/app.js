@@ -154,4 +154,5 @@ function showCityInfo(citySlug)
     $("#feature-title").html(city.getTitle());
     $("#feature-info").html(city.getDescription());
     $("#featureModal").modal("show");
+    map.panTo([city.getLatitude(), city.getLongitude()]);
 }
