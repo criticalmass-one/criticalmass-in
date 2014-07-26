@@ -27,7 +27,7 @@ input[type="radio"], input[type="checkbox"] {
 .sidebar-table {
   position: absolute;
   width: 100%;
-  top: 150px;
+  top: 40px;
   bottom: 0px;
   left: 0px;
   right: 0px;
