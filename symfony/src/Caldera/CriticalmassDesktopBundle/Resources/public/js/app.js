@@ -124,8 +124,10 @@ $('.cityRow').each(function(element)
   var latitude = $(this).data('latitude');
   var longitude = $(this).data('longitude');
   console.log(latitude, longitude);
-  L.marker([latitude, longitude]).addTo(map);
-});$('.cityRow').on('click', function()
+  L.marker([latitude, longitude]).addTo(map).on('click', showCityInfo);
+});
+
+$('.cityRow').on('click', function()
 {
     alert($(this).data('cityslug'));
 });
