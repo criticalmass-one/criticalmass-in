@@ -1,13 +1,5 @@
 var map, boroughSearch = [], theaterSearch = [], museumSearch = [];
 
-function getViewport()
-{}
-
-/*
-$(document).ready(function() {
-  getViewport();
-});
-
 function getViewport() {
   if (sidebar.isVisible()) {
     map.setActiveArea({
@@ -27,7 +19,7 @@ function getViewport() {
     });
   }
 }
-*/
+
 /*
 function sidebarClick(id) {
     alert(id);
@@ -169,11 +161,6 @@ function initApp()
 
     standardTileLayer.addTo(map);
 
-    var layerControl = L.control.groupedLayers(tileLayers, null, {
-        collapsed: false
-    });
-    layerControl.addTo(map);
-
     var sidebar = L.control.sidebar("sidebar", {
         closeButton: true,
         position: "left"
@@ -204,6 +191,7 @@ function initApp()
     });
 
     var cities = CityFactory.getAllCities();
+    var markerArray = new Array();
 
     for (var index in cities)
     {
@@ -218,14 +206,29 @@ function initApp()
         });
 
         var marker = L.marker([city.getLatitude(), city.getLongitude()], { icon: criticalmassIcon, citySlug: city.getCitySlug() });
-        marker.addTo(map);
         marker.on('click', function()
         {
             showCityInfo(this.options.citySlug);
         });
+
+        markerArray.push(marker);
     }
 
+    var markerGroup = L.layerGroup(markerArray);
+
     var zoomControl = L.control.zoom({
-        position: "bottomright"
+        position: "topright"
     }).addTo(map);
+
+
+    var layerControl = L.control.groupedLayers(tileLayers, {
+        "Critical Mass": {
+            "Städte": markerGroup
+        }
+    }, {
+        collapsed: false
+    });
+    layerControl.addTo(map);
+
+    getViewport();
 }
