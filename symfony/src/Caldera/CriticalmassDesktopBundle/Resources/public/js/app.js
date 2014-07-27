@@ -91,9 +91,7 @@ attributionControl.onAdd = function (map) {
 };
 map.addControl(attributionControl);
 
-var zoomControl = L.control.zoom({
-  position: "bottomright"
-}).addTo(map);
+
 
 var sidebar = L.control.sidebar("sidebar", {
   closeButton: true,
@@ -171,8 +169,8 @@ function initApp()
 
     standardTileLayer.addTo(map);
 
-    var layerControl = L.control.groupedLayers(tileLayers, {
-        collapsed: true
+    var layerControl = L.control.groupedLayers(tileLayers, null, {
+        collapsed: false
     });
     layerControl.addTo(map);
 
@@ -226,4 +224,8 @@ function initApp()
             showCityInfo(this.options.citySlug);
         });
     }
+
+    var zoomControl = L.control.zoom({
+        position: "bottomright"
+    }).addTo(map);
 }
