@@ -138,4 +138,7 @@ function initApp()
     layerControl.addTo(map);
 
     getViewport();
+
+    var mapPositions = new MapPositions(map);
+    mapPositions.startLoop();
 }
