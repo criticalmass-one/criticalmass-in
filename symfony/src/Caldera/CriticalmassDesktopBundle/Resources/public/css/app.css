@@ -114,24 +114,24 @@ input[type="radio"], input[type="checkbox"] {
   text-align: center;
 }
 @media (max-width: 992px) {
-  .navbar .navbar-brand {
-    font-size: 18px;
-  }
+    .navbar .navbar-brand {
+        font-size: 18px;
+    }
 }
 @media (max-width: 767px){
-  .url-break {
-    word-break: break-all;
-    word-break: break-word;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  }
+    .url-break {
+        word-break: break-all;
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
 }
 /* Print Handling */
 @media print {
-  .navbar {
-    display: none !important;
-  }
-  .leaflet-control-container {
-    display: none !important;
-  }
+    .navbar {
+        display: none !important;
+    }
+    .leaflet-control-container {
+        display: none !important;
+    }
 }

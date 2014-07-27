@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
     <link rel="stylesheet" href="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css">
 
-    {% stylesheets '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
+    {% stylesheets
+    '@CalderaCriticalmassCoreBundle/Resources/public/css/external/*.css'
+    '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
     '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css'
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -32,6 +34,21 @@
     <script>
         window.onload = function()
         {
+            function loadingCompletedCallback()
+            {
+                if (CallbackHell.hasEventListenerBeenFired('cityListRefreshed') &&
+                        CallbackHell.hasEventListenerBeenFired('rideListRefreshed') &&
+                        CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
+                        )
+                {
+                    initApp();
+                }
+            }
+
+            CallbackHell.registerEventListener('cityListRefreshed', loadingCompletedCallback);
+            CallbackHell.registerEventListener('rideListRefreshed', loadingCompletedCallback);
+            CallbackHell.registerEventListener('tileLayerListRefreshed', loadingCompletedCallback);
+
             CityFactory.refreshAllStoredCities();
             RideFactory.refreshAllStoredRides();
             TileLayerFactory.refreshAllStoredTileLayers();
@@ -74,11 +91,7 @@
             <div class="panel-body">
                 <div class="sidebar-table">
                     <table class="table table-hover" id="theater-table">
-                        <tbody class="list">
-                        {% for city in cities %}
-                            <tr class="cityRow" style="cursor: pointer;" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
-                                <td class="cityName">{{ city.getCity() }}<i class="fa fa-chevron-right pull-right"></i></td></tr>
-                        {% endfor %}
+                        <tbody class="list" id="cityList">
                         </tbody>
                     </table>
                 </div>
@@ -250,7 +263,6 @@
 </div><!-- /.modal -->
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.2/typeahead.bundle.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>

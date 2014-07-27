@@ -1,4 +1,8 @@
 var map, boroughSearch = [], theaterSearch = [], museumSearch = [];
+
+function getViewport()
+{}
+
 /*
 $(document).ready(function() {
   getViewport();
@@ -101,42 +105,7 @@ var sidebar = L.control.sidebar("sidebar", {
 }).addTo(map);*/
 
 /* Larger screens get expanded layer control and visible sidebar */
-/*if (document.body.clientWidth <= 767) {
-  var isCollapsed = true;
-} else {
-  var isCollapsed = false;
-  sidebar.show();
-}
-*//*
-var baseLayers = {
-  "Street Map": mapquestOSM,
-  "Aerial Imagery": mapquestOAM,
-  "Imagery with Streets": mapquestHYB
-};*/
-/*
-$('.cityRow').each(function(element)
-{
-    var latitude = $(this).data('latitude');
-    var longitude = $(this).data('longitude');
-    var citySlug = $(this).data('cityslug');
 
-    var criticalmassIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-
-    var marker = L.marker([latitude, longitude], { icon: criticalmassIcon, citySlug: citySlug });
-    marker.addTo(map);
-    marker.on('click', function()
-    {
-        showCityInfo(this.options.citySlug);
-    });
-});*/
 
 $('.cityRow').on('click', function()
 {
@@ -149,8 +118,7 @@ function showCityInfo(citySlug)
     $("#feature-title").html(city.getTitle());
     $("#feature-info").html(city.getDescription());
     $("#featureModal").modal("show");
-    map.panTo([city.getLatitude(), city.getLongitude()]);
-    map.setZoom(15);
+    map.setView([city.getLatitude(), city.getLongitude()], 15);
 }
 
 if (document.body.clientWidth <= 767) {
@@ -179,7 +147,7 @@ var mapquestHYB = L.layerGroup([L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sa
     attribution: 'Labels courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">. Map data (c) <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> contributors, CC-BY-SA. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
 })]);*/
 
-CallbackHell.registerEventListener('tileLayerListRefreshed', function()
+function initApp()
 {
     var tileLayerObjects = TileLayerFactory.getTileLayers();
     var tileLayers = new Array();
@@ -207,4 +175,55 @@ CallbackHell.registerEventListener('tileLayerListRefreshed', function()
         collapsed: true
     });
     layerControl.addTo(map);
-});
+
+    var sidebar = L.control.sidebar("sidebar", {
+        closeButton: true,
+        position: "left"
+    }).on("shown", function () {
+        getViewport();
+    }).on("hidden", function () {
+        getViewport();
+    }).addTo(map);
+
+    if (document.body.clientWidth <= 767)
+    {
+        var isCollapsed = true;
+    }
+    else
+    {
+        var isCollapsed = false;
+        sidebar.show();
+    }
+
+    var criticalmassIcon = L.icon({
+        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        popupAnchor: [0, -36],
+        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+    });
+
+    var cities = CityFactory.getAllCities();
+
+    for (var index in cities)
+    {
+        var city = cities[index];
+        var html = '<tr class="cityRow" data-cityslug="' + city.getCitySlug() + '" style="cursor: pointer;"><td class="cityName">' + city.getCity() + '<i class="fa fa-chevron-right pull-right"></i></td></tr>';
+
+        $('#cityList').append(html);
+
+        $('.cityRow').on('click', function()
+        {
+            showCityInfo($(this).data('cityslug'));
+        });
+
+        var marker = L.marker([city.getLatitude(), city.getLongitude()], { icon: criticalmassIcon, citySlug: city.getCitySlug() });
+        marker.addTo(map);
+        marker.on('click', function()
+        {
+            showCityInfo(this.options.citySlug);
+        });
+    }
+}
