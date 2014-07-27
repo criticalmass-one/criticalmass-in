@@ -86,18 +86,10 @@ function initApp()
             showCityInfo($(this).data('cityslug'));
         });
 
-        var marker = L.marker([city.getLatitude(), city.getLongitude()], { icon: criticalmassIcon, citySlug: city.getCitySlug(), draggable: true });
+        var marker = L.marker([city.getLatitude(), city.getLongitude()], { icon: criticalmassIcon, citySlug: city.getCitySlug() });
         marker.on('click', function()
         {
             showCityInfo(this.options.citySlug);
-        });
-
-        marker.on('dragend', function(event)
-        {
-            var marker = event.target;
-            var position = marker.getLatLng();
-
-            $('#editRideModal').modal('show');
         });
 
         markerArray.push(marker);
