@@ -110,7 +110,7 @@ MapPositions.prototype.drawPositions = function()
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: Url.getNodeJSApiPrefix() + '?action=fetchPositions&citySlug=hamburg',
+        url: Url.getNodeJSApiPrefix() + '?action=fetchPositions&citySlug=all',
         cache: false,
         context: this,
         crossDomain: true,
