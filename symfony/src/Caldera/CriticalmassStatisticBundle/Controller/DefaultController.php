@@ -13,7 +13,7 @@ class DefaultController extends Controller
 
     public function generateAction($heatmapId)
     {
-        $heatmap = $this->getDoctrine()->getRepository('CalderaCriticalmassHeatmapBundle:Heatmap')->findOneById($heatmapId);
+        $heatmap = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:Heatmap')->findOneById($heatmapId);
 
         foreach ($heatmap->getRides() as $ride)
         {

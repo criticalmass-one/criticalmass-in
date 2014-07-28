@@ -3,7 +3,7 @@ imports:
     - { resource: criticalmass.yml }
     - { resource: security.yml }
     - { resource: @CalderaCriticalmassCoreBundle/Resources/config/admin.yml }
-    - { resource: @CalderaCriticalmassHeatmapBundle/Resources/config/admin.yml }
+    - { resource: @CalderaCriticalmassStatisticBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassPlusBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassContentBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassGlympseBundle/Resources/config/admin.yml }

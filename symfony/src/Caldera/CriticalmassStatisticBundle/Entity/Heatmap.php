@@ -6,7 +6,7 @@
  * Time: 02:24
  */
 
-namespace Caldera\CriticalmassHeatmapBundle\Entity;
+namespace Caldera\CriticalmassStatisticBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use \Caldera\CriticalmassCoreBundle\Entity\Ride;

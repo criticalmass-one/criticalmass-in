@@ -65,10 +65,6 @@ caldera_criticalmass_plus:
     resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
     prefix:   /
 
-caldera_criticalmass_heatmap:
-    resource: "@CalderaCriticalmassHeatmapBundle/Resources/config/routing.yml"
-    prefix:   /
-
 caldera_criticalmass_api:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
     prefix:   /
