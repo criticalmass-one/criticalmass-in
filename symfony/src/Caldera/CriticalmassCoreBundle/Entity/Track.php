@@ -48,7 +48,7 @@ class Track
 
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="blob", nullable=true)
      */
     protected $gpx;
 
