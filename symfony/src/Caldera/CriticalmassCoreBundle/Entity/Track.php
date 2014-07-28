@@ -199,4 +199,9 @@ class Track
     {
         return $this->creationDateTime;
     }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
 }
