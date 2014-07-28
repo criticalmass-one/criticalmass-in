@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Malte
- * Date: 31.05.14
- * Time: 16:26
- */
 
-namespace Caldera\CriticalmassHeatmapBundle\Utility;
+namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
-use Caldera\CriticalmassHeatmapBundle\Entity\Heatmap;
+use Caldera\CriticalmassStatisticBundle\Entity\Heatmap;
 
 abstract class AbstractTilePrinter {
     protected $tile;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassHeatmapBundle\Utility;
+namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 
 class Tile {

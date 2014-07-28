@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Malte
- * Date: 31.05.14
- * Time: 19:22
- */
 
-namespace Caldera\CriticalmassHeatmapBundle\Utility;
+namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 class GPXConverter
 {
