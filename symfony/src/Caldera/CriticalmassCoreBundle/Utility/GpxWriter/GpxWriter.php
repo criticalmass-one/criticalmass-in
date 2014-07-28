@@ -20,7 +20,8 @@ class GpxWriter {
     public function execute()
     {
         $writer = new \XMLWriter();
-        $writer->openURI('php://output');
+        //$writer->openURI('php://output');
+        $writer->openMemory();
         $writer->startDocument('1.0');
 
         $writer->setIndent(4);
@@ -72,11 +73,7 @@ class GpxWriter {
         $writer->endElement();
         $writer->endElement();
         $writer->endDocument();
-
-        ob_start();
-        $writer->flush();
-        $this->gpxContent = ob_get_contents();
-        ob_flush();
+        $this->gpxContent = $writer->outputMemory(true);
     }
 
     public function getGpxContent()
