@@ -2,78 +2,37 @@
 
 namespace Caldera\CriticalmassCoreBundle\Controller;
 
-use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\CriticalmassCoreBundle\Entity\Track;
+use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
 use Caldera\CriticalmassCoreBundle\Utility\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    public function gpxexportAction($rideId, $userId)
+    public function gpxexportAction($rideId, $ticketId)
     {
-        $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'user' => $userId), array('timestamp' => 'ASC'));
+        $ticket = $this->getDoctrine()->getRepository('CalderaCriticalmassGlympseBundle:Ticket')->find($ticketId);
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
 
-        $writer = new \XMLWriter();
-        $writer->openURI('php://output');
-        $writer->startDocument('1.0');
+        $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticketId), array('timestamp' => 'ASC'));
 
-        $writer->setIndent(4);
+        $gpx = new GpxWriter();
+        $gpx->setPositionArray($positionArray);
+        $gpx->execute();
 
-        $writer->startElement('gpx');
-        $writer->writeAttribute('creator', 'criticalmass.in');
-        $writer->writeAttribute('version', '0.1');
-        $writer->writeAttribute('xmlns', 'http://www.topografix.com/GPX/1/1');
-        $writer->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $writer->writeAttribute('xsi:schemaLocation', 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd');
+        $gpxContent = $gpx->getGpxContent();
 
-        $writer->startElement('metadata');
-        $writer->startElement('time');
+        $track = new Track();
+        $track->setRide($ride);
+        $track->setTicket($ticket);
+        $track->setUsername($ticket->getDisplayname());
+        $track->setCreationDateTime(new \DateTime());
+        $track->setGpx($gpxContent);
 
-        $dateTime = $positionArray[0]->getCreationDateTime();
-        $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
-
-        $writer->endElement();
-        $writer->endElement();
-
-        $writer->startElement('trk');
-        $writer->startElement('trkseg');
-
-        foreach ($positionArray as $position)
-        {
-            $hour = $position->getCreationDateTime()->format('H');
-
-            if ($hour >= 19 and $hour < 23 and $position->getAccuracy() <= 350)
-            {
-                $writer->startElement('trkpt');
-                $writer->writeAttribute('lat', $position->getLatitude());
-                $writer->writeAttribute('lon', $position->getLongitude());
-
-                $writer->startElement('ele');
-                $writer->text($position->getAltitude());
-                $writer->endElement();
-
-                $writer->startElement('time');
-
-                $dateTime = $position->getCreationDateTime();
-                $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
-
-                $writer->endElement();
-                $writer->endElement();
-            }
-        }
-        $writer->endElement();
-        $writer->endElement();
-        $writer->endElement();
-        $writer->endDocument();
-
-        ob_start();
-        $writer->flush();
-        $gpx = ob_get_contents();
-        ob_flush();
-
-        $response = new Response();
-        $response->headers->set('content-type', 'text/plain');
-        $response->setContent($gpx);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($track);
+        $manager->flush();
 
         return new Response();
     }
