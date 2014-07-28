@@ -1,3 +1,0 @@
-caldera_criticalmass_heatmap_homepage:
-    pattern:  /heatmap/generate/{heatmapId}
-    defaults: { _controller: CalderaCriticalmassHeatmapBundle:Default:generate }

@@ -1,7 +1,0 @@
-parameters:
-#    caldera_criticalmass_heatmap.example.class: Caldera\CriticalmassHeatmapBundle\Example
-
-services:
-#    caldera_criticalmass_heatmap.example:
-#        class: %caldera_criticalmass_heatmap.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
