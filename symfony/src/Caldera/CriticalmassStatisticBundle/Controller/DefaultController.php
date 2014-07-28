@@ -2,7 +2,13 @@
 
 namespace Caldera\CriticalmassStatisticBundle\Controller;
 
+use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\TraceTilePrinter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\GpxConverter;
+use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\OSMMapDimensionCalculator;
+use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\Tile;
+use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\PNGTilePrinter;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -15,16 +21,15 @@ class DefaultController extends Controller
     {
         $heatmap = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:Heatmap')->findOneById($heatmapId);
 
-        foreach ($heatmap->getRides() as $ride)
+        foreach ($heatmap->getTracks() as $track)
         {
-            echo $ride->getId()."<br />";
-            $gpxc = new GPXConverter();
-            $gpxc->loadContentFromString($ride->getOptimizedGpxContent());
+            $gpxc = new GpxConverter();
+            $gpxc->loadContentFromString(stream_get_contents($track->getGpx()));
             $gpxc->parseContent();
 
             $pathArray = $gpxc->getPathArray();
 
-            for ($zoom = 0; $zoom < 16; ++$zoom)
+            for ($zoom = 1; $zoom < 17; ++$zoom)
             {
                 $osmmdc = new OSMMapDimensionCalculator($pathArray, $zoom);
 
@@ -36,9 +41,12 @@ class DefaultController extends Controller
                         $tile->generatePlaceByTileXTileYZoom($tileX, $tileY, $zoom);
                         $tile->dropPathArray($pathArray);
 
-                        $tp = new PNGTilePrinter($tile, $heatmap);
+                        //$tp = new PNGTilePrinter($tile, $heatmap);
+                        $tp = new TraceTilePrinter($tile, $heatmap, $track->getTicket());
                         $tp->printTile();
                         $tp->saveTile();
+
+                        echo "Done: ".$tile->getOsmXTile().",".$tile->getOsmYTile().",".$tile->getOsmZoom().",".$track->getUsername();
                     }
                 }
             }
