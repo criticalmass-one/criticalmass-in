@@ -62,10 +62,20 @@ class Heatmap
      */
     protected $rides;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track")
+     * @ORM\JoinTable(name="heatmap_track",
+     *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="track_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $tracks;
+
     public function __construct()
     {
         $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tracks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->identifier = md5(microtime());
     }
 
@@ -141,5 +151,48 @@ class Heatmap
     public function getCities()
     {
         return $this->cities;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add tracks
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @return Heatmap
+     */
+    public function addTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    {
+        $this->tracks[] = $tracks;
+
+        return $this;
+    }
+
+    /**
+     * Remove tracks
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     */
+    public function removeTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    {
+        $this->tracks->removeElement($tracks);
+    }
+
+    /**
+     * Get tracks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTracks()
+    {
+        return $this->tracks;
     }
 }
