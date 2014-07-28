@@ -1,9 +1,13 @@
 MapPositions = function(map)
 {
     this.map = map;
+    this.layerGroup = L.layerGroup();
+    this.layerGroup.addTo(this.map);
 };
 
 MapPositions.prototype.map = null;
+
+MapPositions.prototype.layerGroup = null;
 
 MapPositions.prototype.positionsArray = new Array();
 
@@ -47,7 +51,7 @@ MapPositions.prototype.clearOldPositions = function(ajaxResultData)
 
 MapPositions.prototype.removeUsernamePosition = function(username)
 {
-    this.map.removeLayer(this.positionsArray[username]);
+    this.layerGroup.removeLayer(this.positionsArray[username]);
     delete this.positionsArray[username];
     --this.positionsCounter;
 };
@@ -68,7 +72,7 @@ MapPositions.prototype.createUsernamePosition = function(position)
     };
 
     var circle = L.circle([position.latitude, position.longitude], 35, circleOptions);
-    circle.addTo(this.map);
+    circle.addTo(this.layerGroup);
     circle.bindPopup(position.username);
 
     this.positionsArray[position.username] = circle;

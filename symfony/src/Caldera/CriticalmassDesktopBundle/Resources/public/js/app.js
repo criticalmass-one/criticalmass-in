@@ -127,18 +127,20 @@ function initApp()
     }).addTo(map);
 
 
-    var layerControl = L.control.groupedLayers(tileLayers, {
-        "Critical Mass": {
-            "Städte": markerGroup,
-            "Teilnehmer": L.layerGroup(new Array())
-        }
-    }, {
-        collapsed: false
-    });
-    layerControl.addTo(map);
+
 
     getViewport();
 
     var mapPositions = new MapPositions(map);
     mapPositions.startLoop();
+
+    var layerControl = L.control.groupedLayers(tileLayers, {
+        "Critical Mass": {
+            "Städte": markerGroup,
+            "Teilnehmer": mapPositions.layerGroup
+        }
+    }, {
+        collapsed: false
+    });
+    layerControl.addTo(map);
 }
