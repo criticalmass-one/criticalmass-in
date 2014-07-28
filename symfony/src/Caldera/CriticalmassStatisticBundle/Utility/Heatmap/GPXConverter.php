@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
-class GPXConverter
+class GpxConverter
 {
     protected $gpxFileContent;
     protected $gpxXML;
