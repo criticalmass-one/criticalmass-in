@@ -29,7 +29,32 @@ function showCityInfo(citySlug)
     var city = CityFactory.getCityFromStorageBySlug(citySlug);
 
     $("#feature-title").html(city.getTitle());
-    $("#feature-info").html(city.getDescription());
+
+    var html = '<p>' + city.getDescription() + '</p>';
+
+    if (city.countSocialMediaLinks() > 0)
+    {
+        html += '<div class="btn-group">';
+
+        if (city.getUrl())
+        {
+            html += '<button type="button" class="btn btn-default" href="' + city.getUrl() + '">WWW</button>';
+        }
+
+        if (city.getFacebook())
+        {
+            html += '<button type="button" class="btn btn-default" href="' + city.getFacebook() + '">facebook</button>';
+        }
+
+        if (city.getTwitter())
+        {
+            html += '<button type="button" class="btn btn-default" href="' + city.getTwitter() + '">twitter</button>';
+        }
+
+        html += '</div>';
+    }
+
+    $("#feature-info").html(html);
     $("#featureModal").modal("show");
     map.setView([city.getLatitude(), city.getLongitude()], 15);
 }
