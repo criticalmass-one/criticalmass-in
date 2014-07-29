@@ -14,6 +14,8 @@ class MultiPageController extends Controller
 
     public function slugindexAction($slug)
     {
-        return $this->render('CalderaCriticalmassMobileBundle:MultiPage:main.html.twig', array('citySlug' => $slug));
+        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($slug)->getCity();
+
+        return $this->render('CalderaCriticalmassMobileBundle:MultiPage:main.html.twig', array('citySlug' => $city->getMainSlugString()));
     }
 }
