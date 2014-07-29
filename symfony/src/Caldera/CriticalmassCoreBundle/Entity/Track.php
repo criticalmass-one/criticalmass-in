@@ -202,6 +202,6 @@ class Track
 
     public function __toString()
     {
-        return $this->getUsername();
+        return $this->getUsername().' ('.$this->getCreationDateTime()->format('Y-m-d').', '.$this->getRide()->getCity()->getCity().')';
     }
 }
