@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Malte
- * Date: 01.06.14
- * Time: 02:24
- */
 
 namespace Caldera\CriticalmassStatisticBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use \Caldera\CriticalmassCoreBundle\Entity\Ride;
 
 /**
  * @ORM\Entity
@@ -71,86 +64,16 @@ class Heatmap
      */
     protected $tracks;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tracks = new \Doctrine\Common\Collections\ArrayCollection();
+
         $this->identifier = md5(microtime());
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    public function setIdentifier($identifier)
-    {
-        $this->identifier = $identifier;
-    }
-
-    public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride)
-    {
-        $this->rides[] = $ride;
-
-        return $this;
-    }
-
-    public function removeRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride)
-    {
-        $this->rides->removeElement($ride);
-    }
-
-    public function getRides()
-    {
-        return $this->rides;
-    }
-
-    public function getPublic()
-    {
-        return $this->public;
-    }
-
-    public function setPublic($public)
-    {
-        $this->public = $public;
-    }
-
-    public function addCity(\Caldera\CriticalmassCoreBundle\Entity\City $city)
-    {
-        $this->cities[] = $city;
-
-        return $this;
-    }
-
-    public function removeCity(\Caldera\CriticalmassCoreBundle\Entity\City $city)
-    {
-        $this->cities->removeElement($city);
-    }
-
-    public function getCities()
-    {
-        return $this->cities;
     }
 
     /**
@@ -161,6 +84,164 @@ class Heatmap
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Heatmap
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Heatmap
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set identifier
+     *
+     * @param string $identifier
+     * @return Heatmap
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * Get identifier
+     *
+     * @return string 
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * Set public
+     *
+     * @param boolean $public
+     * @return Heatmap
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Get public
+     *
+     * @return boolean 
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * Add cities
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $cities
+     * @return Heatmap
+     */
+    public function addCity(\Caldera\CriticalmassCoreBundle\Entity\City $cities)
+    {
+        $this->cities[] = $cities;
+
+        return $this;
+    }
+
+    /**
+     * Remove cities
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $cities
+     */
+    public function removeCity(\Caldera\CriticalmassCoreBundle\Entity\City $cities)
+    {
+        $this->cities->removeElement($cities);
+    }
+
+    /**
+     * Get cities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCities()
+    {
+        return $this->cities;
+    }
+
+    /**
+     * Add rides
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
+     * @return Heatmap
+     */
+    public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
+    {
+        $this->rides[] = $rides;
+
+        return $this;
+    }
+
+    /**
+     * Remove rides
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
+     */
+    public function removeRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
+    {
+        $this->rides->removeElement($rides);
+    }
+
+    /**
+     * Get rides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRides()
+    {
+        return $this->rides;
     }
 
     /**

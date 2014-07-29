@@ -14,11 +14,14 @@ class HeatmapAdmin extends Admin
     {
         $formMapper
             ->with('Beschreibung', array('class' => 'col-md-6'))
-            ->add('title', 'text', array('label' => 'Titel'))
-            ->add('description', 'textarea', array('label' => 'Beschreibung'))
+                ->add('title', 'text', array('label' => 'Titel'))
+                ->add('description', 'textarea', array('label' => 'Beschreibung'))
             ->end()
             ->with('Touren', array('class' => 'col-md-6'))
                 ->add('rides', 'sonata_type_model', array('label' => 'Touren', 'multiple' => true, 'btn_add' => false))
+            ->end()
+            ->with('Tracks', array('class' => 'col-md-6'))
+                ->add('tracks', null, array('label' => 'Tracks'))
             ->end()
             ->with('Identifier', array('class' => 'col-md-6'))
                 ->add('Identifier', 'text', array('label' => 'Identifier'))
