@@ -124,11 +124,21 @@ class Tile {
 
     public function popPixel()
     {
-        if (count($this->pixelList) > 0)
+        if ($this->hasPixel())
         {
             return array_pop($this->pixelList);
         }
 
         return null;
+    }
+
+    public function countPixel()
+    {
+        return count($this->pixelList);
+    }
+
+    public function hasPixel()
+    {
+        return $this->countPixel() > 0;
     }
 }
