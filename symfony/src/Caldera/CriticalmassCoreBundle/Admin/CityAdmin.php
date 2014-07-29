@@ -19,6 +19,7 @@ class CityAdmin extends Admin
                 ->add('title', 'text', array('label' => 'Bezeichnung', 'required' => true))
                 ->add('description', 'textarea', array('label' => 'Beschreibung', 'required' => false))
                 ->add('autoDetect', 'checkbox', array('label' => 'Autodetection', 'required' => true))
+                ->add('cityPopulation', 'integer', array('label' => 'Einwohnerzahl', 'required' => false))
             ->end()
             ->with('Social Media', array('class' => 'col-md-6'))
                 ->add('url', 'text', array('label' => 'Webseite', 'required' => false))

@@ -136,7 +136,12 @@ class City
      */
     protected $autoDetect = true;
 
-	/**
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $cityPopulation;
+
+    /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
 	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
 	 * mit dem Namen ihrer Stadt dargestellt werden.
@@ -667,5 +672,28 @@ class City
     public function getAutoDetect()
     {
         return $this->autoDetect;
+    }
+
+    /**
+     * Set cityPopulation
+     *
+     * @param integer $cityPopulation
+     * @return City
+     */
+    public function setCityPopulation($cityPopulation)
+    {
+        $this->cityPopulation = $cityPopulation;
+
+        return $this;
+    }
+
+    /**
+     * Get cityPopulation
+     *
+     * @return integer 
+     */
+    public function getCityPopulation()
+    {
+        return $this->cityPopulation;
     }
 }
