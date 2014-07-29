@@ -128,6 +128,10 @@ function initApp()
 
 
 
+    var heatmapGroup = L.layerGroup([L.tileLayer("https://www.criticalmass.cm/images/heatmap/123123123/{z}/{x}/{y}.png", {
+        maxZoom: 18
+    })]);
+
 
     getViewport();
 
@@ -137,7 +141,8 @@ function initApp()
     var layerControl = L.control.groupedLayers(tileLayers, {
         "Critical Mass": {
             "Städte": markerGroup,
-            "Teilnehmer": mapPositions.layerGroup
+            "Teilnehmer": mapPositions.layerGroup,
+            "Heatmaps": heatmapGroup
         }
     }, {
         collapsed: false
