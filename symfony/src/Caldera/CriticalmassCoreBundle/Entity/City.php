@@ -137,7 +137,7 @@ class City
     protected $autoDetect = true;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $cityPopulation;
 
