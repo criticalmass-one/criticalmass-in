@@ -37,6 +37,10 @@
                         )
                 {
                     initApp();
+
+                    {% if citySlug is defined %}
+                    showCityInfo('{{ citySlug }}');
+                    {% endif %}
                 }
             }
 
