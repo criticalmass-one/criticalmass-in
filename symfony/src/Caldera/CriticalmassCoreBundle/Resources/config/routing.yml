@@ -1,5 +1,5 @@
 caldera_criticalmass_gpxexport:
-    pattern: /gpxexport/{rideId}/{userId}
+    pattern: /gpxexport/{rideId}/{ticketId}
     defaults: { _controller: CalderaCriticalmassCoreBundle:Default:gpxexport }
 
 caldera_criticalmass_standardrides:
