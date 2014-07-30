@@ -142,6 +142,16 @@ class City
     protected $cityPopulation;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $punchLine;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $longDescription;
+
+    /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
 	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
 	 * mit dem Namen ihrer Stadt dargestellt werden.
@@ -695,5 +705,51 @@ class City
     public function getCityPopulation()
     {
         return $this->cityPopulation;
+    }
+
+    /**
+     * Set punchLine
+     *
+     * @param string $punchLine
+     * @return City
+     */
+    public function setPunchLine($punchLine)
+    {
+        $this->punchLine = $punchLine;
+
+        return $this;
+    }
+
+    /**
+     * Get punchLine
+     *
+     * @return string 
+     */
+    public function getPunchLine()
+    {
+        return $this->punchLine;
+    }
+
+    /**
+     * Set longDescription
+     *
+     * @param string $longDescription
+     * @return City
+     */
+    public function setLongDescription($longDescription)
+    {
+        $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get longDescription
+     *
+     * @return string 
+     */
+    public function getLongDescription()
+    {
+        return $this->longDescription;
     }
 }
