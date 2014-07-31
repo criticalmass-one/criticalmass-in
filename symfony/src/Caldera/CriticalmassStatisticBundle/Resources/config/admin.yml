@@ -8,4 +8,16 @@ services:
             - Caldera\CriticalmassStatisticBundle\Entity\Heatmap
             - ~
         calls:
-            - [ setTranslationDomain, [CalderaCriticalmassAdminBundle]]
+            - [ setTranslationDomain, [CalderaCriticalmassStatisticBundle]]
+
+services:
+    sonata.admin.rideestimate:
+        class: Caldera\CriticalmassStatisticBundle\Admin\RideEstimateAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Statistik", label: "Schätzung" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassStatisticBundle\Entity\RideEstimate
+            - ~
+        calls:
+            - [ setTranslationDomain, [CalderaCriticalmassStatisticBundle]]
