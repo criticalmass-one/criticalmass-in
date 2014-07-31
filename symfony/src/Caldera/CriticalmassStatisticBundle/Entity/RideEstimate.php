@@ -53,6 +53,11 @@ class RideEstimate
 	 */
 	protected $creationDateTime;
 
+    public function __construct()
+    {
+        $this->creationDateTime = new \DateTime();
+    }
+
     /**
      * Get id
      *
