@@ -10,6 +10,13 @@ class DefaultController extends Controller
     {
         $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('enabled' => true), array('city' => 'ASC'));
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:list.html.twig', array('cities' => $cities));
+        return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig');
+    }
+
+    public function slugindexAction($slug)
+    {
+        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($slug)->getCity();
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig', array('citySlug' => $city->getMainSlugString()));
     }
 }
