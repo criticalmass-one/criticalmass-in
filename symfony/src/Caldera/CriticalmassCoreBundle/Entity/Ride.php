@@ -113,6 +113,16 @@ class Ride
     protected $estimatedParticipants;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $estimatedDistance;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $estimatedDuration;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $facebook;
@@ -558,5 +568,51 @@ class Ride
     public function setTime(\DateTime $time)
     {
         $this->dateTime->add($this->dateTime->diff($time));
+    }
+
+    /**
+     * Set estimatedDistance
+     *
+     * @param float $estimatedDistance
+     * @return Ride
+     */
+    public function setEstimatedDistance($estimatedDistance)
+    {
+        $this->estimatedDistance = $estimatedDistance;
+
+        return $this;
+    }
+
+    /**
+     * Get estimatedDistance
+     *
+     * @return float 
+     */
+    public function getEstimatedDistance()
+    {
+        return $this->estimatedDistance;
+    }
+
+    /**
+     * Set estimatedDuration
+     *
+     * @param float $estimatedDuration
+     * @return Ride
+     */
+    public function setEstimatedDuration($estimatedDuration)
+    {
+        $this->estimatedDuration = $estimatedDuration;
+
+        return $this;
+    }
+
+    /**
+     * Get estimatedDuration
+     *
+     * @return float 
+     */
+    public function getEstimatedDuration()
+    {
+        return $this->estimatedDuration;
     }
 }
