@@ -44,8 +44,10 @@ class RideAdmin extends Admin
             ->with('GPX-Track', array('class' => 'col-md-6'))
                 ->add('optimizedGpxContent', 'textarea', array('label' => 'GPX-Inhalt'))
             ->end()
-            ->with('Teilnehmer', array('class' => 'col-md-6'))
+            ->with('Statistik', array('class' => 'col-md-6'))
                 ->add('estimatedParticipants', 'text', array('label' => 'ungefähre Teilnehmerzahl'))
+                ->add('estimatedDistance', 'text', array('label' => 'ungefähre Fahrstrecke'))
+                ->add('estimatedDuration', 'text', array('label' => 'ungefähre Fahrdauer'))
             ->end()
         ;
     }
