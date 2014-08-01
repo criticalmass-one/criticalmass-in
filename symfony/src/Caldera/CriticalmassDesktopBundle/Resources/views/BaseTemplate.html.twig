@@ -233,16 +233,38 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="cityInfoModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-primary" id="feature-title"></h4>
+                <h4 class="modal-title text-primary" id="cityInfoTitle"></h4>
             </div>
-            <div class="modal-body" id="feature-info"></div>
+            <div class="modal-body" id="cityInfoBody">
+                <ul class="nav nav-tabs" id="cityInfoTabs">
+                    <li class="active"><a href="#cityInfoAbout" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;Stadtinfo</a></li>
+                    <li><a href="#cityInfoRide" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Nächste Tour</a></li>
+                    <li><a href="#cityRideList" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Tourarchiv</a></li>
+                </ul>
+                <div class="tab-content" id="cityInfoTabsContent" style="padding-top: 10px;">
+                    <div class="tab-pane fade active in" id="cityInfoAbout">
+                        <p id="cityInfoDescription"></p>
+                        <p id="cityInfoNextRide">Das Datum der nächsten Tour ist nicht bekannt :(</p>
+                        <div id="cityInfoSocialMedia" class="btn-group"></div>
+
+                    </div>
+                    <div id="cityInfoRide" class="tab-pane fade">
+                        <p>criticalmass.in ist ein Projekt an der Fachhochschule Wedel.</p>
+                        <p>Fachhochschule Wedel<br />Feldstraße 143<br />22880 Wedel</p>
+                        <p><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:malte@criticalmass.in">malte@criticalmass.in</a><br /><span class="glyphicon glyphicon-earphone"></span> 0700 11 864 833</p>
+                    </div>
+                    <div class="tab-pane fade" id="cityRideList">
+                       wdwdwd
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
