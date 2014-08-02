@@ -27,6 +27,8 @@
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
 
     <script>
+        var cityslug = null;
+
         window.onload = function()
         {
             function loadingCompletedCallback()
@@ -36,6 +38,10 @@
                         CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
                         )
                 {
+                    {% if citySlug is defined %}
+                    citySlug = '{{ citySlug }}';
+                    {% endif %}
+
                     initApp();
 
                     {% if citySlug is defined %}
