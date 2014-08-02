@@ -28,13 +28,13 @@ function showCityInfo(citySlug)
 {
     var city = CityFactory.getCityFromStorageBySlug(citySlug);
 
-    $("#feature-title").html(city.getTitle());
-
-    var html = '<p>' + city.getDescription() + '</p>';
+    $('#cityInfoTitle').html(city.getTitle());
+    $('#cityInfoPunchLine').html(city.getPunchLine());
+    $('#cityInfoDescription').html(city.getDescription());
 
     if (city.countSocialMediaLinks() > 0)
     {
-        html += '<div class="btn-group">';
+        var html = '';
 
         if (city.getUrl())
         {
@@ -51,11 +51,23 @@ function showCityInfo(citySlug)
             html += '<button type="button" class="btn btn-default" href="' + city.getTwitter() + '">twitter</button>';
         }
 
-        html += '</div>';
+        $('#cityInfoSocialMedia').html(html);
     }
 
-    $("#feature-info").html(html);
-    $("#featureModal").modal("show");
+    var ride = RideFactory.getRideFromStorageBySlug(citySlug);
+
+    if (ride)
+    {
+        $('#cityModalTabNextRideTitle').html(ride.getTitle());
+        $('#cityModalTabNextRideDescription').html(ride.getDescription());
+
+        $('#cityModalTabNextRideLocation span').html(ride.getLocation());
+        $('#cityModalTabNextRideDate time').html(ride.getFormattedDate());
+        $('#cityModalTabNextRideTime time').html(ride.getFormattedTime());
+    }
+
+    $('#cityInfoModal').modal('show');
+
     map.setView([city.getLatitude(), city.getLongitude()], 15);
 }
 
