@@ -6,7 +6,9 @@ City.prototype.id = null;
 City.prototype.citySlug = null;
 City.prototype.city = null;
 City.prototype.title = null;
+City.prototype.punchLine = null;
 City.prototype.description = null;
+City.prototype.longDescription = null;
 City.prototype.latitude = null;
 City.prototype.longitude = null;
 City.prototype.tileLayerAddress = null;
@@ -53,6 +55,16 @@ City.prototype.setTitle = function(title)
     this.title = title;
 };
 
+City.prototype.getPunchLine = function()
+{
+    return this.punchLine;
+};
+
+City.prototype.setPunchLine = function(punchLine)
+{
+    this.punchLine = punchLine;
+};
+
 City.prototype.getDescription = function()
 {
     return this.description;
@@ -61,6 +73,16 @@ City.prototype.getDescription = function()
 City.prototype.setDescription = function(description)
 {
     this.description = description;
+};
+
+City.prototype.getLongDescription = function()
+{
+    return this.longDescription;
+};
+
+City.prototype.setLongDescription = function(longDescription)
+{
+    this.longDescription = longDescription;
 };
 
 City.prototype.getUrl = function()
