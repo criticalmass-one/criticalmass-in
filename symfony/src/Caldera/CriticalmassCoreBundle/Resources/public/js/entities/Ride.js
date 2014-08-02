@@ -107,6 +107,57 @@ Ride.prototype.getFormattedDateTime = function()
     return this.dateTime.getDate() + '.' + (this.dateTime.getMonth() + 1) + '. ' + this.dateTime.getHours() + '.' + (this.dateTime.getMinutes() < 10 ? '0' + this.dateTime.getMinutes() : this.dateTime.getMinutes()) + ' Uhr';
 };
 
+Ride.prototype.getFormattedDate = function()
+{
+    var month = '';
+
+    switch (this.dateTime.getMonth() + 1) {
+        case 1:
+            month = 'Januar'
+            break;
+        case 2:
+            month = 'Februar';
+            break;
+        case 3:
+            month = 'März';
+            break;
+        case 4:
+            month = 'April';
+            break;
+        case 5:
+            month = 'Mai';
+            break;
+        case 6:
+            month = 'Juni';
+            break;
+        case 7:
+            month = 'Juli';
+            break;
+        case 8:
+            month = 'August';
+            break;
+        case 9:
+            month = 'September';
+            break;
+        case 10:
+            month = 'Oktober';
+            break;
+        case 11:
+            month = 'November';
+            break;
+        case 12:
+            month = 'Dezember';
+            break;
+    }
+
+    return this.dateTime.getDate() + '. ' + month + ' ' + this.dateTime.getFullYear();
+};
+
+Ride.prototype.getFormattedTime = function()
+{
+    return this.dateTime.getHours() + '.' + (this.dateTime.getMinutes() < 10 ? '0' + this.dateTime.getMinutes() : this.dateTime.getMinutes()) + ' Uhr';
+};
+
 Ride.prototype.getLatLng = function()
 {
     return L.latLng(this.latitude, this.longitude);
