@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Stellt eine einzelne Tour einer Critical Mass dar.
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="ride")
  * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Entity\RideRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Ride
 {
@@ -614,5 +616,72 @@ class Ride
     public function getEstimatedDuration()
     {
         return $this->estimatedDuration;
+    }
+
+    /**
+     * Unmapped property to handle file uploads
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Manages the copying of the file to the relevant place on the server
+     */
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // we use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        $basePath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/ride/';
+        $path = $basePath.$this->getCity()->getMainSlugString().'/';
+
+        //@mkdir($path, 0777, true);
+        // move takes the target directory and target filename as params
+        $this->getFile()->move($path, $path.$this->getId().'.jpg');
+
+        // set the path property to the filename where you've saved the file
+        $this->filename = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->setFile(null);
+    }
+
+    /**
+     * @ORM\prePersist
+     * @ORM\preUpdate
+     */
+    public function lifecycleFileUpload() {
+        $this->upload();
+    }
+
+    /**
+     * Updates the hash value to force the preUpdate and postUpdate events to fire
+     */
+    public function refreshUpdated() {
+        $this->setUpdated(date('Y-m-d H:i:s'));
     }
 }

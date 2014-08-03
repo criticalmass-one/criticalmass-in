@@ -49,6 +49,7 @@ class RideAdmin extends Admin
                 ->add('estimatedDistance', 'text', array('label' => 'ungefähre Fahrstrecke'))
                 ->add('estimatedDuration', 'text', array('label' => 'ungefähre Fahrdauer'))
             ->end()
+            ->add('file', 'file', array('required' => false))
         ;
     }
 
