@@ -244,22 +244,30 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-primary" id="cityInfoTitle"></h4>
+                <h4 class="modal-title text-primary" id="cityModalTitle"></h4>
             </div>
-            <div class="modal-body" id="cityInfoBody">
-                <ul class="nav nav-tabs" id="cityInfoTabs">
-                    <li class="active"><a href="#cityInfoAbout" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;Stadtinfo</a></li>
+            <div class="modal-body" id="cityModalBody">
+                <ul class="nav nav-tabs" id="cityModalTabs">
+                    <li class="active"><a href="#cityModalInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;Stadtinfo</a></li>
                     <li><a href="#cityModalRideTab" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Nächste Tour</a></li>
-                    <li><a href="#cityRideList" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Tourarchiv</a></li>
                 </ul>
-                <div class="tab-content" id="cityInfoTabsContent" style="padding-top: 10px;">
-                    <div class="tab-pane fade active in" id="cityInfoAbout">
-                        <p id="cityInfoDescription"></p>
-                        <p id="cityInfoNextRide">Das Datum der nächsten Tour ist nicht bekannt :(</p>
-                        <div id="cityInfoSocialMedia" class="btn-group"></div>
 
+                <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
+                    <div class="tab-pane fade active in" id="cityModalInfoTab">
+                        <div class="jumbotron" id="cityModalTabInfoJumbotron">
+                            <h2 id="cityModalTabInfoJumbotronTitle">Hello, world!</h2>
+                        </div>
+
+                        <h2 id="cityModalTabInfoTitle">Hello, world!</h2>
+                        <p id="cityModalTabInfoDescription"></p>
+                        <div id="cityModalTabInfoSocialMedia" class="btn-group"></div>
                     </div>
+
                     <div id="cityModalRideTab" class="tab-pane fade">
+                        <div class="jumbotron" id="cityModalTabNextRideJumbotron">
+                            <h2 id="cityModalTabNextRideJumbotronTitle" style="color: white; text-shadow: black 0 0 3px;">Hello, world!</h2>
+                        </div>
+
                         <h2 id="cityModalTabNextRideTitle"></h2>
                         <p id="cityModalTabNextRideDescription"></p>
 
@@ -271,9 +279,7 @@
                             <div class="col-md-6" id="cityModalTabNextRideTime"><strong>Uhrzeit:</strong> <time></time></strong></div>
                         </div>
 
-                    </div>
-                    <div class="tab-pane fade" id="cityRideList">
-                       wdwdwd
+                        <div id="cityModalTabNextRideSocialMedia" class="btn-group"></div>
                     </div>
                 </div>
             </div>
