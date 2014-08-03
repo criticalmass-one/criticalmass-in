@@ -23,6 +23,9 @@ RideFactory.convertObjectToRide = function(objectData)
     ride.setHasLocation(objectData.hasLocation);
     ride.setTitle(objectData.title);
     ride.setDescription(objectData.description);
+    ride.setUrl(objectData.url);
+    ride.setFacebook(objectData.facebook);
+    ride.setTwitter(objectData.twitter);
 
     return ride;
 };
