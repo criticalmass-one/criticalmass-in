@@ -24,9 +24,31 @@ $('.cityRow').on('click', function()
 {
     showCityInfo($(this).data('cityslug'));
 });
+
+function resetCityInfo()
+{
+    $('#cityModalTitle').html('Critical Mass');
+    $('#cityModalTabInfoJumbotronTitle').html('Critical Mass');
+    $('#cityModalTabInfoTitle').html('Critical Mass');
+    $('#cityModalTabInfoDescription').html('');
+
+    $('cityModalTabInfoJumbotron').hide();
+    $('#cityModalTabNextRideJumbotron').hide();
+
+    $('#cityModalTabInfoJumbotron').css('background-image', '');
+    $('#cityModalTabNextRideJumbotron').css('background-image', '');
+
+    $('#cityModalTabInfoSocialMedia').html('');
+    $('#cityModalTabNextRideLocation span').html('Der Treffpunkt ist noch nicht bekannt.');
+    $('#cityModalTabNextRideDate time').html('Das Datum ist noch nicht bekannt.');
+    $('#cityModalTabNextRideTime time').html('Die Uhrzeit ist noch nicht bekannt.');
+}
+
 function showCityInfo(slug)
 {
     var city = CityFactory.getCityFromStorageBySlug(slug);
+
+    resetCityInfo();
 
     var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
 
