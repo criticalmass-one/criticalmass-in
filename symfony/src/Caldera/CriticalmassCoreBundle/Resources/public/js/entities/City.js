@@ -14,6 +14,9 @@ City.prototype.longitude = null;
 City.prototype.tileLayerAddress = null;
 City.prototype.tileLayerAttributation = null;
 City.prototype.autoDetect = null;
+City.prototype.url = null;
+City.prototype.facebook = null;
+City.prototype.twitter = null;
 
 City.prototype.getId = function()
 {
