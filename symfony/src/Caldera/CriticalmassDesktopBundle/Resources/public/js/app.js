@@ -58,6 +58,23 @@ function showCityInfo(citySlug)
 
     if (ride)
     {
+        var imageFilename = Url.getUrlPrefix() + 'images/ride/' + slug + '/' + ride.getId() + '.jpg';
+
+        if (Url.fileExists(imageFilename))
+        {
+            $('#cityModalTabNextRideJumbotron').show();
+            $('#cityModalTabNextRideTitle').hide();
+
+            $('#cityModalTabNextRideJumbotron').css('background-image', 'url(' + imageFilename + ')');
+        }
+        else
+        {
+            alert('ride image failure');
+            $('#cityModalTabNextRideJumbotron').hide();
+            $('#cityModalTabNextRideTitle').show();
+        }
+
+        $('#cityModalTabNextRideJumbotronTitle').html(ride.getTitle());
         $('#cityModalTabNextRideTitle').html(ride.getTitle());
         $('#cityModalTabNextRideDescription').html(ride.getDescription());
 
@@ -135,6 +152,7 @@ function initApp()
     var markerGroup = L.layerGroup(markerArray);
 
     map = L.map('map', { zoomControl: false, attributionControl: false, layers: [markerGroup]});
+
     map.setView([53.5554952, 9.9436765], 13);
 
     standardTileLayer.addTo(map);
