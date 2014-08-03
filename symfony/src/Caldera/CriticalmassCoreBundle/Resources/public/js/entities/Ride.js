@@ -11,6 +11,9 @@ Ride.prototype.location = null;
 Ride.prototype.latitude = null;
 Ride.prototype.longitude = null;
 Ride.prototype.hasLocation = null;
+Ride.prototype.url = null;
+Ride.prototype.facebook = null;
+Ride.prototype.twitter = null;
 
 Ride.prototype.getId = function()
 {
@@ -169,4 +172,34 @@ Ride.prototype.isRolling = function()
     var timeDiff = currentDateTime.getTime() - this.dateTime.getTime();
 
     return timeDiff > 900;
+};
+
+Ride.prototype.getUrl = function()
+{
+    return this.url;
+};
+
+Ride.prototype.setUrl = function(url)
+{
+    this.url = url;
+};
+
+Ride.prototype.getFacebook = function()
+{
+    return this.facebook;
+};
+
+Ride.prototype.setFacebook = function(facebook)
+{
+    this.facebook = facebook;
+};
+
+Ride.prototype.getTwitter = function()
+{
+    return this.twitter;
+};
+
+Ride.prototype.setTwitter = function(twitter)
+{
+    this.twitter = twitter;
 };
