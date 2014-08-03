@@ -137,7 +137,7 @@ class Ride
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $website;
+    protected $url;
 
     /**
      * Get id
@@ -535,9 +535,9 @@ class Ride
      * @param string $website
      * @return Ride
      */
-    public function setWebsite($website)
+    public function setUrl($url)
     {
-        $this->website = $website;
+        $this->url = $url;
 
         return $this;
     }
@@ -547,9 +547,9 @@ class Ride
      *
      * @return string 
      */
-    public function getWebsite()
+    public function getUrl()
     {
-        return $this->website;
+        return $this->url;
     }
 
     public function getDate()
