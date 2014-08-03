@@ -72,27 +72,24 @@ function showCityInfo(slug)
     $('#cityModalTabInfoTitle').html(city.getTitle());
     $('#cityModalTabInfoDescription').html(city.getDescription());
 
-    if (city.countSocialMediaLinks() > 0)
+    var html = '';
+
+    if (city.getUrl())
     {
-        var html = '';
-
-        if (city.getUrl())
-        {
-            html += '<button type="button" class="btn btn-default" href="' + city.getUrl() + '">WWW</button>';
-        }
-
-        if (city.getFacebook())
-        {
-            html += '<button type="button" class="btn btn-default" href="' + city.getFacebook() + '">facebook</button>';
-        }
-
-        if (city.getTwitter())
-        {
-            html += '<button type="button" class="btn btn-default" href="' + city.getTwitter() + '">twitter</button>';
-        }
-
-        $('#cityModalTabInfoSocialMedia').html(html);
+        html += '<button type="button" class="btn btn-default" href="' + city.getUrl() + '">WWW</button>';
     }
+
+    if (city.getFacebook())
+    {
+        html += '<button type="button" class="btn btn-default" href="' + city.getFacebook() + '">facebook</button>';
+    }
+
+    if (city.getTwitter())
+    {
+        html += '<button type="button" class="btn btn-default" href="' + city.getTwitter() + '">twitter</button>';
+    }
+
+    $('#cityModalTabInfoSocialMedia').html(html);
 
     var ride = RideFactory.getRideFromStorageBySlug(slug);
 
@@ -120,6 +117,25 @@ function showCityInfo(slug)
         $('#cityModalTabNextRideLocation span').html(ride.getLocation());
         $('#cityModalTabNextRideDate time').html(ride.getFormattedDate());
         $('#cityModalTabNextRideTime time').html(ride.getFormattedTime());
+
+        var html = '';
+
+        if (ride.getUrl())
+        {
+            html += '<button type="button" class="btn btn-default" href="' + ride.getUrl() + '">WWW</button>';
+        }
+
+        if (ride.getFacebook())
+        {
+            html += '<button type="button" class="btn btn-default" href="' + ride.getFacebook() + '">facebook</button>';
+        }
+
+        if (ride.getTwitter())
+        {
+            html += '<button type="button" class="btn btn-default" href="' + ride.getTwitter() + '">twitter</button>';
+        }
+
+        $('#cityModalTabNextRideSocialMedia').html(html);
     }
 
     $('#cityInfoModal').modal('show');
