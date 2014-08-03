@@ -24,13 +24,29 @@ $('.cityRow').on('click', function()
 {
     showCityInfo($(this).data('cityslug'));
 });
-function showCityInfo(citySlug)
+function showCityInfo(slug)
 {
-    var city = CityFactory.getCityFromStorageBySlug(citySlug);
+    var city = CityFactory.getCityFromStorageBySlug(slug);
 
-    $('#cityInfoTitle').html(city.getTitle());
-    $('#cityInfoPunchLine').html(city.getPunchLine());
-    $('#cityInfoDescription').html(city.getDescription());
+    var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
+
+    if (Url.fileExists(imageFilename))
+    {
+        $('#cityModalTabInfoJumbotron').show();
+        $('#cityModalTabInfoTitle').hide();
+
+        $('#cityModalTabInfoJumbotron').css('background-image', 'url(' + imageFilename + ')');
+    }
+    else
+    {
+        $('#cityModalTabInfoJumbotron').hide();
+        $('#cityModalTabInfoTitle').show();
+    }
+
+    $('#cityModalTitle').html(city.getTitle());
+    $('#cityModalTabInfoJumbotronTitle').html(city.getTitle());
+    $('#cityModalTabInfoTitle').html(city.getTitle());
+    $('#cityModalTabInfoDescription').html(city.getDescription());
 
     if (city.countSocialMediaLinks() > 0)
     {
@@ -51,10 +67,10 @@ function showCityInfo(citySlug)
             html += '<button type="button" class="btn btn-default" href="' + city.getTwitter() + '">twitter</button>';
         }
 
-        $('#cityInfoSocialMedia').html(html);
+        $('#cityModalTabInfoSocialMedia').html(html);
     }
 
-    var ride = RideFactory.getRideFromStorageBySlug(citySlug);
+    var ride = RideFactory.getRideFromStorageBySlug(slug);
 
     if (ride)
     {
@@ -69,7 +85,6 @@ function showCityInfo(citySlug)
         }
         else
         {
-            alert('ride image failure');
             $('#cityModalTabNextRideJumbotron').hide();
             $('#cityModalTabNextRideTitle').show();
         }
