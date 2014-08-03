@@ -42,6 +42,8 @@ function resetCityInfo()
     $('#cityModalTabNextRideLocation span').html('Der Treffpunkt ist noch nicht bekannt.');
     $('#cityModalTabNextRideDate time').html('Das Datum ist noch nicht bekannt.');
     $('#cityModalTabNextRideTime time').html('Die Uhrzeit ist noch nicht bekannt.');
+
+    $('#cityModalTabs li:eq(0) a').tab('show');
 }
 
 function showCityInfo(slug)
