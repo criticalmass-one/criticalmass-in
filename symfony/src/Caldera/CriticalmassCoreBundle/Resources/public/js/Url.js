@@ -76,3 +76,11 @@ Url.getNodeJSApiPrefix = function()
 {
     return this.getProtocolString() + this.getHostName() + ':' + this.getNodeJSPortNumber() + '/';
 };
+
+Url.fileExists = function(fileUrl)
+{
+    var http = new XMLHttpRequest();
+    http.open('HEAD', fileUrl, false);
+    http.send();
+    return http.status!=404;
+};
