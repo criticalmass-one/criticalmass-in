@@ -9,13 +9,13 @@ MapPositionTrace.prototype.mapPositions = null;
 
 MapPositionTrace.prototype.positionsArray = new Array();
 
-MapPositionTrace.prototype.addPosition(position)
+MapPositionTrace.prototype.addPosition = function(position)
 {
     this.positionsArray[position.username].push(position);
 
 };
 
-MapPositionTrace.prototype.drawPositionTrace()
+MapPositionTrace.prototype.drawPositionTrace = function()
 {
     for (var username in this.positionArray)
     {
