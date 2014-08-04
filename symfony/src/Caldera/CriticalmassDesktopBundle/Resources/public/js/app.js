@@ -95,6 +95,9 @@ function showCityInfo(slug)
 
     if (ride)
     {
+        $('#cityModalTabNextRideKnown').show();
+        $('#cityModalTabNextRideUnknown').hide();
+
         var imageFilename = Url.getUrlPrefix() + 'images/ride/' + slug + '/' + ride.getId() + '.jpg';
 
         if (Url.fileExists(imageFilename))
@@ -118,6 +121,8 @@ function showCityInfo(slug)
         $('#cityModalTabNextRideDate time').html(ride.getFormattedDate());
         $('#cityModalTabNextRideTime time').html(ride.getFormattedTime());
 
+        $('#cityModalTabNextRideUnknown').hide();
+
         var html = '';
 
         if (ride.getUrl())
@@ -136,6 +141,11 @@ function showCityInfo(slug)
         }
 
         $('#cityModalTabNextRideSocialMedia').html(html);
+    }
+    else
+    {
+        $('#cityModalTabNextRideKnown').hide();
+        $('#cityModalTabNextRideUnknown').show();
     }
 
     $('#cityInfoModal').modal('show');
@@ -168,7 +178,6 @@ function initApp()
             standardTileLayer = tileLayer;
         }
     }
-
 
     var criticalmassIcon = L.icon({
         iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
