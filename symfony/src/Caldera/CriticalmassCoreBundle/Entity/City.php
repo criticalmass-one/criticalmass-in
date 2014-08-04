@@ -40,7 +40,7 @@ class City
     /**
      * Kurze Beschreibung der Critical Mass dieser Stadt.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
