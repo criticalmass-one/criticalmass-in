@@ -74,17 +74,19 @@
     <div class="navbar-collapse collapse">
         <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
-                <input type="text" placeholder="Email" class="form-control">
+                <input type="text" placeholder="Benutzername" class="form-control">
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Password" class="form-control">
+                <input type="password" placeholder="Kennwort" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button type="submit" class="btn btn-success">Login</button>
         </form>
         <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="sidebar.toggle(); return false;"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;Städte</a></li>
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-globe" style="color: white"></i>&nbsp;&nbsp;Critical Mass</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-dashboard" style="color: white"></i>&nbsp;&nbsp;Statistiken</a></li>
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;Über uns</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#loginModal').modal('show'); return false;"><i class="fa fa-user" style="color: white"></i>&nbsp;&nbsp;Dein Profil</a></li>
         </ul>
     </div><!--/.navbar-collapse -->
 </div>
@@ -169,7 +171,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="editRideModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -177,17 +179,19 @@
                 <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
-                <form id="contact-form">
-                    <fieldset>
-                        <div class="form-group">
-                            <label for="name">Username:</label>
-                            <input type="text" class="form-control" id="username">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Password:</label>
-                            <input type="password" class="form-control" id="password">
-                        </div>
-                    </fieldset>
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+
+                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                    <input type="password" id="password" name="_password" required="required" />
+
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
                 </form>
             </div>
             <div class="modal-footer">
@@ -223,22 +227,27 @@
                     </div>
 
                     <div id="cityModalRideTab" class="tab-pane fade">
-                        <div class="jumbotron" id="cityModalTabNextRideJumbotron">
-                            <h2 id="cityModalTabNextRideJumbotronTitle" style="color: white; text-shadow: black 0 0 3px;">Hello, world!</h2>
-                        </div>
+                        <div id="cityModalTabNextRideKnown">
+                            <div class="jumbotron" id="cityModalTabNextRideJumbotron">
+                                <h2 id="cityModalTabNextRideJumbotronTitle" style="color: white; text-shadow: black 0 0 3px;">Hello, world!</h2>
+                            </div>
 
-                        <h2 id="cityModalTabNextRideTitle"></h2>
-                        <p id="cityModalTabNextRideDescription"></p>
+                            <h2 id="cityModalTabNextRideTitle"></h2>
+                            <p id="cityModalTabNextRideDescription"></p>
 
-                        <div class="row">
-                            <div class="col-md-12" id="cityModalTabNextRideLocation"><strong>Treffpunkt:</strong> <span></span></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6" id="cityModalTabNextRideDate"><strong>Datum:</strong> <time></time></div>
-                            <div class="col-md-6" id="cityModalTabNextRideTime"><strong>Uhrzeit:</strong> <time></time></strong></div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-12" id="cityModalTabNextRideLocation"><strong>Treffpunkt:</strong> <span></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" id="cityModalTabNextRideDate"><strong>Datum:</strong> <time></time></div>
+                                <div class="col-md-6" id="cityModalTabNextRideTime"><strong>Uhrzeit:</strong> <time></time></strong></div>
+                            </div>
 
-                        <div id="cityModalTabNextRideSocialMedia" class="btn-group"></div>
+                            <div id="cityModalTabNextRideSocialMedia" class="btn-group"></div>
+                            </div>
+                        <div id="cityModalTabNextRideUnknown">
+                            <div class="alert alert-info" role="alert">Schade — zu dieser Stadt sind uns keine Fahrten bekannt :( Aber wenn du mehr weißt als wir: Schreib uns bitte unter <a href="mailto:ride@criticalmass.in">ride@criticalmass.in</a>!</div>
+                        </div>
                     </div>
                 </div>
             </div>
