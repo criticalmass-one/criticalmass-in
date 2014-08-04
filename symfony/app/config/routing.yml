@@ -9,14 +9,9 @@ sonata_user_resetting:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_resetting_1.xml"
     prefix: /resetting
 
-#sonata_user_profile:
-#    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
-#    prefix: /profile
-
-#sonata_user_profile_show:
-#    pattern: /
-#    defaults: { _controller: CalderaCriticalmassMobileBundle:MultiPage:main }
-
+sonata_user_profile:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
+    prefix: /profile
 
 sonata_user_register:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
