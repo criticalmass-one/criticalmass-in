@@ -114,60 +114,11 @@
 
 {% include 'CalderaCriticalmassDesktopBundle:Modal:loginModal.html.twig' %}
 
+{% include 'CalderaCriticalmassDesktopBundle:Modal:cityModal.html.twig' %}
 
 
-<div class="modal fade" id="cityInfoModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-primary" id="cityModalTitle"></h4>
-            </div>
-            <div class="modal-body" id="cityModalBody">
-                <ul class="nav nav-tabs" id="cityModalTabs">
-                    <li class="active"><a href="#cityModalInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;Stadtinfo</a></li>
-                    <li><a href="#cityModalRideTab" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Nächste Tour</a></li>
-                </ul>
 
-                <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
-                    <div class="tab-pane fade active in" id="cityModalInfoTab">
-                        <div class="jumbotron" id="cityModalTabInfoJumbotron">
-                            <h2 id="cityModalTabInfoJumbotronTitle">Hello, world!</h2>
-                        </div>
 
-                        <h2 id="cityModalTabInfoTitle">Hello, world!</h2>
-                        <p id="cityModalTabInfoDescription"></p>
-                        <div id="cityModalTabInfoSocialMedia" class="btn-group"></div>
-                    </div>
-
-                    <div id="cityModalRideTab" class="tab-pane fade">
-                        <div id="cityModalTabNextRideKnown">
-                            <div class="jumbotron" id="cityModalTabNextRideJumbotron">
-                                <h2 id="cityModalTabNextRideJumbotronTitle" style="color: white; text-shadow: black 0 0 3px;">Hello, world!</h2>
-                            </div>
-
-                            <h2 id="cityModalTabNextRideTitle"></h2>
-                            <p id="cityModalTabNextRideDescription"></p>
-
-                            <div class="row">
-                                <div class="col-md-12" id="cityModalTabNextRideLocation"><strong>Treffpunkt:</strong> <span></span></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6" id="cityModalTabNextRideDate"><strong>Datum:</strong> <time></time></div>
-                                <div class="col-md-6" id="cityModalTabNextRideTime"><strong>Uhrzeit:</strong> <time></time></strong></div>
-                            </div>
-
-                            <div id="cityModalTabNextRideSocialMedia" class="btn-group"></div>
-                            </div>
-                        <div id="cityModalTabNextRideUnknown">
-                            <div class="alert alert-info" role="alert">Schade — zu dieser Stadt sind uns keine Fahrten bekannt :( Aber wenn du mehr weißt als wir: Schreib uns bitte unter <a href="mailto:ride@criticalmass.in">ride@criticalmass.in</a>!</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="glympseModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
