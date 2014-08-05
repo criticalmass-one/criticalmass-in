@@ -135,3 +135,14 @@ input[type="radio"], input[type="checkbox"] {
         display: none !important;
     }
 }
+
+div#map div#glympseLogoContainer
+{
+    position: absolute;
+    height: 40px;
+    width: 150px;
+    z-index: 50000;
+    opacity: 0.8;
+    right: 15px;
+    bottom: 15px;
+}
