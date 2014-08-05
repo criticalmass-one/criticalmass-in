@@ -112,42 +112,9 @@
 
 {% include 'CalderaCriticalmassDesktopBundle:Modal:aboutModal.html.twig' %}
 
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Login</h4>
-            </div>
-            <div class="modal-body">
-                <ul class="nav nav-tabs" id="loginTabs">
-                    <li class="active"><a href="#loginTabsLogin" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;Anmelden</a></li>
-                    <li><a href="#loginTabsRegister" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Registrieren</a></li>
-                    <li><a href="#loginTabsPassword" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Kennwort vergessen</a></li>
-                </ul>
-                <div class="tab-content" id="loginTabsContent" style="padding-top: 10px;">
-                    <div id="loginTabsLogin" class="tab-pane fade active in">
-                        {% block fos_user_login %}
-                            {% render controller("SonataUserBundle:SecurityFOSUser1:login") %}
-                        {% endblock %}
-                    </div>
+{% include 'CalderaCriticalmassDesktopBundle:Modal:loginModal.html.twig' %}
 
-                    <div id="loginTabsRegister" class="tab-pane fade">
-                        {% block sonata_user_registration %}
-                            {% render controller("SonataUserBundle:RegistrationFOSUser1:register") %}
-                        {% endblock %}
-                    </div>
 
-                    <div id="loginTabsPassword" class="tab-pane fade">
-                        {% block fos_user_resetting %}
-                            {% render controller("SonataUserBundle:ResettingFOSUser1:request") %}
-                        {% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="cityInfoModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
