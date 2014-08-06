@@ -2,18 +2,18 @@
 
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
-use Caldera\CriticalmassGlympseBundle\Entity\Ticket;
+use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassStatisticBundle\Entity\Heatmap;
 
 class TraceTilePrinter extends AbstractTilePrinter {
     protected $ticket;
     protected $changed = false;
 
-    public function __construct(Tile $tile, Heatmap $heatmap, Ticket $ticket)
+    public function __construct(Tile $tile, Heatmap $heatmap, Track $track)
     {
         $this->tile = $tile;
         $this->heatmap = $heatmap;
-        $this->ticket = $ticket;
+        $this->track = $track;
     }
 
     public function printTile()
@@ -35,7 +35,16 @@ class TraceTilePrinter extends AbstractTilePrinter {
 
             while ($pixel != null)
             {
-                $color = imagecolorallocate($image, $this->ticket->getColorRed(), $this->ticket->getColorGreen(), $this->ticket->getColorBlue());
+                if ($this->track->getTicket())
+                {
+                    $ticket = $this->track->getTicket();
+                    $color = imagecolorallocate($image, $ticket->getColorRed(), $ticket->getColorGreen(), $ticket->getColorBlue());
+                }
+                else
+                {
+                    $user = $this->track->getUser();
+                    $color = imagecolorallocate($image, $user->getColorRed(), $user->getColorGreen(), $user->getColorBlue());
+                }
 
                 imagefilledellipse($image, $pixel->getX(), $pixel->getY(), 1, 1, $color);
                 $pixel = $this->tile->popPixel();

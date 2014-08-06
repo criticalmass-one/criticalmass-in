@@ -42,7 +42,7 @@ class DefaultController extends Controller
                         $tile->dropPathArray($pathArray);
 
                         //$tp = new PNGTilePrinter($tile, $heatmap);
-                        $tp = new TraceTilePrinter($tile, $heatmap, $track->getTicket());
+                        $tp = new TraceTilePrinter($tile, $heatmap, $track);
                         $tp->printTile();
                         $tp->saveTile();
 
