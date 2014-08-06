@@ -37,7 +37,7 @@ class RideAdmin extends Admin
                 ->add('longitude', 'text', array('label' => 'Längengrad'))
             ->end()
             ->with('Social Media', array('class' => 'col-md-6'))
-                ->add('website', 'text', array('label' => 'Link zu einer Webseite'))
+                ->add('url', 'text', array('label' => 'Link zu einer Webseite'))
                 ->add('facebook', 'text', array('label' => 'Link zu einer Veranstaltung auf facebook'))
                 ->add('twitter', 'text', array('label' => 'Link zu einem Tweet'))
             ->end()
