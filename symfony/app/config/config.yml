@@ -122,3 +122,7 @@ sonata_block:
 sonata_user:
     security_acl: true
     manager_type: orm # can be orm or mongodb
+
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
