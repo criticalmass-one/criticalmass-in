@@ -52,6 +52,11 @@ class Track
      */
     protected $gpx;
 
+    public function __construct()
+    {
+        $this->setCreationDateTime(new \DateTime());
+    }
+
     /**
      * Get id
      *
@@ -202,6 +207,20 @@ class Track
 
     public function __toString()
     {
-        return $this->getUsername().' ('.$this->getCreationDateTime()->format('Y-m-d').', '.$this->getRide()->getCity()->getCity().')';
+        $result = $this->getUsername().'(';
+
+        if ($this->getCreationDateTime())
+        {
+            $result .= $this->getCreationDateTime()->format('Y-m-d');
+        }
+
+        if ($this->getRide())
+        {
+            $result .= ', '.$this->getRide()->getCity()->getCity();
+        }
+
+        $result .= ')';
+
+        return $result;
     }
 }
