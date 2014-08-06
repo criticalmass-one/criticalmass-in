@@ -65,4 +65,13 @@ services:
         calls:
             - [ setTranslationDomain, [CriticalmassCoreBundle]]
 
+    sonata.admin.track:
+        class: Caldera\CriticalmassCoreBundle\Admin\TrackAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Track" }
+        arguments:
+            - ~
+            - Caldera\CriticalmassCoreBundle\Entity\Track
+            - ~
+        calls:
             - [ setTranslationDomain, [CriticalmassCoreBundle]]
