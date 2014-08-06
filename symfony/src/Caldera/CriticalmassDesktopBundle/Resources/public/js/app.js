@@ -117,9 +117,18 @@ function showCityInfo(slug)
         $('#cityModalTabNextRideTitle').html(ride.getTitle());
         $('#cityModalTabNextRideDescription').html(ride.getDescription());
 
-        $('#cityModalTabNextRideLocation span').html(ride.getLocation());
-        $('#cityModalTabNextRideDate time').html(ride.getFormattedDate());
-        $('#cityModalTabNextRideTime time').html(ride.getFormattedTime());
+        if (ride.getLocation())
+        {
+            $('#cityModalTabNextRideLocation').html(ride.getLocation());
+        }
+        else
+        {
+            $('#cityModalTabNextRideLocation').html('Der Treffpunkt ist noch nicht bekannt :(');
+        }
+
+        $('#cityModalTabNextRideDate').html(ride.getFormattedDate());
+        $('#cityModalTabNextRideTime').html(ride.getFormattedTime());
+        $('#cityModalTabNextRideGlympse').html(slug + '@criticalmass.in');
 
         $('#cityModalTabNextRideUnknown').hide();
 
