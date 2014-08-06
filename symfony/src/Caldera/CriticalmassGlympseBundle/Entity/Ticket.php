@@ -392,4 +392,9 @@ class Ticket
     {
         return $this->message;
     }
+
+    public function __toString()
+    {
+        return $this->getCity()->getCity().' '.$this->getDisplayName();
+    }
 }
