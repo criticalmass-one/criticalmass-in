@@ -115,15 +115,16 @@
 
 {% include 'CalderaCriticalmassDesktopBundle:Modal:glympseModal.html.twig' %}
 
-{% javascripts '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+{% javascripts
+'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
 '@CalderaCriticalmassCoreBundle/Resources/public/js/*'
 '@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
 '@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/bootstrap.min.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.activearea.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
