@@ -187,7 +187,7 @@ function initApp()
             standardTileLayer = tileLayer;
         }
     }
-
+/*
     var criticalmassIcon = L.icon({
         iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
         iconSize: [25, 41],
@@ -224,7 +224,24 @@ function initApp()
 
     var markerGroup = L.layerGroup(markerArray);
 
-    map = L.map('map', { zoomControl: false, attributionControl: false, layers: [markerGroup]});
+    map = L.map('map', { zoomControl: false, attributionControl: false, layers: [markerGroup]});*/
+
+    var cities = CityFactory.getAllCities();
+
+    for (var index in cities)
+    {
+        var city = cities[index];
+        var html = '<tr class="cityRow" data-cityslug="' + city.getCitySlug() + '" style="cursor: pointer;"><td class="cityName">' + city.getCity() + '<i class="fa fa-chevron-right pull-right"></i></td></tr>';
+
+        $('#cityList').append(html);
+    }
+
+    $('.cityRow').on('click', function()
+    {
+        showCityInfo($(this).data('cityslug'));
+    });
+    
+    map = L.map('map', { zoomControl: false, attributionControl: false });
 
     map.setView([53.5554952, 9.9436765], 13);
 
@@ -256,7 +273,7 @@ function initApp()
 
 
 
-    var heatmapGroup = L.layerGroup([L.tileLayer("https://www.criticalmass.cm/images/heatmap/123123123/{z}/{x}/{y}.png", {
+    var heatmapGroup = L.layerGroup([L.tileLayer("https://www.criticalmass.cm/images/heatmap/ae5e6d7e21c2936051a06a0f2f40661e/{z}/{x}/{y}.png", {
         maxZoom: 18
     })]);
 
@@ -265,6 +282,9 @@ function initApp()
 
     var mapPositions = new MapPositions(map);
     mapPositions.startLoop();
+
+    var mapCities = new MapCities(map);
+    mapCities.drawCityMarkers();
 
     var layerControl = L.control.groupedLayers(tileLayers, {
         "Critical Mass": {
