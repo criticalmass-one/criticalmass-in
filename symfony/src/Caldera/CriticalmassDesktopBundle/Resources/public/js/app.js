@@ -240,10 +240,13 @@ function initApp()
     {
         showCityInfo($(this).data('cityslug'));
     });
-    
+
     map = L.map('map', { zoomControl: false, attributionControl: false });
 
-    map.setView([53.5554952, 9.9436765], 13);
+    var initMapView = new InitMapView(map, citySlug);
+    initMapView.initView();
+
+    //map.setView([53.5554952, 9.9436765], 13);
 
     standardTileLayer.addTo(map);
 
