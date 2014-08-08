@@ -1,10 +1,13 @@
 MapCities = function(map)
 {
     this.map = map;
+    this.layerGroup = L.layerGroup();
+    this.layerGroup.addTo(this.map);
 };
 
 MapCities.prototype.map = null;
 MapCities.prototype.markersArray = new Array();
+MapCities.prototype.layerGroup = null;
 
 MapCities.prototype.drawCityMarkers = function()
 {
@@ -42,7 +45,7 @@ MapCities.prototype.drawCityMarkers = function()
             showCityInfo(this.options.citySlug);
         });
 
-        marker.addTo(this.map);
+        marker.addTo(this.layerGroup);
 
         this.markersArray[slug] = marker;
     }
