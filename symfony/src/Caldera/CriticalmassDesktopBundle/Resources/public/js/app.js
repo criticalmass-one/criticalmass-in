@@ -289,6 +289,9 @@ function initApp()
     var mapCities = new MapCities(map);
     mapCities.drawCityMarkers();
 
+    var mapView = new MapView(map);
+    mapView.initEventListeners();
+
     var layerControl = L.control.groupedLayers(tileLayers, {
         "Critical Mass": {
             "Städte": markerGroup,
