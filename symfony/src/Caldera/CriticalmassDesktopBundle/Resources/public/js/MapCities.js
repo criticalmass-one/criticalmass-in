@@ -11,8 +11,18 @@ MapCities.prototype.layerGroup = null;
 
 MapCities.prototype.drawCityMarkers = function()
 {
-    var criticalmassIcon = L.icon({
+    var cityIcon = L.icon({
         iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        popupAnchor: [0, -36],
+        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+    });
+
+    var locationIcon = L.icon({
+        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassred.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
@@ -28,17 +38,18 @@ MapCities.prototype.drawCityMarkers = function()
         var city = cities[slug];
         var ride = RideFactory.getRideFromStorageBySlug(slug);
         var latLng = null;
+        var marker = null;
 
         if (ride != null && ride.getHasLocation())
         {
             latLng = [ride.getLatitude(), ride.getLongitude()];
+            marker = L.marker(latLng, { riseOnHover: true, icon: locationIcon, citySlug: slug });
         }
         else
         {
             latLng = [city.getLatitude(), city.getLongitude()];
+            marker = L.marker(latLng, { riseOnHover: true, icon: cityIcon, citySlug: slug });
         }
-
-        var marker = L.marker(latLng, { riseOnHover: true, icon: criticalmassIcon, citySlug: slug });
 
         marker.on('click', function()
         {
