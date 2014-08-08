@@ -187,44 +187,6 @@ function initApp()
             standardTileLayer = tileLayer;
         }
     }
-/*
-    var criticalmassIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-
-    var cities = CityFactory.getAllCities();
-    var markerArray = new Array();
-
-    for (var index in cities)
-    {
-        var city = cities[index];
-        var html = '<tr class="cityRow" data-cityslug="' + city.getCitySlug() + '" style="cursor: pointer;"><td class="cityName">' + city.getCity() + '<i class="fa fa-chevron-right pull-right"></i></td></tr>';
-
-        $('#cityList').append(html);
-
-        $('.cityRow').on('click', function()
-        {
-            showCityInfo($(this).data('cityslug'));
-        });
-
-        var marker = L.marker([city.getLatitude(), city.getLongitude()], { icon: criticalmassIcon, citySlug: city.getCitySlug() });
-        marker.on('click', function()
-        {
-            showCityInfo(this.options.citySlug);
-        });
-
-        markerArray.push(marker);
-    }
-
-    var markerGroup = L.layerGroup(markerArray);
-
-    map = L.map('map', { zoomControl: false, attributionControl: false, layers: [markerGroup]});*/
 
     var cities = CityFactory.getAllCities();
 
