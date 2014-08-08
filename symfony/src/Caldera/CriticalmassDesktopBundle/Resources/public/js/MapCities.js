@@ -31,6 +31,16 @@ MapCities.prototype.drawCityMarkers = function()
         shadowAnchor: [13, 41]
     });
 
+    var unknownLocationIcon = L.icon({
+        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassyellow.png',
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        popupAnchor: [0, -36],
+        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+    });
+
     var cities = CityFactory.getAllCities();
 
     for (slug in cities)
@@ -44,6 +54,11 @@ MapCities.prototype.drawCityMarkers = function()
         {
             latLng = [ride.getLatitude(), ride.getLongitude()];
             marker = L.marker(latLng, { riseOnHover: true, icon: locationIcon, citySlug: slug });
+        }
+        else if (ride != null && !ride.getHasLocation())
+        {
+            latLng = [city.getLatitude(), city.getLongitude()];
+            marker = L.marker(latLng, { riseOnHover: true, icon: unknownLocationIcon, citySlug: slug });
         }
         else
         {
