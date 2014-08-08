@@ -203,13 +203,16 @@ function initApp()
         showCityInfo($(this).data('cityslug'));
     });
 
-    map = L.map('map', { zoomControl: false, attributionControl: false });
+    /*map = L.map('map', { zoomControl: false, attributionControl: false });
 
     var initMapView = new InitMapView(map, citySlug);
-    initMapView.initView();
+    initMapView.initView();*/
 
     //map.setView([53.5554952, 9.9436765], 13);
 
+    map = new Map();
+    map.initMap();
+    
     standardTileLayer.addTo(map);
 
     sidebar = L.control.sidebar("sidebar", {
