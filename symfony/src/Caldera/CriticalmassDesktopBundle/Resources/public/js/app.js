@@ -210,10 +210,10 @@ function initApp()
 
     //map.setView([53.5554952, 9.9436765], 13);
 
-    map = new Map();
+    map = new Map('map');
     map.initMap();
-    
-    standardTileLayer.addTo(map);
+
+    standardTileLayer.addTo(map.map);
 
     sidebar = L.control.sidebar("sidebar", {
         closeButton: true,
@@ -222,7 +222,7 @@ function initApp()
         getViewport();
     }).on("hidden", function () {
         getViewport();
-    }).addTo(map);
+    }).addTo(map.map);
 
     if (document.body.clientWidth <= 767)
     {
@@ -237,7 +237,7 @@ function initApp()
 
     var zoomControl = L.control.zoom({
         position: "topright"
-    }).addTo(map);
+    }).addTo(map.map);
 
 
 
@@ -247,15 +247,6 @@ function initApp()
 
 
     getViewport();
-
-    var mapPositions = new MapPositions(map);
-    mapPositions.startLoop();
-
-    var mapCities = new MapCities(map);
-    mapCities.drawCityMarkers();
-
-    var mapView = new MapView(map);
-    mapView.initEventListeners();
 
     var layerControl = L.control.groupedLayers(tileLayers, {
         "Critical Mass": {
@@ -267,5 +258,5 @@ function initApp()
         collapsed: false
     });
 
-    layerControl.addTo(map);
+    layerControl.addTo(map.map);
 }
