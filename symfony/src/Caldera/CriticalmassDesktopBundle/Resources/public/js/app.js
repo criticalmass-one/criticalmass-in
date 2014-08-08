@@ -294,12 +294,13 @@ function initApp()
 
     var layerControl = L.control.groupedLayers(tileLayers, {
         "Critical Mass": {
-            "Städte": markerGroup,
+            "Städte": mapCities.layerGroup,
             "Teilnehmer": mapPositions.layerGroup,
             "Heatmaps": heatmapGroup
         }
     }, {
         collapsed: false
     });
+
     layerControl.addTo(map);
 }
