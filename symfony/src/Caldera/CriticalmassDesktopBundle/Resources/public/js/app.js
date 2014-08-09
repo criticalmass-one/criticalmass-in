@@ -1,7 +1,7 @@
 var map, sidebar;
 
 function getViewport() {
-  if (sidebar.isVisible()) {
+    /*  if (sidebar.isVisible()) {
     map.setActiveArea({
       position: "absolute",
       top: "0px",
@@ -17,7 +17,7 @@ function getViewport() {
       right: "0px",
       height: $("#map").css("height")
     });
-  }
+  }*/
 }
 
 $('.cityRow').on('click', function()
@@ -171,21 +171,6 @@ if (document.body.clientWidth <= 767) {
 
 function initApp()
 {
-    var cities = CityFactory.getAllCities();
-
-    for (var index in cities)
-    {
-        var city = cities[index];
-        var html = '<tr class="cityRow" data-cityslug="' + city.getCitySlug() + '" style="cursor: pointer;"><td class="cityName">' + city.getCity() + '<i class="fa fa-chevron-right pull-right"></i></td></tr>';
-
-        $('#cityList').append(html);
-    }
-
-    $('.cityRow').on('click', function()
-    {
-        showCityInfo($(this).data('cityslug'));
-    });
-
     /*map = L.map('map', { zoomControl: false, attributionControl: false });
 
     var initMapView = new InitMapView(map, citySlug);
@@ -196,15 +181,6 @@ function initApp()
     map = new Map('map');
     map.initMap();
 
-    sidebar = L.control.sidebar("sidebar", {
-        closeButton: true,
-        position: "left"
-    }).on("shown", function () {
-        getViewport();
-    }).on("hidden", function () {
-        getViewport();
-    }).addTo(map.map);
-
     if (document.body.clientWidth <= 767)
     {
         var isCollapsed = true;
@@ -212,7 +188,7 @@ function initApp()
     else
     {
         var isCollapsed = false;
-        sidebar.show();
+        //sidebar.show();
     }
 
     getViewport();
