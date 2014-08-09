@@ -171,23 +171,6 @@ if (document.body.clientWidth <= 767) {
 
 function initApp()
 {
-    var tileLayerObjects = TileLayerFactory.getTileLayers();
-    var tileLayers = new Array();
-    var standardTileLayer = null;
-
-    for (var index in tileLayerObjects)
-    {
-        var tileLayerObject = tileLayerObjects[index];
-        var tileLayer = L.tileLayer(tileLayerObject.getAddress(), {foo: 'bar'});
-
-        tileLayers[tileLayerObject.getTitle()] = tileLayer;
-
-        if (tileLayerObject.getStandard())
-        {
-            standardTileLayer = tileLayer;
-        }
-    }
-
     var cities = CityFactory.getAllCities();
 
     for (var index in cities)
@@ -234,29 +217,5 @@ function initApp()
         sidebar.show();
     }
 
-
-    var zoomControl = L.control.zoom({
-        position: "topright"
-    }).addTo(map.map);
-
-
-
-    var heatmapGroup = L.layerGroup([L.tileLayer("https://www.criticalmass.cm/images/heatmap/ae5e6d7e21c2936051a06a0f2f40661e/{z}/{x}/{y}.png", {
-        maxZoom: 18
-    })]);
-
-
     getViewport();
-
-    var layerControl = L.control.groupedLayers(tileLayers, {
-        "Critical Mass": {
-            "Städte": mapCities.layerGroup,
-            "Teilnehmer": mapPositions.layerGroup,
-            "Heatmaps": heatmapGroup
-        }
-    }, {
-        collapsed: false
-    });
-
-    layerControl.addTo(map.map);
 }
