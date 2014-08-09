@@ -16,14 +16,14 @@ Map.prototype.initMap = function()
     this.mapCities = new MapCities(this.map);
     this.mapCities.drawCityMarkers();
 
-    this.initMapView = new InitMapView(this.map);
-    this.initMapView.initView();
-
     this.mapTileLayer = new MapTileLayer(this.map);
     this.mapTileLayer.init();
 
     this.mapView = new MapView(this.map);
     this.mapView.initEventListeners();
+
+    this.initMapView = new InitMapView(this.map, this);
+    this.initMapView.initView();
 
     this.mapSidebar = new MapSidebar(this.map, 'sidebar');
     this.mapSidebar.init();
