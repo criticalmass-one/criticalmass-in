@@ -10,14 +10,14 @@ Map.prototype.initMap = function()
 {
     this.map = L.map(this.identifier, { zoomControl: false, attributionControl: false });
 
-    this.initMapView = new InitMapView(this.map);
-    this.initMapView.initView();
-
     this.mapPositions = new MapPositions(this.map);
     this.mapPositions.startLoop();
 
     this.mapCities = new MapCities(this.map);
     this.mapCities.drawCityMarkers();
+
+    this.initMapView = new InitMapView(this.map);
+    this.initMapView.initView();
 
     this.mapTileLayer = new MapTileLayer(this.map);
     this.mapTileLayer.init();
