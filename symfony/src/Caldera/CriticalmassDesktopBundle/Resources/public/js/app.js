@@ -196,8 +196,6 @@ function initApp()
     map = new Map('map');
     map.initMap();
 
-    standardTileLayer.addTo(map.map);
-
     sidebar = L.control.sidebar("sidebar", {
         closeButton: true,
         position: "left"
