@@ -1,6 +1,6 @@
 MapTileLayer = function(map)
 {
-
+    this.map = map;
 };
 
 MapTileLayer.prototype.tileLayers = new Array();
@@ -20,6 +20,7 @@ MapTileLayer.prototype.init = function()
         if (tileLayerObject.getStandard())
         {
             this.standardTileLayer = tileLayer;
+            this.standardTileLayer.addTo(this.map);
         }
     }
 };
