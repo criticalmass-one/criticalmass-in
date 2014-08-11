@@ -53,4 +53,9 @@ MapSidebar.prototype.initEventListeners = function()
     {
         this2.sidebar.toggle();
     });
+
+    $('#sidebarButtonToggle').on('click', function()
+    {
+        this2.sidebar.toggle();
+    });
 };
