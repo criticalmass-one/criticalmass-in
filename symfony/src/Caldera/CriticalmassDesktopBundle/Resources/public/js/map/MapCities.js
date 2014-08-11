@@ -12,7 +12,7 @@ MapCities.prototype.layerGroup = null;
 MapCities.prototype.drawCityMarkers = function()
 {
     var cityIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassgray.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
