@@ -11,6 +11,12 @@ MapSidebar.prototype.sidebar = null;
 
 MapSidebar.prototype.init = function()
 {
+    this.initCities();
+    this.initEventListeners();
+};
+
+MapSidebar.prototype.initCities = function()
+{
     var cities = CityFactory.getAllCities();
 
     for (var index in cities)
@@ -30,15 +36,21 @@ MapSidebar.prototype.init = function()
         closeButton: true,
         position: "left"
     });
+
     this.sidebar.addTo(this.map);
-    /*.on("shown", function () {
-     getViewport();
-     }).on("hidden", function () {
-     getViewport();
-     }).*/
 
     if (document.body.clientWidth > 767)
     {
         this.sidebar.show();
     }
+};
+
+MapSidebar.prototype.initEventListeners = function()
+{
+    var this2 = this;
+
+    $('#navigationButtonSidebar').on('click', function()
+    {
+        this2.sidebar.toggle();
+    });
 };
