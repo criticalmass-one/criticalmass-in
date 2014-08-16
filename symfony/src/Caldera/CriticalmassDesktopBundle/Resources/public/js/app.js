@@ -1,25 +1,5 @@
 var map, sidebar;
 
-function getViewport() {
-    /*  if (sidebar.isVisible()) {
-    map.setActiveArea({
-      position: "absolute",
-      top: "0px",
-      left: $(".leaflet-sidebar").css("width"),
-      right: "0px",
-      height: $("#map").css("height")
-    });
-  } else {
-    map.setActiveArea({
-      position: "absolute",
-      top: "0px",
-      left: "0px",
-      right: "0px",
-      height: $("#map").css("height")
-    });
-  }*/
-}
-
 $('.cityRow').on('click', function()
 {
     showCityInfo($(this).data('cityslug'));
@@ -191,5 +171,4 @@ function initApp()
         //sidebar.show();
     }
 
-    getViewport();
 }

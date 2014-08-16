@@ -47,4 +47,22 @@ Map.prototype.initMap = function()
     });
 
     layerControl.addTo(this.map);
+
+    if (this.mapSidebar.sidebar.isVisible()) {
+        this.map.setActiveArea({
+            position: "absolute",
+            top: "0px",
+            left: $(".leaflet-sidebar").css("width"),
+            right: "0px",
+            height: $("#map").css("height")
+        });
+    } else {
+        this.map.setActiveArea({
+            position: "absolute",
+            top: "0px",
+            left: "0px",
+            right: "0px",
+            height: $("#map").css("height")
+        });
+    }
 };
