@@ -9,11 +9,11 @@ MapCities.prototype.markersArray = new Array();
 MapCities.prototype.drawCityMarkers = function()
 {
     var criticalmassIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassblue.png',
+        iconUrl: '/images/marker/criticalmassblue.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowUrl: '/images/marker/defaultshadow.png',
         shadowSize: [41, 41],
         shadowAnchor: [13, 41]
     });
