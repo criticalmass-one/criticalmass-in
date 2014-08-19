@@ -12,7 +12,7 @@ TileLayerFactory.convertObjectToTileLayer = function(objectData)
     tileLayer.setId(objectData.id);
     tileLayer.setTitle(objectData.title);
     tileLayer.setAddress(objectData.address);
-    tileLayer.setAttributation(objectData.attributation);
+    tileLayer.setAttribution(objectData.attribution);
     tileLayer.setStandard(objectData.standard);
 
     return tileLayer;

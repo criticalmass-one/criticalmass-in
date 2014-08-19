@@ -24,7 +24,7 @@ class TileLayerController extends Controller
                                    'id' => $tileLayer->getId(),
                                    'title' => $tileLayer->getTitle(),
                                    'address' => ($tileLayer->getPlusOnly() && !$user ? '' : $tileLayer->getAddress()),
-                                   'attributation' => $tileLayer->getAttributation(),
+                                   'attribution' => $tileLayer->getAttribution(),
                                    'standard' => $tileLayer->getStandard());
         }
 

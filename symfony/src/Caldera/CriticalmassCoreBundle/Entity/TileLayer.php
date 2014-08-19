@@ -36,7 +36,7 @@ class TileLayer
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $attributation;
+    protected $attribution;
 
     /**
      * @ORM\Column(type="boolean")
@@ -95,14 +95,14 @@ class TileLayer
         $this->address = $address;
     }
 
-    public function getAttributation()
+    public function getAttribution()
     {
-        return $this->attributation;
+        return $this->attribution;
     }
 
-    public function setAttributation($attributation)
+    public function setAttribution($attribution)
     {
-        $this->attributation = $attributation;
+        $this->attribution = $attribution;
     }
 
     public function __toString()

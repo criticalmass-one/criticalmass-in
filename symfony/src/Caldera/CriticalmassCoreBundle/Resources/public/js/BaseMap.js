@@ -65,7 +65,7 @@ BaseMap.prototype.setTileLayer = function(tileLayer)
     }
 
     this.tileLayer = L.tileLayer(tileLayer.getAddress(), {
-        attribition: tileLayer.getAttributation()
+        attribution: tileLayer.getAttribution()
     });
 
     _paq.push(['trackEvent', 'switchTileLayer', tileLayer.getTitle()]);

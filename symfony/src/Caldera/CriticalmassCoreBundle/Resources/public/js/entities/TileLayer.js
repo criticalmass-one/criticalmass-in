@@ -5,7 +5,7 @@ TileLayer = function()
 TileLayer.prototype.id = null;
 TileLayer.prototype.title = null;
 TileLayer.prototype.address = null;
-TileLayer.prototype.attributation = null;
+TileLayer.prototype.attribution = null;
 TileLayer.prototype.standard = null;
 
 TileLayer.prototype.getId = function()
@@ -38,14 +38,14 @@ TileLayer.prototype.setAddress = function(address)
     this.address = address;
 };
 
-TileLayer.prototype.getAttributation = function()
+TileLayer.prototype.getAttribution = function()
 {
-    return this.attributation;
+    return this.attribution;
 };
 
-TileLayer.prototype.setAttributation = function(attributation)
+TileLayer.prototype.setAttribution = function(attribution)
 {
-    this.attributation = attributation;
+    this.attribution = attribution;
 };
 
 TileLayer.prototype.getStandard = function()
