@@ -12,31 +12,31 @@ MapCities.prototype.layerGroup = null;
 MapCities.prototype.drawCityMarkers = function()
 {
     var cityIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassgray.png',
+        iconUrl: '/images/marker/criticalmassgray.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowUrl: '/images/marker/defaultshadow.png',
         shadowSize: [41, 41],
         shadowAnchor: [13, 41]
     });
 
     var locationIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassred.png',
+        iconUrl: '/images/marker/criticalmassred.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowUrl: '/images/marker/defaultshadow.png',
         shadowSize: [41, 41],
         shadowAnchor: [13, 41]
     });
 
     var unknownLocationIcon = L.icon({
-        iconUrl: '/bundles/calderacriticalmasscore/images/marker/criticalmassyellow.png',
+        iconUrl: '/images/marker/criticalmassyellow.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
-        shadowUrl: '/bundles/calderacriticalmasscore/images/marker/defaultshadow.png',
+        shadowUrl: '/images/marker/defaultshadow.png',
         shadowSize: [41, 41],
         shadowAnchor: [13, 41]
     });
