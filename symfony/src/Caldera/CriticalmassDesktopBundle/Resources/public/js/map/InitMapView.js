@@ -30,6 +30,7 @@ InitMapView.prototype.initView = function()
     else
     if (citySlug != null)
     {
+        var city = CityFactory.getCityFromStorageBySlug(citySlug);
         this.initWithCity(city);
         //this.map.cities.openRideCityPopup(citySlug);
     }
