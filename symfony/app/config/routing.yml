@@ -46,7 +46,7 @@ caldera_criticalmass_mobile:
 caldera_criticalmass_desktop:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
     prefix:   /
-    host: www.criticalmass.cm
+    host: beta.criticalmass.cm
 
 caldera_criticalmass_statistic:
     resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing.yml"
