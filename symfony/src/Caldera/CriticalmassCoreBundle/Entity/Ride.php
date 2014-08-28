@@ -671,8 +671,8 @@ class Ride
     }
 
     /**
-     * @ORM\prePersist
-     * @ORM\preUpdate
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function lifecycleFileUpload() {
         $this->upload();
