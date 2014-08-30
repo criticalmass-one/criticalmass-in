@@ -6,11 +6,15 @@ caldera_criticalmass_desktop_slugindex:
     pattern:  /{slug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:slugindex }
 
-caldera_criticalmass_desktop_aboutus:
+caldera_criticalmass_desktop_content_aboutus:
     pattern:  /content/about-us
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:aboutus }
 
-caldera_criticalmass_desktop_glympse:
+caldera_criticalmass_desktop_content_criticalmass:
+    pattern:  /content/criticalmass
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:criticalmass }
+
+caldera_criticalmass_desktop_content_glympse:
     pattern:  /content/glympse
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:glympse }
 
