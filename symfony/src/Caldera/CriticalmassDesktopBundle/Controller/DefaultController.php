@@ -9,8 +9,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('enabled' => true), array('city' => 'ASC'));
-
         return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig');
     }
 
