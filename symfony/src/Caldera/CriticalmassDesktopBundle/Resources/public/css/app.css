@@ -1,9 +1,13 @@
-html, body, #map {
-  height: 100%;
-  width: 100%;
+html, body.fullscreenMapBody, #map
+{
+    height: 100%;
+    width: 100%;
+}
+
+body.fullscreenMapBody, #map {
   overflow: hidden;
 }
-body {
+body.fullscreenMapBody {
   padding-top: 50px;
 }
 input[type="radio"], input[type="checkbox"] {
