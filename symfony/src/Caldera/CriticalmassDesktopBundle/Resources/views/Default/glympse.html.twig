@@ -1,54 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>criticalmass.in</title>
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+{% block title %}My cool blog posts{% endblock %}
 
-    {% stylesheets
-    '@CalderaCriticalmassCoreBundle/Resources/public/css/external/*.css'
-    '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
-    '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css'
-    filter="cssrewrite" %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon-120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
-    <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-</head>
-
-<body>
-<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-
-        <a class="navbar-brand" href="#">criticalmass.in</a>
-    </div>
-
-    <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="navigationButtonSidebar"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;Städte</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-globe" style="color: white"></i>&nbsp;&nbsp;Critical Mass</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#glympseModal').modal('show'); return false;"><i class="fa fa-dashboard" style="color: white"></i>&nbsp;&nbsp;Live-Tracking</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;Über uns</a></li>
-        </ul>
-    </div>
-</div>
-
+{% block content %}
 <div class="container">
     <ol class="breadcrumb">
         <li><a href="#">criticalmass.in</a></li>
@@ -65,7 +19,14 @@
             <h1>Live dabei: Mit Glympse!</h1>
             <p class="lead">criticalmass.in zeigt dir seit 2012 den Weg zur nächsten Critical Mass. Und wir sind noch lange nicht fertig.</p>
 
-            <p>Mit Glympse kannst du einen Aufenthaltsort mit deinen Freunden teilen — und natürlich auch mit criticalmass.in!</p>
+            <p>Mit <a href="https://www.glympse.com/">Glympse</a> kannst du einen Aufenthaltsort mit deinen Freunden teilen — und natürlich auch mit criticalmass.in! Wenn du während der Critical Mass deinen Standort mit uns teilst, können andere Teilnehmer auf unserer Karte sehen, wo die Masse gerade entlangfährt. Es ist ganz einfach:</p>
+            <ol>
+                <li>Lade dir die kostenlose <a href="https://www.glympse.com/get_glympse">Glympse</a>-App herunter. Glympse gibt es für <a href="https://play.google.com/store/apps/details?id=com.glympse.android.glympse">Android</a>, <a href="https://itunes.apple.com/de/app/glympse-zeig-deinen-freunden/id330316698?mt=8">iOS</a> und <a href="http://www.windowsphone.com/de-de/store/app/glympse/ec418e52-b788-e011-986b-78e7d1fa76f8">Windows Phone</a>.</li>
+                <li>Erstelle einen neuen Glympse über vier Stunden, sobald sich die Masse in Bewegung setzt.</li>
+                <li>Lade uns ein! Schicke uns direkt aus der App eine Einladung an <code>hamburg@criticalmass.in</code> oder <code>berlin@criticalmass.in</code> oder <code>koeln@criticalmass.in</code> oder wo auch immer du gerade unterwegs bist.</li>
+                <li>Fahre los: Glympse gewährt uns für den von dir eingestellten Zeitraum Zugriff auf deinen Aufenthaltsort und deine Position wird auf unserer Karte angezeigt.</li>
+                <li>Feierabend? Denke daran, deinen Glympse nach der Tour zu beenden, falls der von dir eingestellte Zeitraum noch nicht abgelaufen sein sollte. Und falls es mal länger dauern sollte: Du kannst in der App den Zeitraum deiner Übertragung manuell um jeweils 15 Minuten verlängern.</li>
+            </ol>
         </div>
 
         <div class="tab-pane fade in" id="tabFaq">
@@ -81,7 +42,7 @@
             </ul>
 
             <h2>Unerkannt solange du willst.</h2>
-            <p>Dass andere Teilnehmer deinen Standort sehen können, wenn du uns eine Glympse-Einladung schickst, ist nunmal Sinn der Sache und wird sich kaum vermeiden lassen. Auf der unserer Karte zeigen wir lediglich deinen aktuellen Aufenthaltsort und den Anzeigenamen an, den du in der Glympse-App eingegeben hast. Wenn du dort nichts eingibst oder ein Pseudonym verwendest, wird erst einmal niemand Rückschlüsse ziehen kann, wer sich gerade unter diesem bunten Kreis auf der Karte bewegt.</p>
+            <p>Dass andere Teilnehmer deinen Standort sehen können, wenn du uns eine Glympse-Einladung schickst, ist nunmal Sinn der Sache und wird sich kaum vermeiden lassen. Auf unserer Karte zeigen wir lediglich deinen aktuellen Aufenthaltsort und den Anzeigenamen an, den du in der Glympse-App eingegeben hast. Wenn du dort nichts eingibst oder ein Pseudonym verwendest, wird erst einmal niemand Rückschlüsse ziehen kann, wer sich gerade unter diesem bunten Kreis auf der Karte bewegt.</p>
             <p>Und die Polizei? Die wird sich vermutlich eh nicht für deinen Aufenthaltsort interessieren, geschweigedenn dass du in der Masse der Teilnehmer zu identifizieren wärest. Wenn du dir Sorgen machst, dass dir die Polizei folgen könnte, solltest du ohnehin kein Mobiltelefon mitführen, das sich über eine so genannte Stille SMS zu erkennen gibt.</p>
 
             <h2>Sicher ist sicher.</h2>
@@ -104,28 +65,16 @@
                 <li>die individuelle Mitteilung, die du bei deiner Glympse-Einladung festgelegt hast</li>
             </ul>
 
-            <div class="alert alert-info" role="alert">Wir haben <strong>keinen Zugriff</strong> auf dein Adressbuch oder sonstige Funktionen und Eigenschaften deines Gerätes!</div>
+            <div class="alert alert-info" role="alert">Wir haben <strong>keinen Zugriff</strong> auf dein Adressbuch, deine Telefonnummer, deine E-Mail-Adresse oder sonstige Funktionen und Eigenschaften deines Gerätes!</div>
+
+            <h2>Und nach der Tour?</h2>
+            <p>Kurz nach Ende einer Critical Mass übertragen wir die aufgezeichneten Positionsdaten in GPX-Dateien. Sicherheitshalber schneiden wir alle Strecken ab, die nicht zu der Critical-Mass-Tour gehören, darunter beispielsweise deine An- und Abfahrt. Wir merken auch, wenn du dich zu weit von den übrigen Teilnehmern entfernt hast, weil du beispielsweise auf dem Weg nach Hause oder zur nächsten Party warst, und entfernen diese Teile ebenfalls aus unserer Aufzeichnung. Sofern du deine Einladung nicht explizit mit deinem Benutzerkonto verknüpft hast, lassen sich zu diesem Zeitpunkt keine Rückschlüsse mehr zu deiner Person ziehen: Man kann lediglich sehen, dass jemand deine Strecke entlanggefahren ist, aber nicht, dass du es warst. Die GPX-Datei lagern wir ein, um sie für Statistiken und Heatmaps zu nutzen.</p>
+            <p>Wir nutzen GPX-Dateien primär, damit unsere Datenbank nicht irgendwann überläuft, schließlich fallen pro Critical Mass und jedem sendenden Teilnehmer zwischen zehn- und dreißigtausend Positionsdaten an.</p>
+
+            <h2>Falls du es dir anders überlegst.</h2>
+            <p>Du kannst die Übertragung deines Standortes natürlich jederzeit abbrechen, indem du die Glympse-Übertragung manuell beendest oder einfach die komplette Glympse-App schließt. Spätestens nach fünf Minuten ist deine Position aus der Karte verschwunden. Und falls du versehentlich noch deinen Heimweg aufgezeichnet hast und wir das nicht bemerkt haben, schicke uns bitte sofort eine Mail an <a href="mailto:gpx@criticalmass.in">gpx@criticalmass.in</a>, wir gehen der Sache sofort nach.</p>
         </div>
     </div>
-
-
-
 </div>
 
-
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/bootstrap.min.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.activearea.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/map/*'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-</body>
-</html>
+{% endblock %}
