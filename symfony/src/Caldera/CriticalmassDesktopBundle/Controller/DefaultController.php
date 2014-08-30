@@ -17,6 +17,10 @@ class DefaultController extends Controller
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($slug)->getCity();
 
         return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig', array('citySlug' => $city->getMainSlugString()));
+    }
 
+    public function aboutusAction()
+    {
+        return $this->render('CalderaCriticalmassDesktopBundle:Default:aboutus.html.twig');
     }
 }
