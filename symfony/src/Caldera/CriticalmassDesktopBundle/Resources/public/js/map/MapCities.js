@@ -12,7 +12,8 @@ MapCities.prototype.layerGroup = null;
 MapCities.prototype.drawCityMarkers = function()
 {
     var cityIcon = L.icon({
-        iconUrl: '/images/marker/criticalmassgray.png',
+        iconUrl: '/images/marker/marker-gray.png',
+        iconRetinaUrl: '/images/marker/marker-gray-2x.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
@@ -22,7 +23,8 @@ MapCities.prototype.drawCityMarkers = function()
     });
 
     var locationIcon = L.icon({
-        iconUrl: '/images/marker/criticalmassred.png',
+        iconUrl: '/images/marker/marker-red.png',
+        iconRetinaUrl: '/images/marker/marker-red-2x.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
@@ -32,7 +34,8 @@ MapCities.prototype.drawCityMarkers = function()
     });
 
     var unknownLocationIcon = L.icon({
-        iconUrl: '/images/marker/criticalmassyellow.png',
+        iconUrl: '/images/marker/marker-yellow.png',
+        iconRetinaUrl: '/images/marker/marker-yellow-2x.png',
         iconSize: [25, 41],
         iconAnchor: [13, 41],
         popupAnchor: [0, -36],
