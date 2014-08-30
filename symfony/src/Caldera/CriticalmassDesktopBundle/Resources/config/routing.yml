@@ -2,14 +2,17 @@ caldera_criticalmass_desktop_index:
     pattern:  /
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:index }
 
-caldera_criticalmass_desktop_aboutus:
-    pattern:  /about-us
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:aboutus }
-
 caldera_criticalmass_desktop_slugindex:
     pattern:  /{slug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:slugindex }
 
+caldera_criticalmass_desktop_aboutus:
+    pattern:  /content/about-us
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:aboutus }
+
+caldera_criticalmass_desktop_glympse:
+    pattern:  /content/glympse
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:glympse }
 
 caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
