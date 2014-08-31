@@ -1,12 +1,7 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block body %}
-    <div class="bg"></div>
-    <div class="jumbotron" id="cityListJumbotron">
-        <h1>Critical Mass in Deutschland</h1>
-        <p>Die Critical Mass findet überall statt. Auch in deiner Nähe.</p>
-    </div>
-
+{% block title %}Städte-Übersicht{% endblock %}
+{% block content %}
     <script>
         function sortCityList(sortFunction)
         {
@@ -64,8 +59,11 @@
         }
     </script>
     <div class="container">
+        <h1>Die nächste Masse ist ganz nah.</h1>
+        <p class="lead">Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.</p>
 
         <p>Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cities|length }} Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.</p>
+
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                 Sortierung
