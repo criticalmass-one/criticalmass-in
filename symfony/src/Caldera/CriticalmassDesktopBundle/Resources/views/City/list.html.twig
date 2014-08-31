@@ -82,7 +82,7 @@
                 <div class="col-md-4 city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
                     <a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}"><h2>{{ city.getCity() }}</h2></a>
                     <p>{{ city.getDescription() }}</p>
-                    <p>{{ city.getEventDateTimeLocationString() }}</p>
+                    <p><small>{{ city.getEventDateTimeLocationString() }}</small></p>
                 </div>
             {% endfor %}
         </div>
