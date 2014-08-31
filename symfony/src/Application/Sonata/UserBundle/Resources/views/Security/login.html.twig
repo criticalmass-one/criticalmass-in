@@ -1,4 +1,10 @@
-{% block sonata_user_login %}
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Einloggen und losfahren!</h1>
     {% block sonata_user_login_error %}
         {% if error %}
             <div class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
@@ -40,4 +46,5 @@
             </div>
         </form>
     {% endblock %}
+    </div>
 {% endblock %}
