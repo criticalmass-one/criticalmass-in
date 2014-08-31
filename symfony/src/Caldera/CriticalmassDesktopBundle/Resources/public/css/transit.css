@@ -1,0 +1,126 @@
+span.hvv-u1,
+span.hvv-u2,
+span.hvv-u3,
+span.hvv-u4,
+span.hvv-s1,
+span.hvv-s11,
+span.hvv-s2,
+span.hvv-s21,
+span.hvv-s3,
+span.hvv-s31,
+span.hvv-a1,
+span.hvv-a2,
+span.hvv-a3,
+span.hvv-r10,
+span.hvv-r20,
+span.hvv-r30,
+span.hvv-r40
+{
+    width: 32px;
+    display: inline-block;
+    text-align: center;
+    background-color: white;
+    font-weight: bold;
+}
+
+span.hvv-u1
+{
+    background-color: rgb(0, 104, 163);
+    color: white;
+}
+
+span.hvv-u2
+{
+    background-color: rgb(214, 38, 49);
+    color: white;
+}
+
+span.hvv-u3
+{
+    background-color: rgb(254, 217, 57);
+    color: white;
+}
+
+span.hvv-u4
+{
+    background-color: rgb(0, 159, 154);
+    color: white;
+}
+
+span.hvv-s1,
+span.hvv-s11,
+span.hvv-s2,
+span.hvv-s21,
+span.hvv-s3,
+span.hvv-s31,
+span.hvv-a1,
+span.hvv-a2,
+span.hvv-a3,
+span.hvv-r10,
+span.hvv-r20,
+span.hvv-r30,
+span.hvv-r40
+{
+    border-radius: 10px;
+}
+
+span.hvv-s11,
+span.hvv-s2
+{
+    border-width: 2px;
+    border-style: solid;
+    padding: -2px;
+}
+
+span.hvv-s1
+{
+    background-color: rgb(34, 175, 77);
+    color: white;
+}
+
+span.hvv-s11
+{
+    border-color: rgb(34, 175, 77);
+    color: rgb(34, 175, 77);
+}
+
+span.hvv-s2
+{
+    border-color: rgb(161, 44, 74);
+    color: rgb(161, 44, 74);
+}
+
+span.hvv-s21
+{
+    background-color: rgb(161, 44, 74);
+    color: white;
+}
+
+span.hvv-s3
+{
+    background-color: rgb(86, 46, 120);
+    color: white;
+}
+
+span.hvv-s31
+{
+    background-color: rgb(86, 46, 120);
+    color: white;
+}
+
+span.hvv-a1,
+span.hvv-a2,
+span.hvv-a3
+{
+    background-color: rgb(233, 139, 58);
+    color: white;
+}
+
+span.hvv-r10,
+span.hvv-r20,
+span.hvv-r30,
+span.hvv-r40
+{
+    background-color: black;
+    color: white;
+}
