@@ -4,5 +4,7 @@ body.standardBody
     overflow: scroll;
 }
 
+div#cityList div.city
 {
+    height: 150px;
 }
