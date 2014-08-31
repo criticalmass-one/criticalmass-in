@@ -28,4 +28,9 @@ class DefaultController extends Controller
     {
         return $this->render('CalderaCriticalmassDesktopBundle:Default:glympse.html.twig');
     }
+
+    public function criticalmassAction()
+    {
+        return $this->render('CalderaCriticalmassDesktopBundle:Default:criticalmass.html.twig');
+    }
 }
