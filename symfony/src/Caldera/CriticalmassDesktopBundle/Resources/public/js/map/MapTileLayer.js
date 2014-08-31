@@ -13,7 +13,7 @@ MapTileLayer.prototype.init = function()
     for (var index in tileLayerObjects)
     {
         var tileLayerObject = tileLayerObjects[index];
-        var tileLayer = L.tileLayer(tileLayerObject.getAddress(), {foo: 'bar'});
+        var tileLayer = L.tileLayer(tileLayerObject.getAddress(), { detectRetina: true });
 
         this.tileLayers[tileLayerObject.getTitle()] = tileLayer;
 
