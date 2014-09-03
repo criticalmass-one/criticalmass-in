@@ -1,73 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>criticalmass.in</title>
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+{% block title %}Über uns{% endblock %}
 
-    {% stylesheets
-    '@CalderaCriticalmassCoreBundle/Resources/public/css/external/*.css'
-    '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
-    '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css'
-    filter="cssrewrite" %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon-120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
-    <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-</head>
-
-<body>
-<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-
-        <a class="navbar-brand" href="#">criticalmass.in</a>
-    </div>
-
-    <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="navigationButtonSidebar"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;Städte</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-globe" style="color: white"></i>&nbsp;&nbsp;Critical Mass</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#glympseModal').modal('show'); return false;"><i class="fa fa-dashboard" style="color: white"></i>&nbsp;&nbsp;Live-Tracking</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;Über uns</a></li>
-        </ul>
-    </div>
-</div>
-
+{% block content %}
 <div class="container">
     <h1>Hej, wir lieben Fahrräder!</h1>
     <p class="lead">criticalmass.in zeigt dir seit 2012 den Weg zur nächsten Critical Mass. Und wir sind noch lange nicht fertig.</p>
 </div>
-
-
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/bootstrap.min.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.activearea.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/map/*'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-</body>
-</html>
+{% endblock %}
