@@ -43,7 +43,7 @@ Map.prototype.initMap = function()
             "Heatmaps": heatmapGroup
         }
     }, {
-        collapsed: false
+        collapsed: true
     });
 
     layerControl.addTo(this.map);
