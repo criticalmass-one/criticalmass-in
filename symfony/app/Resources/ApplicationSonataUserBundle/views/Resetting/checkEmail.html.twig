@@ -1,7 +1,17 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
-</p>
+{% block title %}Kennwort zurücksetzen{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('sonata_user_profile_show') }}">Dein Profil</a></li>
+            <li class="active">Kennwort ändern</li>
+        </ol>
+
+        <h1>Sie haben Post.</h1>
+
+        <p>Wir haben dir eine E-Mail geschickt! Diese Mail enthält einen Link, hinter dem du ein neues Kennwort anfordern kannst.</p>
+    </div>
 {% endblock %}
