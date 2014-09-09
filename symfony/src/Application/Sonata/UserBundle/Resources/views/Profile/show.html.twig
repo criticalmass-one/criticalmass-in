@@ -1,3 +1,17 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
 {% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li class="active">Dein Profil</li>
+        </ol>
+        <h1>Dein Benutzerprofil</h1>
+
+        <ul>
+            <li><a href="{{ path('sonata_user_change_password') }}">Kennwort ändern</a></li>
+        </ul>
+    </div>
+{% endblock %}
