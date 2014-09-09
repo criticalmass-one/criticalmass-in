@@ -1,5 +1,26 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block fos_user_content %}
-    {% include "FOSUserBundle:Resetting:request_content.html.twig" %}
-{% endblock fos_user_content %}
+{% block title %}Kennwort zurücksetzen{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('sonata_user_profile_show') }}">Dein Profil</a></li>
+            <li class="active">Kennwort ändern</li>
+        </ol>
+
+        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+            <div>
+                {% if invalid_username is defined %}
+                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                {% endif %}
+                <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="text" id="username" name="username" required="required" />
+            </div>
+            <div>
+                <input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+            </div>
+        </form>
+    </div>
+{% endblock %}
