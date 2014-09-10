@@ -10,16 +10,23 @@
             <li class="active">Kennwort ändern</li>
         </ol>
 
-        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-            <div>
-                {% if invalid_username is defined %}
-                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
-                {% endif %}
-                <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
-                <input type="text" id="username" name="username" required="required" />
+        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request" class="form-horizontal">
+
+            {% if invalid_username is defined %}
+                <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="username" class="col-sm-4 control-label">Dein Benutzername:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="username" name="username" value="" required="required" />
+                </div>
             </div>
-            <div>
-                <input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <input type="submit" id="_submit" name="_submit" class="btn btn-primary" value="Neues Kennwort anfordern" />
+                </div>
             </div>
         </form>
     </div>
