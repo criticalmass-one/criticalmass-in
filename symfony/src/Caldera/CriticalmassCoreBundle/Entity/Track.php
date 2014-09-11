@@ -46,6 +46,10 @@ class Track
      */
     protected $creationDateTime;
 
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $md5Hash;
 
     /**
      * @ORM\Column(type="blob", nullable=true)
@@ -222,5 +226,28 @@ class Track
         $result .= ')';
 
         return $result;
+    }
+
+    /**
+     * Set md5Hash
+     *
+     * @param string $md5Hash
+     * @return Track
+     */
+    public function setMd5Hash($md5Hash)
+    {
+        $this->md5Hash = $md5Hash;
+
+        return $this;
+    }
+
+    /**
+     * Get md5Hash
+     *
+     * @return string 
+     */
+    public function getMd5Hash()
+    {
+        return $this->md5Hash;
     }
 }
