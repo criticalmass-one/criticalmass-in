@@ -250,4 +250,9 @@ class Track
     {
         return $this->md5Hash;
     }
+
+    public function generateMD5Hash()
+    {
+        $this->setMd5Hash(md5($this->getGpx()));
+    }
 }
