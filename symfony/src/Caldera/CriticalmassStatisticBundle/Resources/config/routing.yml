@@ -6,6 +6,10 @@ caldera_criticalmass_heatmap_homepage:
     pattern:  /heatmap/generate/{heatmapId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Default:generate }
 
-caldera_criticalmass_statistic_track_index:
+caldera_criticalmass_statistic_track_list:
     pattern:  /track/list
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:index }
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:list }
+
+caldera_criticalmass_statistic_gpxgenerate:
+    pattern: /track/generate/{rideId}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:gpxgenerate }

@@ -10,33 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    public function gpxexportAction($rideId, $ticketId)
-    {
-        $ticket = $this->getDoctrine()->getRepository('CalderaCriticalmassGlympseBundle:Ticket')->find($ticketId);
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-
-        $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticketId), array('timestamp' => 'ASC'));
-
-        $gpx = new GpxWriter();
-        $gpx->setPositionArray($positionArray);
-        $gpx->execute();
-
-        $gpxContent = $gpx->getGpxContent();
-
-        $track = new Track();
-        $track->setRide($ride);
-        $track->setTicket($ticket);
-        $track->setUsername($ticket->getDisplayname());
-        $track->setCreationDateTime(new \DateTime());
-        $track->setGpx($gpxContent);
-
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($track);
-        $manager->flush();
-
-        return new Response();
-    }
-
     public function standardridesAction($year, $month)
     {
         $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array(), array('city' => 'ASC'));
