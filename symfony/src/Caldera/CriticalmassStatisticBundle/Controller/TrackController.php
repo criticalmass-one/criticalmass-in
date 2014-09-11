@@ -17,24 +17,27 @@ class TrackController extends Controller
 
         foreach ($tickets as $ticket)
         {
-            $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticket->getId()), array('timestamp' => 'ASC'));
+            if ($ticket->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d'))
+            {
+                $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticket->getId()), array('timestamp' => 'ASC'));
 
-            $gpx = new GpxWriter();
-            $gpx->setPositionArray($positionArray);
-            $gpx->execute();
+                $gpx = new GpxWriter();
+                $gpx->setPositionArray($positionArray);
+                $gpx->execute();
 
-            $gpxContent = $gpx->getGpxContent();
+                $gpxContent = $gpx->getGpxContent();
 
-            $track = new Track();
-            $track->setRide($ride);
-            $track->setTicket($ticket);
-            $track->setUsername($ticket->getDisplayname());
-            $track->setCreationDateTime(new \DateTime());
-            $track->setGpx($gpxContent);
+                $track = new Track();
+                $track->setRide($ride);
+                $track->setTicket($ticket);
+                $track->setUsername($ticket->getDisplayname());
+                $track->setCreationDateTime(new \DateTime());
+                $track->setGpx($gpxContent);
 
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($track);
-            $manager->flush();
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($track);
+                $manager->flush();
+            }
         }
 
         return new Response();
