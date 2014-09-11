@@ -17,7 +17,7 @@ class TrackController extends Controller
 
         foreach ($tickets as $ticket)
         {
-            if ($ticket->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d'))
+            if ($ticket->belongsToRide($ride))
             {
                 $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticket->getId()), array('timestamp' => 'ASC'));
 

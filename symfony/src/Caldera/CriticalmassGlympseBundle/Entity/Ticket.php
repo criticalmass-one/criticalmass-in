@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassGlympseBundle\Entity;
 
+use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -396,5 +397,10 @@ class Ticket
     public function __toString()
     {
         return $this->getCity()->getCity().' '.$this->getDisplayName();
+    }
+
+    public function belongsToRide(Ride $ride)
+    {
+        return $this->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d');
     }
 }
