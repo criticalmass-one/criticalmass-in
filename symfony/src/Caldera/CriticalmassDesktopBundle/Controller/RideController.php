@@ -16,7 +16,14 @@ class RideController extends Controller
 
     public function showAction($citySlug, $rideDate)
     {
-        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
 
         $rideDateTime = new \DateTime($rideDate);
 
