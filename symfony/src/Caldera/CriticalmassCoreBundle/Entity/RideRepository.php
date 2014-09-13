@@ -12,8 +12,8 @@ class RideRepository extends EntityRepository
 
         $result = $query->getResult();
 
-        $result = array_pop($result);
-        $result = array_pop($result);
+        $result = @array_pop($result);
+        $result = @array_pop($result);
 
         return $result;
     }
