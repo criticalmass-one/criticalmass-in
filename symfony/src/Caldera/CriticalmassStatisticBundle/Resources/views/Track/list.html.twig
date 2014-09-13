@@ -11,11 +11,17 @@
             <tr>
                 <th>Datum</th>
                 <th>Stadt</th>
+                <th>Tour</th>
             </tr>
             {% for track in tracks %}
             <tr>
                 <td>{{ track.getRide().getDateTime().format('d. m. Y') }}</td>
                 <td>{{ track.getRide().getCity().getCity() }}</td>
+                <td>{% if track.getRide().getTitle() %}
+                {{ track.getRide().getTitle() }}
+                {% else %}
+                {{ track.getRide().getCity().getTitle() }}
+                {% endif %}</td>
             </tr>
             {% endfor %}
         </table>
