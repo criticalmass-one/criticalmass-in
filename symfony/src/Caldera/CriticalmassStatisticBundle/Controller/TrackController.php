@@ -45,6 +45,8 @@ class TrackController extends Controller
 
     public function listAction()
     {
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:index.html.twig');
+        $tracks = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $this->getUser()->getId()));
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:list.html.twig', array('tracks' => $tracks));
     }
 }
