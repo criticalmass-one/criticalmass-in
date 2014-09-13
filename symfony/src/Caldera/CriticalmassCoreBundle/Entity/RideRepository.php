@@ -6,6 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
 {
+    public function findCityRideByDate(City $city, \DateTime $dateTime)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' AND r.city = '.$city->getId());
+
+        return $query->getResult();
+    }
+
 	public function findCurrentRides()
 	{
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.visibleSince <= CURRENT_TIMESTAMP() AND r.visibleUntil >= CURRENT_TIMESTAMP() GROUP BY r.city ORDER BY r.dateTime DESC');
