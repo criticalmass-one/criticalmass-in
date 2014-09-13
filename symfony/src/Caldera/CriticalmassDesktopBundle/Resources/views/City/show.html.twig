@@ -2,12 +2,12 @@
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 {% block content %}
-    <div class="jumbotron">
-        <h1>{{ city.getTitle() }}</h1>
-        <p>{{ city.getDescription() }}</p>
-    </div>
-
     <div class="container">
+        <div class="jumbotron">
+            <h1>{{ city.getTitle() }}</h1>
+            <p>{{ city.getDescription() }}</p>
+        </div>
+
         {% if ride.getTitle() %}
             <h1>{{ ride.getTitle() }}</h1>
         {% else %}
