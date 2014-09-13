@@ -69,7 +69,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-
+        dql:
+            datetime_functions:
+                date: Caldera\CriticalmassCoreBundle\DQL\DateFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -126,3 +128,4 @@ sonata_user:
 sonata_admin:
     security:
         handler: sonata.admin.security.handler.noop
+
