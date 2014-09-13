@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -394,5 +395,19 @@ class Track
     public function getPoints()
     {
         return $this->points;
+    }
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    protected $file;
+
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
     }
 }
