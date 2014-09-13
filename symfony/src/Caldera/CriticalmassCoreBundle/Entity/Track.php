@@ -47,6 +47,21 @@ class Track
     protected $creationDateTime;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $startDateTime;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $endDateTime;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $distance;
+
+    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
@@ -55,6 +70,11 @@ class Track
      * @ORM\Column(type="blob", nullable=true)
      */
     protected $gpx;
+
+    /**
+     * @ORM\Column(type="blob", nullable=true)
+     */
+    protected $json;
 
     public function __construct()
     {
@@ -254,5 +274,97 @@ class Track
     public function generateMD5Hash()
     {
         $this->setMd5Hash(md5($this->getGpx()));
+    }
+
+    /**
+     * Set startDateTime
+     *
+     * @param \DateTime $startDateTime
+     * @return Track
+     */
+    public function setStartDateTime($startDateTime)
+    {
+        $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get startDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getStartDateTime()
+    {
+        return $this->startDateTime;
+    }
+
+    /**
+     * Set endDateTime
+     *
+     * @param \DateTime $endDateTime
+     * @return Track
+     */
+    public function setEndDateTime($endDateTime)
+    {
+        $this->endDateTime = $endDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get endDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndDateTime()
+    {
+        return $this->endDateTime;
+    }
+
+    /**
+     * Set distance
+     *
+     * @param float $distance
+     * @return Track
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * Get distance
+     *
+     * @return float 
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * Set json
+     *
+     * @param string $json
+     * @return Track
+     */
+    public function setJson($json)
+    {
+        $this->json = $json;
+
+        return $this;
+    }
+
+    /**
+     * Get json
+     *
+     * @return string 
+     */
+    public function getJson()
+    {
+        return $this->json;
     }
 }
