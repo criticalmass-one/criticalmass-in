@@ -22,6 +22,10 @@ caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:list }
 
+caldera_criticalmass_desktop_city_show:
+    pattern:  /city/{citySlug}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
+
 caldera_criticalmass_desktop_ride_showcurrent:
     pattern:  /ride/showcurrent/{citySlug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:showcurrent }
@@ -37,10 +41,6 @@ caldera_criticalmass_desktop_statistic_participants:
 caldera_criticalmass_desktop_ride_show:
     pattern:  /{citySlug}/{rideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:show }
-
-caldera_criticalmass_desktop_city_show:
-    pattern: /{citySlug}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
 
 caldera_criticalmass_desktop_content_show:
     pattern: /static/{classSlug}/{itemSlug}
