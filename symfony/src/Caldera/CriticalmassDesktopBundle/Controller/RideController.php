@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RideController extends Controller
 {
@@ -21,7 +22,14 @@ class RideController extends Controller
 
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:showcurrent.html.twig', array('city' => $city, 'ride' => $ride));
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
+        }
+        else
+        {
+            return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride));
+        }
     }
 
     public function proposeAction($citySlug)
