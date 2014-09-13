@@ -25,7 +25,13 @@ class RideController extends Controller
 
         $city = $citySlugObj->getCity();
 
-        $rideDateTime = new \DateTime($rideDate);
+        try {
+            $rideDateTime = new \DateTime($rideDate);
+        }
+        catch (\Exception $e)
+        {
+            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+        }
 
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
 
