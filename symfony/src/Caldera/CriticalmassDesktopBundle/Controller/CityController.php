@@ -17,8 +17,8 @@ class CityController extends Controller
     {
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
+        $currentRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'ride' => $ride));
+        return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'currentRide' => $currentRide));
     }
 }

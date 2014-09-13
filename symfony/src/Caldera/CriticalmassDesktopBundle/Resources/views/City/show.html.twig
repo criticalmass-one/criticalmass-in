@@ -8,13 +8,13 @@
             <p>{{ city.getDescription() }}</p>
         </div>
 
-        {% if ride.getTitle() %}
-            <h1>{{ ride.getTitle() }}</h1>
+        {% if currentRide.getTitle() %}
+            <h1>{{ currentRide.getTitle() }}</h1>
         {% else %}
-            <h1>{{ ride.getCity().getTitle() }}</h1>
+            <h1>{{ currentRide.getCity().getTitle() }}</h1>
         {% endif %}
-        {% if ride.getDescription() %}
-            <p>{{ ride.getDescription() }}</p>
+        {% if currentRide.getDescription() %}
+            <p>{{ currentRide.getDescription() }}</p>
         {% endif %}
         <div class="row">
             <div class="col-lg-6">
@@ -23,13 +23,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <label>Datum:</label>
-                        <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
+                        <span>{{ currentRide.getDateTime.format('d.m.Y') }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <label>Uhrzeit:</label>
-                    <span>{{ ride.getDateTime.format('H:i') }}</span>
+                        <span>{{ currentRide.getDateTime.format('H:i') }}</span>
+                    </div>
                 </div>
                 <div class="row">
                     <div id="map" style="width: 100%; height: 300px;"></div>
@@ -39,10 +40,10 @@
                     <script type="text/javascript" src="{{ asset_url }}"></script>
                     {% endjavascripts %}
                     <script>
-                        {% if ride.hasLocation() %}
-                        var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+                        {% if currentRide.hasLocation() %}
+                        var mapCenter = L.latLng({{ currentRide.getLatitude() }}, {{ currentRide.getLongitude() }});
                         {% else %}
-                        var mapCenter = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+                        var mapCenter = L.latLng({{ currentRide.getCity().getLatitude() }}, {{ currentRide.getCity().getLongitude() }});
                         {% endif %}
                         var map = L.map('map');
                         var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -54,7 +55,7 @@
 
                         var marker = L.marker(mapCenter);
                         marker.addTo(map);
-                        marker.bindPopup('<strong>Treffpunkt:</strong> {{ ride.getLocation() }}');
+                        marker.bindPopup('<strong>Treffpunkt:</strong> {{ currentRide.getLocation() }}');
                         marker.openPopup();
                     </script>
                 </div>
