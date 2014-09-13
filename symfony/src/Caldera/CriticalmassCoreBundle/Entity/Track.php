@@ -62,6 +62,11 @@ class Track
     protected $distance;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $points;
+
+    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
@@ -366,5 +371,28 @@ class Track
     public function getJson()
     {
         return $this->json;
+    }
+
+    /**
+     * Set points
+     *
+     * @param integer $points
+     * @return Track
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return integer 
+     */
+    public function getPoints()
+    {
+        return $this->points;
     }
 }
