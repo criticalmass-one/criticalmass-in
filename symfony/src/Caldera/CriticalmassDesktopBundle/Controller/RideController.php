@@ -39,10 +39,8 @@ class RideController extends Controller
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
-        else
-        {
-            return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride));
-        }
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride));
     }
 
     public function proposeAction($citySlug)
