@@ -64,6 +64,10 @@
                 <h2>Vergangene Touren</h2>
 
                 <table class="table">
+                    <tr>
+                        <th>Datum</th>
+                        <th>Titel</th>
+                    </tr>
                     {% for ride in rides %}
                     <tr>
                         <td>{{ ride.getDateTime.format('d.m.Y') }}</td>
