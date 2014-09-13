@@ -12,6 +12,9 @@
                 <th>Datum</th>
                 <th>Stadt</th>
                 <th>Tour</th>
+                <th>Beginn</th>
+                <th>Ende</th>
+                <th>Wegstrecke</th>
             </tr>
             {% for track in tracks %}
             <tr>
@@ -22,6 +25,9 @@
                 {% else %}
                 {{ track.getRide().getCity().getTitle() }}
                 {% endif %}</td>
+                <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
+                <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
+                <td>{{ track.getDistance() }} Kilometer</td>
             </tr>
             {% endfor %}
         </table>
