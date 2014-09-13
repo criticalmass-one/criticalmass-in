@@ -44,6 +44,7 @@ class TrackController extends Controller
                 $track->setEndDateTime($endDateTime);
 
                 $track->setDistance(0);
+                $track->setPoints(count($positionArray));
 
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($track);
