@@ -6,5 +6,18 @@
     <div class="container">
         <h1>Hier warst du schon mal.</h1>
         <p class="lead">criticalmass.in zeigt dir seit 2012 den Weg zur nächsten Critical Mass. Und wir sind noch lange nicht fertig.</p>
+
+        <table class="table">
+            <tr>
+                <th>Datum</th>
+                <th>Stadt</th>
+            </tr>
+            {% for track in tracks %}
+            <tr>
+                <td>{{ track.getId() }}</td>
+                <td>{{ track.getRide().getCity().getCity() }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}
