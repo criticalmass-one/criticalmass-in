@@ -1,6 +1,7 @@
-{% extends 'CalderaCriticalmassDesktopBundle::BaseTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block body %}
+{% block title %}{{ city.getTitle }}{% endblock %}
+{% block content %}
     <div class="jumbotron">
         <h1>{{ city.getTitle() }}</h1>
         <p>{{ city.getDescription() }}</p>
