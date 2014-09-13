@@ -39,7 +39,7 @@ caldera_criticalmass_desktop_statistic_participants:
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Statistic:participants }
 
 caldera_criticalmass_desktop_ride_show:
-    pattern:  /{citySlug}/{rideId}
+    pattern:  /{citySlug}/{rideDate}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:show }
 
 caldera_criticalmass_desktop_content_show:
