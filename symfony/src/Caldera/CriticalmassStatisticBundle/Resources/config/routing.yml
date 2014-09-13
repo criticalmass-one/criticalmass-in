@@ -10,6 +10,10 @@ caldera_criticalmass_statistic_track_list:
     pattern:  /track/list
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:list }
 
+caldera_criticalmass_statistic_track_upload:
+    pattern:  /track/upload
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:upload }
+
 caldera_criticalmass_statistic_gpxgenerate:
     pattern: /track/generate/{rideId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:gpxgenerate }
