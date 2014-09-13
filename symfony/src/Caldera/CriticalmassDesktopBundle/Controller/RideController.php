@@ -13,6 +13,17 @@ class RideController extends Controller
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:showcurrent.html.twig', array('ride' => $ride));
     }
 
+    public function showAction($citySlug, $rideDate)
+    {
+        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+
+        $rideDateTime = new \DateTime($rideDate);
+
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:showcurrent.html.twig', array('city' => $city, 'ride' => $ride));
+    }
+
     public function proposeAction($citySlug)
     {
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findLatestForCitySlug($citySlug);
