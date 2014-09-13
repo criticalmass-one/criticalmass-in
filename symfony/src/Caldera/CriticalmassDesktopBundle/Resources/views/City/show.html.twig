@@ -60,6 +60,15 @@
                     </script>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <h2>Vergangene Touren</h2>
+
+                <table>
+                    {% for ride in rides %}
+                        <li>{{ ride.getDateTime.format('d.m.Y') }}</li>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
