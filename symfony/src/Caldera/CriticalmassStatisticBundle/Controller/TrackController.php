@@ -33,6 +33,17 @@ class TrackController extends Controller
                 $track->setUsername($ticket->getDisplayname());
                 $track->setCreationDateTime(new \DateTime());
                 $track->setGpx($gpxContent);
+                $track->generateMD5Hash();
+
+                $startDateTime = new \DateTime();
+                $startDateTime->setTimestamp($positionArray[0]->getTimestamp());
+                $track->setStartDateTime($startDateTime);
+
+                $endDateTime = new \DateTime();
+                $endDateTime->setTimestamp($positionArray[count($positionArray) - 1]->getTimestamp());
+                $track->setEndDateTime($endDateTime);
+
+                $track->setDistance(0);
 
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($track);
