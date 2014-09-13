@@ -63,9 +63,12 @@
             <div class="col-lg-6">
                 <h2>Vergangene Touren</h2>
 
-                <table>
+                <table class="table">
                     {% for ride in rides %}
-                        <li>{{ ride.getDateTime.format('d.m.Y') }}</li>
+                    <tr>
+                        <td>{{ ride.getDateTime.format('d.m.Y') }}</td>
+                        <td>{{ ride.getTitle() }}</td>
+                    </tr>
                     {% endfor %}
                 </table>
             </div>
