@@ -8,9 +8,14 @@ class RideRepository extends EntityRepository
 {
     public function findCityRideByDate(City $city, \DateTime $dateTime)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' AND r.city = '.$city->getId());
+        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' AND r.city = '.$city->getId())->setMaxResults(1);
 
-        return $query->getResult();
+        $result = $query->getResult();
+
+        $result = array_pop($result);
+        $result = array_pop($result);
+
+        return $result;
     }
 
 	public function findCurrentRides()
