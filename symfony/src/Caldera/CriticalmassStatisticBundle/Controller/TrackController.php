@@ -73,4 +73,15 @@ class TrackController extends Controller
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:list.html.twig', array('tracks' => $tracks));
     }
+
+    public function uploadAction()
+    {
+        $track = new Track();
+        $form = $this->createFormBuilder($track)
+            ->add('file')
+            ->add('save', 'submit', array('label' => 'Create Post'))
+            ->getForm();
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
+    }
 }
