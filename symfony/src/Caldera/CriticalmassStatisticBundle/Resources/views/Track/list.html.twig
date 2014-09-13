@@ -14,7 +14,7 @@
             </tr>
             {% for track in tracks %}
             <tr>
-                <td>{{ track.getId() }}</td>
+                <td>{{ track.getRide().getDateTime().format('d. m. Y') }}</td>
                 <td>{{ track.getRide().getCity().getCity() }}</td>
             </tr>
             {% endfor %}
