@@ -67,4 +67,16 @@ class GpxReader {
     {
         return $this->simpleXml->trk->trkseg->trkpt[$n]['lon'];
     }
+
+    public function generateJson()
+    {
+        $result = array();
+
+        foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
+        {
+            $result[] = '['.$point['lat'].','.$point['lon'].']';
+        }
+
+        return '['.implode($result, ',').']';
+    }
 }
