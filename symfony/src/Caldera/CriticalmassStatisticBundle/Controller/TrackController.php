@@ -4,6 +4,7 @@ namespace Caldera\CriticalmassStatisticBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
+use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,6 +94,8 @@ class TrackController extends Controller
             $track->setUsername($this->getUser()->getUsername());
             $track->setDistance(0);
 
+            $rg = new RideGuesser($this);
+            
             $em->persist($track);
             $em->flush();
         }
