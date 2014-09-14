@@ -57,4 +57,14 @@ class GpxReader {
     {
         return $this->rawFileContent;
     }
+
+    public function getLatitudeOfPoint($n)
+    {
+        return $this->simpleXml->trk->trkseg->trkpt[$n]['lat'];
+    }
+
+    public function getLongitudeOfPoint($n)
+    {
+        return $this->simpleXml->trk->trkseg->trkpt[$n]['lon'];
+    }
 }
