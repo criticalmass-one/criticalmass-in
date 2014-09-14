@@ -11,13 +11,13 @@ namespace Caldera\CriticalmassCoreBundle\Utility\GpxReader;
 class GpxReader {
     protected $path;
 
-    protected $xmlReader;
+    protected $simpleXml;
 
     public function loadFile($path)
     {
         $this->path = $path;
+        $this->rawFileContent = file_get_contents($path);
 
-        $this->xmlReader = new \XMLReader($path);
-
+        $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
     }
 }
