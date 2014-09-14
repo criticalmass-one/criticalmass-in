@@ -349,6 +349,11 @@ class Ride
         return $ride->getId() == $this->getId();
     }
 
+    public function getCityTitle()
+    {
+        return $this->getCity()->getTitle();
+    }
+
     public function __toString()
     {
         if ($this->city)

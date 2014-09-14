@@ -130,7 +130,7 @@ class TrackController extends Controller
             ->add('ride', 'entity', array
             (
                 'class' => 'CalderaCriticalmassCoreBundle:Ride',
-                'property'=> 'id',
+                'property'=> 'cityTitle',
                 'label' => 'Tour',
                 'required' => true,
                 'choices' => $choices
