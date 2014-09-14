@@ -96,14 +96,15 @@ class TrackController extends Controller
 
             $rg = new RideGuesser($this);
             $rg->setGpx($track->getGpx());
-            $rides = $rg->guess();
+            $rg->guess();
 
-            foreach ($rides as $ride)
-            {
-                echo $ride->getId();
-            }
             $em->persist($track);
             $em->flush();
+
+            if (!$rg->isDistinct())
+            {
+                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
+            }
         }
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
