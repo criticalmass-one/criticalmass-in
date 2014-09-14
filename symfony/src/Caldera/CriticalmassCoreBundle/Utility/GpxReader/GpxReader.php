@@ -45,4 +45,9 @@ class GpxReader {
     {
         return md5_file($this->path);
     }
+
+    public function getFileContent()
+    {
+        return $this->rawFileContent;
+    }
 }
