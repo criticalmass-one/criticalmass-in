@@ -149,4 +149,9 @@ class TrackController extends Controller
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:setride.html.twig', array('form' => $form->createView()));
     }
+
+    public function viewAction(Request $request, $trackId)
+    {
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('form' => $form->createView()));
+    }
 }

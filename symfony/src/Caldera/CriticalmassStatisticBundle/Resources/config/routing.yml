@@ -18,6 +18,10 @@ caldera_criticalmass_statistic_track_setride:
     pattern:  /track/setride/{trackId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:setRide }
 
+caldera_criticalmass_statistic_track_view:
+    pattern:  /track/view/{trackId}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:view }
+
 caldera_criticalmass_statistic_gpxgenerate:
     pattern: /track/generate/{rideId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:gpxgenerate }
