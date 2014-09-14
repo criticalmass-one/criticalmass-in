@@ -89,6 +89,9 @@ class TrackController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $track->handleUpload();
+            $track->setUser($this->getUser());
+            $track->setUsername($this->getUser()->getUsername());
+            $track->setDistance(0);
 
             $em->persist($track);
             $em->flush();
