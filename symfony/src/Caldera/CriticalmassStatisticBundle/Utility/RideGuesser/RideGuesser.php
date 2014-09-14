@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class RideGuesser {
     protected $controller;
     protected $gpx;
+    protected $rides = array();
 
     public function __construct(Controller $controller)
     {
@@ -32,6 +33,16 @@ class RideGuesser {
         
         $dateTime = $gr->getCreationDateTime();
 
-        $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByLatitudeLongitudeDateTime($gr->getLatitudeOfPoint(0), $gr->getLongitudeOfPoint(0), $dateTime);
+        $this->rides = $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByLatitudeLongitudeDateTime($gr->getLatitudeOfPoint(0), $gr->getLongitudeOfPoint(0), $dateTime);
+    }
+
+    public function getResult()
+    {
+        return $this->rides;
+    }
+
+    public function isDistinct()
+    {
+        return count($this->rides) == 1;
     }
 } 
