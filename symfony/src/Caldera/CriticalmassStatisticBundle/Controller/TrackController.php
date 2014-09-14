@@ -108,4 +108,21 @@ class TrackController extends Controller
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
     }
+
+    public function setrideAction($trackId)
+    {
+        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
+
+        $rg = new RideGuesser($this);
+        $rg->setGpx($track->getGpx());
+        $rg->guess();
+        $rides = $rg->getRides();
+
+        $form = $this->createFormBuilder($track)
+            ->add('ride', 'choice', array('choices' => array(1 => 'foo', 2 => 'bar'), 'required' => true))
+            ->add('save', 'submit', array('label' => 'Create Post'))
+            ->getForm();
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:setride.html.twig', array('form' => $form->createView()));
+    }
 }
