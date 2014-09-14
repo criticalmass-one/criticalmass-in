@@ -36,7 +36,7 @@ class RideGuesser {
         $this->rides = $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByLatitudeLongitudeDateTime($gr->getLatitudeOfPoint(0), $gr->getLongitudeOfPoint(0), $dateTime);
     }
 
-    public function getResult()
+    public function getRides()
     {
         return $this->rides;
     }
