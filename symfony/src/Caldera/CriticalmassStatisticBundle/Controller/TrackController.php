@@ -46,18 +46,6 @@ class TrackController extends Controller
                 $track->setEndDateTime($endDateTime);
 
                 $track->setPoints(count($positionArray));
-/*
-                $distance = 0;
-                $position1 = array_shift($positionArray);
-
-                foreach ($positionArray as $position)
-                {
-                    $position2 = $position;
-
-                    $distance += 0.06559 * 6378.137 * acos(sin($position1->getLatitude()) * sin($position2->getLatitude()) + cos($position1->getLatitude()) * cos($position2->getLatitude()) * cos($position2->getLongitude() - $position1->getLongitude()));
-                }
-
-                $track->setDistance($distance);*/
                 $track->setDistance(0);
 
                 $manager = $this->getDoctrine()->getManager();
