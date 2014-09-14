@@ -155,6 +155,8 @@ class TrackController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($track);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
         }
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:setride.html.twig', array('form' => $form->createView()));
