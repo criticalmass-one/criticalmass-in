@@ -2,7 +2,9 @@
 
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
+use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -409,5 +411,11 @@ class Track
     public function getFile()
     {
         return $this->file;
+    }
+
+    public function handleUpload()
+    {
+        $gpxReader = new GpxReader();
+        $gpxReader->loadFile($this->file->getPathname());
     }
 }
