@@ -119,8 +119,15 @@ class TrackController extends Controller
         $rg->guess();
         $rides = $rg->getRides();
 
+        $choices = array();
+
+        foreach ($rides as $ride)
+        {
+            $choices[$ride->getId()] = $ride->getCity()->getTitle();
+        }
+
         $form = $this->createFormBuilder($track)
-            ->add('ride', 'choice', array('choices' => array(1 => 'foo', 2 => 'bar'), 'required' => true))
+            ->add('ride', 'choice', array('choices' => $choices, 'required' => true))
             ->add('save', 'submit', array('label' => 'Create Post'))
             ->getForm();
 
