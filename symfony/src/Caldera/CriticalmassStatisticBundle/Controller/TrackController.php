@@ -152,6 +152,8 @@ class TrackController extends Controller
 
     public function viewAction(Request $request, $trackId)
     {
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('form' => $form->createView()));
+        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
     }
 }
