@@ -17,6 +17,7 @@
                 <th>Beginn</th>
                 <th>Ende</th>
                 <th>Wegpunkte</th>
+                <th>Optionen</th>
             </tr>
             {% for track in tracks %}
             <tr>
@@ -30,6 +31,7 @@
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getPoints() }}</td>
+                <td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>
             </tr>
             {% endfor %}
         </table>
