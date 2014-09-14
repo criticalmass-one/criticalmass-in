@@ -75,12 +75,12 @@ class Track
     protected $md5Hash;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $gpx;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $json;
 
