@@ -35,4 +35,9 @@ class GpxReader {
     {
         return new \DateTime($this->simpleXml->trk->trkseg->trkpt[count($this->simpleXml->trk->trkseg->trkpt) - 1]->time);
     }
+
+    public function countPoints()
+    {
+        return count($this->simpleXml->trk->trkseg->trkpt);
+    }
 }
