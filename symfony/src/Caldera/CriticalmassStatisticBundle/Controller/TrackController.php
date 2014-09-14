@@ -95,7 +95,9 @@ class TrackController extends Controller
             $track->setDistance(0);
 
             $rg = new RideGuesser($this);
-            
+            $rg->setGpx($track->getGpx());
+            $rg->guess();
+
             $em->persist($track);
             $em->flush();
         }

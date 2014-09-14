@@ -8,31 +8,30 @@
 
 namespace Caldera\CriticalmassStatisticBundle\Utility\RideGuesser;
 
+use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class RideGuesser {
     protected $controller;
-    protected $dateTime;
-    protected $latitude;
-    protected $longitude;
+    protected $gpx;
 
     public function __construct(Controller $controller)
     {
         $this->controller = $controller;
     }
 
-    public function setDateTime(\DateTime $dateTime)
+    public function setGpx($gpx)
     {
-        $this->dateTime = $dateTime;
-    }
-
-    public function setCoordinate($latitude, $longitude)
-    {
-
+        $this->gpx = $gpx;
     }
 
     public function guess()
     {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+        
+        $dateTime = $gr->getCreationDateTime();
 
+        $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByLatitudeLongitudeDateTime($gr->getLatitudeOfPoint(0), $gr->getLongitudeOfPoint(0), $dateTime);
     }
 } 
