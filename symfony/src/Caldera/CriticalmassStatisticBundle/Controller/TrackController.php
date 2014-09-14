@@ -110,7 +110,7 @@ class TrackController extends Controller
         return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
     }
 
-    public function setrideAction($trackId)
+    public function setrideAction(Request $request, $trackId)
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
 
@@ -123,13 +123,29 @@ class TrackController extends Controller
 
         foreach ($rides as $ride)
         {
-            $choices[$ride->getId()] = $ride->getCity()->getTitle();
+            $choices[] = $ride;
         }
 
         $form = $this->createFormBuilder($track)
-            ->add('ride', 'choice', array('choices' => $choices, 'required' => true))
+            ->add('ride', 'entity', array
+            (
+                'class' => 'CalderaCriticalmassCoreBundle:Ride',
+                'property'=> 'id',
+                'label' => 'Tour',
+                'required' => true,
+                'choices' => $choices
+            ))
+            //->add('rideId', 'choice', array('choices' => $choices, 'required' => true))
             ->add('save', 'submit', array('label' => 'Create Post'))
             ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($track);
+            $em->flush();
+        }
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:setride.html.twig', array('form' => $form->createView()));
     }
