@@ -10,7 +10,19 @@ class RideRepository extends EntityRepository
     {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE SQRT((r.latitude - '.$latitude.') * (r.latitude - '.$latitude.') + (r.longitude - '.$longitude.') * (r.longitude - '.$longitude.')) < 0.1 AND DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' ORDER BY r.city DESC');
 
-        return $query->getResult();
+        $result = array();
+
+        $tmp1 = $query->getResult();
+
+        foreach ($tmp1 as $tmp2)
+        {
+            foreach ($tmp2 as $ride)
+            {
+                $result[] = $ride;
+            }
+        }
+
+        return $result;
     }
 
     public function findCityRideByDate(City $city, \DateTime $dateTime)
