@@ -5,6 +5,7 @@ namespace Caldera\CriticalmassStatisticBundle\Controller;
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackController extends Controller
@@ -74,13 +75,24 @@ class TrackController extends Controller
         return $this->render('CalderaCriticalmassStatisticBundle:Track:list.html.twig', array('tracks' => $tracks));
     }
 
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
         $track = new Track();
         $form = $this->createFormBuilder($track)
             ->add('file')
             ->add('save', 'submit', array('label' => 'Create Post'))
             ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $track->handleUpload();
+
+            $em->persist($track);
+            $em->flush();
+        }
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
     }
