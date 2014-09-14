@@ -423,5 +423,6 @@ class Track
         $this->setPoints($gpxReader->countPoints());
         $this->setMd5Hash($gpxReader->getMd5Hash());
         $this->setGpx($gpxReader->getFileContent());
+        $this->setJson($gpxReader->generateJson());
     }
 }
