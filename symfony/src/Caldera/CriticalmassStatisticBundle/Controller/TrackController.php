@@ -96,8 +96,12 @@ class TrackController extends Controller
 
             $rg = new RideGuesser($this);
             $rg->setGpx($track->getGpx());
-            $rg->guess();
+            $rides = $rg->guess();
 
+            foreach ($rides as $ride)
+            {
+                echo $ride->getId();
+            }
             $em->persist($track);
             $em->flush();
         }
