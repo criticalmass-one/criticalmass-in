@@ -40,4 +40,9 @@ class GpxReader {
     {
         return count($this->simpleXml->trk->trkseg->trkpt);
     }
+
+    public function getMd5Hash()
+    {
+        return md5_file($this->path);
+    }
 }
