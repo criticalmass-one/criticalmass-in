@@ -17,7 +17,6 @@
                 <th>Beginn</th>
                 <th>Ende</th>
                 <th>Wegpunkte</th>
-                <th>Wegstrecke</th>
             </tr>
             {% for track in tracks %}
             <tr>
@@ -31,7 +30,6 @@
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getPoints() }}</td>
-                <td>{{ track.getDistance() }} Kilometer</td>
             </tr>
             {% endfor %}
         </table>
