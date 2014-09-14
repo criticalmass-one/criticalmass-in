@@ -417,5 +417,11 @@ class Track
     {
         $gpxReader = new GpxReader();
         $gpxReader->loadFile($this->file->getPathname());
+
+        $this->setStartDateTime($gpxReader->getStartDateTime());
+        $this->setEndDateTime($gpxReader->getEndDateTime());
+        $this->setPoints($gpxReader->countPoints());
+        $this->setMd5Hash($gpxReader->getMd5Hash());
+        $this->setGpx($gpxReader->getFileContent());
     }
 }
