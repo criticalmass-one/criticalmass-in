@@ -30,15 +30,15 @@
                         <h2>Mehr im Netz</h2>
 
                         {% if city.getUrl() %}
-                        <a href="{{ city.getUrl() }}">Homepage</a>
+                        <a class="btn btn-link" href="{{ city.getUrl() }}">Homepage</a>
                         {% endif %}
 
                         {% if city.getFacebook() %}
-                        <a href="{{ city.getFacebook() }}">facebook</a>
+                        <a class="btn btn-link" href="{{ city.getFacebook() }}">facebook</a>
                         {% endif %}
 
                         {% if city.getTwitter() %}
-                        <a href="{{ city.getTwitter() }}">twitter</a>
+                        <a class="btn btn-link" href="{{ city.getTwitter() }}">twitter</a>
                         {% endif %}
                     </div>
                 </div>
