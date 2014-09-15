@@ -20,6 +20,9 @@ class CityController extends Controller
         $currentRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
         $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
 
+        // shift the first ride from the array as the first one is the current and should not be displayed at the recent rides list
+        array_shift($rides);
+
         return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'currentRide' => $currentRide, 'rides' => $rides));
     }
 }
