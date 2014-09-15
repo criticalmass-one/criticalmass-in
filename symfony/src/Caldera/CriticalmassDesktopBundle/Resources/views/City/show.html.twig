@@ -100,18 +100,23 @@
                     </script>
                 </div>
             </div>
+
             <div class="tab-pane fade in" id="recentRidesTab">
-                <h2>Vergangene Touren</h2>
+                <h1>Vergangene Touren</h1>
 
                 <table class="table">
                     <tr>
                         <th>Datum</th>
                         <th>Titel</th>
+                        <th>Teilnehmer</th>
+                        <th>Streckenlänge</th>
                     </tr>
                     {% for ride in rides %}
                     <tr>
                         <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{{ ride.getDateTime.format('d. m. Y') }}</a></td>
-                        <td>{{ ride.getTitle() }}</td>
+                        <td>{% if ride.getTitle() %}{{ ride.getTitle() }}{% else %}{{ city.getTitle() }}{% endif %}</td>
+                        <td>0</td>
+                        <td>0 Kilometer</td>
                     </tr>
                     {% endfor %}
                 </table>
