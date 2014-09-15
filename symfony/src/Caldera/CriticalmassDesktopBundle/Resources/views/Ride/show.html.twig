@@ -1,19 +1,17 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block title %}bla{% endblock %}
 {% if ride.getTitle() %}
     {% set rideTitle = ride.getTitle() %}
 {% else %}
     {% set rideTitle = city.getTitle() ~ ' am ' ~ ride.getDateTime().format('d. m. Y') %}
 {% endif %}
 
+{% block title %}{{ rideTitle }}{% endblock %}
+
 {% block content %}
     <div class="container">
-        {% if ride.getTitle() %}
-            <h1>{{ ride.getTitle() }}</h1>
-        {% else %}
-            <h1>{{ ride.getCity().getTitle() }}</h1>
-        {% endif %}
+        <h1>{{ rideTitle }}</h1>
+
         {% if ride.getDescription() %}
             <p>{{ ride.getDescription() }}</p>
         {% endif %}
