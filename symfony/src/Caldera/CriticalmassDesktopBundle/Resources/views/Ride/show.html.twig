@@ -4,7 +4,7 @@
 {% if ride.getTitle() %}
     {% set rideTitle = ride.getTitle() %}
 {% else %}
-    {% set rideTitle = city.getTitle() %}
+    {% set rideTitle = city.getTitle() ~ ' am ' ~ ride.getDateTime().format('d. m. Y') %}
 {% endif %}
 
 {% block content %}
