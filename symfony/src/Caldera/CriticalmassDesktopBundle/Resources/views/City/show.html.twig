@@ -22,7 +22,26 @@
                     <p>{{ city.getDescription() }}</p>
                 </div>
 
-                {{ city.getLongDescription()|nl2br }}
+                <div class="row">
+                    <div class="col-lg-8">
+                        {{ city.getLongDescription()|nl2br }}
+                    </div>
+                    <div class="col-lg-4">
+                        <h2>Mehr im Netz</h2>
+
+                        {% if city.getUrl() %}
+                        <a href="{{ city.getUrl() }}">Homepage</a>
+                        {% endif %}
+
+                        {% if city.getFacebook() %}
+                        <a href="{{ city.getFacebook() }}">facebook</a>
+                        {% endif %}
+
+                        {% if city.getTwitter() %}
+                        <a href="{{ city.getTwitter() }}">twitter</a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade in active" id="nextRideTab">
 
