@@ -61,6 +61,12 @@ class TrackController extends Controller
     {
         $tracks = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
 
+        foreach ($tracks as $track)
+        {
+            $track->setStartDateTime($track->getStartDateTime()->add(new \DateInterval('PT2H')));
+            $track->setEndDateTime($track->getEndDateTime()->add(new \DateInterval('PT2H')));
+        }
+
         return $this->render('CalderaCriticalmassStatisticBundle:Track:list.html.twig', array('tracks' => $tracks));
     }
 
