@@ -147,7 +147,7 @@ class City
     protected $punchLine;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $longDescription;
 
