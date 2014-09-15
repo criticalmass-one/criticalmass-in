@@ -3,6 +3,11 @@
 {% block title %}{{ city.getTitle }}{% endblock %}
 {% block content %}
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li class="active">{{ city.getCity() }}</li>
+        </ol>
 
         <ul class="nav nav-tabs" id="cityModalTabs">
             <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i> {{ city.getCity() }}</a></li>
