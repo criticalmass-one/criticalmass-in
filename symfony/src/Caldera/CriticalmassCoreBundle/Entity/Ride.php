@@ -33,6 +33,11 @@ class Ride
     protected $city;
 
     /**
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride")
+     */
+    protected $tracks;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $title;
@@ -688,5 +693,38 @@ class Ride
      */
     public function refreshUpdated() {
         $this->setUpdated(date('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Add tracks
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @return Ride
+     */
+    public function addTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    {
+        $this->tracks[] = $tracks;
+
+        return $this;
+    }
+
+    /**
+     * Remove tracks
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     */
+    public function removeTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    {
+        $this->tracks->removeElement($tracks);
+    }
+
+    /**
+     * Get tracks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTracks()
+    {
+        return $this->tracks;
     }
 }
