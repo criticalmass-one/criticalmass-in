@@ -58,13 +58,41 @@
             {% else %}
             <div class="col-lg-12">
             {% endif %}
-                <div class="col-lg-6">
-                    <label>Datum:</label>
-                    <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Datum:</label>
+                        <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <label>Uhrzeit:</label>
-                    <span>{{ ride.getDateTime.format('H:i') }}</span>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Uhrzeit:</label>
+                        <span>{{ ride.getDateTime.format('H:i') }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Treffpunkt:</label>
+                        <span>{{ ride.getLocation() }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Teilnehmer:</label>
+                        <span>{{ ride.getEstimatedParticipants() }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Fahrstrecke:</label>
+                        <span>{{ ride.getEstimatedDistance() }} Kilometer</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Fahrtdauer:</label>
+                        <span>{{ ride.getEstimatedDuration() }} Stunden</span>
+                    </div>
                 </div>
             </div>
             {% if hasSocialMedia or hasEstimationBlock %}
