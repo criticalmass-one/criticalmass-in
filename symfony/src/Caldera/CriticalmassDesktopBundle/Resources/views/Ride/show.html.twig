@@ -50,13 +50,18 @@
             <p>{{ ride.getDescription() }}</p>
         {% endif %}
         <div class="row">
-            <div class="col-lg-6">
-                <label>Datum:</label>
-                <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
+            <div class="col-lg-8">
+                <div class="col-lg-6">
+                    <label>Datum:</label>
+                    <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
+                </div>
+                <div class="col-lg-6">
+                    <label>Uhrzeit:</label>
+                    <span>{{ ride.getDateTime.format('H:i') }}</span>
+                </div>
             </div>
-            <div class="col-lg-6">
-                <label>Uhrzeit:</label>
-                <span>{{ ride.getDateTime.format('H:i') }}</span>
+            <div class="col-lg-4">
+                
             </div>
         </div>
 
