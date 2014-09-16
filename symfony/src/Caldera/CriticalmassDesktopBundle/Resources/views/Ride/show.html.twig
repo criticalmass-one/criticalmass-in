@@ -67,25 +67,52 @@
                     <span>{{ ride.getDateTime.format('H:i') }}</span>
                 </div>
             </div>
-            {% if hasSocialMedia %}
+            {% if hasSocialMedia or hasEstimationBlock %}
             <div class="col-lg-4">
+                {% if hasSocialMedia %}
                 <h2>Mehr im Netz</h2>
 
                 {% if ride.getUrl() %}
-                    <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
+                <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
                 {% endif %}
 
                 {% if ride.getFacebook() %}
-                    <a class="btn btn-link" href="{{ ride.getFacebook() }}">facebook</a>
+                <a class="btn btn-link" href="{{ ride.getFacebook() }}">facebook</a>
                 {% endif %}
 
                 {% if ride.getTwitter() %}
-                    <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
+                <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
+                {% endif %}
+
+                {% endif %}
+
+                {% if hasEstimationBlock %}
+                <h2>Was meinst du?</h2>
+
+                    {{ form_start(estimateForm, { role: 'form' } ) }}
+                    <div class="form-group">
+                        <label for="">Ungefähre Teilnehmerzahl:</label>
+                        {{ form_widget(estimateForm.estimatedParticipants, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Ungefähre Streckenlänge in Kilometern (Beispiel: 32,41)</label>
+                        {{ form_widget(estimateForm.estimatedDistance, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Ungefähre Fahrtdauer in Stunden (Beispiel: 2,25)</label>
+                        {{ form_widget(estimateForm.estimatedDuration, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit">Schätzen</button>
+                    </div>
+                    </form>
+
                 {% endif %}
             </div>
             {% endif %}
         </div>
-
-
     </div>
 {% endblock %}
