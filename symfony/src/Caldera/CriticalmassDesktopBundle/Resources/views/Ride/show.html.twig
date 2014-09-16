@@ -7,6 +7,7 @@
 {% endif %}
 
 {% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
+{% set hasEstimateBlock = app.getUser() != null %}
 
 {% block title %}{{ rideTitle }}{% endblock %}
 
