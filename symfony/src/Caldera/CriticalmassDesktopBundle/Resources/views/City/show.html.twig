@@ -124,8 +124,8 @@
                     <tr>
                         <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{{ ride.getDateTime.format('d. m. Y') }}</a></td>
                         <td>{% if ride.getTitle() %}{{ ride.getTitle() }}{% else %}{{ city.getTitle() }}{% endif %}</td>
-                        <td>0</td>
-                        <td>0 Kilometer</td>
+                        <td>{% if ride.getEstimatedParticipants() > 0 %}{{ ride.getEstimatedParticipants() }}{% endif %}</td>
+                        <td>{% if ride.getEstimatedDistance() > 0 %}{{ ride.getEstimatedDistance() }} Kilometer{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </table>
