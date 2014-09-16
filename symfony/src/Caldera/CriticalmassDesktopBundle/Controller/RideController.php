@@ -2,7 +2,9 @@
 
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
+use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RideController extends Controller
@@ -40,7 +42,43 @@ class RideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride));
+        //$estimate = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:RideEstimate');
+
+        $estimate = new RideEstimate();
+        $form = $this->createFormBuilder($estimate)
+            ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_estimate', array('rideId' => $ride->getId())))
+            ->add('estimatedParticipants', 'text')
+            ->add('estimatedDistance', 'text')
+            ->add('estimatedDuration', 'text')
+            ->add('Schätzen', 'submit')
+            ->getForm();
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'estimateForm' => $form->createView()));
+    }
+
+    public function estimaterideAction(Request $request, $rideId)
+    {
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+
+        $estimate = new RideEstimate();
+        $form = $this->createFormBuilder($estimate)
+            ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_estimate', array('rideId' => $ride->getId())))
+            ->add('estimatedParticipants', 'text')
+            ->add('estimatedDistance', 'text')
+            ->add('estimatedDuration', 'text')
+            ->add('Schätzen', 'submit')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 
     public function proposeAction($citySlug)

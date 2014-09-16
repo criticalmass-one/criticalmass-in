@@ -45,3 +45,7 @@ caldera_criticalmass_desktop_ride_show:
 caldera_criticalmass_desktop_content_show:
     pattern: /static/{classSlug}/{itemSlug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Content:show }
+
+caldera_criticalmass_desktop_ride_estimate:
+    pattern: /ride/estimate/{rideId}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:estimateride }
