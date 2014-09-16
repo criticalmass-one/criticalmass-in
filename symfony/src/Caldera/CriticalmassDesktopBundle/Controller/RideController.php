@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
+use Caldera\CriticalmassStatisticBundle\Utility\RideEstimateCalculator\RideEstimateCalculator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,6 +62,16 @@ class RideController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($estimate);
+
+            $estimates = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:RideEstimate')->findByRide($ride->getId());
+
+            $rec = new RideEstimateCalculator();
+            $rec->setRide($ride);
+            $rec->setEstimates($estimates);
+            $rec->calculate();
+            $ride = $rec->getRide();
+
+            $em->persist($ride);
             $em->flush();
         }
 
