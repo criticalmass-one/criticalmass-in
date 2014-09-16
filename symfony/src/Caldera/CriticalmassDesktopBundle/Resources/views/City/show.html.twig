@@ -1,6 +1,13 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
+{% if city.getUrl() or city.getFacebook() or city.getTwitter() %}
+    {% set hasSocialMedia = true %}
+{% else %}
+    {% set hasSocialMedia = false %}
+{% endif %}
+
 {% block title %}{{ city.getTitle }}{% endblock %}
+
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
@@ -23,9 +30,14 @@
                 </div>
 
                 <div class="row">
+                    {% if hasSocialMedia %}
                     <div class="col-lg-8">
+                    {% else %}
+                    <div class="col-lg-12">
+                    {% endif %}
                         {{ city.getLongDescription()|nl2br }}
                     </div>
+                    {% if hasSocialMedia %}
                     <div class="col-lg-4">
                         <h2>Mehr im Netz</h2>
 
@@ -41,6 +53,7 @@
                         <a class="btn btn-link" href="{{ city.getTwitter() }}">twitter</a>
                         {% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="tab-pane fade in active" id="nextRideTab">
