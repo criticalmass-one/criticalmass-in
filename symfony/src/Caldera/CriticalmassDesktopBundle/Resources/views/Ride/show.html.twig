@@ -6,11 +6,7 @@
     {% set rideTitle = city.getTitle() ~ ' am ' ~ ride.getDateTime().format('d. m. Y') %}
 {% endif %}
 
-{% if ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
-    {% set hasSocialMedia = true %}
-{% else %}
-    {% set hasSocialMedia = false %}
-{% endif %}
+{% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
 
 {% block title %}{{ rideTitle }}{% endblock %}
 
