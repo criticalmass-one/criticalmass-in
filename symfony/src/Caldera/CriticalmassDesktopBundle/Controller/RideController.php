@@ -5,6 +5,7 @@ namespace Caldera\CriticalmassDesktopBundle\Controller;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RideController extends Controller
@@ -16,7 +17,7 @@ class RideController extends Controller
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:showcurrent.html.twig', array('ride' => $ride));
     }
 
-    public function showAction($citySlug, $rideDate)
+    public function showAction(Request $request, $citySlug, $rideDate)
     {
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
@@ -46,27 +47,9 @@ class RideController extends Controller
 
         $estimate = new RideEstimate();
         $form = $this->createFormBuilder($estimate)
-            ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_estimate', array('rideId' => $ride->getId())))
             ->add('estimatedParticipants', 'text')
             ->add('estimatedDistance', 'text')
             ->add('estimatedDuration', 'text')
-            ->add('Schätzen', 'submit')
-            ->getForm();
-
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'estimateForm' => $form->createView()));
-    }
-
-    public function estimaterideAction(Request $request, $rideId)
-    {
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-
-        $estimate = new RideEstimate();
-        $form = $this->createFormBuilder($estimate)
-            ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_estimate', array('rideId' => $ride->getId())))
-            ->add('estimatedParticipants', 'text')
-            ->add('estimatedDistance', 'text')
-            ->add('estimatedDuration', 'text')
-            ->add('Schätzen', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
@@ -75,13 +58,23 @@ class RideController extends Controller
         {
             $estimate->setRide($ride);
             $estimate->setUser($this->getUser());
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($estimate);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'estimateForm' => $form->createView()));
+    }
+
+    public function estimaterideAction(Request $request, $rideId)
+    {
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+
+
+
+        return new Response();
+        //return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 
     public function proposeAction($citySlug)
