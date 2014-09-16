@@ -73,8 +73,11 @@ class RideController extends Controller
 
         if ($form->isValid())
         {
+            $estimate->setRide($ride);
+            $estimate->setUser($this->getUser());
+            
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            $em->persist($estimate);
             $em->flush();
         }
 
