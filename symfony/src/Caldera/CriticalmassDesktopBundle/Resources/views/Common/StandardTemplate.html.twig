@@ -28,7 +28,7 @@
 </head>
 
 <body class="standardBody">
-    {{ include('CalderaCriticalmassDesktopBundle:Common:Navigation.html.twig') }}
+    {% include('CalderaCriticalmassDesktopBundle:Common:Navigation.html.twig') with { 'fullscreenMap': 'false' } %}
 
 {% block content %}{% endblock %}
 
