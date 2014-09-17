@@ -91,12 +91,16 @@
         <table class="table">
             <tr>
                 <th>Stadt</th>
+                <th>aktuelle Tour</th>
                 <th>Turnus</th>
                 <th>Touren</th>
             </tr>
             {% for city in cities %}
             <tr class="city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
+                <td>{% if city.getCurrentRide() %}
+                    {{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr
+                {% endif %}</td>
                 <td>{{ city.getEventDateTimeString() }}</td>
                 <td>{{ city.countRides() }}</td>
             </tr>
