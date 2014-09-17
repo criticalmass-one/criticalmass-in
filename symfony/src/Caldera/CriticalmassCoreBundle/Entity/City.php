@@ -759,4 +759,9 @@ class City
     {
         return $this->longDescription;
     }
+
+    public function countRides()
+    {
+        return count($this->rides);
+    }
 }
