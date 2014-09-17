@@ -77,24 +77,30 @@
                         <span>{{ ride.getLocation() }}</span>
                     </div>
                 </div>
+                {% if ride.getEstimatedParticipants() %}
                 <div class="row">
                     <div class="col-lg-6">
                         <label>Teilnehmer:</label>
                         <span>{{ ride.getEstimatedParticipants() }}</span>
                     </div>
                 </div>
+                {% endif %}
+                {% if ride.getEstimatedDistance() %}
                 <div class="row">
                     <div class="col-lg-6">
                         <label>Fahrstrecke:</label>
                         <span>{{ ride.getEstimatedDistance() }} Kilometer</span>
                     </div>
                 </div>
+                {% endif %}
+                {% if ride.getEstimatedDuration() %}
                 <div class="row">
                     <div class="col-lg-6">
                         <label>Fahrtdauer:</label>
                         <span>{{ ride.getEstimatedDuration() }} Stunden</span>
                     </div>
                 </div>
+                {% endif %}
             </div>
             {% if hasSocialMedia or hasEstimateBlock %}
             <div class="col-lg-4">
