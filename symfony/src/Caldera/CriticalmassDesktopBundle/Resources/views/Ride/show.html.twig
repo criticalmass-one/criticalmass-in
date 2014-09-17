@@ -105,7 +105,7 @@
             {% if hasSocialMedia or hasEstimateBlock %}
             <div class="col-lg-4">
                 {% if hasSocialMedia %}
-                <h2>Mehr im Netz</h2>
+                <h4>Mehr im Netz</h4>
 
                 {% if ride.getUrl() %}
                 <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
@@ -122,7 +122,7 @@
                 {% endif %}
 
                 {% if hasEstimateBlock %}
-                <h2>Was meinst du?</h2>
+                <h4>Was meinst du?</h4>
                     {{ form_start(estimateForm) }}
                         <div class="form-group">
                             <label for="">Ungefähre Teilnehmerzahl:</label>
