@@ -764,4 +764,9 @@ class City
     {
         return count($this->rides);
     }
+
+    public function getCurrentRide()
+    {
+        return $this->rides->last();
+    }
 }
