@@ -638,6 +638,18 @@ class City
 
     public function getEventDateTimeLocationString()
     {
+        $result = $this->getEventDateTimeString();
+
+        if ($this->standardLocation)
+        {
+            $result.= ': '.$this->standardLocation;
+        }
+
+        return $result;
+    }
+
+    public function getEventDateTimeString()
+    {
         $weekDays = array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag');
         $monthWeeks = array(1 => 'ersten', 2 => 'zweiten', 3 => 'dritten', 4 => 'vierten', 0 => 'letzten');
 
@@ -650,11 +662,6 @@ class City
             if ($this->standardTime)
             {
                 $result.= ' um '.$this->standardTime->format('H.i').' Uhr';
-            }
-
-            if ($this->standardLocation)
-            {
-                $result.= ': '.$this->standardLocation;
             }
         }
 
