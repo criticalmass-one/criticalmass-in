@@ -99,7 +99,7 @@
             <tr class="city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
                 <td>{% if city.getCurrentRide() %}
-                    {{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr
+                        <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': city.getCurrentRide().getDateTime().format('Y-m-d') } ) }}">{{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr</a>
                 {% endif %}</td>
                 <td>{{ city.getEventDateTimeString() }}</td>
                 <td>{{ city.countRides() }}</td>
