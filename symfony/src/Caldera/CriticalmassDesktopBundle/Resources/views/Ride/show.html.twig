@@ -54,7 +54,7 @@
         {% endif %}
 
         <div class="row">
-            {% if hasSocialMedia %}
+            {% if hasSocialMedia or hasEstimateBlock %}
             <div class="col-lg-8">
             {% else %}
             <div class="col-lg-12">
@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            {% if hasSocialMedia or hasEstimationBlock %}
+            {% if hasSocialMedia or hasEstimateBlock %}
             <div class="col-lg-4">
                 {% if hasSocialMedia %}
                 <h2>Mehr im Netz</h2>
@@ -115,7 +115,7 @@
 
                 {% endif %}
 
-                {% if hasEstimationBlock %}
+                {% if hasEstimateBlock %}
                 <h2>Was meinst du?</h2>
                     {{ form_start(estimateForm) }}
                         <div class="form-group">
