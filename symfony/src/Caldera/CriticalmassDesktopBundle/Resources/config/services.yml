@@ -2,3 +2,7 @@ parameters:
 #    caldera_criticalmass_desktop.example.class: Caldera\CriticalmassDesktopBundle\Example
 
 services:
+  caldera_criticalmass.language.kernel_request_listener:
+    class: Caldera\CriticalmassCoreBundle\EventListener\LanguageListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: setLocale }
