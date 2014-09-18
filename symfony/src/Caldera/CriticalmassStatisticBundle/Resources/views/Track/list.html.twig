@@ -27,7 +27,7 @@
             {% for track in tracks %}
             <tr>
                 <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
-                <td>{{ track.getRide().getCity().getCity() }}</td>
+                <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
                 <td>{% if track.getRide().getTitle() %}
                 {{ track.getRide().getTitle() }}
                 {% else %}
