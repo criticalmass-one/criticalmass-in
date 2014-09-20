@@ -90,7 +90,7 @@ class Tile {
         $vector[0] = (float) $path->getEndPosition()->getLatitude() - $path->getStartPosition()->getLatitude();
         $vector[1] = (float) $path->getEndPosition()->getLongitude() - $path->getStartPosition()->getLongitude();
 
-        $n = 100;
+        $n = 25;
 
         for ($i = 0; $i < $n; ++$i)
         {
