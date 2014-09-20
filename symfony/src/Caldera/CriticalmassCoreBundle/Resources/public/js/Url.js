@@ -51,7 +51,7 @@ Url.getProtocolString = function()
 
 Url.getEnvironmentString = function()
 {
-    if (window.location.host == 'criticalmass.cm')
+    if (window.location.host == 'criticalmass.cm') or (window.location.host == 'beta.criticalmass.cm')
     {
         return 'app_dev.php/';
     }
