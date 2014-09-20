@@ -145,6 +145,11 @@ class Ride
     protected $url;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $weatherForecast;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -726,5 +731,28 @@ class Ride
     public function getTracks()
     {
         return $this->tracks;
+    }
+
+    /**
+     * Set weatherForecast
+     *
+     * @param string $weatherForecast
+     * @return Ride
+     */
+    public function setWeatherForecast($weatherForecast)
+    {
+        $this->weatherForecast = $weatherForecast;
+
+        return $this;
+    }
+
+    /**
+     * Get weatherForecast
+     *
+     * @return string 
+     */
+    public function getWeatherForecast()
+    {
+        return $this->weatherForecast;
     }
 }
