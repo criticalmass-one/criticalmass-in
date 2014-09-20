@@ -75,7 +75,6 @@ class TrackController extends Controller
         $track = new Track();
         $form = $this->createFormBuilder($track)
             ->add('file')
-            ->add('save', 'submit', array('label' => 'Create Post'))
             ->getForm();
 
         $form->handleRequest($request);
