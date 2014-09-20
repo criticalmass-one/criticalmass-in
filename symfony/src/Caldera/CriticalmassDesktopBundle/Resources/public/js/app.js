@@ -151,13 +151,6 @@ if (document.body.clientWidth <= 767) {
 
 function initApp()
 {
-    /*map = L.map('map', { zoomControl: false, attributionControl: false });
-
-    var initMapView = new InitMapView(map, citySlug);
-    initMapView.initView();*/
-
-    //map.setView([53.5554952, 9.9436765], 13);
-
     map = new Map('map');
     map.initMap();
 
