@@ -129,7 +129,8 @@ function showCityInfo(slug)
             html += '<button type="button" class="btn btn-default" href="' + ride.getTwitter() + '">twitter</button>';
         }
 
-        $('#cityModalTabNextRideSocialMedia').html(html);
+        // das kommt erst später wieder rein
+        //$('#cityModalTabNextRideSocialMedia').html(html);
     }
     else
     {
