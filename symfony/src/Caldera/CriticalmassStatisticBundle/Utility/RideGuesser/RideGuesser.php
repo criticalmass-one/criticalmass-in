@@ -31,7 +31,7 @@ class RideGuesser {
         $gr = new GpxReader();
         $gr->loadString($this->gpx);
         
-        $dateTime = $gr->getCreationDateTime();
+        $dateTime = $gr->getStartDateTime();
 
         $this->rides = $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByLatitudeLongitudeDateTime($gr->getLatitudeOfPoint(0), $gr->getLongitudeOfPoint(0), $dateTime);
     }
