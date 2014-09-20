@@ -32,7 +32,7 @@ Map.prototype.initMap = function()
         position: "topright"
     }).addTo(this.map);
 
-    var heatmapGroup = L.layerGroup([L.tileLayer("https://www.criticalmass.cm/images/heatmap/ae5e6d7e21c2936051a06a0f2f40661e/{z}/{x}/{y}.png", {
+    var heatmapGroup = L.layerGroup([L.tileLayer("https://www.criticalmass.cm/images/heatmap/globalheatmap/{z}/{x}/{y}.png", {
         maxZoom: 18
     })]);
 
