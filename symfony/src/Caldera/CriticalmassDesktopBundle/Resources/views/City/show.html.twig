@@ -89,23 +89,52 @@
                     <script type="text/javascript" src="{{ asset_url }}"></script>
                     {% endjavascripts %}
                     <script>
-                        {% if currentRide.hasLocation() %}
-                        var mapCenter = L.latLng({{ currentRide.getLatitude() }}, {{ currentRide.getLongitude() }});
-                        {% else %}
-                        var mapCenter = L.latLng({{ currentRide.getCity().getLatitude() }}, {{ currentRide.getCity().getLongitude() }});
-                        {% endif %}
                         var map = L.map('map');
                         var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         });
 
                         tileLayer.addTo(map);
-                        map.setView(mapCenter, 10);
 
-                        var marker = L.marker(mapCenter);
+                        {% if currentRide.hasLocation() %}
+                        var mapCenter = L.latLng({{ currentRide.getLatitude() }}, {{ currentRide.getLongitude() }});
+
+                        var locationIcon = L.icon({
+                            iconUrl: '/images/marker/marker-red.png',
+                            iconRetinaUrl: '/images/marker/marker-red-2x.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [13, 41],
+                            popupAnchor: [0, -36],
+                            shadowUrl: '/images/marker/defaultshadow.png',
+                            shadowSize: [41, 41],
+                            shadowAnchor: [13, 41]
+                        });
+
+                        var marker = L.marker(mapCenter, { icon: locationIcon });
                         marker.addTo(map);
                         marker.bindPopup('<strong>Treffpunkt:</strong> {{ currentRide.getLocation() }}');
                         marker.openPopup();
+                        {% else %}
+                        var mapCenter = L.latLng({{ currentRide.getCity().getLatitude() }}, {{ currentRide.getCity().getLongitude() }});
+
+                        var cityIcon = L.icon({
+                            iconUrl: '/images/marker/marker-gray.png',
+                            iconRetinaUrl: '/images/marker/marker-gray-2x.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [13, 41],
+                            popupAnchor: [0, -36],
+                            shadowUrl: '/images/marker/defaultshadow.png',
+                            shadowSize: [41, 41],
+                            shadowAnchor: [13, 41]
+                        });
+
+                        var marker = L.marker(mapCenter, { icon: cityIcon });
+                        marker.addTo(map);
+                        marker.bindPopup('<p>Der Treffpunkt ist leider noch nicht bekannt :(');
+                        marker.openPopup();
+                        {% endif %}
+
+                        map.setView(mapCenter, 15);
                     </script>
                 </div>
             </div>
