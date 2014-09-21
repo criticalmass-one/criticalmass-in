@@ -110,6 +110,17 @@ function showCityInfo(slug)
         $('#cityModalTabNextRideTime').html(ride.getFormattedTime());
         $('#cityModalTabNextRideGlympse').html(slug + '@criticalmass.in');
 
+        if (ride.getWeatherForecast())
+        {
+            $('#cityModalTabNextRideWeatherForecast').html(ride.getWeatherForecast());
+            $('#cityModalTabNextRideWeatherForecastRow').show();
+        }
+        else
+        {
+            $('#cityModalTabNextRideWeatherForecastRow').hide();
+        }
+
+
         $('#cityModalTabNextRideUnknown').hide();
 
         var html = '';
