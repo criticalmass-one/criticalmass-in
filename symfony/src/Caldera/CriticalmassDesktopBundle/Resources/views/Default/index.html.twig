@@ -62,7 +62,7 @@
 </head>
 
 <body class="fullscreenMapBody">
-    {{ include('CalderaCriticalmassDesktopBundle:Common:Navigation.html.twig') }}
+    {% include('CalderaCriticalmassDesktopBundle:Common:Navigation.html.twig') with { 'fullscreenMap': 'true' } %}
 
 <div id="map">
     <div id="glympseLogoContainer">
