@@ -46,9 +46,9 @@ function showCityInfo(slug)
         $('#cityModalTabInfoJumbotron').hide();
         $('#cityModalTabInfoTitle').show();
     }
-
+*/
     $('#cityModalTitle').html(city.getTitle());
-    $('#cityModalTabInfoJumbotronTitle').html(city.getTitle());
+/*    $('#cityModalTabInfoJumbotronTitle').html(city.getTitle());
     $('#cityModalTabInfoTitle').html(city.getTitle());
     $('#cityModalTabInfoDescription').html(city.getDescription());
 
