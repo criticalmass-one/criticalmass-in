@@ -14,6 +14,7 @@ Ride.prototype.hasLocation = null;
 Ride.prototype.url = null;
 Ride.prototype.facebook = null;
 Ride.prototype.twitter = null;
+Ride.prototype.weatherForecast = null;
 
 Ride.prototype.getId = function()
 {
@@ -202,4 +203,14 @@ Ride.prototype.getTwitter = function()
 Ride.prototype.setTwitter = function(twitter)
 {
     this.twitter = twitter;
+};
+
+Ride.prototype.getWeatherForecast = function()
+{
+    return this.weatherForecast;
+};
+
+Ride.prototype.setWeatherForecast = function(weatherForecast)
+{
+    this.weatherForecast = weatherForecast;
 };

@@ -26,6 +26,7 @@ RideFactory.convertObjectToRide = function(objectData)
     ride.setUrl(objectData.url);
     ride.setFacebook(objectData.facebook);
     ride.setTwitter(objectData.twitter);
+    ride.setWeatherForecast(objectData.weatherForecast);
 
     return ride;
 };
