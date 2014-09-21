@@ -32,7 +32,7 @@ function showCityInfo(slug)
 
     resetCityInfo();
 
-    var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
+    /*var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
 
     if (Url.fileExists(imageFilename))
     {
@@ -70,7 +70,7 @@ function showCityInfo(slug)
     }
 
     $('#cityModalTabInfoSocialMedia').html(html);
-
+*/
     var ride = RideFactory.getRideFromStorageBySlug(slug);
 
     if (ride)
@@ -78,7 +78,7 @@ function showCityInfo(slug)
         $('#cityModalTabNextRideKnown').show();
         $('#cityModalTabNextRideUnknown').hide();
 
-        var imageFilename = Url.getUrlPrefix() + 'images/ride/' + slug + '/' + ride.getId() + '.jpg';
+        /*var imageFilename = Url.getUrlPrefix() + 'images/ride/' + slug + '/' + ride.getId() + '.jpg';
 
         if (Url.fileExists(imageFilename))
         {
@@ -91,7 +91,7 @@ function showCityInfo(slug)
         {
             $('#cityModalTabNextRideJumbotron').hide();
             $('#cityModalTabNextRideTitle').show();
-        }
+        }*/
 
         $('#cityModalTabNextRideJumbotronTitle').html(ride.getTitle());
         $('#cityModalTabNextRideTitle').html(ride.getTitle());
