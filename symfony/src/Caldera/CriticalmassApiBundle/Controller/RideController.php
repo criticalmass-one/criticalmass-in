@@ -31,7 +31,8 @@ class RideController extends Controller
                     'description' => $ride2->getDescription(),
                     'url' => $ride2->getUrl(),
                     'facebook' => $ride2->getFacebook(),
-                    'twitter' => $ride2->getTwitter());
+                    'twitter' => $ride2->getTwitter(),
+                    'weatherForecast' => $ride2->getWeatherForecast());
 
                 if ($ride2->getHasLocation())
                 {
