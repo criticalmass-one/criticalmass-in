@@ -4,6 +4,13 @@
 
 {% block content %}
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_track_list') }}">Deine Tracks</a></li>
+            <li class="active">Track hinzufügen</li>
+        </ol>
+
         {{ form(form) }}
     </div>
 {% endblock %}
