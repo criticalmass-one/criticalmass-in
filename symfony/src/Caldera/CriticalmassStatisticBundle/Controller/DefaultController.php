@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\GpxConverter;
 use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\OSMMapDimensionCalculator;
 use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\Tile;
-use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\PNGTilePrinter;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
