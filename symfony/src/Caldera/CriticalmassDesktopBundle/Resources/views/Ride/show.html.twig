@@ -49,6 +49,20 @@
             // create a red polyline from an arrays of LatLng points
             var options = { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }
             var polyline = L.polyline({{ track.getJson() }}, options).addTo(map);
+
+            var locationIcon = L.icon({
+                iconUrl: '/images/marker/marker-red.png',
+                iconRetinaUrl: '/images/marker/marker-red-2x.png',
+                iconSize: [25, 41],
+                iconAnchor: [13, 41],
+                popupAnchor: [0, -36],
+                shadowUrl: '/images/marker/defaultshadow.png',
+                shadowSize: [41, 41],
+                shadowAnchor: [13, 41]
+            });
+
+            var marker = L.marker([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], { icon: locationIcon });
+            marker.addTo(map);
             {% endfor %}
 
             // zoom the map to the polyline
