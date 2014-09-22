@@ -45,4 +45,9 @@ class RideGuesser {
     {
         return count($this->rides) == 1;
     }
+
+    public function isImpossible()
+    {
+        return count($this->rides) == 0;
+    }
 } 
