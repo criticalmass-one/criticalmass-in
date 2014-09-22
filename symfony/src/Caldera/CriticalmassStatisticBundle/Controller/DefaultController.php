@@ -23,7 +23,7 @@ class DefaultController extends Controller
         foreach ($heatmap->getTracks() as $track)
         {
             $gpxc = new GpxConverter();
-            $gpxc->loadContentFromString(stream_get_contents($track->getGpx()));
+            $gpxc->loadContentFromString($track->getGpx());
             $gpxc->parseContent();
 
             $pathArray = $gpxc->getPathArray();
