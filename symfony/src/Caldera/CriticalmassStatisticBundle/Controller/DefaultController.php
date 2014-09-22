@@ -45,8 +45,6 @@ class DefaultController extends Controller
                         $tp = new TraceTilePrinter($tile, $heatmap, $track);
                         $tp->printTile();
                         $tp->saveTile();
-
-                        echo "Done: ".$tile->getOsmXTile().",".$tile->getOsmYTile().",".$tile->getOsmZoom().",".$track->getUsername();
                     }
                 }
             }
