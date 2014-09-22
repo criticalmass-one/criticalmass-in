@@ -155,6 +155,11 @@ class TrackController extends Controller
         return $this->render('CalderaCriticalmassStatisticBundle:Track:setride.html.twig', array('form' => $form->createView()));
     }
 
+    public function uploadfailedAction()
+    {
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:uploadfailed.html.twig');
+    }
+
     public function viewAction(Request $request, $trackId)
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);

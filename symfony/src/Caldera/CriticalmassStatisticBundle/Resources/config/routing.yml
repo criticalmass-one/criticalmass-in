@@ -14,6 +14,10 @@ caldera_criticalmass_statistic_track_setride:
     pattern:  /track/setride/{trackId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:setRide }
 
+caldera_criticalmass_statistic_track_upload_failed:
+    pattern:  /track/upload/failed
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:uploadFailed }
+
 caldera_criticalmass_statistic_track_view:
     pattern:  /track/view/{trackId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:view }
