@@ -3,6 +3,10 @@
 {% block title %}Timeline{% endblock %}
 {% block content %}
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li class="active">Timeline</li>
+        </ol>
         {% for post in posts %}
             {{ post.getMessage() }}
         {% endfor %}
