@@ -2,14 +2,19 @@
 
 {% block title %}Städte-Übersicht{% endblock %}
 {% block content %}
-{#    <script>
+    <script>
         function sortCityList(sortFunction)
         {
-            $('#cityList li').sort(sortFunction).map(function () {
-                return $(this).closest('#cityList li');
+            var tableHeaderRow = $('#tableHeaderRow').html();
+            $('#tableHeaderRow').remove();
+
+            $('#cityList tr').sort(sortFunction).map(function () {
+                return $(this).closest('#cityList tr');
             }).each(function (_, container) {
                 $(container).parent().append(container);
             });
+
+            $('#cityList').prepend(tableHeaderRow);
         }
 
         window.onload = function() {
@@ -54,10 +59,15 @@
 
             $('#sortByNextRide').on('click', function()
             {
-                alert('jo!');
+                var sortFunction = function(a, b)
+                {
+                    return ($(a).data('currentRide') > $(b).data('currentRide') ? 1 : -1);
+                };
+
+                sortCityList(sortFunction);
             });
         }
-    </script>#}
+    </script>
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="#">criticalmass.in</a></li>
@@ -68,7 +78,7 @@
         <p class="lead">Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.</p>
 
         <p>Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cities|length }} Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.</p>
-        {#
+
         <div class="dropdown pull-right">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                 Sortierung
@@ -80,7 +90,7 @@
                 <li id="sortByDistance" role="presentation"><a role="menuitem" tabindex="-1" href="#">Entfernung</a></li>
                 <li id="sortByNextRide" role="presentation"><a role="menuitem" tabindex="-1" href="#">nächster Tour</a></li>
             </ul>
-        </div>#}
+        </div>
 
         {#
         <div id="cityList">
@@ -93,15 +103,15 @@
             {% endfor %}
         </div>
         #}
-        <table class="table">
-            <tr>
+        <table id="cityList" class="table">
+            <tr id="tableHeaderRow">
                 <th>Stadt</th>
                 <th>aktuelle Tour</th>
                 <th>Turnus</th>
                 <th>Touren</th>
             </tr>
             {% for city in cities %}
-            <tr class="city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}">
+            <tr class="city" data-cityName="{{ city.getCity() }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.getLatitude() }}" data-longitude="{{ city.getLongitude() }}" data-currentRide="{% if city.getCurrentRide() %} }}{{ city.getCurrentRide().getDateTime().format('Y-m-d') }}{% endif %}">
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
                 <td>{% if city.getCurrentRide() %}
                         <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': city.getCurrentRide().getDateTime().format('Y-m-d') } ) }}">{{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr</a>
