@@ -217,10 +217,10 @@ class Post
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Ride $ride
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
      * @return Post
      */
-    public function setRide(\Caldera\CriticalmassTimelineBundle\Entity\Ride $ride = null)
+    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -230,7 +230,7 @@ class Post
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassTimelineBundle\Entity\Ride 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride
      */
     public function getRide()
     {
@@ -240,10 +240,10 @@ class Post
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\City $city
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
      * @return Post
      */
-    public function setCity(\Caldera\CriticalmassTimelineBundle\Entity\City $city = null)
+    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
     {
         $this->city = $city;
 
@@ -253,7 +253,7 @@ class Post
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassTimelineBundle\Entity\City 
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
      */
     public function getCity()
     {
