@@ -169,7 +169,7 @@
 
             <div class="tab-pane fade in" id="timelineTab">
                 <h1>Kommentare</h1>
-                {#{{ form(form) }}#}
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
 
                 {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
 
