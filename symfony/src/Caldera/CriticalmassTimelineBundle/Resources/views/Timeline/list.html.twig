@@ -10,7 +10,7 @@
 
         <h1>Schau was gerade passiert.</h1>
 
-        {{ form(form) }}
+        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write')) }}
 
         {% for post in posts %}
             {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
