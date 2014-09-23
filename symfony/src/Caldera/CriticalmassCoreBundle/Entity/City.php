@@ -85,11 +85,18 @@ class City
     protected $enabled = true;
 
     /**
-	 * Array mit den Touren in dieser Stadt.
-	 *
-	 * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
-	 */
-	protected $rides;
+     * Array mit den Touren in dieser Stadt.
+     *
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
+     */
+    protected $rides;
+
+    /**
+     * Array mit den Kommentaren zu dieser Stadt.
+     *
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", mappedBy="city")
+     */
+    protected $posts;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
@@ -768,5 +775,38 @@ class City
     public function getCurrentRide()
     {
         return $this->rides->last();
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     * @return City
+     */
+    public function addPost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     */
+    public function removePost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }
