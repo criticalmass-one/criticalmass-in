@@ -123,6 +123,19 @@
                     </div>
                 </div>
                 {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Kommentare zu dieser Tour</h4>
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write')) }}
+
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
+                    </div>
+                </div>
+
+
+
+
             </div>
             {% if hasSocialMedia or hasEstimateBlock %}
             <div class="col-lg-4">
