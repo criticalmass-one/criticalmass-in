@@ -8,13 +8,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
-    public function listAction(Request $request, $cityId = null)
+    public function listAction(Request $request, $cityId = null, $rideId = null)
     {
         $criteria = array('enabled' => true);
 
         if ($cityId)
         {
             $criteria['city'] = $cityId;
+        }
+
+        if ($rideId)
+        {
+            $criteria['ride'] = $rideId;
         }
 
         $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy($criteria, array('dateTime' => 'DESC'));
