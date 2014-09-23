@@ -171,7 +171,7 @@
                 <h1>Kommentare</h1>
                 {#{{ form(form) }}#}
 
-                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list')) }}
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
 
             </div>
         </div>

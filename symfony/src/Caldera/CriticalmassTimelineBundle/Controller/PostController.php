@@ -8,10 +8,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
-    public function listAction(Request $request)
+    public function listAction(Request $request, $cityId = null)
     {
-        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true), array('dateTime' => 'DESC'));
+        $criteria = array('enabled' => true);
 
-        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig', array('posts' => $posts));
+        if ($cityId)
+        {
+            $criteria['city'] = $cityId;
+        }
+
+        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy($criteria, array('dateTime' => 'DESC'));
+
+        return $this->render('CalderaCriticalmassTimelineBundle:Post:list.html.twig', array('posts' => $posts));
     }
 }
