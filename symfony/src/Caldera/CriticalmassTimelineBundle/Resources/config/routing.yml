@@ -6,3 +6,11 @@ caldera_criticalmass_timeline_list:
 caldera_criticalmass_timeline_post_write:
     path:     /timeline/write
     defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_ride:
+    path:     /timeline/write/ride/{rideId}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_city:
+    path:     /timeline/write/city/{cityId}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }

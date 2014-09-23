@@ -4,26 +4,52 @@ namespace Caldera\CriticalmassTimelineBundle\Controller;
 
 use Caldera\CriticalmassTimelineBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
-    public function writeAction(Request $request)
+    public function writeAction(Request $request, $cityId = null, $rideId = null)
     {
         $post = new Post();
-        $form = $this->createFormBuilder($post)
-            ->add('message', 'textarea')
-            ->getForm();
+        $formBuilder = $this->createFormBuilder($post)
 
+            ->add('message', 'textarea');
+
+        if ($cityId)
+        {
+            $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId)));
+        }
+
+        if ($rideId)
+        {
+            $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId)));
+        }
+
+        $form = $formBuilder->getForm();
         $form->handleRequest($request);
 
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
 
+            if ($cityId)
+            {
+                $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
+                $post->setCity($city);
+            }
+
+            if ($rideId)
+            {
+                $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+                $post->setRide($ride);
+            }
+
             $post->setUser($this->getUser());
             $em->persist($post);
             $em->flush();
+
+            return new RedirectResponse($this->container->get('request')->headers->get('referer'));
         }
 
         return $this->render('CalderaCriticalmassTimelineBundle:Post:write.html.twig', array('form' => $form->createView()));

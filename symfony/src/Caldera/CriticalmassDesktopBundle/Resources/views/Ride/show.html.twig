@@ -127,7 +127,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h4>Kommentare zu dieser Tour</h4>
-                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write')) }}
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
 
                         {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
                     </div>
