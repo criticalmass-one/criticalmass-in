@@ -20,7 +20,7 @@
             {% else %}
             <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i> {{ city.getCity() }}</a></li>
             {% endif %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="fa fa-road"></i> Vergangene Touren</a></li>
+            <li><a href="#recentRidesTab" data-toggle="tab"><i class="fa fa-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
             <li><a href="#timelineTab" data-toggle="tab"><i class="fa fa-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
         </ul>
 
