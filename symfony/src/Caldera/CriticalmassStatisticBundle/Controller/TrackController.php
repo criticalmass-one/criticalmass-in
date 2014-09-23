@@ -91,14 +91,11 @@ class TrackController extends Controller
             $rg->setGpx($track->getGpx());
             $rg->guess();
 
-            if (!$rg->isDistinct())
+            if ($rg->isImpossible())
             {
-                $em->persist($track);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
+                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed'));
             }
-            else
+            elseif ($rg->isDistinct())
             {
                 $rides = $rg->getRides();
                 $ride = array_pop($rides);
@@ -108,6 +105,13 @@ class TrackController extends Controller
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+            }
+            else
+            {
+                $em->persist($track);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
             }
         }
 
