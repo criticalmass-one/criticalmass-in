@@ -7,8 +7,15 @@
             <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
             <li class="active">Timeline</li>
         </ol>
+
+        <h1>Schau was gerade passiert.</h1>
+
         {% for post in posts %}
+            <div class="row">
+                <strong>{{ post.getUser().getUsername() }}</strong>
+                <date>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</date>
             {{ post.getMessage() }}
+            </div>
         {% endfor %}
         </div>
 {% endblock %}
