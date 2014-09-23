@@ -169,10 +169,10 @@
 
             <div class="tab-pane fade in" id="timelineTab">
                 <h1>Kommentare</h1>
-                {{ form(form) }}
-                    {% for post in city.getPosts() %}
-                        {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
-                    {% endfor %}
+                {#{{ form(form) }}#}
+
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list')) }}
+
             </div>
         </div>
     </div>
