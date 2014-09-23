@@ -1,8 +1,11 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'role': 'form'}}) }}
 
-{{ form_widget(form.message) }}
+<div class="form-group">
+    <label for="">Dein Kommentar:</label>
+    {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+</div>
 
-<button type="submit" class="btn btn-default">Absenden</button>
+<button type="submit" class="btn btn-success pull-right">Absenden</button>
 
 {{ form_widget(form._token) }}
 
