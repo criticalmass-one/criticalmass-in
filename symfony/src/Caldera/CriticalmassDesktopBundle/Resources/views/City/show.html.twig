@@ -2,6 +2,7 @@
 
 {% set hasSocialMedia = city.getUrl() or city.getFacebook() or city.getTwitter() %}
 {% set hasCurrentRide = city.getCurrentRide() != null %}
+{% set hasRides = rides|length > 0 %}
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 
@@ -20,7 +21,9 @@
             {% else %}
             <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i> {{ city.getCity() }}</a></li>
             {% endif %}
+            {% if hasRides %}
             <li><a href="#recentRidesTab" data-toggle="tab"><i class="fa fa-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
+            {% endif %}
             <li><a href="#timelineTab" data-toggle="tab"><i class="fa fa-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
         </ul>
 
@@ -155,6 +158,7 @@
                 </div>
             </div>
             {% endif %}
+            {% if hasRides %}
             <div class="tab-pane fade in" id="recentRidesTab">
                 <h1>Vergangene Touren</h1>
 
@@ -175,6 +179,7 @@
                     {% endfor %}
                 </table>
             </div>
+            {% endif %}
 
             <div class="tab-pane fade in" id="timelineTab">
                 <h1>Kommentare</h1>
