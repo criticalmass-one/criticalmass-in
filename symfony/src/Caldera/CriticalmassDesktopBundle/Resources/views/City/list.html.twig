@@ -28,13 +28,6 @@
                 sortCityList(sortFunction);
             });
 
-
-            $('#sortByParticipants').on('click', function()
-            {
-                alert('jo!');
-            });
-
-
             $('#sortByDistance').on('click', function()
             {
                 function successCallback(geolocationResult)
@@ -86,7 +79,6 @@
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <li id="sortByCity" role="presentation"><a role="menuitem" tabindex="-1" href="#">Stadt</a></li>
-                <li id="sortByParticipants" role="presentation"><a role="menuitem" tabindex="-1" href="#">Teilnehmerzahl</a></li>
                 <li id="sortByDistance" role="presentation"><a role="menuitem" tabindex="-1" href="#">Entfernung</a></li>
                 <li id="sortByNextRide" role="presentation"><a role="menuitem" tabindex="-1" href="#">nächster Tour</a></li>
             </ul>
