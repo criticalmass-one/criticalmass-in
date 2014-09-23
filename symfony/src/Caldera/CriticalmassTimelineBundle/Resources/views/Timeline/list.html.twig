@@ -2,7 +2,6 @@
 
 {% block title %}Timeline{% endblock %}
 {% block content %}
-    {{ form(form) }}
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
@@ -11,14 +10,10 @@
 
         <h1>Schau was gerade passiert.</h1>
 
-        {% for post in posts %}
-            <div class="row">
-                <img src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" />
+        {{ form(form) }}
 
-                <strong>{{ post.getUser().getUsername() }}</strong>
-                <date>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</date>
-            {{ post.getMessage() }}
-            </div>
+        {% for post in posts %}
+            {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
         {% endfor %}
         </div>
 {% endblock %}
