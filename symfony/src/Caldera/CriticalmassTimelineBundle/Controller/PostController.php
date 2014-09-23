@@ -19,11 +19,15 @@ class PostController extends Controller
         if ($cityId)
         {
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId)));
+            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
+            $post->setCity($city);
         }
 
         if ($rideId)
         {
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId)));
+            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+            $post->setRide($ride);
         }
 
         $form = $formBuilder->getForm();
@@ -32,18 +36,6 @@ class PostController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-
-            if ($cityId)
-            {
-                $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
-                $post->setCity($city);
-            }
-
-            if ($rideId)
-            {
-                $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-                $post->setRide($ride);
-            }
 
             $post->setUser($this->getUser());
             $em->persist($post);
