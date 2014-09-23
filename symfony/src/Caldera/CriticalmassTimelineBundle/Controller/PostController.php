@@ -22,12 +22,15 @@ class PostController extends Controller
             $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
             $post->setCity($city);
         }
-
-        if ($rideId)
+        elseif ($rideId)
         {
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId)));
             $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
             $post->setRide($ride);
+        }
+        else
+        {
+            $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write'));
         }
 
         $form = $formBuilder->getForm();
