@@ -3,6 +3,8 @@
 {% block title %}Timeline{% endblock %}
 {% block content %}
     <div class="container">
-        blablabla
+        {% for post in posts %}
+            {{ post.getMessage() }}
+        {% endfor %}
         </div>
 {% endblock %}

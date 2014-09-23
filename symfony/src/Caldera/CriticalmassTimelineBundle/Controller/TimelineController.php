@@ -8,6 +8,8 @@ class TimelineController extends Controller
 {
     public function listAction()
     {
-        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig');
+        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true), array('dateTime' => 'DESC'));
+
+        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig', array('posts' => $posts));
     }
 }
