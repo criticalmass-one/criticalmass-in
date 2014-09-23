@@ -1,0 +1,3 @@
+caldera_criticalmass_timeline_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Default:index }

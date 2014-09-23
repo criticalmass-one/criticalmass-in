@@ -1,0 +1,7 @@
+parameters:
+#    caldera_criticalmass_timeline.example.class: Caldera\CriticalmassTimelineBundle\Example
+
+services:
+#    caldera_criticalmass_timeline.example:
+#        class: %caldera_criticalmass_timeline.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
