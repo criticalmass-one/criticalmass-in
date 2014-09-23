@@ -61,6 +61,10 @@ class Post
      */
     protected $enabled = true;
 
+    public function __construct()
+    {
+        $this->dateTime = new \DateTime();
+    }
 
     /**
      * Get id
