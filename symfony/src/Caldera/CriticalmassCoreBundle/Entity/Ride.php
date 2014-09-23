@@ -755,4 +755,14 @@ class Ride
     {
         return $this->weatherForecast;
     }
+
+    public function getFancyTitle()
+    {
+        if (!$this->title)
+        {
+            return $this->getCityTitle().' '.$this->dateTime->format('d.m.Y');
+        }
+
+        return $this->getTitle();
+    }
 }

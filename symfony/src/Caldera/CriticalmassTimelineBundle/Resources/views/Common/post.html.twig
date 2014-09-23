@@ -7,7 +7,7 @@
         {% if post.getCity() %}
         <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über {{ post.getCity().getTitle() }}:</h4>
         {% elseif post.getRide() %}
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu {{ post.getRide().getTitle() }}:</h4>
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu {{ post.getRide().getFancyTitle() }}:</h4>
         {% else %}
         <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt:</h4>
         {% endif %}
