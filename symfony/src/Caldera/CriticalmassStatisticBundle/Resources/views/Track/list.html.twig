@@ -27,9 +27,9 @@
                 <th>Beginn</th>
                 <th>Ende</th>
                 <th>Wegpunkte</th>
-                <th>Optionen</th>
+                {#<th>Optionen</th>#}
             </tr>
-            {% for track in tracks %}
+            {% for track in tracks %}{% if track.getRide() %}
             <tr>
                 <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
@@ -41,9 +41,9 @@
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getPoints() }}</td>
-                <td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>
+                {#<td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>#}
             </tr>
-            {% endfor %}
+            {% endif %}{% endfor %}
         </table>
     </div>
 {% endblock %}
