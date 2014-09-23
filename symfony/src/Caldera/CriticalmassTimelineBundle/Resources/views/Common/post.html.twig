@@ -5,9 +5,9 @@
 
     <div class="media-body">
         {% if post.getCity() %}
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über {{ post.getCity().getTitle() }}:</h4>
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:</h4>
         {% elseif post.getRide() %}
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu {{ post.getRide().getFancyTitle() }}:</h4>
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:</h4>
         {% else %}
         <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt:</h4>
         {% endif %}
