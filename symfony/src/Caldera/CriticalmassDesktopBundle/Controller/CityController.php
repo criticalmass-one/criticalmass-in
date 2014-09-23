@@ -25,24 +25,6 @@ class CityController extends Controller
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "'.$citySlug.'" finden :(');
         }
 
-        $post = new Post();
-        $form = $this->createFormBuilder($post)
-            ->add('message', 'text')
-            ->add('LOS', 'submit')
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-
-            $post->setUser($this->getUser());
-            $post->setCity($city);
-            $em->persist($post);
-            $em->flush();
-        }
-
         $currentRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findOneBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
         $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
 

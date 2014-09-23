@@ -8,6 +8,29 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
+    public function writeAction(Request $request)
+    {
+        $post = new Post();
+        $form = $this->createFormBuilder($post)
+            ->add('message', 'text')
+            ->add('LOS', 'submit')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $post->setUser($this->getUser());
+            $em->persist($post);
+            $em->flush();
+        }
+
+        return $this->render('CalderaCriticalmassTimelineBundle:Post:write.html.twig', array('form' => $form->createView()));
+    }
+
+
     public function listAction(Request $request, $cityId = null, $rideId = null)
     {
         $criteria = array('enabled' => true);
