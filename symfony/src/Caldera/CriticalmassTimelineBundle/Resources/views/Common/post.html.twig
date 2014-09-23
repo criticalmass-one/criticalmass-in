@@ -4,7 +4,7 @@
     </span>
 
     <div class="media-body">
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }}</h4>
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt:</h4>
         <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
         {{ post.getMessage()|nl2br }}
     </div>
