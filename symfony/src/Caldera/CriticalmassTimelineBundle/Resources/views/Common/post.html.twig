@@ -1,7 +1,11 @@
-<div class="row">
-    <img src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" />
+<div class="row post media">
+    <span class="pull-left">
+        <img class="media-object" src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
+    </span>
 
-    <strong>{{ post.getUser().getUsername() }}</strong>
-    <date>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</date>
-    {{ post.getMessage() }}
+    <div class="media-body">
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }}</h4>
+        <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
+        {{ post.getMessage()|nl2br }}
+    </div>
 </div>
