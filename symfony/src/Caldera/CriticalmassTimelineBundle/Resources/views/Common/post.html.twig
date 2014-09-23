@@ -4,7 +4,14 @@
     </span>
 
     <div class="media-body">
+        {% if post.getCity() %}
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über {{ post.getCity().getTitle() }}:</h4>
+        {% elseif post.getRide() %}
+        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu {{ post.getRide().getTitle() }}:</h4>
+        {% else %}
         <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt:</h4>
+        {% endif %}
+
         <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
         {{ post.getMessage()|nl2br }}
     </div>
