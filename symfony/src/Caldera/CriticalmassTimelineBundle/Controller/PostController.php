@@ -12,7 +12,7 @@ class PostController extends Controller
     {
         $post = new Post();
         $form = $this->createFormBuilder($post)
-            ->add('message', 'text')
+            ->add('message', 'textarea')
             ->getForm();
 
         $form->handleRequest($request);
