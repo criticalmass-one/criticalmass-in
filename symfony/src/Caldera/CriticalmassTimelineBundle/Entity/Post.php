@@ -37,17 +37,12 @@ class Post
     protected $city;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $hasCoords = false;
-
-    /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $longitude;
 
@@ -75,29 +70,6 @@ class Post
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set hasCoords
-     *
-     * @param boolean $hasCoords
-     * @return Post
-     */
-    public function setHasCoords($hasCoords)
-    {
-        $this->hasCoords = $hasCoords;
-
-        return $this;
-    }
-
-    /**
-     * Get hasCoords
-     *
-     * @return boolean 
-     */
-    public function getHasCoords()
-    {
-        return $this->hasCoords;
     }
 
     /**
