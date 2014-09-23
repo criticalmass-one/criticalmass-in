@@ -14,7 +14,7 @@
                 $(container).parent().append(container);
             });
 
-            $('#cityList').prepend(tableHeaderRow);
+            $('#cityList').prepend('<tr id="tableHeaderRow">' + tableHeaderRow + '</tr>');
         }
 
         window.onload = function() {
