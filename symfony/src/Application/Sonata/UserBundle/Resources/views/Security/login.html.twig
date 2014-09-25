@@ -5,6 +5,9 @@
 {% block content %}
     <div class="container">
         <h1>Einloggen und losfahren!</h1>
+
+        <p>Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast, kannst du dir <a href="{{ path('sonata_user_resetting_request') }}">ein neues zusenden lassen</a>. Und falls du noch kein Benutzerkonto hast, kannst du dich <a href="{{ path('sonata_user_registration_register') }}">hier anmelden</a>.</p>
+
     {% block sonata_user_login_error %}
         {% if error %}
             <div class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
