@@ -9,6 +9,8 @@
 <button type="submit" class="btn btn-success pull-right">Absenden</button>
 
 {{ form_widget(form._token) }}
+{{ form_widget(form.latitude) }}
+{{ form_widget(form.longitude) }}
 
 </form>
 {% else %}

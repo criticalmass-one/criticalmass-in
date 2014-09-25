@@ -13,8 +13,9 @@ class PostController extends Controller
     {
         $post = new Post();
         $formBuilder = $this->createFormBuilder($post)
-
-            ->add('message', 'textarea');
+            ->add('message', 'textarea')
+            ->add('latitude', 'hidden')
+            ->add('longitude', 'hidden');
 
         if ($cityId)
         {
