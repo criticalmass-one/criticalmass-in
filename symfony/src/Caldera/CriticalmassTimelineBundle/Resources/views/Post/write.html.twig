@@ -6,7 +6,10 @@
     {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
 </div>
 
-<button id="submitPostButton" type="submit" class="btn btn-success pull-right">Absenden</button>
+<div class="form-group">
+    <input type="checkbox" id="shareLocation" checked="checked" /> Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können.
+    <button id="submitPostButton" type="submit" class="btn btn-success pull-right">Absenden</button>
+</div>
 
 {{ form_widget(form._token) }}
 {{ form_widget(form.latitude) }}
@@ -25,7 +28,7 @@
     {
         $('#form_latitude').val(position.coords.latitude);
         $('#form_longitude').val(position.coords.longitude);
-        
+
         $('#postForm').submit();
     }
 
@@ -36,9 +39,15 @@
 
     $('#postForm').on('submit', function(element)
     {
-        element.preventDefault();
+        if ($('#shareLocation').attr('checked')) {
+            element.preventDefault();
 
-        getLocation();
+            getLocation();
+        }
+        else
+        {
+            $('#postForm').submit();
+        }
     });
 </script>
 {% else %}
