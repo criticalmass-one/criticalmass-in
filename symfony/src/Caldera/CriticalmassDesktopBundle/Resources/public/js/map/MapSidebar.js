@@ -52,10 +52,12 @@ MapSidebar.prototype.initEventListeners = function()
     $('#navigationButtonSidebar').on('click', function()
     {
         this2.sidebar.toggle();
+        _paq.push(['trackEvent', 'sidebar', 'toggle']);
     });
 
     $('#sidebarButtonToggle').on('click', function()
     {
         this2.sidebar.toggle();
+        _paq.push(['trackEvent', 'sidebar', 'toggle']);
     });
 };

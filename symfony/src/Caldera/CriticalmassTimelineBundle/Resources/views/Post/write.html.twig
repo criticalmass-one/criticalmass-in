@@ -42,10 +42,14 @@
         if ($('#shareLocation').attr('checked')) {
             element.preventDefault();
 
+            _paq.push(['trackEvent', 'writeComment', 'withLocation']);
+
             getLocation();
         }
         else
         {
+            _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
+
             $('#postForm').submit();
         }
     });

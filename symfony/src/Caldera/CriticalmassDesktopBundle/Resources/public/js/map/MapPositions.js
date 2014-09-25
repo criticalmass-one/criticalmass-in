@@ -163,6 +163,4 @@ MapPositions.prototype.panToLatestPosition = function(requestedSlug)
     var latestPosition = this.getLatestPosition(requestedSlug);
 
     this.map.panTo(latestPosition.getLatLng());
-
-    //_paq.push(['trackEvent', 'panTo', 'latestPosition']);
 };

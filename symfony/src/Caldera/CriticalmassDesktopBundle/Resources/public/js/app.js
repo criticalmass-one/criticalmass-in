@@ -30,12 +30,16 @@ function showCityInfo(slug)
 {
     var city = CityFactory.getCityFromStorageBySlug(slug);
 
+    _paq.push(['trackEvent', 'showCityModal', clug]);
+
     resetCityInfo();
 
     $('#cityModalTabNextButtonsCity').on('click', function()
     {
         $('#cityInfoModal').modal('hide');
         map.map.panTo([city.getLatitude(), city.getLongitude()]);
+
+        _paq.push(['trackEvent', 'panToCity', 'hamburg']);
     });
     /*var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
 
@@ -111,6 +115,7 @@ function showCityInfo(slug)
             {
                 $('#cityInfoModal').modal('hide');
                 map.map.panTo([ride.getLatitude(), ride.getLongitude()]);
+                _paq.push(['trackEvent', 'panToLocation', slug]);
             });
         }
         else
@@ -163,6 +168,7 @@ function showCityInfo(slug)
             $('#cityModalTabNextButtonsPosition').on('click', function()
             {
                 map.mapPositions.panToLatestPosition(slug)
+                _paq.push(['trackEvent', 'panToPosition', slug]);
             });
         }
         else

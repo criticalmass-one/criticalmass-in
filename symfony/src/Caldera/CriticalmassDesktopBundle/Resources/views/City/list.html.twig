@@ -20,6 +20,8 @@
         window.onload = function() {
             $('#sortByCity').on('click', function()
             {
+                _paq.push(['trackEvent', 'sortCityList', 'City']);
+
                 var sortFunction = function(a, b)
                 {
                     return ($(a).data('cityname') > $(b).data('cityname') ? 1 : -1);
@@ -30,6 +32,8 @@
 
             $('#sortByDistance').on('click', function()
             {
+                _paq.push(['trackEvent', 'sortCityList', 'Distance']);
+
                 function successCallback(geolocationResult)
                 {
                     var latitude = geolocationResult.coords.latitude;
@@ -52,6 +56,8 @@
 
             $('#sortByNextRide').on('click', function()
             {
+                _paq.push(['trackEvent', 'sortCityList', 'Ride']);
+
                 var sortFunction = function(a, b)
                 {
                     return ($(a).data('currentride') > $(b).data('currentride') ? 1 : -1);
