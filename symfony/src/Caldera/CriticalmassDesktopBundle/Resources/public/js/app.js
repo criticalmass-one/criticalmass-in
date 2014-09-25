@@ -177,14 +177,13 @@ function initApp()
     map = new Map('map');
     map.initMap();
 
-    if (document.body.clientWidth <= 767)
+    if (document.body.clientWidth <= 750)
     {
         var isCollapsed = true;
     }
     else
     {
         var isCollapsed = false;
-        //sidebar.show();
     }
 
 }
