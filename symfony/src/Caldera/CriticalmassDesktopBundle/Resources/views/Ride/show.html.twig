@@ -45,11 +45,6 @@
             tileLayer.addTo(map);
             map.setView([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], 10);
 
-            {% for track in ride.getTracks() %}
-            // create a red polyline from an arrays of LatLng points
-            var options = { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }
-            var polyline = L.polyline({{ track.getJson() }}, options).addTo(map);
-
             var locationIcon = L.icon({
                 iconUrl: '/images/marker/marker-red.png',
                 iconRetinaUrl: '/images/marker/marker-red-2x.png',
@@ -63,6 +58,11 @@
 
             var marker = L.marker([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], { icon: locationIcon });
             marker.addTo(map);
+
+            {% for track in ride.getTracks() %}
+            // create a red polyline from an arrays of LatLng points
+            var options = { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }
+            var polyline = L.polyline({{ track.getJson() }}, options).addTo(map);
             {% endfor %}
 
             // zoom the map to the polyline
