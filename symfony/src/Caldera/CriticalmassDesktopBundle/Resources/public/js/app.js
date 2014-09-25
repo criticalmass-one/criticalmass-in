@@ -155,6 +155,20 @@ function showCityInfo(slug)
 
         // das kommt erst später wieder rein
         //$('#cityModalTabNextRideSocialMedia').html(html);
+
+        if (map.mapPositions.getLatestPosition(slug))
+        {
+            $('#cityModalTabNextButtonsPosition').show();
+
+            $('#cityModalTabNextButtonsPosition').on('click', function()
+            {
+                map.mapPositions.panToLatestPosition(slug)
+            });
+        }
+        else
+        {
+            $('#cityModalTabNextButtonsPosition').hide();
+        }
     }
     else
     {

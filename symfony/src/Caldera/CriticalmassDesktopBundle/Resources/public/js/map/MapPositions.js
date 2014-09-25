@@ -68,7 +68,8 @@ MapPositions.prototype.createUsernamePosition = function(position)
         fillOpacity: 0.75,
         weight: 3,
         username: position.username,
-        timestamp: position.timestamp
+        timestamp: position.timestamp,
+        citySlug: position.citySlug
     };
 
     var circle = L.circle([position.latitude, position.longitude], 35, circleOptions);
@@ -136,4 +137,32 @@ MapPositions.prototype.setUserPositionColor = function(username, colorRed, color
     };
 
     this.positionsArray[username].setStyle(circleOptions);
+};
+
+MapPositions.prototype.getLatestPosition = function(requestedSlug)
+{
+    var maxTimestamp = 0;
+    var maxTimestampIndex = 0;
+
+    for (index in this.positionsArray)
+    {
+        var position = this.positionsArray[index];
+
+        if (position.options.citySlug == requestedSlug && position.options.timestamp > maxTimestamp)
+        {
+            maxTimestamp = this.positionsArray[index].options.timestamp;
+            maxTimestampIndex = index;
+        }
+    }
+
+    return this.positionsArray[maxTimestampIndex];
+};
+
+MapPositions.prototype.panToLatestPosition = function(requestedSlug)
+{
+    var latestPosition = this.getLatestPosition(requestedSlug);
+
+    this.map.panTo(latestPosition.getLatLng());
+
+    //_paq.push(['trackEvent', 'panTo', 'latestPosition']);
 };
