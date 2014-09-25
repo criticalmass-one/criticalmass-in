@@ -101,6 +101,11 @@ function showCityInfo(slug)
         {
             $('#cityModalTabNextRideLocation').html(ride.getLocation());
             $('#cityModalTabNextButtonsLocation').show();
+
+            $('#cityModalTabNextButtonsLocation').on('click', function()
+            {
+               map.map.panTo([ride.getLatitude(), ride.getLongitude()]);
+            });
         }
         else
         {
