@@ -163,8 +163,6 @@ function showCityInfo(slug)
     }
 
     $('#cityInfoModal').modal('show');
-
-    map.setView([city.getLatitude(), city.getLongitude()], 15);
 }
 
 if (document.body.clientWidth <= 767) {
