@@ -33,4 +33,9 @@ class DefaultController extends Controller
     {
         return $this->render('CalderaCriticalmassDesktopBundle:Default:criticalmass.html.twig');
     }
+
+    public function impressAction()
+    {
+        return $this->render('CalderaCriticalmassDesktopBundle:Default:impress.html.twig');
+    }
 }

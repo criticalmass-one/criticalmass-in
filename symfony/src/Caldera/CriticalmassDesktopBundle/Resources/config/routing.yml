@@ -6,6 +6,10 @@ caldera_criticalmass_desktop_slugindex:
     pattern:  /{slug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:slugindex }
 
+caldera_criticalmass_desktop_content_impress:
+    pattern:  /content/about-us/impress
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:impress }
+
 caldera_criticalmass_desktop_content_aboutus:
     pattern:  /content/about-us
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:aboutus }
