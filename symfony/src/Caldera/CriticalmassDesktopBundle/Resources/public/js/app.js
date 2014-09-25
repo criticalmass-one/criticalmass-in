@@ -34,6 +34,7 @@ function showCityInfo(slug)
 
     $('#cityModalTabNextButtonsCity').on('click', function()
     {
+        $('#cityInfoModal').modal('hide');
         map.map.panTo([city.getLatitude(), city.getLongitude()]);
     });
     /*var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
@@ -108,7 +109,8 @@ function showCityInfo(slug)
 
             $('#cityModalTabNextButtonsLocation').on('click', function()
             {
-               map.map.panTo([ride.getLatitude(), ride.getLongitude()]);
+                $('#cityInfoModal').modal('hide');
+                map.map.panTo([ride.getLatitude(), ride.getLongitude()]);
             });
         }
         else
