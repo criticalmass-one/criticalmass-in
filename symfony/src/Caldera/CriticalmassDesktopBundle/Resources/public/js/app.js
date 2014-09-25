@@ -100,10 +100,12 @@ function showCityInfo(slug)
         if (ride.getLocation())
         {
             $('#cityModalTabNextRideLocation').html(ride.getLocation());
+            $('#cityModalTabNextButtonsLocation').show();
         }
         else
         {
             $('#cityModalTabNextRideLocation').html('Der Treffpunkt ist noch nicht bekannt :(');
+            $('#cityModalTabNextButtonsLocation').hide();
         }
 
         $('#cityModalTabNextRideDate').html(ride.getFormattedDate());
