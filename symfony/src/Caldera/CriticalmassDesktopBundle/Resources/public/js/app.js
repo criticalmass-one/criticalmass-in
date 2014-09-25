@@ -30,7 +30,7 @@ function showCityInfo(slug)
 {
     var city = CityFactory.getCityFromStorageBySlug(slug);
 
-    _paq.push(['trackEvent', 'showCityModal', clug]);
+    _paq.push(['trackEvent', 'showCityModal', slug]);
 
     resetCityInfo();
 
