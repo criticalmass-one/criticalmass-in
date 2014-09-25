@@ -777,7 +777,7 @@ class City
         $currentRide = $this->rides->last();
         $currentDateTime = new \DateTime();
 
-        if ($currentRide && $currentRide->getDateTime()->format('Y-m-d') > $currentDateTime->format('Y-m-d'))
+        if ($currentRide && $currentRide->getDateTime()->format('Y-m-d') >= $currentDateTime->format('Y-m-d'))
         {
             return $currentRide;
         }
