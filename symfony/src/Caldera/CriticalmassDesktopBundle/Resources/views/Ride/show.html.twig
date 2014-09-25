@@ -43,7 +43,7 @@
             });
 
             tileLayer.addTo(map);
-            map.setView([53, 9], 10);
+            map.setView([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], 10);
 
             {% for track in ride.getTracks() %}
             // create a red polyline from an arrays of LatLng points
