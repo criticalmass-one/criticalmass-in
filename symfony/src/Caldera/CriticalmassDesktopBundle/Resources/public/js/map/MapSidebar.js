@@ -39,7 +39,7 @@ MapSidebar.prototype.initCities = function()
 
     this.sidebar.addTo(this.map);
 
-    if (document.body.clientWidth > 767)
+    if (!citySlug && document.body.clientWidth > 750)
     {
         this.sidebar.show();
     }
