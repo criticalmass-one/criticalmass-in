@@ -1,3 +1,4 @@
+{% if app.getUser() %}
 {{ form_start(form, {'attr': {'role': 'form'}}) }}
 
 <div class="form-group">
@@ -10,3 +11,6 @@
 {{ form_widget(form._token) }}
 
 </form>
+{% else %}
+<p>Mit einem criticalmass.in-Benutzerkonto könntest du an dieser Stelle einen Kommentar verfassen. Wenn du Lust und Zeit hast, kannst du dich hier drüben <a href="{{ path('fos_user_security_login') }}">einloggen oder anmelden</a>.</p>
+{% endif %}
