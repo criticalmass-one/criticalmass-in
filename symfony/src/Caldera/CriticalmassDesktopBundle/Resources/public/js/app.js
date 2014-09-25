@@ -32,6 +32,10 @@ function showCityInfo(slug)
 
     resetCityInfo();
 
+    $('#cityModalTabNextButtonsCity').on('click', function()
+    {
+        map.map.panTo([city.getLatitude(), city.getLongitude()]);
+    });
     /*var imageFilename = Url.getUrlPrefix() + 'images/city/' + slug + '.jpg';
 
     if (Url.fileExists(imageFilename))
