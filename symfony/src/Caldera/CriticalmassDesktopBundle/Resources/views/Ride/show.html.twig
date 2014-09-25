@@ -56,7 +56,7 @@
                 shadowAnchor: [13, 41]
             });
 
-            var marker = L.marker([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], { icon: locationIcon });
+            var marker = L.marker([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], { icon: locationIcon });
             marker.addTo(map);
 
             {% for track in ride.getTracks() %}
