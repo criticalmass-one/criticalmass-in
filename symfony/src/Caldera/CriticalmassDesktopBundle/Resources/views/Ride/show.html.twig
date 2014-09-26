@@ -72,11 +72,11 @@
         </script>
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-6">Treffpunkt:<br />Fischmarkt</div>
-            <div class="col-md-3 col-sm-6 col-xs-6">Freitag, 26. September 2014<br />19:00 Uhr</div>
-            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">5.721</span><br />Teilnehmer</div>
-            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">28,5</span><br />Kilometer</div>
-            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">2:12</span><br />Stunden</div>
+            <div class="col-md-3 col-sm-6 col-xs-6">Treffpunkt:<br />{{ ride.getLocation() }}</div>
+            <div class="col-md-3 col-sm-6 col-xs-6">{{ ride.getDateTime.format('d.m.Y') }}<br />{{ ride.getDateTime.format('H:i') }} Uhr</div>
+            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedParticipants() }}</span><br />Teilnehmer</div>
+            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedDistance() }}</span><br />Kilometer</div>
+            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedDuration() }}</span><br />Stunden</div>
         </div>
         <div class="row">
             {% if hasSocialMedia or hasEstimateBlock %}
@@ -87,48 +87,6 @@
                 {% if ride.getDescription() %}
                 <div class="row">
                     <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
-                </div>
-                {% endif %}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label>Datum:</label>
-                        <span>{{ ride.getDateTime.format('d.m.Y') }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label>Uhrzeit:</label>
-                        <span>{{ ride.getDateTime.format('H:i') }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label>Treffpunkt:</label>
-                        <span>{{ ride.getLocation() }}</span>
-                    </div>
-                </div>
-                {% if ride.getEstimatedParticipants() %}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label>Teilnehmer:</label>
-                        <span>{{ ride.getEstimatedParticipants() }}</span>
-                    </div>
-                </div>
-                {% endif %}
-                {% if ride.getEstimatedDistance() %}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label>Fahrstrecke:</label>
-                        <span>{{ ride.getEstimatedDistance() }} Kilometer</span>
-                    </div>
-                </div>
-                {% endif %}
-                {% if ride.getEstimatedDuration() %}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label>Fahrtdauer:</label>
-                        <span>{{ ride.getEstimatedDuration() }} Stunden</span>
-                    </div>
                 </div>
                 {% endif %}
 
