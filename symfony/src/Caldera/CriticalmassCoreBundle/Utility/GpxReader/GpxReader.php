@@ -79,4 +79,39 @@ class GpxReader {
 
         return '['.implode($result, ',').']';
     }
+
+    /**
+     * The earth is flat, stupid. As we struggle with PHP and it’s acos calculations we assume the earth to be flat, so
+     * we can use Pythagoras here. As we have only small distances about twenty or thirty kilometres, this works well
+     * enough. This calculation will fail with wrong distances when a Critical Mass rides from Paris to Berlin or does
+     * even larger distances.
+     *
+     * Don’t show this your kids.
+     */
+    public function calculateDistance()
+    {
+        $distance = (float) 0.0;
+
+        $index = 1;
+
+        $firstCoord = $this->simpleXml->trk->trkseg->trkpt[0];
+
+        while ($index < $this->countPoints())
+        {
+            $secondCoord = $this->simpleXml->trk->trkseg->trkpt[$index];
+            
+            $dx = 71.5 * ((float) $firstCoord['lon'] - (float) $secondCoord['lon']);
+            $dy = 111.3 * ((float) $firstCoord['lat'] - (float) $secondCoord['lat']);
+
+            $value = (float) sqrt($dx * $dx + $dy * $dy);
+
+            $distance += $value;
+
+            $firstCoord = $secondCoord;
+
+            ++$index;
+        }
+
+        return (float) $distance;
+    }
 }
