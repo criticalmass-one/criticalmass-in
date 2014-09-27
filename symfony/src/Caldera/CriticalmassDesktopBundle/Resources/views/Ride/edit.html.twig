@@ -1,6 +1,6 @@
-{% extends 'CalderaCriticalmassDesktopBundle::BaseTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block body %}
+{% block content %}
     <div class="container">
         <h1>Tour-Details korrigieren</h1>
         <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
@@ -66,7 +66,7 @@
             <div class="row">
                     <div class="form-group">
                         <label for="description">Link zu einer Webseite:</label>
-                        {{ form_widget(form.website, { 'attr' : { 'class': 'form-control'} }) }}
+                        {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
             </div>
 
