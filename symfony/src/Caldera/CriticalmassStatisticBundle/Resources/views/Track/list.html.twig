@@ -26,7 +26,7 @@
                 <th>Tour</th>
                 <th>Beginn</th>
                 <th>Ende</th>
-                <th>Wegpunkte</th>
+                <th>Distanz</th>
                 {#<th>Optionen</th>#}
             </tr>
             {% for track in tracks %}{% if track.getRide() %}
@@ -40,7 +40,7 @@
                 {% endif %}</a></td>
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
-                <td>{{ track.getPoints() }}</td>
+                <td>{{ track.getDistance()|round(2) }} Kilometer</td>
                 {#<td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>#}
             </tr>
             {% endif %}{% endfor %}
