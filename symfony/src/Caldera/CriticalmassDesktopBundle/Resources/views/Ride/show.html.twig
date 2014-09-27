@@ -22,7 +22,10 @@
 
         <div class="row">
             {% if app.getUser() %}
-            <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_statistic_track_upload') }}" style="margin-top: 24px;">Track hinzufügen</a>
+            <div class="btn-group  pull-right">
+                <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_upload') }}" style="margin-top: 24px;">Track hinzufügen</a>
+                <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_upload') }}" style="margin-top: 24px;"><i class="fa fa-wrench"></i></a>
+            </div>
             {% endif %}
             <h1>{{ rideTitle }}</h1>
         </div>
