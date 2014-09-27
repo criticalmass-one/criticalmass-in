@@ -38,6 +38,10 @@ caldera_criticalmass_desktop_ride_propose:
     pattern:  /ride/propose/{citySlug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:propose }
 
+caldera_criticalmass_desktop_ride_edit:
+    pattern:  /{citySlug}/{rideDate}/edit
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:edit }
+
 caldera_criticalmass_desktop_statistic_participants:
     pattern: /statistic/participants
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Statistic:participants }
