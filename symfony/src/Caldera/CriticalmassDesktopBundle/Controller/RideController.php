@@ -88,9 +88,31 @@ class RideController extends Controller
         //return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 
-    public function proposeAction($citySlug)
+    public function editAction($citySlug, $rideDate)
     {
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findLatestForCitySlug($citySlug);
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
+
+        try {
+            $rideDateTime = new \DateTime($rideDate);
+        }
+        catch (\Exception $e)
+        {
+            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+        }
+
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
+        }
 
         $form = $this->createFormBuilder($ride)
             ->add('title', 'text')
@@ -102,7 +124,7 @@ class RideController extends Controller
             ->add('longitude', 'hidden')
             ->add('facebook', 'text')
             ->add('twitter', 'text')
-            ->add('website', 'text')
+            ->add('url', 'text')
             ->add('hasLocation', 'checkbox')
             ->add('hasTime', 'checkbox')
             ->add('save', 'submit')
@@ -117,6 +139,6 @@ class RideController extends Controller
             $em->flush();
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:propose.html.twig', array('ride' => $ride, 'form' => $form->createView()));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('ride' => $ride, 'city' => $city, 'form' => $form->createView()));
     }
 }
