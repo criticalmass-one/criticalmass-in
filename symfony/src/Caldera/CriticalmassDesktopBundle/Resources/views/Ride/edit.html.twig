@@ -12,27 +12,27 @@
                 {{ form_start(form) }}
                     <div class="row">
                         <div class="form-group">
-                            <label for="title">Titel:</label>
+                            <label class="control-label" for="title">Titel:</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group">
-                            <label for="description">Beschreibung:</label>
+                            <label class="control-label" for="description">Beschreibung:</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
                         </div>
                     </div>
 
                     <div class="row">
-                        <label for="date">Datum:</label>
+                        <label class="control-label" for="date">Datum:</label>
                             <div class="form-group">
                                 {{ form_widget(form.date, { 'attr' : { 'class': 'form-control'} }) }}
                             </div>
                     </div>
 
                     <div class="row">
-                        <label for="time">Uhrzeit:</label>
+                        <label class="control-label" for="time">Uhrzeit:</label>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 {{ form_widget(form.hasTime) }}
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="row">
-                        <label for="location">Treffpunkt:</label>
+                        <label class="control-label" for="location">Treffpunkt:</label>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 {{ form_widget(form.hasLocation) }}
@@ -60,21 +60,21 @@
 
                     <div class="row">
                         <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
-                            <label for="twitter">Link zu einem Tweet:</label>
+                            <label class="control-label" for="twitter">Link zu einem Tweet:</label>
                             {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
-                            <label for="url">Link zu einer Webseite:</label>
+                            <label class="control-label" for="url">Link zu einer Webseite:</label>
                             {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group">
-                            <label for="weatherForecast">Wettervorhersage:</label>
+                            <label class="control-label" for="weatherForecast">Wettervorhersage:</label>
                             {{ form_widget(form.weatherForecast, { 'attr' : { 'class': 'form-control'} }) }}
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <button type="submit" class="btn btn-success">Speichern</button>
                         </div>
                     </div>
-                
+
                     {{ form_widget(form.latitude) }}
                     {{ form_widget(form.longitude) }}
                     {{ form_widget(form._token) }}
