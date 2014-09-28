@@ -104,9 +104,9 @@ class RideController extends Controller
         }
         else
         {
-            return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimatefailure.html.twig', array('form' => $form->createView()));
+            return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimatefailure.html.twig', array('form' => $form->createView(), 'ride' => $ride));
         }
 
-        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $citySlug, 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 }
