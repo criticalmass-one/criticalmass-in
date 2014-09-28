@@ -51,7 +51,10 @@ class RideEstimateCalculator {
             }
         }
 
-        $distance /= $distanceCounter;
+        if ($distanceCounter)
+        {
+            $distance /= $distanceCounter;
+        }
 
         $this->ride->setEstimatedDistance($distance);
     }
@@ -70,7 +73,10 @@ class RideEstimateCalculator {
             }
         }
 
-        $duration /= $durationCounter;
+        if ($durationCounter)
+        {
+            $duration /= $durationCounter;
+        }
 
         $this->ride->setEstimatedDuration($duration);
     }
@@ -89,7 +95,10 @@ class RideEstimateCalculator {
             }
         }
 
-        $participants /= $participantsCounter;
+        if ($participantsCounter)
+        {
+            $participants /= $participantsCounter;
+        }
 
         $this->ride->setEstimatedParticipants($participants);
     }
