@@ -94,6 +94,10 @@ class RideController extends Controller
             $em->persist($ride);
             $em->flush();
         }
+        else
+        {
+            return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimatefailure.html.twig', array('form' => $form->createView()));
+        }
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }

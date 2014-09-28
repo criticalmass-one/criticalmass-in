@@ -1,0 +1,45 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Tourschätzung{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Hoppla :(</h1>
+
+        <p>Bei deiner Schätzung stimmen die Eingabewerte leider nicht so richtig. Bitte probiere es noch einmal.</p>
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Ungefähre Teilnehmerzahl:</label>
+                    {{ form_widget(form.estimatedParticipants, {'attr': {'class': 'form-control'}}) }}
+                    <p class="help-block">Beispiel: 205 oder 5150</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Ungefähre Streckenlänge in Kilometern:</label>
+                    {{ form_widget(form.estimatedDistance, {'attr': {'class': 'form-control'}}) }}
+                    <p class="help-block">Beispiel: 16 oder 21,35</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">Ungefähre Fahrtdauer in Stunden</label>
+                    {{ form_widget(form.estimatedDuration, {'attr': {'class': 'form-control'}}) }}
+                    <p class="help-block">Beispiel: 2,25 für zwei Stunden und fünfzehn Minuten</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+                <button type="submit" class="btn btn-primary pull-right">Schätzen</button>
+        </div>
+
+        {{ form_widget(form._token) }}
+        </form>
+    </div>
+{% endblock %}
