@@ -426,4 +426,11 @@ class Track
         $this->setJson($gpxReader->generateJson());
         $this->setDistance($gpxReader->calculateDistance());
     }
+
+    public function getDuration()
+    {
+        $diff = $this->endDateTime->diff($this->startDateTime);
+
+        return $diff->format('%h.%i');
+    }
 }
