@@ -127,6 +127,7 @@ class RideController extends Controller
             ->add('url', 'text')
             ->add('hasLocation', 'checkbox')
             ->add('hasTime', 'checkbox')
+            ->add('weatherForecast', 'text')
             ->add('save', 'submit')
             ->getForm();
 
