@@ -7,6 +7,14 @@
         <h1>Tour-Details korrigieren</h1>
         <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
 
+        {% if hasErrors is not null %}
+        {% if hasErrors == true %}
+        <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+        {% elseif hasErrors == false %}
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: city.getMainSlugString(), rideDate: rideDate } ) }}">Zurück zur Tour?</a></div>
+        {% endif %}
+        {% endif %}
+
         <div class="row">
             <div class="col-md-4">
                 {{ form_start(form) }}
