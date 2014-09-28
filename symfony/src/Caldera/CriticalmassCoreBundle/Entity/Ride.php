@@ -769,4 +769,48 @@ class Ride
 
         return $this->getTitle();
     }
+
+    public function getPreviousRide()
+    {
+        $rides = $this->getCity()->getRides();
+
+        $prevRide = null;
+
+        foreach ($rides as $ride)
+        {
+            if ($ride && !$prevRide && $ride->getDateTime() < $this->getDateTime())
+            {
+                $prevRide = $ride;
+            }
+            else
+            if ($ride && $prevRide && $ride->getDateTime() > $prevRide->getDateTime() && $ride->getDateTime() < $this->getDateTime())
+            {
+                $prevRide = $ride;
+            }
+        }
+
+        return $prevRide;
+    }
+
+    public function getNextRide()
+    {
+        $rides = $this->getCity()->getRides();
+
+        $nextRide = null;
+
+        foreach ($rides as $ride)
+        {
+            if ($ride && !$nextRide && $ride->getDateTime() > $this->getDateTime())
+            {
+                $nextRide = $ride;
+            }
+            else
+                if ($ride && $nextRide && $ride->getDateTime() < $nextRide->getDateTime() && $ride->getDateTime() > $this->getDateTime())
+                {
+                    $nextRide = $ride;
+                }
+        }
+
+        return $nextRide;
+    }
 }
