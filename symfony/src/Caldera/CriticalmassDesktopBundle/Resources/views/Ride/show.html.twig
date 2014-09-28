@@ -1,14 +1,8 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% if ride.getTitle() %}
-    {% set rideTitle = ride.getTitle() %}
-{% else %}
-    {% set rideTitle = city.getTitle() ~ ' am ' ~ ride.getDateTime().format('d. m. Y') %}
-{% endif %}
-
 {% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
 
-{% block title %}{{ rideTitle }}{% endblock %}
+{% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -16,7 +10,7 @@
             <li><a href="#">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
-            <li class="active">{{ rideTitle }}</li>
+            <li class="active">{{ ride.getFancyTitle() }}</li>
         </ol>
 
         <div class="row">
@@ -28,7 +22,7 @@
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-wrench"></i></a>
             </div>
             {% endif %}
-            <h1>{{ rideTitle }}</h1>
+            <h1>{{ ride.getFancyTitle() }}</h1>
         </div>
 
         <div class="row">
