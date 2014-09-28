@@ -4,6 +4,7 @@ namespace Caldera\CriticalmassStatisticBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
+use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,8 +101,17 @@ class TrackController extends Controller
                 $ride = array_pop($rides);
                 $track->setRide($ride);
 
+                $re = new RideEstimate();
+                $re->setRide($ride);
+                $re->setUser($this->getUser());
+                $re->setEstimatedDistance($track->getDistance());
+                $re->setEstimatedDuration($track->getDuration());
+
+                $em->persist($re);
                 $em->persist($track);
                 $em->flush();
+
+                $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
                 return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
             }
@@ -149,6 +159,14 @@ class TrackController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $re = new RideEstimate();
+            $re->setRide($ride);
+            $re->setUser($this->getUser());
+            $re->setEstimatedDistance($track->getDistance());
+            $re->setEstimatedDuration($track->getDuration());
+
+            $em->persist($re);
             $em->persist($track);
             $em->flush();
 
