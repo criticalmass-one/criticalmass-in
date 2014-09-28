@@ -774,15 +774,23 @@ class City
 
     public function getCurrentRide()
     {
-        $currentRide = $this->rides->last();
-        $currentDateTime = new \DateTime();
+        $currentRide = null;
+        $dateTime = new \DateTime();
 
-        if ($currentRide && $currentRide->getDateTime()->format('Y-m-d') >= $currentDateTime->format('Y-m-d'))
+        foreach ($this->getRides() as $ride)
         {
-            return $currentRide;
+            if ($ride && !$currentRide && $ride->getDateTime() > $dateTime)
+            {
+                $currentRide = $ride;
+            }
+            else
+            if ($ride && $currentRide && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime)
+            {
+                $currentRide = $ride;
+            }
         }
 
-        return null;
+        return $currentRide;
     }
 
     /**
