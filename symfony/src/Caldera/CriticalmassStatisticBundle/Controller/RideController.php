@@ -89,18 +89,7 @@ class RideController extends Controller
             $em->persist($estimate);
             $em->flush();
 
-            // as the Entity Manager has been flushed, the new estimate is already stored in the database and can be collected in the next step
-            // otherwise we would get into trouble if this is the first estimate and we divide somewhere through zero
-            $estimates = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:RideEstimate')->findByRide($ride->getId());
-
-            $rec = new RideEstimateCalculator();
-            $rec->setRide($ride);
-            $rec->setEstimates($estimates);
-            $rec->calculate();
-            $ride = $rec->getRide();
-
-            $em->persist($ride);
-            $em->flush();
+            $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
         }
         else
         {
