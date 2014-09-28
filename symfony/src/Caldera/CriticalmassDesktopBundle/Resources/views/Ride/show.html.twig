@@ -23,6 +23,7 @@
         <div class="row">
             {% if app.getUser() %}
             <div class="btn-group  pull-right" style="margin-top: 24px;">
+                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_upload') }}"><i class="fa fa-cloud-upload"></i></a>
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-wrench"></i></a>
             </div>
@@ -98,8 +99,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h4>Kommentare zu dieser Tour</h4>
-                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
-
                         {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
                     </div>
                 </div>
@@ -139,5 +138,19 @@
             <li class="next"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getNextRide().getDateTime().format('Y-m-d') }) }}">Nächste Tour &rarr;</a></li>
             {% endif %}
         </ul>
+    </div>
+
+    <div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Kommentar zu dieser Tour verfassen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
