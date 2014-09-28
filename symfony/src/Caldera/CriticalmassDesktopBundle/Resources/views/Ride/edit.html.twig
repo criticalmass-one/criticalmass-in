@@ -81,13 +81,14 @@
 
                     <div class="row">
                             <div class="form-group">
-                                {{ form_widget(form.save, { 'attr' : { 'class': 'form-control'} }) }}
+                                <button type="submit" class="btn btn-success">Speichern</button>
                             </div>
                     </div>
                     {{ form_widget(form.latitude) }}
                     {{ form_widget(form.longitude) }}
-
-                {{ form_end(form) }}
+                    {{ form_widget(form._token) }}
+                {{ form_errors(form) }}
+                </form>
             </div>
             <div class="col-md-8">
                 <div id="map" style="height: 500px;"></div>
