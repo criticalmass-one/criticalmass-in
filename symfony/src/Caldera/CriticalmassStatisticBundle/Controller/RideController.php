@@ -74,8 +74,16 @@ class RideController extends Controller
 
             // TODO: This is simply bullshit. Really, we should try to rely on locales here. The validator of our entity accepts also dots or commas
             // but before pushing that shit into our database we need to replace all commas with a dot
-            $estimate->setEstimatedDistance(str_replace(',', '.', $estimate->getEstimatedDistance()));
-            $estimate->setEstimatedDuration(str_replace(',', '.', $estimate->getEstimatedDuration()));
+
+            if ($estimate->getEstimatedDistance())
+            {
+                $estimate->setEstimatedDistance(str_replace(',', '.', $estimate->getEstimatedDistance()));
+            }
+
+            if ($estimate->getEstimatedDuration())
+            {
+                $estimate->setEstimatedDuration(str_replace(',', '.', $estimate->getEstimatedDuration()));
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($estimate);
