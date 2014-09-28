@@ -55,7 +55,11 @@
                             <span class="input-group-addon">
                                 {{ form_widget(form.hasLocation) }}
                             </span>
-                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control'} }) }}
+                            {% if ride.hasLocation() %}
+                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                            {% else %}
+                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                            {% endif %}
                         </div>
                     </div>
 
@@ -107,8 +111,23 @@
             <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
             <script>
+                function toggleLocationMap()
+                {
+                    $('#form_location').prop('disabled', !$('#form_hasLocation').prop('checked'));
+                }
+
+
+                function toggleTime()
+                {
+                    $('#form_time_minute').prop('disabled', !$('#form_hasTime').prop('checked'));
+                    $('#form_time_hour').prop('disabled', !$('#form_hasTime').prop('checked'));
+                }
+
                 window.onload = function()
                 {
+                    $('#form_hasLocation').on('click', toggleLocationMap);
+                    $('#form_hasTime').on('click', toggleTime);
+
                     {% if ride.hasLocation() %}
                     var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
                     {% else %}
