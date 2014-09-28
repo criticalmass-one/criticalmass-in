@@ -117,7 +117,7 @@ class RideController extends Controller
         $form = $this->createFormBuilder($ride)
             ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
             ->add('title', 'text')
-            ->add('description', 'text')
+            ->add('description', 'textarea')
             ->add('date', 'date')
             ->add('time', 'time')
             ->add('location', 'text')
