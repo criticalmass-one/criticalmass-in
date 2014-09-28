@@ -130,6 +130,7 @@
         </ul>
     </div>
 
+    {% if app.getUser() %}
     <div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -171,4 +172,5 @@
             </div>
         </div>
     </div>
+    {% endif %}
 {% endblock %}
