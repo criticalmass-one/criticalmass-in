@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassStatisticBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -35,16 +36,19 @@ class RideEstimate
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\Regex("/([0-9]{1,5})/")
      */
     protected $estimatedParticipants;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Regex("/([0-9]{1,5})([\.,]*)([0-9]{0,3})/")
      */
     protected $estimatedDistance;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Regex("/([0-9]{1,5})([\.,]*)([0-9]{0,3})/")
      */
     protected $estimatedDuration;
 
