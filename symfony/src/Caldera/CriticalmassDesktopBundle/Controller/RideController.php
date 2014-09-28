@@ -48,35 +48,11 @@ class RideController extends Controller
 
         $estimate = new RideEstimate();
         $form = $this->createFormBuilder($estimate)
+            ->setAction($this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
             ->add('estimatedParticipants', 'text')
             ->add('estimatedDistance', 'text')
             ->add('estimatedDuration', 'text')
             ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid())
-        {
-            $estimate->setRide($ride);
-            $estimate->setUser($this->getUser());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($estimate);
-            $em->flush();
-
-            // as the Entity Manager has been flushed, the new estimate is already stored in the database and can be collected in the next step
-            // otherwise we would get into trouble if this is the first estimate and we divide somewhere through zero
-            $estimates = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:RideEstimate')->findByRide($ride->getId());
-
-            $rec = new RideEstimateCalculator();
-            $rec->setRide($ride);
-            $rec->setEstimates($estimates);
-            $rec->calculate();
-            $ride = $rec->getRide();
-
-            $em->persist($ride);
-            $em->flush();
-        }
 
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'estimateForm' => $form->createView()));
     }
