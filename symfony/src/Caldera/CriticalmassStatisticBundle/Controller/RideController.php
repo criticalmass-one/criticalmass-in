@@ -14,6 +14,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends Controller
 {
+    public function estimateformAction(Request $request, $rideId)
+    {
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+
+        $estimate = new RideEstimate();
+
+        $form = $this->createFormBuilder($estimate)
+            ->setAction($this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
+            ->add('estimatedParticipants', 'text')
+            ->add('estimatedDistance', 'text')
+            ->add('estimatedDuration', 'text')
+            ->getForm();
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimateform.html.twig', array('form' => $form->createView()));
+    }
+
     public function estimateAction(Request $request, $citySlug, $rideDate)
     {
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
