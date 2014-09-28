@@ -40,13 +40,18 @@ class RideEstimateCalculator {
     protected function calculateDistance()
     {
         $distance = 0;
+        $distanceCounter = 0;
 
         foreach ($this->estimates as $estimate)
         {
-            $distance += $estimate->getEstimatedDistance();
+            if ($estimate->getEstimatedDistance())
+            {
+                $distance += $estimate->getEstimatedDistance();
+                ++$distanceCounter;
+            }
         }
 
-        $distance /= count($this->estimates);
+        $distance /= $distanceCounter;
 
         $this->ride->setEstimatedDistance($distance);
     }
@@ -54,13 +59,18 @@ class RideEstimateCalculator {
     protected function calculateDuration()
     {
         $duration = 0;
+        $durationCounter = 0;
 
         foreach ($this->estimates as $estimate)
         {
-            $duration += $estimate->getEstimatedDuration();
+            if ($estimate->getEstimatedDuration())
+            {
+                $duration += $estimate->getEstimatedDuration();
+                ++$durationCounter;
+            }
         }
 
-        $duration /= count($this->estimates);
+        $duration /= $durationCounter;
 
         $this->ride->setEstimatedDuration($duration);
     }
@@ -68,13 +78,18 @@ class RideEstimateCalculator {
     protected function calculateParticipants()
     {
         $participants = 0;
+        $participantsCounter = 0;
 
         foreach ($this->estimates as $estimate)
         {
-            $participants += $estimate->getEstimatedParticipants();
+            if ($estimate->getEstimatedParticipants())
+            {
+                $participants += $estimate->getEstimatedParticipants();
+                ++$participantsCounter;
+            }
         }
 
-        $participants /= count($this->estimates);
+        $participants /= $participantsCounter;
 
         $this->ride->setEstimatedParticipants($participants);
     }
