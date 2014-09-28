@@ -60,8 +60,10 @@
                 shadowAnchor: [13, 41]
             });
 
+            {% if ride.hasLocation %}
             var marker = L.marker([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], { icon: locationIcon });
             marker.addTo(map);
+            {% endif %}
 
             {% for track in ride.getTracks() %}
             // create a red polyline from an arrays of LatLng points
