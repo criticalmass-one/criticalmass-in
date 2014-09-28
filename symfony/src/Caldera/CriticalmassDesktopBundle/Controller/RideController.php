@@ -88,7 +88,7 @@ class RideController extends Controller
         //return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 
-    public function editAction($citySlug, $rideDate)
+    public function editAction(Request $request, $citySlug, $rideDate)
     {
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
@@ -115,6 +115,7 @@ class RideController extends Controller
         }
 
         $form = $this->createFormBuilder($ride)
+            ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
             ->add('title', 'text')
             ->add('description', 'text')
             ->add('date', 'date')
@@ -131,7 +132,7 @@ class RideController extends Controller
             ->add('save', 'submit')
             ->getForm();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
