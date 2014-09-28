@@ -4,6 +4,14 @@
 
 {% block content %}
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Tourschätzung</li>
+        </ol>
+
         <h1>Hoppla :(</h1>
 
         <p>Bei deiner Schätzung stimmen die Eingabewerte leider nicht so richtig. Bitte probiere es noch einmal.</p>
