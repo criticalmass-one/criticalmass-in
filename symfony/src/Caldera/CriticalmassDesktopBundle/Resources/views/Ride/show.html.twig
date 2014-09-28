@@ -131,8 +131,13 @@
         </div>
 
         <ul class="pager">
-            <li class="previous"><a href="#">&larr; Vorige Tour</a></li>
-            <li class="next"><a href="#">Nächste Tour &rarr;</a></li>
+            {% if ride.getPreviousRide() %}
+            <li class="previous"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getPreviousRide().getDateTime().format('Y-m-d') }) }}">&larr; Vorige Tour</a></li>
+            {% endif %}
+
+            {% if ride.getNextRide() %}
+            <li class="next"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getNextRide().getDateTime().format('Y-m-d') }) }}">Nächste Tour &rarr;</a></li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}
