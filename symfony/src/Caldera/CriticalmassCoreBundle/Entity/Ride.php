@@ -4,6 +4,7 @@ namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Stellt eine einzelne Tour einer Critical Mass dar.
@@ -131,16 +132,19 @@ class Ride
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
      */
     protected $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
      */
     protected $url;
 
