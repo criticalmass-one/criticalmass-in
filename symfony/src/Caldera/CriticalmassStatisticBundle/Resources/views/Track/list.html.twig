@@ -11,7 +11,7 @@
         </ol>
 
         <div class="row">
-            <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_statistic_track_upload') }}" style="margin-top: 24px;">Track hinzufügen</a>
+            <a class="btn btn-success pull-right" href="#" data-toggle="modal" data-target="#modalTrackUpload" style="margin-top: 24px;"><i class="fa fa-cloud-upload"></i>&nbsp;&nbsp;Track hinzufügen</a>
             <h1>Hier warst du schon mal.</h1>
         </div>
 
@@ -45,5 +45,19 @@
             </tr>
             {% endif %}{% endfor %}
         </table>
+    </div>
+
+    <div class="modal fade" id="modalTrackUpload" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Track hochladen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('CalderaCriticalmassStatisticBundle:Track:upload')) }}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
