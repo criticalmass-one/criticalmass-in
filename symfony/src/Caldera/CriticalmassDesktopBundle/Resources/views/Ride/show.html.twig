@@ -23,7 +23,7 @@
         <div class="row">
             {% if app.getUser() %}
             <div class="btn-group  pull-right" style="margin-top: 24px;">
-                <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_upload') }}">Track hinzufügen</a>
+                <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_upload') }}"><i class="fa fa-cloud-upload"></i></a>
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-wrench"></i></a>
             </div>
             {% endif %}
