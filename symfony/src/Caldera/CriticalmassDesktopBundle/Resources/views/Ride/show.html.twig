@@ -7,7 +7,6 @@
 {% endif %}
 
 {% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
-{% set hasEstimateBlock = app.getUser() != null %}
 
 {% block title %}{{ rideTitle }}{% endblock %}
 
@@ -24,7 +23,7 @@
             {% if app.getUser() %}
             <div class="btn-group  pull-right" style="margin-top: 24px;">
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
-                <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_upload') }}"><i class="fa fa-cloud-upload"></i></a>
+                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate"><i class="fa fa-signal"></i></a>
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-wrench"></i></a>
             </div>
             {% endif %}
@@ -85,7 +84,7 @@
             <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedDuration()|round(2) }}</span><br />Stunden</div>
         </div>
         <div class="row">
-            {% if hasSocialMedia or hasEstimateBlock %}
+            {% if hasSocialMedia %}
             <div class="col-lg-8">
             {% else %}
             <div class="col-lg-12">
@@ -103,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            {% if hasSocialMedia or hasEstimateBlock %}
+            {% if hasSocialMedia %}
             <div class="col-lg-4">
                 {% if hasSocialMedia %}
                 <h4>Mehr im Netz</h4>
@@ -119,12 +118,8 @@
                 {% if ride.getTwitter() %}
                 <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
                 {% endif %}
-
                 {% endif %}
 
-                {% if hasEstimateBlock %}
-                {{ render(controller('CalderaCriticalmassStatisticBundle:Ride:estimateform', { 'rideId': ride.getId() })) }}
-                {% endif %}
             </div>
             {% endif %}
         </div>
@@ -149,6 +144,20 @@
                 </div>
                 <div class="modal-body">
                     {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEstimate" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Tour schätzen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('CalderaCriticalmassStatisticBundle:Ride:estimateform', { 'rideId': ride.getId() })) }}
                 </div>
             </div>
         </div>
