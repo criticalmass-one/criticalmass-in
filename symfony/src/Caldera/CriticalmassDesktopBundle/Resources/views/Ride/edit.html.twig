@@ -101,7 +101,18 @@
                     tileLayer.addTo(map);
                     map.setView(mapCenter, 12);
 
-                    var marker = L.marker(mapCenter, { draggable: 'true' });
+                    var locationIcon = L.icon({
+                        iconUrl: '/images/marker/marker-red.png',
+                        iconRetinaUrl: '/images/marker/marker-red-2x.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [13, 41],
+                        popupAnchor: [0, -36],
+                        shadowUrl: '/images/marker/defaultshadow.png',
+                        shadowSize: [41, 41],
+                        shadowAnchor: [13, 41]
+                    });
+
+                    var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
                     marker.addTo(map);
                     marker.bindPopup('Schieb mich auf den Treffpunkt!');
                     marker.openPopup();
