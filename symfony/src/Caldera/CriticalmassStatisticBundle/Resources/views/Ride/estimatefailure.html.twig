@@ -11,24 +11,24 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-4">
-                <div class="form-group">
-                    <label for="">Ungefähre Teilnehmerzahl:</label>
+                <div class="form-group{% if form_errors(form.estimatedParticipants) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Ungefähre Teilnehmerzahl:</label>
                     {{ form_widget(form.estimatedParticipants, {'attr': {'class': 'form-control'}}) }}
                     <p class="help-block">Beispiel: 205 oder 5150</p>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="form-group">
-                    <label for="">Ungefähre Streckenlänge in Kilometern:</label>
+                <div class="form-group{% if form_errors(form.estimatedDistance) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Ungefähre Streckenlänge in Kilometern:</label>
                     {{ form_widget(form.estimatedDistance, {'attr': {'class': 'form-control'}}) }}
                     <p class="help-block">Beispiel: 16 oder 21,35</p>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="form-group">
-                    <label for="">Ungefähre Fahrtdauer in Stunden</label>
+                <div class="form-group{% if form_errors(form.estimatedDuration) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Ungefähre Fahrtdauer in Stunden</label>
                     {{ form_widget(form.estimatedDuration, {'attr': {'class': 'form-control'}}) }}
                     <p class="help-block">Beispiel: 2,25 für zwei Stunden und fünfzehn Minuten</p>
                 </div>
