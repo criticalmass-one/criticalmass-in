@@ -42,7 +42,7 @@
             });
 
             tileLayer.addTo(map);
-            map.setView([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], 14);
+
 
             var locationIcon = L.icon({
                 iconUrl: '/images/marker/marker-red.png',
@@ -58,6 +58,10 @@
             {% if ride.hasLocation %}
             var marker = L.marker([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], { icon: locationIcon });
             marker.addTo(map);
+
+            map.setView([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], 14);
+            {% else %}
+            map.setView([{{ city.getLatitude() }}, {{ city.getLongitude() }}], 14);
             {% endif %}
 
             {% for track in ride.getTracks() %}
