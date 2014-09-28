@@ -11,58 +11,58 @@
             <div class="col-md-4">
                 {{ form_start(form) }}
                     <div class="row">
-                            <div class="form-group">
-                                <label for="title">Titel:</label>
-                                {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                            </div>
+                        <div class="form-group">
+                            <label for="title">Titel:</label>
+                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
 
                     <div class="row">
-                            <div class="form-group">
-                                <label for="description">Beschreibung:</label>
-                                {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
-                            </div>
+                        <div class="form-group">
+                            <label for="description">Beschreibung:</label>
+                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
 
                     <div class="row">
-                            <label for="date">Datum:</label>
+                        <label for="date">Datum:</label>
                             <div class="form-group">
                                 {{ form_widget(form.date, { 'attr' : { 'class': 'form-control'} }) }}
                             </div>
                     </div>
 
                     <div class="row">
-                            <label for="time">Uhrzeit:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    {{ form_widget(form.hasTime) }}
-                                </span>
-                                {{ form_widget(form.time, { 'attr' : { 'class': 'form-control'} }) }}
-                            </div>
+                        <label for="time">Uhrzeit:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                {{ form_widget(form.hasTime) }}
+                            </span>
+                            {{ form_widget(form.time, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
 
                     <div class="row">
-                            <label for="location">Treffpunkt:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    {{ form_widget(form.hasLocation) }}
-                                </span>
-                                {{ form_widget(form.location, { 'attr' : { 'class': 'form-control'} }) }}
-                            </div>
+                        <label for="location">Treffpunkt:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                {{ form_widget(form.hasLocation) }}
+                            </span>
+                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
 
                     <div class="row">
-                                <label for="facebook">Link zu einer Veranstaltung auf facebook:</label>
-                            <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
-                                {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
-                            </div>
+                        <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="facebook">Link zu einer Veranstaltung auf facebook:</label>
+                            {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
-                                <label for="twitter">Link zu einem Tweet:</label>
-                                {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
-                            </div>
+                            <label for="twitter">Link zu einem Tweet:</label>
+                            {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
 
                     <div class="row">
@@ -80,10 +80,11 @@
                     </div>
 
                     <div class="row">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success">Speichern</button>
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Speichern</button>
+                        </div>
                     </div>
+                
                     {{ form_widget(form.latitude) }}
                     {{ form_widget(form.longitude) }}
                     {{ form_widget(form._token) }}
