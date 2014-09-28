@@ -1,0 +1,26 @@
+<h4>Was meinst du?</h4>
+<p>Hier kannst du einen Tipp abgeben, wie viele Teilnehmer unterwegs waren und wie viele Kilometer sie in welcher Zeit gefahren sind. Du brauchst nicht alle Felder ausfüllen — schreib einfach, was du weißt.</p>
+{{ form_start(form) }}
+<div class="form-group">
+    <label for="">Ungefähre Teilnehmerzahl:</label>
+    {{ form_widget(form.estimatedParticipants, {'attr': {'class': 'form-control'}}) }}
+    <p class="help-block">Beispiel: 205 oder 5150</p>
+</div>
+
+<div class="form-group">
+    <label for="">Ungefähre Streckenlänge in Kilometern:</label>
+    {{ form_widget(form.estimatedDistance, {'attr': {'class': 'form-control'}}) }}
+    <p class="help-block">Beispiel: 16 oder 21,35</p>
+</div>
+
+<div class="form-group">
+    <label for="">Ungefähre Fahrtdauer in Stunden</label>
+    {{ form_widget(form.estimatedDuration, {'attr': {'class': 'form-control'}}) }}
+    <p class="help-block">Beispiel: 2,25 für zwei Stunden und fünfzehn Minuten</p>
+</div>
+
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">Schätzen</button>
+</div>
+{{ form_widget(form._token) }}
+</form>
