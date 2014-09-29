@@ -152,7 +152,29 @@ class Ride
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $weatherForecast;
-    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archive_rides")
+     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
+     */
+    protected $archiveParent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isArchived;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $archiveDateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_rides")
+     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
+     */
+    protected $archiveUser;
+
     /**
      * Get id
      *
@@ -812,5 +834,104 @@ class Ride
         }
 
         return $nextRide;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+        $this->setIsArchived(true);
+        $this->setArchiveDateTime(new \DateTime());
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param boolean $isArchived
+     * @return Ride
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set archiveDateTime
+     *
+     * @param \DateTime $archiveDateTime
+     * @return Ride
+     */
+    public function setArchiveDateTime($archiveDateTime)
+    {
+        $this->archiveDateTime = $archiveDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getArchiveDateTime()
+    {
+        return $this->archiveDateTime;
+    }
+
+    /**
+     * Set archiveUser
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @return Ride
+     */
+    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    {
+        $this->archiveUser = $archiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveUser
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getArchiveUser()
+    {
+        return $this->archiveUser;
+    }
+
+    /**
+     * Set archiveParent
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $archiveParent
+     * @return Ride
+     */
+    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\Ride $archiveParent = null)
+    {
+        $this->archiveParent = $archiveParent;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveParent
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride 
+     */
+    public function getArchiveParent()
+    {
+        return $this->archiveParent;
     }
 }
