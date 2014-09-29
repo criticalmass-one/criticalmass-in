@@ -92,6 +92,9 @@ class RideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
 
+        $archiveRide = clone $ride;
+        $archiveRide->setArchiveUser($this->getUser());
+        $archiveRide->setArchiveParent($ride);
 
         $form = $this->createFormBuilder($ride)
             ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
@@ -120,6 +123,7 @@ class RideController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
+            $em->persist($archiveRide);
             $em->flush();
 
             // TODO: remove also this
