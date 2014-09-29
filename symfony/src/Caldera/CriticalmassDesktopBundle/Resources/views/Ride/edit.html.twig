@@ -8,7 +8,7 @@
             <li><a href="#">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
             <li class="active">Tour editieren</li>
         </ol>
 
@@ -19,7 +19,7 @@
         {% if hasErrors == true %}
         <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
         {% elseif hasErrors == false %}
-        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: city.getMainSlugString(), rideDate: rideDate } ) }}">Zurück zur Tour?</a></div>
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: city.getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">Zurück zur Tour?</a></div>
         {% endif %}
         {% endif %}
 

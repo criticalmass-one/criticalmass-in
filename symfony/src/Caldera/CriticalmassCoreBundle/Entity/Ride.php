@@ -598,9 +598,16 @@ class Ride
         return $this->dateTime;
     }
 
+    public function getFormattedDate()
+    {
+        return $this->dateTime->format('Y-m-d');
+    }
+
     public function setDate(\DateTime $date)
     {
-        $this->dateTime->add($this->dateTime->diff($date));
+        $newDate = new \DateTime($this->dateTime->format('Y-m-d').' 00:00:00');
+
+        $this->dateTime = $newDate->add($newDate->diff($date));
     }
 
     public function getTime()
@@ -610,7 +617,8 @@ class Ride
 
     public function setTime(\DateTime $time)
     {
-        $this->dateTime->add($this->dateTime->diff($time));
+        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d').' '.$time->format('H:i:s'));
+
     }
 
     /**

@@ -93,8 +93,6 @@ class RideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
 
-        // TODO: This is shit. But Symfony keeps stealing the object data of !$ride after calling handleRequest(), so the template cannot access ride.getDateTime() afterwards
-        $rideDate = $ride->getDateTime()->format('Y-m-d');
 
         $form = $this->createFormBuilder($ride)
             ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
@@ -134,6 +132,6 @@ class RideController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('ride' => $ride, 'rideDate' => $rideDate, 'city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('ride' => $ride, 'city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
     }
 }
