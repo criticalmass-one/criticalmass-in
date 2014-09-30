@@ -75,6 +75,7 @@ class TrackController extends Controller
     {
         $track = new Track();
         $form = $this->createFormBuilder($track)
+            ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_upload'))
             ->add('file')
             ->getForm();
 
@@ -91,7 +92,7 @@ class TrackController extends Controller
             $rg->setGpx($track->getGpx());
             $rg->guess();
 
-            if ($rg->isImpossible())
+            if ($rg->isImpossible() || count($track->getPoints()) < 100)
             {
                 return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed'));
             }
