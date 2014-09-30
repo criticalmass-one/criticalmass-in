@@ -43,7 +43,7 @@ class CityController extends Controller
         $form = $this->createFormBuilder($city)
             ->add('city', 'text')
             ->add('title', 'text')
-            ->add('description', 'text')
+            ->add('description', 'textarea')
             ->add('url', 'text')
             ->add('facebook', 'text')
             ->add('twitter', 'text')
@@ -51,7 +51,7 @@ class CityController extends Controller
             ->add('latitude', 'hidden')
             ->add('cityPopulation', 'text')
             ->add('punchLine', 'text')
-            ->add('longDescription', 'text')
+            ->add('longDescription', 'textarea')
             ->getForm();
 
         return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView()));
