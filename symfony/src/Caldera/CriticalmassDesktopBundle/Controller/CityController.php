@@ -35,4 +35,11 @@ class CityController extends Controller
 
         return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'rides' => $rides));
     }
+
+    public function editAction(Request $request, $citySlug)
+    {
+        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
+
+        return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city));
+    }
 }
