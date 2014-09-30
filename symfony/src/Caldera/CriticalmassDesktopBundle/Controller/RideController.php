@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Type\RideType;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,8 +61,6 @@ class RideController extends Controller
     {
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
 
-
-
         return new Response();
         //return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
@@ -96,23 +95,7 @@ class RideController extends Controller
         $archiveRide->setArchiveUser($this->getUser());
         $archiveRide->setArchiveParent($ride);
 
-        $form = $this->createFormBuilder($ride)
-            ->setAction($this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
-            ->add('title', 'text')
-            ->add('description', 'textarea')
-            ->add('date', 'date')
-            ->add('time', 'time')
-            ->add('location', 'text')
-            ->add('latitude', 'hidden')
-            ->add('longitude', 'hidden')
-            ->add('facebook', 'text')
-            ->add('twitter', 'text')
-            ->add('url', 'text')
-            ->add('hasLocation', 'checkbox')
-            ->add('hasTime', 'checkbox')
-            ->add('weatherForecast', 'text')
-            ->add('save', 'submit')
-            ->getForm();
+        $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
 
         $form->handleRequest($request);
 
