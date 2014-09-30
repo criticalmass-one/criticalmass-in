@@ -54,6 +54,15 @@ class CityController extends Controller
             ->add('longDescription', 'textarea')
             ->getForm();
 
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($city);
+            $em->flush();
+        }
+
         return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView()));
     }
 }
