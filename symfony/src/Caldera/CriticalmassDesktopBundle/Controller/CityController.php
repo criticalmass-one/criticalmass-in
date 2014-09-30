@@ -40,6 +40,20 @@ class CityController extends Controller
     {
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city));
+        $form = $this->createFormBuilder($city)
+            ->add('city', 'text')
+            ->add('title', 'text')
+            ->add('description', 'text')
+            ->add('url', 'text')
+            ->add('facebook', 'text')
+            ->add('twitter', 'text')
+            ->add('longitude', 'text')
+            ->add('latitude', 'text')
+            ->add('cityPopulation', 'text')
+            ->add('punchLine', 'text')
+            ->add('longDescription', 'text')
+            ->getForm();
+
+        return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView()));
     }
 }

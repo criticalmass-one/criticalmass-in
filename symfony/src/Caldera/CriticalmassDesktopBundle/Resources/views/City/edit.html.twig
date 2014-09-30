@@ -10,5 +10,7 @@
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a></li>
             <li class="active">Stadt editieren</li>
         </ol>
+
+        {{ form(form) }}
     </div>
 {% endblock %}
