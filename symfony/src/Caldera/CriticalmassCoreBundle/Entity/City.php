@@ -159,6 +159,28 @@ class City
     protected $longDescription;
 
     /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="archive_cities")
+     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
+     */
+    protected $archiveParent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isArchived;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $archiveDateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_rides")
+     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
+     */
+    protected $archiveUser;
+
+    /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
 	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
 	 * mit dem Namen ihrer Stadt dargestellt werden.
@@ -824,5 +846,104 @@ class City
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param boolean $isArchived
+     * @return City
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set archiveDateTime
+     *
+     * @param \DateTime $archiveDateTime
+     * @return City
+     */
+    public function setArchiveDateTime($archiveDateTime)
+    {
+        $this->archiveDateTime = $archiveDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getArchiveDateTime()
+    {
+        return $this->archiveDateTime;
+    }
+
+    /**
+     * Set archiveParent
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $archiveParent
+     * @return City
+     */
+    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\City $archiveParent = null)
+    {
+        $this->archiveParent = $archiveParent;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveParent
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     */
+    public function getArchiveParent()
+    {
+        return $this->archiveParent;
+    }
+
+    /**
+     * Set archiveUser
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @return City
+     */
+    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    {
+        $this->archiveUser = $archiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveUser
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getArchiveUser()
+    {
+        return $this->archiveUser;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+        $this->setIsArchived(true);
+        $this->setArchiveDateTime(new \DateTime());
     }
 }
