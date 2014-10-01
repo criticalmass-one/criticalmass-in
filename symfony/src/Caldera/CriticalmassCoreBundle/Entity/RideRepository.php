@@ -59,7 +59,7 @@ class RideRepository extends EntityRepository
             $endDate = $endDate->add($dayInterval);
         }
 
-        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.dateTime >= '".$startDate->format('Y-m-d')."' AND r.dateTime <= '".$endDate->format('Y-m-d')."' ORDER BY r.dateTime DESC");
+        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.dateTime >= '".$startDate->format('Y-m-d')."' AND r.dateTime <= '".$endDate->format('Y-m-d')."' ORDER BY r.dateTime ASC");
 
         $result = array();
 
