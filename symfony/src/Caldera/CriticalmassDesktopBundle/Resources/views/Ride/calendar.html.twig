@@ -11,5 +11,15 @@
         </ol>
 
         <h1>hic sunt birotarii</h1>
+
+        {% for date,day in calendar %}
+        <div class="col-md-1">
+            {{ date }}
+
+            {% if loop.index % 7 == 0 %}
+            </div><div class="row">
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
 {% endblock %}
