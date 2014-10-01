@@ -45,21 +45,21 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRidesInInterval($startDate = null, $endDate = null)
+    public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
     {
-        if (!$startDate)
+        if (!$startDateTime)
         {
-            $startDate = new \DateTime();
+            $startDateTime = new \DateTime();
         }
 
-        if (!$endDate)
+        if (!$endDateTime)
         {
             $endDate = new \DateTime();
             $dayInterval = new \DateInterval('P1M');
-            $endDate = $endDate->add($dayInterval);
+            $endDateTime = $endDate->add($dayInterval);
         }
 
-        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.dateTime >= '".$startDate->format('Y-m-d')."' AND r.dateTime <= '".$endDate->format('Y-m-d')."' ORDER BY r.dateTime ASC");
+        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.dateTime >= '".$startDateTime->format('Y-m-d')."' AND r.dateTime <= '".$endDateTime->format('Y-m-d')."' ORDER BY r.dateTime ASC");
 
         $result = array();
 
