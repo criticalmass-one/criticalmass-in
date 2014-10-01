@@ -73,6 +73,7 @@ class TrackController extends Controller
 
     public function uploadAction(Request $request)
     {
+        $errorList = array();
         $track = new Track();
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_upload'))
@@ -92,12 +93,18 @@ class TrackController extends Controller
                 $rg->setGpx($track->getGpx());
                 $rg->guess();
 
-                if (($rg->isImpossible()) ||
-                    ($track->getPoints() < 100) ||
-                    ($track->getPoints() != $track->getTimeStamps()))
+                if ($track->getPoints() < 100) {
+                    array_push($errorList, "tooFewPoints");
+                }
+
+                if ($track->getPoints() != $track->getTimeStamps()) {
+                    array_push($errorList, "tooFewTimeStamps");
+                }
+
+                if ($rg->isImpossible())
                 {
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed'));
-                } elseif ($rg->isDistinct()) {
+                    array_push($errorList, "noTourFound");
+                } elseif (($rg->isDistinct()) && (sizeof($errorList) == 0)) {
                     $rides = $rg->getRides();
                     $ride = array_pop($rides);
                     $track->setRide($ride);
@@ -115,15 +122,19 @@ class TrackController extends Controller
                     $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
                     return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
-                } else {
+                } elseif (sizeof($errorList) == 0) {
                     $em->persist($track);
                     $em->flush();
 
                     return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
                 }
             } else {
-                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed'));
+                array_push($errorList, "noXML");
             }
+        }
+
+        if (sizeof($errorList) > 0) {
+            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed', array('errorList' => $errorList)));
         }
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
