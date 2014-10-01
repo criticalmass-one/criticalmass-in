@@ -17,24 +17,6 @@ class RideController extends Controller
 
         $calendar = array();
 
-        $day = new \DateTime();
-
-        $startDay = $day->format('N');
-
-        $dayInterval = new \DateInterval('P1D');
-
-        while ($startDay > 1)
-        {
-            $day->sub($dayInterval);
-            $startDay = $day->format('N');
-        }
-
-        for ($dayIndex = 0; $dayIndex < 5 * 7; ++$dayIndex)
-        {
-            $calendar[$day->format('Y-m-d')] = array();
-            $day->add($dayInterval);
-        }
-
         foreach ($cities as $city)
         {
             if ($city->getCurrentRide())
