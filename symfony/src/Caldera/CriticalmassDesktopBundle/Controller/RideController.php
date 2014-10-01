@@ -22,7 +22,7 @@ class RideController extends Controller
             $rides[$ride->getFormattedDate()][] = $ride;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:calendar.html.twig', array('rides' => $rides));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:list.html.twig', array('rides' => $rides));
     }
 
     public function showcurrentAction($citySlug)
