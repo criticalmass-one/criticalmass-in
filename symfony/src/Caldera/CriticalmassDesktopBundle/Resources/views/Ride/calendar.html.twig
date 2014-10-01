@@ -12,14 +12,26 @@
 
         <h1>hic sunt birotarii</h1>
 
-        {% for date,day in calendar %}
-        <div class="col-md-1">
-            {{ date }}
-
-            {% if loop.index % 7 == 0 %}
-            </div><div class="row">
-            {% endif %}
+        {% for date, rides in rides %}
+        <div class="row">
+            <h4>{{ date }}</h4>
         </div>
+
+        <table class="table">
+            <tr>
+                <th>Stadt</th>
+                <th>Uhrzeit</th>
+                <th>Treffpunkt</th>
+            </tr>
+
+            {% for ride in rides %}
+                <tr>
+                    <td>{{ ride.getCity() }}</td>
+                    <td>{{ ride.getTime().format('H:i') }} Uhr</td>
+                    <td>{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
         {% endfor %}
     </div>
 {% endblock %}

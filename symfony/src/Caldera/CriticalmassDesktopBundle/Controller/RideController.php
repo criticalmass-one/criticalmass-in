@@ -15,7 +15,7 @@ class RideController extends Controller
     {
         $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findCities();
 
-        $calendar = array();
+        $rides = array();
 
         foreach ($cities as $city)
         {
@@ -23,11 +23,11 @@ class RideController extends Controller
             {
                 $ride = $city->getCurrentRide();
 
-                $calendar[$ride->getFormattedDate()][] = $ride;
+                $rides[$ride->getFormattedDate()][] = $ride;
             }
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:calendar.html.twig', array('calendar' => $calendar));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:calendar.html.twig', array('rides' => $rides));
     }
 
     public function showcurrentAction($citySlug)
