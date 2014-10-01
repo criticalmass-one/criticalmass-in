@@ -12,9 +12,9 @@
 
         <h1>hic sunt birotarii</h1>
 
-        {% for date, rides in rides %}
+        {% for dateString, rides in rides %}
         <div class="row">
-            <h4>{{ date }}</h4>
+            <h4>{{ dateString|date('l, d. F Y') }}</h4>
         </div>
 
         <table class="table">
