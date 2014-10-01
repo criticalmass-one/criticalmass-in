@@ -19,18 +19,18 @@
 
         <table class="table">
             <tr>
-                <th class="col-md-2">Stadt</th>
-                <th class="col-md-2">Uhrzeit</th>
-                <th class="col-md-4">Treffpunkt</th>
-                <th class="col-md-4">Titel</th>
+                <th class="col-xs-4 col-sm-3 col-md-2 col-lg-2">Stadt</th>
+                <th class="hidden-xs col-sm-3 col-md-2 col-lg-2">Uhrzeit</th>
+                <th class="col-xs-8 col-sm-6 col-md-4 col-lg-4">Treffpunkt</th>
+                <th class="hidden-xs hidden-sm col-md-4 col-lg-4">Titel</th>
             </tr>
 
             {% for ride in rides %}
             <tr>
-                <td class="col-md-2">{{ ride.getCity() }}</td>
-                <td class="col-md-2">{{ ride.getTime().format('H:i') }} Uhr</td>
-                <td class="col-md-4">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</td>
-                <td class="col-md-4">{{ ride.getFancyTitle() }}</td>
+                <td class="col-xs-4 col-sm-3 col-md-2 col-lg-2">{{ ride.getCity() }}</td>
+                <td class="hidden-xs col-sm-3 col-md-2 col-lg-2">{{ ride.getTime().format('H:i') }} Uhr</td>
+                <td class="col-xs-8 col-sm-6 col-md-4 col-lg-4">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</td>
+                <td class="hidden-xs hidden-sm col-md-4 col-lg-4">{{ ride.getFancyTitle() }}</td>
             </tr>
             {% endfor %}
         </table>
