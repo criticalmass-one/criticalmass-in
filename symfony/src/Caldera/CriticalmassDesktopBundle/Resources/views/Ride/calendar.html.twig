@@ -21,15 +21,17 @@
             <tr>
                 <th class="col-md-2">Stadt</th>
                 <th class="col-md-2">Uhrzeit</th>
-                <th class="col-md-8">Treffpunkt</th>
+                <th class="col-md-4">Treffpunkt</th>
+                <th class="col-md-4">Titel</th>
             </tr>
 
             {% for ride in rides %}
-                <tr>
-                    <td class="col-md-2">{{ ride.getCity() }}</td>
-                    <td class="col-md-2">{{ ride.getTime().format('H:i') }} Uhr</td>
-                    <td class="col-md-8">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</td>
-                </tr>
+            <tr>
+                <td class="col-md-2">{{ ride.getCity() }}</td>
+                <td class="col-md-2">{{ ride.getTime().format('H:i') }} Uhr</td>
+                <td class="col-md-4">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</td>
+                <td class="col-md-4">{{ ride.getFancyTitle() }}</td>
+            </tr>
             {% endfor %}
         </table>
         {% endfor %}
