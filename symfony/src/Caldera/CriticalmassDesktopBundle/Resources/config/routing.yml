@@ -26,6 +26,10 @@ caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:list }
 
+caldera_criticalmass_desktop_city_calendar:
+    pattern:  /city/calendar
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:calendar }
+
 caldera_criticalmass_desktop_city_show:
     pattern:  /city/{citySlug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
