@@ -37,13 +37,44 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
-	public function findCurrentRides()
-	{
+    public function findCurrentRides()
+    {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.visibleSince <= CURRENT_TIMESTAMP() AND r.visibleUntil >= CURRENT_TIMESTAMP() GROUP BY r.city ORDER BY r.dateTime DESC');
         //$query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r GROUP BY r.city ORDER BY r.dateTime DESC');
 
         return $query->getResult();
-	}
+    }
+
+    public function findRidesInInterval($startDate = null, $endDate = null)
+    {
+        if (!$startDate)
+        {
+            $startDate = new \DateTime();
+        }
+
+        if (!$endDate)
+        {
+            $endDate = new \DateTime();
+            $dayInterval = new \DateInterval('P1M');
+            $endDate = $endDate->add($dayInterval);
+        }
+
+        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.dateTime >= '".$startDate->format('Y-m-d')."' AND r.dateTime <= '".$endDate->format('Y-m-d')."' ORDER BY r.dateTime DESC");
+
+        $result = array();
+
+        $tmp1 = $query->getResult();
+
+        foreach ($tmp1 as $tmp2)
+        {
+            foreach ($tmp2 as $ride)
+            {
+                $result[] = $ride;
+            }
+        }
+
+        return $result;
+    }
 
     public function findLatestForCitySlug($citySlug)
     {

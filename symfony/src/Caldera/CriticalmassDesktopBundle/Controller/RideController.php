@@ -13,18 +13,13 @@ class RideController extends Controller
 {
     public function listAction(Request $request)
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findCities();
+        $ridesResult = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesInInterval();
 
         $rides = array();
 
-        foreach ($cities as $city)
+        foreach ($ridesResult as $ride)
         {
-            if ($city->getCurrentRide())
-            {
-                $ride = $city->getCurrentRide();
-
-                $rides[$ride->getFormattedDate()][] = $ride;
-            }
+            $rides[$ride->getFormattedDate()][] = $ride;
         }
 
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:calendar.html.twig', array('rides' => $rides));
