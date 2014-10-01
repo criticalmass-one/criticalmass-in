@@ -8,6 +8,8 @@
 
 namespace Caldera\CriticalmassCoreBundle\Utility\GpxReader;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class GpxReader {
     protected $path;
     protected $rawFileContent;
@@ -17,10 +19,16 @@ class GpxReader {
     {
         $this->path = $path;
         $this->rawFileContent = file_get_contents($path);
+        $result = true;
 
-        $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+        try {
+            $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+        } catch (\Exception $e) {
+            $result = false;
+        }
+
+        return $result;
     }
-
     public function loadString($content)
     {
         $this->rawFileContent = $content;
@@ -66,6 +74,11 @@ class GpxReader {
     public function getLongitudeOfPoint($n)
     {
         return $this->simpleXml->trk->trkseg->trkpt[$n]['lon'];
+    }
+
+    public function getTimeOfPoint($n)
+    {
+        return $this->simpleXml->trk->trkseg->trkpt[$n]->time;
     }
 
     public function generateJson()

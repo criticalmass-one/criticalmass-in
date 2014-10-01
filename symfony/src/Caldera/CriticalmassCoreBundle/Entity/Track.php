@@ -70,6 +70,11 @@ class Track
     protected $points;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $timeStamps;
+
+    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
@@ -398,6 +403,23 @@ class Track
     {
         return $this->points;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTimeStamps()
+    {
+        return $this->timeStamps;
+    }
+
+    /**
+     * @param mixed $timeStamps
+     */
+    public function setTimeStamps($timeStamps)
+    {
+        $this->timeStamps = $timeStamps;
+    }
+
     /**
      * @Assert\File(maxSize="6000000")
      */
@@ -415,16 +437,30 @@ class Track
 
     public function handleUpload()
     {
+        $result = false;
         $gpxReader = new GpxReader();
-        $gpxReader->loadFile($this->file->getPathname());
+        if ($gpxReader->loadFile($this->file->getPathname())) {
 
-        $this->setStartDateTime($gpxReader->getStartDateTime());
-        $this->setEndDateTime($gpxReader->getEndDateTime());
-        $this->setPoints($gpxReader->countPoints());
-        $this->setMd5Hash($gpxReader->getMd5Hash());
-        $this->setGpx($gpxReader->getFileContent());
-        $this->setJson($gpxReader->generateJson());
-        $this->setDistance($gpxReader->calculateDistance());
+            $result = true;
+
+            $this->setStartDateTime($gpxReader->getStartDateTime());
+            $this->setEndDateTime($gpxReader->getEndDateTime());
+            $this->setPoints($gpxReader->countPoints());
+            $this->setMd5Hash($gpxReader->getMd5Hash());
+            $this->setGpx($gpxReader->getFileContent());
+            $this->setJson($gpxReader->generateJson());
+            $this->setDistance($gpxReader->calculateDistance());
+
+            $this->timeStamps = 0;
+
+            for ($i = 0; $i < $this->points; $i++) {
+                if ($gpxReader->getTimeOfPoint($i) != "") {
+                    $this->timeStamps++;
+                }
+            }
+        }
+
+        return $result;
     }
 
     public function getDuration()

@@ -84,44 +84,45 @@ class TrackController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $track->handleUpload();
-            $track->setUser($this->getUser());
-            $track->setUsername($this->getUser()->getUsername());
+            if ($track->handleUpload()) {
+                $track->setUser($this->getUser());
+                $track->setUsername($this->getUser()->getUsername());
 
-            $rg = new RideGuesser($this);
-            $rg->setGpx($track->getGpx());
-            $rg->guess();
+                $rg = new RideGuesser($this);
+                $rg->setGpx($track->getGpx());
+                $rg->guess();
 
-            if ($rg->isImpossible() || count($track->getPoints()) < 100)
-            {
+                if (($rg->isImpossible()) ||
+                    ($track->getPoints() < 100) ||
+                    ($track->getPoints() != $track->getTimeStamps()))
+                {
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed'));
+                } elseif ($rg->isDistinct()) {
+                    $rides = $rg->getRides();
+                    $ride = array_pop($rides);
+                    $track->setRide($ride);
+
+                    $re = new RideEstimate();
+                    $re->setRide($ride);
+                    $re->setUser($this->getUser());
+                    $re->setEstimatedDistance($track->getDistance());
+                    $re->setEstimatedDuration($track->getDuration());
+
+                    $em->persist($re);
+                    $em->persist($track);
+                    $em->flush();
+
+                    $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
+
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+                } else {
+                    $em->persist($track);
+                    $em->flush();
+
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
+                }
+            } else {
                 return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed'));
-            }
-            elseif ($rg->isDistinct())
-            {
-                $rides = $rg->getRides();
-                $ride = array_pop($rides);
-                $track->setRide($ride);
-
-                $re = new RideEstimate();
-                $re->setRide($ride);
-                $re->setUser($this->getUser());
-                $re->setEstimatedDistance($track->getDistance());
-                $re->setEstimatedDuration($track->getDuration());
-
-                $em->persist($re);
-                $em->persist($track);
-                $em->flush();
-
-                $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
-
-                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
-            }
-            else
-            {
-                $em->persist($track);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
             }
         }
 
