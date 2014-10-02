@@ -12,6 +12,7 @@ class StatisticController extends Controller
         $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findCities();
 
         $topParticipantsRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array(), array('estimatedParticipants' => 'DESC'), 10);
+        $topDistanceRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array(), array('estimatedDistance' => 'DESC'), 10);
 
         return $this->render('CalderaCriticalmassStatisticBundle:Statistic:index.html.twig', array('cities' => $cities, 'topParticipantRides' => $topParticipantsRides));
     }

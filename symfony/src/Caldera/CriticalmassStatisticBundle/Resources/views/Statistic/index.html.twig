@@ -25,6 +25,26 @@
                     {% endfor %}
                 </table>
             </div>
+
+            <div class="col-md-4">
+                <h4>Die längsten Touren</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>Stadt</th>
+                        <th>Monat</th>
+                        <th>Länge</th>
+                    </tr>
+
+                    {% for ride in topDistanceRides %}
+                        <tr>
+                            <td>{{ ride.getCity().getCity() }}</td>
+                            <td>{{ ride.getDateTime().format('F Y') }}</td>
+                            <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
