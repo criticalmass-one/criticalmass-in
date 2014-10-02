@@ -946,4 +946,26 @@ class City
         $this->setIsArchived(true);
         $this->setArchiveDateTime(new \DateTime());
     }
+
+    public function calculateAverageRideParticipants()
+    {
+        if (!count($this->rides))
+        {
+            return 0;
+        }
+
+        $participants = 0;
+        $rideCounter = 0;
+
+        foreach ($this->getRides() as $ride)
+        {
+            if ($ride->getEstimatedParticipants() > 0)
+            {
+                ++$rideCounter;
+                $participants += $ride->getEstimatedParticipants();
+            }
+        }
+
+        return $participants / $rideCounter;
+    }
 }

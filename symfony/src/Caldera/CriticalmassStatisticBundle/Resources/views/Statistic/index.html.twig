@@ -55,11 +55,10 @@
                         <th>Durchschnittliche Teilnehmer</th>
                     </tr>
 
-                    {% for ride in topAverageParticipantsRides %}
+                    {% for averageParticipants, city in topAverageParticipantsCities %}
                         <tr>
-                            <td><a href="#">{{ ride['cityName'] }}</a></td>
-                            <td>{{ ride['averageParticipants'] }}</td>
-                            {#<td>{{ ride.getEstimatedParticipants()|round(2) }} Kilometer</td>#}
+                            <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() })}}">{{ city.getCity() }}</a></td>
+                            <td>{{ averageParticipants }}</td>
                         </tr>
                     {% endfor %}
                 </table>

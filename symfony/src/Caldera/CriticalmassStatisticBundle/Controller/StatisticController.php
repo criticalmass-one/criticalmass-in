@@ -13,9 +13,19 @@ class StatisticController extends Controller
 
         $topParticipantsRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array(), array('estimatedParticipants' => 'DESC'), 10);
         $topDistanceRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array(), array('estimatedDistance' => 'DESC'), 10);
-        $topAverageParticipantsRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findCitiesByAverageParticipants(10);
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:index.html.twig', array('cities' => $cities, 'topParticipantRides' => $topParticipantsRides, 'topDistanceRides' => $topDistanceRides, 'topAverageParticipantsRides' => $topAverageParticipantsRides));
+        $topAverageParticipantsCities = array();
+
+        foreach ($cities as $city)
+        {
+            $topAverageParticipantsCities[$city->calculateAverageRideParticipants()] = $city;
+        }
+
+        krsort($topAverageParticipantsCities);
+
+        $topAverageParticipantsCities = array_slice($topAverageParticipantsCities, 0, 10, true);
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:index.html.twig', array('cities' => $cities, 'topParticipantRides' => $topParticipantsRides, 'topDistanceRides' => $topDistanceRides, 'topAverageParticipantsCities' => $topAverageParticipantsCities));
     }
 
     public function cityparticipantsAction(Request $request, $citySlug)
