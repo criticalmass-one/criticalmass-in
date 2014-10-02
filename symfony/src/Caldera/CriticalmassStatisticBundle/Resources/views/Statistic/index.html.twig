@@ -45,6 +45,25 @@
                     {% endfor %}
                 </table>
             </div>
+
+            <div class="col-md-4">
+                <h4>Höchste durchschnittliche Teilnehmer</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>Stadt</th>
+                        <th>Durchschnittliche Teilnehmer</th>
+                    </tr>
+
+                    {% for ride in topAverageParticipantsRides %}
+                        <tr>
+                            <td>{{ ride['cityName'] }}</td>
+                            <td>{{ ride['averageParticipants'] }}</td>
+                            {#<td>{{ ride.getEstimatedParticipants()|round(2) }} Kilometer</td>#}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
