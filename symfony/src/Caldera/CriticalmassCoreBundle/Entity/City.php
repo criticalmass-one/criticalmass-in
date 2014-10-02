@@ -159,6 +159,21 @@ class City
     protected $longDescription;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorRed = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorGreen = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorBlue = 0;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="archive_cities")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
@@ -967,5 +982,74 @@ class City
         }
 
         return $participants / $rideCounter;
+    }
+
+    /**
+     * Set colorRed
+     *
+     * @param integer $colorRed
+     * @return City
+     */
+    public function setColorRed($colorRed)
+    {
+        $this->colorRed = $colorRed;
+
+        return $this;
+    }
+
+    /**
+     * Get colorRed
+     *
+     * @return integer 
+     */
+    public function getColorRed()
+    {
+        return $this->colorRed;
+    }
+
+    /**
+     * Set colorGreen
+     *
+     * @param integer $colorGreen
+     * @return City
+     */
+    public function setColorGreen($colorGreen)
+    {
+        $this->colorGreen = $colorGreen;
+
+        return $this;
+    }
+
+    /**
+     * Get colorGreen
+     *
+     * @return integer 
+     */
+    public function getColorGreen()
+    {
+        return $this->colorGreen;
+    }
+
+    /**
+     * Set colorBlue
+     *
+     * @param integer $colorBlue
+     * @return City
+     */
+    public function setColorBlue($colorBlue)
+    {
+        $this->colorBlue = $colorBlue;
+
+        return $this;
+    }
+
+    /**
+     * Get colorBlue
+     *
+     * @return integer 
+     */
+    public function getColorBlue()
+    {
+        return $this->colorBlue;
     }
 }
