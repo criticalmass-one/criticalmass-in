@@ -2,6 +2,10 @@ caldera_criticalmass_statistic_index:
     pattern:  /statistic
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:index }
 
+caldera_criticalmass_statistic_city_participants:
+    pattern:  /statistic/city/participants/{citySlug}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:cityparticipants }
+
 caldera_criticalmass_statistic_track_list:
     pattern:  /track/list
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:list }
