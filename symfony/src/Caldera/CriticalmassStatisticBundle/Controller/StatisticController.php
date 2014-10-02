@@ -37,7 +37,16 @@ class StatisticController extends Controller
 
     public function rideparticipantsAction(Request $request, $year, $month)
     {
-        $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByYearMonth($year, $month);
+        if (!$year or !$month)
+        {
+            $dateTime = new \DateTime();
+        }
+        else
+        {
+            $dateTime = new \DateTime($year.'-'.$month.'-01');
+        }
+
+        $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByDateTimeMonth($dateTime);
 
         return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides));
     }
