@@ -18,8 +18,8 @@
 
                     {% for ride in topParticipantRides %}
                     <tr>
-                        <td>{{ ride.getCity().getCity() }}</td>
-                        <td>{{ ride.getDateTime().format('F Y') }}</td>
+                        <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() })}}">{{ ride.getCity().getCity() }}</a></td>
+                        <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
                         <td>{{ ride.getEstimatedParticipants() }}</td>
                     </tr>
                     {% endfor %}
@@ -38,8 +38,8 @@
 
                     {% for ride in topDistanceRides %}
                         <tr>
-                            <td>{{ ride.getCity().getCity() }}</td>
-                            <td>{{ ride.getDateTime().format('F Y') }}</td>
+                            <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() })}}">{{ ride.getCity().getCity() }}</a></td>
+                            <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
                             <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
                         </tr>
                     {% endfor %}
@@ -57,7 +57,7 @@
 
                     {% for ride in topAverageParticipantsRides %}
                         <tr>
-                            <td>{{ ride['cityName'] }}</td>
+                            <td><a href="#">{{ ride['cityName'] }}</a></td>
                             <td>{{ ride['averageParticipants'] }}</td>
                             {#<td>{{ ride.getEstimatedParticipants()|round(2) }} Kilometer</td>#}
                         </tr>
