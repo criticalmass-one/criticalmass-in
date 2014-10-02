@@ -76,6 +76,14 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
+    public function findRidesByYearMonth($year, $month)
+    {
+        $startDateTime = new \DateTime($year.'-'.$month.'-01');
+        $endDateTime = new \DateTime($year.'-'.$month.'-'.$startDateTime->format('t'));
+
+        return $this->findRidesInInterval($startDateTime, $endDateTime);
+    }
+
     public function findLatestForCitySlug($citySlug)
     {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r JOIN CalderaCriticalmassCoreBundle:City c WITH c.id = r.city JOIN CalderaCriticalmassCoreBundle:CitySlug cs WITH cs.city = c.id WHERE cs.slug = \''.$citySlug.'\' GROUP BY r.city ORDER BY r.dateTime DESC');
