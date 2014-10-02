@@ -8,7 +8,7 @@ caldera_criticalmass_statistic_city_participants:
 
 caldera_criticalmass_statistic_ride_participants:
     pattern:  /statistic/ride/participants/{year}/{month}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:rideparticipants }
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:rideparticipants, year: null, month: null }
 
 caldera_criticalmass_statistic_track_list:
     pattern:  /track/list
