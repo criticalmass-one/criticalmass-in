@@ -85,6 +85,10 @@ class TrackController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            if (!($track->getFile())) {
+                return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
+            }
+
             if ($track->handleUpload()) {
                 $track->setUser($this->getUser());
                 $track->setUsername($this->getUser()->getUsername());
@@ -131,6 +135,8 @@ class TrackController extends Controller
             } else {
                 array_push($errorList, "noXML");
             }
+        } else {
+            //array_push($errorList, "tooBig");
         }
 
         if (sizeof($errorList) > 0) {
