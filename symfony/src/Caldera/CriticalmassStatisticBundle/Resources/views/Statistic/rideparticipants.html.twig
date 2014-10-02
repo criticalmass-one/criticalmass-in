@@ -30,5 +30,14 @@
                 var myLineChart = new Chart(ctx).Pie(data);
             }
         </script>
+        <ul class="pager">
+            {% if previousMonth %}
+                <li class="previous"><a href="{{ path('caldera_criticalmass_statistic_ride_participants', { year: previousMonth.format('Y'), month: previousMonth.format('m') }) }}">{{ previousMonth.format('F Y') }}</a></li>
+            {% endif %}
+
+            {% if nextMonth %}
+                <li class="next"><a href="{{ path('caldera_criticalmass_statistic_ride_participants', { year: nextMonth.format('Y'), month: nextMonth.format('m') }) }}">{{ nextMonth.format('F Y') }}</a></li>
+            {% endif %}
+        </ul>
     </div>
 {% endblock %}

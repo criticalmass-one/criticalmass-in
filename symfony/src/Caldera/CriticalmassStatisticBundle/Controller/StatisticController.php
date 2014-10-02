@@ -46,8 +46,21 @@ class StatisticController extends Controller
             $dateTime = new \DateTime($year.'-'.$month.'-01');
         }
 
+        $monthInterval = new \DateInterval('P1M');
+
+        $previousMonth = clone $dateTime;
+        $previousMonth->sub($monthInterval);
+
+        $nextMonth = clone $dateTime;
+        $nextMonth = $nextMonth->add($monthInterval);
+
+        if ($nextMonth > new \DateTime())
+        {
+            $nextMonth = null;
+        }
+
         $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByDateTimeMonth($dateTime);
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides));
+        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides, 'previousMonth' => $previousMonth, 'nextMonth' => $nextMonth));
     }
 }
