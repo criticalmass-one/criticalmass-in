@@ -34,4 +34,11 @@ class StatisticController extends Controller
 
         return $this->render('CalderaCriticalmassStatisticBundle:Statistic:cityparticipants.html.twig', array('city' => $city));
     }
+
+    public function rideparticipantsAction(Request $request, $year, $month)
+    {
+        $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByYearMonth($year, $month);
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides));
+    }
 }
