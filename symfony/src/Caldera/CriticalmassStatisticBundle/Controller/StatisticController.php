@@ -35,6 +35,14 @@ class StatisticController extends Controller
         return $this->render('CalderaCriticalmassStatisticBundle:Statistic:cityparticipants.html.twig', array('city' => $city));
     }
 
+    /**
+     * Prepares a template with a pie chart containing the estimated participants of every tour in a specific month.
+     *
+     * @param Request $request
+     * @param $year
+     * @param $month
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function rideparticipantsAction(Request $request, $year, $month)
     {
         if (!$year or !$month)
@@ -46,6 +54,9 @@ class StatisticController extends Controller
             $dateTime = new \DateTime($year.'-'.$month.'-01');
         }
 
+        /* Okay, now take the rides from the database and push them into our new array $rides with their estimated par-
+        ticipants as their key so we can sort them afterwards. We’ll use a two-dimensional array here to cover cities
+        with identical estimates. */
         $rides = array();
         $rideResult = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByDateTimeMonth($dateTime);
 
@@ -53,8 +64,11 @@ class StatisticController extends Controller
         {
             $rides[$ride->getEstimatedParticipants()][] = $ride;
         }
+
+        /* Now sort this shit and keep the old keys as the index. */
         krsort($rides);
 
+        /* We’ll use this interval to calculate the previous and the next month for the navigation. */
         $monthInterval = new \DateInterval('P1M');
 
         $previousMonth = clone $dateTime;
@@ -63,12 +77,11 @@ class StatisticController extends Controller
         $nextMonth = clone $dateTime;
         $nextMonth = $nextMonth->add($monthInterval);
 
+        /* If the next month would be in the future, skip this case. */
         if ($nextMonth > new \DateTime())
         {
             $nextMonth = null;
         }
-
-        $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByDateTimeMonth($dateTime);
 
         return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides, 'previousMonth' => $previousMonth, 'nextMonth' => $nextMonth));
     }
