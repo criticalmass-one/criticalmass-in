@@ -15,13 +15,15 @@
 
         <script>
             var data = [
-                    {% for ride in rides %}
+                    {% for rides2 in rides %}
+                    {% for ride in rides2 %}
                     {
                         label: "{{ ride.getCity().getCity() }}",
                         color: "rgba({{ ride.getCity().getColorRed() }}, {{ ride.getCity().getColorGreen() }}, {{ ride.getCity().getColorBlue() }}, 0.2)",
                         highlight: "rgba({{ ride.getCity().getColorRed() }}, {{ ride.getCity().getColorGreen() }}, {{ ride.getCity().getColorBlue() }}, 1)",
                         value: {{ ride.getEstimatedParticipants() }}
                     },
+                    {% endfor %}
                     {% endfor %}
                 ];
 
