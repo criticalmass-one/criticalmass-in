@@ -83,6 +83,6 @@ class StatisticController extends Controller
             $nextMonth = null;
         }
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides, 'previousMonth' => $previousMonth, 'nextMonth' => $nextMonth));
+        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:rideparticipants.html.twig', array('rides' => $rides, 'currentMonth' => $dateTime, 'previousMonth' => $previousMonth, 'nextMonth' => $nextMonth));
     }
 }
