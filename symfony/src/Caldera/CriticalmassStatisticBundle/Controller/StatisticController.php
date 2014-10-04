@@ -46,6 +46,15 @@ class StatisticController extends Controller
             $dateTime = new \DateTime($year.'-'.$month.'-01');
         }
 
+        $rides = array();
+        $rideResult = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findRidesByDateTimeMonth($dateTime);
+
+        foreach ($rideResult as $ride)
+        {
+            $rides[$ride->getEstimatedParticipants()][] = $ride;
+        }
+        krsort($rides);
+
         $monthInterval = new \DateInterval('P1M');
 
         $previousMonth = clone $dateTime;
