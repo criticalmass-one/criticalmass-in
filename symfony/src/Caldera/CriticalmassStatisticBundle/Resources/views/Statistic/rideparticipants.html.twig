@@ -41,6 +41,14 @@
                         <th>Stadt</th>
                         <th>Teilnehmer</th>
                     </tr>
+                    {% for rides2 in rides %}
+                    {% for ride in rides2 %}
+                    <tr>
+                        <td>{{ ride.getCity().getCity() }}</td>
+                        <td>{{ ride.getEstimatedParticipants() }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
                 </table>
             </div>
         </div>
