@@ -34,6 +34,13 @@
             <div class="tab-pane fade in active" id="cityInfoTab">
             {% endif %}
                 <div class="jumbotron">
+                    {% if app.getUser() %}
+                    <div class="btn-group pull-right" style="margin-top: 24px;">
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="fa fa-wrench"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="fa fa-add"></i></a>
+                    </div>
+                    {% endif %}
+
                     <h1>{{ city.getTitle() }}</h1>
                     <p>{{ city.getDescription() }}</p>
                 </div>
@@ -174,14 +181,7 @@
             {% if hasRides %}
             <div class="tab-pane fade in" id="recentRidesTab">
                 <div class="row">
-                {% if app.getUser() %}
-                    <div class="btn-group pull-right" style="margin-top: 24px;">
-                        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="fa fa-add"></i></a>
-                    </div>
-
                     <h1>Vergangene Touren</h1>
-                {% endif %}
                 </div>
 
                 <table class="table">
