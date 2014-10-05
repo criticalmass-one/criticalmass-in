@@ -1,0 +1,81 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Neue Stadt hinzufügen{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li class="active">Stadt hinzufügen</li>
+        </ol>
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Titel:</label>
+                {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Name:</label>
+                {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Beschreibung:</label>
+                {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Webseite:</label>
+                {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Seite auf facebook:</label>
+                {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">twitter:</label>
+                {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Einwohnerzahl:</label>
+                {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Punchline:</label>
+                {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label" for="">Lange Beschreibung:</label>
+                {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success pull-right">Speichern</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

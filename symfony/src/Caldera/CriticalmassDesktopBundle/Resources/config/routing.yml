@@ -34,6 +34,10 @@ caldera_criticalmass_desktop_ride_add:
     pattern:  /{citySlug}/addride
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:add }
 
+caldera_criticalmass_desktop_city_add:
+    pattern:  /city/add
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:add }
+
 caldera_criticalmass_desktop_city_show:
     pattern:  /city/{citySlug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
