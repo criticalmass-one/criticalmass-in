@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Caldera\CriticalmassCoreBundle\Type\RideType;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -89,8 +90,11 @@ class RideController extends Controller
         }
 
         $city = $citySlugObj->getCity();
+        $ride = new Ride();
 
-        return new Response();
+        $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', array('citySlug' => $city->getMainSlugString()))));
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:add.html.twig', array('form' => $form->createView(), 'city' => $city));
     }
 
 
