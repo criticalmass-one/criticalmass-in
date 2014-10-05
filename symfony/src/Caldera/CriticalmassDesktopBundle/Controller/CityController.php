@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Type\CityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -39,19 +40,7 @@ class CityController extends Controller
     {
         $city = new \Caldera\CriticalmassCoreBundle\Entity\City();
 
-        $form = $this->createFormBuilder($city)
-            ->add('city', 'text')
-            ->add('title', 'text')
-            ->add('description', 'textarea')
-            ->add('url', 'text')
-            ->add('facebook', 'text')
-            ->add('twitter', 'text')
-            ->add('longitude', 'hidden')
-            ->add('latitude', 'hidden')
-            ->add('cityPopulation', 'text')
-            ->add('punchLine', 'text')
-            ->add('longDescription', 'textarea')
-            ->getForm();
+        $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')));
 
         $form->handleRequest($request);
 
