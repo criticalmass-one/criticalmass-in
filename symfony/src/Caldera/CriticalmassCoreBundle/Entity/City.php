@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
@@ -26,6 +27,7 @@ class City
 	 * Name der Stadt.
 	 *
 	 * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
 	 */
 	protected $city;
 
@@ -34,6 +36,7 @@ class City
 	 * oder "Critical Mass Bremen".
 	 *
 	 * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
 	 */
 	protected $title;
 
@@ -41,6 +44,7 @@ class City
      * Kurze Beschreibung der Critical Mass dieser Stadt.
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank()
      */
     protected $description;
 
@@ -48,6 +52,7 @@ class City
 	 * Adresse der Webseite der Critical Mass in dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
 	 */
 	protected $url;
 
@@ -55,6 +60,7 @@ class City
 	 * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
 	 */
 	protected $facebook;
 
@@ -62,6 +68,7 @@ class City
 	 * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
 	 */
 	protected $twitter;
 
