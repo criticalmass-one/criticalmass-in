@@ -162,7 +162,7 @@ class Ride
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $isArchived;
+    protected $isArchived = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -405,6 +405,10 @@ class Ride
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->visibleSince = new \DateTime();
+        $this->visibleUntil = new \DateTime();
+        $this->expectedStartDateTime = new \DateTime();
+        $this->archiveDateTime = new \DateTime();
         $this->latitude = 0.0;
         $this->longitude = 0.0;
     }
