@@ -56,9 +56,16 @@ class CityController extends Controller
             $em->persist($citySlug);
             $em->persist($city);
             $em->flush();
+
+            $hasErrors = false;
+            $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
+        }
+        elseif ($form->isSubmitted())
+        {
+            $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:add.html.twig', array('city' => $city, 'form' => $form->createView()));
+        return $this->render('CalderaCriticalmassDesktopBundle:City:add.html.twig', array('city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
     }
 
     public function editAction(Request $request, $citySlug)

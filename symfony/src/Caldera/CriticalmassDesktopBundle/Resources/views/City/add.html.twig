@@ -12,6 +12,14 @@
 
         {{ form_start(form) }}
 
+        {% if hasErrors is not null %}
+        {% if hasErrors == true %}
+        <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+        {% elseif hasErrors == false %}
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">Weiter zur Stadt?</a></div>
+        {% endif %}
+        {% endif %}
+
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
