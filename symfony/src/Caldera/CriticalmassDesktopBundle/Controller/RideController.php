@@ -94,7 +94,27 @@ class RideController extends Controller
 
         $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', array('citySlug' => $city->getMainSlugString()))));
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:add.html.twig', array('form' => $form->createView(), 'city' => $city));
+        $form->handleRequest($request);
+
+        // TODO: remove this shit and test the validation in the template
+        $hasErrors = null;
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+
+            // TODO: remove also this
+            $hasErrors = false;
+        }
+        elseif ($form->isSubmitted())
+        {
+            // TODO: remove even more shit
+            $hasErrors = true;
+        }
+
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:add.html.twig', array('hasErrors' => $hasErrors, 'ride' => $ride, 'form' => $form->createView(), 'city' => $city));
     }
 
 
