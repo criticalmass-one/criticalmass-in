@@ -79,6 +79,21 @@ class RideController extends Controller
         //return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 
+    public function addAction(Request $request, $citySlug)
+    {
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
+
+        return new Response();
+    }
+
+
     public function editAction(Request $request, $citySlug, $rideDate)
     {
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
