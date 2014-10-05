@@ -116,19 +116,19 @@
             <script>
                 function toggleLocationMap()
                 {
-                    $('#form_location').prop('disabled', !$('#form_hasLocation').prop('checked'));
+                    $('#ride_location').prop('disabled', !$('#ride_hasLocation').prop('checked'));
                 }
 
                 function toggleTime()
                 {
-                    $('#form_time_minute').prop('disabled', !$('#form_hasTime').prop('checked'));
-                    $('#form_time_hour').prop('disabled', !$('#form_hasTime').prop('checked'));
+                    $('#ride_time_minute').prop('disabled', !$('#ride_hasTime').prop('checked'));
+                    $('#ride_time_hour').prop('disabled', !$('#ride_hasTime').prop('checked'));
                 }
 
                 window.onload = function()
                 {
-                    $('#form_hasLocation').on('click', toggleLocationMap);
-                    $('#form_hasTime').on('click', toggleTime);
+                    $('#ride_hasLocation').on('click', toggleLocationMap);
+                    $('#ride_hasTime').on('click', toggleTime);
 
                     var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
 
