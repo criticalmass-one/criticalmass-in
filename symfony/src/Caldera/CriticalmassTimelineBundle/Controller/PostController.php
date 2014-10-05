@@ -47,6 +47,10 @@ class PostController extends Controller
 
             return new RedirectResponse($this->container->get('request')->headers->get('referer'));
         }
+        elseif ($form->isSubmitted())
+        {
+            return $this->render('CalderaCriticalmassTimelineBundle:Post:writefailed.html.twig', array('form' => $form->createView()));
+        }
 
         return $this->render('CalderaCriticalmassTimelineBundle:Post:write.html.twig', array('form' => $form->createView()));
     }

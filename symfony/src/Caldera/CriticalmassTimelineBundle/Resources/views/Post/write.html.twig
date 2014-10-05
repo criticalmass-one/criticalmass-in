@@ -1,8 +1,8 @@
 {% if app.getUser() %}
 {{ form_start(form, {'attr': {'id': 'postForm', 'role': 'form'}}) }}
 
-<div class="form-group">
-    <label for="">Dein Kommentar:</label>
+<div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+    <label for="" class="control-label">Dein Kommentar:</label>
     {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
 </div>
 

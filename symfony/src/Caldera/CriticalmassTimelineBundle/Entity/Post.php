@@ -3,7 +3,7 @@
 namespace Caldera\CriticalmassTimelineBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -33,6 +33,7 @@ class Post
     /**
      * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="posts")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     protected $city;
 
