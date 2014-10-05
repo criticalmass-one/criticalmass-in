@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Type\CityType;
+use \Caldera\CriticalmassCoreBundle\Entity\City as City;
 use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class CityController extends Controller
 
     public function addAction(Request $request)
     {
-        $city = new \Caldera\CriticalmassCoreBundle\Entity\City();
+        $city = new City();
 
         $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')));
 
