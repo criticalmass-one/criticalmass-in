@@ -59,7 +59,6 @@ class CityController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($city);
-            $em->persist($archiveCity);
             $em->flush();
         }
 
