@@ -152,6 +152,7 @@ class City
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
     protected $cityPopulation;
 
