@@ -18,7 +18,7 @@ class CityType extends AbstractType
             ->add('twitter', 'text')
             ->add('longitude', 'hidden')
             ->add('latitude', 'hidden')
-            ->add('cityPopulation', 'text')
+            ->add('cityPopulation', 'integer')
             ->add('punchLine', 'text')
             ->add('longDescription', 'textarea');
     }
