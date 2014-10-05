@@ -108,6 +108,10 @@ class RideController extends Controller
 
             // TODO: remove also this
             $hasErrors = false;
+
+            /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
+            just to change the action url of the form, but we are far to stupid for this hack. */
+            $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()))));
         }
         elseif ($form->isSubmitted())
         {
