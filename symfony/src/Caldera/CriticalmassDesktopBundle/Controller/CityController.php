@@ -76,19 +76,7 @@ class CityController extends Controller
     {
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
-        $form = $this->createFormBuilder($city)
-            ->add('city', 'text')
-            ->add('title', 'text')
-            ->add('description', 'textarea')
-            ->add('url', 'text')
-            ->add('facebook', 'text')
-            ->add('twitter', 'text')
-            ->add('longitude', 'hidden')
-            ->add('latitude', 'hidden')
-            ->add('cityPopulation', 'text')
-            ->add('punchLine', 'text')
-            ->add('longDescription', 'textarea')
-            ->getForm();
+        $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
 
         $archiveCity = clone $city;
         $archiveCity->setArchiveUser($this->getUser());
