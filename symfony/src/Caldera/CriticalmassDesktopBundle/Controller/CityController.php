@@ -53,10 +53,6 @@ class CityController extends Controller
             ->add('longDescription', 'textarea')
             ->getForm();
 
-        $archiveCity = clone $city;
-        $archiveCity->setArchiveUser($this->getUser());
-        $archiveCity->setArchiveParent($city);
-
         $form->handleRequest($request);
 
         if ($form->isValid())
