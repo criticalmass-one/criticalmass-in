@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Type\CityType;
+use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -47,6 +48,12 @@ class CityController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+
+            $csg = new CitySlugGenerator($city);
+            $citySlug = $csg->execute();
+            $city->addSlug($citySlug);
+
+            $em->persist($citySlug);
             $em->persist($city);
             $em->flush();
         }
