@@ -154,7 +154,7 @@ class City
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="integer")
      */
-    protected $cityPopulation;
+    protected $cityPopulation = 0;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -190,7 +190,7 @@ class City
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $isArchived;
+    protected $isArchived = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -237,6 +237,8 @@ class City
     {
         $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
         $this->slugs = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->archiveDateTime = new \DateTime();
     }
     
     /**
