@@ -91,6 +91,7 @@ class RideController extends Controller
 
         $city = $citySlugObj->getCity();
         $ride = new Ride();
+        $ride->setCity($city);
 
         $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', array('citySlug' => $city->getMainSlugString()))));
 
