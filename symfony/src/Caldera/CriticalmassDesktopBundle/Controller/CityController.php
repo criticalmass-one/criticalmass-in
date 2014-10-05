@@ -45,6 +45,8 @@ class CityController extends Controller
 
         $form->handleRequest($request);
 
+        $hasErrors = null;
+
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
@@ -58,6 +60,7 @@ class CityController extends Controller
             $em->flush();
 
             $hasErrors = false;
+
             $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
         }
         elseif ($form->isSubmitted())
