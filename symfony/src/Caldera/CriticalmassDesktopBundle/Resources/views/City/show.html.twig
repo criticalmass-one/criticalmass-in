@@ -78,14 +78,23 @@
             </div>
             {% if hasCurrentRide %}
             <div class="tab-pane fade in active" id="nextRideTab">
-                {% if city.getCurrentRide().getTitle() %}
+                <div class="row">
+                    {% if app.getUser() %}
+                    <div class="btn-group pull-right" style="margin-top: 24px;">
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: city.getCurrentRide().getFormattedDate() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
+                    </div>
+                    {% endif %}
+
+                    {% if city.getCurrentRide().getTitle() %}
                     <h1>{{ city.getCurrentRide().getTitle() }}</h1>
-                {% else %}
+                    {% else %}
                     <h1>{{ city.getCurrentRide().getCity().getTitle() }}</h1>
-                {% endif %}
-                {% if city.getCurrentRide().getDescription() %}
-                    <p>{{ city.getCurrentRide().getDescription() }}</p>
-                {% endif %}
+                    {% endif %}
+                </div>
+
+                    {% if city.getCurrentRide().getDescription() %}
+                        <p>{{ city.getCurrentRide().getDescription() }}</p>
+                    {% endif %}
 
                 <div class="row">
                     <div class="col-lg-12">
