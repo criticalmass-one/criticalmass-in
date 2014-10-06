@@ -4,6 +4,14 @@
 
 {% block content %}
     <div class="container">
+        {% if ride == null %}
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
+            <li class="active">Tour hinzufügen</li>
+        </ol>
+        {% else %}
         <ol class="breadcrumb">
             <li><a href="#">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
@@ -11,6 +19,7 @@
             <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
             <li class="active">Tour editieren</li>
         </ol>
+        {% endif %}
 
         <h1>Tour-Details korrigieren</h1>
         <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
@@ -63,7 +72,7 @@
                             <span class="input-group-addon">
                                 {{ form_widget(form.hasLocation) }}
                             </span>
-                            {% if ride.hasLocation() %}
+                            {% if ride and ride.hasLocation() %}
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                             {% else %}
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
@@ -124,7 +133,6 @@
                     $('#form_location').prop('disabled', !$('#form_hasLocation').prop('checked'));
                 }
 
-
                 function toggleTime()
                 {
                     $('#form_time_minute').prop('disabled', !$('#form_hasTime').prop('checked'));
@@ -136,10 +144,10 @@
                     $('#form_hasLocation').on('click', toggleLocationMap);
                     $('#form_hasTime').on('click', toggleTime);
 
-                    {% if ride.hasLocation() %}
+                    {% if ride and ride.hasLocation() %}
                     var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
                     {% else %}
-                    var mapCenter = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+                    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
                     {% endif %}
                     var map = L.map('map');
                     var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
