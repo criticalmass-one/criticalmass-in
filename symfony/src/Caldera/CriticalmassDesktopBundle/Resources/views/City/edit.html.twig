@@ -1,15 +1,23 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block title %}{{ city.getTitle }} editieren{% endblock %}
+{% block title %}{% if city != null %}{{ city.getTitle }} editieren{% else %}neue Stadt hinzufügen{% endif %}{% endblock %}
 
 {% block content %}
     <div class="container">
+        {% if city != null %}
         <ol class="breadcrumb">
             <li><a href="#">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a></li>
             <li class="active">Stadt editieren</li>
         </ol>
+        {% else %}
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li class="active">Stadt hinzufügen</li>
+        </ol>
+        {% endif %}
 
         {{ form_start(form) }}
 
@@ -91,7 +99,11 @@
             <script>
                 window.onload = function()
                 {
+                    {% if city != null %}
                     var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+                    {% else %}
+                    var mapCenter = L.latLng(51.163375, 10.447683);
+                    {% endif %}
 
                     var map = L.map('map');
                     var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
