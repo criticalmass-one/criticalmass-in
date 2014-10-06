@@ -111,7 +111,12 @@
                     });
 
                     tileLayer.addTo(map);
+
+                    {% if city != null %}
                     map.setView(mapCenter, 12);
+                    {% else %}
+                    map.setView(mapCenter, 6);
+                    {% endif %}
 
                     var locationIcon = L.icon({
                         iconUrl: '/images/marker/marker-red.png',
