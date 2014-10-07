@@ -2,5 +2,10 @@
 
 {% block title %}Städte-Übersicht{% endblock %}
 {% block content %}
-    {% include('CalderaCriticalmassTimelineBundle:Post:write.html.twig') with { 'form' :  form } %}
+    <div class="container">
+        <h1>Hoppla: Vertippt?</h1>
+
+        <p>Du hast leider gar keinen Kommentar eingegeben.</p>
+        {% include('CalderaCriticalmassTimelineBundle:Post:write.html.twig') with { 'form' :  form } %}
+    </div>
 {% endblock %}
