@@ -18,10 +18,8 @@ class TrackController extends Controller
 
         $tickets = $this->getDoctrine()->getRepository('CalderaCriticalmassGlympseBundle:Ticket')->findBy(array('city' => $ride->getCity()));
 
-        foreach ($tickets as $ticket)
-        {
-            if ($ticket->belongsToRide($ride))
-            {
+        foreach ($tickets as $ticket) {
+            if ($ticket->belongsToRide($ride)) {
                 $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticket->getId()), array('timestamp' => 'ASC'));
 
                 $gpx = new GpxWriter();
@@ -62,8 +60,7 @@ class TrackController extends Controller
     {
         $tracks = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
 
-        foreach ($tracks as $track)
-        {
+        foreach ($tracks as $track) {
             $track->setStartDateTime($track->getStartDateTime()->add(new \DateInterval('PT2H')));
             $track->setEndDateTime($track->getEndDateTime()->add(new \DateInterval('PT2H')));
         }
@@ -105,8 +102,7 @@ class TrackController extends Controller
                     array_push($errorList, "tooFewTimeStamps");
                 }
 
-                if ($rg->isImpossible())
-                {
+                if ($rg->isImpossible()) {
                     array_push($errorList, "noTourFound");
                 } elseif (($rg->isDistinct()) && (sizeof($errorList) == 0)) {
                     $rides = $rg->getRides();
@@ -157,8 +153,7 @@ class TrackController extends Controller
 
         $choices = array();
 
-        foreach ($rides as $ride)
-        {
+        foreach ($rides as $ride) {
             $choices[] = $ride;
         }
 
@@ -166,12 +161,12 @@ class TrackController extends Controller
             ->add('ride', 'entity', array
             (
                 'class' => 'CalderaCriticalmassCoreBundle:Ride',
-                'property'=> 'cityTitle',
-                'label' => 'Tour',
+                'property' => 'cityTitle',
+                'label' => 'Tour auswählen',
                 'required' => true,
                 'choices' => $choices
             ))
-            ->add('save', 'submit', array('label' => 'Create Post'))
+            ->add('save', 'submit', array('label' => 'Track hinzufügen', 'attr' => array('class' => 'btn btn-primary')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -205,5 +200,24 @@ class TrackController extends Controller
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
 
         return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
+    }
+
+    public function deleteconfirmAction(Request $request)
+    {
+        $track = new Track();
+        $errorList = array();
+        $form = $this->createFormBuilder($track)
+            ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_deleteconfirm'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($track);
+            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+        }
+
+        return $this->render('CalderaCriticalmassStatisticBundle:Track:deleteconfirm.html.twig', array('form' => $form->createView()));
     }
 }

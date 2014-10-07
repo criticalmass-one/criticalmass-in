@@ -27,6 +27,7 @@
                 <th>Beginn</th>
                 <th>Ende</th>
                 <th>Distanz</th>
+                <th></th>
                 {#<th>Optionen</th>#}
             </tr>
             {% for track in tracks %}{% if track.getRide() %}
@@ -41,6 +42,11 @@
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getDistance()|round(2) }} Kilometer</td>
+                <td>
+                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalDownload"><i class="fa fa-download"></i></a>
+                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalRemove"><i class="fa fa-remove"></i></a>
+                    <a class="btn btn-default" href="#" data-track="'+track.getId()+'" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-trash"></i></a>
+                </td>
                 {#<td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>#}
             </tr>
             {% endif %}{% endfor %}
@@ -60,4 +66,19 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Track löschen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('CalderaCriticalmassStatisticBundle:Track:deleteconfirm')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

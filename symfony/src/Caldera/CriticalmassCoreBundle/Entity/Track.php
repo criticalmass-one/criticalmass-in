@@ -89,6 +89,11 @@ class Track
      */
     protected $json;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $activated;
+
     public function __construct()
     {
         $this->setCreationDateTime(new \DateTime());
@@ -469,4 +474,21 @@ class Track
 
         return $diff->format('%h.%i');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getActivated()
+    {
+        return $this->activated;
+    }
+
+    /**
+     * @param mixed $activated
+     */
+    public function setActivated($activated)
+    {
+        $this->activated = $activated;
+    }
+
 }
