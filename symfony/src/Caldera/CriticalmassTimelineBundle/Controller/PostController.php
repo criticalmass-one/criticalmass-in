@@ -17,6 +17,9 @@ class PostController extends Controller
             ->add('latitude', 'hidden')
             ->add('longitude', 'hidden');
 
+        $ride = null;
+        $city = null;
+
         if ($cityId)
         {
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId)));
@@ -49,7 +52,7 @@ class PostController extends Controller
         }
         elseif ($form->isSubmitted())
         {
-            return $this->render('CalderaCriticalmassTimelineBundle:Post:writefailed.html.twig', array('form' => $form->createView()));
+            return $this->render('CalderaCriticalmassTimelineBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
         }
 
         return $this->render('CalderaCriticalmassTimelineBundle:Post:write.html.twig', array('form' => $form->createView()));
