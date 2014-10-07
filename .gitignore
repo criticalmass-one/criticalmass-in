@@ -1,6 +1,5 @@
 symfony/web/css
 symfony/web/js
-composer.phar
 symfony/composer.lock
 symfony/app/config/database.yml
 .sonar
