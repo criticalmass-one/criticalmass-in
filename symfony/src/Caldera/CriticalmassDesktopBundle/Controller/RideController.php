@@ -8,6 +8,7 @@ use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RideController extends Controller
@@ -82,6 +83,11 @@ class RideController extends Controller
 
     public function addAction(Request $request, $citySlug)
     {
+        if (!$this->getUser())
+        {
+            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour erstellen zu können.');
+        }
+
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
         if (!$citySlugObj)
@@ -125,6 +131,11 @@ class RideController extends Controller
 
     public function editAction(Request $request, $citySlug, $rideDate)
     {
+        if (!$this->getUser())
+        {
+            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour bearbeiten zu können.');
+        }
+
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
         if (!$citySlugObj)
