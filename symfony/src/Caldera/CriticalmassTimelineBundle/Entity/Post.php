@@ -33,7 +33,6 @@ class Post
     /**
      * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="posts")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @Assert\NotBlank()
      */
     protected $city;
 
@@ -54,6 +53,7 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $message;
 
