@@ -150,7 +150,7 @@ class RideController extends Controller
         }
         catch (\Exception $e)
         {
-            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfangen. Bitte gib ein Datum im Format YYYY-MM-DD an.');
         }
 
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
