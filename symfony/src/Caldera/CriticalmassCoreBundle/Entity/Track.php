@@ -455,6 +455,7 @@ class Track
             $this->setGpx($gpxReader->getFileContent());
             $this->setJson($gpxReader->generateJson());
             $this->setDistance($gpxReader->calculateDistance());
+            $this->setActivated(1);
 
             $this->timeStamps = 0;
 

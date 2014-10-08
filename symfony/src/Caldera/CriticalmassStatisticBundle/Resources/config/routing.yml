@@ -35,5 +35,17 @@ caldera_criticalmass_heatmap_homepage:
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Default:generate }
 
 caldera_criticalmass_statistic_track_deleteconfirm:
-    pattern:  /track/deleteconfirm
+    pattern:  /track/deleteconfirm/
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:deleteconfirm }
+
+caldera_criticalmass_statistic_track_remove:
+    pattern:  /track/deactivate/{trackId}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:deactivate }
+
+caldera_criticalmass_statistic_track_activate:
+    pattern:  /track/activate/{trackId}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:activate }
+
+caldera_criticalmass_statistic_track_download:
+    pattern:  /track/download/{trackId}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:download }

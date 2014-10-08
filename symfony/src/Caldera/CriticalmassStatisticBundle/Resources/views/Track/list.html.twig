@@ -32,21 +32,41 @@
             </tr>
             {% for track in tracks %}{% if track.getRide() %}
             <tr>
-                <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
-                <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
-                <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">{% if track.getRide().getTitle() %}
-                {{ track.getRide().getTitle() }}
+                {% if track.getActivated() %}
+                    <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
+                    <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
+                    <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
+                    {% if track.getRide().getTitle() %}
+                        {{ track.getRide().getTitle() }}
+                    {% else %}
+                        {{ track.getRide().getCity().getTitle() }}
+                    {% endif %}</a></td>
+                    <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
+                    <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
+                    <td>{{ track.getDistance()|round(2) }} Kilometer</td>
+                    <td>
+                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="fa fa-download"></i></a>
+                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_remove', {'trackId': track.getId()}) }}"><i class="fa fa-remove"></i></a>
+                    <a class="trackDeleteButton btn btn-default" href="#" data-trackid={{ track.getId() }}><i class="fa fa-trash"></i></a>
+                    </td>
                 {% else %}
-                {{ track.getRide().getCity().getTitle() }}
-                {% endif %}</a></td>
-                <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
-                <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
-                <td>{{ track.getDistance()|round(2) }} Kilometer</td>
-                <td>
+                    <td><s>{{ track.getRide().getDateTime().format('d. m. Y') }}</s></td>
+                    <td><s>{{ track.getRide().getCity().getCity() }}</s></td>
+                    <td><s>
+                    {% if track.getRide().getTitle() %}
+                        {{ track.getRide().getTitle() }}
+                    {% else %}
+                        {{ track.getRide().getCity().getTitle() }}
+                    {% endif %}</s></td>
+                    <td><s>{{ track.getStartDateTime().format('H:i') }} Uhr</s></td>
+                    <td><s>{{ track.getEndDateTime().format('H:i') }} Uhr</s></td>
+                    <td><s>{{ track.getDistance()|round(2) }} Kilometer</s></td>
+                    <td>
                     <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalDownload"><i class="fa fa-download"></i></a>
-                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalRemove"><i class="fa fa-remove"></i></a>
-                    <a class="btn btn-default" href="#" data-track="'+track.getId()+'" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-trash"></i></a>
-                </td>
+                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_statistic_track_activate', {'trackId': track.getId()}) }}"><i class="fa fa-ok"></i></a>
+                    <a class="trackDeleteButton btn btn-default" href="#" data-trackid={{ track.getId() }}><i class="fa fa-trash"></i></a>
+                    </td>
+                {% endif %}
                 {#<td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>#}
             </tr>
             {% endif %}{% endfor %}
@@ -75,10 +95,34 @@
                     <h4 class="modal-title">Track löschen</h4>
                 </div>
                 <div class="modal-body">
+                    <span id="trackIdLabel"></span>
                     {{ render(controller('CalderaCriticalmassStatisticBundle:Track:deleteconfirm')) }}
                 </div>
             </div>
         </div>
     </div>
+
+    {% javascripts
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        function prepareDeleteModal()
+        {
+            /* this enthalt die Quelle des Events, also den Button, der das ganze ausgelöst hat. An dessen data-trackid-Attribut wollen wir nun ran. */
+            var trackID = $(this).data('trackid');
+
+            $('#trackIdLabel').html(trackID);
+
+            /* und Fenster anzeigen */
+            $('#modalDelete').modal('show');
+
+        }
+
+        /* Event an alle Elemente mit der Klasse trackDownloadButton anhängen. */
+        $('.trackDeleteButton').on('click', prepareDeleteModal);
+
+    </script>
 
 {% endblock %}

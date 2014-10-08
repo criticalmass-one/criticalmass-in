@@ -34,6 +34,7 @@ class TrackController extends Controller
                 $track->setUsername($ticket->getDisplayname());
                 $track->setCreationDateTime(new \DateTime());
                 $track->setGpx($gpxContent);
+                $track->setActivated(1);
                 $track->generateMD5Hash();
 
                 $startDateTime = new \DateTime();
@@ -202,11 +203,55 @@ class TrackController extends Controller
         return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
     }
 
+    public function downloadAction(Request $request, $trackId=0)
+    {
+        if ($trackId) {
+            $em = $this->getDoctrine()->getManager();
+            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+
+            $file = fopen("test.txt", "w");
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Content-Length: ' . filesize($file));
+            ob_clean();
+            flush();
+            readfile($file);
+            exit;
+        }
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+    }
+
+    public function deactivateAction(Request $request, $trackId=0)
+    {
+        if ($trackId) {
+            $em = $this->getDoctrine()->getManager();
+            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+            $track2->setActivated(0);
+            $em->merge($track2);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+    }
+
+    public function activateAction(Request $request, $trackId=0)
+    {
+        if ($trackId) {
+            $em = $this->getDoctrine()->getManager();
+            $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+            $track->setActivated(1);
+            $em->merge($track);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+    }
+
     public function deleteconfirmAction(Request $request)
     {
-        $track = new Track();
         $errorList = array();
-        $form = $this->createFormBuilder($track)
+        $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_deleteconfirm'))
             ->getForm();
 
@@ -214,7 +259,9 @@ class TrackController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($track);
+            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track',93);
+            $em->remove($track2);
+            $em->flush();
             return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
         }
 
