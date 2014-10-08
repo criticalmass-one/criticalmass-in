@@ -66,22 +66,41 @@ class PostController extends Controller
     }
 
 
+    /**
+     * List all posts.
+     *
+     * This action handles different cases:
+     *
+     * If you provide a $cityId, it will just list posts for this city.
+     * If you provide a $rideId, it will list all posts for the specified ride.
+     * If you call this method without any parameters, it will list everything in a timeline style.
+     *
+     * @param Request $request
+     * @param null $cityId
+     * @param null $rideId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function listAction(Request $request, $cityId = null, $rideId = null)
     {
+        /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
 
+        /* If a $cityId is provided, add the city to the criteria. */
         if ($cityId)
         {
             $criteria['city'] = $cityId;
         }
 
+        /* If a $rideId is provided, add the ride to the criteria. */
         if ($rideId)
         {
             $criteria['ride'] = $rideId;
         }
 
+        /* Now fetch all posts with matching criteria. */
         $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy($criteria, array('dateTime' => 'DESC'));
 
+        /* And render our shit. */
         return $this->render('CalderaCriticalmassTimelineBundle:Post:list.html.twig', array('posts' => $posts));
     }
 }
