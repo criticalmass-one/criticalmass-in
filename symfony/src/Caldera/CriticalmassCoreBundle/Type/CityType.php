@@ -10,17 +10,17 @@ class CityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', 'text')
-            ->add('title', 'text')
-            ->add('description', 'textarea')
-            ->add('url', 'text')
-            ->add('facebook', 'text')
-            ->add('twitter', 'text')
+            ->add('city', 'text', array('required' => false))
+            ->add('title', 'text', array('required' => false))
+            ->add('description', 'textarea', array('required' => false))
+            ->add('url', 'text', array('required' => false))
+            ->add('facebook', 'text', array('required' => false))
+            ->add('twitter', 'text', array('required' => false))
             ->add('longitude', 'hidden')
             ->add('latitude', 'hidden')
-            ->add('cityPopulation', 'integer')
-            ->add('punchLine', 'text')
-            ->add('longDescription', 'textarea');
+            ->add('cityPopulation', 'integer', array('required' => false))
+            ->add('punchLine', 'text', array('required' => false))
+            ->add('longDescription', 'textarea', array('required' => false));
     }
 
     public function getName()

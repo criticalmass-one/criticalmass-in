@@ -10,19 +10,19 @@ class RideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text')
-            ->add('description', 'textarea')
+            ->add('title', 'text', array('required' => false))
+            ->add('description', 'textarea', array('required' => false))
             ->add('date', 'date')
             ->add('time', 'time')
-            ->add('location', 'text')
+            ->add('location', 'text', array('required' => false))
             ->add('latitude', 'hidden')
             ->add('longitude', 'hidden')
-            ->add('facebook', 'text')
-            ->add('twitter', 'text')
-            ->add('url', 'text')
+            ->add('facebook', 'text', array('required' => false))
+            ->add('twitter', 'text', array('required' => false))
+            ->add('url', 'text', array('required' => false))
             ->add('hasLocation', 'checkbox')
             ->add('hasTime', 'checkbox')
-            ->add('weatherForecast', 'text')
+            ->add('weatherForecast', 'text', array('required' => false))
             ->add('save', 'submit');
     }
 
