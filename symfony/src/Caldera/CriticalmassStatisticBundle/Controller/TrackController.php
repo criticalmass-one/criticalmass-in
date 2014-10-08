@@ -248,23 +248,15 @@ class TrackController extends Controller
         return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
     }
 
-    public function deleteconfirmAction(Request $request)
+    public function deleteconfirmAction(Request $request, $trackId = 0)
     {
-        $errorList = array();
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_deleteconfirm'))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
+        if ($trackId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track',93);
+            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
             $em->remove($track2);
             $em->flush();
-            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
         }
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:deleteconfirm.html.twig', array('form' => $form->createView()));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
     }
 }

@@ -65,9 +65,11 @@
             {% endif %}
 
             {% for track in ride.getTracks() %}
+            {% if track.getActivated() %}
             // create a red polyline from an arrays of LatLng points
             var options = { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }
             var polyline = L.polyline({{ track.getJson() }}, options).addTo(map);
+            {% endif %}
             {% endfor %}
 
             // zoom the map to the polyline
