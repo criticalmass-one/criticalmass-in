@@ -207,16 +207,22 @@ class TrackController extends Controller
     {
         if ($trackId) {
             $em = $this->getDoctrine()->getManager();
-            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+            $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
 
-            $file = fopen("test.txt", "w");
+            /*$file = "app.php";
+            error_log($file);
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.basename($file).'"');
             header('Content-Length: ' . filesize($file));
             ob_clean();
             flush();
             readfile($file);
-            exit;
+            exit;*/
+
+            header('Content-disposition: attachment; filename=track.gpx');
+            header('Content-type: text/plain');
+
+            echo $track->getGpx();
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
@@ -226,9 +232,9 @@ class TrackController extends Controller
     {
         if ($trackId) {
             $em = $this->getDoctrine()->getManager();
-            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
-            $track2->setActivated(0);
-            $em->merge($track2);
+            $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+            $track->setActivated(0);
+            $em->merge($track);
             $em->flush();
         }
 
