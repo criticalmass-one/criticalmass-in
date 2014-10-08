@@ -37,7 +37,7 @@
                     {% if app.getUser() %}
                     <div class="btn-group pull-right" style="margin-top: 24px;">
                         <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-add"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-plus"></i></a>
                     </div>
                     {% endif %}
 
