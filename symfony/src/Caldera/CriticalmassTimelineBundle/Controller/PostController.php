@@ -25,16 +25,21 @@ class PostController extends Controller
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId)));
             $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
             $post->setCity($city);
+
+            $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', array('citySlug' => $city->getMainSlugString()));
         }
         elseif ($rideId)
         {
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId)));
             $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
             $post->setRide($ride);
+
+            $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()));
         }
         else
         {
             $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write'));
+            $redirectUrl = $this->generateUrl('caldera_criticalmass_timeline_list');
         }
 
         $form = $formBuilder->getForm();
@@ -48,7 +53,9 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush();
 
-            return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+            /* Using the user’s referer will not work as the user might come from the writefailed page and would be
+               redirected there again. */
+            return new RedirectResponse($redirectUrl);
         }
         elseif ($form->isSubmitted())
         {
