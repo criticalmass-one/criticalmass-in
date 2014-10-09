@@ -91,7 +91,7 @@ class PostController extends Controller
 
             $content = "Es wurde der Kommentar mit der ID " + $postId + "gemeldet.\n" + "Der Inhalt:\n" + $post->getMessage();
 
-            mail("info@criticalmass.in", "Kommentar gemeldet", $content, "info@criticalmass.in");
+            mail("malte@criticalmass.in", "Kommentar gemeldet", $content, "malte@criticalmass.in");
         }
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
