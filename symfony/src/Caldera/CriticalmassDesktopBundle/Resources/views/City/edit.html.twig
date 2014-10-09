@@ -98,10 +98,12 @@
                         $('#city_longitude').val(position.lng);
                     });
 
+                    var standardLocationMarker = null;
+
                     function addStandardLocationMarker() {
                         var standardLocation = L.latLng($('#city_standardLatitude').val(), $('#city_standardLongitude').val());
 
-                        var standardLocationMarker = L.marker(standardLocation, {
+                        standardLocationMarker = L.marker(standardLocation, {
                             draggable: 'true',
                             icon: standardLocationIcon
                         });
@@ -120,12 +122,24 @@
 
                     function removeStandardLocationMarker()
                     {
-
+                        map.removeLayer(standardLocationMarker);
                     }
 
                     {% if city.getIsStandardable() %}
                     addStandardLocationMarker();
                     {% endif %}
+
+                    $('#city_isStandardable').on('click', function()
+                    {
+                        if ($(this).prop('checked'))
+                        {
+                            addStandardLocationMarker();
+                        }
+                        else
+                        {
+                            removeStandardLocationMarker();
+                        }
+                    });
                 };
             </script>
         </div>
