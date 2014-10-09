@@ -21,7 +21,7 @@ class City
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-  protected $id;
+    protected $id;
 
 	/**
 	 * Name der Stadt.
@@ -129,6 +129,11 @@ class City
      * @ORM\Column(type="time", nullable=true)
      */
     protected $standardTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isStandardableLocation = false;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -1087,5 +1092,28 @@ class City
         }
 
         return false;
+    }
+
+    /**
+     * Set isStandardableLocation
+     *
+     * @param boolean $isStandardableLocation
+     * @return City
+     */
+    public function setIsStandardableLocation($isStandardableLocation)
+    {
+        $this->isStandardableLocation = $isStandardableLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get isStandardableLocation
+     *
+     * @return boolean 
+     */
+    public function getIsStandardableLocation()
+    {
+        return $this->isStandardableLocation;
     }
 }
