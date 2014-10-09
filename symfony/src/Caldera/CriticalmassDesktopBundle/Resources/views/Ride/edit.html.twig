@@ -27,6 +27,9 @@
         </ol>
         {% endif %}
 
+        {% if city.getIsStandardable() %}
+        <div class="alert alert-warning" role="alert"><strong>Vorsicht!</strong> Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.</div>
+        {% endif %}
         <h1>{{ title }}</h1>
         <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
 
