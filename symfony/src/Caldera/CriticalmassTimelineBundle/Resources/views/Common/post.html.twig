@@ -14,7 +14,7 @@
         {% endif %}
 
         {% if app.getUser().getId() == post.getUser.getId() %}
-            <a class="postDeleteButton btn btn-default" href="#" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
+            <a class="postDeleteButton btn btn-default" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
         {% endif %}
         </h4>
 
