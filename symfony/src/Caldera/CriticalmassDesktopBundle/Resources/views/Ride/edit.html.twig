@@ -59,6 +59,7 @@
                     </div>
 
                     <div class="row">
+                        <div class="alert alert-warning" role="alert" id="doubleMonthRide"><strong>Vorsicht!</strong> Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?</div>
                         <label class="control-label" for="date">Datum:</label>
                             <div class="form-group">
                                 {{ form_widget(form.date, { 'attr' : { 'class': 'form-control' } }) }}
@@ -152,6 +153,9 @@
                 {
                     $('#ride_hasLocation').on('click', toggleLocation);
                     $('#ride_hasTime').on('click', toggleTime);
+                    $('#ride_date_day').on('click', checkRideDate);
+                    $('#ride_date_month').on('click', checkRideDate);
+                    $('#ride_date_year').on('click', checkRideDate);
 
                     {% if ride and ride.hasLocation() %}
                     var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
@@ -190,6 +194,29 @@
                         $('#ride_longitude').val(position.lng);
                     });
                 };
+
+                var rideDate = new Date({{ city.getCurrentRide().getDateTime().format('Y, m, d, H, i, s') }});
+                function checkRideDate()
+                {
+                    var day = $('#ride_date_day').val();
+                    var month = $('#ride_date_month').val();
+                    var year = $('#ride_date_year').val();
+
+                    var hour = $('#ride_time_hour').val();
+                    var minute = $('#ride_time_minute').val();
+                    var second = 0;
+
+                    var newRideDate = new Date(year, month, day, hour, minute, second);
+
+                    if ((newRideDate.getMonth() + 1) == rideDate.getMonth())
+                    {
+                        $('#doubleMonthRide').show();
+                    }
+                    else
+                    {
+                        $('#doubleMonthRide').hide();
+                    }
+                }
             </script>
         </div>
     </div>
