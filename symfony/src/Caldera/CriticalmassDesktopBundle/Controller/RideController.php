@@ -125,7 +125,7 @@ class RideController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('hasErrors' => $hasErrors, 'ride' => null, 'form' => $form->createView(), 'city' => $city));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('hasErrors' => $hasErrors, 'ride' => null, 'form' => $form->createView(), 'city' => $city, 'dateTime' => new \DateTime()));
     }
 
 
