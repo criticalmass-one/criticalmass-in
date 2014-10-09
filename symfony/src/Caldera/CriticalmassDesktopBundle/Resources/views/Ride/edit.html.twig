@@ -59,8 +59,8 @@
                     </div>
 
                     <div class="row">
-                        <div class="alert alert-warning" role="alert" id="doubleMonthRide"><strong>Vorsicht!</strong> Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?</div>
-                        <div class="alert alert-danger" role="alert" id="doubleDayRide"><strong>Achtung!</strong> An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider keine zwei Touren an einem Tag verwaltet werden.</div>
+                        <div class="alert alert-warning" role="alert" id="doubleMonthRide" style="display: none;"><strong>Vorsicht!</strong> Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?</div>
+                        <div class="alert alert-danger" role="alert" id="doubleDayRide" style="display: none;"><strong>Achtung!</strong> An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider keine zwei Touren an einem Tag verwaltet werden.</div>
                         <label class="control-label" for="date">Datum:</label>
                             <div class="form-group">
                                 {{ form_widget(form.date, { 'attr' : { 'class': 'form-control' } }) }}
@@ -196,25 +196,50 @@
                     });
                 };
 
-                var rideDate = new Date({{ city.getCurrentRide().getDateTime().format('Y, m, d, H, i, s') }});
+                var rideDates = [];
+
+                {% for ride in city.getRides() %}
+                rideDates.push(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+                {% endfor %}
+
+                function searchForMonth(year, month)
+                {
+                    for (index in rideDates)
+                    {
+                        if ((rideDates[index].getFullYear() == year) && ((rideDates[index].getMonth() + 1) == month))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                function searchForMonthDay(year, month, day)
+                {
+                    for (index in rideDates)
+                    {
+                        if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
                 function checkRideDate()
                 {
                     var day = $('#ride_date_day').val();
                     var month = $('#ride_date_month').val();
                     var year = $('#ride_date_year').val();
 
-                    var hour = $('#ride_time_hour').val();
-                    var minute = $('#ride_time_minute').val();
-                    var second = 0;
-
-                    var newRideDate = new Date(year, month, day, hour, minute, second);
-
-                    if (newRideDate.getDay() == rideDate.getDay())
+                    if (searchForMonthDay(year, month, day))
                     {
                         $('#doubleMonthRide').hide();
                         $('#doubleDayRide').show();
                     }
-                    else if ((newRideDate.getMonth() + 1) == rideDate.getMonth())
+                    else if (searchForMonth(year, month))
                     {
                         $('#doubleMonthRide').show();
                         $('#doubleDayRide').hide();
