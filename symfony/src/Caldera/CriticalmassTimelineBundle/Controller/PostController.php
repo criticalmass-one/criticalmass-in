@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassTimelineBundle\Controller;
 
 use Caldera\CriticalmassTimelineBundle\Entity\Post;
+use Caldera\CriticalmassTimelineBundle\Type\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,17 +13,13 @@ class PostController extends Controller
     public function writeAction(Request $request, $cityId = null, $rideId = null)
     {
         $post = new Post();
-        $formBuilder = $this->createFormBuilder($post)
-            ->add('message', 'textarea')
-            ->add('latitude', 'hidden')
-            ->add('longitude', 'hidden');
 
         $ride = null;
         $city = null;
 
         if ($cityId)
         {
-            $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId)));
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
             $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
             $post->setCity($city);
 
@@ -30,7 +27,7 @@ class PostController extends Controller
         }
         elseif ($rideId)
         {
-            $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId)));
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId))));
             $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
             $post->setRide($ride);
 
@@ -38,11 +35,11 @@ class PostController extends Controller
         }
         else
         {
-            $formBuilder->setAction($this->generateUrl('caldera_criticalmass_timeline_post_write'));
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
+
             $redirectUrl = $this->generateUrl('caldera_criticalmass_timeline_list');
         }
 
-        $form = $formBuilder->getForm();
         $form->handleRequest($request);
 
         if ($form->isValid())
