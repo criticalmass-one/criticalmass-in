@@ -98,18 +98,34 @@
                         $('#city_longitude').val(position.lng);
                     });
 
-                    var standardLocationMarker = L.marker(mapCenter, { draggable: 'true', icon: standardLocationIcon });
-                    standardLocationMarker.addTo(map);
-                    standardLocationMarker.bindPopup('Schieb mich auf den Treffpunkt der Touren!');
-                    standardLocationMarker.openPopup();
+                    function addStandardLocationMarker() {
+                        var standardLocation = L.latLng($('#city_standardLatitude').val(), $('#city_standardLongitude').val());
 
-                    standardLocationMarker.on('dragend', function(event){
-                        var marker = event.target;
-                        var position = marker.getLatLng();
+                        var standardLocationMarker = L.marker(standardLocation, {
+                            draggable: 'true',
+                            icon: standardLocationIcon
+                        });
+                        standardLocationMarker.addTo(map);
+                        standardLocationMarker.bindPopup('Schieb mich auf den Treffpunkt der Touren!');
+                        standardLocationMarker.openPopup();
 
-                        $('#city_standardLatitude').val(position.lat);
-                        $('#city_standardLongitude').val(position.lng);
-                    });
+                        standardLocationMarker.on('dragend', function (event) {
+                            var marker = event.target;
+                            var position = marker.getLatLng();
+
+                            $('#city_standardLatitude').val(position.lat);
+                            $('#city_standardLongitude').val(position.lng);
+                        });
+                    }
+
+                    function removeStandardLocationMarker()
+                    {
+
+                    }
+
+                    {% if city.getIsStandardable() %}
+                    addStandardLocationMarker();
+                    {% endif %}
                 };
             </script>
         </div>
