@@ -9,6 +9,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+    {{ form_errors(form) }}
     <div class="container">
         {% if city != null %}
         <ol class="breadcrumb">
@@ -23,6 +24,14 @@
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li class="active">Stadt hinzufügen</li>
         </ol>
+        {% endif %}
+
+        {% if hasErrors is not null %}
+            {% if hasErrors == true %}
+                <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+            {% elseif hasErrors == false %}
+                <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() } ) }}">Zurück zur Stadt?</a></div>
+            {% endif %}
         {% endif %}
 
         {{ form_start(form) }}

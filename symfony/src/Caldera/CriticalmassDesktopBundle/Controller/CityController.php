@@ -96,14 +96,22 @@ class CityController extends Controller
 
         $form->handleRequest($request);
 
+        $hasErrors = null;
+
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($city);
             $em->persist($archiveCity);
             $em->flush();
+
+            $hasErrors = false;
+        }
+        elseif ($form->isSubmitted())
+        {
+            $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView()));
+        return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
     }
 }
