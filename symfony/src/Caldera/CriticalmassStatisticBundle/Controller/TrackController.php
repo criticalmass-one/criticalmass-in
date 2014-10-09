@@ -258,8 +258,8 @@ class TrackController extends Controller
     {
         if ($trackId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $track2 = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
-            $em->remove($track2);
+            $track = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
+            $em->remove($track);
             $em->flush();
         }
 
