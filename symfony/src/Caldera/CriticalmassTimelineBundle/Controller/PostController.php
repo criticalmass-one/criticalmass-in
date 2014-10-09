@@ -82,4 +82,18 @@ class PostController extends Controller
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
+
+    public function reportconfirmAction(Request $request, $postId = 0)
+    {
+        if ($postId > 0) {
+            $em = $this->getDoctrine()->getManager();
+            $post = $em->find('CalderaCriticalmassTimelineBundle:Post',$postId);
+
+            $content = "Es wurde der Kommentar mit der ID " + $postId + "gemeldet.\n" + "Der Inhalt:\n" + $post->getMessage();
+
+            mail("info@criticalmass.in", "Kommentar gemeldet", $content, "info@criticalmass.in");
+        }
+
+        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+    }
 }

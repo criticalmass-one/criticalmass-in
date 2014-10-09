@@ -15,6 +15,8 @@
 
         {% if app.getUser().getId() == post.getUser.getId() %}
             <a class="postDeleteButton btn btn-default" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
+        {% else %}
+            <a class="postReportButton btn btn-default" href="#" title="Melden" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
         {% endif %}
         </h4>
 
@@ -40,6 +42,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalReport" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Kommentar melden</h4>
+            </div>
+            <div class="modal-body">
+                <span id="trackIdLabel"></span>
+                <p>Willst Du diesen Kommentar melden?</p>
+
+                <a id="reportButton" href="" class="btn btn-success">Ja, melden</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% javascripts
 '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
 %}
@@ -60,5 +79,20 @@
 
     /* Event an alle Elemente mit der Klasse trackDownloadButton anhängen. */
     $('.postDeleteButton').on('click', prepareDeleteModal);
+
+    function prepareReportModal()
+    {
+        /* this enthalt die Quelle des Events, also den Button, der das ganze ausgelöst hat. An dessen data-trackid-Attribut wollen wir nun ran. */
+        var postId = $(this).data('postid');
+
+        $('#reportButton').prop('href', 'http://beta.criticalmass.cm/app_dev.php/post/reportconfirm/' + postId);
+
+        /* und Fenster anzeigen */
+        $('#modalReport').modal('show');
+
+    }
+
+    /* Event an alle Elemente mit der Klasse trackDownloadButton anhängen. */
+    $('.postReportButton').on('click', prepareReportModal);
 
 </script>
