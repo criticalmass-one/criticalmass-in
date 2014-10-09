@@ -37,6 +37,7 @@
                     <li><a href="{{ path('caldera_criticalmass_statistic_ride_participants') }}">Aktueller Monat</a></li>
                 </ul>
             </li>
+            <li><a href="{{ path('caldera_criticalmass_timeline_list') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-dashboard" style="color: white"></i>&nbsp;&nbsp;Chronik</a></li>
             {% if app.getUser() %}
             <li><a href="{{ path('fos_user_security_login') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-user" style="color: white"></i>&nbsp;&nbsp;Benutzerkonto</a></li>
             {% else %}
