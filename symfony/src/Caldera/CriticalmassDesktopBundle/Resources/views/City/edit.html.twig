@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="row">
                     <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
@@ -159,12 +159,53 @@
                         {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-success pull-right">Speichern</button>
             </div>
         </div>
         <div class="row">
             <h2>Tour-Informationen</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="form-group{% if form_errors(form.isStandardable) %} has-error has-feedback{% endif %}">
+                        <label class="control-label" for="">Hat regelmäßige Touren:</label>
+                        {{ form_widget(form.isStandardable, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group{% if form_errors(form.standardDayOfWeek) %} has-error has-feedback{% endif %}">
+                        <label class="control-label" for="">Einwohnerzahl:</label>
+                        {{ form_widget(form.standardDayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group{% if form_errors(form.standardWeekOfMonth) %} has-error has-feedback{% endif %}">
+                        <label class="control-label" for="">Einwohnerzahl:</label>
+                        {{ form_widget(form.standardWeekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="form-group{% if form_errors(form.standardTime) %} has-error has-feedback{% endif %}">
+                        <label class="control-label" for="">Hat regelmäßige Touren:</label>
+                        {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group{% if form_errors(form.standardLocation) %} has-error has-feedback{% endif %}">
+                        <label class="control-label" for="">Hat regelmäßige Touren:</label>
+                        {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-success pull-right">Speichern</button>
         </div>
         {{ form_end(form) }}
     </div>
