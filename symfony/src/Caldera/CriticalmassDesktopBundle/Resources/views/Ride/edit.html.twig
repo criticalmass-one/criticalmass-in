@@ -121,7 +121,7 @@
 
                     <div class="row">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">Speichern</button>
+                            <button type="submit" class="btn btn-success" id="rideSubmitButton">Speichern</button>
                         </div>
                     </div>
 
@@ -238,16 +238,19 @@
                     {
                         $('#doubleMonthRide').hide();
                         $('#doubleDayRide').show();
+                        $('#rideSubmitButton').prop('disabled', 'disabled');
                     }
                     else if (searchForMonth(year, month))
                     {
                         $('#doubleMonthRide').show();
                         $('#doubleDayRide').hide();
+                        $('#rideSubmitButton').prop('disabled', '');
                     }
                     else
                     {
                         $('#doubleMonthRide').hide();
                         $('#doubleDayRide').hide();
+                        $('#rideSubmitButton').prop('disabled', '');
                     }
                 }
             </script>
