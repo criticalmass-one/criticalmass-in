@@ -1062,4 +1062,30 @@ class City
     {
         return $this->colorBlue;
     }
+
+    public function hasRideInMonth(\DateTime $dateTime)
+    {
+        foreach ($this->rides as $ride)
+        {
+            if ($ride->getDateTime()->format('Y-m') == $dateTime->format('Y-m'))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRideAtMonthDay(\DateTime $dateTime)
+    {
+        foreach ($this->rides as $ride)
+        {
+            if ($ride->getDateTime()->format('Y-m-d') == $dateTime->format('Y-m-d'))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
