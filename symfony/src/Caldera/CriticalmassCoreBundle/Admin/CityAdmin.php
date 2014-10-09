@@ -45,6 +45,7 @@ class CityAdmin extends Admin
                 ->add('isStandardable', 'checkbox', array('label' => 'Standard-Werte verwenden', 'required' => true))
                 ->add('standardDayOfWeek', 'choice', array('label' => 'Wochentag', 'choices' => array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag'), 'required' => false))
                 ->add('standardWeekOfMonth', 'choice', array('label' => 'Woche im Monat', 'choices' => array(1 => 'Erste Woche im Monat', 2 => 'Zweite Woche im Monat', 3 => 'Dritte Woche im Monat', 4 => 'Vierte Woche im Monat', 0 => 'Letzte Woche im Monat'), 'required' => false))
+                ->add('isStandardableTime', 'checkbox', array('label' => 'Standard-Zeitpunkt verwenden', 'required' => false))
                 ->add('standardTime', 'time', array('label' => 'Startzeit', 'required' => false))
                 ->add('isStandardableLocation', 'checkbox', array('label' => 'Standard-Treffpunkt verwenden', 'required' => false))
                 ->add('standardLocation', 'text', array('label' => 'Treffpunkt', 'required' => false))

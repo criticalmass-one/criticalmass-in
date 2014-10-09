@@ -126,6 +126,11 @@ class City
     protected $standardWeekOfMonth;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isStandardableTime = false;
+
+    /**
      * @ORM\Column(type="time", nullable=true)
      */
     protected $standardTime;
@@ -1115,5 +1120,28 @@ class City
     public function getIsStandardableLocation()
     {
         return $this->isStandardableLocation;
+    }
+
+    /**
+     * Set isStandardableTime
+     *
+     * @param boolean $isStandardableTime
+     * @return City
+     */
+    public function setIsStandardableTime($isStandardableTime)
+    {
+        $this->isStandardableTime = $isStandardableTime;
+
+        return $this;
+    }
+
+    /**
+     * Get isStandardableTime
+     *
+     * @return boolean 
+     */
+    public function getIsStandardableTime()
+    {
+        return $this->isStandardableTime;
     }
 }

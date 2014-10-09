@@ -142,6 +142,12 @@
                             $('#city_standardLocation').prop('disabled', 'disabled');
                         }
                     });
+
+                    $('#city_isStandardableTime').on('click', function()
+                    {
+                        $('#city_standardTime_hour').prop('disabled', !$('#city_isStandardableTime').prop('checked'));
+                        $('#city_standardTime_minute').prop('disabled', !$('#city_isStandardableTime').prop('checked'));
+                    });
                 };
             </script>
         </div>
@@ -262,8 +268,17 @@
                 <div class="row">
                     <div class="form-group{% if form_errors(form.standardTime) %} has-error has-feedback{% endif %}">
                         <label class="control-label" for="">Uhrzeit der Touren:</label>
-                        {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control'} }) }}
-                        <p class="help-block">Startzeit der Touren</p>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                {{ form_widget(form.isStandardableTime) }}
+                            </span>
+                            {% if city.getIsStandardableTime() %}
+                                {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control' } }) }}
+                            {% else %}
+                                {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                            {% endif %}
+                        </div>
+                        <p class="help-block">Startzeit der Touren.</p>
                     </div>
                 </div>
 
