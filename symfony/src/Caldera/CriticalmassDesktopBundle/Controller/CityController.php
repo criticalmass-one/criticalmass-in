@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Type\CityType;
+use Caldera\CriticalmassCoreBundle\Type\StandardCityType;
 use \Caldera\CriticalmassCoreBundle\Entity\City as City;
 use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -87,7 +88,7 @@ class CityController extends Controller
 
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
-        $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
+        $form = $this->createForm(new StandardCityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
 
         $archiveCity = clone $city;
         $archiveCity->setArchiveUser($this->getUser());
