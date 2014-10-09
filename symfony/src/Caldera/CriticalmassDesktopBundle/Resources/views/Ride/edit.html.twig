@@ -41,9 +41,135 @@
         {% endif %}
         {% endif %}
 
-        <div class="row">
-            <div class="col-md-4">
-                {{ form_start(form) }}
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="height: 250px;"></div>
+                </div>
+                {% javascripts
+                '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+                %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+                <script>
+                    function toggleLocation()
+                    {
+                        $('#ride_location').prop('disabled', !$('#ride_hasLocation').prop('checked'));
+                    }
+
+                    function toggleTime()
+                    {
+                        $('#ride_time_minute').prop('disabled', !$('#ride_hasTime').prop('checked'));
+                        $('#ride_time_hour').prop('disabled', !$('#ride_hasTime').prop('checked'));
+                    }
+
+                    window.onload = function()
+                    {
+                        $('#ride_hasLocation').on('click', toggleLocation);
+                        $('#ride_hasTime').on('click', toggleTime);
+                        $('#ride_date_day').on('click', checkRideDate);
+                        $('#ride_date_month').on('click', checkRideDate);
+                        $('#ride_date_year').on('click', checkRideDate);
+
+                        {% if ride and ride.hasLocation() %}
+                        var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+                        {% else %}
+                        var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+                        {% endif %}
+                        var map = L.map('map');
+                        var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        });
+
+                        tileLayer.addTo(map);
+                        map.setView(mapCenter, 12);
+
+                        var locationIcon = L.icon({
+                            iconUrl: '/images/marker/marker-red.png',
+                            iconRetinaUrl: '/images/marker/marker-red-2x.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [13, 41],
+                            popupAnchor: [0, -36],
+                            shadowUrl: '/images/marker/defaultshadow.png',
+                            shadowSize: [41, 41],
+                            shadowAnchor: [13, 41]
+                        });
+
+                        var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
+                        marker.addTo(map);
+                        marker.bindPopup('Schieb mich auf den Treffpunkt!');
+                        marker.openPopup();
+
+                        marker.on('dragend', function(event){
+                            var marker = event.target;
+                            var position = marker.getLatLng();
+
+                            $('#ride_latitude').val(position.lat);
+                            $('#ride_longitude').val(position.lng);
+                        });
+                    };
+
+                    var rideDates = [];
+
+                    {% for ride in city.getRides() %}
+                    rideDates.push(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+                    {% endfor %}
+
+                    function searchForMonth(year, month)
+                    {
+                        for (index in rideDates)
+                        {
+                            if ((rideDates[index].getFullYear() == year) && ((rideDates[index].getMonth() + 1) == month))
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+
+                    function searchForMonthDay(year, month, day)
+                    {
+                        for (index in rideDates)
+                        {
+                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day)
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+
+                    function checkRideDate()
+                    {
+                        var day = $('#ride_date_day').val();
+                        var month = $('#ride_date_month').val();
+                        var year = $('#ride_date_year').val();
+
+                        if (searchForMonthDay(year, month, day))
+                        {
+                            $('#doubleMonthRide').hide();
+                            $('#doubleDayRide').show();
+                            $('#rideSubmitButton').prop('disabled', 'disabled');
+                        }
+                        else if (searchForMonth(year, month))
+                        {
+                            $('#doubleMonthRide').show();
+                            $('#doubleDayRide').hide();
+                            $('#rideSubmitButton').prop('disabled', '');
+                        }
+                        else
+                        {
+                            $('#doubleMonthRide').hide();
+                            $('#doubleDayRide').hide();
+                            $('#rideSubmitButton').prop('disabled', '');
+                        }
+                    }
+                </script>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="form-group">
                             <label class="control-label" for="title">Titel:</label>
@@ -94,7 +220,8 @@
                         </div>
                         <p class="help-block">Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert werden, falls der noch nicht bekannt sein sollte.</p>
                     </div>
-
+                </div>
+                <div class="col-md-6">
                     <div class="row">
                         <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="facebook">Link zu einer Veranstaltungsseite auf facebook:</label>
@@ -133,132 +260,8 @@
                     {{ form_widget(form.latitude) }}
                     {{ form_widget(form.longitude) }}
                     {{ form_widget(form._token) }}
-                </form>
+                </div>
             </div>
-            <div class="col-md-8">
-                <div id="map" style="height: 500px;"></div>
-            </div>
-            {% javascripts
-            '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-            %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-            <script>
-                function toggleLocation()
-                {
-                    $('#ride_location').prop('disabled', !$('#ride_hasLocation').prop('checked'));
-                }
-
-                function toggleTime()
-                {
-                    $('#ride_time_minute').prop('disabled', !$('#ride_hasTime').prop('checked'));
-                    $('#ride_time_hour').prop('disabled', !$('#ride_hasTime').prop('checked'));
-                }
-
-                window.onload = function()
-                {
-                    $('#ride_hasLocation').on('click', toggleLocation);
-                    $('#ride_hasTime').on('click', toggleTime);
-                    $('#ride_date_day').on('click', checkRideDate);
-                    $('#ride_date_month').on('click', checkRideDate);
-                    $('#ride_date_year').on('click', checkRideDate);
-
-                    {% if ride and ride.hasLocation() %}
-                    var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
-                    {% else %}
-                    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-                    {% endif %}
-                    var map = L.map('map');
-                    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    });
-
-                    tileLayer.addTo(map);
-                    map.setView(mapCenter, 12);
-
-                    var locationIcon = L.icon({
-                        iconUrl: '/images/marker/marker-red.png',
-                        iconRetinaUrl: '/images/marker/marker-red-2x.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [13, 41],
-                        popupAnchor: [0, -36],
-                        shadowUrl: '/images/marker/defaultshadow.png',
-                        shadowSize: [41, 41],
-                        shadowAnchor: [13, 41]
-                    });
-
-                    var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
-                    marker.addTo(map);
-                    marker.bindPopup('Schieb mich auf den Treffpunkt!');
-                    marker.openPopup();
-
-                    marker.on('dragend', function(event){
-                        var marker = event.target;
-                        var position = marker.getLatLng();
-
-                        $('#ride_latitude').val(position.lat);
-                        $('#ride_longitude').val(position.lng);
-                    });
-                };
-
-                var rideDates = [];
-
-                {% for ride in city.getRides() %}
-                rideDates.push(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
-                {% endfor %}
-
-                function searchForMonth(year, month)
-                {
-                    for (index in rideDates)
-                    {
-                        if ((rideDates[index].getFullYear() == year) && ((rideDates[index].getMonth() + 1) == month))
-                        {
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-
-                function searchForMonthDay(year, month, day)
-                {
-                    for (index in rideDates)
-                    {
-                        if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day)
-                        {
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-
-                function checkRideDate()
-                {
-                    var day = $('#ride_date_day').val();
-                    var month = $('#ride_date_month').val();
-                    var year = $('#ride_date_year').val();
-
-                    if (searchForMonthDay(year, month, day))
-                    {
-                        $('#doubleMonthRide').hide();
-                        $('#doubleDayRide').show();
-                        $('#rideSubmitButton').prop('disabled', 'disabled');
-                    }
-                    else if (searchForMonth(year, month))
-                    {
-                        $('#doubleMonthRide').show();
-                        $('#doubleDayRide').hide();
-                        $('#rideSubmitButton').prop('disabled', '');
-                    }
-                    else
-                    {
-                        $('#doubleMonthRide').hide();
-                        $('#doubleDayRide').hide();
-                        $('#rideSubmitButton').prop('disabled', '');
-                    }
-                }
-            </script>
-        </div>
+        </form>
     </div>
 {% endblock %}
