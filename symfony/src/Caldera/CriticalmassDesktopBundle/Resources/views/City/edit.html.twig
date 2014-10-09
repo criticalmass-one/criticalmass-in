@@ -73,17 +73,42 @@
                         shadowAnchor: [13, 41]
                     });
 
-                    var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
-                    marker.addTo(map);
-                    marker.bindPopup('Schieb mich auf den Mittelpunkt der Stadt!');
-                    marker.openPopup();
 
-                    marker.on('dragend', function(event){
+                    var standardLocationIcon = L.icon({
+                        iconUrl: '/images/marker/marker-yellow.png',
+                        iconRetinaUrl: '/images/marker/marker-yellow-2x.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [13, 41],
+                        popupAnchor: [0, -36],
+                        shadowUrl: '/images/marker/defaultshadow.png',
+                        shadowSize: [41, 41],
+                        shadowAnchor: [13, 41]
+                    });
+
+                    var locationMarker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
+                    locationMarker.addTo(map);
+                    locationMarker.bindPopup('Schieb mich auf den Mittelpunkt der Stadt!');
+                    locationMarker.openPopup();
+
+                    locationMarker.on('dragend', function(event){
                         var marker = event.target;
                         var position = marker.getLatLng();
 
                         $('#city_latitude').val(position.lat);
                         $('#city_longitude').val(position.lng);
+                    });
+
+                    var standardLocationMarker = L.marker(mapCenter, { draggable: 'true', icon: standardLocationIcon });
+                    standardLocationMarker.addTo(map);
+                    standardLocationMarker.bindPopup('Schieb mich auf den Treffpunkt der Touren!');
+                    standardLocationMarker.openPopup();
+
+                    standardLocationMarker.on('dragend', function(event){
+                        var marker = event.target;
+                        var position = marker.getLatLng();
+
+                        $('#city_standardLatitude').val(position.lat);
+                        $('#city_standardLongitude').val(position.lng);
                     });
                 };
             </script>
