@@ -1,6 +1,12 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block title %}{% if city != null %}{{ city.getTitle }} editieren{% else %}Neue Stadt hinzufügen{% endif %}{% endblock %}
+{% if city != null %}
+    {% set title = 'Stadt editieren' %}
+{% else %}
+    {% set title = 'Neue Stadt hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -20,6 +26,10 @@
         {% endif %}
 
         {{ form_start(form) }}
+
+        <div class="row">
+            <h1>{{ title }}</h1>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -77,6 +87,10 @@
                     });
                 };
             </script>
+        </div>
+
+        <div class="row">
+             <h2>Städte-Informationen</h2>
         </div>
 
         <div class="row">
@@ -147,6 +161,9 @@
 
                 <button type="submit" class="btn btn-success pull-right">Speichern</button>
             </div>
+        </div>
+        <div class="row">
+            <h2>Tour-Informationen</h2>
         </div>
         {{ form_end(form) }}
     </div>
