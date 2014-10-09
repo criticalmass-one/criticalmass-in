@@ -106,7 +106,7 @@ class RideController extends Controller
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
 
-        if ($form->isValid())
+        if ($form->isValid() && !$city->hasRideAtMonthDay($ride->getDateTime()))
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
