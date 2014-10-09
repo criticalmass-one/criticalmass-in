@@ -117,6 +117,8 @@ class TrackController extends Controller
                     $re->setEstimatedDuration($track->getDuration());
 
                     $em->persist($re);
+                    $em->flush();
+                    $track->setRideEstimate($re->getId());
                     $em->persist($track);
                     $em->flush();
 
@@ -182,6 +184,8 @@ class TrackController extends Controller
             $re->setEstimatedDuration($track->getDuration());
 
             $em->persist($re);
+            $em->flush();
+            $track->setRideEstimate($re->getId());
             $em->persist($track);
             $em->flush();
 
@@ -208,16 +212,6 @@ class TrackController extends Controller
         if ($trackId) {
             $em = $this->getDoctrine()->getManager();
             $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
-
-            /*$file = "app.php";
-            error_log($file);
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($file).'"');
-            header('Content-Length: ' . filesize($file));
-            ob_clean();
-            flush();
-            readfile($file);
-            exit;*/
 
             header('Content-disposition: attachment; filename=track.gpx');
             header('Content-type: text/plain');
@@ -259,7 +253,9 @@ class TrackController extends Controller
         if ($trackId > 0) {
             $em = $this->getDoctrine()->getManager();
             $track = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
+            $re = $em->find('CalderaCriticalmassStatisticBundle:RideEstimate', $track->getRideEstimate());
             $em->remove($track);
+            $em->remove($re);
             $em->flush();
         }
 

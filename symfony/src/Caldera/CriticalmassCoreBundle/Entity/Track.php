@@ -75,6 +75,11 @@ class Track
     protected $timeStamps;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $rideEstimate;
+
+    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
@@ -491,5 +496,23 @@ class Track
     {
         $this->activated = $activated;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRideEstimate()
+    {
+        return $this->rideEstimate;
+    }
+
+    /**
+     * @param mixed $rideEstimate
+     */
+    public function setRideEstimate($rideEstimate)
+    {
+        $this->rideEstimate = $rideEstimate;
+    }
+
+
 
 }
