@@ -15,7 +15,19 @@
         {% for post in posts %}
             {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
         {% endfor %}
-        </div>
+
+        <ul class="pager">
+            {% if page < (postCount / 20) %}
             <li class="previous"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page + 1 }) }}">&larr; Ältere</a></li>
+            {% else %}
+            <li class="previous disabled"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page }) }}">&larr; Ältere</a></li>
+            {% endif %}
+
+            {% if page > 1 %}
             <li class="next"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page - 1 }) }}">Neuere &rarr;</a></li>
+            {% else %}
+            <li class="next disabled"><a href="{{ path('caldera_criticalmass_timeline_list') }}">Neuere &rarr;</a></li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock %}
