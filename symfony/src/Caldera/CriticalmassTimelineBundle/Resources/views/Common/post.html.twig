@@ -23,6 +23,6 @@
 
 {% if post.getChildren()|length > 0 %}
     {% for child in post.getChildren() %}
-        {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  child } %}
+        {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post':  child } %}
     {% endfor %}
 {% endif %}
