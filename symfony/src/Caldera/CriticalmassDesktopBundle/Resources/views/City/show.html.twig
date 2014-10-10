@@ -97,38 +97,6 @@
                     {% endif %}
 
                 <div class="row">
-                    <div class="col-lg-12">
-                        <label>Datum:</label>
-                        <span>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <label>Uhrzeit:</label>
-                        <span>{{ city.getCurrentRide().getDateTime.format('H:i') }}</span>
-                    </div>
-                </div>
-                {% if city.getCurrentRide().getWeatherForecast() %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <label>Wetter:</label>
-                        <span>{{ city.getCurrentRide().getWeatherForecast() }}</span>
-                    </div>
-                </div>
-                {% endif %}
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <label>Treffpunkt:</label>
-                        {% if city.getCurrentRide().hasLocation() %}
-                        <span>{{ city.getCurrentRide().getLocation() }}</span>
-                        {% else %}
-                        <span><em>noch nicht bekannt</em></span>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="row">
                     <div id="map" class="col-md-12" style="height: 300px;"></div>
                     {% javascripts
                     '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
@@ -144,7 +112,16 @@
 
                         tileLayer.addTo(map);
 
+                        var popupContent = '<label>Datum:</label><span>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</span>';
+                        popupContent += '<label>Uhrzeit:</label><span>{{ city.getCurrentRide().getDateTime.format('H:i') }}</span>';
+
+                        {% if city.getCurrentRide().getWeatherForecast() %}
+                        popupContent += '<label>Wetter:</label><span>{{ city.getCurrentRide().getWeatherForecast() }}</span>';
+                        {% endif %}
+
                         {% if city.getCurrentRide().hasLocation() %}
+                        popupContent += '<strong>Treffpunkt:</strong> {{ city.getCurrentRide().getLocation() }}';
+
                         var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
 
                         var locationIcon = L.icon({
@@ -160,9 +137,11 @@
 
                         var marker = L.marker(mapCenter, { icon: locationIcon });
                         marker.addTo(map);
-                        marker.bindPopup('<strong>Treffpunkt:</strong> {{ city.getCurrentRide().getLocation() }}');
+                        marker.bindPopup(popupContent);
                         marker.openPopup();
                         {% else %}
+                        popupContent += '<p>Der Treffpunkt ist leider noch nicht bekannt :(';
+
                         var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
 
                         var cityIcon = L.icon({
@@ -178,7 +157,7 @@
 
                         var marker = L.marker(mapCenter, { icon: cityIcon });
                         marker.addTo(map);
-                        marker.bindPopup('<p>Der Treffpunkt ist leider noch nicht bekannt :(');
+                        marker.bindPopup(popupContent);
                         marker.openPopup();
                         {% endif %}
 
