@@ -4,11 +4,11 @@
 {% set indent = 0 %}
 {% endif %}
 
-<div class="row">
+<div class="row" id="post-{{ post.getId() }}" data-indent="{{ indent }}">
     {% if col is defined %}
     <div class="col-md-{{ col }} col-md-offset-{{ indent }}">
     {% else %}
-    <div class="col-md-12">
+    <div class="col-md-12" data-indent="0">
     {% endif %}
         <div class="post media">
             <span class="pull-left">
@@ -17,7 +17,7 @@
 
 
             <div class="media-body">
-                <button class="btn btn-default btn-xs"><i class="glyphicon glyphicon-share-alt"></i></button>
+                <button class="btn btn-default btn-xs answer" data-postid="{{ post.getId() }}"><i class="glyphicon glyphicon-share-alt"></i></button>
                 {% if post.getCity() %}
                 <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:</h4>
                 {% elseif post.getRide() %}
