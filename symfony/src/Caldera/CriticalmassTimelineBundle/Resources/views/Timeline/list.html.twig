@@ -21,9 +21,8 @@
 
                     var postId = $(this).data('postid');
                     var indent = $('#post-' + postId).data('indent');
-
+                    
                     var newForm = '<div id="postFormContainer" class="row post-answer-form"><div class="col-md-' + (12 - indent - 1) + ' col-md-offset-' + (indent + 1) +'">' + postFormHtml + '</div></div>';
-
 
                     $('#post-' + postId).append(newForm);
                 });
