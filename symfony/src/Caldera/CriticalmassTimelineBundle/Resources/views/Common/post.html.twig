@@ -1,11 +1,23 @@
+{% if indent is defined %}
+{% set col= 12 - indent %}
+{% else %}
+{% set indent= 0 %}
+{% endif %}
+
 <div class="row">
+    {% if col is defined %}
+    <div class="col-md-{{ col }} col-md-offset-{{ indent }}">qwdqwdqwdqwdqwdqwd
+    {% else %}
     <div class="col-md-12">
+    {% endif %}
         <div class="post media">
             <span class="pull-left">
                 <img class="media-object" src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
             </span>
 
+
             <div class="media-body">
+                <button class="btn btn-default btn-xs"><i class="glyphicon glyphicon-share-alt"></i></button>
                 {% if post.getCity() %}
                 <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:</h4>
                 {% elseif post.getRide() %}
@@ -23,6 +35,6 @@
 
 {% if post.getChildren()|length > 0 %}
     {% for child in post.getChildren() %}
-        {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post':  child } %}
+        {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post':  child, 'indent': (indent + 1) } %}
     {% endfor %}
 {% endif %}
