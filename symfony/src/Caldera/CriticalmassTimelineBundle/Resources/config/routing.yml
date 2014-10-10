@@ -1,6 +1,6 @@
 caldera_criticalmass_timeline_list:
-    path:     /timeline/list
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Timeline:list }
+    path:     /timeline/list/{page}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Timeline:list, page: 1 }
 
 caldera_criticalmass_timeline_post_write:
     path:     /timeline/write
