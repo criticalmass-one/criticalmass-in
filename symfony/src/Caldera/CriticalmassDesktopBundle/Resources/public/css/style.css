@@ -9,7 +9,8 @@ body.standardBody
     background-image: url(http://cdn.leafletjs.com/leaflet-0.7.3/images/layers-2x.png) !important;
 }
 
-@media (min-width:768px) {
+@media (min-width:768px)
+{
     div.leaflet-popup-content dl.dl-horizontal dt {
         width: 80px;
     }
