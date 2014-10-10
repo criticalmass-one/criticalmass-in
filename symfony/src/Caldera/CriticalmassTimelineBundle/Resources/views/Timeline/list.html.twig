@@ -16,4 +16,6 @@
             {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
         {% endfor %}
         </div>
+            <li class="previous"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page + 1 }) }}">&larr; Ältere</a></li>
+            <li class="next"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page - 1 }) }}">Neuere &rarr;</a></li>
 {% endblock %}
