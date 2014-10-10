@@ -138,7 +138,6 @@
                         var marker = L.marker(mapCenter, { icon: locationIcon });
                         marker.addTo(map);
                         marker.bindPopup(popupContent);
-                        marker.openPopup();
                         {% else %}
                         popupContent += '<p>Der Treffpunkt ist leider noch nicht bekannt :(';
 
@@ -158,10 +157,10 @@
                         var marker = L.marker(mapCenter, { icon: cityIcon });
                         marker.addTo(map);
                         marker.bindPopup(popupContent);
-                        marker.openPopup();
                         {% endif %}
 
                         map.setView(mapCenter, 15);
+                        marker.openPopup();
                     </script>
                 </div>
             </div>
