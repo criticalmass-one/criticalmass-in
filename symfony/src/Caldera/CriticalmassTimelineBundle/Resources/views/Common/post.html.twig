@@ -1,18 +1,22 @@
-<div class="row post media">
-    <span class="pull-left">
-        <img class="media-object" src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
-    </span>
+<div class="row">
+    <div class="col-md-12">
+        <div class="post media">
+            <span class="pull-left">
+                <img class="media-object" src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
+            </span>
 
-    <div class="media-body">
-        {% if post.getCity() %}
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:</h4>
-        {% elseif post.getRide() %}
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:</h4>
-        {% else %}
-        <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt:</h4>
-        {% endif %}
+            <div class="media-body">
+                {% if post.getCity() %}
+                <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:</h4>
+                {% elseif post.getRide() %}
+                <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt zu <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:</h4>
+                {% else %}
+                <h4 class="media-heading username">{{ post.getUser().getUsername() }} schreibt:</h4>
+                {% endif %}
 
-        <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
-        {{ post.getMessage()|nl2br }}
+                <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
+                {{ post.getMessage()|nl2br }}
+            </div>
+        </div>
     </div>
 </div>
