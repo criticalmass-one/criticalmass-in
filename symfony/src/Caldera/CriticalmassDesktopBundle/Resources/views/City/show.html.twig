@@ -16,7 +16,7 @@
 
         <ul class="nav nav-tabs" id="cityModalTabs">
             {% if hasCurrentRide %}
-            <li><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> {{ city.getCity() }}</a></li>
+            <li><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-flag"></i> {{ city.getCity() }}</a></li>
             <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="glyphicon glyphicon-calendar"></i> Nächste Tour</a></li>
             {% else %}
             <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> {{ city.getCity() }}</a></li>
