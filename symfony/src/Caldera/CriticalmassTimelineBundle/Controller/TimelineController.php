@@ -14,6 +14,8 @@ class TimelineController extends Controller
 
         $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true), array('dateTime' => 'DESC'), $pageLimit, ($page - 1) * $pageLimit);
 
-        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig', array('posts' => $posts));
+        $postCount = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->countPosts();
+
+        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig', array('posts' => $posts, 'page' => $page, 'postCount' => $postCount));
     }
 }
