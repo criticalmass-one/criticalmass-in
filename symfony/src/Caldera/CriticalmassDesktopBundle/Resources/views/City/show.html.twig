@@ -112,15 +112,16 @@
 
                         tileLayer.addTo(map);
 
-                        var popupContent = '<label>Datum:</label><span>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</span>';
-                        popupContent += '<label>Uhrzeit:</label><span>{{ city.getCurrentRide().getDateTime.format('H:i') }}</span>';
+                        var popupContent = '<dl class="dl-horizontal">';
+                        popupContent += '<dt>Datum:</dt><dd>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</dd>';
+                        popupContent += '<dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd>';
 
                         {% if city.getCurrentRide().getWeatherForecast() %}
-                        popupContent += '<label>Wetter:</label><span>{{ city.getCurrentRide().getWeatherForecast() }}</span>';
+                        popupContent += '<dt>Wetter:</dt><dd>{{ city.getCurrentRide().getWeatherForecast() }}</dd>';
                         {% endif %}
 
                         {% if city.getCurrentRide().hasLocation() %}
-                        popupContent += '<strong>Treffpunkt:</strong> {{ city.getCurrentRide().getLocation() }}';
+                        popupContent += '<dt>Treffpunkt:</dt> {{ city.getCurrentRide().getLocation() }}';
 
                         var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
 
@@ -136,10 +137,8 @@
                         });
 
                         var marker = L.marker(mapCenter, { icon: locationIcon });
-                        marker.addTo(map);
-                        marker.bindPopup(popupContent);
                         {% else %}
-                        popupContent += '<p>Der Treffpunkt ist leider noch nicht bekannt :(';
+                        popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
 
                         var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
 
@@ -155,9 +154,12 @@
                         });
 
                         var marker = L.marker(mapCenter, { icon: cityIcon });
+                        {% endif %}
+
+                        popupContent += '</dl>';
+
                         marker.addTo(map);
                         marker.bindPopup(popupContent);
-                        {% endif %}
 
                         map.setView(mapCenter, 15);
                         marker.openPopup();
