@@ -1,0 +1,3 @@
+criticalmass_gallery_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CriticalmassGalleryBundle:Default:index }

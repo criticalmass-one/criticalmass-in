@@ -1,3 +1,7 @@
+criticalmass_gallery:
+    resource: "@CriticalmassGalleryBundle/Resources/config/routing.yml"
+    prefix:   /
+
 caldera_criticalmass_timeline:
     resource: "@CalderaCriticalmassTimelineBundle/Resources/config/routing.yml"
     prefix:   /

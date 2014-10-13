@@ -1,0 +1,7 @@
+parameters:
+#    criticalmass_gallery.example.class: Caldera\CriticalmassGalleryBundle\Example
+
+services:
+#    criticalmass_gallery.example:
+#        class: %criticalmass_gallery.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
