@@ -113,7 +113,8 @@ class TrackController extends Controller
 
                 $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
-                return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+                return $this->redirect($this->generateUrl('criticalmass_gallery_homepage'));
+                //return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
             }
             else
             {
