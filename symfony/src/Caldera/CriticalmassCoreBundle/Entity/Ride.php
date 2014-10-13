@@ -176,6 +176,13 @@ class Ride
     protected $archiveUser;
 
     /**
+     * Array mit den Kommentaren zu dieser Tour.
+     *
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", mappedBy="ride")
+     */
+    protected $posts;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -945,5 +952,36 @@ class Ride
     public function getArchiveParent()
     {
         return $this->archiveParent;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     * @return City
+     */
+    public function addPost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     */
+    public function removePost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

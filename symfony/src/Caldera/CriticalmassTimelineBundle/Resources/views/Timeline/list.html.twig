@@ -10,24 +10,42 @@
 
         <h1>Schau was gerade passiert.</h1>
 
-        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write')) }}
-
-        {% for post in posts %}
-            {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
-        {% endfor %}
-
-        <ul class="pager">
-            {% if page < (postCount / 20) %}
-            <li class="previous"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page + 1 }) }}">&larr; Ältere</a></li>
-            {% else %}
-            <li class="previous disabled"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page }) }}">&larr; Ältere</a></li>
-            {% endif %}
-
-            {% if page > 1 %}
-            <li class="next"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page - 1 }) }}">Neuere &rarr;</a></li>
-            {% else %}
-            <li class="next disabled"><a href="{{ path('caldera_criticalmass_timeline_list') }}">Neuere &rarr;</a></li>
-            {% endif %}
+        <ul class="nav nav-tabs" id="cityModalTabs">
+            <li class="active"><a href="#commentTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare </a></li>
+            <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder </a></li>
         </ul>
+
+        <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
+            <div class="tab-pane fade in active" id="commentTab">
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write')) }}
+
+                {% for post in posts %}
+                    {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
+                {% endfor %}
+
+                <ul class="pager">
+                    {% if page < (postCount / 20) %}
+                    <li class="previous"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page + 1 }) }}">&larr; Ältere</a></li>
+                    {% else %}
+                    <li class="previous disabled"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page }) }}">&larr; Ältere</a></li>
+                    {% endif %}
+
+                    {% if page > 1 %}
+                    <li class="next"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page - 1 }) }}">Neuere &rarr;</a></li>
+                    {% else %}
+                    <li class="next disabled"><a href="{{ path('caldera_criticalmass_timeline_list') }}">Neuere &rarr;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="tab-pane fade in" id="galleryTab">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Bilder</h1>
+                        {{ render(controller('CriticalmassGalleryBundle:Gallery:list')) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
