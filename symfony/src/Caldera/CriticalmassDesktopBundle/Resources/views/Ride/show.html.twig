@@ -100,12 +100,31 @@
                 </div>
                 {% endif %}
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Kommentare zu dieser Tour</h4>
-                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
+                <ul class="nav nav-tabs" id="cityModalTabs">
+                    <li class="active"><a href="#commentTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> Kommentare <span class="badge">{{ ride.getPosts()|length }}</span></a></li>
+                    <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> Bilder </a></li>
+                </ul>
+
+                <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
+                    <div class="tab-pane fade in active" id="commentTab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Kommentare zu dieser Tour</h4>
+                                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in" id="galleryTab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Bilder zu dieser Tour</h4>
+                                {{ render(controller('CriticalmassGalleryBundle:Gallery:list')) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
             {% if hasSocialMedia %}
             <div class="col-lg-4">
