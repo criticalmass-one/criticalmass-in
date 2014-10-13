@@ -19,6 +19,7 @@
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate"><i class="fa fa-signal"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload"><i class="fa fa-cloud-upload"></i></a>
+                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalPictureUpload"><i class="fa fa-camera"></i></a>
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-wrench"></i></a>
             </div>
             {% endif %}
@@ -201,5 +202,20 @@
             </div>
         </div>
     </div>
+
+        <div class="modal fade" id="modalPictureUpload" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ render(controller('CriticalmassGalleryBundle:Gallery:add', { 'rideId': ride.getId() })) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% endif %}
 {% endblock %}
