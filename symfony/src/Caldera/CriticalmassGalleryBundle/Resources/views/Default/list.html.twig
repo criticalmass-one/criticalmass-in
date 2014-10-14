@@ -1,0 +1,5 @@
+{% for photo in photos %}
+    {{%  if photo.getUser() == app.getUser() %}}
+        <p><img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}"></p>
+    {{% endif %}}
+{% endfor %}

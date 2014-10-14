@@ -33,7 +33,7 @@ class PhotosController extends Controller
             $em->persist($photos);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
         }
 
         return $this->render('CriticalmassGalleryBundle:Default:add.html.twig', array('form' => $form->createView()));

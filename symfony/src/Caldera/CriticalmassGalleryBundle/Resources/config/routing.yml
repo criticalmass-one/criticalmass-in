@@ -5,3 +5,7 @@ criticalmass_gallery_homepage:
 criticalmass_gallery_photos_add:
     pattern:  /photos/add
     defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
+
+criticalmass_gallery_photos_list:
+    pattern:  /photos/list
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:list }
