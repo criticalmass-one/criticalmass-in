@@ -1,1 +1,11 @@
-Upload!!!
+<p>Lorem ipsum</p>
+
+{{ form_start(form, {'attr': {'role': 'form'}}) }}
+
+<div class="form-group">
+    <label for="">Bilder:</label>
+    {{ form_widget(form.file, { 'attr': {'multiple': 'multiple' }}) }}
+</div>
+
+<button type="submit" class="btn btn-default">Bilder hochladen</button>
+{{ form_end(form) }}

@@ -1,1 +1,4 @@
-Hello this Gallery!
+{% for photo in photos %}
+<p><img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}"></p>
+<p><img src="/../../photos/validation.png"></p>
+{% endfor %}

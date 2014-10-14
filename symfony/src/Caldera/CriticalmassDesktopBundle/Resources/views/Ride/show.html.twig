@@ -120,7 +120,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>Bilder zu dieser Tour</h4>
-                                {{ render(controller('CriticalmassGalleryBundle:Gallery:list')) }}
+                                {{ render(controller('CriticalmassGalleryBundle:Photos:list')) }}
                             </div>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                         <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
                     </div>
                     <div class="modal-body">
-                        {{ render(controller('CriticalmassGalleryBundle:Gallery:add', { 'rideId': ride.getId() })) }}
+                        {{ render(controller('CriticalmassGalleryBundle:Photos:add')) }}
                     </div>
                 </div>
             </div>

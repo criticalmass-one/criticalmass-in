@@ -1,3 +1,7 @@
 criticalmass_gallery_homepage:
     path:     /hello
     defaults: { _controller: CriticalmassGalleryBundle:Default:index }
+
+criticalmass_gallery_photos_add:
+    pattern:  /photos/add
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
