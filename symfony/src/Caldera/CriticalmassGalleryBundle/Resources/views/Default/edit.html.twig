@@ -1,0 +1,15 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block content %}
+
+{{ form_start(form, {'attr': {'role': 'form'}}) }}
+
+<div class="form-group">
+    <label for="" class="control-label">Bildbeschreibung:</label>
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<button type="submit" class="btn btn-default">Änderung speichern</button>
+{{ form_end(form) }}
+
+{% endblock %}

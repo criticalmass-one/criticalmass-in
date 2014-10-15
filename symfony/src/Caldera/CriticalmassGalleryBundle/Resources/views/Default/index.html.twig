@@ -1,8 +1,8 @@
 <div class="row">
     {% for photo in photos %}
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a href="#" id="photoOpen" class="thumbnail" data-target="#modalPhoto" data-photo="{{ photo.getFilePath() }}">
-                <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" width="200" height="200" img="img-responsive">
+            <a href="#" id="photoOpen" class="thumbnail" data-target="#modalPhoto" data-photo="{{ photo.getFilePath() }}" data-description="{{ photo.getDescription() }}" data-photoid="{{ photo.getId() }}">
+                <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" img="img-responsive">
             </a>
         </div>
     {% endfor %}
@@ -16,6 +16,10 @@
             </div>
             <div class="modal-body">
                 <img id="bigPhoto" src="">
+                <p id="description"></p>
+                <a href="#" id="photoEdit"><i class="fa fa-wrench"></i></a>
+                <a href="#" id="photoOpen" data-photo="" data-description="" data-photoid="">Voriges</a>
+                <a href="#" id="nextPhoto">Nächstes</a>
             </div>
         </div>
     </div>
@@ -32,8 +36,15 @@
             event.preventDefault();
 
             var photo = $(this).data('photo');
+            var description = $(this).data('description');
+            var photoid = $(this).data('photoid');
 
             $('#bigPhoto').prop('src', photo);
+            $('#description').text(description);
+            $('#photoEdit').prop('href', 'http://beta.criticalmass.cm/app_dev.php/photos/edit/' + photoid);
+            $('#prevPhoto').prop('data-photo', "{" + "{ photos[photoId-1] }}");
+            //$('#nextPhoto').prop('data-photo', "{" + "{ photos[photoId+1] }}");
+            $('#nextPhoto').data('photo', photoid);
 
             $('#modalPhoto').modal('show');
 
