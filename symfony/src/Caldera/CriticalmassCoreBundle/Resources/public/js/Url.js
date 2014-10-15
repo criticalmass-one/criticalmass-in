@@ -5,7 +5,7 @@ Url = function()
 
 Url.environment = 'dev';
 Url.system = 'local';
-Url.tls = true;
+Url.tls = false;
 
 Url.nodeJSPort = 1337;
 
@@ -51,7 +51,7 @@ Url.getProtocolString = function()
 
 Url.getEnvironmentString = function()
 {
-    if (window.location.host == 'criticalmass.cm') or (window.location.host == 'beta.criticalmass.cm')
+    if (window.location.host == 'criticalmass.in') or (window.location.host == 'beta.criticalmass.in')
     {
         return 'app_dev.php/';
     }

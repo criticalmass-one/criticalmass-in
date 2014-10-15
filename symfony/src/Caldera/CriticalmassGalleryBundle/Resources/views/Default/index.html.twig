@@ -1,3 +1,43 @@
-{% for photo in photos %}
-    <p><img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}"></p>
-{% endfor %}
+<div class="row">
+    {% for photo in photos %}
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a href="#" id="photoOpen" class="thumbnail" data-target="#modalPhoto" data-photo="{{ photo.getFilePath() }}">
+                <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" width="200" height="200" img="img-responsive">
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="modalPhoto" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="bigPhoto" src="">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% javascripts
+'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script>
+    window.onload = function() {
+        $('a.thumbnail').click(function (event) {
+            event.preventDefault();
+
+            var photo = $(this).data('photo');
+
+            $('#bigPhoto').prop('src', photo);
+
+            $('#modalPhoto').modal('show');
+
+        });
+    }
+
+</script>
