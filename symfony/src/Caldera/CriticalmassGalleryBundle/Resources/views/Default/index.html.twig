@@ -1,27 +1,39 @@
 <script>
     var photoList = new Array();
 
-    function addPhoto(id, title, description, path)
+    function addPhoto(photoIndex, photoId, title, description, path)
     {
-        photoList[id] = { id: id, title: title, description: description, path: path};
+        photoList[photoIndex] = { photoId: photoId, title: title, description: description, path: path};
     }
 
-    function getPhoto(id)
+    function getPhoto(photoIndex)
     {
-        return photoList[id];
+        return photoList[photoIndex];
+    }
+
+    function getPrev(photoIndex)
+    {
+        return photoList[photoIndex - 1] || null;
+    }
+
+    function getNext(photoIndex)
+    {
+        return photoList[photoIndex + 1] || null;
     }
 </script>
 
 <div class="row">
+    {% set index = 0 %}
     {% for photo in photos %}
         <script>
-               addPhoto('{{ photo.getId() }}', 'Penis', '{{ photo.getDescription() }}', '{{ photo.getFilePath() }}');
+               addPhoto({{ index }}, '{{ photo.getId() }}', 'Penis', '{{ photo.getDescription() }}', '{{ photo.getFilePath() }}');
         </script>
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a href="#" id="photoOpen" class="thumbnail" data-photoid="{{ photo.getId() }}">
+            <a href="#" id="photoOpen" class="thumbnail" data-photoindex="{{ index }}">
                 <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" img="img-responsive">
             </a>
         </div>
+        {% set index = index + 1 %}
     {% endfor %}
 </div>
 
@@ -35,8 +47,13 @@
                 <img id="bigPhoto" src="">
                 <p id="photoDescription"></p>
                 <a href="#" id="photoEdit"><i class="fa fa-wrench"></i></a>
-                <a href="#" id="photoOpen" data-photo="" data-description="" data-photoid="">Voriges</a>
-                <a href="#" id="nextPhoto">Nächstes</a>
+            </div>
+
+            <div class="modal-footer">
+                <ul class="pager">
+                    <li class="previous" id="previousPhoto"><a href="#">&larr; Older</a></li>
+                    <li class="next" id="nextPhoto"><a href="#">Newer &rarr;</a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -50,20 +67,56 @@
 
 <script>
      window.onload = function() {
-     $('a.thumbnail').click(function (event) {
-     event.preventDefault();
+         $('a.thumbnail').click(function (event) {
+             event.preventDefault();
 
-     var photoId = $(this).data('photoid');
+             var photoIndex = $(this).data('photoindex');
 
-     var photo = getPhoto(photoId);
+             photoPopup(photoIndex);
+         });
+     }
 
-     $('#bigPhoto').prop('src', photo.path);
-     $('#photoDescription').text(photo.description);
-     $('#photoEdit').prop('href', 'http://beta.criticalmass.cm/app_dev.php/photos/edit/' + photo.id);
+     function photoPopup(photoIndex)
+     {
+         var photo = getPhoto(photoIndex);
 
-     $('#modalPhoto').modal('show');
+         $('#bigPhoto').prop('src', photo.path);
+         $('#photoDescription').text(photo.description);
+         $('#photoEdit').prop('href', 'http://beta.criticalmass.cm/app_dev.php/photos/edit/' + photo.photoId);
 
-     });
+         var previousPhoto = getPrev(photoIndex);
+         var nextPhoto = getNext(photoIndex);
+
+         if (previousPhoto)
+         {
+             $('#previousPhoto a').off('click');
+             $('#previousPhoto a').on('click', function() {
+                 photoPopup(photoIndex - 1);
+             });
+
+             $('#previousPhoto').removeClass('disabled');
+         }
+         else
+         {
+             $('#previousPhoto').addClass('disabled');
+         }
+
+         if (nextPhoto)
+         {
+             $('#nextPhoto a').off('click');
+             $('#nextPhoto a').on('click', function() {
+                 photoPopup(photoIndex + 1);
+             });
+
+             $('#nextPhoto').removeClass('disabled');
+         }
+         else
+         {
+             $('#nextPhoto').addClass('disabled');
+         }
+
+         $('#modalPhoto').modal('show');
+
      }
 
 </script>

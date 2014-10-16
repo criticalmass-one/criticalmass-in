@@ -58,4 +58,11 @@ class PhotosController extends Controller
             return $this->render('CriticalmassGalleryBundle:Default:edit.html.twig', array('form' => $form->createView()));
         }
     }
+
+    public function showAction(Request $request, $photoId) {
+        $em = $this->getDoctrine()->getManager();
+        $photo = $em->find('CriticalmassGalleryBundle:Photos', $photoId);
+
+        return $this->render('CriticalmassGalleryBundle:Default:show.html.twig', array('photo' => $photo));
+    }
 }

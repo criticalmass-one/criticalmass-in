@@ -13,3 +13,7 @@ criticalmass_gallery_photos_list:
 criticalmass_gallery_photos_edit:
     pattern: /photos/edit/{photoId}
     defaults: { _controller: CriticalmassGalleryBundle:Photos:edit }
+
+criticalmass_gallery_photos_show:
+    pattern: /photos/show/{photoId}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:show }
