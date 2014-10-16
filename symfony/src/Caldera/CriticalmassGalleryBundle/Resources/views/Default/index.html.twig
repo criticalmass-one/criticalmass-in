@@ -1,7 +1,24 @@
+<script>
+    var photoList = new Array();
+
+    function addPhoto(id, title, description, path)
+    {
+        photoList[id] = { id: id, title: title, description: description, path: path};
+    }
+
+    function getPhoto(id)
+    {
+        return photoList[id];
+    }
+</script>
+
 <div class="row">
     {% for photo in photos %}
+        <script>
+               addPhoto('{{ photo.getId() }}', 'Penis', '{{ photo.getDescription() }}', '{{ photo.getFilePath() }}');
+        </script>
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a href="#" id="photoOpen" class="thumbnail" data-target="#modalPhoto" data-photo="{{ photo.getFilePath() }}" data-description="{{ photo.getDescription() }}" data-photoid="{{ photo.getId() }}">
+            <a href="#" id="photoOpen" class="thumbnail" data-photoid="{{ photo.getId() }}">
                 <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" img="img-responsive">
             </a>
         </div>
@@ -16,7 +33,7 @@
             </div>
             <div class="modal-body">
                 <img id="bigPhoto" src="">
-                <p id="description"></p>
+                <p id="photoDescription"></p>
                 <a href="#" id="photoEdit"><i class="fa fa-wrench"></i></a>
                 <a href="#" id="photoOpen" data-photo="" data-description="" data-photoid="">Voriges</a>
                 <a href="#" id="nextPhoto">Nächstes</a>
@@ -30,25 +47,23 @@
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
 <script>
-    window.onload = function() {
-        $('a.thumbnail').click(function (event) {
-            event.preventDefault();
+     window.onload = function() {
+     $('a.thumbnail').click(function (event) {
+     event.preventDefault();
 
-            var photo = $(this).data('photo');
-            var description = $(this).data('description');
-            var photoid = $(this).data('photoid');
+     var photoId = $(this).data('photoid');
 
-            $('#bigPhoto').prop('src', photo);
-            $('#description').text(description);
-            $('#photoEdit').prop('href', 'http://beta.criticalmass.cm/app_dev.php/photos/edit/' + photoid);
-            $('#prevPhoto').prop('data-photo', "{" + "{ photos[photoId-1] }}");
-            //$('#nextPhoto').prop('data-photo', "{" + "{ photos[photoId+1] }}");
-            $('#nextPhoto').data('photo', photoid);
+     var photo = getPhoto(photoId);
 
-            $('#modalPhoto').modal('show');
+     $('#bigPhoto').prop('src', photo.path);
+     $('#photoDescription').text(photo.description);
+     $('#photoEdit').prop('href', 'http://beta.criticalmass.cm/app_dev.php/photos/edit/' + photo.id);
 
-        });
-    }
+     $('#modalPhoto').modal('show');
+
+     });
+     }
 
 </script>
