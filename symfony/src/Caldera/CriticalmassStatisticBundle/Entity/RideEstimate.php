@@ -35,6 +35,12 @@ class RideEstimate
 	protected $ride;
 
     /**
+     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track", mappedBy="rideEstimate")
+     * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
+     */
+    protected $track;
+
+    /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\Regex("/^([0-9]{1,6})$/")
      */

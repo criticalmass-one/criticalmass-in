@@ -75,7 +75,7 @@ class Track
     protected $timeStamps;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassStatisticBundle\Entity\RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
      */
     protected $rideEstimate;
 
@@ -497,22 +497,27 @@ class Track
         $this->activated = $activated;
     }
 
+
     /**
-     * @return mixed
+     * Set rideEstimate
+     *
+     * @param \Caldera\CriticalmassStatisticBundle\Entity\RideEstimate $rideEstimate
+     * @return Track
+     */
+    public function setRideEstimate(\Caldera\CriticalmassStatisticBundle\Entity\RideEstimate $rideEstimate = null)
+    {
+        $this->rideEstimate = $rideEstimate;
+
+        return $this;
+    }
+
+    /**
+     * Get rideEstimate
+     *
+     * @return \Caldera\CriticalmassStatisticBundle\Entity\RideEstimate 
      */
     public function getRideEstimate()
     {
         return $this->rideEstimate;
     }
-
-    /**
-     * @param mixed $rideEstimate
-     */
-    public function setRideEstimate($rideEstimate)
-    {
-        $this->rideEstimate = $rideEstimate;
-    }
-
-
-
 }
