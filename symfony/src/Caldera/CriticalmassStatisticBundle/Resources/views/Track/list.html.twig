@@ -46,13 +46,13 @@
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getDistance()|round(2) }} Kilometer</td>
-                <td><a class="btn btn-default" title="Herunterladen" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-download"></i></a>
+                <td><a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-download"></i></a>
                 {% if track.getActivated() %}
-                <a class="btn btn-default" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-close"></i></a>
+                <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-close"></i></a>
                 {% else %}
-                <a class="btn btn-default" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
                 {% endif %}
-                <a class="btn btn-default trackDeleteButton" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="glyphicon glyphicon-trash"></i></a></td>
+                <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="glyphicon glyphicon-trash"></i></a></td>
             </tr>
             {% endif %}{% endfor %}
         </table>
