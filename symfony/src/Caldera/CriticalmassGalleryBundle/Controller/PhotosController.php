@@ -8,14 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PhotosController extends Controller
 {
-    public function listAction() {
+    public function indexAction() {
         $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy(array('enabled' => true));
         return $this->render('CriticalmassGalleryBundle:Default:index.html.twig', array('photos' => $photos));
     }
 
+    public function listAction() {
+        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy(array('enabled' => true));
+        return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
+    }
+
     public function addAction(Request $request) {
-        $photos = new Photos();
-        $form = $this->createFormBuilder($photos)
+        $photo = new Photos();
+        $form = $this->createFormBuilder($photo)
             ->setAction($this->generateUrl('criticalmass_gallery_photos_add'))
             ->add('file')
             ->getForm();
@@ -25,12 +30,12 @@ class PhotosController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $photos->handleUpload();
+            $photo->handleUpload();
 
-            $photos->setUser($this->getUser());
-            $photos->setDescription("");
+            $photo->setUser($this->getUser());
+            $photo->setDescription("");
 
-            $em->persist($photos);
+            $em->persist($photo);
             $em->flush();
 
             return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
@@ -53,6 +58,8 @@ class PhotosController extends Controller
             if ($form->isValid()) {
                 $em->merge($photo);
                 $em->flush();
+
+                return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
             }
 
             return $this->render('CriticalmassGalleryBundle:Default:edit.html.twig', array('form' => $form->createView()));

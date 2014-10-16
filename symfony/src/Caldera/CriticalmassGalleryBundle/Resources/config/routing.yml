@@ -1,5 +1,5 @@
-criticalmass_gallery_homepage:
-    path:     /hello
+criticalmass_gallery_photos/index:
+    path:     /photos/index
     defaults: { _controller: CriticalmassGalleryBundle:Default:index }
 
 criticalmass_gallery_photos_add:

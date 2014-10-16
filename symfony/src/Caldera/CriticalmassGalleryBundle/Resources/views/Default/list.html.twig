@@ -1,5 +1,16 @@
-{% for photo in photos %}
-    {{%  if photo.getUser() == app.getUser() %}}
-        <p><img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}"></p>
-    {{% endif %}}
-{% endfor %}
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block content %}
+
+<div class="row">
+    {% for photo in photos %}
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a href="#" id="photoOpen" class="thumbnail">
+                <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" img="img-responsive">
+            </a>
+            <a href="http://beta.criticalmass.cm/app_dev.php/photos/edit/{{ photo.getId() }}"><i class="fa fa-wrench"></i></a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
