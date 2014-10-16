@@ -28,46 +28,31 @@
                 <th>Ende</th>
                 <th>Distanz</th>
                 <th></th>
-                {#<th>Optionen</th>#}
             </tr>
             {% for track in tracks %}{% if track.getRide() %}
+            {% if not track.getActivated() %}
+            <tr style="text-decoration: line-through;">
+            {% else %}
             <tr>
-                {% if track.getActivated() %}
-                    <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
-                    <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
-                    <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
-                    {% if track.getRide().getTitle() %}
-                        {{ track.getRide().getTitle() }}
-                    {% else %}
-                        {{ track.getRide().getCity().getTitle() }}
-                    {% endif %}</a></td>
-                    <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
-                    <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
-                    <td>{{ track.getDistance()|round(2) }} Kilometer</td>
-                    <td>
-                    <a class="btn btn-default" title="Herunterladen" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="fa fa-download"></i></a>
-                    <a class="btn btn-default" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-close"></i></a>
-                    <a class="trackDeleteButton btn btn-default" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
-                    </td>
+            {% endif %}
+                <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
+                <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
+                <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
+                {% if track.getRide().getTitle() %}
+                    {{ track.getRide().getTitle() }}
                 {% else %}
-                    <td><s>{{ track.getRide().getDateTime().format('d. m. Y') }}</s></td>
-                    <td><s>{{ track.getRide().getCity().getCity() }}</s></td>
-                    <td><s>
-                    {% if track.getRide().getTitle() %}
-                        {{ track.getRide().getTitle() }}
-                    {% else %}
-                        {{ track.getRide().getCity().getTitle() }}
-                    {% endif %}</s></td>
-                    <td><s>{{ track.getStartDateTime().format('H:i') }} Uhr</s></td>
-                    <td><s>{{ track.getEndDateTime().format('H:i') }} Uhr</s></td>
-                    <td><s>{{ track.getDistance()|round(2) }} Kilometer</s></td>
-                    <td>
-                    <a class="btn btn-default" title="Herunterladen" href="#" data-toggle="modal" data-target="#modalDownload"><i class="fa fa-download"></i></a>
-                    <a class="btn btn-default" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a class="trackDeleteButton btn btn-default" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
-                    </td>
+                    {{ track.getRide().getCity().getTitle() }}
+                {% endif %}</a></td>
+                <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
+                <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
+                <td>{{ track.getDistance()|round(2) }} Kilometer</td>
+                <td><a class="btn btn-default" title="Herunterladen" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-download"></i></a>
+                {% if track.getActivated() %}
+                <a class="btn btn-default" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-close"></i></a>
+                {% else %}
+                <a class="btn btn-default" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
                 {% endif %}
-                {#<td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>#}
+                <a class="btn btn-default trackDeleteButton" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="glyphicon glyphicon-trash"></i></a></td>
             </tr>
             {% endif %}{% endfor %}
         </table>
