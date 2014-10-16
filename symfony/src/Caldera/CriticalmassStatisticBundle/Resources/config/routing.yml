@@ -38,13 +38,9 @@ caldera_criticalmass_statistic_track_deleteconfirm:
     pattern:  /track/deleteconfirm/{trackId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:deleteconfirm }
 
-caldera_criticalmass_statistic_track_remove:
-    pattern:  /track/deactivate/{trackId}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:deactivate }
-
-caldera_criticalmass_statistic_track_activate:
-    pattern:  /track/activate/{trackId}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:activate }
+caldera_criticalmass_statistic_track_toggle:
+    pattern:  /track/toggle/{trackId}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:toggle }
 
 caldera_criticalmass_statistic_track_download:
     pattern:  /track/download/{trackId}

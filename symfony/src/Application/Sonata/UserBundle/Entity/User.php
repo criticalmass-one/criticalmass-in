@@ -187,4 +187,9 @@ class User extends BaseUser
     {
         return $this->pingToken;
     }
+
+    public function equals(User $user)
+    {
+        return $user->getId() == $this->getId();
+    }
 }

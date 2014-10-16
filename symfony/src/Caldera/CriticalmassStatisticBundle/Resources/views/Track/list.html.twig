@@ -46,7 +46,7 @@
                     <td>{{ track.getDistance()|round(2) }} Kilometer</td>
                     <td>
                     <a class="btn btn-default" title="Herunterladen" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="fa fa-download"></i></a>
-                    <a class="btn btn-default" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_remove', {'trackId': track.getId()}) }}"><i class="fa fa-remove"></i></a>
+                    <a class="btn btn-default" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-close"></i></a>
                     <a class="trackDeleteButton btn btn-default" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="fa fa-trash"></i></a>
                     </td>
                 {% else %}
@@ -63,7 +63,7 @@
                     <td><s>{{ track.getDistance()|round(2) }} Kilometer</s></td>
                     <td>
                     <a class="btn btn-default" title="Herunterladen" href="#" data-toggle="modal" data-target="#modalDownload"><i class="fa fa-download"></i></a>
-                    <a class="btn btn-default" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_activate', {'trackId': track.getId()}) }}"><i class="fa fa-ok"></i></a>
+                    <a class="btn btn-default" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a class="trackDeleteButton btn btn-default" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="fa fa-trash"></i></a>
                     </td>
                 {% endif %}

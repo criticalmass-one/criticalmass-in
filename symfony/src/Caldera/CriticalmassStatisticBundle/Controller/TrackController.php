@@ -222,25 +222,14 @@ class TrackController extends Controller
         return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
     }
 
-    public function deactivateAction(Request $request, $trackId=0)
+    public function toggleAction(Request $request, $trackId)
     {
-        if ($trackId) {
-            $em = $this->getDoctrine()->getManager();
-            $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
-            $track->setActivated(0);
-            $em->merge($track);
-            $em->flush();
-        }
+        $em = $this->getDoctrine()->getManager();
+        $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
-    }
-
-    public function activateAction(Request $request, $trackId=0)
-    {
-        if ($trackId) {
-            $em = $this->getDoctrine()->getManager();
-            $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
-            $track->setActivated(1);
+        if ($track->getUser()->equals($this->getUser()))
+        {
+            $track->setActivated(!$track->getActivated());
             $em->merge($track);
             $em->flush();
         }
