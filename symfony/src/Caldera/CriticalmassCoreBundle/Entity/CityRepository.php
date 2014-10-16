@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -26,5 +27,30 @@ class CityRepository extends EntityRepository
 
         return $query->getResult();
 	}
+
+    public function findCities()
+    {
+        $expr = Criteria::expr();
+        $criteria = Criteria::create();
+
+        $criteria->where(
+            $expr->andX(
+                $expr->eq('enabled', true),
+                $expr->eq('isArchived', false)
+
+            )
+        );
+
+        $criteria->orderBy(array('city' => 'ASC'));
+
+        return $this->matching($criteria);
+    }
+
+    public function findCitiesByAverageParticipants($limit = 10)
+    {
+        $query = $this->getEntityManager()->createQuery("SELECT IDENTITY(r.city) AS city, c.city AS cityName, SUM(r.estimatedParticipants) / COUNT(c.id) AS averageParticipants FROM CalderaCriticalmassCoreBundle:Ride r JOIN r.city c GROUP BY r.city ORDER BY averageParticipants DESC")->setMaxResults($limit);
+
+        return $query->getResult();
+    }
 }
 

@@ -1,6 +1,14 @@
-caldera_criticalmass_statistic_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Default:index }
+caldera_criticalmass_statistic_index:
+    pattern:  /statistic
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:index }
+
+caldera_criticalmass_statistic_city_participants:
+    pattern:  /statistic/city/participants/{citySlug}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:cityparticipants }
+
+caldera_criticalmass_statistic_ride_participants:
+    pattern:  /statistic/ride/participants/{year}/{month}
+    defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:rideparticipants, year: null, month: null }
 
 caldera_criticalmass_statistic_track_list:
     pattern:  /track/list

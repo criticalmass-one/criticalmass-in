@@ -1,0 +1,48 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Statistiken{% endblock %}
+
+{% block content %}
+    {% javascripts
+    '@CalderaCriticalmassStatisticBundle/Resources/public/js/Chartjs/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <div class="container">
+        <h1>Zahlen, bitte.</h1>
+
+        <canvas id="myChart" width="1000" height="400"></canvas>
+
+        <script>
+            var data = {
+                labels: [
+                    {% for ride in city.getRides() %}
+                            "{{ ride.getDateTime().format('m/Y') }}",
+                            {% endfor %}
+                        ],
+
+                datasets: [
+                    {
+                        label: "{{ city.getCity() }}",
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [
+                            {% for ride in city.getRides() %}
+                            {{ ride.getEstimatedParticipants() }},
+                            {% endfor %}
+                        ]
+                    },
+                ]
+            };
+
+            window.onload = function() {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                var myLineChart = new Chart(ctx).Line(data);
+            }
+        </script>
+    </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Statistiken{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_statistic_index') }}">Statistiken</a></li>
+            <li class="active">Übersicht</li>
+        </ol>
+
+        <h1>Zahlen, bitte.</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Touren mit den meisten Teilnehmern</h4>
+                <table class="table">
+                    <tr>
+                        <th>Stadt</th>
+                        <th>Monat</th>
+                        <th>Teilnehmer</th>
+                    </tr>
+
+                    {% for ride in topParticipantRides %}
+                    <tr>
+                        <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() })}}">{{ ride.getCity().getCity() }}</a></td>
+                        <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
+                        <td>{{ ride.getEstimatedParticipants() }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="col-md-4">
+                <h4>Die längsten Touren</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>Stadt</th>
+                        <th>Monat</th>
+                        <th>Länge</th>
+                    </tr>
+
+                    {% for ride in topDistanceRides %}
+                        <tr>
+                            <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() })}}">{{ ride.getCity().getCity() }}</a></td>
+                            <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
+                            <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="col-md-4">
+                <h4>Höchste durchschnittliche Teilnehmer</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>Stadt</th>
+                        <th>Durchschnittliche Teilnehmer</th>
+                    </tr>
+
+                    {% for averageParticipants, city in topAverageParticipantsCities %}
+                        <tr>
+                            <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() })}}">{{ city.getCity() }}</a></td>
+                            <td>{{ averageParticipants }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

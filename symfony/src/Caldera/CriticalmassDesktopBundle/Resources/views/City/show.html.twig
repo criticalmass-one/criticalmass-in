@@ -16,15 +16,15 @@
 
         <ul class="nav nav-tabs" id="cityModalTabs">
             {% if hasCurrentRide %}
-            <li><a href="#cityInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i> {{ city.getCity() }}</a></li>
-            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="fa fa-calendar"></i> Nächste Tour</a></li>
+            <li><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-flag"></i> {{ city.getCity() }}</a></li>
+            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="glyphicon glyphicon-calendar"></i> Nächste Tour</a></li>
             {% else %}
-            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="fa fa-question-circle"></i> {{ city.getCity() }}</a></li>
+            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> {{ city.getCity() }}</a></li>
             {% endif %}
             {% if hasRides %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="fa fa-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
+            <li><a href="#recentRidesTab" data-toggle="tab"><i class="glyphicon glyphicon-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
             {% endif %}
-            <li><a href="#timelineTab" data-toggle="tab"><i class="fa fa-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
+            <li><a href="#timelineTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
         </ul>
 
         <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
@@ -34,6 +34,13 @@
             <div class="tab-pane fade in active" id="cityInfoTab">
             {% endif %}
                 <div class="jumbotron">
+                    {% if app.getUser() %}
+                    <div class="btn-group pull-right" style="margin-top: 24px;">
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-plus"></i></a>
+                    </div>
+                    {% endif %}
+
                     <h1>{{ city.getTitle() }}</h1>
                     <p>{{ city.getDescription() }}</p>
                 </div>
@@ -71,131 +78,140 @@
             </div>
             {% if hasCurrentRide %}
             <div class="tab-pane fade in active" id="nextRideTab">
-                {% if city.getCurrentRide().getTitle() %}
-                    <h1>{{ city.getCurrentRide().getTitle() }}</h1>
-                {% else %}
-                    <h1>{{ city.getCurrentRide().getCity().getTitle() }}</h1>
-                {% endif %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if app.getUser() %}
+                        <div class="btn-group pull-right" style="margin-top: 24px;">
+                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: city.getCurrentRide().getFormattedDate() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
+                        </div>
+                        {% endif %}
+
+                        {% if city.getCurrentRide().getTitle() %}
+                        <h1>{{ city.getCurrentRide().getTitle() }}</h1>
+                        {% else %}
+                        <h1>{{ city.getCurrentRide().getCity().getTitle() }}</h1>
+                        {% endif %}
+                    </div>
+                </div>
+
                 {% if city.getCurrentRide().getDescription() %}
-                    <p>{{ city.getCurrentRide().getDescription() }}</p>
-                {% endif %}
-
                 <div class="row">
-                    <div class="col-lg-12">
-                        <label>Datum:</label>
-                        <span>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <label>Uhrzeit:</label>
-                        <span>{{ city.getCurrentRide().getDateTime.format('H:i') }}</span>
-                    </div>
-                </div>
-                {% if city.getCurrentRide().getWeatherForecast() %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <label>Wetter:</label>
-                        <span>{{ city.getCurrentRide().getWeatherForecast() }}</span>
+                    <div class="col-md-12">
+                        <p>{{ city.getCurrentRide().getDescription() }}</p>
                     </div>
                 </div>
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-lg-12">
-                        <label>Treffpunkt:</label>
-                        {% if city.getCurrentRide().hasLocation() %}
-                        <span>{{ city.getCurrentRide().getLocation() }}</span>
-                        {% else %}
-                        <span><em>noch nicht bekannt</em></span>
-                        {% endif %}
+                    <div class="col-md-12">
+                        <div id="map" style="height: 300px;"></div>
+                        {% javascripts
+                        '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+                        %}
+                        <script type="text/javascript" src="{{ asset_url }}"></script>
+                        {% endjavascripts %}
+                        <script>
+                            var map = L.map('map');
+                            var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                                detectRetina: true
+                            });
+
+                            tileLayer.addTo(map);
+
+                            var popupContent = '<dl class="dl-horizontal">';
+                            popupContent += '<dt>Datum:</dt><dd>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</dd>';
+                            popupContent += '<dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd>';
+
+                            {% if city.getCurrentRide().getWeatherForecast() %}
+                            popupContent += '<dt>Wetter:</dt><dd>{{ city.getCurrentRide().getWeatherForecast() }}</dd>';
+                            {% endif %}
+
+                            {% if city.getCurrentRide().hasLocation() %}
+                            popupContent += '<dt>Treffpunkt:</dt> {{ city.getCurrentRide().getLocation() }}';
+
+                            var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
+
+                            var locationIcon = L.icon({
+                                iconUrl: '/images/marker/marker-red.png',
+                                iconRetinaUrl: '/images/marker/marker-red-2x.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [13, 41],
+                                popupAnchor: [0, -36],
+                                shadowUrl: '/images/marker/defaultshadow.png',
+                                shadowSize: [41, 41],
+                                shadowAnchor: [13, 41]
+                            });
+
+                            var marker = L.marker(mapCenter, { icon: locationIcon });
+                            {% else %}
+                            popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
+
+                            var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+
+                            var cityIcon = L.icon({
+                                iconUrl: '/images/marker/marker-gray.png',
+                                iconRetinaUrl: '/images/marker/marker-gray-2x.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [13, 41],
+                                popupAnchor: [0, -36],
+                                shadowUrl: '/images/marker/defaultshadow.png',
+                                shadowSize: [41, 41],
+                                shadowAnchor: [13, 41]
+                            });
+
+                            var marker = L.marker(mapCenter, { icon: cityIcon });
+                            {% endif %}
+
+                            popupContent += '</dl>';
+
+                            marker.addTo(map);
+                            marker.bindPopup(popupContent);
+
+                            map.setView(mapCenter, 15);
+                            marker.openPopup();
+                        </script>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div id="map" class="col-md-12" style="height: 300px;"></div>
-                    {% javascripts
-                    '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-                    %}
-                    <script type="text/javascript" src="{{ asset_url }}"></script>
-                    {% endjavascripts %}
-                    <script>
-                        var map = L.map('map');
-                        var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                            detectRetina: true
-                        });
-
-                        tileLayer.addTo(map);
-
-                        {% if city.getCurrentRide().hasLocation() %}
-                        var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
-
-                        var locationIcon = L.icon({
-                            iconUrl: '/images/marker/marker-red.png',
-                            iconRetinaUrl: '/images/marker/marker-red-2x.png',
-                            iconSize: [25, 41],
-                            iconAnchor: [13, 41],
-                            popupAnchor: [0, -36],
-                            shadowUrl: '/images/marker/defaultshadow.png',
-                            shadowSize: [41, 41],
-                            shadowAnchor: [13, 41]
-                        });
-
-                        var marker = L.marker(mapCenter, { icon: locationIcon });
-                        marker.addTo(map);
-                        marker.bindPopup('<strong>Treffpunkt:</strong> {{ city.getCurrentRide().getLocation() }}');
-                        marker.openPopup();
-                        {% else %}
-                        var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-
-                        var cityIcon = L.icon({
-                            iconUrl: '/images/marker/marker-gray.png',
-                            iconRetinaUrl: '/images/marker/marker-gray-2x.png',
-                            iconSize: [25, 41],
-                            iconAnchor: [13, 41],
-                            popupAnchor: [0, -36],
-                            shadowUrl: '/images/marker/defaultshadow.png',
-                            shadowSize: [41, 41],
-                            shadowAnchor: [13, 41]
-                        });
-
-                        var marker = L.marker(mapCenter, { icon: cityIcon });
-                        marker.addTo(map);
-                        marker.bindPopup('<p>Der Treffpunkt ist leider noch nicht bekannt :(');
-                        marker.openPopup();
-                        {% endif %}
-
-                        map.setView(mapCenter, 15);
-                    </script>
                 </div>
             </div>
             {% endif %}
             {% if hasRides %}
             <div class="tab-pane fade in" id="recentRidesTab">
-                <h1>Vergangene Touren</h1>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Vergangene Touren</h1>
+                    </div>
+                </div>
 
-                <table class="table">
-                    <tr>
-                        <th>Datum</th>
-                        <th>Titel</th>
-                        <th>Teilnehmer</th>
-                        <th>Streckenlänge</th>
-                    </tr>
-                    {% for ride in rides %}
-                    <tr>
-                        <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{{ ride.getDateTime.format('d. m. Y') }}</a></td>
-                        <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{% if ride.getTitle() %}{{ ride.getTitle() }}{% else %}{{ city.getTitle() }}{% endif %}</a></td>
-                        <td>{% if ride.getEstimatedParticipants() %}{{ ride.getEstimatedParticipants()|round }}{% endif %}</td>
-                        <td>{% if ride.getEstimatedDistance() %}{{ ride.getEstimatedDistance()|round(2) }} Kilometer{% endif %}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th class="col-xs-3 col-sm-2 col-md-2 col-lg-2">Datum</th>
+                                <th class="col-xs-9 col-sm-6 col-md-6 col-lg-6">Titel</th>
+                                <th class="hidden-xs col-sm-2 col-md-2 col-lg-2">Teilnehmer</th>
+                                <th class="hidden-xs col-sm-2 col-md-2 col-lg-2">Streckenlänge</th>
+                            </tr>
+                            {% for ride in rides %}
+                            <tr>
+                                <td class="col-xs-3 col-sm-2 col-md-2 col-lg-2"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{{ ride.getDateTime.format('d. m. Y') }}</a></td>
+                                <td class="col-xs-9 col-sm-6 col-md-6 col-lg-6"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{% if ride.getTitle() %}{{ ride.getTitle() }}{% else %}{{ city.getTitle() }}{% endif %}</a></td>
+                                <td class="hidden-xs col-sm-2 col-md-2 col-lg-2">{% if ride.getEstimatedParticipants() %}{{ ride.getEstimatedParticipants()|round }}{% endif %}</td>
+                                <td class="hidden-xs col-sm-2 col-md-2 col-lg-2">{% if ride.getEstimatedDistance() %}{{ ride.getEstimatedDistance()|round(2) }} Kilometer{% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
             </div>
             {% endif %}
 
             <div class="tab-pane fade in" id="timelineTab">
-                <h1>Kommentare</h1>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Kommentare</h1>
+                    </div>
+                </div>
                 {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
 
                 {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}

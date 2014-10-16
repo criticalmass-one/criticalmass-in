@@ -5,15 +5,49 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
-            <li class="active">Timeline</li>
+            <li class="active">Chronik</li>
         </ol>
 
         <h1>Schau was gerade passiert.</h1>
 
         {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write')) }}
 
+        <script>
+            window.onload = function() {
+                var postFormHtml = $('#postFormContainer').html();
+
+                $('button.answer').on('click', function () {
+                    $('#postFormContainer').remove();
+
+                    var postId = $(this).data('postid');
+                    var indent = $('#post-' + postId).data('indent');
+
+                    var url = $(postFormHtml).prop('action');
+//                    alert(url);
+                    var newForm = '<div id="postFormContainer" class="row post-answer-form"><div class="col-md-' + (12 - indent - 1) + ' col-md-offset-' + (indent + 1) +'">' + postFormHtml + '</div></div>';
+
+                    $('#post-' + postId).append(newForm);
+                    $('#formButtonGroup').append('<button id="cancelPostButton" type="cancel" class="btn btn-cancel pull-right">Abbrechen</button>');
+
+                });
+            };
+        </script>
         {% for post in posts %}
             {% include('CalderaCriticalmassTimelineBundle:Common:post.html.twig') with { 'post' :  post } %}
         {% endfor %}
-        </div>
+
+        <ul class="pager">
+            {% if page < (postCount / 20) %}
+            <li class="previous"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page + 1 }) }}">&larr; Ältere</a></li>
+            {% else %}
+            <li class="previous disabled"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page }) }}">&larr; Ältere</a></li>
+            {% endif %}
+
+            {% if page > 1 %}
+            <li class="next"><a href="{{ path('caldera_criticalmass_timeline_list', { page: page - 1 }) }}">Neuere &rarr;</a></li>
+            {% else %}
+            <li class="next disabled"><a href="{{ path('caldera_criticalmass_timeline_list') }}">Neuere &rarr;</a></li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock %}

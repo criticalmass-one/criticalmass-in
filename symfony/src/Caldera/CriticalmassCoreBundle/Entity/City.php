@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
@@ -20,12 +21,13 @@ class City
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-  protected $id;
+    protected $id;
 
 	/**
 	 * Name der Stadt.
 	 *
 	 * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
 	 */
 	protected $city;
 
@@ -34,6 +36,7 @@ class City
 	 * oder "Critical Mass Bremen".
 	 *
 	 * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
 	 */
 	protected $title;
 
@@ -41,6 +44,7 @@ class City
      * Kurze Beschreibung der Critical Mass dieser Stadt.
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank()
      */
     protected $description;
 
@@ -48,6 +52,7 @@ class City
 	 * Adresse der Webseite der Critical Mass in dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
 	 */
 	protected $url;
 
@@ -55,6 +60,7 @@ class City
 	 * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
 	 */
 	protected $facebook;
 
@@ -62,6 +68,7 @@ class City
 	 * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
 	 */
 	protected $twitter;
 
@@ -119,9 +126,19 @@ class City
     protected $standardWeekOfMonth;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isStandardableTime = false;
+
+    /**
      * @ORM\Column(type="time", nullable=true)
      */
     protected $standardTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isStandardableLocation = false;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -145,8 +162,9 @@ class City
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="int")
      */
-    protected $cityPopulation;
+    protected $cityPopulation = 0;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -157,6 +175,43 @@ class City
      * @ORM\Column(type="text", nullable=true)
      */
     protected $longDescription;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorRed = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorGreen = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $colorBlue = 0;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="archive_cities")
+     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
+     */
+    protected $archiveParent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isArchived = false;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $archiveDateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_rides")
+     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
+     */
+    protected $archiveUser;
 
     /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
@@ -192,6 +247,8 @@ class City
     {
         $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
         $this->slugs = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->archiveDateTime = new \DateTime();
     }
     
     /**
@@ -824,5 +881,267 @@ class City
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param boolean $isArchived
+     * @return City
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set archiveDateTime
+     *
+     * @param \DateTime $archiveDateTime
+     * @return City
+     */
+    public function setArchiveDateTime($archiveDateTime)
+    {
+        $this->archiveDateTime = $archiveDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getArchiveDateTime()
+    {
+        return $this->archiveDateTime;
+    }
+
+    /**
+     * Set archiveParent
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City $archiveParent
+     * @return City
+     */
+    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\City $archiveParent = null)
+    {
+        $this->archiveParent = $archiveParent;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveParent
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     */
+    public function getArchiveParent()
+    {
+        return $this->archiveParent;
+    }
+
+    /**
+     * Set archiveUser
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @return City
+     */
+    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    {
+        $this->archiveUser = $archiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveUser
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getArchiveUser()
+    {
+        return $this->archiveUser;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+        $this->setIsArchived(true);
+        $this->setArchiveDateTime(new \DateTime());
+    }
+
+    public function calculateAverageRideParticipants()
+    {
+        if (!count($this->rides))
+        {
+            return 0;
+        }
+
+        $participants = 0;
+        $rideCounter = 0;
+
+        foreach ($this->getRides() as $ride)
+        {
+            if ($ride->getEstimatedParticipants() > 0)
+            {
+                ++$rideCounter;
+                $participants += $ride->getEstimatedParticipants();
+            }
+        }
+
+        return $participants / $rideCounter;
+    }
+
+    /**
+     * Set colorRed
+     *
+     * @param integer $colorRed
+     * @return City
+     */
+    public function setColorRed($colorRed)
+    {
+        $this->colorRed = $colorRed;
+
+        return $this;
+    }
+
+    /**
+     * Get colorRed
+     *
+     * @return integer 
+     */
+    public function getColorRed()
+    {
+        return $this->colorRed;
+    }
+
+    /**
+     * Set colorGreen
+     *
+     * @param integer $colorGreen
+     * @return City
+     */
+    public function setColorGreen($colorGreen)
+    {
+        $this->colorGreen = $colorGreen;
+
+        return $this;
+    }
+
+    /**
+     * Get colorGreen
+     *
+     * @return integer 
+     */
+    public function getColorGreen()
+    {
+        return $this->colorGreen;
+    }
+
+    /**
+     * Set colorBlue
+     *
+     * @param integer $colorBlue
+     * @return City
+     */
+    public function setColorBlue($colorBlue)
+    {
+        $this->colorBlue = $colorBlue;
+
+        return $this;
+    }
+
+    /**
+     * Get colorBlue
+     *
+     * @return integer 
+     */
+    public function getColorBlue()
+    {
+        return $this->colorBlue;
+    }
+
+    public function hasRideInMonth(\DateTime $dateTime)
+    {
+        foreach ($this->rides as $ride)
+        {
+            if ($ride->getDateTime()->format('Y-m') == $dateTime->format('Y-m'))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRideAtMonthDay(\DateTime $dateTime)
+    {
+        foreach ($this->rides as $ride)
+        {
+            if ($ride->getDateTime()->format('Y-m-d') == $dateTime->format('Y-m-d'))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Set isStandardableLocation
+     *
+     * @param boolean $isStandardableLocation
+     * @return City
+     */
+    public function setIsStandardableLocation($isStandardableLocation)
+    {
+        $this->isStandardableLocation = $isStandardableLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get isStandardableLocation
+     *
+     * @return boolean 
+     */
+    public function getIsStandardableLocation()
+    {
+        return $this->isStandardableLocation;
+    }
+
+    /**
+     * Set isStandardableTime
+     *
+     * @param boolean $isStandardableTime
+     * @return City
+     */
+    public function setIsStandardableTime($isStandardableTime)
+    {
+        $this->isStandardableTime = $isStandardableTime;
+
+        return $this;
+    }
+
+    /**
+     * Get isStandardableTime
+     *
+     * @return boolean 
+     */
+    public function getIsStandardableTime()
+    {
+        return $this->isStandardableTime;
     }
 }

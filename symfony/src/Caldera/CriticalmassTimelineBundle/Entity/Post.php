@@ -3,11 +3,11 @@
 namespace Caldera\CriticalmassTimelineBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
  * @ORM\Table(name="post")
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassTimelineBundle\Entity\PostRepository")
  */
 class Post
 {
@@ -17,6 +17,17 @@ class Post
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", mappedBy="parent")
+     */
+    protected $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="posts")
@@ -53,6 +64,7 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $message;
 
@@ -258,5 +270,61 @@ class Post
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $parent
+     * @return Post
+     */
+    public function setParent(\Caldera\CriticalmassTimelineBundle\Entity\Post $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Caldera\CriticalmassTimelineBundle\Entity\Post 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $children
+     * @return Post
+     */
+    public function addChild(\Caldera\CriticalmassTimelineBundle\Entity\Post $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $children
+     */
+    public function removeChild(\Caldera\CriticalmassTimelineBundle\Entity\Post $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

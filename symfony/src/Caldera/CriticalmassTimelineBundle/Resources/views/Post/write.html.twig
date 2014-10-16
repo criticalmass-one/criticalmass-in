@@ -1,59 +1,65 @@
 {% if app.getUser() %}
-{{ form_start(form, {'attr': {'id': 'postForm', 'role': 'form'}}) }}
+<div id="postFormContainer">
+    {{ form_start(form, {'attr': {'id': 'postForm', 'role': 'form'}}) }}
 
-<div class="form-group">
-    <label for="">Dein Kommentar:</label>
-    {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
-</div>
+    <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+        <label for="" class="control-label">Dein Kommentar:</label>
+        {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+    </div>
 
-<div class="form-group">
-    <button id="submitPostButton" type="submit" class="btn btn-success pull-right">Absenden</button>
-    <input type="checkbox" id="shareLocation" checked="checked" /> Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können.
-</div>
+    <div class="form-group">
+        <div class="btn-group pull-right" id="formButtonGroup">
+            <button id="submitPostButton" type="submit" class="btn btn-success pull-right">Absenden</button>
+        </div>
+        <input type="checkbox" id="shareLocation" checked="checked" /> Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können.
+    </div>
 
-{{ form_widget(form._token) }}
-{{ form_widget(form.latitude) }}
-{{ form_widget(form.longitude) }}
+    {{ form_widget(form._token) }}
+    {{ form_widget(form.latitude) }}
+    {{ form_widget(form.longitude) }}
 
-</form>
-<script>
-    function getLocation() {
-        if (navigator.geolocation)
-        {
-            navigator.geolocation.getCurrentPosition(successPosition, failurePosition);
+    </form>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(successPosition, failurePosition);
+            }
         }
-    }
 
-    function successPosition(position)
-    {
-        $('#form_latitude').val(position.coords.latitude);
-        $('#form_longitude').val(position.coords.longitude);
-
-        $('#postForm').submit();
-    }
-
-    function failurePosition(position)
-    {
-        $('#postForm').submit();
-    }
-
-    $('#postForm').on('submit', function(element)
-    {
-        if ($('#shareLocation').attr('checked')) {
-            element.preventDefault();
-
-            _paq.push(['trackEvent', 'writeComment', 'withLocation']);
-
-            getLocation();
-        }
-        else
+        function successPosition(position)
         {
-            _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
+            $('#form_latitude').val(position.coords.latitude);
+            $('#form_longitude').val(position.coords.longitude);
 
             $('#postForm').submit();
         }
-    });
-</script>
-{% else %}
-<p>Mit einem criticalmass.in-Benutzerkonto könntest du an dieser Stelle einen Kommentar verfassen. Wenn du Lust und Zeit hast, kannst du dich hier drüben <a href="{{ path('fos_user_security_login') }}">einloggen oder anmelden</a>.</p>
-{% endif %}
+
+        function failurePosition(position)
+        {
+            $('#postForm').submit();
+        }
+
+        $('#postForm').on('submit', function(element)
+        {
+            $('#submitPostButton').prop('disabled', 'disabled');
+
+            if ($('#shareLocation').attr('checked')) {
+                element.preventDefault();
+
+                _paq.push(['trackEvent', 'writeComment', 'withLocation']);
+
+                getLocation();
+            }
+            else
+            {
+                _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
+
+                $('#postForm').submit();
+            }
+        });
+    </script>
+    {% else %}
+    <p>Mit einem criticalmass.in-Benutzerkonto könntest du an dieser Stelle einen Kommentar verfassen. Wenn du Lust und Zeit hast, kannst du dich hier drüben <a href="{{ path('fos_user_security_login') }}">einloggen oder anmelden</a>.</p>
+    {% endif %}
+</div>

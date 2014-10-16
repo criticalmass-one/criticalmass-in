@@ -1,9 +1,9 @@
-<div class="row post media">
-    <span class="pull-left">
-        <img class="media-object" src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
-    </span>
-
-    <div class="media-body">
+{% if indent is defined %}
+{% set col = 12 - indent %}
+{% else %}
+{% set indent = 0 %}
+{% endif %}
+<div class="media-body">
         <h4 class="media-heading username">
         {% if post.getCity() %}
         {{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
@@ -22,7 +22,6 @@
 
         <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
         {{ post.getMessage()|nl2br }}
-    </div>
 </div>
 
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">

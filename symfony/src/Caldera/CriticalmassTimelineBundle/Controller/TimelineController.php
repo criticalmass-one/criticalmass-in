@@ -8,10 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TimelineController extends Controller
 {
-    public function listAction(Request $request)
+    public function listAction(Request $request, $page)
     {
-        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true), array('dateTime' => 'DESC'));
+        $pageLimit = 20;
 
-        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig', array('posts' => $posts));
+        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true, 'parent' => null), array('dateTime' => 'DESC'), $pageLimit, ($page - 1) * $pageLimit);
+
+        $postCount = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->countPosts();
+
+        return $this->render('CalderaCriticalmassTimelineBundle:Timeline:list.html.twig', array('posts' => $posts, 'page' => $page, 'postCount' => $postCount));
     }
 }
