@@ -207,7 +207,7 @@ class TrackController extends Controller
         return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
     }
 
-    public function downloadAction(Request $request, $trackId=0)
+    public function downloadAction(Request $request, $trackId)
     {
         $em = $this->getDoctrine()->getManager();
         $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
