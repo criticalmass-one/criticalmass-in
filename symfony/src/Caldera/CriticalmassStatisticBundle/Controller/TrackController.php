@@ -170,7 +170,6 @@ class TrackController extends Controller
                 'required' => true,
                 'choices' => $choices
             ))
-            ->add('save', 'submit', array('label' => 'Track hinzufügen', 'attr' => array('class' => 'btn btn-primary')))
             ->getForm();
 
         $form->handleRequest($request);
