@@ -6,4 +6,4 @@ symfony/app/config/parameters.yml
 symfony/app/config/parameters.yml.dist
 .sonar
 symfony/web/images/*
-
+symfony/cache.properties
