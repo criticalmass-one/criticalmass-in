@@ -7,6 +7,7 @@ use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -204,7 +205,12 @@ class TrackController extends Controller
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
+        if ($track->getUser()->equals($this->getUser()))
+        {
+            return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
+        }
+
+        throw new AccessDeniedException('');
     }
 
     public function downloadAction(Request $request, $trackId)
