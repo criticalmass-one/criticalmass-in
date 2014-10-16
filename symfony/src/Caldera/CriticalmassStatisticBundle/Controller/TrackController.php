@@ -246,7 +246,7 @@ class TrackController extends Controller
         return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
     }
 
-    public function deleteconfirmAction(Request $request, $trackId = 0)
+    public function deleteAction(Request $request, $trackId)
     {
         if ($trackId > 0) {
             $em = $this->getDoctrine()->getManager();
