@@ -209,10 +209,11 @@ class TrackController extends Controller
 
     public function downloadAction(Request $request, $trackId=0)
     {
-        if ($trackId) {
-            $em = $this->getDoctrine()->getManager();
-            $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+        $em = $this->getDoctrine()->getManager();
+        $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
 
+        if ($track->getUser()->equals($this->getUser()))
+        {
             header('Content-disposition: attachment; filename=track.gpx');
             header('Content-type: text/plain');
 
