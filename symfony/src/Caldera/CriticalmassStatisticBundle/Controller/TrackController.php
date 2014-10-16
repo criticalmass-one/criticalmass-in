@@ -185,7 +185,7 @@ class TrackController extends Controller
 
             $em->persist($re);
             $em->flush();
-            $track->setRideEstimate($re->getId());
+            $track->setRideEstimate($re);
             $em->persist($track);
             $em->flush();
 
@@ -259,9 +259,9 @@ class TrackController extends Controller
 
         if ($track->getUser()->equals($this->getUser()))
         {
-            $re = $em->find('CalderaCriticalmassStatisticBundle:RideEstimate', $track->getRideEstimate());
+            //$re = $em->find('CalderaCriticalmassStatisticBundle:RideEstimate', $track->getRideEstimate());
             $em->remove($track);
-            $em->remove($re);
+            //$em->remove($re);
             $em->flush();
         }
 
