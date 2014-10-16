@@ -222,6 +222,15 @@ class TrackController extends Controller
         return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
     }
 
+    /**
+     * Activate or deactivate the user’s track. Deactivating a track will hide it from public ride overviews.
+     *
+     * @param Request $request
+     * @param $trackId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @author swahlen
+     */
     public function toggleAction(Request $request, $trackId)
     {
         $em = $this->getDoctrine()->getManager();
