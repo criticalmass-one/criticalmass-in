@@ -248,9 +248,11 @@ class TrackController extends Controller
 
     public function deleteAction(Request $request, $trackId)
     {
-        if ($trackId > 0) {
-            $em = $this->getDoctrine()->getManager();
-            $track = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
+        $em = $this->getDoctrine()->getManager();
+        $track = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
+
+        if ($track->getUser()->equals($this->getUser()))
+        {
             $re = $em->find('CalderaCriticalmassStatisticBundle:RideEstimate', $track->getRideEstimate());
             $em->remove($track);
             $em->remove($re);
