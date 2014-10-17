@@ -83,15 +83,18 @@ class TrackController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
+/*
             if (!($track->getFile())) {
                 return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
-            }
+            }*/
 
-            if ($track->handleUpload()) {
+            if ($track->handleUpload())
+            {
+                /* User and user name are redundant, yes. This is a preparation to have a chance to change the user name later without losing the dependency to the user. */
                 $track->setUser($this->getUser());
                 $track->setUsername($this->getUser()->getUsername());
 
+                /* Now, bring up the RideGuesser. We wanna know where the user was riding. */
                 $rg = new RideGuesser($this);
                 $rg->setGpx($track->getGpx());
                 $rg->guess();
@@ -104,29 +107,40 @@ class TrackController extends Controller
                     array_push($errorList, "tooFewTimeStamps");
                 }
 
-                if ($rg->isImpossible()) {
+                /* Let’s see. The RideGuesser could not detect a ride. */
+                if ($rg->isImpossible())
+                {
                     array_push($errorList, "noTourFound");
-                } elseif (($rg->isDistinct()) && (sizeof($errorList) == 0)) {
+                }
+                /* Okay, it found a distinct ride, so let’s bring up the magic. */
+                elseif (($rg->isDistinct()) && (sizeof($errorList) == 0))
+                {
+                    /* Save the concurrent ride. */
                     $rides = $rg->getRides();
                     $ride = array_pop($rides);
                     $track->setRide($ride);
 
+                    /* Extract the ride distance and duration into a RideEstimate entity. */
                     $re = new RideEstimate();
                     $re->setRide($ride);
                     $re->setUser($this->getUser());
                     $re->setEstimatedDistance($track->getDistance());
                     $re->setEstimatedDuration($track->getDuration());
+                    $track->setRideEstimate($re);
 
+                    /* Save the shit… */
                     $em->persist($re);
-                    $em->flush();
-                    $track->setRideEstimate($re->getId());
                     $em->persist($track);
                     $em->flush();
 
+                    /* … aaaand recalculate all estimates for this ride. */
                     $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
+                    /* Throw the user back to his track list. */
                     return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
-                } elseif (sizeof($errorList) == 0) {
+                }
+                /* No, that didn’t work. We cannot detect a distinct ride, so the user has to set a ride hisself. */
+                elseif (sizeof($errorList) == 0) {
                     $em->persist($track);
                     $em->flush();
 
