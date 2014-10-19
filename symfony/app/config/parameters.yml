@@ -11,4 +11,4 @@ parameters:
     database_port: null
     database_name: criticalmass_in
     database_user: root
-    database_password: dublin
+    database_password:
