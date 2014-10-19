@@ -120,16 +120,10 @@ class TrackController extends Controller
                     $ride = array_pop($rides);
                     $track->setRide($ride);
 
-                    /* Extract the ride distance and duration into a RideEstimate entity. */
-                    $re = new RideEstimate();
-                    $re->setRide($ride);
-                    $re->setUser($this->getUser());
-                    $re->setEstimatedDistance($track->getDistance());
-                    $re->setEstimatedDuration($track->getDuration());
-                    $track->setRideEstimate($re);
+                    /* Extract distance and duration from the track. */
+                    $this->get('caldera.criticalmassstatistic.rideestimate')->addEstimate($track);
 
                     /* Save the shit… */
-                    $em->persist($re);
                     $em->persist($track);
                     $em->flush();
 
@@ -164,17 +158,20 @@ class TrackController extends Controller
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
 
+        /* Well, when this action is called, the RideGuesser seemed to fail to detect a distinct ride. We need to catch a new list of the possible rides to present it to the user. */
         $rg = new RideGuesser($this);
         $rg->setGpx($track->getGpx());
         $rg->guess();
         $rides = $rg->getRides();
 
+        /* Now we build our select input field with the values from the possible rides. */
         $choices = array();
 
         foreach ($rides as $ride) {
             $choices[] = $ride;
         }
 
+        /* Here we go. The "entity" form field will be converted into a select box. */
         $form = $this->createFormBuilder($track)
             ->add('ride', 'entity', array
             (
@@ -188,18 +185,12 @@ class TrackController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
+            /* Extract distance and duration from the track. */
+            $this->get('caldera.criticalmassstatistic.rideestimate')->addEstimate($track);
+
             $em = $this->getDoctrine()->getManager();
-
-            $re = new RideEstimate();
-            $re->setRide($ride);
-            $re->setUser($this->getUser());
-            $re->setEstimatedDistance($track->getDistance());
-            $re->setEstimatedDuration($track->getDuration());
-
-            $em->persist($re);
-            $em->flush();
-            $track->setRideEstimate($re);
             $em->persist($track);
             $em->flush();
 
