@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\CriticalmassStatisticBundle\Type\RideEstimateType;
 use Caldera\CriticalmassCoreBundle\Type\RideType;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -60,15 +61,8 @@ class RideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
 
-        //$estimate = $this->getDoctrine()->getRepository('CalderaCriticalmassStatisticBundle:RideEstimate');
-
         $estimate = new RideEstimate();
-        $form = $this->createFormBuilder($estimate)
-            ->setAction($this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
-            ->add('estimatedParticipants', 'text')
-            ->add('estimatedDistance', 'text')
-            ->add('estimatedDuration', 'text')
-            ->getForm();
+        $form = $this->createForm(new RideEstimateType(), $estimate, array('action' => $this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
 
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'estimateForm' => $form->createView()));
     }

@@ -5,6 +5,7 @@ namespace Caldera\CriticalmassStatisticBundle\Controller;
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
+use Caldera\CriticalmassStatisticBundle\Type\RideEstimateType;
 use Caldera\CriticalmassStatisticBundle\Utility\RideEstimateCalculator\RideEstimateCalculator;
 use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,13 +20,7 @@ class RideController extends Controller
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
 
         $estimate = new RideEstimate();
-
-        $form = $this->createFormBuilder($estimate)
-            ->setAction($this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
-            ->add('estimatedParticipants', 'text')
-            ->add('estimatedDistance', 'text')
-            ->add('estimatedDuration', 'text')
-            ->getForm();
+        $form = $this->createForm(new RideEstimateType(), $estimate, array('action' => $this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
 
         return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimateform.html.twig', array('form' => $form->createView()));
     }
@@ -57,13 +52,7 @@ class RideController extends Controller
         }
 
         $estimate = new RideEstimate();
-
-        $form = $this->createFormBuilder($estimate)
-            ->setAction($this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d'))))
-            ->add('estimatedParticipants', 'text')
-            ->add('estimatedDistance', 'text')
-            ->add('estimatedDuration', 'text')
-            ->getForm();
+        $form = $this->createForm(new RideEstimateType(), $estimate, array('action' => $this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
 
         $form->handleRequest($request);
 
