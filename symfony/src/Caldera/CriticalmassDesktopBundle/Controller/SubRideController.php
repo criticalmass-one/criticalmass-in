@@ -3,6 +3,8 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\CriticalmassCoreBundle\Entity\SubRide;
+use Caldera\CriticalmassCoreBundle\Type\SubRideType;
 use Caldera\CriticalmassStatisticBundle\Type\RideEstimateType;
 use Caldera\CriticalmassCoreBundle\Type\RideType;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
@@ -14,11 +16,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SubRideController extends Controller
 {
-    public function addAction(Request $request, $citySlug)
+    public function addAction(Request $request, $citySlug, $rideDate)
     {
         if (!$this->getUser())
         {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour erstellen zu können.');
+            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
         }
 
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
@@ -29,17 +31,27 @@ class SubRideController extends Controller
         }
 
         $city = $citySlugObj->getCity();
-        $ride = new Ride();
-        $ride->setCity($city);
 
-        $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', array('citySlug' => $city->getMainSlugString()))));
+        $rideDateTime = new \DateTime($rideDate);
+
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
+        }
+
+        $subRide = new SubRide();
+        $subRide->setRide($ride);
+
+        $form = $this->createForm(new SubRideType(), $subRide, array('action' => $this->generateUrl('caldera_criticalmass_desktop_subride_add', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $rideDate))));
 
         $form->handleRequest($request);
 
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
 
-        if ($form->isValid() && !$city->hasRideAtMonthDay($ride->getDateTime()))
+        if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
@@ -58,7 +70,7 @@ class SubRideController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'ride' => null, 'form' => $form->createView(), 'city' => $city, 'dateTime' => new \DateTime()));
+        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'subRide' => null, 'form' => $form->createView(), 'city' => $city, 'ride' => $ride));
     }
 
     public function editAction(Request $request, $citySlug, $rideDate)
