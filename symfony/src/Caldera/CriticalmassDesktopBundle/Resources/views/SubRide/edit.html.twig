@@ -1,0 +1,280 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% if ride %}
+{% set title = 'Tour editieren' %}
+{% else %}
+{% set title = 'Tour hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if ride %}
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Tour editieren</li>
+        </ol>
+        {% else %}
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
+            <li class="active">Tour hinzufügen</li>
+        </ol>
+        {% endif %}
+
+        {% if city.getIsStandardable() %}
+        <div class="alert alert-warning" role="alert"><strong>Vorsicht!</strong> Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.</div>
+        {% endif %}
+        <h1>{{ title }}</h1>
+        <p>Manchmal klappt das nicht so ganz: Sich widersprechende Quellen, verschiedene Veranstaltungen auf facebook und twitter, da verlieren wir leider auch schon mal den Überblick. Danke, dass du dir die Zeit nimmst, fehlende Details zu ergänzen oder fehlerhafte Angaben zu korrigieren.</p>
+
+        {% if hasErrors is not null %}
+        {% if hasErrors == true %}
+        <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+        {% elseif hasErrors == false %}
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: city.getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">Zurück zur Tour?</a></div>
+        {% endif %}
+        {% endif %}
+
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="height: 250px;"></div>
+                </div>
+                {% javascripts
+                '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+                %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+                <script>
+                    function toggleLocation()
+                    {
+                        $('#ride_location').prop('disabled', !$('#ride_hasLocation').prop('checked'));
+                    }
+
+                    function toggleTime()
+                    {
+                        $('#ride_time_minute').prop('disabled', !$('#ride_hasTime').prop('checked'));
+                        $('#ride_time_hour').prop('disabled', !$('#ride_hasTime').prop('checked'));
+                    }
+
+                    window.onload = function()
+                    {
+                        $('#ride_hasLocation').on('click', toggleLocation);
+                        $('#ride_hasTime').on('click', toggleTime);
+                        $('#ride_date_day').on('click', checkRideDate);
+                        $('#ride_date_month').on('click', checkRideDate);
+                        $('#ride_date_year').on('click', checkRideDate);
+
+                        {% if ride and ride.hasLocation() %}
+                        var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+                        {% else %}
+                        var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+                        {% endif %}
+                        var map = L.map('map');
+                        var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        });
+
+                        tileLayer.addTo(map);
+                        map.setView(mapCenter, 12);
+
+                        var locationIcon = L.icon({
+                            iconUrl: '/images/marker/marker-red.png',
+                            iconRetinaUrl: '/images/marker/marker-red-2x.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [13, 41],
+                            popupAnchor: [0, -36],
+                            shadowUrl: '/images/marker/defaultshadow.png',
+                            shadowSize: [41, 41],
+                            shadowAnchor: [13, 41]
+                        });
+
+                        var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
+                        marker.addTo(map);
+                        marker.bindPopup('Schieb mich auf den Treffpunkt!');
+                        marker.openPopup();
+
+                        marker.on('dragend', function(event){
+                            var marker = event.target;
+                            var position = marker.getLatLng();
+
+                            $('#ride_latitude').val(position.lat);
+                            $('#ride_longitude').val(position.lng);
+                        });
+                    };
+
+                    var rideDates = [];
+
+                    {% for ride in city.getRides() %}
+                    rideDates.push(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+                    {% endfor %}
+
+                    {% if ride %}
+                    var rideDateTime = new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }});
+                    {% else %}
+                    var rideDateTime = null;
+                    {% endif %}
+
+                    function searchForMonth(year, month)
+                    {
+                        for (index in rideDates)
+                        {
+                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month  && !isSelfMonth(year, month))
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+
+                    function searchForMonthDay(year, month, day)
+                    {
+                        for (index in rideDates)
+                        {
+                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day && !isSelfDateTime(year, month, day))
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+
+                    function isSelfDateTime(year, month, day)
+                    {
+                        return (rideDateTime && rideDateTime.getFullYear() == year && rideDateTime.getMonth() + 1 == month && rideDateTime.getDate() == day);
+                    }
+
+                    function isSelfMonth(year,  month)
+                    {
+                        return (rideDateTime && rideDateTime.getFullYear() == year && rideDateTime.getMonth() + 1 == month);
+                    }
+
+                    function checkRideDate()
+                    {
+                        var day = $('#ride_date_day').val();
+                        var month = $('#ride_date_month').val();
+                        var year = $('#ride_date_year').val();
+
+                        if (searchForMonthDay(year, month, day))
+                        {
+                            $('#doubleMonthRide').hide();
+                            $('#doubleDayRide').show();
+                            $('#rideSubmitButton').prop('disabled', 'disabled');
+                        }
+                        else if (searchForMonth(year, month))
+                        {
+                            $('#doubleMonthRide').show();
+                            $('#doubleDayRide').hide();
+                            $('#rideSubmitButton').prop('disabled', '');
+                        }
+                        else
+                        {
+                            $('#doubleMonthRide').hide();
+                            $('#doubleDayRide').hide();
+                            $('#rideSubmitButton').prop('disabled', '');
+                        }
+                    }
+                </script>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label" for="title">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+                    <p class="help-block">Hier kann optional der Titel der Tour angegeben werden.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label" for="description">Beschreibung:</label>
+                    {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
+                    <p class="help-block">Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge, die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der Stadt genügend Platz.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="alert alert-warning" role="alert" id="doubleMonthRide"{% if city.hasRideAtMonthDay(dateTime) or not city.hasRideInMonth(dateTime) %} style="display: none;"{% endif %}><strong>Vorsicht!</strong> Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?</div>
+                <div class="alert alert-danger" role="alert" id="doubleDayRide"{% if not city.hasRideAtMonthDay(dateTime) %} style="display: none;"{% endif %}><strong>Achtung!</strong> An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider keine zwei Touren an einem Tag verwaltet werden.</div>
+                <div class="form-group{% if city.hasRideAtMonthDay(dateTime) %} has-error has-feedback{% elseif city.hasRideInMonth(dateTime) %} has-warning has-feedback{% endif %}">
+                    <label class="control-label" for="date">Datum:</label>
+                    {{ form_widget(form.date, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="control-label" for="time">Uhrzeit:</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        {{ form_widget(form.hasTime) }}
+                    </span>
+                    {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+                <p class="help-block">Mit der Checkbox kann die Anzeige der Uhrzeit deaktiviert werden, falls die Uhrzeit noch nicht bekannt sein sollte.</p>
+            </div>
+
+            <div class="row">
+                <label class="control-label" for="location">Treffpunkt:</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        {{ form_widget(form.hasLocation) }}
+                    </span>
+                    {% if ride and ride.hasLocation() %}
+                    {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                    {% else %}
+                    {{ form_widget(form.location, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                    {% endif %}
+                </div>
+                <p class="help-block">Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert werden, falls der noch nicht bekannt sein sollte.</p>
+            </div>
+
+            <div class="row">
+                <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="facebook">Link zu einer Veranstaltungsseite auf facebook:</label>
+                    {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="twitter">Link zu einem Tweet:</label>
+                    {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="url">Link zu einer Webseite:</label>
+                    {{ form_widget(form.url, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label" for="weatherForecast">Wettervorhersage:</label>
+                    {{ form_widget(form.weatherForecast, { 'attr' : { 'class': 'form-control' } }) }}
+                    <p class="help-block">Optional kann hier eine Wettervorhersage eingegeben werden, die auf der Tour-Seite angezeigt wird.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" id="rideSubmitButton"{% if city.hasRideAtMonthDay(dateTime) %} disabled="disabled"{% endif %}>Speichern</button>
+                </div>
+            </div>
+
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+            {{ form_widget(form._token) }}
+
+        </form>
+    </div>
+{% endblock %}

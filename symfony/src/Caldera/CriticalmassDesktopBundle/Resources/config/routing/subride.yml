@@ -1,0 +1,3 @@
+caldera_criticalmass_desktop_subride_add:
+    pattern:  /add/{citySlug}/{rideDate}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:SubRide:add }

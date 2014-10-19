@@ -73,3 +73,7 @@ caldera_criticalmass_desktop_content_show:
 caldera_criticalmass_desktop_ride_estimate:
     pattern: /ride/estimate/{rideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:estimateride }
+
+caldera_criticalmass_desktop_subride:
+    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing/subride.yml"
+    prefix: /subride

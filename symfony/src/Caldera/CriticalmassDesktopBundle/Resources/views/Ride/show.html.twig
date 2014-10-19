@@ -22,6 +22,7 @@
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="fa fa-cloud-upload"></i></a>
                 {% endif %}
                 <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="fa fa-wrench"></i></a>
+                <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="glyphicon glyphicon-map-marker"></i></a>
             </div>
             {% endif %}
             <h1>{{ ride.getFancyTitle() }}</h1>
