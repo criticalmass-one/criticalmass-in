@@ -115,11 +115,17 @@
                     rideDates.push(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
                     {% endfor %}
 
+                    {% if ride %}
+                    var rideDateTime = new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }});
+                    {% else %}
+                    var rideDateTime = null;
+                    {% endif %}
+
                     function searchForMonth(year, month)
                     {
                         for (index in rideDates)
                         {
-                            if ((rideDates[index].getFullYear() == year) && ((rideDates[index].getMonth() + 1) == month))
+                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month  && !isSelfMonth(year, month))
                             {
                                 return true;
                             }
@@ -132,13 +138,23 @@
                     {
                         for (index in rideDates)
                         {
-                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day)
+                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day && !isSelfDateTime(year, month, day))
                             {
                                 return true;
                             }
                         }
 
                         return false;
+                    }
+
+                    function isSelfDateTime(year, month, day)
+                    {
+                        return (rideDateTime && rideDateTime.getFullYear() == year && rideDateTime.getMonth() + 1 == month && rideDateTime.getDate() == day);
+                    }
+
+                    function isSelfMonth(year,  month)
+                    {
+                        return (rideDateTime && rideDateTime.getFullYear() == year && rideDateTime.getMonth() + 1 == month);
                     }
 
                     function checkRideDate()
