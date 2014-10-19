@@ -622,7 +622,6 @@ class Ride
     public function setTime(\DateTime $time)
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d').' '.$time->format('H:i:s'));
-
     }
 
     /**
