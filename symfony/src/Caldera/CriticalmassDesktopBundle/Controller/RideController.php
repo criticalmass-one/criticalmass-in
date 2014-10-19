@@ -61,10 +61,7 @@ class RideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
 
-        $estimate = new RideEstimate();
-        $form = $this->createForm(new RideEstimateType(), $estimate, array('action' => $this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
-
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'estimateForm' => $form->createView()));
+        return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride));
     }
 
     public function estimaterideAction(Request $request, $rideId)
