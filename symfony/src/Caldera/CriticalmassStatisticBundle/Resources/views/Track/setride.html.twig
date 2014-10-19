@@ -13,9 +13,21 @@
 
         <h1>Hoppla!</h1>
 
-        <p>Leider gibt es zu deinem hochgeladenen Track mehrere mögliche Touren. Wähle einfach die richtige Tour
-        unten aus und lade den Track dann hoch.</p>
+        <p>Normalerweise erkennt unsere tolle Datenbank anhand deiner in der Datei gespeicherten GPS-Koordinaten, bei welcher Tour du mitgefahren bist. Vereinzelt gibt es jedoch mehrdeutige Ergebnisse, wenn du zum Beispiel in Hamburg oder im Ruhrgebiet unterwegs warst, wo mehrere Touren parallel auf dichtem Raum herumfahren sind.</p>
 
-        {{ form(form) }}
+        {{ form_start(form, { 'attr': { 'role': 'form '}}) }}
+
+        <div class="form-group">
+            <label for="">Zugehörige Tour:</label>
+            {{ form_widget(form.ride, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            <div class="btn-group pull-right" id="formButtonGroup">
+                <button id="submitPostButton" type="submit" class="btn btn-success pull-right">Abspeichern</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
     </div>
 {% endblock %}
