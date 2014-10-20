@@ -7,5 +7,72 @@
     {{ form_widget(form.file, { 'attr': {'multiple': 'multiple' }}) }}
 </div>
 
+<div id="dragandrophandler">Drag & Drop Files Here</div>
+
 <button type="submit" class="btn btn-default">Bilder hochladen</button>
 {{ form_end(form) }}
+
+<style>
+    #dragandrophandler
+    {
+        border:2px dotted #0B85A1;
+        width:400px;
+        color:#92AAB0;
+        text-align:left;vertical-align:middle;
+        padding:10px 10px 10 10px;
+        margin-bottom:10px;
+        font-size:200%;
+    }
+</style>
+
+{% javascripts
+'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<script>
+    var obj = $("#dragandrophandler");
+    obj.on('dragenter', function (e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('border', '2px solid #0B85A1');
+    });
+    obj.on('dragover', function (e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    obj.on('drop', function (e)
+    {
+
+        $(this).css('border', '2px dotted #0B85A1');
+        e.preventDefault();
+        var files = e.originalEvent.dataTransfer.files;
+
+        $('#form_file').val("bla");
+
+        //We need to send dropped files to Server
+        handleFileUpload(files,obj);
+    });
+
+    $(document).on('dragenter', function (e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on('dragover', function (e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+        obj.css('border', '2px dotted #0B85A1');
+    });
+    $(document).on('drop', function (e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+</script>
