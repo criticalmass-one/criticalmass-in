@@ -183,6 +183,13 @@ class Ride
     protected $posts;
 
     /**
+     * Array mit den Bildern zu dieser Tour.
+     *
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photos", mappedBy="ride")
+     */
+    protected $photos;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -984,4 +991,14 @@ class Ride
     {
         return $this->posts;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+
 }

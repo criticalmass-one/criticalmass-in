@@ -105,6 +105,13 @@ class City
      */
     protected $posts;
 
+    /**
+     * Array mit den Bildern zu dieser Stadt.
+     *
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photos", mappedBy="city")
+     */
+    protected $photos;
+
 	/**
 	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
 	 */
@@ -1144,4 +1151,14 @@ class City
     {
         return $this->isStandardableTime;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+
 }

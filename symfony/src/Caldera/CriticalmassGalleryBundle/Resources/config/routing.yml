@@ -6,6 +6,14 @@ criticalmass_gallery_photos_add:
     pattern:  /photos/add
     defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
 
+criticalmass_gallery_photos_add_city:
+    pattern:  /photos/add/city/{cityId}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
+
+criticalmass_gallery_photos_add_ride:
+    pattern:  /photos/add/ride/{rideId}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
+
 criticalmass_gallery_photos_list:
     pattern:  /photos/list
     defaults: { _controller: CriticalmassGalleryBundle:Photos:list }

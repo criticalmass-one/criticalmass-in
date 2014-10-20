@@ -25,7 +25,7 @@
             <li><a href="#recentRidesTab" data-toggle="tab"><i class="glyphicon glyphicon-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
             {% endif %}
             <li><a href="#timelineTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
-            <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder </a></li>
+            <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder <span class="badge">{{ city.getPhotos()|length }}</span></a></li>
         </ul>
 
         <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
@@ -164,7 +164,7 @@
                             var marker = L.marker(mapCenter, { icon: cityIcon });
                             {% endif %}
 
-                            popupContent += '</dl>';
+                            popupContenE-Mail Adresse geändert.t += '</dl>';
 
                             marker.addTo(map);
                             marker.bindPopup(popupContent);
@@ -178,7 +178,7 @@
             {% endif %}
             {% if hasRides %}
             <div class="tab-pane fade in" id="recentRidesTab">
-                <div class="row">
+                <div class="row">E-Mail Adresse geändert.
                     <div class="col-md-12">
                         <h1>Vergangene Touren</h1>
                     </div>
@@ -223,9 +223,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1>Bilder</h1>
-                        {{ render(controller('CriticalmassGalleryBundle:Photos:add')) }}
+                        {{ render(controller('CriticalmassGalleryBundle:Photos:add', { 'cityId': city.getId() })) }}
 
-                        {{ render(controller('CriticalmassGalleryBundle:Photos:index')) }}
+                        {{ render(controller('CriticalmassGalleryBundle:Photos:index', { 'cityId': city.getId() } )) }}
                     </div>
                 </div>
             </div>

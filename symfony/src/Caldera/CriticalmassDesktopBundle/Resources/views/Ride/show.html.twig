@@ -104,7 +104,7 @@
 
                 <ul class="nav nav-tabs" id="cityModalTabs">
                     <li class="active"><a href="#commentTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare <span class="badge">{{ ride.getPosts()|length }}</span></a></li>
-                    <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder </a></li>
+                    <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder <span class="badge">{{ ride.getPhotos()|length }}</span></a></li>
                 </ul>
 
                 <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
@@ -121,7 +121,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>Bilder zu dieser Tour</h4>
-                                {{ render(controller('CriticalmassGalleryBundle:Photos:index')) }}
+                                {{ render(controller('CriticalmassGalleryBundle:Photos:index', {'rideId': ride.getId() })) }}
                             </div>
                         </div>
                     </div>
@@ -204,19 +204,19 @@
         </div>
     </div>
 
-        <div class="modal fade" id="modalPictureUpload" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{ render(controller('CriticalmassGalleryBundle:Photos:add')) }}
-                    </div>
+    <div class="modal fade" id="modalPictureUpload" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('CriticalmassGalleryBundle:Photos:add', { 'rideId': ride.getId() })) }}
                 </div>
             </div>
         </div>
+    </div>
 
     {% endif %}
 {% endblock %}
