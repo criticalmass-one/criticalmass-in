@@ -39,6 +39,11 @@ class Ride
     protected $tracks;
 
     /**
+     * @ORM\OneToMany(targetEntity="SubRide", mappedBy="ride")
+     */
+    protected $subRides;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $title;
@@ -944,5 +949,38 @@ class Ride
     public function getArchiveParent()
     {
         return $this->archiveParent;
+    }
+
+    /**
+     * Add subRides
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides
+     * @return Ride
+     */
+    public function addSubRide(\Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides)
+    {
+        $this->subRides[] = $subRides;
+
+        return $this;
+    }
+
+    /**
+     * Remove subRides
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides
+     */
+    public function removeSubRide(\Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides)
+    {
+        $this->subRides->removeElement($subRides);
+    }
+
+    /**
+     * Get subRides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubRides()
+    {
+        return $this->subRides;
     }
 }
