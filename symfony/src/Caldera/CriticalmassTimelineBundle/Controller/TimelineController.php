@@ -12,7 +12,7 @@ class TimelineController extends Controller
     {
         $pageLimit = 20;
 
-        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true), array('dateTime' => 'DESC'), $pageLimit, ($page - 1) * $pageLimit);
+        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('enabled' => true, 'photo' => null), array('dateTime' => 'DESC'), $pageLimit, ($page - 1) * $pageLimit);
 
         $postCount = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->countPosts();
 

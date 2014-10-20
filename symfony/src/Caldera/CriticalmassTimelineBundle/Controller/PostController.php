@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
-    public function writeAction(Request $request, $cityId = null, $rideId = null)
+    public function writeAction(Request $request, $cityId = null, $rideId = null, $photoId = null)
     {
         $post = new Post();
 
@@ -32,6 +32,14 @@ class PostController extends Controller
             $post->setRide($ride);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()));
+        }
+        elseif ($photoId)
+        {
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', array('photoId' => $photoId))));
+            $photo = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->find($photoId);
+            $post->setPhoto($photo);
+
+            $redirectUrl = $this->generateUrl('criticalmass_gallery_photos_show', array('photoId' => $photoId));
         }
         else
         {
@@ -77,7 +85,7 @@ class PostController extends Controller
      * @param null $rideId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request, $cityId = null, $rideId = null)
+    public function listAction(Request $request, $cityId = null, $rideId = null, $photoId = null)
     {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
@@ -92,6 +100,11 @@ class PostController extends Controller
         if ($rideId)
         {
             $criteria['ride'] = $rideId;
+        }
+
+        if ($photoId)
+        {
+            $criteria['photo'] = $photoId;
         }
 
         /* Now fetch all posts with matching criteria. */

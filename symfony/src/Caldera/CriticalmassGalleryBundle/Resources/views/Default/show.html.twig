@@ -1,2 +1,12 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block content %}
+
 <img src="{{ photo.getFilePath() }}">
 <p>{{ photo.getDescription() }}</p>
+
+{{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'photoId': photo.getId() })) }}
+
+    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'photoId': photo.getId() })) }}
+
+{% endblock %}

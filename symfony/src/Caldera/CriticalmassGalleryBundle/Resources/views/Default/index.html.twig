@@ -29,7 +29,8 @@
                addPhoto({{ index }}, '{{ photo.getId() }}', 'Penis', '{{ photo.getDescription() }}', '{{ photo.getFilePath() }}');
         </script>
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a href="#" id="photoOpen" class="thumbnail" data-photoindex="{{ index }}">
+            <a href="{{ path ('criticalmass_gallery_photos_show', {photoId: photo.getId()}) }}" class="thumbnail">
+            {#<a href="#" id="photoOpen" class="thumbnail" data-photoindex="{{ index }}">#}
                 <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" img="img-responsive">
             </a>
         </div>
@@ -66,7 +67,7 @@
 {% endjavascripts %}
 
 <script>
-     window.onload = function() {
+     /*window.onload = function() {
          $('a.thumbnail').click(function (event) {
              event.preventDefault();
 
@@ -116,6 +117,6 @@
 
          $('#modalPhoto').modal('show');
 
-     }
+     }*/
 
 </script>

@@ -37,6 +37,12 @@ class Post
     protected $city;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photos", inversedBy="posts")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     */
+    protected $photo;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -260,4 +266,21 @@ class Post
     {
         return $this->city;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
 }
