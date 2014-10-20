@@ -128,7 +128,7 @@
                             {% endif %}
 
                             {% if city.getCurrentRide().hasLocation() %}
-                            popupContent += '<dt>Treffpunkt:</dt> {{ city.getCurrentRide().getLocation() }}';
+                            popupContent += '<dt>Treffpunkt:</dt><dd>{{ city.getCurrentRide().getLocation() }}</dd>';
 
                             var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
 
