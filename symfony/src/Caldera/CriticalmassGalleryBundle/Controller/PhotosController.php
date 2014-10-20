@@ -21,10 +21,6 @@ class PhotosController extends Controller
 
     public function addAction(Request $request, $cityId = 0, $rideId = 0) {
         $photo = new Photos();
-        error_log("city");
-        error_log($cityId);
-        error_log("ride");
-        error_log($rideId);
         if ($cityId) {
 
             $form = $this->createFormBuilder($photo)
