@@ -242,11 +242,24 @@ class Photos
         // target filename to move to
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
+            $this->getId() . "." . $this->getFile()->getClientOriginalExtension()
         );
 
         // set the path property to the filename where you've saved the file
-        $this->filePath = "/../../".$this->getUploadRootDir().$this->getFile()->getClientOriginalName();
+        $this->filePath = "/../../".$this->getUploadRootDir() . $this->getId() . "." . $this->getFile()->getClientOriginalExtension();
+
+        /*$filename = $this->filePath;
+
+        header('Content-Type:image/jpeg');
+
+        list($width, $height) = getimagesize($filename);
+
+        $image_p = imagecreatetruecolor(50, 50);
+        $image = imagecreatefrompng($filename);
+
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0, 50, 50, $width, $height);
+
+        imagepng($image_p);*/
     }
 
     /**

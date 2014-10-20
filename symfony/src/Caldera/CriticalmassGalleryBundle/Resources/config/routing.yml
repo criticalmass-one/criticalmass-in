@@ -17,3 +17,11 @@ criticalmass_gallery_photos_edit:
 criticalmass_gallery_photos_show:
     pattern: /photos/show/{photoId}
     defaults: { _controller: CriticalmassGalleryBundle:Photos:show }
+
+criticalmass_gallery_photos_delete:
+    pattern: /photos/delete/{photoId}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:delete }
+
+criticalmass_gallery_photos_report:
+    pattern: /photos/report/{photoId}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:report }
