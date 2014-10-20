@@ -57,6 +57,17 @@
                 shadowAnchor: [13, 41]
             });
 
+            var subRideLocationIcon = L.icon({
+                iconUrl: '/images/marker/marker-blue.png',
+                iconRetinaUrl: '/images/marker/marker-blue-2x.png',
+                iconSize: [25, 41],
+                iconAnchor: [13, 41],
+                popupAnchor: [0, -36],
+                shadowUrl: '/images/marker/defaultshadow.png',
+                shadowSize: [41, 41],
+                shadowAnchor: [13, 41]
+            });
+
             {% if ride.hasLocation %}
             var marker = L.marker([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], { icon: locationIcon });
             marker.addTo(map);
@@ -77,6 +88,10 @@
             // zoom the map to the polyline
             map.fitBounds(polyline.getBounds());
 
+            {% for subRide in ride.getSubRides() %}
+            var marker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideLocationIcon });
+            marker.addTo(map);
+            {% endfor %}
         </script>
 
         <div class="row">
