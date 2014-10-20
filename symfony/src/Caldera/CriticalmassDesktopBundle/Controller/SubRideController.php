@@ -42,7 +42,9 @@ class SubRideController extends Controller
         }
 
         $subRide = new SubRide();
+        $subRide->setDateTime($ride->getDateTime());
         $subRide->setRide($ride);
+        $subRide->setUser($this->getUser());
 
         $form = $this->createForm(new SubRideType(), $subRide, array('action' => $this->generateUrl('caldera_criticalmass_desktop_subride_add', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $rideDate))));
 
