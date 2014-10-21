@@ -109,11 +109,11 @@
     var subRideMarkers = new Array();
     var subRideMarker = null;
 
-    {% for subRide in city.getCurrentRide().getSubRides() %}
+    {% for subRide in ride.getSubRides() %}
     subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
     subRideMarker.addTo(map);
     subRideMarker.bindPopup('<h5>{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ subRide.getDateTime().format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}</p>{% endif %}');
-    subRideMarkers.push(subRideMarker);
+    subRideMarkers[{{ subRide.getId() }}] = subRideMarker;
     {% endfor %}
 </script>
 {% if pastRide %}
@@ -146,15 +146,26 @@
 
         {% for subRide in ride.getSubRides() %}
         <div class="media">
-            <a class="pull-left" href="#">
+            <a class="pull-left subride" href="#" data-subrideid="{{ subRide.getId() }}">
                 <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
             </a>
             <div class="media-body">
-                <h5 class="media-heading">{{ subRide.getTitle() }}</h5>
+                <h5 class="media-heading">{{ subRide.getDateTime().format('H.i') }} Uhr: {{ subRide.getTitle() }}</h5>
                 <p>{{ subRide.getDescription()|nl2br }}</p>
             </div>
         </div>
         {% endfor %}
+        <script>
+            window.onload = function() {
+                $('.subride').on('click', function () {
+                    var subRideId = $(this).data('subrideid');
+                    var marker = subRideMarkers[subRideId];
+
+                    map.panTo(marker.getLatLng());
+                    marker.openPopup();
+                });
+            }
+        </script>
 
         <h4>Mehr im Netz</h4>
 
