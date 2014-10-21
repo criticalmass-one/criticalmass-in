@@ -150,7 +150,7 @@
                 <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
             </a>
             <div class="media-body">
-                <h5 class="media-heading">{{ subRide.getTitle() }}</h5>
+                <h5 class="media-heading">{{ subRide.getDateTime().format('H.i') }} Uhr: {{ subRide.getTitle() }}</h5>
                 <p>{{ subRide.getDescription()|nl2br }}</p>
             </div>
         </div>
