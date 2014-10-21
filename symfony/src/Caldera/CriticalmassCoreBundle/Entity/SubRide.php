@@ -29,6 +29,7 @@ class SubRide
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     protected $title;
 
@@ -49,6 +50,7 @@ class SubRide
 
 	/**
 	 * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
 	 */
     protected $location;
 
