@@ -7,22 +7,26 @@
 {% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
 
 <div class="row">
-    {% if app.getUser() %}
-    <div class="btn-group  pull-right" style="margin-top: 24px;">
-        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment" title="Kommentieren"><i class="fa fa-pencil"></i></a>
-        {% if pastRide %}
-        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="fa fa-signal"></i></a>
-        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="fa fa-cloud-upload"></i></a>
+    <div class="col-md-12">
+        {% if app.getUser() %}
+        <div class="btn-group  pull-right" style="margin-top: 24px;">
+            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment" title="Kommentieren"><i class="fa fa-pencil"></i></a>
+            {% if pastRide %}
+            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="fa fa-signal"></i></a>
+            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="fa fa-cloud-upload"></i></a>
+            {% endif %}
+            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="fa fa-wrench"></i></a>
+            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="glyphicon glyphicon-map-marker"></i></a>
+        </div>
         {% endif %}
-        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="fa fa-wrench"></i></a>
-        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="glyphicon glyphicon-map-marker"></i></a>
+        <h1>{{ ride.getFancyTitle() }}</h1>
     </div>
-    {% endif %}
-    <h1>{{ ride.getFancyTitle() }}</h1>
 </div>
 
 <div class="row">
-    <div id="map" class="col-md-12" style="height: 350px;"></div>
+    <div class="col-md-12">
+        <div id="map" style="height: 350px;"></div>
+    </div>
 </div>
 
 {% javascripts
@@ -161,49 +165,50 @@
         </div>
         {% endif %}
     </div>
+</div>
 
-    {% if app.getUser() %}
-    <div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Kommentar zu dieser Tour verfassen</h4>
-                </div>
-                <div class="modal-body">
-                    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
-                </div>
+{% if app.getUser() %}
+<div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Kommentar zu dieser Tour verfassen</h4>
+            </div>
+            <div class="modal-body">
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
             </div>
         </div>
     </div>
+</div>
 
-    {% if pastRide %}
-    <div class="modal fade" id="modalEstimate" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Tour schätzen</h4>
-                </div>
-                <div class="modal-body">
-                    {{ render(controller('CalderaCriticalmassStatisticBundle:Ride:estimateform', { 'rideId': ride.getId() })) }}
-                </div>
+{% if pastRide %}
+<div class="modal fade" id="modalEstimate" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Tour schätzen</h4>
+            </div>
+            <div class="modal-body">
+                {{ render(controller('CalderaCriticalmassStatisticBundle:Ride:estimateform', { 'rideId': ride.getId() })) }}
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="modalTrackUpload" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Track zu dieser Tour hochladen</h4>
-                </div>
-                <div class="modal-body">
-                    {{ render(controller('CalderaCriticalmassStatisticBundle:Track:upload')) }}
-                </div>
+<div class="modal fade" id="modalTrackUpload" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Track zu dieser Tour hochladen</h4>
+            </div>
+            <div class="modal-body">
+                {{ render(controller('CalderaCriticalmassStatisticBundle:Track:upload')) }}
             </div>
         </div>
     </div>
-    {% endif %}
-    {% endif %}
+</div>
+{% endif %}
+{% endif %}
