@@ -109,8 +109,8 @@
     var subRideMarkers = new Array();
     var subRideMarker = null;
 
-    {% for subRide in city.getCurrentRide().getSubRides() %}
-        subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
+    {% for subRide in ride.getSubRides() %}
+    subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
     subRideMarker.addTo(map);
     subRideMarker.bindPopup('<h5>{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ subRide.getDateTime().format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>{% if subRide.getDescription() %}<p>{{ subRide.getDescription() }}</p>{% endif %}');
     subRideMarkers.push(subRideMarker);
