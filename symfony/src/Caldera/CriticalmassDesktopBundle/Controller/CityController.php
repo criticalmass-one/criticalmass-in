@@ -37,7 +37,7 @@ class CityController extends Controller
             // shift the first ride from the array as the first one is the current and should not be displayed at the recent rides list
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'rides' => $rides));
+        return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'rides' => $rides, 'dateTime' => new \DateTime()));
     }
 
     public function addAction(Request $request)
