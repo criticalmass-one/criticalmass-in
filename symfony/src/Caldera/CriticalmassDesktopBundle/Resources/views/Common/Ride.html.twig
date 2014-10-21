@@ -128,43 +128,44 @@
 <div class="row">
     {% if hasSocialMedia %}
     <div class="col-lg-8">
-        {% else %}
-        <div class="col-lg-12">
-            {% endif %}
-            {% if ride.getDescription() %}
-            <div class="row">
-                <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
-            </div>
-            {% endif %}
+    {% else %}
+    <div class="col-lg-12">
+    {% endif %}
 
-            <div class="row">
-                <div class="col-md-12">
-                    <h4>Kommentare zu dieser Tour</h4>
-                    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
-                </div>
-            </div>
-        </div>
-        {% if hasSocialMedia %}
-        <div class="col-lg-4">
-            {% if hasSocialMedia %}
-            <h4>Mehr im Netz</h4>
-
-            {% if ride.getUrl() %}
-            <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
-            {% endif %}
-
-            {% if ride.getFacebook() %}
-            <a class="btn btn-link" href="{{ ride.getFacebook() }}">facebook</a>
-            {% endif %}
-
-            {% if ride.getTwitter() %}
-            <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
-            {% endif %}
-            {% endif %}
-
+        {% if ride.getDescription() %}
+        <div class="row">
+            <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
         </div>
         {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Kommentare zu dieser Tour</h4>
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
+            </div>
+        </div>
     </div>
+
+    {% if hasSocialMedia %}
+    <div class="col-lg-4">
+        {% if hasSocialMedia %}
+        <h4>Mehr im Netz</h4>
+
+        {% if ride.getUrl() %}
+        <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
+        {% endif %}
+
+        {% if ride.getFacebook() %}
+        <a class="btn btn-link" href="{{ ride.getFacebook() }}">facebook</a>
+        {% endif %}
+
+        {% if ride.getTwitter() %}
+        <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
+        {% endif %}
+        {% endif %}
+
+    </div>
+    {% endif %}
 </div>
 
 {% if app.getUser() %}
