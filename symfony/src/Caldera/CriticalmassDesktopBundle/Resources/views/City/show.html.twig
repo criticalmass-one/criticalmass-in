@@ -171,12 +171,24 @@
                             map.setView(mapCenter, 15);
                             marker.openPopup();
 
-                            var subRideMarker = new Array();
+                            var subRideIcon = L.icon({
+                                iconUrl: '/images/marker/marker-blue.png',
+                                iconRetinaUrl: '/images/marker/marker-blue-2x.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [13, 41],
+                                popupAnchor: [0, -36],
+                                shadowUrl: '/images/marker/defaultshadow.png',
+                                shadowSize: [41, 41],
+                                shadowAnchor: [13, 41]
+                            });
+
+                            var subRideMarkers = new Array();
+                            var subRideMarker = null;
 
                             {% for subRide in city.getCurrentRide().getSubRides() %}
-                            subRideMarker[{{ subRide.getId() }}] = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: locationIcon });
-                            subRideMarker[{{ subRide.getId() }}].addTo(map);
-                            subRideMarker[{{ subRide.getId() }}].bindPopup('<dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ city.getCurrentRide().getLocation() }}</dd></dl>');
+                            subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
+                            subRideMarker.addTo(map);
+                            subRideMarker.bindPopup('<dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>');
                             {% endfor %}
                         </script>
                     </div>
