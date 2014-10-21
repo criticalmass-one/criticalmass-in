@@ -126,12 +126,7 @@
 </div>
 {% endif %}
 <div class="row">
-    {% if hasSocialMedia %}
     <div class="col-lg-8">
-    {% else %}
-    <div class="col-lg-12">
-    {% endif %}
-
         {% if ride.getDescription() %}
         <div class="row">
             <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
@@ -146,9 +141,21 @@
         </div>
     </div>
 
-    {% if hasSocialMedia %}
     <div class="col-lg-4">
-        {% if hasSocialMedia %}
+        <h4>Mini-Masses zu dieser Tour</h4>
+
+        {% for subRide in ride.getSubRides() %}
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
+            </a>
+            <div class="media-body">
+                <h5 class="media-heading">{{ subRide.getTitle() }}</h5>
+                <p>{{ subRide.getDescription()|nl2br }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
         <h4>Mehr im Netz</h4>
 
         {% if ride.getUrl() %}
@@ -162,10 +169,7 @@
         {% if ride.getTwitter() %}
         <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
         {% endif %}
-        {% endif %}
-
     </div>
-    {% endif %}
 </div>
 
 {% if app.getUser() %}
