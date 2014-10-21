@@ -4,6 +4,12 @@
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
+{% if dateTime > ride.getDateTime() %}
+{% set pastRide = true %}
+{% else %}
+{% set pastRide = false %}
+{% endif %}
+
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
@@ -17,7 +23,7 @@
             {% if app.getUser() %}
             <div class="btn-group  pull-right" style="margin-top: 24px;">
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment" title="Kommentieren"><i class="fa fa-pencil"></i></a>
-                {% if dateTime > ride.getDateTime() %}
+                {% if pastRide %}
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="fa fa-signal"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="fa fa-cloud-upload"></i></a>
                 {% endif %}
@@ -168,7 +174,7 @@
         </div>
     </div>
 
-    {% if dateTime > ride.getDateTime() %}
+    {% if pastRide %}
     <div class="modal fade" id="modalEstimate" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
