@@ -55,6 +55,11 @@ class Photos
     protected $file;
 
     /**
+     * @Assert\File(maxSize="6000000")
+     */
+    protected $small_file;
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $filePath;
@@ -245,8 +250,30 @@ class Photos
             $this->getId() . "." . $this->getFile()->getClientOriginalExtension()
         );
 
+        error_log("pre_output");
+
         // set the path property to the filename where you've saved the file
         $this->filePath = "/../../".$this->getUploadRootDir() . $this->getId() . "." . $this->getFile()->getClientOriginalExtension();
+
+        // Content type
+        header('Content-Type: image/jpeg');
+
+        // Get new dimensions
+        list($width, $height) = getimagesize($this->getFile()->getContent());
+        $new_width = 50;
+        $new_height = 50;
+
+        // Resample
+        $this->small_file = imagecreatetruecolor($new_width, $new_height);
+        $image = imagecreatefromstring($this->getFile()->getContent());
+        imagecopyresampled($this->small_file, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+        error_log("output");
+
+        // Output
+        //imagejpeg($image_p, null, 100);
+        $this->small_file->move($this->getUploadRootDir(),
+            $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension());
     }
 
     /**
