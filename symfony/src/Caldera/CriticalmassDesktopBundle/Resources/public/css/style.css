@@ -9,12 +9,12 @@ body.standardBody
     background-image: url(http://cdn.leafletjs.com/leaflet-0.7.3/images/layers-2x.png) !important;
 }
 
-.edit-subride
+.edit-subride, .post .edit-post
 {
     display: none;
 }
 
-.subride:hover .edit-subride
+.subride:hover .edit-subride, .post:hover .edit-post
 {
     display: block;
 }
