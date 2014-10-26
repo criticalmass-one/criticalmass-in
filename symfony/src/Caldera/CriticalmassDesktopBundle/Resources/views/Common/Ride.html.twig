@@ -44,6 +44,7 @@
     tileLayer.addTo(map);
 
     var markerGroup = L.featureGroup();
+    var trackGroup = L.featureGroup();
 
     var popupContent = '<dl class="dl-horizontal">';
     popupContent += '<dt>Datum:</dt><dd>{{ ride.getDateTime.format('d.m.Y') }}</dd>';
@@ -117,6 +118,12 @@
 
     markerGroup.addTo(map);
 
+    {% for track in ride.getTracks() %}
+    var trackLine = L.polyline({{ track.getJSON() }});
+    trackGroup.addLayer(trackLine);
+    {% endfor %}
+
+    trackGroup.addTo(map);
     map.fitBounds(markerGroup.getBounds());
 
     //map.setView(mapCenter, 15);
