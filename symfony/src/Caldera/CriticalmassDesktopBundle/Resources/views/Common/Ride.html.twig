@@ -115,6 +115,8 @@
     subRideMarker.bindPopup('<h5>{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ subRide.getDateTime().format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}</p>{% endif %}');
     subRideMarkers[{{ subRide.getId() }}] = subRideMarker;
     {% endfor %}
+
+    var subRideMarkersLayerGroup = L.layerGroup(subRideMarkers);
 </script>
 {% if pastRide %}
 <div class="row">
