@@ -18,12 +18,12 @@
             {% else %}
             {{ post.getUser().getUsername() }} schreibt:
             {% endif %}</h4>
-{#        {% if app.getUser().getId() == post.getUser().getId() %}
-            <a class="postDeleteButton btn btn-default" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
-        {% else %}
-            <a class="postReportButton btn btn-default" href="#" title="Melden" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
-        {% endif %}#}
-            
+            {% if app.getUser().getId() == post.getUser().getId() %}
+                <a class="postDeleteButton btn btn-default" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
+            {% else %}
+                <a class="postReportButton btn btn-default" href="#" title="Melden" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
+            {% endif %}
+
             <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
             {{ post.getMessage()|nl2br }}
         </div>
