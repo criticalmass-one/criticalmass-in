@@ -108,7 +108,7 @@
 
     var subRideMarkers = new Array();
 
-    {% for subRide in ride.getSubRides() %}
+    {% for subRide in ride.getActiveSubRides() %}
     var subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
     subRideMarker.addTo(map);
     subRideMarker.bindPopup('<h5>{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ subRide.getDateTime().format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}</p>{% endif %}');
@@ -160,7 +160,7 @@
     <div class="col-lg-4">
         <h4>Mini-Masses zu dieser Tour</h4>
 
-        {% for subRide in ride.getSubRides() %}
+        {% for subRide in ride.getActiveSubRides() %}
         <div class="media subride">
             <a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="glyphicon glyphicon-wrench"></i></a>
             <a class="pull-left subride" href="#" data-subrideid="{{ subRide.getId() }}">

@@ -983,4 +983,19 @@ class Ride
     {
         return $this->subRides;
     }
+
+    public function getActiveSubRides()
+    {
+        $subRides = array();
+
+        foreach ($this->subRides as $subRide)
+        {
+            if (!$subRide->getIsArchived())
+            {
+                $subRides[] = $subRide;
+            }
+        }
+
+        return $subRides;
+    }
 }
