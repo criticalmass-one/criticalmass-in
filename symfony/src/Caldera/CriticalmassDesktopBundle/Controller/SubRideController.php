@@ -75,42 +75,25 @@ class SubRideController extends Controller
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'subRide' => null, 'form' => $form->createView(), 'city' => $city, 'ride' => $ride));
     }
 
-    public function editAction(Request $request, $citySlug, $rideDate)
+    public function editAction(Request $request, $subRideId)
     {
         if (!$this->getUser())
         {
             throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour bearbeiten zu können.');
         }
 
-        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+        $subRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:SubRide')->find($subRideId);
 
-        if (!$citySlugObj)
+        if (!$subRide)
         {
-            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+            throw new NotFoundHttpException('Wir haben leider keine Mini-Mass mit der ID '.$subRideId.' gefunden.');
         }
 
-        $city = $citySlugObj->getCity();
-
-        try {
-            $rideDateTime = new \DateTime($rideDate);
-        }
-        catch (\Exception $e)
-        {
-            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfangen. Bitte gib ein Datum im Format YYYY-MM-DD an.');
-        }
-
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
-
-        if (!$ride)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
-        }
-
-        $archiveRide = clone $ride;
+        /*$archiveRide = clone $subRide;
         $archiveRide->setArchiveUser($this->getUser());
-        $archiveRide->setArchiveParent($ride);
+        $archiveRide->setArchiveParent($ride);*/
 
-        $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
+        $form = $this->createForm(new SubRideType(), $subRide, array('action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit', array('subRideId' => $subRideId))));
 
         $form->handleRequest($request);
 
@@ -121,7 +104,7 @@ class SubRideController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
-            $em->persist($archiveRide);
+           //$em->persist($archiveRide);
             $em->flush();
 
             // TODO: remove also this
@@ -133,6 +116,6 @@ class SubRideController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('ride' => $ride, 'city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
+        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('ride' => $subRide->getRide(), 'subRide' => $subRide, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
     }
 }
