@@ -43,6 +43,8 @@
 
     tileLayer.addTo(map);
 
+    var markerGroup = L.featureGroup();
+
     var popupContent = '<dl class="dl-horizontal">';
     popupContent += '<dt>Datum:</dt><dd>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</dd>';
     popupContent += '<dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd>';
@@ -89,7 +91,7 @@
 
     popupContent += '</dl>';
 
-    locationMarker.addTo(map);
+    locationMarker.addTo(markerGroup);
     locationMarker.bindPopup(popupContent);
 
     var subRideIcon = L.icon({
@@ -104,20 +106,18 @@
     });
 
     var subRideMarkers = new Array();
-    var subRideMarker = null;
-    var subRideMarkersLayerGroup = L.featureGroup();
 
     {% for subRide in ride.getSubRides() %}
     subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
     subRideMarker.addTo(map);
     subRideMarker.bindPopup('<h5>{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ subRide.getDateTime().format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}</p>{% endif %}');
     subRideMarkers[{{ subRide.getId() }}] = subRideMarker;
-    subRideMarkersLayerGroup.addLayer(subRideMarker);
+    markerGroup.addLayer(subRideMarker);
     {% endfor %}
 
-    subRideMarkersLayerGroup.addTo(map);
+    markerGroup.addTo(map);
 
-    map.fitBounds(subRideMarkersLayerGroup.getBounds());
+    map.fitBounds(markerGroup.getBounds());
 
     //map.setView(mapCenter, 15);
     locationMarker.openPopup();
