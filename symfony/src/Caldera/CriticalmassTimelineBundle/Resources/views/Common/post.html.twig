@@ -4,24 +4,30 @@
 {% set indent = 0 %}
 {% endif %}
 <div class="media-body">
-        <h4 class="media-heading username">
-        {% if post.getCity() %}
-        {{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
-        {% elseif post.getRide() %}
-        {{ post.getUser().getUsername() }} schreibt zu <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:
-        {% else %}
-        {{ post.getUser().getUsername() }} schreibt:
-        {% endif %}
+    <div class="post media">
+        <span class="pull-left">
+            <img class="media-object" src="http://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
+        </span>
 
+        <div class="media-body">
+            <h4 class="media-heading username">
+            {% if post.getCity() %}
+            {{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
+            {% elseif post.getRide() %}
+            {{ post.getUser().getUsername() }} schreibt zu <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:
+            {% else %}
+            {{ post.getUser().getUsername() }} schreibt:
+            {% endif %}</h4>
 {#        {% if app.getUser().getId() == post.getUser().getId() %}
             <a class="postDeleteButton btn btn-default" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
         {% else %}
             <a class="postReportButton btn btn-default" href="#" title="Melden" data-postid={{ post.getId() }}><i class="fa fa-trash"></i></a>
         {% endif %}#}
-        </h4>
-
-        <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
-        {{ post.getMessage()|nl2br }}
+            
+            <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
+            {{ post.getMessage()|nl2br }}
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
