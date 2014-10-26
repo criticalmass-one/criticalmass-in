@@ -89,9 +89,11 @@ class SubRideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Mini-Mass mit der ID '.$subRideId.' gefunden.');
         }
 
-        /*$archiveRide = clone $subRide;
+        $archiveRide = clone $subRide;
         $archiveRide->setArchiveUser($this->getUser());
-        $archiveRide->setArchiveParent($ride);*/
+        $archiveRide->setArchiveParent($subRide);
+        $archiveRide->setIsArchived(true);
+        $archiveRide->setArchiveDateTime(new \DateTime());
 
         $form = $this->createForm(new SubRideType(), $subRide, array('action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit', array('subRideId' => $subRideId))));
 
@@ -104,7 +106,7 @@ class SubRideController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
-           //$em->persist($archiveRide);
+            $em->persist($archiveRide);
             $em->flush();
 
             // TODO: remove also this

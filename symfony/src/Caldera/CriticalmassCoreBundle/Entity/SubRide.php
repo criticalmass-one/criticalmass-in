@@ -88,6 +88,29 @@ class SubRide
      */
     protected $user;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SubRide", inversedBy="archive_subrides")
+     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
+     */
+    protected $archiveParent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isArchived = false;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $archiveDateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_subrides")
+     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
+     */
+    protected $archiveUser;
+
     public function __construct()
     {
         $this->creationDateTime = new \DateTime();
@@ -387,5 +410,97 @@ class SubRide
     public function setTime(\DateTime $time)
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d').' '.$time->format('H:i:s'));
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param boolean $isArchived
+     * @return SubRide
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set archiveDateTime
+     *
+     * @param \DateTime $archiveDateTime
+     * @return SubRide
+     */
+    public function setArchiveDateTime($archiveDateTime)
+    {
+        $this->archiveDateTime = $archiveDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getArchiveDateTime()
+    {
+        return $this->archiveDateTime;
+    }
+
+    /**
+     * Set archiveParent
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $archiveParent
+     * @return SubRide
+     */
+    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\SubRide $archiveParent = null)
+    {
+        $this->archiveParent = $archiveParent;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveParent
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\SubRide 
+     */
+    public function getArchiveParent()
+    {
+        return $this->archiveParent;
+    }
+
+    /**
+     * Set archiveUser
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @return SubRide
+     */
+    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    {
+        $this->archiveUser = $archiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveUser
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getArchiveUser()
+    {
+        return $this->archiveUser;
     }
 }
