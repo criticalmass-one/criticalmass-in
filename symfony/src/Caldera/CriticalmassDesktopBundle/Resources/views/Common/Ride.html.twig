@@ -124,10 +124,13 @@
     {% endfor %}
 
     trackGroup.addTo(map);
-    map.fitBounds(markerGroup.getBounds());
 
-    //map.setView(mapCenter, 15);
+    {% if pastRide and ride.getTracks()|length > 0 %}
+    map.fitBounds(trackGroup.getBounds());
+    {% else %}
+    map.fitBounds(markerGroup.getBounds());
     locationMarker.openPopup();
+    {% endif %}
 </script>
 {% if pastRide %}
 <div class="row">
