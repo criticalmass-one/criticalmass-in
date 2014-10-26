@@ -1,0 +1,28 @@
+caldera_criticalmass_desktop_ride_show:
+    pattern:  /{citySlug}/{rideDate}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:show }
+
+caldera_criticalmass_desktop_ride_edit:
+    pattern:  /{citySlug}/{rideDate}/edit
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:edit }
+
+caldera_criticalmass_desktop_ride_estimate:
+    pattern: /ride/estimate/{rideId}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:estimateride }
+
+caldera_criticalmass_desktop_ride_list:
+    pattern:  /ride/list
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:list }
+
+caldera_criticalmass_desktop_ride_add:
+    pattern:  /{citySlug}/addride
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:add }
+
+caldera_criticalmass_desktop_ride_showcurrent:
+    pattern:  /ride/showcurrent/{citySlug}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:showcurrent }
+
+caldera_criticalmass_desktop_ride_propose:
+    pattern:  /ride/propose/{citySlug}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:propose }
+

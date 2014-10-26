@@ -1,0 +1,15 @@
+caldera_criticalmass_desktop_city_list:
+    pattern:  /city/list
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:list }
+
+caldera_criticalmass_desktop_city_add:
+    pattern:  /city/add
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:add }
+
+caldera_criticalmass_desktop_city_show:
+    pattern:  /{citySlug}/show
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
+
+caldera_criticalmass_desktop_city_edit:
+    pattern:  /{citySlug}/edit
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:edit }
