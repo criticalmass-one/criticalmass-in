@@ -67,7 +67,7 @@
             shadowAnchor: [13, 41]
         });
 
-        var marker = L.marker(mapCenter, { icon: locationIcon });
+        var locationMarker = L.marker(mapCenter, { icon: locationIcon });
         {% else %}
         popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
 
@@ -84,13 +84,13 @@
         shadowAnchor: [13, 41]
     });
 
-    var marker = L.marker(mapCenter, { icon: cityIcon });
+    var locationMarker = L.marker(mapCenter, { icon: cityIcon });
     {% endif %}
 
     popupContent += '</dl>';
 
-    marker.addTo(map);
-    marker.bindPopup(popupContent);
+    locationMarker.addTo(map);
+    locationMarker.bindPopup(popupContent);
 
     var subRideIcon = L.icon({
         iconUrl: '/images/marker/marker-blue.png',
@@ -120,7 +120,7 @@
     map.fitBounds(subRideMarkersLayerGroup.getBounds());
 
     //map.setView(mapCenter, 15);
-    marker.openPopup();
+    locationMarker.openPopup();
 </script>
 {% if pastRide %}
 <div class="row">
