@@ -10,6 +10,12 @@
         </span>
 
         <div class="media-body">
+            {% if app.getUser().getId() == post.getUser().getId() %}
+            <a class="postDeleteButton btn btn-default btn-xs pull-right" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
+            {% else %}
+            <a class="postReportButton btn btn-default btn-xs pull-right" href="#" title="Melden" data-postid={{ post.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
+            {% endif %}
+            
             <h4 class="media-heading username">
             {% if post.getCity() %}
             {{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
@@ -18,11 +24,6 @@
             {% else %}
             {{ post.getUser().getUsername() }} schreibt:
             {% endif %}</h4>
-            {% if app.getUser().getId() == post.getUser().getId() %}
-                <a class="postDeleteButton btn btn-default" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
-            {% else %}
-                <a class="postReportButton btn btn-default" href="#" title="Melden" data-postid={{ post.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
-            {% endif %}
 
             <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
             {{ post.getMessage()|nl2br }}
