@@ -46,34 +46,34 @@
     var markerGroup = L.featureGroup();
 
     var popupContent = '<dl class="dl-horizontal">';
-    popupContent += '<dt>Datum:</dt><dd>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</dd>';
-    popupContent += '<dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd>';
+    popupContent += '<dt>Datum:</dt><dd>{{ ride.getDateTime.format('d.m.Y') }}</dd>';
+    popupContent += '<dt>Uhrzeit:</dt><dd>{{ ride.getDateTime.format('H:i') }}</dd>';
 
-    {% if city.getCurrentRide().getWeatherForecast() %}
-        popupContent += '<dt>Wetter:</dt><dd>{{ city.getCurrentRide().getWeatherForecast() }}</dd>';
-        {% endif %}
+    {% if ride.getWeatherForecast() %}
+    popupContent += '<dt>Wetter:</dt><dd>{{ ride.getWeatherForecast() }}</dd>';
+    {% endif %}
 
-        {% if city.getCurrentRide().hasLocation() %}
-            popupContent += '<dt>Treffpunkt:</dt><dd>{{ city.getCurrentRide().getLocation() }}</dd>';
+    {% if ride.hasLocation() %}
+    popupContent += '<dt>Treffpunkt:</dt><dd>{{ ride.getLocation() }}</dd>';
 
-            var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
+    var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
 
-        var locationIcon = L.icon({
-            iconUrl: '/images/marker/marker-red.png',
-            iconRetinaUrl: '/images/marker/marker-red-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [13, 41],
-            popupAnchor: [0, -36],
-            shadowUrl: '/images/marker/defaultshadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [13, 41]
-        });
+    var locationIcon = L.icon({
+        iconUrl: '/images/marker/marker-red.png',
+        iconRetinaUrl: '/images/marker/marker-red-2x.png',
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        popupAnchor: [0, -36],
+        shadowUrl: '/images/marker/defaultshadow.png',
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+    });
 
-        var locationMarker = L.marker(mapCenter, { icon: locationIcon });
-        {% else %}
-        popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
+    var locationMarker = L.marker(mapCenter, { icon: locationIcon });
+    {% else %}
+    popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
 
-        var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
 
     var cityIcon = L.icon({
         iconUrl: '/images/marker/marker-gray.png',
