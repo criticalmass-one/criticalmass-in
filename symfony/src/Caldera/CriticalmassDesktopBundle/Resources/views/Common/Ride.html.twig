@@ -161,7 +161,7 @@
         <h4>Mini-Masses zu dieser Tour</h4>
 
         {% for subRide in ride.getSubRides() %}
-        <div class="media">
+        <div class="media subride">
             <a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="glyphicon glyphicon-wrench"></i></a>
             <a class="pull-left subride" href="#" data-subrideid="{{ subRide.getId() }}">
                 <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
