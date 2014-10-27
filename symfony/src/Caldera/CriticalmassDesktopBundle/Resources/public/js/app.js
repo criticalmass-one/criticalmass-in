@@ -37,7 +37,10 @@ function showCityInfo(slug)
     $('#cityModalTabNextButtonsCity').on('click', function()
     {
         $('#cityInfoModal').modal('hide');
-        map.map.panTo([city.getLatitude(), city.getLongitude()]);
+        map.map.invalidateSize();
+
+        //map.map.panTo([city.getLatitude(), city.getLongitude()]);
+        map.map.setView([city.getLatitude(), city.getLongitude()], 14);
 
         _paq.push(['trackEvent', 'panToCity', 'hamburg']);
     });
@@ -114,7 +117,11 @@ function showCityInfo(slug)
             $('#cityModalTabNextButtonsLocation').on('click', function()
             {
                 $('#cityInfoModal').modal('hide');
-                map.map.panTo([ride.getLatitude(), ride.getLongitude()]);
+
+                //map.map.panTo([ride.getLatitude(), ride.getLongitude()]);
+                map.map.invalidateSize();
+                map.map.setView([ride.getLatitude(), ride.getLongitude()], 14);
+
                 _paq.push(['trackEvent', 'panToLocation', slug]);
             });
         }
