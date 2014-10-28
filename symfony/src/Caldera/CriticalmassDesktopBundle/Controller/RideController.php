@@ -74,11 +74,6 @@ class RideController extends Controller
 
     public function addAction(Request $request, $citySlug)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour erstellen zu können.');
-        }
-
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
         if (!$citySlugObj)
@@ -122,11 +117,6 @@ class RideController extends Controller
 
     public function editAction(Request $request, $citySlug, $rideDate)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour bearbeiten zu können.');
-        }
-
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
         if (!$citySlugObj)

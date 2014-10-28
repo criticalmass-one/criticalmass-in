@@ -42,11 +42,6 @@ class CityController extends Controller
 
     public function addAction(Request $request)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Stadt hinzufügen zu können.');
-        }
-
         $city = new City();
 
         $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')));
@@ -81,11 +76,6 @@ class CityController extends Controller
 
     public function editAction(Request $request, $citySlug)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Stadt bearbeiten zu können.');
-        }
-
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
         $form = $this->createForm(new StandardCityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
