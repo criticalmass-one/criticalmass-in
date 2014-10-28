@@ -114,6 +114,7 @@ class SubRide
     public function __construct()
     {
         $this->creationDateTime = new \DateTime();
+        $this->archiveDateTime = new \DateTime();
     }
 
     /**
