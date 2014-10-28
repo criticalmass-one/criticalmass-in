@@ -9,7 +9,7 @@
     </span>
 
     <div class="media-body">
-        {% if app.getUser().getId() == post.getUser().getId() %}
+        {% if app.getUser() and app.getUser().getId() == post.getUser().getId() %}
         <a class="postDeleteButton edit-post btn btn-default btn-xs pull-right" href="#" title="Löschen" data-postid={{ post.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
         {% else %}
         <a class="postReportButton edit-post btn btn-default btn-xs pull-right" href="#" title="Melden" data-postid={{ post.getId() }}><i class="glyphicon glyphicon-trash"></i></a>
