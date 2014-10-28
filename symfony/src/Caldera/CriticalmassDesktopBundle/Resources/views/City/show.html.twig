@@ -116,12 +116,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1>Kommentare</h1>
+
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
+
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
                     </div>
                 </div>
-                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
-
-                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
-
             </div>
         </div>
     </div>
