@@ -2,10 +2,6 @@ caldera_criticalmass_desktop_index:
     pattern:  /
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:index }
 
-caldera_criticalmass_desktop_slugindex:
-    pattern:  /{slug}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:slugindex }
-
 caldera_criticalmass_desktop_content_impress:
     pattern:  /content/about-us/impress
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:impress }
@@ -41,3 +37,7 @@ caldera_criticalmass_desktop_city:
 caldera_criticalmass_desktop_ride:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing/ride.yml"
     prefix: /
+
+caldera_criticalmass_desktop_slugindex:
+    pattern:  /{slug}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:slugindex }
