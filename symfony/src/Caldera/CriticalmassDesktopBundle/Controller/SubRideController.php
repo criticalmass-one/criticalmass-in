@@ -65,6 +65,9 @@ class SubRideController extends Controller
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
             $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()))));
+
+            // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
+            return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'subRide' => $subRide, 'form' => $form->createView(), 'city' => $city, 'ride' => $ride));
         }
         elseif ($form->isSubmitted())
         {
