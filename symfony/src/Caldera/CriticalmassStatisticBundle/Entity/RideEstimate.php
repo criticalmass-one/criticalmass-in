@@ -215,4 +215,27 @@ class RideEstimate
     {
         return $this->ride;
     }
+
+    /**
+     * Set track
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $track
+     * @return RideEstimate
+     */
+    public function setTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $track = null)
+    {
+        $this->track = $track;
+
+        return $this;
+    }
+
+    /**
+     * Get track
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\Track 
+     */
+    public function getTrack()
+    {
+        return $this->track;
+    }
 }
