@@ -31,7 +31,7 @@
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
             <a href="{{ path ('criticalmass_gallery_photos_show', {photoId: photo.getId()}) }}" class="thumbnail">
             {#<a href="#" id="photoOpen" class="thumbnail" data-photoindex="{{ index }}">#}
-                <img src="{{ photo.getFilePath() }}" alt="{{ photo.getDescription() }}" img="img-responsive">
+                <img src="{{ photo.getFilePathByDepth(2) }}" alt="{{ photo.getDescription() }}" img="img-responsive">
             </a>
         </div>
         {% set index = index + 1 %}

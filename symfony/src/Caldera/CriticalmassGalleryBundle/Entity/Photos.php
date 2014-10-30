@@ -269,8 +269,11 @@ class Photos
 
         // Output
         imagejpeg($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
-        /*$this->small_file->move($this->getUploadRootDir(),
-            $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension());*/
+        $info = exif_read_data($this->filePath, 0, true);
+        if (isset($info['GPSLatitude']) && isset($info['GPSLongitude'])) {
+            error_log($info['GPSLatitude']);
+            error_log($info['GPSLongitude']);
+        }
     }
 
     /**
@@ -279,6 +282,20 @@ class Photos
     public function getFilePath()
     {
         return $this->filePath;
+    }
+
+    public function getFilePathByDepth($depth) {
+        $result = "";
+
+        for ($i = 0; $i < $depth; $i++) {
+            $result = $result . "../";
+        }
+
+        $result = $result . $this->filePath;
+
+        error_log($result);
+
+        return $result;
     }
 
     public function getUploadRootDir() {

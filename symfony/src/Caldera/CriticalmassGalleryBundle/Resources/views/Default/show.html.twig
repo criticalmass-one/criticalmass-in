@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <img src="{{ photo.getFilePath() }}">
+    <img src="{{ photo.getFilePathByDepth(3) }}">
     {% if app.getUser().getId() == photo.getUser().getId() %}
         <a class="btn btn-default" href="#" title="Löschen" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-trash"></i></a>
     {% else %}
