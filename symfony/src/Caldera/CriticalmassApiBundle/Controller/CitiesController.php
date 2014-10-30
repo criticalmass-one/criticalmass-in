@@ -39,7 +39,7 @@ class CitiesController extends Controller
 
     public function listallAction()
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('enabled' => true), array('city' => 'ASC'));
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('enabled' => true, 'isArchived' => false), array('city' => 'ASC'));
 
         $citiesResult = array();
 
