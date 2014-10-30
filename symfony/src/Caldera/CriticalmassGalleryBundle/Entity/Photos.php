@@ -233,6 +233,15 @@ class Photos
         $this->licence = $licence;
     }
 
+    function coordinateToDec($coordinate) {
+        list($dividend, $divisor) = split("/", $coordinate);
+        if ($divisor == 0) {
+            return 0;
+        } else {
+            return $dividend / $divisor;
+        }
+    }
+
     public function handleUpload()
     {
         // the file property can be empty if the field is not required
@@ -270,9 +279,15 @@ class Photos
         // Output
         imagejpeg($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
         $info = exif_read_data($this->filePath, 0, true);
-        if (isset($info['GPSLatitude']) && isset($info['GPSLongitude'])) {
-            error_log($info['GPSLatitude']);
-            error_log($info['GPSLongitude']);
+        if (isset($info['GPS']['GPSLatitude']) && isset($info['GPS']['GPSLongitude'])) {
+            $deg = $this->coordinateToDec($info['GPS']['GPSLatitude'][0]);
+            $min = $this->coordinateToDec($info['GPS']['GPSLatitude'][1]);
+            $sec = $this->coordinateToDec($info['GPS']['GPSLatitude'][2]);
+            $this->latitude = $deg+((($min*60)+($sec))/3600);
+            $deg = $this->coordinateToDec($info['GPS']['GPSLongitude'][0]);
+            $min = $this->coordinateToDec($info['GPS']['GPSLongitude'][1]);
+            $sec = $this->coordinateToDec($info['GPS']['GPSLongitude'][2]);
+            $this->longitude = $deg+((($min*60)+($sec))/3600);
         }
     }
 
@@ -292,8 +307,6 @@ class Photos
         }
 
         $result = $result . $this->filePath;
-
-        error_log($result);
 
         return $result;
     }
