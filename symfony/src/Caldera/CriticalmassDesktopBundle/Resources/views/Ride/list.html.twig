@@ -10,13 +10,20 @@
             <li class="active">Kalender</li>
         </ol>
 
-        <h1>hic sunt birotarii</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>hic sunt birotarii</h1>
 
-        <p class="lead">Irgendwo ist immer was los.</p>
+                <p class="lead">Irgendwo ist immer was los.</p>
+            </div>
+        </div>
+
 
         {% for dateString, rides in rides %}
         <div class="row">
-            <h4>{{ dateString|date('l, d. F Y') }}</h4>
+            <div class="col-md-12">
+                <h4>{{ dateString|date('l, d. F Y') }}</h4>
+            </div>
         </div>
 
         <table class="table">
