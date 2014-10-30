@@ -22,7 +22,7 @@ MapSidebar.prototype.initCities = function()
     for (var index in cities)
     {
         var city = cities[index];
-        var html = '<tr class="cityRow" data-cityslug="' + city.getCitySlug() + '" style="cursor: pointer;"><td class="cityName">' + city.getCity() + '<i class="fa fa-chevron-right pull-right"></i></td></tr>';
+        var html = '<tr class="cityRow" data-cityslug="' + city.getCitySlug() + '" style="cursor: pointer;"><td class="cityName">' + city.getCity() + '<i class="glyphicon glyphicon-chevron-right pull-right"></i></td></tr>';
 
         $('#cityList').append(html);
     }
