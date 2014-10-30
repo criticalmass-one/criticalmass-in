@@ -13,14 +13,14 @@
     <div class="container">
         {% if city != null %}
         <ol class="breadcrumb">
-            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a></li>
             <li class="active">Stadt editieren</li>
         </ol>
         {% else %}
         <ol class="breadcrumb">
-            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li class="active">Stadt hinzufügen</li>
         </ol>
