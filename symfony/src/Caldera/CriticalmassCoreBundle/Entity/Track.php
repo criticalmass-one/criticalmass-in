@@ -402,18 +402,16 @@ class Track
 
     public function handleUpload()
     {
-        $result = false;
         $gpxReader = new GpxReader();
-        if ($gpxReader->loadFile($this->file->getPathname())) {
 
-            $result = true;
-
+        if ($gpxReader->loadFile($this->file->getPathname()))
+        {
             $this->setStartDateTime($gpxReader->getStartDateTime());
             $this->setEndDateTime($gpxReader->getEndDateTime());
             $this->setPoints($gpxReader->countPoints());
             $this->setMd5Hash($gpxReader->getMd5Hash());
             $this->setGpx($gpxReader->getFileContent());
-            $this->setJson($gpxReader->generateJson());
+            //$this->setJson($gpxReader->generateJson());
             $this->setDistance($gpxReader->calculateDistance());
             $this->setActivated(1);
 
@@ -424,9 +422,11 @@ class Track
                     $this->timeStamps++;
                 }
             }
+
+            return true;
         }
 
-        return $result;
+        return false;
     }
 
     public function getDuration()
