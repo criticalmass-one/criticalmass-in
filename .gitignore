@@ -7,3 +7,5 @@ symfony/app/config/parameters.yml.dist
 .sonar
 symfony/web/images/*
 symfony/cache.properties
+symfony/web/geojson
+symfony/web/gpx
