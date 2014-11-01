@@ -84,19 +84,16 @@ class Track
     protected $md5Hash;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $gpx;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $json;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     protected $activated;
+
+    /**
+     * This property contains the content of the gpx file, but will NOT be mapped to the database.
+     *
+     * @var
+     */
+    protected $gpx;
 
     public function __construct()
     {
@@ -134,29 +131,6 @@ class Track
     public function getUsername()
     {
         return $this->username;
-    }
-
-    /**
-     * Set gpx
-     *
-     * @param string $gpx
-     * @return Track
-     */
-    public function setGpx($gpx)
-    {
-        $this->gpx = $gpx;
-
-        return $this;
-    }
-
-    /**
-     * Get gpx
-     *
-     * @return string 
-     */
-    public function getGpx()
-    {
-        return $this->gpx;
     }
 
     /**
@@ -368,29 +342,6 @@ class Track
     }
 
     /**
-     * Set json
-     *
-     * @param string $json
-     * @return Track
-     */
-    public function setJson($json)
-    {
-        $this->json = $json;
-
-        return $this;
-    }
-
-    /**
-     * Get json
-     *
-     * @return string 
-     */
-    public function getJson()
-    {
-        return $this->json;
-    }
-
-    /**
      * Set points
      *
      * @param integer $points
@@ -519,4 +470,15 @@ class Track
     {
         return $this->rideEstimate;
     }
+
+    public function setGpx($gpx)
+    {
+        $this->gpx = $gpx;
+    }
+
+    public function getGpx()
+    {
+        return $this->gpx;
+    }
+
 }
