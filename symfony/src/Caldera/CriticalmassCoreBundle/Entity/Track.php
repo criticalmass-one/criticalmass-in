@@ -508,4 +508,20 @@ class Track
     {
         $this->setGpx(file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx'));
     }
+
+    public function getJson()
+    {
+        $this->loadGeoJson();
+        return $this->getGeoJson();
+    }
+
+    public function getGeoJson()
+    {
+        return $this->geoJson;
+    }
+
+    public function loadGeoJson()
+    {
+        $this->geoJson = file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/geojson/track/'.$this->getId().'.json');
+    }
 }
