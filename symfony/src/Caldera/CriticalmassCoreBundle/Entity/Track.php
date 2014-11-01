@@ -98,6 +98,11 @@ class Track
     public function __construct()
     {
         $this->setCreationDateTime(new \DateTime());
+
+        if ($this->id)
+        {
+            $this->loadTrack();
+        }
     }
 
     /**
@@ -481,4 +486,26 @@ class Track
         return $this->gpx;
     }
 
+    public function saveTrack()
+    {
+        if (!$handle = fopen('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx', "a")) {
+            print "Kann die Datei nicht öffnen";
+            exit;
+        }
+
+        // Schreibe $somecontent in die geöffnete Datei.
+        if (!fwrite($handle, $this->getGpx())) {
+            print "Kann in die Datei nicht schreiben";
+            exit;
+        }
+
+        print "Fertig, in Datei wurde geschrieben";
+
+        fclose($handle);
+    }
+
+    public function loadTrack()
+    {
+        $this->setGpx(file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx'));
+    }
 }
