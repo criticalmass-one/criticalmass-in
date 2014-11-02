@@ -89,6 +89,11 @@ class Track
     protected $activated;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $previewJsonArray;
+
+    /**
      * This property contains the content of the gpx file, but will NOT be mapped to the database.
      *
      * @var
@@ -509,19 +514,26 @@ class Track
         $this->setGpx(file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx'));
     }
 
-    public function getJson()
+    /**
+     * Set previewJsonArray
+     *
+     * @param boolean $previewJsonArray
+     * @return Track
+     */
+    public function setPreviewJsonArray($previewJsonArray)
     {
-        $this->loadGeoJson();
-        return $this->getGeoJson();
+        $this->previewJsonArray = $previewJsonArray;
+
+        return $this;
     }
 
-    public function getGeoJson()
+    /**
+     * Get previewJsonArray
+     *
+     * @return boolean 
+     */
+    public function getPreviewJsonArray()
     {
-        return $this->geoJson;
-    }
-
-    public function loadGeoJson()
-    {
-        $this->geoJson = file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/geojson/track/'.$this->getId().'.json');
+        return $this->previewJsonArray;
     }
 }
