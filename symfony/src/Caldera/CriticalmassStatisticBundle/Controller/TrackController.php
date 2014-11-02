@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassStatisticBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Track;
+use Caldera\CriticalmassCoreBundle\Utility\GeoJsonUtility\GeoJsonUtility;
 use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
@@ -127,6 +128,8 @@ class TrackController extends Controller
                     $em->persist($track);
                     $em->flush();
 
+                    $track->saveTrack();
+
                     /* … aaaand recalculate all estimates for this ride. */
                     $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
@@ -137,6 +140,8 @@ class TrackController extends Controller
                 elseif (sizeof($errorList) == 0) {
                     $em->persist($track);
                     $em->flush();
+
+                    $track->saveTrack();
 
                     return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
                 }
@@ -160,6 +165,7 @@ class TrackController extends Controller
 
         /* Well, when this action is called, the RideGuesser seemed to fail to detect a distinct ride. We need to catch a new list of the possible rides to present it to the user. */
         $rg = new RideGuesser($this);
+        $track->loadTrack();
         $rg->setGpx($track->getGpx());
         $rg->guess();
         $rides = $rg->getRides();
@@ -208,6 +214,10 @@ class TrackController extends Controller
     public function viewAction(Request $request, $trackId)
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
+
+        $gju = new GeoJsonUtility();
+        $gju->addTrackAsPolyline($track);
+        $gju->saveFile('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/geojson/track/'.$track->getId().'.json');
 
         if ($track->getUser()->equals($this->getUser()))
         {

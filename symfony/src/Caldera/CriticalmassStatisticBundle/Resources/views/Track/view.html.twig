@@ -24,6 +24,7 @@
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+        <script type="text/javascript" src="/geojson/track/3.json"></script>
         <script>
             var map = L.map('map');
             var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -31,14 +32,14 @@
             });
 
             tileLayer.addTo(map);
-            map.setView([53, 9], 10);
+
+            map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
 
             // create a red polyline from an arrays of LatLng points
-            var polyline = L.polyline({{ track.getJson() }}, {color: 'red'}).addTo(map);
+            var polyline = L.polyline({{ track.getPreviewJsonArray() }}, { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }).addTo(map);
 
             // zoom the map to the polyline
             map.fitBounds(polyline.getBounds());
-
         </script>
     </div>
 {% endblock %}
