@@ -542,4 +542,48 @@ class Track
     {
         return $this->previewJsonArray;
     }
+
+    public function getPreviousTrack()
+    {
+        $tracks = $this->getUser()->getTracks();
+
+        $prevTrack = null;
+
+        foreach ($tracks as $track)
+        {
+            if ($track && !$prevTrack && $track->getStartDateTime() < $this->getStartDateTime())
+            {
+                $prevTrack = $track;
+            }
+            else
+                if ($track && $prevTrack && $track->getStartDateTime() > $prevTrack->getStartDateTime() && $track->getStartDateTime() < $this->getStartDateTime())
+                {
+                    $prevTrack = $track;
+                }
+        }
+
+        return $prevTrack;
+    }
+
+    public function getNextTrack()
+    {
+        $tracks = $this->getUser()->getTracks();
+
+        $nextTrack = null;
+
+        foreach ($tracks as $track)
+        {
+            if ($track && !$nextTrack && $track->getStartDateTime() > $this->getStartDateTime())
+            {
+                $nextTrack = $track;
+            }
+            else
+                if ($track && $nextTrack && $track->getStartDateTime() < $nextTrack->getStartDateTime() && $track->getStartDateTime() > $this->getStartDateTime())
+                {
+                    $nextTrack = $track;
+                }
+        }
+
+        return $nextTrack;
+    }
 }
