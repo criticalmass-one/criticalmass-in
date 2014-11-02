@@ -237,6 +237,8 @@ class TrackController extends Controller
             header('Content-disposition: attachment; filename=track.gpx');
             header('Content-type: text/plain');
 
+            $track->loadTrack();
+            
             echo $track->getGpx();
         }
 
