@@ -41,5 +41,15 @@
             // zoom the map to the polyline
             map.fitBounds(polyline.getBounds());
         </script>
+
+        <ul class="pager">
+            {% if track.getPreviousTrack() %}
+                <li class="previous"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getPreviousTrack().getId() }) }}">&larr; Voriger Track</a></li>
+            {% endif %}
+
+            {% if track.getNextTrack() %}
+                <li class="next"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getNextTrack().getId() }) }}">Nächster Track &rarr;</a></li>
+            {% endif %}
+        </ul>
     </div>
 {% endblock %}
