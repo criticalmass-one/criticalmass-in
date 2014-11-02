@@ -268,7 +268,7 @@ class TrackController extends Controller
     public function deleteAction(Request $request, $trackId)
     {
         $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassCoreBundle:Track',$trackId);
+        $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
 
         if ($track->getUser()->equals($this->getUser()))
         {
