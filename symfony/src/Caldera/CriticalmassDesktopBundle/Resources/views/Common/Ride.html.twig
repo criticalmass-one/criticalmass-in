@@ -118,14 +118,14 @@
 
     markerGroup.addTo(map);
 
-    {% for track in ride.getTracks() %}
+    {% for track in ride.getActiveTracks() %}
     var trackLine = L.polyline({{ track.getPreviewJsonArray() }}, { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }).addTo(map);
     trackGroup.addLayer(trackLine);
     {% endfor %}
 
     trackGroup.addTo(map);
 
-    {% if pastRide and ride.getTracks()|length > 0 %}
+    {% if pastRide and ride.getActiveTracks()|length > 0 %}
     map.fitBounds(trackGroup.getBounds());
     {% else %}
     map.fitBounds(markerGroup.getBounds());
