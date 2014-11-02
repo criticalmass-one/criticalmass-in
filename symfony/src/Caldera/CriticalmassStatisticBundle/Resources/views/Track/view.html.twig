@@ -11,13 +11,21 @@
             <li class="active">Track anzeigen</li>
         </ol>
 
-        {% if track.getRide().getTitle() %}
-        <h1>{{ track.getRide().getTitle() }}</h1>
-        {% else %}
-        <h1>{{ track.getRide().getCity().getTitle() }}</h1>
-        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                {% if track.getRide().getTitle() %}
+                <h1>{{ track.getRide().getTitle() }}</h1>
+                {% else %}
+                <h1>{{ track.getRide().getCity().getTitle() }}</h1>
+                {% endif %}
+            </div>
+        </div>
 
-        <div id="map" class="col-lg-12" style="height: 350px;"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
 
         {% javascripts
         '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
@@ -42,18 +50,22 @@
             map.fitBounds(polyline.getBounds());
         </script>
 
-        <ul class="pager">
-            {% if track.getPreviousTrack() %}
-            <li class="previous"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getPreviousTrack().getId() }) }}">&larr; Voriger Track</a></li>
-            {% else %}
-            <li class="previous disabled"><a href="#">&larr; Voriger Track</a></li>
-            {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pager">
+                    {% if track.getPreviousTrack() %}
+                    <li class="previous"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getPreviousTrack().getId() }) }}">&larr; Voriger Track</a></li>
+                    {% else %}
+                    <li class="previous disabled"><a href="#">&larr; Voriger Track</a></li>
+                    {% endif %}
 
-            {% if track.getNextTrack() %}
-            <li class="next"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getNextTrack().getId() }) }}">Nächster Track &rarr;</a></li>
-            {% else %}
-            <li class="next disabled"><a href="#">Nächster Track &rarr;</a></li>
-            {% endif %}
-        </ul>
+                    {% if track.getNextTrack() %}
+                    <li class="next"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getNextTrack().getId() }) }}">Nächster Track &rarr;</a></li>
+                    {% else %}
+                    <li class="next disabled"><a href="#">Nächster Track &rarr;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}
