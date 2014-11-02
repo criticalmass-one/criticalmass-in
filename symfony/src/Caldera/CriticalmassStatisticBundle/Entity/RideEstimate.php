@@ -35,7 +35,7 @@ class RideEstimate
 	protected $ride;
 
     /**
-     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track", mappedBy="rideEstimate")
+     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track", mappedBy="rideEstimate", cascade={"persist"})
      * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
      */
     protected $track;
