@@ -51,6 +51,14 @@
         </script>
 
         <div class="row">
+            <div class="col-md-3">Tour:<br /><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: track.getRide().getCity().getMainSlugString(), rideDate: track.getRide().getFormattedDate() }) }}">{{ track.getRide().getFancyTitle() }}</a></div>
+            <div class="col-md-2">{{ track.getRide().getDateTime.format('d.m.Y') }}<br />{{ track.getRide().getDateTime.format('H:i') }} Uhr</div>
+            <div class="col-md-3">Treffpunkt:<br />{{ track.getRide().getLocation() }}</div>
+            <div class="col-md-2"><span style="font-size: 20px;">{{ track.getDistance()|round(2) }}</span><br />Kilometer</div>
+            <div class="col-md-2"><span style="font-size: 20px;">{{ track.getDuration()|round(2) }}</span><br />Stunden</div>
+        </div>
+
+        <div class="row">
             <div class="col-md-12">
                 <ul class="pager">
                     {% if track.getPreviousTrack() %}
