@@ -215,10 +215,6 @@ class TrackController extends Controller
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
 
-        $gju = new GeoJsonUtility();
-        $gju->addTrackAsPolyline($track);
-        $gju->saveFile('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/geojson/track/'.$track->getId().'.json');
-
         if ($track->getUser()->equals($this->getUser()))
         {
             return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
