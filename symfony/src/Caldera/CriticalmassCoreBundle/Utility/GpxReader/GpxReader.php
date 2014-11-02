@@ -8,6 +8,7 @@
 
 namespace Caldera\CriticalmassCoreBundle\Utility\GpxReader;
 
+use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class GpxReader {
@@ -32,6 +33,18 @@ class GpxReader {
     public function loadString($content)
     {
         $this->rawFileContent = $content;
+
+        $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+    }
+
+    public function loadTrack(Track $track)
+    {
+        if (!$track->getGpx())
+        {
+            $track->loadTrack();
+        }
+
+        $this->rawFileContent = $track->getGpx();
 
         $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
     }
@@ -81,16 +94,30 @@ class GpxReader {
         return $this->simpleXml->trk->trkseg->trkpt[$n]->time;
     }
 
-    public function generateJson()
+    public function getRootNode()
+    {
+        return $this->simpleXml;
+    }
+
+    public function generateJsonArray()
     {
         $result = array();
 
+        $counter = 0;
+
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
         {
-            $result[] = '['.$point['lat'].','.$point['lon'].']';
+            $result[] = array('lat' => (float) $point['lat'], 'lng' => (float) $point['lon']);//'['.$point['lat'].','.$point['lon'].']';
+
+            ++$counter;
+
+            if ($counter > 20)
+            {
+                break;
+            }
         }
 
-        return '['.implode($result, ',').']';
+        return $result;
     }
 
     /**
