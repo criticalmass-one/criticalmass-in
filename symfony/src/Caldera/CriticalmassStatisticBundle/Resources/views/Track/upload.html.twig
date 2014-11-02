@@ -7,5 +7,13 @@
     {{ form_widget(form.file, {'attr': {'class': 'form-control' }}) }}
 </div>
 
-<button type="submit" class="btn btn-default">Track hochladen</button>
+<button id="uploadGpxButton" type="submit" class="btn btn-default">Track hochladen</button>
 {{ form_end(form) }}
+
+<script type="text/javascript">
+    $('#uploadGpxButton').on('click', function()
+    {
+        $('#uploadGpxButton').prop('disabled', 'true');
+        $('#uploadGpxButton').html('Einen Moment bitte…');
+    });
+</script>
