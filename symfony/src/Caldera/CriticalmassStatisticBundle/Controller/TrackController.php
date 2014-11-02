@@ -270,7 +270,7 @@ class TrackController extends Controller
         $em = $this->getDoctrine()->getManager();
         $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
 
-        if ($track->getUser()->equals($this->getUser()))
+        if ($track && $track->getUser()->equals($this->getUser()))
         {
             //$re = $em->find('CalderaCriticalmassStatisticBundle:RideEstimate', $track->getRideEstimate());
             $em->remove($track);
