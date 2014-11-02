@@ -215,7 +215,7 @@ class TrackController extends Controller
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
 
-        if ($track->getUser()->equals($this->getUser()))
+        if ($track && $track->getUser()->equals($this->getUser()))
         {
             return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
         }
@@ -234,7 +234,7 @@ class TrackController extends Controller
             header('Content-type: text/plain');
 
             $track->loadTrack();
-            
+
             echo $track->getGpx();
         }
 
