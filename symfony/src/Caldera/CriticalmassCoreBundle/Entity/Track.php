@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
+use Caldera\CriticalmassCoreBundle\Utility\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -416,9 +417,14 @@ class Track
             $this->setPoints($gpxReader->countPoints());
             $this->setMd5Hash($gpxReader->getMd5Hash());
             $this->setGpx($gpxReader->getFileContent());
-            //$this->setJson($gpxReader->generateJson());
             $this->setDistance($gpxReader->calculateDistance());
             $this->setActivated(1);
+
+            $sag = new SimpleLatLngArrayGenerator();
+            $sag->loadTrack($this);
+            $sag->execute();
+
+            $this->setPreviewJsonArray($sag->getJsonArray());
 
             $this->timeStamps = 0;
 
