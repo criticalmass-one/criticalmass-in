@@ -119,7 +119,7 @@
     markerGroup.addTo(map);
 
     {% for track in ride.getTracks() %}
-    var trackLine = L.polyline({{ track.getJSON() }});
+    var trackLine = L.polyline({{ track.getPreviewJsonArray() }}, { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }).addTo(map);
     trackGroup.addLayer(trackLine);
     {% endfor %}
 
