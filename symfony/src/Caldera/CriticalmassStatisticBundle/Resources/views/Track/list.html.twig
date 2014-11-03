@@ -99,9 +99,9 @@
             /* this enthalt die Quelle des Events, also den Button, der das ganze ausgelöst hat. An dessen data-trackid-Attribut wollen wir nun ran. */
             var trackId = $(this).data('trackid');
 
-            $('#deleteButton').prop('href', 'https://beta.criticalmass.cm/app_dev.php/track/delete/' + trackId);
 
             /* und Fenster anzeigen */
+            $('#deleteButton').prop('href', '/track/delete/' + trackId);
             $('#modalDelete').modal('show');
 
         }
