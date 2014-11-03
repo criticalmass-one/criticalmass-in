@@ -10,13 +10,13 @@
     <div class="col-md-12">
         {% if app.getUser() %}
         <div class="btn-group  pull-right" style="margin-top: 24px;">
-            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment" title="Kommentieren"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment" title="Kommentieren"><i class="halflings pencil"></i></a>
             {% if pastRide %}
-            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="glyphicon glyphicon-signal"></i></a>
-            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="glyphicon glyphicon-cloud-upload"></i></a>
+            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i></a>
+            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
             {% endif %}
-            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="glyphicon glyphicon-wrench"></i></a>
-            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="glyphicon glyphicon-map-marker"></i></a>
+            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i></a>
+            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="halflings map-marker"></i></a>
         </div>
         {% endif %}
         <h1>{{ ride.getFancyTitle() }}</h1>
@@ -163,7 +163,7 @@
 
         {% for subRide in ride.getActiveSubRides() %}
         <div class="media subride">
-            {% if app.getUser() %}<a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="glyphicon glyphicon-wrench"></i></a>{% endif %}
+            {% if app.getUser() %}<a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>{% endif %}
             <a class="pull-left subride" href="#" data-subrideid="{{ subRide.getId() }}">
                 <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
             </a>
@@ -188,17 +188,16 @@
 
         {% if hasSocialMedia %}
         <h4>Mehr im Netz</h4>
-
         {% if ride.getUrl() %}
-        <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
+        <a class="btn btn-default" href="{{ ride.getUrl() }}"><i class="social rss"></i> Homepage</a>
         {% endif %}
 
         {% if ride.getFacebook() %}
-        <a class="btn btn-link" href="{{ ride.getFacebook() }}">facebook</a>
+        <a class="btn btn-default" href="{{ ride.getFacebook() }}"><i class="social facebook"></i> facebook</a>
         {% endif %}
 
         {% if ride.getTwitter() %}
-        <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
+        <a class="btn btn-default" href="{{ ride.getTwitter() }}"><i class="social twitter"></i> twitter</a>
         {% endif %}
         {% endif %}
     </div>

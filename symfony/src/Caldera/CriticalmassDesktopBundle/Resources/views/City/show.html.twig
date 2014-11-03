@@ -16,15 +16,15 @@
 
         <ul class="nav nav-tabs" id="cityModalTabs">
             {% if hasCurrentRide %}
-            <li><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-flag"></i> {{ city.getCity() }}</a></li>
-            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="glyphicon glyphicon-calendar"></i> Nächste Tour</a></li>
+            <li><a href="#cityInfoTab" data-toggle="tab"><i class="halflings flag"></i> {{ city.getCity() }}</a></li>
+            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="halflings calendar"></i> Nächste Tour</a></li>
             {% else %}
-            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> {{ city.getCity() }}</a></li>
+            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="halflings info-sign"></i> {{ city.getCity() }}</a></li>
             {% endif %}
             {% if hasRides %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="glyphicon glyphicon-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
+            <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
             {% endif %}
-            <li><a href="#timelineTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
+            <li><a href="#timelineTab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
         </ul>
 
         <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
@@ -36,8 +36,8 @@
                 <div class="jumbotron">
                     {% if app.getUser() %}
                     <div class="btn-group pull-right" style="margin-top: 24px;">
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-plus"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings uni-wrench"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings plus"></i></a>
                     </div>
                     {% endif %}
 
@@ -62,15 +62,15 @@
                         <h2>Mehr im Netz</h2>
 
                         {% if city.getUrl() %}
-                        <a class="btn btn-link" href="{{ city.getUrl() }}">Homepage</a>
+                        <a class="btn btn-default" href="{{ city.getUrl() }}"><i class="social rss"></i> Homepage</a>
                         {% endif %}
 
                         {% if city.getFacebook() %}
-                        <a class="btn btn-link" href="{{ city.getFacebook() }}">facebook</a>
+                        <a class="btn btn-default" href="{{ city.getFacebook() }}"><i class="social facebook"></i> facebook</a>
                         {% endif %}
 
                         {% if city.getTwitter() %}
-                        <a class="btn btn-link" href="{{ city.getTwitter() }}">twitter</a>
+                        <a class="btn btn-default" href="{{ city.getTwitter() }}"><i class="social twitter"></i> twitter</a>
                         {% endif %}
                     </div>
                     {% endif %}
