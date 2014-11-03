@@ -96,17 +96,11 @@
     <script>
         function prepareDeleteModal()
         {
-            /* this enthalt die Quelle des Events, also den Button, der das ganze ausgelöst hat. An dessen data-trackid-Attribut wollen wir nun ran. */
             var trackId = $(this).data('trackid');
-
-
-            /* und Fenster anzeigen */
             $('#deleteButton').prop('href', '/track/delete/' + trackId);
             $('#modalDelete').modal('show');
-
         }
 
-        /* Event an alle Elemente mit der Klasse trackDownloadButton anhängen. */
         $('.trackDeleteButton').on('click', prepareDeleteModal);
 
     </script>
