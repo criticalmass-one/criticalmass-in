@@ -9,3 +9,4 @@ symfony/web/images/*
 symfony/cache.properties
 symfony/web/geojson
 symfony/web/gpx
+symfony/web/fonts
