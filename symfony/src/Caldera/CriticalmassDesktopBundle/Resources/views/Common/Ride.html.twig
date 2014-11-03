@@ -184,6 +184,7 @@
             }
         </script>
 
+        {% if hasSocialMedia %}
         <h4>Mehr im Netz</h4>
 
         {% if ride.getUrl() %}
@@ -196,6 +197,7 @@
 
         {% if ride.getTwitter() %}
         <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
+        {% endif %}
         {% endif %}
     </div>
 </div>
