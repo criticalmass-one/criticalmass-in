@@ -16,4 +16,12 @@
         $('#uploadGpxButton').prop('disabled', 'true');
         $('#uploadGpxButton').html('Einen Moment bitte…');
     });
+
+    window.onload = function()
+    {
+        $('#modalTrackUpload').on('hidden.bs.modal', function () {
+            $('#uploadGpxButton').prop('disabled', '');
+            $('#uploadGpxButton').html('Track hochladen');
+        });
+    }
 </script>
