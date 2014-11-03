@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: criticalmass.yml }
     - { resource: security.yml }
+    - { resource: @CalderaCriticalmassAssetBundle/Resources/config/config.yml }
     - { resource: @CalderaCriticalmassCoreBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassStatisticBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassPlusBundle/Resources/config/admin.yml }
@@ -50,23 +51,6 @@ assetic:
         #    jar: %kernel.root_dir%/Resources/java/compiler.jar
         #yui_css:
         #    jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
-    assets:
-        bootstrap_glyphicons_ttf:
-            inputs:
-                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.ttf
-            output: "fonts/glyphicons-social-regular.ttf"
-        bootstrap_glyphicons_eot:
-            inputs:
-                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.eot
-            output: "fonts/glyphicons-social-regular.eot"
-        bootstrap_glyphicons_svg:
-            inputs:
-                 - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.svg
-            output: "fonts/glyphicons-social-regular.svg"
-        bootstrap_glyphicons_woff:
-            inputs:
-                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.woff
-            output: "fonts/glyphicons-social-regular.woff"
 
 # Doctrine Configuration
 doctrine:
