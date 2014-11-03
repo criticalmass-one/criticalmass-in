@@ -158,6 +158,7 @@
     </div>
 
     <div class="col-lg-4">
+        {% if ride.getActiveSubRides() %}
         <h4>Mini-Masses zu dieser Tour</h4>
 
         {% for subRide in ride.getActiveSubRides() %}
@@ -183,6 +184,7 @@
                 });
             }
         </script>
+        {% endif %}
 
         {% if hasSocialMedia %}
         <h4>Mehr im Netz</h4>
