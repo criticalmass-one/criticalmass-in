@@ -41,7 +41,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: true
-    bundles:        [ CalderaCriticalmassDesktopBundle, CalderaCriticalmassMobileBundle, CalderaCriticalmassCoreBundle, CalderaCriticalmassStatisticBundle, CalderaCriticalmassTimelineBundle ]
+    bundles:        [ CalderaCriticalmassAssetBundle, CalderaCriticalmassDesktopBundle, CalderaCriticalmassMobileBundle, CalderaCriticalmassCoreBundle, CalderaCriticalmassStatisticBundle, CalderaCriticalmassTimelineBundle ]
     java: /usr/bin/java
     filters:
         cssrewrite: ~
