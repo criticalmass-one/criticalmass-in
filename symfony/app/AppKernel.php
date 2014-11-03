@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassStatisticBundle\CalderaCriticalmassStatisticBundle(),
             new Caldera\CriticalmassGlympseBundle\CalderaCriticalmassGlympseBundle(),
             new Caldera\CriticalmassTimelineBundle\CalderaCriticalmassTimelineBundle(),
+            new Caldera\CriticalmassAssetBundle\CalderaCriticalmassAssetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
