@@ -390,6 +390,11 @@ class Ride
         return $ride->getId() == $this->getId();
     }
 
+    public function isSameRide(Ride $ride)
+    {
+        return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
+    }
+
     public function getCityTitle()
     {
         return $this->getCity()->getTitle();
