@@ -12,7 +12,7 @@ class DefaultController extends Controller
 {
     public function standardridesAction($year, $month)
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array(), array('city' => 'ASC'));
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
 
         echo '<ul>';
 
