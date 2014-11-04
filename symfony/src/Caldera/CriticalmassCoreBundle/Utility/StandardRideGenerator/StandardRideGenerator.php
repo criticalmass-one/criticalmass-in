@@ -125,4 +125,17 @@ class StandardRideGenerator {
 
         $this->ride->setExpectedStartDateTime($expectedStartDateTime);
     }
+
+    public function isRideDuplicate()
+    {
+        foreach ($this->city->getRides() as $ride)
+        {
+            if ($ride->isSameRide($this->ride))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 } 
