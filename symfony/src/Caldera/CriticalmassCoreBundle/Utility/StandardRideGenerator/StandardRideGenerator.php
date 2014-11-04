@@ -81,7 +81,7 @@ class StandardRideGenerator {
 
     protected function calculateLocation()
     {
-        if ($this->city->getStandardLocation())
+        if ($this->city->getStandardLocation() && $this->city->getStandardLatitude() && $this->city->getStandardLongitude())
         {
             $this->ride->setLocation($this->city->getStandardLocation());
             $this->ride->setLatitude($this->city->getStandardLatitude());
