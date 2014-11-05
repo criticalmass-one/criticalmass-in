@@ -5,6 +5,7 @@ namespace Caldera\CriticalmassGalleryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Photos
@@ -78,6 +79,11 @@ class Photos
      * @ORM\Column(type="boolean")
      */
     protected $licence = true;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $dateTime;
 
     /**
      * Get id
@@ -244,6 +250,9 @@ class Photos
 
     public function handleUpload()
     {
+        $this->dateTime = new \DateTime();
+        $this->dateTime->format('Y-m-d H:i:s');
+
         // the file property can be empty if the field is not required
         if (null === $this->getFile()) {
             return;
@@ -279,6 +288,7 @@ class Photos
         // Output
         imagejpeg($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
         $info = exif_read_data($this->filePath, 0, true);
+
         if (isset($info['GPS']['GPSLatitude']) && isset($info['GPS']['GPSLongitude'])) {
             $deg = $this->coordinateToDec($info['GPS']['GPSLatitude'][0]);
             $min = $this->coordinateToDec($info['GPS']['GPSLatitude'][1]);
@@ -289,6 +299,15 @@ class Photos
             $sec = $this->coordinateToDec($info['GPS']['GPSLongitude'][2]);
             $this->longitude = $deg+((($min*60)+($sec))/3600);
         }
+
+        /*if (isset($info['GPS']['TimeStamp']) && isset($info['GPS']['DateStamp'])) {
+            $this->dateTime = new DateTime($info['GPS']['DateStamp'], $info['GPS']['TimeStamp'][0] . ":" .
+        $info['GPS']['TimeStamp'][1] . ":" . $info['GPS']['TimeStamp'][2]);
+        } else {
+            $this->dateTime = new DateTime();
+        }*/
+
+        //error_log($this->dateTime->format('Y-m-d H:i:s'));
     }
 
     /**
@@ -321,6 +340,22 @@ class Photos
     public function setFilePath($filePath)
     {
         $this->filePath = $filePath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * @param mixed $dateTime
+     */
+    public function setDateTime($dateTime)
+    {
+        $this->dateTime = $dateTime;
     }
 
 }
