@@ -829,6 +829,21 @@ class City
         return count($this->rides);
     }
 
+    public function getActiveRides()
+    {
+        $result = array();
+
+        foreach ($this->rides as $ride)
+        {
+            if (!$ride->isArchived())
+            {
+                $result[] = $ride;
+            }
+        }
+
+        return $result;
+    }
+
     public function getCurrentRide()
     {
         $currentRide = null;
