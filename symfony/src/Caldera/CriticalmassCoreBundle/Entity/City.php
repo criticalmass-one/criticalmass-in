@@ -826,7 +826,7 @@ class City
 
     public function countRides()
     {
-        return count($this->rides);
+        return count($this->getActiveRides());
     }
 
     public function getActiveRides()
