@@ -85,6 +85,11 @@ class Photos
      */
     protected $dateTime;
 
+    public function __construct()
+    {
+        $this->dateTime = new \DateTime();
+    }
+
     /**
      * Get id
      *
@@ -251,7 +256,6 @@ class Photos
     public function handleUpload()
     {
         $this->dateTime = new \DateTime();
-        $this->dateTime->format('Y-m-d H:i:s');
 
         // the file property can be empty if the field is not required
         if (null === $this->getFile()) {
@@ -272,7 +276,7 @@ class Photos
         $this->filePath = $this->getUploadRootDir() . $this->getId() . "." . $this->getFile()->getClientOriginalExtension();
 
         // Content type
-        header('Content-Type: image/jpeg');
+        //header('Content-Type: image/jpeg');
 
         // Get new dimensions
 
@@ -300,14 +304,14 @@ class Photos
             $this->longitude = $deg+((($min*60)+($sec))/3600);
         }
 
-        /*if (isset($info['GPS']['TimeStamp']) && isset($info['GPS']['DateStamp'])) {
-            $this->dateTime = new DateTime($info['GPS']['DateStamp'], $info['GPS']['TimeStamp'][0] . ":" .
-        $info['GPS']['TimeStamp'][1] . ":" . $info['GPS']['TimeStamp'][2]);
+        if (isset($info['GPS']['GPSTimeStamp']) && isset($info['GPS']['GPSDateStamp'])) {
+            $this->dateTime = new \DateTime(str_replace(":", "-", $info['GPS']['GPSDateStamp'])
+            .' '.  preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][0]) . ":" .
+                preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][1]) . ":" .
+                preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][2]));
         } else {
             $this->dateTime = new DateTime();
-        }*/
-
-        //error_log($this->dateTime->format('Y-m-d H:i:s'));
+        }
     }
 
     /**
