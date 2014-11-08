@@ -32,7 +32,7 @@ class ApiCall
     /**
      * @ORM\Column(type="string", length=256)
      */
-    protected $call;
+    protected $request;
 
     /**
      * @ORM\Column(type="datetime")
@@ -73,26 +73,26 @@ class ApiCall
     }
 
     /**
-     * Set call
+     * Set request
      *
-     * @param string $call
+     * @param string $request
      * @return ApiCall
      */
-    public function setCall($call)
+    public function setCall($request)
     {
-        $this->call = $call;
+        $this->request = $request;
 
         return $this;
     }
 
     /**
-     * Get call
+     * Get request
      *
      * @return string 
      */
-    public function getCall()
+    public function getRequest()
     {
-        return $this->call;
+        return $this->request;
     }
 
     /**
