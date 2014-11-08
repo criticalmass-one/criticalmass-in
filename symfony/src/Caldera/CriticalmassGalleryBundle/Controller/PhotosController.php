@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Caldera\CriticalmassGalleryBundle\Entity\Photos;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +66,40 @@ class PhotosController extends Controller
             $em->flush();
 
             $photo->handleUpload();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
+
+            if (count($track)) {
+                $gpxReader = new GpxReader();
+                $gpxReader->loadString($track[0]->getGpx());
+                $finished = 0;
+                $photo->setDateTime(new \DateTime("2014-08-29 17:19:14"));
+                error_log($photo->getDateTime()->format('Y-m-d H:i:s'));
+                $tmpDatetimePrev = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint(0))));
+                $tmpDatetimeSucc = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint(1))));
+                error_log($tmpDatetimePrev->format('Y-m-d H:i:s'));
+                error_log($tmpDatetimeSucc->format('Y-m-d H:i:s'));
+                error_log($tmpDatetimePrev <= $photo->getDateTime());
+                error_log($photo->getDateTime() <= $tmpDatetimeSucc);
+                error_log($photo->getDateTime()->format('Y-m-d H:i:s'));
+                for ($i = 0; $i < $gpxReader->countPoints() - 1 || $finished; $i++) {
+                    $tmpDatetimePrev = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i))));
+                    $tmpDatetimeSucc = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i+1))));
+                    if (($gpxReader->getTimestampOfPoint($i) <= $photo->getDateTime()) &&
+                        ($gpxReader->getTimestampOfPoint($i+1) >= $photo->getDateTime())) {
+                        $timeDiffPrev = $tmpDatetimePrev->diff($photo->getDateTime());
+                        $timeDiffPrevSec = $timeDiffPrev->format('%s') + 60*$timeDiffPrev->format("%i") + 3600*$timeDiffPrev->format("%H");
+                        $timeDiffSucc = $photo->getDateTime()->diff($tmpDatetimeSucc);
+                        $timeDiffSuccSec = $timeDiffSucc->format('%s') + 60*$timeDiffSucc->format("%i") + 3600*$timeDiffSucc->format("%H");
+                        $timespan = $timeDiffPrevSec + $timeDiffSuccSec;
+                        error_log($gpxReader->getLatitudeOfPoint($i));
+
+                        $finished = 1;
+                    }
+                }
+            }
 
             $em->merge($photo);
             $em->flush();

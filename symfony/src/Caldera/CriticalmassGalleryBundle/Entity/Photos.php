@@ -310,7 +310,7 @@ class Photos
                 preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][1]) . ":" .
                 preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][2]));
         } else {
-            $this->dateTime = new DateTime();
+            $this->dateTime = new \DateTime();
         }
     }
 

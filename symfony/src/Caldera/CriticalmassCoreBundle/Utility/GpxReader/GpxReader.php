@@ -68,6 +68,11 @@ class GpxReader {
         return $this->simpleXml->trk->trkseg->trkpt[$n]['lon'];
     }
 
+    public function getTimestampOfPoint($n)
+    {
+        return $this->simpleXml->trk->trkseg->trkpt[$n]->time;
+    }
+
     public function generateJson()
     {
         $result = array();

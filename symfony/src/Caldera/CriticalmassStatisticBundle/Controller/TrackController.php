@@ -75,6 +75,7 @@ class TrackController extends Controller
     {
         $track = new Track();
         $form = $this->createFormBuilder($track)
+            ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_upload'))
             ->add('file')
             ->getForm();
 
