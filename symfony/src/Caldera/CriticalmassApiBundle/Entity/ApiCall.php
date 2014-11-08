@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="appcall")
+ * @ORM\Table(name="apicall")
  * @ORM\Entity
  */
 class ApiCall
