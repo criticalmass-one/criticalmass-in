@@ -19,7 +19,7 @@ class ApiCall
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\App", inversedBy="api_calls")
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassApiBundle\Entity\App", inversedBy="api_calls")
      * @ORM\JoinColumn(name="app_id", referencedColumnName="id")
      */
     protected $app;
@@ -121,10 +121,10 @@ class ApiCall
     /**
      * Set app
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\App $app
+     * @param \Caldera\CriticalmassApiBundle\Entity\App $app
      * @return ApiCall
      */
-    public function setApp(\Caldera\CriticalmassCoreBundle\Entity\App $app = null)
+    public function setApp(\Caldera\CriticalmassApiBundle\Entity\App $app = null)
     {
         $this->app = $app;
 
@@ -134,7 +134,7 @@ class ApiCall
     /**
      * Get app
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\App 
+     * @return \Caldera\CriticalmassApiBundle\Entity\App
      */
     public function getApp()
     {
