@@ -87,8 +87,8 @@ class PhotosController extends Controller
                 for ($i = 0; $i < $gpxReader->countPoints() - 1 || $finished; $i++) {
                     $tmpDatetimePrev = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i))));
                     $tmpDatetimeSucc = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i+1))));
-                    if (($gpxReader->getTimestampOfPoint($i) <= $photo->getDateTime()) &&
-                        ($gpxReader->getTimestampOfPoint($i+1) >= $photo->getDateTime())) {
+                    if (($tmpDatetimePrev <= $photo->getDateTime()) &&
+                        ($tmpDatetimeSucc >= $photo->getDateTime())) {
                         $timeDiffPrev = $tmpDatetimePrev->diff($photo->getDateTime());
                         $timeDiffPrevSec = $timeDiffPrev->format('%s') + 60*$timeDiffPrev->format("%i") + 3600*$timeDiffPrev->format("%H");
                         $timeDiffSucc = $photo->getDateTime()->diff($tmpDatetimeSucc);

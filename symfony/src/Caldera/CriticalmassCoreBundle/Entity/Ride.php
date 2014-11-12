@@ -992,13 +992,38 @@ class Ride
         return $this->posts;
     }
 
+
+
     /**
-     * @return mixed
+     * Add photos
+     *
+     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photos $photos
+     * @return Ride
+     */
+    public function addPhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photos $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photos $photos
+     */
+    public function removePhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photos $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPhotos()
     {
         return $this->photos;
     }
-
-
 }
