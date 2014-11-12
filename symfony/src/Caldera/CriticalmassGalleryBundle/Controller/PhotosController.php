@@ -81,10 +81,8 @@ class PhotosController extends Controller
                 $tmpDatetimeSucc = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint(1))));
                 error_log($tmpDatetimePrev->format('Y-m-d H:i:s'));
                 error_log($tmpDatetimeSucc->format('Y-m-d H:i:s'));
-                error_log($tmpDatetimePrev <= $photo->getDateTime());
-                error_log($photo->getDateTime() <= $tmpDatetimeSucc);
                 error_log($photo->getDateTime()->format('Y-m-d H:i:s'));
-                for ($i = 0; $i < $gpxReader->countPoints() - 1 || $finished; $i++) {
+                for ($i = 0; $i < ($gpxReader->countPoints() - 1) && !($finished); $i++) {
                     $tmpDatetimePrev = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i))));
                     $tmpDatetimeSucc = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i+1))));
                     if (($tmpDatetimePrev <= $photo->getDateTime()) &&
@@ -95,7 +93,9 @@ class PhotosController extends Controller
                         $timeDiffSuccSec = $timeDiffSucc->format('%s') + 60*$timeDiffSucc->format("%i") + 3600*$timeDiffSucc->format("%H");
                         $timespan = $timeDiffPrevSec + $timeDiffSuccSec;
                         error_log($gpxReader->getLatitudeOfPoint($i));
-
+                        error_log($gpxReader->getLatitudeOfPoint($i+1));
+                        error_log($gpxReader->getLongitudeOfPoint($i));
+                        error_log($gpxReader->getLongitudeOfPoint($i+1));
                         $finished = 1;
                     }
                 }
@@ -159,11 +159,36 @@ class PhotosController extends Controller
     {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $post = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
+            $photo = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
 
             $content = "Es wurde das Bild mit der ID " + $photoId + "gemeldet.";
 
             mail("malte@criticalmass.in", "Bild gemeldet", $content, "malte@criticalmass.in");
+        }
+
+        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+    }
+
+    public function changeAction(Request $request, $photoId, $latitude, $longitude) {
+
+        error_log("test");
+        error_log($photoId);
+
+        if ($photoId > 0) {
+            $em = $this->getDoctrine()->getManager();
+            $photo = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
+
+            error_log($photo->getLatitude());
+            error_log($photo->getLongitude());
+
+            $photo->setLatitude($latitude);
+            $photo->setLongitude($longitude);
+
+            error_log($photo->getLatitude());
+            error_log($photo->getLongitude());
+
+            $em->merge($photo);
+            $em->flush();
         }
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));

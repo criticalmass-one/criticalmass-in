@@ -33,3 +33,7 @@ criticalmass_gallery_photos_delete:
 criticalmass_gallery_photos_report:
     pattern: /photos/report/{photoId}
     defaults: { _controller: CriticalmassGalleryBundle:Photos:report }
+
+criticalmass_gallery_photos_change:
+    pattern: /photos/change/{photoId}/{latitude}/{longitude}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:change }

@@ -16,7 +16,7 @@
         <div class="row">
             {% if app.getUser() %}
             <div class="btn-group  pull-right" style="margin-top: 24px;">
-                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalPhoto"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate"><i class="fa fa-signal"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload"><i class="fa fa-cloud-upload"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalPictureUpload"><i class="fa fa-camera"></i></a>
@@ -47,7 +47,7 @@
 
 
             var locationIcon = L.icon({
-                iconUrl: '/images/marker/marker-red.png',
+                iconUrl: 'https://www.criticalmass.in/images/marker/marker-red.png',
                 iconRetinaUrl: '/images/marker/marker-red-2x.png',
                 iconSize: [25, 41],
                 iconAnchor: [13, 41],
@@ -66,6 +66,27 @@
             map.setView([{{ city.getLatitude() }}, {{ city.getLongitude() }}], 14);
             {% endif %}
 
+            {% for photo in ride.getPhotos() %}
+            {% if photo.getLatitude() and photo.getLongitude() %}
+            var photoMarker = L.marker([{{photo.getLatitude()}}, {{ photo.getLongitude() }}], {icon:locationIcon, draggable: true});
+            photoMarker.addTo(map);
+
+            photoMarker.on('dragend', function(event){
+                var marker = event.target;
+
+                $('#changeButton').prop('href', "http://beta.criticalmass.cm/app_dev.php/photos/change/" + {{ photo.getId() }} + "/" + marker.getLatLng().lat + "/" + marker.getLatLng().lng);
+
+                $('#modalPhotoChange').modal('show');
+            });
+
+            photoMarker.on('click', function() {
+                alert('dumm');
+
+                $('#modalPhoto').modal('show');
+            });
+            {% endif %}
+            {% endfor %}
+
             {% for track in ride.getTracks() %}
             {% if track.getJson() %}
             {% if track.getUser() %}
@@ -79,7 +100,8 @@
             {% endfor %}
 
             // zoom the map to the polyline
-            map.fitBounds(polyline.getBounds());
+            //map.fitBounds(polyline.getBounds());
+
 
         </script>
 
@@ -161,6 +183,20 @@
         </ul>
     </div>
 
+    <div class="modal fade" id="modalPhoto" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('CriticalmassGalleryBundle:Photos:add', { 'rideId': ride.getId() })) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% if app.getUser() %}
     <div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -218,5 +254,21 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalPhotoChange" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Position des Bildes ändern</h4>
+                </div>
+                <div class="modal-body">
+                    Möchtest du wirklich die Position dieses Bildes verändern?
+                    <a id="changeButton" href="" class="btn btn-success">Ja, ändern</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% endif %}
+    </div>
 {% endblock %}
