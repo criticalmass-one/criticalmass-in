@@ -16,7 +16,7 @@
         <div class="row">
             {% if app.getUser() %}
             <div class="btn-group  pull-right" style="margin-top: 24px;">
-                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalPhoto"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate"><i class="fa fa-signal"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload"><i class="fa fa-cloud-upload"></i></a>
                 <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalPictureUpload"><i class="fa fa-camera"></i></a>
@@ -80,9 +80,10 @@
             });
 
             photoMarker.on('click', function() {
-                alert('dumm');
-
-                $('#modalPhoto').modal('show');
+                var photoPath = '{{ photo.getFilePathByDepth(2) }}';
+                alert(photoPath);
+                $("#photoShow").prop('src', photoPath);
+                $('#modalPhotoShow').modal('show');
             });
             {% endif %}
             {% endfor %}
@@ -183,21 +184,22 @@
         </ul>
     </div>
 
-    <div class="modal fade" id="modalPhoto" tabindex="-1" role="dialog">
+    {% if app.getUser() %}
+
+    <div class="modal fade" id="modalPhotoShow" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
+                    <h4 class="modal-title">Kommentar zu dieser Tour verfassen</h4>
                 </div>
                 <div class="modal-body">
-                    {{ render(controller('CriticalmassGalleryBundle:Photos:add', { 'rideId': ride.getId() })) }}
+                    <img id="photoShow" src="">
                 </div>
             </div>
         </div>
     </div>
 
-    {% if app.getUser() %}
     <div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
