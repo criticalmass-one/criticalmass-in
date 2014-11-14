@@ -275,42 +275,50 @@ class Photos
         // set the path property to the filename where you've saved the file
         $this->filePath = $this->getUploadRootDir() . $this->getId() . "." . $this->getFile()->getClientOriginalExtension();
 
-        // Content type
-        //header('Content-Type: image/jpeg');
 
-        // Get new dimensions
+        if ($this->getFile()->getClientOriginalExtension() == "jpg") {
+            $image = imagecreatefromjpeg($this->filePath);
+            list($width, $height) = getimagesize($this->filePath);
+            $new_width = 50;
+            $new_height = 50;
+            $this->small_file = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($this->small_file, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
-        // Resample
-        //$image = imagecreatefromstring($this->getFile()->getContent());
-        $image = imagecreatefromjpeg($this->filePath);
-        list($width, $height) = getimagesize($this->filePath);
-        $new_width = 50;
-        $new_height = 50;
-        $this->small_file = imagecreatetruecolor($new_width, $new_height);
-        imagecopyresampled($this->small_file, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            // Output
+            imagejpeg($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
+            $info = exif_read_data($this->filePath, 0, true);
 
-        // Output
-        imagejpeg($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
-        $info = exif_read_data($this->filePath, 0, true);
+            if (isset($info['GPS']['GPSLatitude']) && isset($info['GPS']['GPSLongitude'])) {
+                $deg = $this->coordinateToDec($info['GPS']['GPSLatitude'][0]);
+                $min = $this->coordinateToDec($info['GPS']['GPSLatitude'][1]);
+                $sec = $this->coordinateToDec($info['GPS']['GPSLatitude'][2]);
+                $this->latitude = $deg + ((($min * 60) + ($sec)) / 3600);
+                $deg = $this->coordinateToDec($info['GPS']['GPSLongitude'][0]);
+                $min = $this->coordinateToDec($info['GPS']['GPSLongitude'][1]);
+                $sec = $this->coordinateToDec($info['GPS']['GPSLongitude'][2]);
+                $this->longitude = $deg + ((($min * 60) + ($sec)) / 3600);
+            }
 
-        if (isset($info['GPS']['GPSLatitude']) && isset($info['GPS']['GPSLongitude'])) {
-            $deg = $this->coordinateToDec($info['GPS']['GPSLatitude'][0]);
-            $min = $this->coordinateToDec($info['GPS']['GPSLatitude'][1]);
-            $sec = $this->coordinateToDec($info['GPS']['GPSLatitude'][2]);
-            $this->latitude = $deg+((($min*60)+($sec))/3600);
-            $deg = $this->coordinateToDec($info['GPS']['GPSLongitude'][0]);
-            $min = $this->coordinateToDec($info['GPS']['GPSLongitude'][1]);
-            $sec = $this->coordinateToDec($info['GPS']['GPSLongitude'][2]);
-            $this->longitude = $deg+((($min*60)+($sec))/3600);
+            if (isset($info['GPS']['GPSTimeStamp']) && isset($info['GPS']['GPSDateStamp'])) {
+                $this->dateTime = new \DateTime(str_replace(":", "-", $info['GPS']['GPSDateStamp'])
+                    . ' ' . preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][0]) . ":" .
+                    preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][1]) . ":" .
+                    preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][2]));
+            } else {
+                $this->dateTime = new \DateTime();
+            }
         }
 
-        if (isset($info['GPS']['GPSTimeStamp']) && isset($info['GPS']['GPSDateStamp'])) {
-            $this->dateTime = new \DateTime(str_replace(":", "-", $info['GPS']['GPSDateStamp'])
-            .' '.  preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][0]) . ":" .
-                preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][1]) . ":" .
-                preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][2]));
-        } else {
-            $this->dateTime = new \DateTime();
+        if ($this->getFile()->getClientOriginalExtension() == "png") {
+            $image = imagecreatefrompng($this->filePath);
+            list($width, $height) = getimagesize($this->filePath);
+            $new_width = 50;
+            $new_height = 50;
+            $this->small_file = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($this->small_file, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+            // Output
+            imagepng($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
         }
     }
 
