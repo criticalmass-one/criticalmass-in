@@ -160,4 +160,96 @@ class App
     {
         return $this->user;
     }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return App
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return App
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set allowedReferer
+     *
+     * @param string $allowedReferer
+     * @return App
+     */
+    public function setAllowedReferer($allowedReferer)
+    {
+        $this->allowedReferer = $allowedReferer;
+
+        return $this;
+    }
+
+    /**
+     * Get allowedReferer
+     *
+     * @return string 
+     */
+    public function getAllowedReferer()
+    {
+        return $this->allowedReferer;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return App
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 }
