@@ -40,6 +40,26 @@ class App
     protected $creationDateTime;
 
     /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $allowedReferer;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $url;
+
+    /**
      * Get id
      *
      * @return integer 
