@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Entity;
 
+use Caldera\CriticalmassGalleryBundle\Utility\PhotoUtility;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -244,15 +245,6 @@ class Photos
         $this->licence = $licence;
     }
 
-    function coordinateToDec($coordinate) {
-        list($dividend, $divisor) = split("/", $coordinate);
-        if ($divisor == 0) {
-            return 0;
-        } else {
-            return $dividend / $divisor;
-        }
-    }
-
     public function handleUpload()
     {
         $this->dateTime = new \DateTime();
@@ -269,56 +261,29 @@ class Photos
         // target filename to move to
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getId() . "." . $this->getFile()->getClientOriginalExtension()
+            $this->getId() . "." . strtolower($this->getFile()->getClientOriginalExtension())
         );
 
         // set the path property to the filename where you've saved the file
-        $this->filePath = $this->getUploadRootDir() . $this->getId() . "." . $this->getFile()->getClientOriginalExtension();
+        $this->filePath = $this->getUploadRootDir() . $this->getId() . "." . strtolower($this->getFile()->getClientOriginalExtension());
 
+        $utility = new PhotoUtility();
 
-        if ($this->getFile()->getClientOriginalExtension() == "jpg") {
-            $image = imagecreatefromjpeg($this->filePath);
-            list($width, $height) = getimagesize($this->filePath);
-            $new_width = 50;
-            $new_height = 50;
-            $this->small_file = imagecreatetruecolor($new_width, $new_height);
-            imagecopyresampled($this->small_file, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+        if ($this->getFile()->getClientOriginalExtension() == "jpg" ||
+            $this->getFile()->getClientOriginalExtension() == "JPG" ) {
 
-            // Output
-            imagejpeg($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
-            $info = exif_read_data($this->filePath, 0, true);
+            $utility->makeSmallPhotoJPG($this, 50, 50, "_klein");
+            $utility->makeSmallPhotoJPG($this, 100, 100, "_thumbnail");
+            $utility->getMetaInfos($this);
 
-            if (isset($info['GPS']['GPSLatitude']) && isset($info['GPS']['GPSLongitude'])) {
-                $deg = $this->coordinateToDec($info['GPS']['GPSLatitude'][0]);
-                $min = $this->coordinateToDec($info['GPS']['GPSLatitude'][1]);
-                $sec = $this->coordinateToDec($info['GPS']['GPSLatitude'][2]);
-                $this->latitude = $deg + ((($min * 60) + ($sec)) / 3600);
-                $deg = $this->coordinateToDec($info['GPS']['GPSLongitude'][0]);
-                $min = $this->coordinateToDec($info['GPS']['GPSLongitude'][1]);
-                $sec = $this->coordinateToDec($info['GPS']['GPSLongitude'][2]);
-                $this->longitude = $deg + ((($min * 60) + ($sec)) / 3600);
-            }
-
-            if (isset($info['GPS']['GPSTimeStamp']) && isset($info['GPS']['GPSDateStamp'])) {
-                $this->dateTime = new \DateTime(str_replace(":", "-", $info['GPS']['GPSDateStamp'])
-                    . ' ' . preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][0]) . ":" .
-                    preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][1]) . ":" .
-                    preg_replace("#[/].*#", "", $info['GPS']['GPSTimeStamp'][2]));
-            } else {
-                $this->dateTime = new \DateTime();
-            }
         }
 
-        if ($this->getFile()->getClientOriginalExtension() == "png") {
-            $image = imagecreatefrompng($this->filePath);
-            list($width, $height) = getimagesize($this->filePath);
-            $new_width = 50;
-            $new_height = 50;
-            $this->small_file = imagecreatetruecolor($new_width, $new_height);
-            imagecopyresampled($this->small_file, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+        if ($this->getFile()->getClientOriginalExtension() == "png" ||
+            $this->getFile()->getClientOriginalExtension() == "PNG" ) {
 
-            // Output
-            imagepng($this->small_file, $this->getUploadRootDir() . $this->getId() . "_klein." . $this->getFile()->getClientOriginalExtension(), 100);
+            $utility->makeSmallPhotoPNG($this, 50, 50, "_klein");
+            $utility->makeSmallPhotoPNG($this, 100, 100, "_thumbnail");
+
         }
     }
 
@@ -370,4 +335,27 @@ class Photos
         $this->dateTime = $dateTime;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSmallFile()
+    {
+        return $this->small_file;
+    }
+
+    /**
+     * @param mixed $small_file
+     */
+    public function setSmallFile($small_file)
+    {
+        $this->small_file = $small_file;
+    }
+
+    public function toSmallPath($path) {
+        return str_replace("" . $this->id, $this->id . "_klein", $path);
+    }
+
+    public function toThumbnailPath($path) {
+        return str_replace("" . $this->id, $this->id . "_thumbnail", $path);
+    }
 }

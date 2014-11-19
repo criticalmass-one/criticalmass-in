@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Controller;
 
-use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
+use Caldera\CriticalmassGalleryBundle\Utility\PhotoUtility;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Caldera\CriticalmassGalleryBundle\Entity\Photos;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,35 +69,20 @@ class PhotosController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
+            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
+
+            $utility = new PhotoUtility();
+
+            $utility->approximateCoordinates($photo, $track);
+
             if (!($photo->getLatitude() && $photo->getLongitude())) {
 
                 $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
 
-                if (count($track)) {
-                    $gpxReader = new GpxReader();
-                    $gpxReader->loadString($track[0]->getGpx());
-                    $finished = 0;
-                    for ($i = 0; $i < ($gpxReader->countPoints() - 1) && !($finished); $i++) {
-                        $tmpDatetimePrev = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i))));
-                        $tmpDatetimeSucc = new \DateTime(str_replace("T", " ", str_replace("Z", "", $gpxReader->getTimestampOfPoint($i + 1))));
-                        if (($tmpDatetimePrev <= $photo->getDateTime()) &&
-                            ($tmpDatetimeSucc >= $photo->getDateTime())
-                        ) {
-                            $timeDiffPrev = $tmpDatetimePrev->diff($photo->getDateTime());
-                            $timeDiffPrevSec = $timeDiffPrev->format('%s') + 60 * $timeDiffPrev->format("%i") + 3600 * $timeDiffPrev->format("%H");
-                            $timeDiffSucc = $photo->getDateTime()->diff($tmpDatetimeSucc);
-                            $timeDiffSuccSec = $timeDiffSucc->format('%s') + 60 * $timeDiffSucc->format("%i") + 3600 * $timeDiffSucc->format("%H");
-                            $timespan = $timeDiffPrevSec + $timeDiffSuccSec;
-                            $interpolatedLatitude = floatval($gpxReader->getLatitudeOfPoint($i)) * (($timespan - $timeDiffPrevSec) / floatval($timespan)) +
-                                floatval($gpxReader->getLatitudeOfPoint($i + 1)) * (($timespan - $timeDiffSuccSec) / floatval($timespan));
-                            $interpolatedLongitude = floatval($gpxReader->getLongitudeOfPoint($i)) * (($timespan - $timeDiffPrevSec) / floatval($timespan)) +
-                                floatval($gpxReader->getLongitudeOfPoint($i + 1)) * (($timespan - $timeDiffSuccSec) / floatval($timespan));
-                            $photo->setLatitude($interpolatedLatitude);
-                            $photo->setLongitude($interpolatedLongitude);
-                            $finished = 1;
-                        }
-                    }
-                }
+                $utility = new PhotoUtility();
+
+                $utility->approximateCoordinates($photo, $track);
+
             }
 
             $em->merge($photo);
@@ -169,22 +154,12 @@ class PhotosController extends Controller
     }
 
     public function changeAction(Request $request, $photoId, $latitude, $longitude) {
-
-        error_log("test");
-        error_log($photoId);
-
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
             $photo = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
 
-            error_log($photo->getLatitude());
-            error_log($photo->getLongitude());
-
             $photo->setLatitude($latitude);
             $photo->setLongitude($longitude);
-
-            error_log($photo->getLatitude());
-            error_log($photo->getLongitude());
 
             $em->merge($photo);
             $em->flush();

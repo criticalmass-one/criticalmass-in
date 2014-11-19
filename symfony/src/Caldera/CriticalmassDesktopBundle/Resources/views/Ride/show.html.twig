@@ -80,8 +80,7 @@
             });
 
             photoMarker.on('click', function() {
-                var photoPath = '{{ photo.getFilePathByDepth(2) }}';
-                alert(photoPath);
+                var photoPath = '{{ photo.toThumbnailPath(photo.getFilePathByDepth(2)) }}';
                 $("#photoShow").prop('src', photoPath);
                 $('#modalPhotoShow').modal('show');
             });
@@ -191,7 +190,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Kommentar zu dieser Tour verfassen</h4>
                 </div>
                 <div class="modal-body">
                     <img id="photoShow" src="">
