@@ -41,3 +41,7 @@ caldera_criticalmass_getgpsinterval:
 caldera_criticalmass_api_app_list:
     pattern: /app/list
     defaults: { _controller: CalderaCriticalmassApiBundle:App:list }
+
+caldera_criticalmass_api_app_edit:
+    pattern: /app/edit/{appId}
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:edit }

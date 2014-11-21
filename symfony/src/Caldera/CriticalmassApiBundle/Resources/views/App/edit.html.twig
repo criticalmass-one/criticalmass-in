@@ -1,0 +1,54 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Footitle{% endblock %}
+
+{% block content %}
+    {{ form_errors(form) }}
+    <div class="container">
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Footitle</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Beschreibung:</label>
+                    {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Webseite:</label>
+                    {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Verlinke eine Webseite über diese Critical Mass.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success pull-right">Speichern</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
