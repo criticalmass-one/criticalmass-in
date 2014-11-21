@@ -32,7 +32,7 @@ class AppController extends Controller
         if ($form->isValid())
         {
             $app->setUser($this->getUser());
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($app);
             $em->flush();
