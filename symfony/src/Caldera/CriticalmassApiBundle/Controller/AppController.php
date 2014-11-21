@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassApiBundle\Controller;
 
+use Caldera\CriticalmassApiBundle\Entity\App;
 use Caldera\CriticalmassApiBundle\Type\AppType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,17 @@ class AppController extends Controller
         $apps = $this->getDoctrine()->getRepository('CalderaCriticalmassApiBundle:App')->findBy(array('user' => $this->getUser()->getId()));
 
         return $this->render('CalderaCriticalmassApiBundle:App:list.html.twig', array('apps' => $apps));
+    }
+
+    public function addAction(Request $request)
+    {
+        $app = new App();
+
+        $form = $this->createForm(new AppType(), $app, array('action' => $this->generateUrl('caldera_criticalmass_api_app_add')));
+
+        $form->handleRequest($request);
+
+        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null));
     }
 
     public function editAction(Request $request, $appId)
@@ -33,6 +45,6 @@ class AppController extends Controller
             $em->flush();
         }
 
-        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app));
     }
 }
