@@ -27,7 +27,23 @@ class AppController extends Controller
 
         $form->handleRequest($request);
 
-        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null));
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($app);
+            $em->flush();
+
+            $hasErrors = false;
+
+            $form = $this->createForm(new AppType(), $app, array('action' => $this->generateUrl('caldera_criticalmass_api_app_edit', array('appId' => $app->getId()))));
+        }
+        elseif ($form->isSubmitted())
+        {
+            $hasErrors = true;
+        }
+
+        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null, 'hasErrors' => $hasErrors));
     }
 
     public function editAction(Request $request, $appId)
