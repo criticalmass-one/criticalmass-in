@@ -28,8 +28,8 @@
                 {% else %}
                 <td>{{ app.getTitle() }}</td>
                 {% endif %}
-                <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
                 <td><code class="hidden">{{ app.getToken() }}</code><button class="showTokenButton btn btn-xs btn-default">anzeigen</button></td>
+                <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }} Uhr</td>
                 <td>{{ app.getApiCalls() }}</td>
                 <td>{% if app.getApproved() == 1 %}{% if app.getEnabled == 1 %}aktiv{% else %}inaktiv{% endif %}{% else %}Warten auf Freischaltung{% endif %}</td>
                 <td><a href="{{ path('caldera_criticalmass_api_app_edit', { 'appId': app.getId() }) }}" class="btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a></td>
