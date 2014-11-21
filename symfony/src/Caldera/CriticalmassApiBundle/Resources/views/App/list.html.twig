@@ -15,7 +15,11 @@
             </tr>
             {% for app in apps %}
             <tr>
+                {% if app.getUrl() %}
+                <td><a href="{{ app.getUrl() }}">{{ app.getTitle() }}</a></td>
+                {% else %}
                 <td>{{ app.getTitle() }}</td>
+                {% endif %}
                 <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
                 <td><code class="hidden">{{ app.getToken() }}</code><button class="showTokenButton btn btn-xs btn-default">anzeigen</button></td>
                 <td>{{ app.getApiCalls() }}</td>
