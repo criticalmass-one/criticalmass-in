@@ -41,11 +41,13 @@ class App
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @Assert\NotBlank()
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $description;
 
@@ -61,6 +63,7 @@ class App
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @Assert\Url()
      */
     protected $url;
 
