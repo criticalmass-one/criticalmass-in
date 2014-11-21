@@ -1,0 +1,20 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Deine Apps{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <table id="cityList" class="table">
+            <tr id="tableHeaderRow">
+                <th>Titel</th>
+                <th>Erstellt</th>
+            </tr>
+            {% for app in apps %}
+            <tr>
+                <td>{{ app.getTitle() }}</td>
+                <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
