@@ -46,6 +46,26 @@
 
         <div class="row">
             <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.allowedReferer) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Webseite:</label>
+                    {{ form_widget(form.allowedReferer, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Verlinke eine Webseite über diese Critical Mass.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.enabled) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Webseite:</label>
+                    {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Verlinke eine Webseite über diese Critical Mass.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <button type="submit" class="btn btn-success pull-right">Speichern</button>
             </div>
         </div>
