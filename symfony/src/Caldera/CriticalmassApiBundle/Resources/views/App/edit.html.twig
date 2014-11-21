@@ -10,7 +10,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h1>Footitle</h1>
+                <h1>App editieren</h1>
             </div>
         </div>
 
@@ -19,7 +19,7 @@
                 <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Titel:</label>
                     {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                    <p class="help-block">Gib hier den Titel deiner App ein. Das kann auch einfach die Bezeichnung einer Webseite oder dein eigener Name sein.</p>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Beschreibung:</label>
                     {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                    <p class="help-block">Beschreibe kurz, worum es in deiner App geht.</p>
                 </div>
             </div>
         </div>
@@ -39,17 +39,17 @@
                 <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Webseite:</label>
                     {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Verlinke eine Webseite über diese Critical Mass.</p>
+                    <p class="help-block">Wenn du eine Webseite betreibst oder deine App über eine Webseite verbreitest, gib bitte hier deren Adresse ein.</p>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.enabled) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Aktivierung:</label>
                     {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Schalte hier den Zugriff auf die Api ein oder aus.</p>
+                    <p class="help-block">Schalte hier den Zugriff auf die Api ein oder aus. Wenn du den Zugriff abschaltest, kannst du mit deinem Zugriffsschlüssel nicht mehr auf die Api zugreifen.</p>
                 </div>
             </div>
         </div>
