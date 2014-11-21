@@ -9,12 +9,14 @@
                 <th>Titel</th>
                 <th>Erstellt</th>
                 <th>Aufrufe</th>
+                <th>Status</th>
             </tr>
             {% for app in apps %}
             <tr>
                 <td>{{ app.getTitle() }}</td>
                 <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
                 <td>{{ app.getApiCalls() }}</td>
+                <td>{% if app.getApproved() == 1 %}{% if app.getEnabled == 1 %}aktiv{% else %}inaktiv{% endif %}{% else %}Warten auf Freischaltung{% endif %}</td>
             </tr>
             {% endfor %}
         </table>
