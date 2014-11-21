@@ -50,6 +50,11 @@ class App
     protected $description;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $restrictedAccess;
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $allowedReferer;
@@ -307,5 +312,28 @@ class App
     public function getApproved()
     {
         return $this->approved;
+    }
+
+    /**
+     * Set restrictedAccess
+     *
+     * @param boolean $restrictedAccess
+     * @return App
+     */
+    public function setRestrictedAccess($restrictedAccess)
+    {
+        $this->restrictedAccess = $restrictedAccess;
+
+        return $this;
+    }
+
+    /**
+     * Get restrictedAccess
+     *
+     * @return boolean 
+     */
+    public function getRestrictedAccess()
+    {
+        return $this->restrictedAccess;
     }
 }
