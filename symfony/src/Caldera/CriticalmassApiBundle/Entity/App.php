@@ -60,6 +60,16 @@ class App
     protected $url;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $approved;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -251,5 +261,51 @@ class App
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return App
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set approved
+     *
+     * @param boolean $approved
+     * @return App
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+
+        return $this;
+    }
+
+    /**
+     * Get approved
+     *
+     * @return boolean 
+     */
+    public function getApproved()
+    {
+        return $this->approved;
     }
 }
