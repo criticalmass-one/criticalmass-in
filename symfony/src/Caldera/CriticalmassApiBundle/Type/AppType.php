@@ -14,7 +14,7 @@ class AppType extends AbstractType
             ->add('description', 'textarea', array('required' => false))
             ->add('url', 'text', array('required' => false))
             ->add('allowedReferer', 'textarea', array('required' => true))
-            ->add('enabled', 'choice', array('label' => 'Wochentag', 'choices' => array(0 => 'inaktiv', 1 => 'aktiv'), 'required' => true));
+            ->add('enabled', 'choice', array('label' => 'Aktivierung', 'choices' => array(0 => 'inaktiv', 1 => 'aktiv'), 'required' => true));
     }
 
     public function getName()
