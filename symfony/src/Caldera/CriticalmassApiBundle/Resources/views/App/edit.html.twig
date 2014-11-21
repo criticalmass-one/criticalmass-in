@@ -43,17 +43,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.allowedReferer) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Erlaubte Referer:</label>
-                    {{ form_widget(form.allowedReferer, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Gib hier die Adressen an, von denen auf die Api zugegriffen werden darf. Reguläre Ausdrücke sind erlaubt, jeweils eine Angabe pro Zeile.</p>
-                </div>
-            </div>
-        </div>
-
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.enabled) %} has-error has-feedback{% endif %}">
