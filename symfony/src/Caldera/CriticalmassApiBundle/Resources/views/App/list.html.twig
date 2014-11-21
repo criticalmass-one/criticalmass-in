@@ -8,11 +8,13 @@
             <tr id="tableHeaderRow">
                 <th>Titel</th>
                 <th>Erstellt</th>
+                <th>Aufrufe</th>
             </tr>
             {% for app in apps %}
             <tr>
                 <td>{{ app.getTitle() }}</td>
                 <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
+                <td>{{ app.getApiCalls() }}</td>
             </tr>
             {% endfor %}
         </table>
