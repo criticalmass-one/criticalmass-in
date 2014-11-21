@@ -32,7 +32,7 @@ class App
     /**
      * @ORM\Column(type="integer")
      */
-    protected $apiCalls;
+    protected $apiCalls = 0;
 
     /**
      * @ORM\Column(type="datetime")
@@ -52,10 +52,10 @@ class App
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $restrictedAccess;
+    protected $restrictedAccess = 0;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $allowedReferer;
 
@@ -67,12 +67,18 @@ class App
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enabled;
+    protected $enabled = 0;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $approved;
+    protected $approved = 0;
+
+    public function __construct()
+    {
+        $this->setToken(md5(microtime()));
+        $this->setCreationDateTime(new \DateTime());
+    }
 
     /**
      * Get id
