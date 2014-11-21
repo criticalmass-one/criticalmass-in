@@ -14,7 +14,12 @@
         <ol class="breadcrumb">
             <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
             <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
-            <li class="active">Deine Apps</li>
+            <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
+            {% if app2 != null %}
+            <li class="active">App editieren</li>
+            {% else %}
+            <li class="active">App hinzufügen</li>
+            {% endif %}
         </ol>
 
         <div class="row">
