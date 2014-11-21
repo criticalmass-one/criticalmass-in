@@ -16,11 +16,21 @@
             <tr>
                 <td>{{ app.getTitle() }}</td>
                 <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
-                <td><code>{{ app.getToken() }}</code></td>
+                <td><code class="hidden">{{ app.getToken() }}</code><button class="showTokenButton btn btn-xs btn-default">anzeigen</button></td>
                 <td>{{ app.getApiCalls() }}</td>
                 <td>{% if app.getApproved() == 1 %}{% if app.getEnabled == 1 %}aktiv{% else %}inaktiv{% endif %}{% else %}Warten auf Freischaltung{% endif %}</td>
             </tr>
             {% endfor %}
         </table>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                $('.showTokenButton').on('click', function()
+                {
+                    $(this).prev().removeClass('hidden');
+                    $(this).hide();
+                });
+            };
+        </script>
     </div>
 {% endblock %}
