@@ -1,6 +1,12 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% block title %}Footitle{% endblock %}
+{% if app2 != null %}
+    {% set title = 'App editieren' %}
+{% else %}
+    {% set title = 'Neue App hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
     {{ form_errors(form) }}
@@ -13,7 +19,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h1>App editieren</h1>
+                <h1>{{ title }}</h1>
             </div>
         </div>
 
