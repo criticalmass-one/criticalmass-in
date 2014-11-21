@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ app.getTitle() }}</td>
                 <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }}</td>
-                <td>{{ app.getToken() }}</td>
+                <td><code>{{ app.getToken() }}</code></td>
                 <td>{{ app.getApiCalls() }}</td>
                 <td>{% if app.getApproved() == 1 %}{% if app.getEnabled == 1 %}aktiv{% else %}inaktiv{% endif %}{% else %}Warten auf Freischaltung{% endif %}</td>
             </tr>
