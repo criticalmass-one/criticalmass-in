@@ -74,4 +74,19 @@ class AppController extends Controller
 
         return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app, 'hasErrors' => $hasErrors));
     }
+
+    public function deleteAction(Request $request, $appId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $app = $em->find('CalderaCriticalmassApiBundle:App', $appId);
+
+        if ($app && $app->getUser()->equals($this->getUser()))
+        {
+            $em->remove($app);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_api_app_list'));
+    }
 }
