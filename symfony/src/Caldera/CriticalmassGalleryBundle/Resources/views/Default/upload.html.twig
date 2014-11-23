@@ -1,0 +1,17 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+    {% javascripts
+    '@CriticalmassGalleryBundle/Resources/public/js/external/dropzone.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <div class="container">
+        <form action="/upload"
+              class="dropzone"
+              id="my-awesome-dropzone"></form>
+    </div>
+{% endblock %}

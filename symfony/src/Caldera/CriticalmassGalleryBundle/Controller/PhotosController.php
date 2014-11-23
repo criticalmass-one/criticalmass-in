@@ -167,4 +167,8 @@ class PhotosController extends Controller
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
+
+    public function uploadAction(Request $request) {
+        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig');
+    }
 }

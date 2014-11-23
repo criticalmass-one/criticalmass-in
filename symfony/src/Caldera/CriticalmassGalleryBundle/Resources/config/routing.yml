@@ -37,3 +37,7 @@ criticalmass_gallery_photos_report:
 criticalmass_gallery_photos_change:
     pattern: /photos/change/{photoId}/{latitude}/{longitude}
     defaults: { _controller: CriticalmassGalleryBundle:Photos:change }
+
+criticalmass_gallery_photos_upload:
+    pattern: /photos/upload
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }
