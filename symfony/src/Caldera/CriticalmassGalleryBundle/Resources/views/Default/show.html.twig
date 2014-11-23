@@ -2,18 +2,20 @@
 
 {% block content %}
 
-    <img src="{{ photo.getFilePathByDepth(3) }}">
-    {% if app.getUser().getId() == photo.getUser().getId() %}
-        <a class="btn btn-default" href="#" title="Löschen" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-trash"></i></a>
-        <a class="btn btn-default" href="{{ path ('criticalmass_gallery_photos_edit', {'photoId' : photo.getId()}) }}" title="Bearbeiten"><i class="fa fa-trash"></i></a>
-    {% else %}
-        <a class="btn btn-default" href="#" title="Melden" data-toggle="modal" data-target="#modalReport"><i class="fa fa-trash"></i></a>
-    {% endif %}
-        <p>{{ photo.getDescription() }}</p>
+    <div class="container">
+        <img src="{{ photo.getFilePathByDepth(3) }}">
+        {% if app.getUser().getId() == photo.getUser().getId() %}
+            <a class="btn btn-default" href="#" title="Löschen" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-trash"></i></a>
+            <a class="btn btn-default" href="{{ path ('criticalmass_gallery_photos_edit', {'photoId' : photo.getId()}) }}" title="Bearbeiten"><i class="fa fa-trash"></i></a>
+        {% else %}
+            <a class="btn btn-default" href="#" title="Melden" data-toggle="modal" data-target="#modalReport"><i class="fa fa-trash"></i></a>
+        {% endif %}
+            <p>{{ photo.getDescription() }}</p>
 
-    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'photoId': photo.getId() })) }}
+        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'photoId': photo.getId() })) }}
 
-    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'photoId': photo.getId() })) }}
+        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'photoId': photo.getId() })) }}
+    </div>
 
     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
         <div class="modal-dialog">
