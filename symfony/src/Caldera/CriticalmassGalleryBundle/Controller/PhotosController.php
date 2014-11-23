@@ -170,10 +170,83 @@ class PhotosController extends Controller
     }
 
     public function uploadAction(Request $request) {
+        $photo = new Photos();
+        /*if ($cityId) {
+
+            $form = $this->createFormBuilder($photo)
+                ->setAction($this->generateUrl('criticalmass_gallery_photos_add_city', array('cityId' => $cityId)))
+                ->add('file')
+                ->getForm();
+
+            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
+            $photo->setCity($city);
+        }
+        elseif ($rideId)
+        {
+            $form = $this->createFormBuilder($photo)
+                ->setAction($this->generateUrl('criticalmass_gallery_photos_add_ride', array('rideId' => $rideId)))
+                ->add('file')
+                ->getForm();
+
+            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
+            $photo->setCity($city);
+            $photo->setRide($ride);
+        }
+        else
+        {
+            $form = $this->createFormBuilder($photo)
+                ->setAction($this->generateUrl('criticalmass_gallery_photos_add'))
+                ->add('file')
+                ->getForm();
+        }*/
+
+        //if ($form->isValid()) {
         if ($request->getMethod() == 'POST') {
-            return new Response('FILE: '.$request->files->get('file'));
+            $em = $this->getDoctrine()->getManager();
+
+            $photo->setFile($request->files->get('file'));
+            $photo->setUser($this->getUser());
+            $photo->setDescription("");
+            $photo->setFilePath("");
+
+            $em->persist($photo);
+            $em->flush();
+
+            $photo->handleUpload();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
+
+            $utility = new PhotoUtility();
+
+            $utility->approximateCoordinates($photo, $track);
+
+            if (!($photo->getLatitude() && $photo->getLongitude())) {
+
+                $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
+
+                $utility = new PhotoUtility();
+
+                $utility->approximateCoordinates($photo, $track);
+
+            }
+
+            $em->merge($photo);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
         }
 
         return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig');
+
+        //return $this->render('CriticalmassGalleryBundle:Default:add.html.twig', array('form' => $form->createView()));
+
+        /*if ($request->getMethod() == 'POST') {
+            return new Response('FILE: '.$request->files->get('file'));
+        }
+
+        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig');*/
     }
 }
