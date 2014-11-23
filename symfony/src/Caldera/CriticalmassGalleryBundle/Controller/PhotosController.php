@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Caldera\CriticalmassGalleryBundle\Entity\Photos;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class PhotosController extends Controller
@@ -169,6 +170,10 @@ class PhotosController extends Controller
     }
 
     public function uploadAction(Request $request) {
+        if ($request->getMethod() == 'POST') {
+            return new Response('FILE: '.$request->files->get('file'));
+        }
+
         return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig');
     }
 }
