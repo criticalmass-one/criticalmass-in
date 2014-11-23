@@ -4,6 +4,22 @@
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
+{% block additionalHeaderElements %}
+    {% stylesheets
+    '@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
+    filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block additionalFooterElements %}
+    {% javascripts
+    '@CriticalmassGalleryBundle/Resources/public/js/external/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
@@ -80,9 +96,8 @@
             });
 
             photoMarker.on('click', function() {
-                var photoPath = '{{ photo.toThumbnailPath(photo.getFilePathByDepth(2)) }}';
-                $("#photoShow").prop('src', photoPath);
-                $('#modalPhotoShow').modal('show');
+                var photoPath = '{{ photo.getFilePathByDepth(2) }}';
+                $.fancybox( {href : photoPath, title : 'Lorem lipsum'} );
             });
             {% endif %}
             {% endfor %}
