@@ -26,6 +26,8 @@
     <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
     <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    {% block additionalHeaderElements %}{% endblock %}
 </head>
 
 <body class="standardBody">
@@ -44,6 +46,7 @@
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
+{% block additionalFooterElements %}{% endblock %}
     <!-- Piwik -->
     <script type="text/javascript">
         var _paq = _paq || [];
