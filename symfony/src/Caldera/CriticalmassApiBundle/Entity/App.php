@@ -77,6 +77,11 @@ class App
      */
     protected $approved = 0;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted = 0;
+    
     public function __construct()
     {
         $this->setToken(md5(microtime()));
@@ -344,5 +349,28 @@ class App
     public function getRestrictedAccess()
     {
         return $this->restrictedAccess;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return App
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 }

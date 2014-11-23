@@ -14,7 +14,7 @@ class AppController extends Controller
 {
     public function listAction()
     {
-        $apps = $this->getDoctrine()->getRepository('CalderaCriticalmassApiBundle:App')->findBy(array('user' => $this->getUser()->getId()));
+        $apps = $this->getDoctrine()->getRepository('CalderaCriticalmassApiBundle:App')->findBy(array('user' => $this->getUser()->getId(), 'deleted' => 0));
 
         return $this->render('CalderaCriticalmassApiBundle:App:list.html.twig', array('apps' => $apps));
     }
@@ -83,7 +83,8 @@ class AppController extends Controller
 
         if ($app && $app->getUser()->equals($this->getUser()))
         {
-            $em->remove($app);
+            $app->setDeleted(true);
+            $em->persist($app);
             $em->flush();
         }
 
