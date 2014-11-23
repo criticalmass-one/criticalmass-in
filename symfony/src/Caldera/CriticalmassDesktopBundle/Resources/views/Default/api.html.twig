@@ -22,6 +22,14 @@
 
     <p>Ein Slug ist der Name der Stadt ohne Großbuchstaben, Umlaute und Sonderzeichen. Aus Berlin würde etwa <code>berlin</code>, die Critical Mass Hamburg-Harburg liefe unter <code>hamburgharburg</code> und aus Düsseldorf würde <code>duesseldorf</code>. Anhand dieses Slugs können Städte auf criticalmass.in eindeutig idenifiziert werden.</p>
 
+    <h2>Authentifizierung</h2>
+
+    <p>Damit die Api weiß, mit wem sie hier redet, muss bei jeder Anfrage das Header-Feld <code>X-CriticalMassIn-Access-Token</code> mit deinem eigenen Zugangs-Token mitgeschickt werden.</p>
+
+    <h2>Beispiele</h2>
+
+    <p>Weil diese Dokumentation noch nicht so ganz viel taugt, kannst du dir noch zwei unserer Widgets in unserem <a href="https://github.com/calderacc/criticalmass.in-widgets">GitHub-Repository</a> ansehen.</p>
+
     <h2>Api-Aufrufe</h2>
 
     <h3>Liste aller Städte</h3>
@@ -47,6 +55,6 @@
     <code>GET /api/positions/?slug</code>
 
     <p>Gibt die Positionsdaten aller Teilnehmer der mit <code>?slug</code> identifierten Stadt zurück, die ihren Aufenthaltsort öffentlich teilen.</p>
-    
+
 </div>
 {% endblock %}
