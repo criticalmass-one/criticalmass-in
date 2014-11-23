@@ -65,6 +65,7 @@ security:
         - { path: /edit$, role: ROLE_USER }
         - { path: /add$, role: ROLE_USER }
         - { path: ^/subride/edit, role: ROLE_USER }
+        - { path: ^/app, role: ROLE_USER }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
