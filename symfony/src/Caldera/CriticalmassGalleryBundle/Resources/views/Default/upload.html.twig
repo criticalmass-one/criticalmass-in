@@ -12,12 +12,18 @@
     {% javascripts
     '@CriticalmassGalleryBundle/Resources/public/js/external/dropzone.min.js'
     %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
+    <script type="text/javascript" src="{{ asset_url }}">
+        Dropzone.options.myAwesomeDropzone = {
+                dictDefaultMessage: "bla"
+        };
+    </script>
     {% endjavascripts %}
+
 
     <div class="container">
         <form action="{{ path('criticalmass_gallery_photos_upload') }}"
               class="dropzone"
-              id="my-awesome-dropzone"></form>
+              id="my-awesome-dropzone">
+        </form>
     </div>
 {% endblock %}
