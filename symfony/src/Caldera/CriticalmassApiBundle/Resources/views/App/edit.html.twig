@@ -67,6 +67,7 @@
             </div>
         </div>
 
+        {% if app2 != null and app2.getApproved == 1 %}
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.enabled) %} has-error has-feedback{% endif %}">
@@ -76,12 +77,15 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <input type="hidden" name="app[enabled]" value="0" />
+        {% endif %}
 
         <div class="row">
             <div class="col-md-12">
                 <button type="submit" class="btn btn-success pull-right">Speichern</button>
             </div>
         </div>
-        {{ form_end(form) }}
+        </form>
     </div>
 {% endblock %}
