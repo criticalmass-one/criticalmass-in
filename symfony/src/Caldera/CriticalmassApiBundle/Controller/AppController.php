@@ -27,7 +27,7 @@ class AppController extends Controller
 
         $form->handleRequest($request);
 
-        $hasErrors = false;
+        $hasErrors = null;
 
         if ($form->isValid())
         {
