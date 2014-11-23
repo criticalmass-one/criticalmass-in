@@ -3,8 +3,14 @@
 {% block title %}Upload{% endblock %}
 
 {% block content %}
+    {% stylesheets
+    '@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
+    filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+
     {% javascripts
-    '@CriticalmassGalleryBundle/Resources/public/js/external/dropzone.js'
+    '@CriticalmassGalleryBundle/Resources/public/js/external/dropzone.min.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
