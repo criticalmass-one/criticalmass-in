@@ -18,6 +18,10 @@ caldera_criticalmass_desktop_content_glympse:
     pattern:  /content/glympse
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:glympse }
 
+caldera_criticalmass_desktop_content_api:
+    pattern:  /content/api
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:api }
+
 caldera_criticalmass_desktop_statistic_participants:
     pattern: /statistic/participants
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Statistic:participants }
