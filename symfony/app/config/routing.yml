@@ -46,6 +46,10 @@ caldera_criticalmass_core:
     resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
+caldera_criticalmass_api:
+    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
+    prefix:   /
+
 caldera_criticalmass_mobile:
     resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
     prefix:   /
@@ -66,8 +70,4 @@ caldera_criticalmass_content:
 
 caldera_criticalmass_plus:
     resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_api:
-    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
     prefix:   /

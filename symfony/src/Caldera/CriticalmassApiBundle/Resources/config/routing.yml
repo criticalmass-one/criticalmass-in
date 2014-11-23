@@ -1,3 +1,15 @@
+caldera_criticalmass_api_app_list:
+    pattern: /app/list
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:list }
+
+caldera_criticalmass_api_app_add:
+    pattern: /app/add
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:add }
+
+caldera_criticalmass_api_app_edit:
+    pattern: /app/edit/{appId}
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:edit }
+
 CalderaCriticalmassCoreBundle_Api:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/cities.yml"
     prefix:   /api/cities
@@ -37,15 +49,3 @@ caldera_criticalmass_getgpsstatus:
 caldera_criticalmass_getgpsinterval:
     pattern: /api/getgpsinterval
     defaults: { _controller: CalderaCriticalmassApiBundle:Api:getgpsinterval }
-
-caldera_criticalmass_api_app_list:
-    pattern: /app/list
-    defaults: { _controller: CalderaCriticalmassApiBundle:App:list }
-
-caldera_criticalmass_api_app_add:
-    pattern: /app/add
-    defaults: { _controller: CalderaCriticalmassApiBundle:App:add }
-
-caldera_criticalmass_api_app_edit:
-    pattern: /app/edit/{appId}
-    defaults: { _controller: CalderaCriticalmassApiBundle:App:edit }
