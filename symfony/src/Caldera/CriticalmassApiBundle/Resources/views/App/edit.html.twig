@@ -21,6 +21,14 @@
             {% endif %}
         </ol>
 
+        {% if hasErrors is not null %}
+        {% if hasErrors == true %}
+        <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+        {% elseif hasErrors == false %}
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_api_app_list') }}">Zurück zur Übersicht?</a></div>
+        {% endif %}
+        {% endif %}
+
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ title }}</h1>
