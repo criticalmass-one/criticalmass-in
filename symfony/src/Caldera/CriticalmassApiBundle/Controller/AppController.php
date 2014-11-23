@@ -57,13 +57,21 @@ class AppController extends Controller
 
         $form->handleRequest($request);
 
+        $hasErrors = null;
+
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($app);
             $em->flush();
+
+            $hasErrors = false;
+        }
+        elseif ($form->isSubmitted())
+        {
+            $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app));
+        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app, 'hasErrors' => $hasErrors));
     }
 }
