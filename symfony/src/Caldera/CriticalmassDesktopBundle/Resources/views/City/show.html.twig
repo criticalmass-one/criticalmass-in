@@ -6,6 +6,15 @@
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 
+
+{% block additionalFooterElements %}
+    {% javascripts
+    '@CriticalmassGalleryBundle/Resources/public/js/external/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
@@ -223,9 +232,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1>Bilder</h1>
-                        {{ render(controller('CriticalmassGalleryBundle:Photos:add', { 'cityId': city.getId() })) }}
+                        {{ render(controller('CriticalmassGalleryBundle:Photos:upload', { 'cityId': city.getId() })) }}
 
-                        {{ render(controller('CriticalmassGalleryBundle:Photos:index', { 'cityId': city.getId() } )) }}
+                        {{ render(controller('CriticalmassGalleryBundle:Photos:list', { 'cityId': city.getId() } )) }}
                     </div>
                 </div>
             </div>

@@ -1,10 +1,6 @@
-criticalmass_gallery_photos/index:
+criticalmass_gallery_photos_index:
     path:     /photos/index
-    defaults: { _controller: CriticalmassGalleryBundle:Default:index }
-
-criticalmass_gallery_photos_add:
-    pattern:  /photos/add
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:index }
 
 criticalmass_gallery_photos_add_city:
     pattern:  /photos/add/city/{cityId}
@@ -15,7 +11,7 @@ criticalmass_gallery_photos_add_ride:
     defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
 
 criticalmass_gallery_photos_list:
-    pattern:  /photos/list
+    pattern:  /photos/list/
     defaults: { _controller: CriticalmassGalleryBundle:Photos:list }
 
 criticalmass_gallery_photos_edit:
@@ -40,4 +36,12 @@ criticalmass_gallery_photos_change:
 
 criticalmass_gallery_photos_upload:
     pattern: /photos/upload
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }
+
+criticalmass_gallery_photos_upload_ride:
+    path:     /photos/upload/ride/{rideId}
+    defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }
+
+criticalmass_gallery_photos_upload_city:
+    path:     /photos/upload/city/{cityId}
     defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }

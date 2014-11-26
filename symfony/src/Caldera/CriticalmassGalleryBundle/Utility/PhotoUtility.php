@@ -7,6 +7,13 @@ use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 
 class PhotoUtility {
 
+    public function reduceSize($photo, $percent) {
+        list($old_width, $old_height) = getimagesize($photo->getFilePath());
+        $new_width = $old_width * $percent;
+        $new_height = $old_height * $percent;
+        return array('width' => $new_width, 'height' => $new_height);
+    }
+
     public function makeSmallPhotoJPG($photo, $width, $height, $name) {
         $image = imagecreatefromjpeg($photo->getFilePath());
         list($old_width, $old_height) = getimagesize($photo->getFilePath());
@@ -20,7 +27,7 @@ class PhotoUtility {
         list($old_width, $old_height) = getimagesize($photo->getFilePath());
         $photo->setSmallFile(imagecreatetruecolor($width, $height));
         imagecopyresampled($photo->getSmallFile(), $image, 0, 0, 0, 0, $width, $height, $old_width, $old_height);
-        imagepng($photo->getSmallFile(), $photo->getUploadRootDir() . $photo->getId() . $name . ".png", 100);
+        imagepng($photo->getSmallFile(), $photo->getUploadRootDir() . $photo->getId() . $name . ".png", 9);
     }
 
     public function getMetaInfos($photo) {

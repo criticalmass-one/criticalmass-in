@@ -1,29 +1,24 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% stylesheets
+'@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
+filter="cssrewrite" %}
+<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+{% endstylesheets %}
 
-{% block title %}Upload{% endblock %}
+{% javascripts
+'@CriticalmassGalleryBundle/Resources/public/js/external/dropzone.min.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+<script>
+</script>
+{% endjavascripts %}
 
-{% block content %}
-    {% stylesheets
-    '@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
-    filter="cssrewrite" %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-
-    {% javascripts
-    '@CriticalmassGalleryBundle/Resources/public/js/external/dropzone.min.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}">
-        Dropzone.options.myAwesomeDropzone = {
-                dictDefaultMessage: "bla"
-        };
-    </script>
-    {% endjavascripts %}
-
-
-    <div class="container">
-        <form action="{{ path('criticalmass_gallery_photos_upload') }}"
-              class="dropzone"
-              id="my-awesome-dropzone">
-        </form>
-    </div>
-{% endblock %}
+<div class="form-group">
+    {% if cityId %}
+        <form action="{{ path('criticalmass_gallery_photos_upload_city', { cityId: cityId }) }}"
+    {% elseif rideId %}
+        <form action="{{ path('criticalmass_gallery_photos_upload_ride', { rideId: rideId }) }}"
+    {% endif %}
+          class="dropzone"
+          id="my-awesome-dropzone">
+    </form>
+</div>

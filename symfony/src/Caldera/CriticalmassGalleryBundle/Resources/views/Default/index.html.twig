@@ -1,122 +1,41 @@
-<script>
-    var photoList = new Array();
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-    function addPhoto(photoIndex, photoId, title, description, path)
-    {
-        photoList[photoIndex] = { photoId: photoId, title: title, description: description, path: path};
-    }
+{% block additionalHeaderElements %}
+    {% stylesheets
+    '@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
+    filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
 
-    function getPhoto(photoIndex)
-    {
-        return photoList[photoIndex];
-    }
+{% block additionalFooterElements %}
+    {% javascripts
+    '@CriticalmassGalleryBundle/Resources/public/js/external/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 
-    function getPrev(photoIndex)
-    {
-        return photoList[photoIndex - 1] || null;
-    }
+{% block content %}
 
-    function getNext(photoIndex)
-    {
-        return photoList[photoIndex + 1] || null;
-    }
-</script>
-
-<div class="row">
-    {% set index = 0 %}
-    {% for photo in photos %}
-        <script>
-               addPhoto({{ index }}, '{{ photo.getId() }}', 'Penis', '{{ photo.getDescription() }}', '{{ photo.getFilePath() }}');
-        </script>
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a href="{{ path ('criticalmass_gallery_photos_show', {photoId: photo.getId()}) }}" class="thumbnail">
-            {#<a href="#" id="photoOpen" class="thumbnail" data-photoindex="{{ index }}">#}
-                <img src="{{ photo.getFilePathByDepth(2) }}" alt="{{ photo.getDescription() }}" img="img-responsive">
-            </a>
-        </div>
-        {% set index = index + 1 %}
-    {% endfor %}
-</div>
-
-<div class="modal fade" id="modalPhoto" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <img id="bigPhoto" src="">
-                <p id="photoDescription"></p>
-                <a href="#" id="photoEdit"><i class="fa fa-wrench"></i></a>
-            </div>
-
-            <div class="modal-footer">
-                <ul class="pager">
-                    <li class="previous" id="previousPhoto"><a href="#">&larr; Older</a></li>
-                    <li class="next" id="nextPhoto"><a href="#">Newer &rarr;</a></li>
-                </ul>
-            </div>
+    <script>
+        window.onload = function()
+        {
+            $(".fancybox").fancybox();
+        };
+    </script>
+    <div class="container">
+        <div class="row">
+            {% for photo in photos %}
+                <div class="col-lg-1 col-md-4 col-xs-6 thumb">
+                    <a href={{ path('criticalmass_gallery_photos_show', { photoId: photo.getId() } ) }}><i class="fa fa-pencil"></i></a>
+                    <a class="thumbnail fancybox" href="{{ photo.getFilePathByDepth(2) }}">
+                        <img src=" {{ photo.toSmallPath(photo.getFilePathByDepth(2)) }} " alt="{{ photo.getDescription() }}" img="img-responsive">
+                    </a>
+                    {#<a href="http://beta.criticalmass.cm/app_dev.php/photos/edit/{{ photo.getId() }}"><i class="fa fa-wrench"></i></a>#}
+                </div>
+            {% endfor %}
         </div>
     </div>
-</div>
 
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
-<script>
-     /*window.onload = function() {
-         $('a.thumbnail').click(function (event) {
-             event.preventDefault();
-
-             var photoIndex = $(this).data('photoindex');
-
-             photoPopup(photoIndex);
-         });
-     }
-
-     function photoPopup(photoIndex)
-     {
-         var photo = getPhoto(photoIndex);
-
-         $('#bigPhoto').prop('src', photo.path);
-         $('#photoDescription').text(photo.description);
-add
-         var previousPhoto = getPrev(photoIndex);
-         var nextPhoto = getNext(photoIndex);
-
-         if (previousPhoto)
-         {
-             $('#previousPhoto a').off('click');
-             $('#previousPhoto a').on('click', function() {
-                 photoPopup(photoIndex - 1);
-             });
-
-             $('#previousPhoto').removeClass('disabled');
-         }
-         else
-         {
-             $('#previousPhoto').addClass('disabled');
-         }
-
-         if (nextPhoto)
-         {
-             $('#nextPhoto a').off('click');
-             $('#nextPhoto a').on('click', function() {
-                 photoPopup(photoIndex + 1);
-             });
-
-             $('#nextPhoto').removeClass('disabled');
-         }
-         else
-         {
-             $('#nextPhoto').addClass('disabled');
-         }
-
-         $('#modalPhoto').modal('show');
-
-     }*/
-
-</script>
+{% endblock %}

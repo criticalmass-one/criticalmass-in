@@ -272,8 +272,9 @@ class Photos
         if ($this->getFile()->getClientOriginalExtension() == "jpg" ||
             $this->getFile()->getClientOriginalExtension() == "JPG" ) {
 
-            $utility->makeSmallPhotoJPG($this, 50, 50, "_klein");
-            $utility->makeSmallPhotoJPG($this, 100, 100, "_thumbnail");
+            $smallSize = $utility->reduceSize($this, 0.5);
+            $utility->makeSmallPhotoJPG($this, $smallSize['width'], $smallSize['height'], "_klein");
+            $utility->makeSmallPhotoJPG($this, 200, 200, "_thumbnail");
             $utility->getMetaInfos($this);
 
         }
@@ -281,8 +282,9 @@ class Photos
         if ($this->getFile()->getClientOriginalExtension() == "png" ||
             $this->getFile()->getClientOriginalExtension() == "PNG" ) {
 
-            $utility->makeSmallPhotoPNG($this, 50, 50, "_klein");
-            $utility->makeSmallPhotoPNG($this, 100, 100, "_thumbnail");
+            $smallSize = $utility->reduceSize($this, 0.5);
+            $utility->makeSmallPhotoPNG($this, $smallSize['width'], $smallSize['height'], "_klein");
+            $utility->makeSmallPhotoPNG($this, 200, 200, "_thumbnail");
 
         }
     }

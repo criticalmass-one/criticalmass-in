@@ -13,86 +13,29 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class PhotosController extends Controller
 {
     public function indexAction() {
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy(array('enabled' => true));
-        return $this->render('CriticalmassGalleryBundle:Default:index.html.twig', array('photos' => $photos));
-    }
-
-    public function listAction() {
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy(array('enabled' => true));
+        $criteria = array('enabled' => true);
+        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy($criteria, array('dateTime' => 'DESC'));
         return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
-    public function addAction(Request $request, $cityId = 0, $rideId = 0) {
-        $photo = new Photos();
-        if ($cityId) {
+    public function listAction(Request $request, $cityId = null, $rideId = null) {
+        /* We do not want disabled posts. */
+        $criteria = array('enabled' => true);
 
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_add_city', array('cityId' => $cityId)))
-                ->add('file')
-                ->getForm();
-
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
-            $photo->setCity($city);
-        }
-        elseif ($rideId)
+        /* If a $cityId is provided, add the city to t he criteria. */
+        if ($cityId)
         {
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_add_ride', array('rideId' => $rideId)))
-                ->add('file')
-                ->getForm();
-
-            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
-            $photo->setCity($city);
-            $photo->setRide($ride);
+            $criteria['city'] = $cityId;
         }
-        else
+
+        /* If a $rideId is provided, add the ride to the criteria. */
+        if ($rideId)
         {
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_add'))
-                ->add('file')
-                ->getForm();
+            $criteria['ride'] = $rideId;
         }
 
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $photo->setUser($this->getUser());
-            $photo->setDescription("");
-            $photo->setFilePath("");
-
-            $em->persist($photo);
-            $em->flush();
-
-            $photo->handleUpload();
-
-            $em = $this->getDoctrine()->getManager();
-
-            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-            $utility = new PhotoUtility();
-
-            $utility->approximateCoordinates($photo, $track);
-
-            if (!($photo->getLatitude() && $photo->getLongitude())) {
-
-                $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-                $utility = new PhotoUtility();
-
-                $utility->approximateCoordinates($photo, $track);
-
-            }
-
-            $em->merge($photo);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
-        }
-
-        return $this->render('CriticalmassGalleryBundle:Default:add.html.twig', array('form' => $form->createView()));
+        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy($criteria, array('dateTime' => 'DESC'));
+        return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
     public function editAction(Request $request, $photoId=0) {
@@ -169,39 +112,22 @@ class PhotosController extends Controller
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
 
-    public function uploadAction(Request $request) {
+    public function uploadAction(Request $request, $cityId = 0, $rideId = 0) {
         $photo = new Photos();
-        /*if ($cityId) {
 
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_add_city', array('cityId' => $cityId)))
-                ->add('file')
-                ->getForm();
+        error_log($rideId);
 
+        if ($cityId) {
             $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
             $photo->setCity($city);
         }
-        elseif ($rideId)
-        {
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_add_ride', array('rideId' => $rideId)))
-                ->add('file')
-                ->getForm();
-
+        elseif ($rideId) {
             $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
             $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
             $photo->setCity($city);
             $photo->setRide($ride);
         }
-        else
-        {
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_add'))
-                ->add('file')
-                ->getForm();
-        }*/
 
-        //if ($form->isValid()) {
         if ($request->getMethod() == 'POST') {
             $em = $this->getDoctrine()->getManager();
 
@@ -236,17 +162,9 @@ class PhotosController extends Controller
             $em->merge($photo);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
+            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_index'));
         }
 
-        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig');
-
-        //return $this->render('CriticalmassGalleryBundle:Default:add.html.twig', array('form' => $form->createView()));
-
-        /*if ($request->getMethod() == 'POST') {
-            return new Response('FILE: '.$request->files->get('file'));
-        }
-
-        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig');*/
+        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig', array('cityId' => $cityId, 'rideId' => $rideId));
     }
 }
