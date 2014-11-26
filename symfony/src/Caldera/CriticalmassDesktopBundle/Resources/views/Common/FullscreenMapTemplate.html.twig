@@ -10,11 +10,12 @@
     <meta name="author" content="">
     <title>criticalmass.in</title>
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-
     {% stylesheets
     '@CalderaCriticalmassCoreBundle/Resources/public/css/external/*.css'
     '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
+    '@CalderaCriticalmassTimelineBundle/Resources/public/css/*.css'
+    '@CalderaCriticalmassAssetBundle/Resources/public/css/glyphicons/social/*.css'
+    '@CalderaCriticalmassAssetBundle/Resources/public/css/glyphicons/halflings/*.css'
     '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css'
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -62,26 +63,7 @@
 </head>
 
 <body>
-<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-
-        <a class="navbar-brand" href="#">criticalmass.in</a>
-    </div>
-
-    <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="navigationButtonSidebar"><i class="halflings list" style="color: white"></i>&nbsp;&nbsp;Städte</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="halflings globe" style="color: white"></i>&nbsp;&nbsp;Critical Mass</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#glympseModal').modal('show'); return false;"><i class="halflings dashboard" style="color: white"></i>&nbsp;&nbsp;Live-Tracking</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="halflings info-sign" style="color: white"></i>&nbsp;&nbsp;Über uns</a></li>
-        </ul>
-    </div>
-</div>
+{% include('CalderaCriticalmassDesktopBundle:Common:Navigation.html.twig') with { 'fullscreenMap': 'true' } %}
 
 <div id="map">
     <div id="glympseLogoContainer">
