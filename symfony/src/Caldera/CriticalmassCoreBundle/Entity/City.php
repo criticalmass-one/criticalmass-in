@@ -835,7 +835,7 @@ class City
 
         foreach ($this->rides as $ride)
         {
-            if (!$ride->isArchived())
+            if (!$ride->getIsArchived())
             {
                 $result[] = $ride;
             }
