@@ -87,6 +87,7 @@
             var photoMarker = L.marker([{{photo.getLatitude()}}, {{ photo.getLongitude() }}], {icon:locationIcon, draggable: true});
             photoMarker.addTo(map);
 
+            {% if app.getUser().getId() == photo.getUser().getId() %}
             photoMarker.on('dragend', function(event){
                 var marker = event.target;
 
@@ -94,6 +95,7 @@
 
                 $('#modalPhotoChange').modal('show');
             });
+            {% endif %}
 
             photoMarker.on('click', function() {
                 var photoPath = '{{ photo.getFilePathByDepth(2) }}';

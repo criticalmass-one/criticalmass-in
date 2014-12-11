@@ -128,7 +128,9 @@ class PhotosController extends Controller
             $photo->setRide($ride);
         }
 
-        if ($request->getMethod() == 'POST') {
+        if (($request->getMethod() == 'POST') &&
+            ((strtolower($request->files->get('file')->getClientOriginalExtension()) == "jpg") ||
+             (strtolower($request->files->get('file')->getClientOriginalExtension()) == "png"))) {
             $em = $this->getDoctrine()->getManager();
 
             $photo->setFile($request->files->get('file'));
