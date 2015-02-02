@@ -15,13 +15,13 @@ class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
         $this->testCity->setStandardDayOfWeek(5);
         $this->testCity->setStandardTime(new \DateTime("19:00:00"));
         $this->testCity->setStandardWeekOfMonth(5);
-        $this->testCity->setStandardLatitude(9);
-        $this->testCity->setStandardLongitude(53);
-        $this->testCity->setStandardLocation('foo');
+        $this->testCity->setStandardLatitude(9.9935);
+        $this->testCity->setStandardLongitude(53.5506);
+        $this->testCity->setStandardLocation('Rathausmarkt Hamburg');
         $this->testCity->setIsStandardable(true);
     }
 
-    public function test1()
+    public function testNoStandardableRide()
     {
         $city = new City();
         $city->setIsStandardable(false);
@@ -32,7 +32,7 @@ class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
         $this->assertNull($ride);
     }
 
-    public function test2()
+    public function testStandardableRide()
     {
         $srg = new StandardRideGenerator($this->testCity, 2015, 01);
         $ride = $srg->execute();
@@ -40,11 +40,21 @@ class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
         $this->assertNotNull($ride);
     }
 
-    public function test3()
+    public function testDateTime()
     {
         $srg = new StandardRideGenerator($this->testCity, 2015, 01);
         $ride = $srg->execute();
 
         $this->assertEquals($ride->getDateTime()->format('Y-m-d H-i-s'), '2015-01-30 19-00-00');
+    }
+
+    public function testLocation()
+    {
+        $srg = new StandardRideGenerator($this->testCity, 2015, 01);
+        $ride = $srg->execute();
+
+        $this->assertEquals($ride->getLocation(), 'Rathausmarkt Hamburg');
+        $this->assertEquals($ride->getLatitude(), 9.9935);
+        $this->assertEquals($ride->getLongitude(), 53.5506);
     }
 } 
