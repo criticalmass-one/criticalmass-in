@@ -22,6 +22,11 @@ class StandardRideGenerator {
 
     public function execute()
     {
+        if (!$this->city->getIsStandardable())
+        {
+            return null;
+        }
+        
         $this->ride->setDateTime(new \DateTime($this->year.'-'.$this->month.'-01 00:00:00'));
 
         $this->calculateDate();
