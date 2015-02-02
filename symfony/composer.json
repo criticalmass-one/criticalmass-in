@@ -31,7 +31,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "sonata-project/easy-extends-bundle": "dev-master",
         "sonata-project/datagrid-bundle": "dev-master",
-        "sonata-project/user-bundle": "dev-master"
+        "sonata-project/user-bundle": "dev-master",
+        "phpunit/phpunit": "4.0.*"
     },
     "scripts": {
         "post-install-cmd": [
