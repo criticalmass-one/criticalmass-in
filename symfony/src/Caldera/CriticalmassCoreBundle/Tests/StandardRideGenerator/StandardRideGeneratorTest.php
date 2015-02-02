@@ -6,6 +6,21 @@ use Caldera\CriticalmassCoreBundle\Entity\City;
 use PHPUnit_Framework_TestCase;
 
 class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
+
+    protected $testCity;
+
+    protected function setUp()
+    {
+        $this->testCity = new City();
+        $this->testCity->setStandardDayOfWeek(5);
+        $this->testCity->setStandardTime(new \DateTime("19:00:00"));
+        $this->testCity->setStandardWeekOfMonth(5);
+        $this->testCity->setStandardLatitude(9);
+        $this->testCity->setStandardLongitude(53);
+        $this->testCity->setStandardLocation('foo');
+        $this->testCity->setIsStandardable(true);
+    }
+
     public function test1()
     {
         $city = new City();
@@ -19,19 +34,7 @@ class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
 
     public function test2()
     {
-        $year = 2015;
-        $month = 01;
-
-        $city = new City();
-        $city->setStandardDayOfWeek(5);
-        $city->setStandardTime(new \DateTime("19:00:00"));
-        $city->setStandardWeekOfMonth(5);
-        $city->setStandardLatitude(9);
-        $city->setStandardLongitude(53);
-        $city->setStandardLocation('foo');
-        $city->setIsStandardable(true);
-
-        $srg = new StandardRideGenerator($city, $year, $month);
+        $srg = new StandardRideGenerator($this->testCity, 2015, 01);
         $ride = $srg->execute();
 
         $this->assertNotNull($ride);
@@ -39,19 +42,7 @@ class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
 
     public function test3()
     {
-        $year = 2015;
-        $month = 01;
-
-        $city = new City();
-        $city->setStandardDayOfWeek(5);
-        $city->setStandardTime(new \DateTime("19:00:00"));
-        $city->setStandardWeekOfMonth(5);
-        $city->setStandardLatitude(9);
-        $city->setStandardLongitude(53);
-        $city->setStandardLocation('foo');
-        $city->setIsStandardable(true);
-
-        $srg = new StandardRideGenerator($city, $year, $month);
+        $srg = new StandardRideGenerator($this->testCity, 2015, 01);
         $ride = $srg->execute();
 
         $this->assertEquals($ride->getDateTime()->format('Y-m-d H-i-s'), '2015-01-30 19-00-00');
