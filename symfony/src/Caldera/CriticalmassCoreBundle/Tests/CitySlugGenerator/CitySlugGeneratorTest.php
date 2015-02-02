@@ -6,7 +6,7 @@ use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
 use Caldera\CriticalmassCoreBundle\Entity\City;
 use PHPUnit_Framework_TestCase;
 
-class CalculatorTest extends PHPUnit_Framework_TestCase
+class CitySlugGeneratorTest extends PHPUnit_Framework_TestCase
 {
     public function test1()
     {
