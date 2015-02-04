@@ -108,7 +108,7 @@ class City
     /**
      * Array mit den Bildern zu dieser Stadt.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photos", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", mappedBy="city")
      */
     protected $photos;
 

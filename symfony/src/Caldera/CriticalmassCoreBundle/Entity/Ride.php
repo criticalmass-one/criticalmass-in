@@ -185,7 +185,7 @@ class Ride
     /**
      * Array mit den Bildern zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photos", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", mappedBy="ride")
      */
     protected $photos;
 
@@ -997,10 +997,10 @@ class Ride
     /**
      * Add photos
      *
-     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photos $photos
+     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photo $photos
      * @return Ride
      */
-    public function addPhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photos $photos)
+    public function addPhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photo $photos)
     {
         $this->photos[] = $photos;
 
@@ -1010,9 +1010,9 @@ class Ride
     /**
      * Remove photos
      *
-     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photos $photos
+     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photo $photos
      */
-    public function removePhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photos $photos)
+    public function removePhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photo $photos)
     {
         $this->photos->removeElement($photos);
     }
