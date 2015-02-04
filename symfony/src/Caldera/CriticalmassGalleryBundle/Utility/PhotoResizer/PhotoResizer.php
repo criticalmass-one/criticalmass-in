@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: malte
- * Date: 04.02.15
- * Time: 18:14
- */
 
 namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer;
 
