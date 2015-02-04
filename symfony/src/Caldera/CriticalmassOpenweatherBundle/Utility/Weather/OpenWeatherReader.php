@@ -34,14 +34,22 @@ class OpenWeatherReader {
         
         $dateTime = new \DateTime();
         
+        $dayFound = false;
+        
         foreach ($weather->list as $id => $weatherDay)
         {
             $dateTime->setTimestamp($weatherDay->dt);
         
             if ($this->date->format('Y-m-d') == $dateTime->format('Y-m-d'))
             {
+                $dayFound = true;
                 break;
             }
+        }
+        
+        if (!$dayFound)
+        {
+            return null;
         }
         
         $weather = $weather->list[$id];
