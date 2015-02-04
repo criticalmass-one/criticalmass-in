@@ -62,12 +62,7 @@ class Photo
     protected $small_file;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    protected $filePath;
-
-    /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -89,6 +84,7 @@ class Photo
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->description = '';
     }
 
     /**
