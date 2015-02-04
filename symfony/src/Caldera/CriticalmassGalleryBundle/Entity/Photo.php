@@ -9,12 +9,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
- * Photos
+ * Photo
  *
- * @ORM\Table(name="Photos")
+ * @ORM\Table(name="Photo")
  * @ORM\Entity
  */
-class Photos
+class Photo
 {
     /**
      * @ORM\Id
@@ -24,19 +24,19 @@ class Photos
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="photos")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
