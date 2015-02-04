@@ -6,6 +6,12 @@ use Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer\PhotoResizer;
 
 class PhotoResizerTest extends \PHPUnit_Framework_TestCase {
 
+    public static function tearDownAfterClass()
+    {
+        unlink(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
+        unlink(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto3.jpeg');
+    }
+    
     public function testCurrentSize()
     {
         $filename = getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg';
@@ -48,9 +54,9 @@ class PhotoResizerTest extends \PHPUnit_Framework_TestCase {
 
         $pr->resizeFactor(0.25);
 
-        $pr->saveJpeg(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
+        $pr->saveJpeg(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto3.jpeg');
 
-        $size = getimagesize(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
+        $size = getimagesize(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto3.jpeg');
 
         $this->assertEquals(160, $size[0]);
         $this->assertEquals(120, $size[1]);
