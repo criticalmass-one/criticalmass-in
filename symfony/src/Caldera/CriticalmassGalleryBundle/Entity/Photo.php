@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * Photo
  *
- * @ORM\Table(name="Photo")
+ * @ORM\Table(name="photo")
  * @ORM\Entity
  */
 class Photo
