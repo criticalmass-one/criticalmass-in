@@ -2,19 +2,17 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Controller;
 
-use Caldera\CriticalmassGalleryBundle\Utility\PhotoUtility;
+use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader\PhotoUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Caldera\CriticalmassGalleryBundle\Entity\Photos;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class PhotosController extends Controller
 {
     public function indexAction() {
         $criteria = array('enabled' => true);
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy($criteria, array('dateTime' => 'DESC'));
+        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
         return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
@@ -34,14 +32,15 @@ class PhotosController extends Controller
             $criteria['ride'] = $rideId;
         }
 
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->findBy($criteria, array('dateTime' => 'DESC'));
+        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
+
         return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
     public function editAction(Request $request, $photoId=0) {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photos', $photoId);
+            $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
             $form = $this->createFormBuilder($photo)
                 ->setAction($this->generateUrl('criticalmass_gallery_photos_edit', array('photoId' => $photoId)))
                 ->add('description')
@@ -62,7 +61,7 @@ class PhotosController extends Controller
 
     public function showAction(Request $request, $photoId) {
         $em = $this->getDoctrine()->getManager();
-        $photo = $em->find('CriticalmassGalleryBundle:Photos', $photoId);
+        $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
 
         return $this->render('CriticalmassGalleryBundle:Default:show.html.twig', array('photo' => $photo));
     }
@@ -71,7 +70,7 @@ class PhotosController extends Controller
     {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
+            $photo = $em->find('CriticalmassGalleryBundle:Photo',$photoId);
             $comments = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('photo' => $photo));
             foreach ($comments as $comment) {
                 $em->remove($comment);
@@ -87,7 +86,7 @@ class PhotosController extends Controller
     {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
+            $photo = $em->find('CriticalmassGalleryBundle:Photo',$photoId);
 
             $content = "Es wurde das Bild mit der ID " + $photoId + "gemeldet.";
 
@@ -100,7 +99,7 @@ class PhotosController extends Controller
     public function changeAction(Request $request, $photoId, $latitude, $longitude) {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photos',$photoId);
+            $photo = $em->find('CriticalmassGalleryBundle:Photo',$photoId);
 
             $photo->setLatitude($latitude);
             $photo->setLongitude($longitude);

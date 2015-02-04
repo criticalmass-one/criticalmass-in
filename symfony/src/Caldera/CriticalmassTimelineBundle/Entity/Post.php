@@ -37,7 +37,7 @@ class Post
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photos", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", inversedBy="posts")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
