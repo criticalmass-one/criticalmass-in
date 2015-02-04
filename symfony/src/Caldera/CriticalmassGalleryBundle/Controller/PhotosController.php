@@ -113,7 +113,7 @@ class PhotosController extends Controller
     }
 
     public function uploadAction(Request $request, $cityId = 0, $rideId = 0) {
-        $photo = new Photos();
+        $photo = new Photo();
 
         error_log($rideId);
 
@@ -124,23 +124,26 @@ class PhotosController extends Controller
         elseif ($rideId) {
             $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
             $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
+
             $photo->setCity($city);
             $photo->setRide($ride);
         }
 
         if (($request->getMethod() == 'POST') &&
-            ((strtolower($request->files->get('file')->getClientOriginalExtension()) == "jpg") ||
-             (strtolower($request->files->get('file')->getClientOriginalExtension()) == "png"))) {
+            (strtolower($request->files->get('file')->getClientOriginalExtension()) == "jpg"))
+        {
             $em = $this->getDoctrine()->getManager();
 
             $photo->setFile($request->files->get('file'));
             $photo->setUser($this->getUser());
-            $photo->setDescription("");
-            $photo->setFilePath("");
 
             $em->persist($photo);
             $em->flush();
 
+            $pu = new PhotoUploader();
+            $pu->setPhoto($photo);
+            $pu->execute();
+            /*
             $photo->handleUpload();
 
             $em = $this->getDoctrine()->getManager();
@@ -158,11 +161,11 @@ class PhotosController extends Controller
                 $utility = new PhotoUtility();
 
                 $utility->approximateCoordinates($photo, $track);
+*/
+            //}
 
-            }
-
-            $em->merge($photo);
-            $em->flush();
+//            $em->merge($photo);
+  //          $em->flush();
 
             return $this->redirect($this->generateUrl('criticalmass_gallery_photos_index'));
         }
