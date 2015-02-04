@@ -2,15 +2,25 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer;
 
+use Caldera\CriticalmassGalleryBundle\Entity\Photo;
 
 class PhotoResizer {
     protected $filename;
     protected $image;
+    protected $photo;
 
     public function loadJpeg($filename)
     {
         $this->filename = $filename;
         $this->image = imagecreatefromjpeg($filename);
+    }
+
+    public function setPhoto(Photo $photo)
+    {
+        $this->photo = $photo;
+        $this->filename = getcwd().'/photos/'.$photo->getId().'.jpg';
+
+        $this->image = imagecreatefromjpeg($this->filename);
     }
 
     public function getCurrentSize()
