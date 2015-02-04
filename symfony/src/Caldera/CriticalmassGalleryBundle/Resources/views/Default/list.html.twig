@@ -29,8 +29,8 @@
         {% for photo in photos %}
             <div class="col-lg-2 col-md-4 col-xs-6 thumb">
                 <a href={{ path('criticalmass_gallery_photos_show', { photoId: photo.getId() } ) }}><i class="fa fa-pencil"></i></a>
-                <a class="thumbnail fancybox" href="{{ photo.getFilePathByDepth(2) }}">
-                    <img src=" {{ photo.toThumbnailPath(photo.getFilePathByDepth(2)) }} " alt="{{ photo.getDescription() }}" img="img-responsive">
+                <a class="thumbnail fancybox" href="/photos/{{ photo.getId() }}.jpg">
+                    <img src="/photos/{{ photo.getId() }}.jpg" alt="{{ photo.getDescription() }}" img="img-responsive">
                 </a>
                 {#<a href="http://beta.criticalmass.cm/app_dev.php/photos/edit/{{ photo.getId() }}"><i class="fa fa-wrench"></i></a>#}
             </div>
