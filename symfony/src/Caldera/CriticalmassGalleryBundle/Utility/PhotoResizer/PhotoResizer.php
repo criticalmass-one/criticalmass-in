@@ -24,6 +24,16 @@ class PhotoResizer {
         return getimagesize($this->filename);
     }
     
+    public function resizeFactor($factor)
+    {
+        list($oldWidth, $oldHeight) = getimagesize($this->filename);
+        
+        $newWidth = $oldWidth * $factor;
+        $newHeight = $oldHeight * $factor;
+        
+        $this->resize($newWidth, $newHeight);
+    }
+    
     public function resize($newWidth, $newHeight)
     {
         list($oldWidth, $oldHeight) = getimagesize($this->filename);

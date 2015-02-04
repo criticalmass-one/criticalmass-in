@@ -20,7 +20,7 @@ class PhotoResizerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(480, $size[1]);
     }
 
-    public function testResize()
+    public function testResizeAbsolute()
     {
         $filename = getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg';
 
@@ -31,10 +31,28 @@ class PhotoResizerTest extends \PHPUnit_Framework_TestCase {
         $pr->resize(320, 240);
 
         $pr->saveJpeg(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
-        
+
         $size = getimagesize(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
-        
+
         $this->assertEquals(320, $size[0]);
         $this->assertEquals(240, $size[1]);
+    }
+
+    public function testResizeFactor()
+    {
+        $filename = getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg';
+
+        $pr = new PhotoResizer();
+
+        $pr->loadJpeg($filename);
+
+        $pr->resizeFactor(0.25);
+
+        $pr->saveJpeg(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
+
+        $size = getimagesize(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto2.jpeg');
+
+        $this->assertEquals(160, $size[0]);
+        $this->assertEquals(120, $size[1]);
     }
 }
