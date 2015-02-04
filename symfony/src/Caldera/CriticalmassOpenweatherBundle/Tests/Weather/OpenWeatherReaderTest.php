@@ -5,7 +5,7 @@ namespace Caldera\CriticalmassOpenweatherBundle\Tests\Weather;
 use Caldera\CriticalmassOpenweatherBundle\Utility\Weather\OpenWeatherReader;
 use PHPUnit_Framework_TestCase;
 
-class OpenWeatherApiTest extends PHPUnit_Framework_TestCase {
+class OpenWeatherReaderTest extends PHPUnit_Framework_TestCase {
 
     private $weatherString;
     
