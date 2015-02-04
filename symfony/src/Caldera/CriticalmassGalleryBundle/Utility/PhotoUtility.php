@@ -52,14 +52,7 @@ class PhotoUtility {
         }
     }
 
-    function coordinateToDec($coordinate) {
-        list($dividend, $divisor) = split("/", $coordinate);
-        if ($divisor == 0) {
-            return 0;
-        } else {
-            return $dividend / $divisor;
-        }
-    }
+
 
     function xmlToDateTime($xml) {
         return new \DateTime(str_replace("T", " ", str_replace("Z", "", $xml)));
