@@ -71,8 +71,9 @@ class OpenWeatherReader {
         
         $this->entity->setWindSpeed($weather->speed);
         $this->entity->setWindDeg($weather->deg);
-        
+
         $this->entity->setClouds($weather->clouds);
+        $this->entity->setRain(isset($weather->rain) ?  $weather->rain : 0);
 
         return $this->entity;
     }
