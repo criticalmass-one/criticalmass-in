@@ -18,7 +18,7 @@ class Weather {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\CalderaCriticalmassCoreBundle\Entity\Ride", inversedBy="weather")
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="weather")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
