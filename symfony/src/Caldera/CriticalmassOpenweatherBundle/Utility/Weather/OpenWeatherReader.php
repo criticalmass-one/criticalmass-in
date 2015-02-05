@@ -54,6 +54,9 @@ class OpenWeatherReader {
         
         $weather = $weather->list[$id];
 
+        $this->entity->setJson($this->json);
+        $this->entity->setWeatherDateTime($dateTime);
+
         $this->entity->setTemperatureMin($weather->temp->min);
         $this->entity->setTemperatureMax($weather->temp->max);
         $this->entity->setTemperatureMorning($weather->temp->morn);
