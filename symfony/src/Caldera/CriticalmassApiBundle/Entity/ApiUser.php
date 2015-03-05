@@ -30,7 +30,7 @@ class ApiUser
     protected $app;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="api_users")
+     * @ORM\ManyToOne(targetEntity="\Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="api_users")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
