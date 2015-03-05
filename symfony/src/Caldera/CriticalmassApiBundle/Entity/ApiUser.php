@@ -38,7 +38,6 @@ class ApiUser
      * @ORM\Column(type="boolean")
      */
     protected $enabled = 0;
-
     
     public function __construct()
     {
