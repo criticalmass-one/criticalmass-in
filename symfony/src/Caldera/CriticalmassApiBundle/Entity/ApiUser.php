@@ -28,6 +28,12 @@ class ApiUser
      * @ORM\JoinColumn(name="app_id", referencedColumnName="id")
      */
     protected $app;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="api_users")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected $city;
     
     /**
      * @ORM\Column(type="datetime")
@@ -54,6 +60,29 @@ class ApiUser
         return $this->id;
     }
 
+    /**
+     * Set city
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return ApiUser
+     */
+    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+    
     /**
      * Set token
      *
