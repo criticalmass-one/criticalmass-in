@@ -328,29 +328,6 @@ class Position
     }
 
     /**
-     * Set user_id
-     *
-     * @param \Application\Sonata\UserBundle\Entity\User $userId
-     * @return Position
-     */
-    public function setUserId(\Application\Sonata\UserBundle\Entity\User $userId = null)
-    {
-        $this->user_id = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get user_id
-     *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\User
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
      * Set user
      *
      * @param \Application\Sonata\UserBundle\Entity\User $user
