@@ -90,4 +90,9 @@ class AppController extends Controller
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_api_app_list'));
     }
+    
+    public function apiAction(Request $request)
+    {
+        return $this->render('CalderaCriticalmassApiBundle:App:api.html.twig');
+    }
 }

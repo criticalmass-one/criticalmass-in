@@ -1,0 +1,58 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Deine Apps{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_api_app_add') }}" style="margin-top: 24px;"><i class="halflings plus"></i>&nbsp;&nbsp;App hinzufügen</a>
+                <h1>Criticalmass as a Service.</h1>
+                <p class="lead">Dem Grundgedanken der Critical Mass folgend kannst du unsere Daten auch auf anderen Seiten oder in anderen Apps nutzen. Es funktioniert ganz einfach!</p>
+                <p>Du musst dir lediglich eine so genannte App registrieren — das muss nicht zwangsläufig eine „echte App“ fürs Smartphone sein, das ist eher die Bezeichnung für einen Zugang zu unserer API.</p>
+                
+                <h2>Positionsdaten senden</h2>
+                
+                <p>Über die Api-Schnittstelle können natürlich auch Positionsdaten an unseren Server gesendet werden. Die Vorgehensweise ist relativ unspektakulär: Du forderst ein Benutzerkonto an und schickst anschließend Positionsdaten mit der Kennung dieses Benutzerkontos los.</p>
+                
+                <h3>Benutzer erstellen</h3>
+                
+                <code>POST api/city/:citySlug/user/create</code>
+                
+                <p>Erstellt ein Benutzerkonto für die angegebene Stadt. Der Benutzer ist mit dieser Stadt verknüpft, alle folgenden Positionsdaten werden also unter der aktuellen Tour dieser Stadt abgelegt.</p>
+                
+                <p>Die Rückgabe sieht beispielsweise so aus:</p>
+                
+                <p><pre>{
+    request: 'ok',
+    result: {
+        citySlug: 'hamburg',
+        token: 'abcdefghijklmnopqrstuvwxyz123456'
+    }
+}</pre></p>
+                
+                <p>Den <code>token</code> nach Möglichkeit gut merken, der ist für die nachfolgenden Positionsdaten notwendig.</p>
+                
+                <h3>Positionsdaten senden</h3>
+                
+                <p>Abhängig von deinen gesendeten Daten sieht der Rückgabewert so oder so ähnlich aus:</p>
+                
+                <p><pre>{
+    request: 'ok',
+    result: {
+        user: userToken,
+        position: {
+            latitude: 53,
+            longitude: 9,
+            accuracy: 15,
+            altitude: 17,
+            altitudeAccuracy: 25,
+            heading: 37,
+            speed: 16,
+            timestamp: 1234567890
+        }
+    }
+}</pre></p>
+            </div>
+        </div>
+{% endblock %}
