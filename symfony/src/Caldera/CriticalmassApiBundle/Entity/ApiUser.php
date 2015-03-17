@@ -25,13 +25,13 @@ class ApiUser
 
     /**
      * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassApiBundle\Entity\App", inversedBy="api_users")
-     * @ORM\JoinColumn(name="app_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="app_id", referencedColumnName="id", nullable=false)
      */
     protected $app;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="api_users")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
     protected $city;
     
