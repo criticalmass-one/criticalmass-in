@@ -1088,6 +1088,12 @@ class City
         return $this->colorBlue;
     }
 
+    /**
+     * Checks if this city has already a saved ride for the given month.
+     *
+     * @param \DateTime $dateTime
+     * @return bool
+     */
     public function hasRideInMonth(\DateTime $dateTime)
     {
         foreach ($this->rides as $ride)
@@ -1101,6 +1107,12 @@ class City
         return false;
     }
 
+    /**
+     * Checks if this city has already a saved ride for the given day.
+     *
+     * @param \DateTime $dateTime
+     * @return bool
+     */
     public function hasRideAtMonthDay(\DateTime $dateTime)
     {
         foreach ($this->rides as $ride)
