@@ -11,3 +11,15 @@ symfony/web/geojson
 symfony/web/gpx
 symfony/web/fonts
 symfony/web/photos
+.idea/.name
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/php.xml
+.idea/stampede.iml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/copyright/profiles_settings.xml
+.idea/scopes/scope_settings.xml
