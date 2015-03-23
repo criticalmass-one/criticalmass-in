@@ -1,5 +1,5 @@
-criticalmass_gallery:
-    resource: "@CriticalmassGalleryBundle/Resources/config/routing.yml"
+caldera_criticalmass_gallery:
+    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing.yml"
     prefix:   /
 
 caldera_criticalmass_timeline:
@@ -45,7 +45,7 @@ _sonata_admin:
 caldera_criticalmass_core:
     resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
     prefix:   /
-
+    
 caldera_criticalmass_mobile:
     resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
     prefix:   /
