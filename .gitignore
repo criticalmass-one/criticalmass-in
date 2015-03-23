@@ -8,3 +8,4 @@ symfony/web/fonts
 symfony/web/geojson
 symfony/web/gpx
 symfony/web/photos
+.idea/*
