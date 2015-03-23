@@ -11,7 +11,7 @@ namespace Caldera\CriticalmassGalleryBundle\Utility\Gps;
 class GpsConverter {
 
     protected function coordinateToDec($coordinate) {
-        list($dividend, $divisor) = split('/', $coordinate);
+        list($dividend, $divisor) = explode('/', $coordinate);
 
         if ($divisor == 0) {
             return 0;
