@@ -1,6 +1,10 @@
-criticalmass_gallery_photos_index:
+caldera_criticalmass_gallery_photos_upload_ride:
+    pattern: /{citySlug}/{rideDate}/upload
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:upload }
+
+caldera_criticalmass_gallery_photos_index:
     path:     /photos/index
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:index }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:index }
 
 criticalmass_gallery_photos_add_city:
     pattern:  /photos/add/city/{cityId}
@@ -33,10 +37,6 @@ criticalmass_gallery_photos_report:
 criticalmass_gallery_photos_change:
     pattern: /photos/change/{photoId}/{latitude}/{longitude}
     defaults: { _controller: CriticalmassGalleryBundle:Photos:change }
-
-criticalmass_gallery_photos_upload:
-    pattern: /photos/upload
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }
 
 criticalmass_gallery_photos_upload_ride:
     path:     /photos/upload/ride/{rideId}

@@ -111,22 +111,34 @@ class PhotosController extends Controller
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
 
-    public function uploadAction(Request $request, $cityId = 0, $rideId = 0) {
+    public function uploadAction(Request $request, $citySlug, $rideDate) {
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
+
+        try {
+            $rideDateTime = new \DateTime($rideDate);
+        }
+        catch (\Exception $e)
+        {
+            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+        }
+
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
+        }
+
         $photo = new Photo();
-
-        error_log($rideId);
-
-        if ($cityId) {
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
-            $photo->setCity($city);
-        }
-        elseif ($rideId) {
-            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
-
-            $photo->setCity($city);
-            $photo->setRide($ride);
-        }
+        $photo->setCity($city);
+        $photo->setRide($ride);
 
         if (($request->getMethod() == 'POST') &&
             (strtolower($request->files->get('file')->getClientOriginalExtension()) == "jpg"))
@@ -166,9 +178,9 @@ class PhotosController extends Controller
 //            $em->merge($photo);
   //          $em->flush();
 
-            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_index'));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_gallery_photos_index'));
         }
 
-        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig', array('cityId' => $cityId, 'rideId' => $rideId));
+        return $this->render('CalderaCriticalmassGalleryBundle:Upload:upload.html.twig', array('ride' => $ride));
     }
 }
