@@ -7,13 +7,15 @@ use Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader\PhotoUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotosController extends Controller
 {
     public function indexAction() {
         $criteria = array('enabled' => true);
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
-        return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
+        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
+        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
     public function listAction(Request $request, $cityId = null, $rideId = null) {
@@ -111,7 +113,8 @@ class PhotosController extends Controller
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
 
-    public function uploadAction(Request $request, $citySlug, $rideDate) {
+    public function processuploadAction(Request $request, $citySlug, $rideDate)
+    {
         $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
         if (!$citySlugObj)
@@ -135,7 +138,7 @@ class PhotosController extends Controller
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
-
+        
         $photo = new Photo();
         $photo->setCity($city);
         $photo->setRide($ride);
@@ -154,31 +157,36 @@ class PhotosController extends Controller
             $pu = new PhotoUploader();
             $pu->setPhoto($photo);
             $pu->execute();
-            /*
-            $photo->handleUpload();
 
-            $em = $this->getDoctrine()->getManager();
+         //   return $this->redirect($this->generateUrl('caldera_criticalmass_gallery_photos_index'));
+        }
+        
+        return new Response('qwdqwdw');
+    }
+    
+    public function uploadAction(Request $request, $citySlug, $rideDate) {
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
 
-            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
+        if (!$citySlugObj)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        }
 
-            $utility = new PhotoUtility();
+        $city = $citySlugObj->getCity();
 
-            $utility->approximateCoordinates($photo, $track);
+        try {
+            $rideDateTime = new \DateTime($rideDate);
+        }
+        catch (\Exception $e)
+        {
+            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+        }
 
-            if (!($photo->getLatitude() && $photo->getLongitude())) {
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
 
-                $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-                $utility = new PhotoUtility();
-
-                $utility->approximateCoordinates($photo, $track);
-*/
-            //}
-
-//            $em->merge($photo);
-  //          $em->flush();
-
-            return $this->redirect($this->generateUrl('caldera_criticalmass_gallery_photos_index'));
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
 
         return $this->render('CalderaCriticalmassGalleryBundle:Upload:upload.html.twig', array('ride' => $ride));

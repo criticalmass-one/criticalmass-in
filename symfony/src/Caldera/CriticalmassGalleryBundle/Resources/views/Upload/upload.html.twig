@@ -30,8 +30,12 @@ filter="cssrewrite" %}
         </div>
         
         <div class="row">
+            <p>Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen.</p>
+        </div>
+        
+        <div class="row">
             <div class="form-group">
-                <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="my-awesome-dropzone">
+                <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride_process', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="my-awesome-dropzone">
                 </form>
             </div>
         </div>

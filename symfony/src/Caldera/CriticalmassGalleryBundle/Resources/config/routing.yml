@@ -2,46 +2,50 @@ caldera_criticalmass_gallery_photos_upload_ride:
     pattern: /{citySlug}/{rideDate}/upload
     defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:upload }
 
+caldera_criticalmass_gallery_photos_upload_ride_process:
+    pattern: /{citySlug}/{rideDate}/processupload
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:processupload }
+
 caldera_criticalmass_gallery_photos_index:
     path:     /photos/index
     defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:index }
 
 criticalmass_gallery_photos_add_city:
     pattern:  /photos/add/city/{cityId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:add }
 
 criticalmass_gallery_photos_add_ride:
     pattern:  /photos/add/ride/{rideId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:add }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:add }
 
 criticalmass_gallery_photos_list:
     pattern:  /photos/list/
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:list }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:list }
 
 criticalmass_gallery_photos_edit:
     pattern: /photos/edit/{photoId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:edit }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:edit }
 
 criticalmass_gallery_photos_show:
     pattern: /photos/show/{photoId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:show }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:show }
 
 criticalmass_gallery_photos_delete:
     pattern: /photos/delete/{photoId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:delete }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:delete }
 
 criticalmass_gallery_photos_report:
     pattern: /photos/report/{photoId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:report }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:report }
 
 criticalmass_gallery_photos_change:
     pattern: /photos/change/{photoId}/{latitude}/{longitude}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:change }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:change }
 
 criticalmass_gallery_photos_upload_ride:
     path:     /photos/upload/ride/{rideId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:upload }
 
 criticalmass_gallery_photos_upload_city:
     path:     /photos/upload/city/{cityId}
-    defaults: { _controller: CriticalmassGalleryBundle:Photos:upload }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:upload }
