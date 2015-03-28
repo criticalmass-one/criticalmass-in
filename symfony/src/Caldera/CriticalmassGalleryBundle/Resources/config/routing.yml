@@ -1,10 +1,10 @@
 caldera_criticalmass_gallery_photos_upload_ride:
     pattern: /{citySlug}/{rideDate}/upload
-    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:upload }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Upload:upload }
 
 caldera_criticalmass_gallery_photos_upload_ride_process:
     pattern: /{citySlug}/{rideDate}/processupload
-    defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:processupload }
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Upload:process }
 
 caldera_criticalmass_gallery_photos_index:
     path:     /photos/index
