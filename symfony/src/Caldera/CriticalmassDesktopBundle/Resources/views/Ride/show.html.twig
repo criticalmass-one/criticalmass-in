@@ -6,7 +6,7 @@
 
 {% block additionalHeaderElements %}
     {% stylesheets
-    '@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
+    '@CalderaCriticalmassGalleryBundle/Resources/public/css/external/*.css'
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
@@ -14,7 +14,7 @@
 
 {% block additionalFooterElements %}
     {% javascripts
-    '@CriticalmassGalleryBundle/Resources/public/js/external/*.js'
+    '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -160,7 +160,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>Bilder zu dieser Tour</h4>
-                                {{ render(controller('CriticalmassGalleryBundle:Photos:list', {'rideId': ride.getId() })) }}
+                                {{ render(controller('CalderaCriticalmassGalleryBundle:Photos:list', {'rideId': ride.getId() })) }}
                             </div>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
                     <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
                 </div>
                 <div class="modal-body">
-                    {{ render(controller('CriticalmassGalleryBundle:Photos:upload', { 'rideId': ride.getId() })) }}
+                    {{ render(controller('CalderaCriticalmassGalleryBundle:Photos:upload', { 'rideId': ride.getId() })) }}
                 </div>
             </div>
         </div>

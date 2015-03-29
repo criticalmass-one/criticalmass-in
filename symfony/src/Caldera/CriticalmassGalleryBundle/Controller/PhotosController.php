@@ -32,9 +32,9 @@ class PhotosController extends Controller
             $criteria['ride'] = $rideId;
         }
 
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
+        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
 
-        return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
+        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
     public function editAction(Request $request, $photoId=0) {
