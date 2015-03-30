@@ -113,6 +113,10 @@ class TrackController extends Controller
                 {
                     array_push($errorList, "noTourFound");
                 }
+                elseif ($rg->isDuplicate())
+                {
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+                }
                 /* Okay, it found a distinct ride, so let’s bring up the magic. */
                 elseif (($rg->isDistinct()) && (sizeof($errorList) == 0))
                 {
