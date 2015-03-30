@@ -54,6 +54,9 @@
                 <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="halflings trash"></i></a></td>
             </tr>
             {% endif %}{% endfor %}
+            {% if tracks|length == 0 %}
+                <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen. Greif dir eine GPX-Datei und <a href="#" data-toggle="modal" data-target="#modalTrackUpload">lege los</a>!</td>
+            {% endif %}
         </table>
     </div>
 
