@@ -265,7 +265,7 @@
                     <h4 class="modal-title">Bilder zu dieser Tour hochladen</h4>
                 </div>
                 <div class="modal-body">
-                    {{ render(controller('CalderaCriticalmassGalleryBundle:Photos:upload', { 'rideId': ride.getId() })) }}
+                    {{ render(controller('CalderaCriticalmassGalleryBundle:Upload:upload', { 'rideDate': ride.getFormattedDate(), 'citySlug': ride.getCity().getMainSlugString() })) }}
                 </div>
             </div>
         </div>
