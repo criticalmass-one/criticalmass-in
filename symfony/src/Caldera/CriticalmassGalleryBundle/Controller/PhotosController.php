@@ -2,18 +2,18 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Controller;
 
-use Caldera\CriticalmassGalleryBundle\Entity\Photo;
-use Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader\PhotoUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotosController extends Controller
 {
     public function indexAction() {
         $criteria = array('enabled' => true);
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
-        return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
+        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
+        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
     public function listAction(Request $request, $cityId = null, $rideId = null) {
@@ -32,9 +32,9 @@ class PhotosController extends Controller
             $criteria['ride'] = $rideId;
         }
 
-        $photos = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
+        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
 
-        return $this->render('CriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
+        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
     public function editAction(Request $request, $photoId=0) {
@@ -109,66 +109,5 @@ class PhotosController extends Controller
         }
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
-    }
-
-    public function uploadAction(Request $request, $cityId = 0, $rideId = 0) {
-        $photo = new Photo();
-
-        error_log($rideId);
-
-        if ($cityId) {
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
-            $photo->setCity($city);
-        }
-        elseif ($rideId) {
-            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
-
-            $photo->setCity($city);
-            $photo->setRide($ride);
-        }
-
-        if (($request->getMethod() == 'POST') &&
-            (strtolower($request->files->get('file')->getClientOriginalExtension()) == "jpg"))
-        {
-            $em = $this->getDoctrine()->getManager();
-
-            $photo->setFile($request->files->get('file'));
-            $photo->setUser($this->getUser());
-
-            $em->persist($photo);
-            $em->flush();
-
-            $pu = new PhotoUploader();
-            $pu->setPhoto($photo);
-            $pu->execute();
-            /*
-            $photo->handleUpload();
-
-            $em = $this->getDoctrine()->getManager();
-
-            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-            $utility = new PhotoUtility();
-
-            $utility->approximateCoordinates($photo, $track);
-
-            if (!($photo->getLatitude() && $photo->getLongitude())) {
-
-                $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-                $utility = new PhotoUtility();
-
-                $utility->approximateCoordinates($photo, $track);
-*/
-            //}
-
-//            $em->merge($photo);
-  //          $em->flush();
-
-            return $this->redirect($this->generateUrl('criticalmass_gallery_photos_index'));
-        }
-
-        return $this->render('CriticalmassGalleryBundle:Default:upload.html.twig', array('cityId' => $cityId, 'rideId' => $rideId));
     }
 }

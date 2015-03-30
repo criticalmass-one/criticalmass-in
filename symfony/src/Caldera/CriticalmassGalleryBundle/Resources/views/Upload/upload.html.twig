@@ -1,0 +1,43 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Fotos hochladen{% endblock %}
+
+{% block content %}
+{% stylesheets
+'@CalderaCriticalmassGalleryBundle/Resources/public/css/external/*.css'
+filter="cssrewrite" %}
+<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+{% endstylesheets %}
+
+{% javascripts
+'@CalderaCriticalmassGalleryBundle/Resources/public/js/external/dropzone.min.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+<script>
+</script>
+{% endjavascripts %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Fotos hochladen</li>
+        </ol>
+        
+        <div class="row">
+            <h1>Fotos hochladen</h1>
+        </div>
+        
+        <div class="row">
+            <p>Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst, werden deine Fotos automatisch auf der Karte verortet.</p>
+        </div>
+        
+        <div class="row">
+            <div class="form-group">
+                <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride_process', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="my-awesome-dropzone">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
