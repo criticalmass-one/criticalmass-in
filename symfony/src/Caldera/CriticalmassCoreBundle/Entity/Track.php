@@ -433,4 +433,9 @@ class Track
 
         return $diff->format('%h.%i');
     }
+    
+    public function loadGpx()
+    {
+        $this->gpx = file_get_contents($this->file->getPathname());
+    }
 }
