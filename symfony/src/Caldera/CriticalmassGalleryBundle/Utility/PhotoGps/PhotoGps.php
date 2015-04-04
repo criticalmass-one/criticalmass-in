@@ -5,8 +5,8 @@ namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoGps;
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\DateTimeReader;
 use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
-use Caldera\CriticalmassGalleryBundle\Utility\Gps\GpsConverter;
 
 class PhotoGps {
     protected $track;
@@ -54,13 +54,11 @@ class PhotoGps {
         
         $this->photo->setLatitude($gr->getLatitude());
         $this->photo->setLongitude($gr->getLongitude());
-
-        /*if (isset($this->exifData['GPS']['GPSTimeStamp']) && isset($this->exifData['GPS']['GPSDateStamp'])) {
-            $this->photo->setDateTime(new \DateTime(str_replace(":", "-", $this->exifData['GPS']['GPSDateStamp'])
-                . ' ' . preg_replace("#[/].*#", "", $this->exifData['GPS']['GPSTimeStamp'][0]) . ":" .
-                preg_replace("#[/].*#", "", $this->exifData['GPS']['GPSTimeStamp'][1]) . ":" .
-                preg_replace("#[/].*#", "", $this->exifData['GPS']['GPSTimeStamp'][2])));
-        }*/
+        
+        $dtr = new DateTimeReader($this->photo);
+        $dtr->execute();
+        
+        $this->photo->setDateTime($dtr->getDateTime());
     }
 
     protected function xmlToDateTime($xml)
