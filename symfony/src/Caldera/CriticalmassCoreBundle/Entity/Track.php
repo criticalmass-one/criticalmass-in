@@ -74,9 +74,6 @@ class Track
      */
     protected $md5Hash;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     protected $gpx;
 
     /**
@@ -120,29 +117,6 @@ class Track
     public function getUsername()
     {
         return $this->username;
-    }
-
-    /**
-     * Set gpx
-     *
-     * @param string $gpx
-     * @return Track
-     */
-    public function setGpx($gpx)
-    {
-        $this->gpx = $gpx;
-
-        return $this;
-    }
-
-    /**
-     * Get gpx
-     *
-     * @return string 
-     */
-    public function getGpx()
-    {
-        return $this->gpx;
     }
 
     /**
@@ -436,6 +410,18 @@ class Track
     
     public function loadGpx()
     {
-        $this->gpx = file_get_contents($this->file->getPathname());
+        $this->gpx = file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx');
+    }
+    
+    public function setGpx($gpx)
+    {
+        $this->gpx = $gpx;
+
+        return $this;
+    }
+    
+    public function getGpx()
+    {
+        return $this->gpx;
     }
 }
