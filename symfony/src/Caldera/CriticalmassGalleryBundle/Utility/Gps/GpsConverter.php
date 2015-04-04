@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: malte
- * Date: 04.02.15
- * Time: 17:13
- */
 
 namespace Caldera\CriticalmassGalleryBundle\Utility\Gps;
 

@@ -52,8 +52,6 @@ class PhotoUtility {
         }
     }
 
-
-
     function xmlToDateTime($xml) {
         return new \DateTime(str_replace("T", " ", str_replace("Z", "", $xml)));
     }
