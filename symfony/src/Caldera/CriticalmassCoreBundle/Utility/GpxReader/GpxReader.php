@@ -118,4 +118,16 @@ class GpxReader {
 
         return (float) $distance;
     }
+    
+    public function findCoordNearDateTime(\DateTime $dateTime)
+    {
+        $n = 0;
+        
+        while ($dateTime->format('U') < $this->getDateTimeOfPoint($n)->format('U') && $n < $this->countPoints() - 1)
+        {
+            ++$n;
+        }
+        
+        return array('latitude' => $this->getLatitudeOfPoint($n), 'longitude' => $this->getLongitudeOfPoint($n));
+    }
 }
