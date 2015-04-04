@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader;
 
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\DateTimeReader;
 use Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer\PhotoResizer;
 
 class PhotoUploader {
@@ -19,6 +20,8 @@ class PhotoUploader {
 
         $this->makeSmallPhoto();
         $this->makeThumbnail();
+        
+        $this->readDateTimeFromExif();
     }
     
     protected function makeSmallPhoto()
@@ -35,5 +38,13 @@ class PhotoUploader {
         $pr->setPhoto($this->photo);
         $pr->resizeFactor(0.2);
         $pr->saveJpeg($this->photo->getUploadRootDir().$this->photo->getId().'.thumbnail.jpg');
+    }
+    
+    protected function readDateTimeFromExif()
+    {
+        $dtr = new DateTimeReader($this->photo);
+        $dtr->execute();
+
+        $this->photo->setDateTime($dtr->getDateTime());
     }
 }

@@ -5,7 +5,6 @@ namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoGps;
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
-use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\DateTimeReader;
 use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
 
 class PhotoGps {
@@ -54,11 +53,6 @@ class PhotoGps {
         
         $this->photo->setLatitude($gr->getLatitude());
         $this->photo->setLongitude($gr->getLongitude());
-        
-        $dtr = new DateTimeReader($this->photo);
-        $dtr->execute();
-        
-        $this->photo->setDateTime($dtr->getDateTime());
     }
 
     protected function xmlToDateTime($xml)

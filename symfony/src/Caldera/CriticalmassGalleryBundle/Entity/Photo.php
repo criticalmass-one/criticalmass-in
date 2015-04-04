@@ -240,7 +240,7 @@ class Photo
     {
         $this->licence = $licence;
     }
-    
+
     /**
      * @return mixed
      */
