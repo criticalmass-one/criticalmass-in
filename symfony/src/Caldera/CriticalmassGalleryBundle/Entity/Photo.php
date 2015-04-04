@@ -290,7 +290,7 @@ class Photo
      */
     public function getFilePath()
     {
-        return $this->filePath;
+        return $this->getUploadRootDir().$this->getId().'.jpg';
     }
 
     public function getFilePathByDepth($depth) {
