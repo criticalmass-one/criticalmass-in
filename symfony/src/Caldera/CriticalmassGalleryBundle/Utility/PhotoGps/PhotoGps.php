@@ -31,7 +31,7 @@ class PhotoGps {
     {
         $this->readExifData();
         
-        if ($this->exifData)
+        if (isset($this->exifData['GPS']))
         {
             $this->readFromExifData();
         }
@@ -73,10 +73,14 @@ class PhotoGps {
     public function approximateCoordinates()
     {
         $gpxReader = new GpxReader();
-        
-        $this->track->loadGpx();
-        $gpxReader->loadString($this->track->getGpx());
-        
+        $gpxReader->loadFile('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/2.gpx');
+        //$this->track->getGpx()
+
+        $result = $gpxReader->findCoordNearDateTime($this->photo->getDateTime());
+
+        $this->photo->setLatitude($result['latitude']);
+        $this->photo->setLongitude($result['longitude']);
+        /*
         $finished = 0;
         
         for ($i = 0; $i < ($gpxReader->countPoints() - 1) && !($finished); $i++)
@@ -100,6 +104,6 @@ class PhotoGps {
                     $timeDiffSucc));
                 $finished = 1;
             }
-        }
+        }*/
     }
 }

@@ -52,19 +52,9 @@ class UploadController extends Controller
             $em->persist($photo);
             $em->flush();
 
-            $pu = new PhotoUploader();
-            $pu->setPhoto($photo);
+            $pu = new PhotoUploader($photo, $this->getDoctrine(), $ride, $this->getUser());
             $pu->execute();
 
-            $pg = new PhotoGps();
-            $pg->setPhoto($photo);
-
-            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneBy(array('ride' => $ride, 'user' => $this->getUser()));
-            $pg->setTrack($track);
-
-            $pg->execute();
-
-            $em = $this->getDoctrine()->getManager();
             $em->persist($photo);
             $em->flush();
             
