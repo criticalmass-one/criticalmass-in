@@ -2,33 +2,22 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Utility\ExifReader;
 
-use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\Gps\GpsConverter;
 
-class GpsReader {
-    protected $filename;
-
-    public function setPhoto(Photo $photo)
-    {
-        $this->filename = $photo->getFilePath();
-    }
-
-    public function setFilename($filename)
-    {
-        $this->filename = $filename;
-    }
+class GpsReader extends AbstractExifReader {
+    protected $latitude;
+    protected $longitude;
     
     public function execute()
     {
-        $exif = exif_read_data($this->filename, 0, true);
-        
-        if (isset($exif['GPS']['GPSLatitude']) && isset($exif['GPS']['GPSLongitude']))
+        if (isset($this->exifData['GPS']['GPSLatitude']) && isset($this->exifData['GPS']['GPSLongitude']))
         {
             $gc = new GpsConverter();
             
             $result = array();
 
-            $result['latitude'] = $gc->convert($exif['GPS']['GPSLatitude']);
-            $result['longitude'] = $gc->convert($exif['GPS']['GPSLongitude']);
+            $this->latitude = $gc->convert($this->exifData['GPS']['GPSLatitude']);
+            $this->longitude = $gc->convert($this->exifData['GPS']['GPSLongitude']);
             
             return $result;
         }
@@ -36,5 +25,15 @@ class GpsReader {
         {
             return null;
         }
+    }
+    
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+    
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }

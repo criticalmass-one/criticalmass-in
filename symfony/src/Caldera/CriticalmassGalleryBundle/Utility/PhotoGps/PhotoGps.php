@@ -5,6 +5,7 @@ namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoGps;
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
 use Caldera\CriticalmassGalleryBundle\Utility\Gps\GpsConverter;
 
 class PhotoGps {
@@ -48,13 +49,11 @@ class PhotoGps {
     
     public function readFromExifData()
     {
-        $gc = new GpsConverter();
-
-        if (isset($this->exifData['GPS']['GPSLatitude']) && isset($this->exifData['GPS']['GPSLongitude']))
-        {
-            $this->photo->setLatitude($gc->convert($this->exifData['GPS']['GPSLatitude']));
-            $this->photo->setLongitude($gc->convert($this->exifData['GPS']['GPSLongitude']));
-        }
+        $gr = new GpsReader($this->photo);
+        $gr->execute();
+        
+        $this->photo->setLatitude($gr->getLatitude());
+        $this->photo->setLongitude($gr->getLongitude());
 
         /*if (isset($this->exifData['GPS']['GPSTimeStamp']) && isset($this->exifData['GPS']['GPSDateStamp'])) {
             $this->photo->setDateTime(new \DateTime(str_replace(":", "-", $this->exifData['GPS']['GPSDateStamp'])
