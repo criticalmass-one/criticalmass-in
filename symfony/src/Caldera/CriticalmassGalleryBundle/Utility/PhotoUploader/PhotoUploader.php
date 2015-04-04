@@ -5,7 +5,6 @@ namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader;
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
 use Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer\PhotoResizer;
 
-
 class PhotoUploader {
     protected $photo;
 

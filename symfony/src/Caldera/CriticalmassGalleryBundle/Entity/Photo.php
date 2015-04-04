@@ -240,51 +240,7 @@ class Photo
     {
         $this->licence = $licence;
     }
-
-    public function handleUpload()
-    {
-        $this->dateTime = new \DateTime();
-
-        // the file property can be empty if the field is not required
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-
-        // move takes the target directory and then the
-        // target filename to move to
-        $this->getFile()->move(
-            $this->getUploadRootDir(),
-            $this->getId() . "." . strtolower($this->getFile()->getClientOriginalExtension())
-        );
-
-        // set the path property to the filename where you've saved the file
-        $this->filePath = $this->getUploadRootDir() . $this->getId() . "." . strtolower($this->getFile()->getClientOriginalExtension());
-
-        $utility = new PhotoUtility();
-
-        if ($this->getFile()->getClientOriginalExtension() == "jpg" ||
-            $this->getFile()->getClientOriginalExtension() == "JPG" ) {
-
-            $smallSize = $utility->reduceSize($this, 0.5);
-            $utility->makeSmallPhotoJPG($this, $smallSize['width'], $smallSize['height'], "_klein");
-            $utility->makeSmallPhotoJPG($this, 200, 200, "_thumbnail");
-            $utility->getMetaInfos($this);
-
-        }
-
-        if ($this->getFile()->getClientOriginalExtension() == "png" ||
-            $this->getFile()->getClientOriginalExtension() == "PNG" ) {
-
-            $smallSize = $utility->reduceSize($this, 0.5);
-            $utility->makeSmallPhotoPNG($this, $smallSize['width'], $smallSize['height'], "_klein");
-            $utility->makeSmallPhotoPNG($this, 200, 200, "_thumbnail");
-
-        }
-    }
-
+    
     /**
      * @return mixed
      */
