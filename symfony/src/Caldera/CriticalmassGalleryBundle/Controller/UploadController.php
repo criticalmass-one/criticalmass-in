@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassGalleryBundle\Controller;
 
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\PhotoGps\PhotoGps;
 use Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader\PhotoUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,19 +38,18 @@ class UploadController extends Controller
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
-        
-        $photo = new Photo();
-        $photo->setCity($city);
-        $photo->setRide($ride);
 
         if (($request->getMethod() == 'POST') &&
             (strtolower($request->files->get('file')->getClientOriginalExtension()) == "jpg"))
         {
-            $em = $this->getDoctrine()->getManager();
+            $photo = new Photo();
+            $photo->setCity($city);
+            $photo->setRide($ride);
 
             $photo->setFile($request->files->get('file'));
             $photo->setUser($this->getUser());
-
+            
+            $em = $this->getDoctrine()->getManager();
             $em->persist($photo);
             $em->flush();
 
@@ -57,6 +57,18 @@ class UploadController extends Controller
             $pu->setPhoto($photo);
             $pu->execute();
 
+            $pg = new PhotoGps();
+            $pg->setPhoto($photo);
+
+            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneBy(array('ride' => $ride, 'user' => $this->getUser()));
+            $pg->setTrack($track);
+
+            $pg->execute();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($photo);
+            $em->flush();
+            
          //   return $this->redirect($this->generateUrl('caldera_criticalmass_gallery_photos_index'));
         }
         
