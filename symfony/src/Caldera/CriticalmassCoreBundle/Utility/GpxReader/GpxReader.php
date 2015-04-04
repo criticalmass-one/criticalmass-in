@@ -72,6 +72,11 @@ class GpxReader {
     {
         return $this->simpleXml->trk->trkseg->trkpt[$n]->time;
     }
+    
+    public function getDateTimeOfPoint($n)
+    {
+        return new \DateTime(str_replace("T", " ", str_replace("Z", "", $this->getTimestampOfPoint($n))));
+    }
 
     public function generateJson()
     {
