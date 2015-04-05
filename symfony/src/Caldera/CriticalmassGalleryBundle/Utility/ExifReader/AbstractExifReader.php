@@ -11,7 +11,7 @@ abstract class AbstractExifReader {
     public function __construct(Photo $photo)
     {
         $this->photo = $photo;
-        
+
         $this->exifData = exif_read_data($this->getPhotoFilename(), 0, true);
     }
     

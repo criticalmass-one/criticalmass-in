@@ -1,26 +1,28 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: malte
- * Date: 04.02.15
- * Time: 17:35
- */
 
 namespace Caldera\CriticalmassGalleryBundle\Tests\Utility\Gps;
 
+use Caldera\CriticalmassGalleryBundle\Tests\Utility\Gps\Entity\TestPhoto;
+use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
 
-use Caldera\CriticalmassGalleryBundle\Utility\Gps\GpsReader;
-
-class GpsReaderTest extends \PHPUnit_Framework_TestCase {
+class GpsReaderTest extends \PHPUnit_Framework_TestCase
+{
+    protected $photo;
+    
+    protected function setup()
+    {
+        $this->photo = new TestPhoto();
+        $this->photo->setFilePath(getcwd().'/../src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg');
+    }
     
     public function testPhotoGps()
     {
-        $gr = new GpsReader();
-        $gr->setFilename(getcwd().'/src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg');
-        $gps = $gr->execute();
+        $gr = new GpsReader($this->photo);
+        $gr->execute();
 
-        $this->assertEquals(53.57, round($gps['latitude'], 2));
-        $this->assertEquals(9.92, round($gps['longitude'], 2));
+        $this->assertEquals(53.57, round($gr->getLatitude(), 2));
+        $this->assertEquals(9.92, round($gr->getLongitude(), 2));
     }
-
 }
+
+

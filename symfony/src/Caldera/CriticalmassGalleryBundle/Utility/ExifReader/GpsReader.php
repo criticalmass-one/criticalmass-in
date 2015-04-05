@@ -14,17 +14,13 @@ class GpsReader extends AbstractExifReader {
         {
             $gc = new GpsConverter();
             
-            $result = array();
-
             $this->latitude = $gc->convert($this->exifData['GPS']['GPSLatitude']);
             $this->longitude = $gc->convert($this->exifData['GPS']['GPSLongitude']);
-            
-            return $result;
+         
+            return true;
         }
-        else
-        {
-            return null;
-        }
+     
+        return false;
     }
     
     public function getLatitude()
