@@ -2,6 +2,8 @@
 
 namespace Caldera\CriticalmassCoreBundle\Utility\GpxReader;
 
+use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxCoordLoop\GpxCoordLoop;
+
 class GpxReader {
     protected $path;
     protected $rawFileContent;
@@ -121,13 +123,9 @@ class GpxReader {
     
     public function findCoordNearDateTime(\DateTime $dateTime)
     {
-        $n = 0;
+        $gcl = new GpxCoordLoop($this);
+        $result = $gcl->execute($dateTime);
         
-        while ($dateTime->format('U') < $this->getDateTimeOfPoint($n)->format('U') && $n < $this->countPoints() - 1)
-        {
-            ++$n;
-        }
-        
-        return array('latitude' => $this->getLatitudeOfPoint($n), 'longitude' => $this->getLongitudeOfPoint($n));
+        return array('latitude' => $this->getLatitudeOfPoint($result), 'longitude' => $this->getLongitudeOfPoint($result));
     }
 }
