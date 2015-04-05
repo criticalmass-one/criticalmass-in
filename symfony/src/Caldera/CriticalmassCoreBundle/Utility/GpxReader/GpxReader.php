@@ -46,7 +46,7 @@ class GpxReader {
 
     public function getMd5Hash()
     {
-        return md5_file($this->path);
+        return md5($this->rawFileContent);
     }
 
     public function getFileContent()
