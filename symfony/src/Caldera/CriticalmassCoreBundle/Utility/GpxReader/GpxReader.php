@@ -118,7 +118,7 @@ class GpxReader {
             ++$index;
         }
 
-        return (float) $distance;
+        return (float) round($distance, 2);
     }
     
     public function findCoordNearDateTime(\DateTime $dateTime)
