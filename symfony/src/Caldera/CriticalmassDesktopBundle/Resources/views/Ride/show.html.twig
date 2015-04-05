@@ -94,10 +94,7 @@
             photoArray[{{ photo.getId() }}] = (new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
             
 
-            var photoMarker = L.marker([{{photo.getLatitude()}}, {{ photo.getLongitude() }}], {icon:locationIcon, draggable: true});
-            photoMarker.addTo(map);
-
-            {% if app.getUser().getId() == photo.getUser().getId() %}
+            {% if app.getUser().getId() == photo.getUser().getId() and 1 == 0 %}
             photoMarker.on('dragend', function(event){
                 var marker = event.target;
 
@@ -107,16 +104,13 @@
             });
             {% endif %}
 
-            photoMarker.on('click', function() {
-                var photoPath = '/{{ photo.getFilePath() }}';
-                $.fancybox( {href : photoPath, title : 'Lorem lipsum'} );
-            });
+
             {% endif %}
             {% endfor %}
             
 
             var gallery = new Gallery();
-            gallery.init(photoArray);
+            gallery.init(map, photoArray);
 
             {% for track in ride.getTracks() %}
             {% if track.getJson() %}
