@@ -15,7 +15,7 @@ class GpxCoordLoopTest extends \PHPUnit_Framework_TestCase
 <gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" creator="Adze - http://kobotsw.com/apps/adze" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
     <metadata>
         <name>Testtrack</name>
-        <time>2015-04-03T06:46:56.174Z</time>
+        <time>2015-04-01T06:46:56.174Z</time>
     </metadata>
     <trk>
         <name>Testtrack</name>
@@ -98,8 +98,88 @@ class GpxCoordLoopTest extends \PHPUnit_Framework_TestCase
 EOF;
 
     }
-    
-    public function testGpxReader1()
+
+    public function testCreationDateTime()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(new \DateTime('2015-04-01T06:46:56.174Z'), $gr->getCreationDateTime());
+    }
+
+    public function testStartDateTime()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(new \DateTime('2015-04-01T01:14:49Z'), $gr->getStartDateTime());
+    }
+
+    public function testEndDateTime()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(new \DateTime('2015-04-01T24:14:49Z'), $gr->getEndDateTime());
+    }
+
+    public function testCountNodes()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(24, $gr->countPoints());
+    }
+
+    public function testMd5()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals('916a0d0fd0ecb12e110bd51d484f1968', $gr->getMd5Hash());
+    }
+
+    public function testLatitude()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(6.606435, $gr->getLatitudeOfPoint(5));
+    }
+
+    public function testLongitude()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(6.907195, $gr->getLongitudeOfPoint(5));
+    }
+
+    public function testTimestamp()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals('2015-04-01T06:14:49Z', $gr->getTimestampOfPoint(5));
+    }
+
+    public function testDateTime()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(new \DateTime('2015-04-01 06:14:49'), $gr->getDateTimeOfPoint(5));
+    }
+
+    public function testDistance()
+    {
+        $gr = new GpxReader();
+        $gr->loadString($this->gpx);
+
+        $this->assertEquals(3042.61, $gr->calculateDistance());
+    }
+
+    public function testFindCoordNearDateTime()
     {
         $gr = new GpxReader();
         $gr->loadString($this->gpx);
