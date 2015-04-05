@@ -98,7 +98,7 @@
             {% endif %}
 
             photoMarker.on('click', function() {
-                var photoPath = '{{ photo.getFilePathByDepth(2) }}';
+                var photoPath = '/{{ photo.getFilePath() }}';
                 $.fancybox( {href : photoPath, title : 'Lorem lipsum'} );
             });
             {% endif %}
