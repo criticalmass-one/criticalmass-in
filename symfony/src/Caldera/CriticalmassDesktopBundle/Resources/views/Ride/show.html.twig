@@ -10,6 +10,11 @@
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
+    {% javascripts
+    '@CalderaCriticalmassGalleryBundle/Resources/public/js/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block additionalFooterElements %}
@@ -82,8 +87,13 @@
             map.setView([{{ city.getLatitude() }}, {{ city.getLongitude() }}], 14);
             {% endif %}
 
+            var photoArray = new Array();
+            
             {% for photo in ride.getPhotos() %}
             {% if photo.getLatitude() and photo.getLongitude() %}
+            photoArray[{{ photo.getId() }}] = (new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
+            
+
             var photoMarker = L.marker([{{photo.getLatitude()}}, {{ photo.getLongitude() }}], {icon:locationIcon, draggable: true});
             photoMarker.addTo(map);
 
@@ -103,6 +113,10 @@
             });
             {% endif %}
             {% endfor %}
+            
+
+            var gallery = new Gallery();
+            gallery.init(photoArray);
 
             {% for track in ride.getTracks() %}
             {% if track.getJson() %}
