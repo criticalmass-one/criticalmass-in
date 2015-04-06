@@ -3,7 +3,7 @@ CalderaCriticalmassGalleryBundle_Upload:
     prefix:   /
 
 CalderaCriticalmassGalleryBundle_Edit_Photo:
-    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/edit.yml"
+    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/editphoto.yml"
     prefix:   /gallery/photo/edit
 
 

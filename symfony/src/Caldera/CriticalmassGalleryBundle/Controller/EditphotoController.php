@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class EditController extends Controller
+class EditphotoController extends Controller
 {
     public function relocateAction(Request $request, $photoId, $latitude, $longitude)
     {

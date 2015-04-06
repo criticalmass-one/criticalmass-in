@@ -37,7 +37,7 @@ DragablePhoto.prototype.addTo = function(map)
         var marker = event.target;
 
         $.ajax({
-            url: 'https://beta.criticalmass.cm/app_dev.php/photos/relocate/' + this2.getId() + '/' + marker.getLatLng().lat + '/' + marker.getLatLng().lng
+            url: 'https://beta.criticalmass.cm/app_dev.php/gallery/photo/edit/relocate/' + this2.getId() + '/' + marker.getLatLng().lat + '/' + marker.getLatLng().lng
         }).done(function(data)
         {
             if (console && console.log)
