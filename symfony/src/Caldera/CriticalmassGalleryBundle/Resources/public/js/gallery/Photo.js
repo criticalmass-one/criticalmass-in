@@ -1,22 +1,3 @@
-Gallery = function()
-{
-};
-
-Gallery.prototype.init = function(map, photoArray)
-{
-    var photo;
-    
-    while (photo = photoArray.pop())
-    {
-        photo.addTo(map);
-    }
-};
-
-Gallery.prototype.test = function()
-{
-    //alert('foo');
-};
-
 Photo = function(id, latitude, longitude)
 {
     this.id = id;
@@ -55,12 +36,12 @@ Photo.prototype.addTo = function(map)
         shadowSize: [41, 41],
         shadowAnchor: [13, 41]
     });
-    
+
     var photoMarker = L.marker([this.getLatitude(), this.getLongitude()], { icon:locationIcon, draggable: true });
     photoMarker.addTo(map);
 
     var this2 = this;
-    
+
     photoMarker.on('click', function()
     {
         var photoPath = '/photos/' + this2.getId() + '.jpg';
