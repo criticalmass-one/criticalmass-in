@@ -5,7 +5,7 @@ Photo = function(id, latitude, longitude)
     this.longitude = longitude;
 };
 
-Photo.prototype.address = null;
+Photo.prototype.id = null;
 Photo.prototype.latitude = null;
 Photo.prototype.longitude = null;
 
