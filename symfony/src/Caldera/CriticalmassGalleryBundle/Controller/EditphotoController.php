@@ -12,9 +12,10 @@ class EditphotoController extends Controller
 {
     public function relocateAction(Request $request, $photoId, $latitude, $longitude)
     {
-        if ($photoId > 0) {
+        if ($photoId > 0)
+        {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CalderaCriticalmassGalleryBundle:Photo',$photoId);
+            $photo = $em->find('CalderaCriticalmassGalleryBundle:Photo', $photoId);
 
             $photo->setLatitude($latitude);
             $photo->setLongitude($longitude);
