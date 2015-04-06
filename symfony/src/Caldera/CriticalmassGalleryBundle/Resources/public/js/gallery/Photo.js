@@ -44,7 +44,7 @@ Photo.prototype.addTo = function(map)
         shadowAnchor: [13, 41]
     });
 
-    var photoMarker = L.marker([this.getLatitude(), this.getLongitude()], { icon:locationIcon, draggable: true });
+    var photoMarker = L.marker([this.getLatitude(), this.getLongitude()], { icon:locationIcon, draggable: false });
     photoMarker.addTo(map);
 
     var this2 = this;
