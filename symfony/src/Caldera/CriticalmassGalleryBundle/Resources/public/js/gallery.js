@@ -59,9 +59,11 @@ Photo.prototype.addTo = function(map)
     var photoMarker = L.marker([this.getLatitude(), this.getLongitude()], { icon:locationIcon, draggable: true });
     photoMarker.addTo(map);
 
+    var this2 = this;
+    
     photoMarker.on('click', function()
     {
-        var photoPath = '/photos/' + this.getId() + '.jpg';
+        var photoPath = '/photos/' + this2.getId() + '.jpg';
         $.fancybox( {href : photoPath, title : 'Lorem lipsum'} );
     });
 };
