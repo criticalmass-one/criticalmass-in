@@ -27,11 +27,11 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-    var photoArray = new Array();
-
+    var gallery = new Gallery();
+    
     {% for photo in ride.getPhotos() %}
         {% if photo.getLatitude() and photo.getLongitude() %}
-            photoArray[{{ photo.getId() }}] = (new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
+            gallery.addPhoto(new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
 
 
             {% if app.getUser() and app.getUser().getId() == photo.getUser().getId() and 1 == 0 %}
@@ -48,9 +48,6 @@
         {% endif %}
     {% endfor %}
 
-
-    var gallery = new Gallery();
-    gallery.addPhotos(photoArray);
     gallery.addTo(map);
     </script>
 {% endblock %}
