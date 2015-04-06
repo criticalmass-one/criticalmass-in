@@ -10,19 +10,48 @@
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
+{% endblock %}
+
+{% block additionalFooterElements %}
     {% javascripts
     '@CalderaCriticalmassGalleryBundle/Resources/public/js/*.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-{% endblock %}
 
-{% block additionalFooterElements %}
     {% javascripts
+    '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/jquery.fancybox.js'
     '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <script type="text/javascript">
+    var photoArray = new Array();
+
+    {% for photo in ride.getPhotos() %}
+        {% if photo.getLatitude() and photo.getLongitude() %}
+            photoArray[{{ photo.getId() }}] = (new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
+
+
+            {% if app.getUser() and app.getUser().getId() == photo.getUser().getId() and 1 == 0 %}
+                photoMarker.on('dragend', function(event){
+                var marker = event.target;
+
+                $('#changeButton').prop('href', "http://beta.criticalmass.cm/app_dev.php/photos/change/" + {{ photo.getId() }} + "/" + marker.getLatLng().lat + "/" + marker.getLatLng().lng);
+
+                $('#modalPhotoChange').modal('show');
+                });
+            {% endif %}
+
+
+        {% endif %}
+    {% endfor %}
+
+
+    var gallery = new Gallery();
+    gallery.init(map, photoArray);
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -86,31 +115,6 @@
             {% else %}
             map.setView([{{ city.getLatitude() }}, {{ city.getLongitude() }}], 14);
             {% endif %}
-
-            var photoArray = new Array();
-            
-            {% for photo in ride.getPhotos() %}
-            {% if photo.getLatitude() and photo.getLongitude() %}
-            photoArray[{{ photo.getId() }}] = (new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
-            
-
-            {% if app.getUser().getId() == photo.getUser().getId() and 1 == 0 %}
-            photoMarker.on('dragend', function(event){
-                var marker = event.target;
-
-                $('#changeButton').prop('href', "http://beta.criticalmass.cm/app_dev.php/photos/change/" + {{ photo.getId() }} + "/" + marker.getLatLng().lat + "/" + marker.getLatLng().lng);
-
-                $('#modalPhotoChange').modal('show');
-            });
-            {% endif %}
-
-
-            {% endif %}
-            {% endfor %}
-            
-
-            var gallery = new Gallery();
-            gallery.init(map, photoArray);
 
             {% for track in ride.getTracks() %}
             {% if track.getJson() %}
