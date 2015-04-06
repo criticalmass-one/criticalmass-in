@@ -14,7 +14,7 @@ class EditphotoController extends Controller
     {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photo',$photoId);
+            $photo = $em->find('CalderaCriticalmassGalleryBundle:Photo',$photoId);
 
             $photo->setLatitude($latitude);
             $photo->setLongitude($longitude);
