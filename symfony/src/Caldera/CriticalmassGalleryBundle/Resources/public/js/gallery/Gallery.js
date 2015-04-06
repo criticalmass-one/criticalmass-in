@@ -11,8 +11,3 @@ Gallery.prototype.init = function(map, photoArray)
         photo.addTo(map);
     }
 };
-
-Gallery.prototype.test = function()
-{
-    //alert('foo');
-};
