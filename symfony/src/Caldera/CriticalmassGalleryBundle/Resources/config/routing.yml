@@ -1,18 +1,15 @@
-caldera_criticalmass_gallery_photos_upload_ride:
-    pattern: /{citySlug}/{rideDate}/upload
-    defaults: { _controller: CalderaCriticalmassGalleryBundle:Upload:upload }
+CalderaCriticalmassGalleryBundle_Upload:
+    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/upload.yml"
+    prefix:   /
 
-caldera_criticalmass_gallery_photos_upload_ride_process:
-    pattern: /{citySlug}/{rideDate}/processupload
-    defaults: { _controller: CalderaCriticalmassGalleryBundle:Upload:process }
+CalderaCriticalmassGalleryBundle_Edit_Photo:
+    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/edit.yml"
+    prefix:   /gallery/photo/edit
+
 
 caldera_criticalmass_gallery_photos_index:
     path:     /photos/index
     defaults: { _controller: CalderaCriticalmassGalleryBundle:Photos:index }
-
-criticalmass_gallery_photos_relocate:
-    pattern: /photos/relocate/{photoId}/{latitude}/{longitude}
-    defaults: { _controller: CalderaCriticalmassGalleryBundle:Edit:relocate }
     
 criticalmass_gallery_photos_add_city:
     pattern:  /photos/add/city/{cityId}
