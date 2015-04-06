@@ -1,13 +1,15 @@
-Photo = function(id, latitude, longitude)
+Photo = function(id, latitude, longitude, title)
 {
     this.id = id;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.title = title;
 };
 
 Photo.prototype.id = null;
 Photo.prototype.latitude = null;
 Photo.prototype.longitude = null;
+Photo.prototype.title = null;
 
 Photo.prototype.getId = function()
 {
@@ -22,6 +24,11 @@ Photo.prototype.getLatitude = function()
 Photo.prototype.getLongitude = function()
 {
     return this.longitude;
+};
+
+Photo.prototype.getTitle = function()
+{
+    return this.title;
 };
 
 Photo.prototype.addTo = function(map)
@@ -45,6 +52,6 @@ Photo.prototype.addTo = function(map)
     photoMarker.on('click', function()
     {
         var photoPath = '/photos/' + this2.getId() + '.jpg';
-        $.fancybox( {href : photoPath, title : 'Lorem lipsum'} );
+        $.fancybox( { href : photoPath, title : this2.getTitle() } );
     });
 };

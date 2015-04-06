@@ -31,7 +31,7 @@
     
     {% for photo in ride.getPhotos() %}
         {% if photo.getLatitude() and photo.getLongitude() %}
-            gallery.addPhoto(new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}));
+            gallery.addPhoto(new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo #{{ photo.getId() }}'));
 
 
             {% if app.getUser() and app.getUser().getId() == photo.getUser().getId() and 1 == 0 %}
