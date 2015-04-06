@@ -168,7 +168,7 @@ EOF;
         $gr = new GpxReader();
         $gr->loadString($this->gpx);
 
-        $this->assertEquals(new \DateTime('2015-04-01 06:14:49'), $gr->getDateTimeOfPoint(5));
+        $this->assertEquals(new \DateTime('2015-04-01T06:14:49Z'), $gr->getDateTimeOfPoint(5));
     }
 
     public function testDistance()
@@ -184,7 +184,7 @@ EOF;
         $gr = new GpxReader();
         $gr->loadString($this->gpx);
 
-        $dateTime = new \DateTime('2015-04-01 20:00:00');
+        $dateTime = new \DateTime('2015-04-01T20:14:49Z');
         $coords = $gr->findCoordNearDateTime($dateTime);
 
         $this->assertEquals(20.606435, $coords['latitude']);

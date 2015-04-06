@@ -107,7 +107,7 @@ EOF;
 
         $gcl = new GpxCoordLoop($gr);
 
-        $searchDateTime = new \DateTime('2015-04-01 08:00:00');
+        $searchDateTime = new \DateTime('2015-04-01T08:14:49Z');
         $result = $gcl->execute($searchDateTime);
 
         $this->assertEquals(7, $result);
@@ -120,7 +120,7 @@ EOF;
         
         $gcl = new GpxCoordLoop($gr);
         
-        $searchDateTime = new \DateTime('2015-04-01 15:00:00');
+        $searchDateTime = new \DateTime('2015-04-01T15:14:49Z');
         $result = $gcl->execute($searchDateTime);
         
         $this->assertEquals(14, $result);
