@@ -10,15 +10,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EditphotoController extends Controller
 {
-    public function relocateAction(Request $request, $photoId, $latitude, $longitude)
+    public function relocateAction(Request $request, $photoId)
     {
         if ($photoId > 0)
         {
             $em = $this->getDoctrine()->getManager();
             $photo = $em->find('CalderaCriticalmassGalleryBundle:Photo', $photoId);
 
-            $photo->setLatitude($latitude);
-            $photo->setLongitude($longitude);
+            $photo->setLatitude($request->get('latitude'));
+            $photo->setLongitude($request->get('longitude'));
 
             $em->merge($photo);
             $em->flush();
