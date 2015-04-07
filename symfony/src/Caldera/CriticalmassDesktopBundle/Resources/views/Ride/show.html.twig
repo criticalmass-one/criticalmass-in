@@ -33,20 +33,11 @@
     
     {% for photo in ride.getPhotos() %}
         {% if photo.getLatitude() and photo.getLongitude() %}
-            gallery.addPhoto(new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo #{{ photo.getId() }}'));
-
-
-            {% if app.getUser() and app.getUser().getId() == photo.getUser().getId() and 1 == 0 %}
-                photoMarker.on('dragend', function(event){
-                var marker = event.target;
-
-                $('#changeButton').prop('href', "http://beta.criticalmass.cm/app_dev.php/photos/change/" + {{ photo.getId() }} + "/" + marker.getLatLng().lat + "/" + marker.getLatLng().lng);
-
-                $('#modalPhotoChange').modal('show');
-                });
+            {% if app.getUser() and app.getUser().getId() == photo.getUser().getId() %}
+                gallery.addPhoto(new DragablePhoto({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo #{{ photo.getId() }}'));
+            {% else %}
+                 gallery.addPhoto(new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo #{{ photo.getId() }}'));
             {% endif %}
-
-
         {% endif %}
     {% endfor %}
 
@@ -94,8 +85,7 @@
             });
 
             tileLayer.addTo(map);
-
-
+            
             var locationIcon = L.icon({
                 iconUrl: 'https://www.criticalmass.in/images/marker/marker-red.png',
                 iconRetinaUrl: '/images/marker/marker-red-2x.png',
