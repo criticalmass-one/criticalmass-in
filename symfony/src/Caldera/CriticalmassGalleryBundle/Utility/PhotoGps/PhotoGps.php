@@ -74,36 +74,10 @@ class PhotoGps {
     {
         $gpxReader = new GpxReader();
         $gpxReader->loadFile('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/2.gpx');
-        //$this->track->getGpx()
 
         $result = $gpxReader->findCoordNearDateTime($this->photo->getDateTime());
 
         $this->photo->setLatitude($result['latitude']);
         $this->photo->setLongitude($result['longitude']);
-        /*
-        $finished = 0;
-        
-        for ($i = 0; $i < ($gpxReader->countPoints() - 1) && !($finished); $i++)
-        {
-            $tmpDatetimePrev = $this->xmlToDateTime($gpxReader->getTimestampOfPoint($i));
-            $tmpDatetimeSucc = $this->xmlToDateTime($gpxReader->getTimestampOfPoint($i + 1));
-            
-            if (($tmpDatetimePrev <= $this->photo->getDateTime()) &&
-                ($tmpDatetimeSucc >= $this->photo->getDateTime()))
-            {
-                $timeDiffPrev = $this->timeDiffInSec($tmpDatetimePrev->diff($this->photo->getDateTime()));
-                $timeDiffSucc = $this->timeDiffinSec($tmpDatetimeSucc->diff($this->photo->getDateTime()));
-
-                $this->photo->setLatitude($this->interpolate($gpxReader->getLatitudeOfPoint($i),
-                    $gpxReader->getLatitudeOfPoint($i+1),
-                    $timeDiffPrev,
-                    $timeDiffSucc));
-                $this->photo->setLongitude($this->interpolate($gpxReader->getLongitudeOfPoint($i),
-                    $gpxReader->getLongitudeOfPoint($i+1),
-                    $timeDiffPrev,
-                    $timeDiffSucc));
-                $finished = 1;
-            }
-        }*/
     }
 }
