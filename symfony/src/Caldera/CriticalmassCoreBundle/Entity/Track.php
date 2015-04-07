@@ -278,7 +278,7 @@ class Track
      */
     public function getStartDateTime()
     {
-        return $this->startDateTime;
+        return $this->startDateTime->setTimezone(new \DateTimeZone('GMT'));
     }
 
     /**
@@ -301,7 +301,7 @@ class Track
      */
     public function getEndDateTime()
     {
-        return $this->endDateTime;
+        return $this->endDateTime->setTimezone(new \DateTimeZone('GMT'));
     }
 
     /**
