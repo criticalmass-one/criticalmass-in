@@ -12,7 +12,7 @@ class DefaultController extends Controller
 {
     public function standardridesAction($year, $month)
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array(), array('city' => 'ASC'));
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
 
         echo '<ul>';
 
@@ -21,38 +21,37 @@ class DefaultController extends Controller
             echo '<li>';
             echo '<strong>'.$city->getTitle().'</strong>';
 
-            if ($city->getIsStandardable())
-            {
+            if ($city->getIsStandardable()) {
                 $srg = new StandardRideGenerator($city, $year, $month);
                 $ride = $srg->execute();
 
-                echo '<br />Lege folgende Tour an:';
-                echo '<ul>';
-
-                if ($ride->getHasTime())
+                if ($srg->isRideDuplicate())
                 {
-                    echo '<li>Datum und Uhrzeit: '.$ride->getDateTime()->format('Y-m-d H:i').'</li>';
+                    echo '<br />Tour existiert bereits.';
                 }
-                else
-                {
-                    echo '<li>Datum: '.$ride->getDateTime()->format('Y-m-d').', Uhrzeit ist bislang unbekannt</li>';
-                }
+                else {
+                    echo '<br />Lege folgende Tour an:';
+                    echo '<ul>';
 
-                if ($ride->getHasLocation())
-                {
-                    echo '<li>Treffpunkt: '.$ride->getLocation().' ('.$ride->getLatitude().'/'.$ride->getLongitude().')</li>';
-                }
-                else
-                {
-                    echo '<li>Treffpunkt ist bislang unbekannt</li>';
-                }
+                    if ($ride->getHasTime()) {
+                        echo '<li>Datum und Uhrzeit: ' . $ride->getDateTime()->format('Y-m-d H:i') . '</li>';
+                    } else {
+                        echo '<li>Datum: ' . $ride->getDateTime()->format('Y-m-d') . ', Uhrzeit ist bislang unbekannt</li>';
+                    }
 
-                echo '<li>sichtbar von '.$ride->getVisibleSince()->format('Y-m-d H:i').' bis '.$ride->getVisibleUntil()->format('Y-m-d H:i').'</li>';
-                echo '</ul>';
+                    if ($ride->getHasLocation()) {
+                        echo '<li>Treffpunkt: ' . $ride->getLocation() . ' (' . $ride->getLatitude() . '/' . $ride->getLongitude() . ')</li>';
+                    } else {
+                        echo '<li>Treffpunkt ist bislang unbekannt</li>';
+                    }
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($ride);
-                $em->flush();
+                    echo '<li>sichtbar von ' . $ride->getVisibleSince()->format('Y-m-d H:i') . ' bis ' . $ride->getVisibleUntil()->format('Y-m-d H:i') . '</li>';
+                    echo '</ul>';
+
+                    $em = $this->getDoctrine()->getManager();
+                    //$em->persist($ride);
+                    $em->flush();
+                }
             }
             else
             {

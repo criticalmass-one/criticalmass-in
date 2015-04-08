@@ -1,7 +1,5 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
-{% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
-
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
 {% block additionalHeaderElements %}
@@ -48,11 +46,15 @@
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="#">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städt#eliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
             <li class="active">{{ ride.getFancyTitle() }}</li>
         </ol>
+    
+        {% if not app.getUser() %}
+            <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.</div>
+        {% endif %}
 
         <div class="row">
             {% if app.getUser() %}
@@ -191,13 +193,19 @@
             {% endif %}
         </div>
 
+        {% include('CalderaCriticalmassDesktopBundle:Common:Ride.html.twig') with { 'ride': ride } %}
+
         <ul class="pager">
             {% if ride.getPreviousRide() %}
             <li class="previous"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getPreviousRide().getDateTime().format('Y-m-d') }) }}">&larr; Vorige Tour</a></li>
+            {% else %}
+            <li class="previous disabled"><a href="#">&larr; Vorige Tour</a></li>
             {% endif %}
 
             {% if ride.getNextRide() %}
             <li class="next"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getNextRide().getDateTime().format('Y-m-d') }) }}">Nächste Tour &rarr;</a></li>
+            {% else %}
+            <li class="next disabled"><a href="#">Nächste Tour &rarr;</a></li>
             {% endif %}
         </ul>
     </div>
@@ -276,4 +284,5 @@
 
     {% endif %}
     </div>
+
 {% endblock %}

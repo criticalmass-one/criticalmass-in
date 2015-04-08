@@ -3,12 +3,12 @@
 namespace Caldera\CriticalmassCoreBundle\Entity;
 
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
+use Caldera\CriticalmassCoreBundle\Utility\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="track")
  * @ORM\Entity()
  */
@@ -70,20 +70,45 @@ class Track
     protected $points;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $timeStamps;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassStatisticBundle\Entity\RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $rideEstimate;
+
+    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
 
-    protected $gpx;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $activated;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $json;
+    protected $previewJsonArray;
+
+    /**
+     * This property contains the content of the gpx file, but will NOT be mapped to the database.
+     *
+     * @var
+     */
+    protected $gpx;
 
     public function __construct()
     {
         $this->setCreationDateTime(new \DateTime());
+
+        if ($this->id)
+        {
+            $this->loadTrack();
+        }
     }
 
     /**
@@ -328,29 +353,6 @@ class Track
     }
 
     /**
-     * Set json
-     *
-     * @param string $json
-     * @return Track
-     */
-    public function setJson($json)
-    {
-        $this->json = $json;
-
-        return $this;
-    }
-
-    /**
-     * Get json
-     *
-     * @return string 
-     */
-    public function getJson()
-    {
-        return $this->json;
-    }
-
-    /**
      * Set points
      *
      * @param integer $points
@@ -372,6 +374,23 @@ class Track
     {
         return $this->points;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTimeStamps()
+    {
+        return $this->timeStamps;
+    }
+
+    /**
+     * @param mixed $timeStamps
+     */
+    public function setTimeStamps($timeStamps)
+    {
+        $this->timeStamps = $timeStamps;
+    }
+
     /**
      * @Assert\File(maxSize="6000000")
      */
@@ -390,15 +409,35 @@ class Track
     public function handleUpload()
     {
         $gpxReader = new GpxReader();
-        $gpxReader->loadFile($this->file->getPathname());
 
-        $this->setStartDateTime($gpxReader->getStartDateTime());
-        $this->setEndDateTime($gpxReader->getEndDateTime());
-        $this->setPoints($gpxReader->countPoints());
-        $this->setMd5Hash($gpxReader->getMd5Hash());
-        $this->setGpx($gpxReader->getFileContent());
-        $this->setJson($gpxReader->generateJson());
-        $this->setDistance($gpxReader->calculateDistance());
+        if ($gpxReader->loadFile($this->file->getPathname()))
+        {
+            $this->setStartDateTime($gpxReader->getStartDateTime());
+            $this->setEndDateTime($gpxReader->getEndDateTime());
+            $this->setPoints($gpxReader->countPoints());
+            $this->setMd5Hash($gpxReader->getMd5Hash());
+            $this->setGpx($gpxReader->getFileContent());
+            $this->setDistance($gpxReader->calculateDistance());
+            $this->setActivated(1);
+
+            $sag = new SimpleLatLngArrayGenerator();
+            $sag->loadTrack($this);
+            $sag->execute();
+
+            $this->setPreviewJsonArray($sag->getJsonArray());
+
+            $this->timeStamps = 0;
+
+            for ($i = 0; $i < $this->points; $i++) {
+                if ($gpxReader->getTimeOfPoint($i) != "") {
+                    $this->timeStamps++;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public function getDuration()
@@ -407,7 +446,7 @@ class Track
 
         return $diff->format('%h.%i');
     }
-    
+
     public function loadGpx()
     {
         $this->gpx = file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx');
@@ -420,8 +459,138 @@ class Track
         return $this;
     }
     
+    /**
+     * @return mixed
+     */
+    public function getActivated()
+    {
+        return $this->activated;
+    }
+
+    /**
+     * @param mixed $activated
+     */
+    public function setActivated($activated)
+    {
+        $this->activated = $activated;
+    }
+
+
+    /**
+     * Set rideEstimate
+     *
+     * @param \Caldera\CriticalmassStatisticBundle\Entity\RideEstimate $rideEstimate
+     * @return Track
+     */
+    public function setRideEstimate(\Caldera\CriticalmassStatisticBundle\Entity\RideEstimate $rideEstimate = null)
+    {
+        $this->rideEstimate = $rideEstimate;
+
+        return $this;
+    }
+
+    /**
+     * Get rideEstimate
+     *
+     * @return \Caldera\CriticalmassStatisticBundle\Entity\RideEstimate 
+     */
+    public function getRideEstimate()
+    {
+        return $this->rideEstimate;
+    }
+
     public function getGpx()
     {
         return $this->gpx;
+    }
+
+    public function saveTrack()
+    {
+        if (!$handle = fopen('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx', "a")) {
+            print "Kann die Datei nicht öffnen";
+            exit;
+        }
+
+        // Schreibe $somecontent in die geöffnete Datei.
+        if (!fwrite($handle, $this->getGpx())) {
+            print "Kann in die Datei nicht schreiben";
+            exit;
+        }
+
+        print "Fertig, in Datei wurde geschrieben";
+
+        fclose($handle);
+    }
+
+    public function loadTrack()
+    {
+        $this->setGpx(file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx'));
+    }
+
+    /**
+     * Set previewJsonArray
+     *
+     * @param boolean $previewJsonArray
+     * @return Track
+     */
+    public function setPreviewJsonArray($previewJsonArray)
+    {
+        $this->previewJsonArray = $previewJsonArray;
+
+        return $this;
+    }
+
+    /**
+     * Get previewJsonArray
+     *
+     * @return boolean 
+     */
+    public function getPreviewJsonArray()
+    {
+        return $this->previewJsonArray;
+    }
+
+    public function getPreviousTrack()
+    {
+        $tracks = $this->getUser()->getTracks();
+
+        $prevTrack = null;
+
+        foreach ($tracks as $track)
+        {
+            if ($track && !$prevTrack && $track->getStartDateTime() < $this->getStartDateTime())
+            {
+                $prevTrack = $track;
+            }
+            else
+                if ($track && $prevTrack && $track->getStartDateTime() > $prevTrack->getStartDateTime() && $track->getStartDateTime() < $this->getStartDateTime())
+                {
+                    $prevTrack = $track;
+                }
+        }
+
+        return $prevTrack;
+    }
+
+    public function getNextTrack()
+    {
+        $tracks = $this->getUser()->getTracks();
+
+        $nextTrack = null;
+
+        foreach ($tracks as $track)
+        {
+            if ($track && !$nextTrack && $track->getStartDateTime() > $this->getStartDateTime())
+            {
+                $nextTrack = $track;
+            }
+            else
+                if ($track && $nextTrack && $track->getStartDateTime() < $nextTrack->getStartDateTime() && $track->getStartDateTime() > $this->getStartDateTime())
+                {
+                    $nextTrack = $track;
+                }
+        }
+
+        return $nextTrack;
     }
 }

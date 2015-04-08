@@ -35,6 +35,12 @@ class RideEstimate
 	protected $ride;
 
     /**
+     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track", mappedBy="rideEstimate", cascade={"persist"})
+     * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
+     */
+    protected $track;
+
+    /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\Regex("/^([0-9]{1,6})$/")
      */
@@ -208,5 +214,28 @@ class RideEstimate
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set track
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $track
+     * @return RideEstimate
+     */
+    public function setTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $track = null)
+    {
+        $this->track = $track;
+
+        return $this;
+    }
+
+    /**
+     * Get track
+     *
+     * @return \Caldera\CriticalmassCoreBundle\Entity\Track 
+     */
+    public function getTrack()
+    {
+        return $this->track;
     }
 }

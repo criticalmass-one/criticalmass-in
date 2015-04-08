@@ -22,6 +22,11 @@ class StandardRideGenerator {
 
     public function execute()
     {
+        if (!$this->city->getIsStandardable())
+        {
+            return null;
+        }
+        
         $this->ride->setDateTime(new \DateTime($this->year.'-'.$this->month.'-01 00:00:00'));
 
         $this->calculateDate();
@@ -81,7 +86,7 @@ class StandardRideGenerator {
 
     protected function calculateLocation()
     {
-        if ($this->city->getStandardLocation())
+        if ($this->city->getStandardLocation() && $this->city->getStandardLatitude() && $this->city->getStandardLongitude())
         {
             $this->ride->setLocation($this->city->getStandardLocation());
             $this->ride->setLatitude($this->city->getStandardLatitude());
@@ -124,5 +129,18 @@ class StandardRideGenerator {
         $expectedStartDateTime->add($interval);
 
         $this->ride->setExpectedStartDateTime($expectedStartDateTime);
+    }
+
+    public function isRideDuplicate()
+    {
+        foreach ($this->city->getRides() as $ride)
+        {
+            if ($ride->isSameRide($this->ride))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 } 

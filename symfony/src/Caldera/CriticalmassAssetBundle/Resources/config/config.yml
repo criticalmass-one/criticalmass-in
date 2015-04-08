@@ -1,0 +1,35 @@
+assetic:
+    assets:
+        social_glyphicons_ttf:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.ttf
+            output: "fonts/glyphicons-social-regular.ttf"
+        social_glyphicons_eot:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.eot
+            output: "fonts/glyphicons-social-regular.eot"
+        social_glyphicons_svg:
+            inputs:
+                 - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.svg
+            output: "fonts/glyphicons-social-regular.svg"
+        social_glyphicons_woff:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/social/glyphicons-social-regular.woff
+            output: "fonts/glyphicons-social-regular.woff"
+
+        halflings_glyphicons_ttf:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/halflings/glyphicons-halflings-regular.ttf
+            output: "fonts/glyphicons-halflings-regular.ttf"
+        halflings_glyphicons_eot:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/halflings/glyphicons-halflings-regular.eot
+            output: "fonts/glyphicons-halflings-regular.eot"
+        halflings_glyphicons_svg:
+            inputs:
+                 - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/halflings/glyphicons-halflings-regular.svg
+            output: "fonts/glyphicons-halflings-regular.svg"
+        halflings_glyphicons_woff:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/halflings/glyphicons-halflings-regular.woff
+            output: "fonts/glyphicons-halflings-regular.woff"

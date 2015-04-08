@@ -3,6 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Utility\GpxReader;
 
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxCoordLoop\GpxCoordLoop;
+use Caldera\CriticalmassCoreBundle\Entity\Track;
 
 class GpxReader {
     protected $path;
@@ -13,13 +14,31 @@ class GpxReader {
     {
         $this->path = $path;
         $this->rawFileContent = file_get_contents($path);
+        $result = true;
+
+        try {
+            $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+        } catch (\Exception $e) {
+            $result = false;
+        }
+
+        return $result;
+    }
+    public function loadString($content)
+    {
+        $this->rawFileContent = $content;
 
         $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
     }
 
-    public function loadString($content)
+    public function loadTrack(Track $track)
     {
-        $this->rawFileContent = $content;
+        if (!$track->getGpx())
+        {
+            $track->loadTrack();
+        }
+
+        $this->rawFileContent = $track->getGpx();
 
         $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
     }
@@ -74,16 +93,35 @@ class GpxReader {
         return new \DateTime($this->getTimestampOfPoint($n));
     }
 
-    public function generateJson()
+    public function getTimeOfPoint($n)
+    {
+        return $this->simpleXml->trk->trkseg->trkpt[$n]->time;
+    }
+
+    public function getRootNode()
+    {
+        return $this->simpleXml;
+    }
+
+    public function generateJsonArray()
     {
         $result = array();
 
+        $counter = 0;
+
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
         {
-            $result[] = '['.$point['lat'].','.$point['lon'].']';
+            $result[] = array('lat' => (float) $point['lat'], 'lng' => (float) $point['lon']);//'['.$point['lat'].','.$point['lon'].']';
+
+            ++$counter;
+
+            if ($counter > 20)
+            {
+                break;
+            }
         }
 
-        return '['.implode($result, ',').']';
+        return $result;
     }
 
     /**

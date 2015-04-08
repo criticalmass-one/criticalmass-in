@@ -28,7 +28,7 @@ class RideController extends Controller
                     'dateTime' => $ride2->getDateTime()->format('F d, Y H:i:s'),
                     'hasLocation' => $ride2->getHasLocation(),
                     'title' => $ride2->getTitle(),
-                    'description' => $ride2->getDescription(),
+                    'description' => substr($ride2->getDescription(), 0, 250),
                     'url' => $ride2->getUrl(),
                     'facebook' => $ride2->getFacebook(),
                     'twitter' => $ride2->getTwitter(),

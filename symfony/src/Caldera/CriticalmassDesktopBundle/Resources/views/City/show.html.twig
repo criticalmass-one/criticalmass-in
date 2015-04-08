@@ -18,22 +18,22 @@
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li class="active">{{ city.getCity() }}</li>
         </ol>
 
         <ul class="nav nav-tabs" id="cityModalTabs">
             {% if hasCurrentRide %}
-            <li><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-flag"></i> {{ city.getCity() }}</a></li>
-            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="glyphicon glyphicon-calendar"></i> Nächste Tour</a></li>
+            <li><a href="#cityInfoTab" data-toggle="tab"><i class="halflings flag"></i> {{ city.getCity() }}</a></li>
+            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="halflings calendar"></i> Nächste Tour</a></li>
             {% else %}
-            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="glyphicon glyphicon-question-circle"></i> {{ city.getCity() }}</a></li>
+            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="halflings info-sign"></i> {{ city.getCity() }}</a></li>
             {% endif %}
             {% if hasRides %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="glyphicon glyphicon-road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
+            <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
             {% endif %}
-            <li><a href="#timelineTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
+            <li><a href="#timelineTab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
             <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder <span class="badge">{{ city.getPhotos()|length }}</span></a></li>
         </ul>
 
@@ -46,8 +46,8 @@
                 <div class="jumbotron">
                     {% if app.getUser() %}
                     <div class="btn-group pull-right" style="margin-top: 24px;">
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="glyphicon glyphicon-plus"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings uni-wrench"></i></a>
+                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings plus"></i></a>
                     </div>
                     {% endif %}
 
@@ -72,15 +72,15 @@
                         <h2>Mehr im Netz</h2>
 
                         {% if city.getUrl() %}
-                        <a class="btn btn-link" href="{{ city.getUrl() }}">Homepage</a>
+                        <a class="btn btn-default" href="{{ city.getUrl() }}"><i class="social rss"></i> Homepage</a>
                         {% endif %}
 
                         {% if city.getFacebook() %}
-                        <a class="btn btn-link" href="{{ city.getFacebook() }}">facebook</a>
+                        <a class="btn btn-default" href="{{ city.getFacebook() }}"><i class="social facebook"></i> facebook</a>
                         {% endif %}
 
                         {% if city.getTwitter() %}
-                        <a class="btn btn-link" href="{{ city.getTwitter() }}">twitter</a>
+                        <a class="btn btn-default" href="{{ city.getTwitter() }}"><i class="social twitter"></i> twitter</a>
                         {% endif %}
                     </div>
                     {% endif %}
@@ -88,101 +88,7 @@
             </div>
             {% if hasCurrentRide %}
             <div class="tab-pane fade in active" id="nextRideTab">
-                <div class="row">
-                    <div class="col-md-12">
-                        {% if app.getUser() %}
-                        <div class="btn-group pull-right" style="margin-top: 24px;">
-                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: city.getCurrentRide().getFormattedDate() } ) }}"><i class="glyphicon glyphicon-wrench"></i></a>
-                        </div>
-                        {% endif %}
-
-                        {% if city.getCurrentRide().getTitle() %}
-                        <h1>{{ city.getCurrentRide().getTitle() }}</h1>
-                        {% else %}
-                        <h1>{{ city.getCurrentRide().getCity().getTitle() }}</h1>
-                        {% endif %}
-                    </div>
-                </div>
-
-                {% if city.getCurrentRide().getDescription() %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>{{ city.getCurrentRide().getDescription() }}</p>
-                    </div>
-                </div>
-                {% endif %}
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="map" style="height: 300px;"></div>
-                        {% javascripts
-                        '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-                        %}
-                        <script type="text/javascript" src="{{ asset_url }}"></script>
-                        {% endjavascripts %}
-                        <script>
-                            var map = L.map('map');
-                            var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                                detectRetina: true
-                            });
-
-                            tileLayer.addTo(map);
-
-                            var popupContent = '<dl class="dl-horizontal">';
-                            popupContent += '<dt>Datum:</dt><dd>{{ city.getCurrentRide().getDateTime.format('d.m.Y') }}</dd>';
-                            popupContent += '<dt>Uhrzeit:</dt><dd>{{ city.getCurrentRide().getDateTime.format('H:i') }}</dd>';
-
-                            {% if city.getCurrentRide().getWeatherForecast() %}
-                            popupContent += '<dt>Wetter:</dt><dd>{{ city.getCurrentRide().getWeatherForecast() }}</dd>';
-                            {% endif %}
-
-                            {% if city.getCurrentRide().hasLocation() %}
-                            popupContent += '<dt>Treffpunkt:</dt> {{ city.getCurrentRide().getLocation() }}';
-
-                            var mapCenter = L.latLng({{ city.getCurrentRide().getLatitude() }}, {{ city.getCurrentRide().getLongitude() }});
-
-                            var locationIcon = L.icon({
-                                iconUrl: '/images/marker/marker-red.png',
-                                iconRetinaUrl: '/images/marker/marker-red-2x.png',
-                                iconSize: [25, 41],
-                                iconAnchor: [13, 41],
-                                popupAnchor: [0, -36],
-                                shadowUrl: '/images/marker/defaultshadow.png',
-                                shadowSize: [41, 41],
-                                shadowAnchor: [13, 41]
-                            });
-
-                            var marker = L.marker(mapCenter, { icon: locationIcon });
-                            {% else %}
-                            popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
-
-                            var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-
-                            var cityIcon = L.icon({
-                                iconUrl: '/images/marker/marker-gray.png',
-                                iconRetinaUrl: '/images/marker/marker-gray-2x.png',
-                                iconSize: [25, 41],
-                                iconAnchor: [13, 41],
-                                popupAnchor: [0, -36],
-                                shadowUrl: '/images/marker/defaultshadow.png',
-                                shadowSize: [41, 41],
-                                shadowAnchor: [13, 41]
-                            });
-
-                            var marker = L.marker(mapCenter, { icon: cityIcon });
-                            {% endif %}
-
-                            popupContenE-Mail Adresse geändert.t += '</dl>';
-
-                            marker.addTo(map);
-                            marker.bindPopup(popupContent);
-
-                            map.setView(mapCenter, 15);
-                            marker.openPopup();
-                        </script>
-                    </div>
-                </div>
+            {% include('CalderaCriticalmassDesktopBundle:Common:Ride.html.twig') with { 'ride': city.getCurrentRide() } %}
             </div>
             {% endif %}
             {% if hasRides %}
@@ -220,12 +126,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1>Kommentare</h1>
+
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
+
+                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
                     </div>
                 </div>
-                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
-
-                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
-
             </div>
 
             <div class="tab-pane fade in" id="galleryTab">

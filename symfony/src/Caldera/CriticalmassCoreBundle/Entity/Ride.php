@@ -16,27 +16,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Ride
 {
-	/**
-	 * Numerische ID der Tour.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
+    /**
+     * Numerische ID der Tour.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
-	/**
-	 * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
-	 *
-	 * @ORM\ManyToOne(targetEntity="City", inversedBy="rides")
-	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-	 */
+    /**
+     * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
+     *
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="rides")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
     protected $city;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="ride")
      */
     protected $tracks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SubRide", mappedBy="ride")
+     */
+    protected $subRides;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -55,39 +60,39 @@ class Ride
      */
     protected $dateTime;
 
-	/**
-	 * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
+    /**
+     * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
+     *
+     * @ORM\Column(type="boolean")
+     */
     protected $hasTime;
 
-	/**
-	 * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
+    /**
+     * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
+     *
+     * @ORM\Column(type="boolean")
+     */
     protected $hasLocation;
 
-	/**
-	 * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
-	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
+    /**
+     * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     protected $location;
 
-	/**
-	 * Breitengrad des Treffpunktes.
-	 *
-	 * @ORM\Column(type="float")
-	 */
+    /**
+     * Breitengrad des Treffpunktes.
+     *
+     * @ORM\Column(type="float")
+     */
     protected $latitude;
 
-	/**
-	 * Laengengrad des Treffpunktes.
-	 *
-	 * @ORM\Column(type="float")
-	 */
+    /**
+     * Laengengrad des Treffpunktes.
+     *
+     * @ORM\Column(type="float")
+     */
     protected $longitude;
 
     /**
@@ -192,7 +197,7 @@ class Ride
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -208,14 +213,14 @@ class Ride
     public function setDateTime($dateTime)
     {
         $this->dateTime = $dateTime;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -231,14 +236,14 @@ class Ride
     public function setHasTime($hasTime)
     {
         $this->hasTime = $hasTime;
-    
+
         return $this;
     }
 
     /**
      * Get hasTime
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHasTime()
     {
@@ -254,14 +259,14 @@ class Ride
     public function setHasLocation($hasLocation)
     {
         $this->hasLocation = $hasLocation;
-    
+
         return $this;
     }
 
     /**
      * Get hasLocation
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHasLocation()
     {
@@ -277,14 +282,14 @@ class Ride
     public function setLocation($location)
     {
         $this->location = $location;
-    
+
         return $this;
     }
 
     /**
      * Get location
      *
-     * @return string 
+     * @return string
      */
     public function getLocation()
     {
@@ -300,7 +305,7 @@ class Ride
     public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
     {
         $this->city = $city;
-    
+
         return $this;
     }
 
@@ -323,14 +328,14 @@ class Ride
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-    
+
         return $this;
     }
 
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -346,14 +351,14 @@ class Ride
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-    
+
         return $this;
     }
 
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -399,6 +404,11 @@ class Ride
         return $ride->getId() == $this->getId();
     }
 
+    public function isSameRide(Ride $ride)
+    {
+        return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
+    }
+
     public function getCityTitle()
     {
         return $this->getCity()->getTitle();
@@ -406,12 +416,9 @@ class Ride
 
     public function __toString()
     {
-        if ($this->city)
-        {
-            return $this->city->getTitle()." - ".$this->getDateTime()->format("Y-m-d");
-        }
-        else
-        {
+        if ($this->city) {
+            return $this->city->getTitle() . " - " . $this->getDateTime()->format("Y-m-d");
+        } else {
             return $this->getDateTime()->format("Y-m-d");
         }
     }
@@ -443,7 +450,7 @@ class Ride
     /**
      * Get visibleSince
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getVisibleSince()
     {
@@ -466,7 +473,7 @@ class Ride
     /**
      * Get visibleUntil
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getVisibleUntil()
     {
@@ -489,7 +496,7 @@ class Ride
     /**
      * Get expectedStartDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpectedStartDateTime()
     {
@@ -512,7 +519,7 @@ class Ride
     /**
      * Get enableTracking
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnableTracking()
     {
@@ -535,7 +542,7 @@ class Ride
     /**
      * Get estimatedParticipants
      *
-     * @return integer 
+     * @return integer
      */
     public function getEstimatedParticipants()
     {
@@ -558,7 +565,7 @@ class Ride
     /**
      * Get facebook
      *
-     * @return string 
+     * @return string
      */
     public function getFacebook()
     {
@@ -581,7 +588,7 @@ class Ride
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -604,7 +611,7 @@ class Ride
     /**
      * Get website
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -623,7 +630,7 @@ class Ride
 
     public function setDate(\DateTime $date)
     {
-        $newDate = new \DateTime($this->dateTime->format('Y-m-d').' 00:00:00');
+        $newDate = new \DateTime($this->dateTime->format('Y-m-d') . ' 00:00:00');
 
         $this->dateTime = $newDate->add($newDate->diff($date));
     }
@@ -635,8 +642,7 @@ class Ride
 
     public function setTime(\DateTime $time)
     {
-        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d').' '.$time->format('H:i:s'));
-
+        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
     }
 
     /**
@@ -655,7 +661,7 @@ class Ride
     /**
      * Get estimatedDistance
      *
-     * @return float 
+     * @return float
      */
     public function getEstimatedDistance()
     {
@@ -678,7 +684,7 @@ class Ride
     /**
      * Get estimatedDuration
      *
-     * @return float 
+     * @return float
      */
     public function getEstimatedDuration()
     {
@@ -724,11 +730,11 @@ class Ride
         // sanitize it at least to avoid any security issues
 
         $basePath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/ride/';
-        $path = $basePath.$this->getCity()->getMainSlugString().'/';
+        $path = $basePath . $this->getCity()->getMainSlugString() . '/';
 
         //@mkdir($path, 0777, true);
         // move takes the target directory and target filename as params
-        $this->getFile()->move($path, $path.$this->getId().'.jpg');
+        $this->getFile()->move($path, $path . $this->getId() . '.jpg');
 
         // set the path property to the filename where you've saved the file
         $this->filename = $this->getFile()->getClientOriginalName();
@@ -741,14 +747,16 @@ class Ride
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function lifecycleFileUpload() {
+    public function lifecycleFileUpload()
+    {
         $this->upload();
     }
 
     /**
      * Updates the hash value to force the preUpdate and postUpdate events to fire
      */
-    public function refreshUpdated() {
+    public function refreshUpdated()
+    {
         $this->setUpdated(date('Y-m-d H:i:s'));
     }
 
@@ -778,11 +786,28 @@ class Ride
     /**
      * Get tracks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {
         return $this->tracks;
+    }
+
+    public function getActiveTracks()
+    {
+        $tracks = $this->getTracks();
+
+        $result = array();
+
+        foreach ($tracks as $track)
+        {
+            if ($track->getActivated())
+            {
+                $result[] = $track;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -970,6 +995,17 @@ class Ride
     public function addPost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
+    }
+    
+    /**
+     * Add subRides
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides
+     * @return Ride
+     */
+    public function addSubRide(\Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides)
+    {
+        $this->subRides[] = $subRides;
 
         return $this;
     }
@@ -991,8 +1027,6 @@ class Ride
     {
         return $this->posts;
     }
-
-
 
     /**
      * Add photos
@@ -1025,5 +1059,40 @@ class Ride
     public function getPhotos()
     {
         return $this->photos;
+    }
+    
+    /**
+     * Remove subRides
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides
+     */
+    public function removeSubRide(\Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides)
+    {
+        $this->subRides->removeElement($subRides);
+    }
+
+    /**
+     * Get subRides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubRides()
+    {
+        return $this->subRides;
+    }
+
+    public function getActiveSubRides()
+    {
+        $subRides = array();
+
+        foreach ($this->subRides as $subRide)
+        {
+            if (!$subRide->getIsArchived())
+            {
+                $subRides[] = $subRide;
+            }
+        }
+
+        return $subRides;
     }
 }

@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: criticalmass.yml }
     - { resource: security.yml }
+    - { resource: @CalderaCriticalmassAssetBundle/Resources/config/config.yml }
     - { resource: @CalderaCriticalmassCoreBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassStatisticBundle/Resources/config/admin.yml }
     - { resource: @CalderaCriticalmassPlusBundle/Resources/config/admin.yml }
@@ -40,7 +41,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: true
-    bundles:        [ CalderaCriticalmassDesktopBundle, CalderaCriticalmassMobileBundle, CalderaCriticalmassCoreBundle, CalderaCriticalmassStatisticBundle, CalderaCriticalmassGalleryBundle ]
+    bundles:        [ CalderaCriticalmassApiBundle, CalderaCriticalmassAssetBundle, CalderaCriticalmassDesktopBundle, CalderaCriticalmassMobileBundle, CalderaCriticalmassCoreBundle, CalderaCriticalmassStatisticBundle, CalderaCriticalmassGalleryBundle, CalderaCriticalmassTimelineBundle ]
     java: /usr/bin/java
     filters:
         cssrewrite: ~

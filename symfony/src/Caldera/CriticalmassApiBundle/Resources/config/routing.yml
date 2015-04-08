@@ -1,3 +1,19 @@
+caldera_criticalmass_api_app_list:
+    pattern: /app/list
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:list }
+
+caldera_criticalmass_api_app_add:
+    pattern: /app/add
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:add }
+
+caldera_criticalmass_api_app_edit:
+    pattern: /app/edit/{appId}
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:edit }
+
+caldera_criticalmass_api_app_delete:
+    pattern: /app/delete/{appId}
+    defaults: { _controller: CalderaCriticalmassApiBundle:App:delete }
+
 CalderaCriticalmassCoreBundle_Api:
     resource: "@CalderaCriticalmassApiBundle/Resources/config/routing/cities.yml"
     prefix:   /api/cities

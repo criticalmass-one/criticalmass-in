@@ -50,4 +50,21 @@ class RideGuesser {
     {
         return count($this->rides) == 0;
     }
+    
+    public function isDuplicate()
+    {
+        if ($this->isDistinct())
+        {
+            $ride = $this->rides[0];
+            $user = $this->controller->getUser();
+            
+            $duplicate = $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(
+                array('ride' => $ride, 'user' => $user)
+            );
+            
+            return $duplicate != null;
+        }
+        
+        throw new \Exception('Please call this method only on distinct rides.');
+    }
 } 

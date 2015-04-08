@@ -50,7 +50,8 @@ BaseMap.prototype.switchTileLayer = function(oldCitySlug, newCitySlug)
         this.map.removeLayer(this.tileLayer);
 
         this.tileLayer = L.tileLayer(newCity.getTileLayerAddress(), {
-            attribution: newCity.getTileLayerAttributation()
+            attribution: newCity.getTileLayerAttributation(),
+            detectRetina: true
         });
 
         this.tileLayer.addTo(this.map);

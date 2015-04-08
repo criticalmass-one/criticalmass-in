@@ -10,34 +10,14 @@ caldera_criticalmass_statistic_ride_participants:
     pattern:  /statistic/ride/participants/{year}/{month}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Statistic:rideparticipants, year: null, month: null }
 
-caldera_criticalmass_statistic_track_list:
-    pattern:  /track/list
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:list }
-
-caldera_criticalmass_statistic_track_upload:
-    pattern:  /track/upload
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:upload }
-
-caldera_criticalmass_statistic_track_setride:
-    pattern:  /track/setride/{trackId}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:setRide }
-
-caldera_criticalmass_statistic_track_upload_failed:
-    pattern:  /track/upload/failed
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:uploadFailed }
-
-caldera_criticalmass_statistic_track_view:
-    pattern:  /track/view/{trackId}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:view }
-
 caldera_criticalmass_statistic_ride_estimate:
     pattern:  /{citySlug}/{rideDate}/estimate
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Ride:estimate }
 
-caldera_criticalmass_statistic_gpxgenerate:
-    pattern: /track/generate/{rideId}
-    defaults: { _controller: CalderaCriticalmassStatisticBundle:Track:gpxgenerate }
-
 caldera_criticalmass_heatmap_homepage:
     pattern:  /heatmap/generate/{heatmapId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Default:generate }
+
+caldera_criticalmass_desktop_ride:
+    resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing/track.yml"
+    prefix: /track

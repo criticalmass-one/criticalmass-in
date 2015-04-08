@@ -17,3 +17,11 @@ caldera_criticalmass_timeline_post_write_city:
 caldera_criticalmass_timeline_post_write_photo:
     path:     /timeline/write/photo/{photoId}
     defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
+
+caldera_criticalmass_timeline_post_deleteconfirm:
+    pattern:  /post/deleteconfirm/{postId}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:deleteconfirm }
+
+caldera_criticalmass_timeline_post_reportconfirm:
+    pattern:  /post/reportconfirm/{postId}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:reportconfirm }

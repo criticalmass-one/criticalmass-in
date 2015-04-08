@@ -36,6 +36,11 @@ class User extends BaseUser
     protected $currentCity;
 
     /**
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track", mappedBy="user", cascade={"persist", "remove"})
+     */
+    protected $tracks;
+
+    /**
      * @ORM\Column(type="smallint")
      */
     protected $colorRed = 0;
@@ -186,5 +191,43 @@ class User extends BaseUser
     public function getPingToken()
     {
         return $this->pingToken;
+    }
+
+    public function equals(User $user)
+    {
+        return $user->getId() == $this->getId();
+    }
+
+    /**
+     * Add tracks
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @return User
+     */
+    public function addTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    {
+        $this->tracks[] = $tracks;
+
+        return $this;
+    }
+
+    /**
+     * Remove tracks
+     *
+     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     */
+    public function removeTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    {
+        $this->tracks->removeElement($tracks);
+    }
+
+    /**
+     * Get tracks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTracks()
+    {
+        return $this->tracks;
     }
 }

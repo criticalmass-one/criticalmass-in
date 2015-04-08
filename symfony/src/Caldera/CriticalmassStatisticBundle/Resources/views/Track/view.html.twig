@@ -11,19 +11,28 @@
             <li class="active">Track anzeigen</li>
         </ol>
 
-        {% if track.getRide().getTitle() %}
-        <h1>{{ track.getRide().getTitle() }}</h1>
-        {% else %}
-        <h1>{{ track.getRide().getCity().getTitle() }}</h1>
-        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                {% if track.getRide().getTitle() %}
+                <h1>{{ track.getRide().getTitle() }}</h1>
+                {% else %}
+                <h1>{{ track.getRide().getCity().getTitle() }}</h1>
+                {% endif %}
+            </div>
+        </div>
 
-        <div id="map" class="col-lg-12" style="height: 350px;"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
 
         {% javascripts
         '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+        <script type="text/javascript" src="/geojson/track/3.json"></script>
         <script>
             var map = L.map('map');
             var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -31,14 +40,40 @@
             });
 
             tileLayer.addTo(map);
-            map.setView([53, 9], 10);
+
+            map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
 
             // create a red polyline from an arrays of LatLng points
-            var polyline = L.polyline({{ track.getJson() }}, {color: 'red'}).addTo(map);
+            var polyline = L.polyline({{ track.getPreviewJsonArray() }}, { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }).addTo(map);
 
             // zoom the map to the polyline
             map.fitBounds(polyline.getBounds());
-
         </script>
+
+        <div class="row">
+            <div class="col-md-3">Tour:<br /><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: track.getRide().getCity().getMainSlugString(), rideDate: track.getRide().getFormattedDate() }) }}">{{ track.getRide().getFancyTitle() }}</a></div>
+            <div class="col-md-2">{{ track.getRide().getDateTime.format('d.m.Y') }}<br />{{ track.getRide().getDateTime.format('H:i') }} Uhr</div>
+            <div class="col-md-3">Treffpunkt:<br />{{ track.getRide().getLocation() }}</div>
+            <div class="col-md-2"><span style="font-size: 20px;">{{ track.getDistance()|round(2) }}</span><br />Kilometer</div>
+            <div class="col-md-2"><span style="font-size: 20px;">{{ track.getDuration()|round(2) }}</span><br />Stunden</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pager">
+                    {% if track.getPreviousTrack() %}
+                    <li class="previous"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getPreviousTrack().getId() }) }}">&larr; Voriger Track</a></li>
+                    {% else %}
+                    <li class="previous disabled"><a href="#">&larr; Voriger Track</a></li>
+                    {% endif %}
+
+                    {% if track.getNextTrack() %}
+                    <li class="next"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getNextTrack().getId() }) }}">Nächster Track &rarr;</a></li>
+                    {% else %}
+                    <li class="next disabled"><a href="#">Nächster Track &rarr;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}

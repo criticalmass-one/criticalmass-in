@@ -833,7 +833,22 @@ class City
 
     public function countRides()
     {
-        return count($this->rides);
+        return count($this->getActiveRides());
+    }
+
+    public function getActiveRides()
+    {
+        $result = array();
+
+        foreach ($this->rides as $ride)
+        {
+            if (!$ride->getIsArchived())
+            {
+                $result[] = $ride;
+            }
+        }
+
+        return $result;
     }
 
     public function getCurrentRide()
@@ -1080,6 +1095,12 @@ class City
         return $this->colorBlue;
     }
 
+    /**
+     * Checks if this city has already a saved ride for the given month.
+     *
+     * @param \DateTime $dateTime
+     * @return bool
+     */
     public function hasRideInMonth(\DateTime $dateTime)
     {
         foreach ($this->rides as $ride)
@@ -1093,6 +1114,12 @@ class City
         return false;
     }
 
+    /**
+     * Checks if this city has already a saved ride for the given day.
+     *
+     * @param \DateTime $dateTime
+     * @return bool
+     */
     public function hasRideAtMonthDay(\DateTime $dateTime)
     {
         foreach ($this->rides as $ride)

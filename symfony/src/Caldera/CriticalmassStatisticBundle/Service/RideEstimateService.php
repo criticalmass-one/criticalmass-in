@@ -3,6 +3,8 @@
 namespace Caldera\CriticalmassStatisticBundle\Service;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\CriticalmassCoreBundle\Entity\Track;
+use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Caldera\CriticalmassStatisticBundle\Utility\RideEstimateCalculator\RideEstimateCalculator;
 
 class RideEstimateService
@@ -26,6 +28,24 @@ class RideEstimateService
 
         $em = $this->doctrine;
         $em->persist($ride);
+        $em->flush();
+    }
+
+    public function addEstimate(Track $track)
+    {
+        /* Extract the ride distance and duration into a RideEstimate entity. */
+        $re = new RideEstimate();
+        $re->setRide($track->getRide());
+        $re->setUser($track->getUser());
+        $re->setTrack($track);
+
+        $track->setRideEstimate($re);
+
+        $re->setEstimatedDistance($track->getDistance());
+        $re->setEstimatedDuration($track->getDuration());
+
+        $em = $this->doctrine;
+        $em->persist($re);
         $em->flush();
     }
 }

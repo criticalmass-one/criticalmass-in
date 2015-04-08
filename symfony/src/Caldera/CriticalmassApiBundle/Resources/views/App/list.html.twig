@@ -1,0 +1,87 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Deine Apps{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_api_app_add') }}" style="margin-top: 24px;"><i class="halflings plus"></i>&nbsp;&nbsp;App hinzufügen</a>
+                <h1>Alles ist aus Crowd gemacht.</h1>
+                <p class="lead">Dem Grundgedanken der Critical Mass folgend kannst du unsere Daten auch auf anderen Seiten oder in anderen Apps nutzen. Es funktioniert ganz einfach!</p>
+                <p>Du musst dir lediglich eine so genannte App registrieren — das muss nicht zwangsläufig eine „echte App“ fürs Smartphone sein, das ist eher die Bezeichnung für einen Zugang zu unserer API.</p>
+            </div>
+        </div>
+
+        <table id="cityList" class="table">
+            <tr id="tableHeaderRow">
+                <th>Titel</th>
+                <th>Erstellt</th>
+                <th>Zugriffsschlüssel</th>
+                <th>Aufrufe</th>
+                <th>Status</th>
+                <th>Optionen</th>
+            </tr>
+            {% for app in apps %}
+            <tr>
+                {% if app.getUrl() %}
+                <td><a href="{{ app.getUrl() }}">{{ app.getTitle() }}</a></td>
+                {% else %}
+                <td>{{ app.getTitle() }}</td>
+                {% endif %}
+                <td>{{ app.getCreationDateTime().format('Y-m-d H:i') }} Uhr</td>
+                <td>{% if app.getApproved() %}<code class="hidden">{{ app.getToken() }}</code><button class="showTokenButton btn btn-xs btn-default">anzeigen</button>{% endif %}</td>
+                <td>{{ app.getApiCalls() }}</td>
+                <td>{% if app.getApproved() == 1 %}{% if app.getEnabled == 1 %}aktiv{% else %}inaktiv{% endif %}{% else %}Warten auf Freischaltung{% endif %}</td>
+                <td>
+                    <a href="{{ path('caldera_criticalmass_api_app_edit', { 'appId': app.getId() }) }}" class="btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>
+                    <a class="btn btn-default btn-xs appDeleteButton" title="Löschen" href="#" data-appid={{ app.getId() }}><i class="halflings trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                $('.showTokenButton').on('click', function()
+                {
+                    $(this).prev().removeClass('hidden');
+                    $(this).hide();
+                });
+            };
+        </script>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">App löschen</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="trackIdLabel"></span>
+                    <p>Willst Du diese App wirklich löschen?</p>
+
+                    <a id="deleteButton" href="" class="btn btn-success">Ja, löschen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% javascripts
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        function prepareDeleteModal()
+        {
+            var appId = $(this).data('appid');
+            $('#deleteButton').prop('href', '/app/delete/' + appId);
+            $('#modalDelete').modal('show');
+        }
+
+        $('.appDeleteButton').on('click', prepareDeleteModal);
+
+    </script>
+{% endblock %}

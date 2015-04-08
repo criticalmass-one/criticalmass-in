@@ -1,0 +1,91 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% if app2 != null %}
+    {% set title = 'App editieren' %}
+{% else %}
+    {% set title = 'Neue App hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
+            <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
+            {% if app2 != null %}
+            <li class="active">App editieren</li>
+            {% else %}
+            <li class="active">App hinzufügen</li>
+            {% endif %}
+        </ol>
+
+        {% if hasErrors is not null %}
+        {% if hasErrors == true %}
+        <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+        {% elseif hasErrors == false %}
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_api_app_list') }}">Zurück zur Übersicht?</a></div>
+        {% endif %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Gib hier den Titel deiner App ein. Das kann auch einfach die Bezeichnung einer Webseite oder dein eigener Name sein.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Beschreibung:</label>
+                    {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Beschreibe kurz, worum es in deiner App geht.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Webseite:</label>
+                    {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Wenn du eine Webseite betreibst oder deine App über eine Webseite verbreitest, gib bitte hier deren Adresse ein.</p>
+                </div>
+            </div>
+        </div>
+
+        {% if app2 != null and app2.getApproved == 1 %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.enabled) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Aktivierung:</label>
+                    {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Schalte hier den Zugriff auf die Api ein oder aus. Wenn du den Zugriff abschaltest, kannst du mit deinem Zugriffsschlüssel nicht mehr auf die Api zugreifen.</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <input type="hidden" name="app[enabled]" value="0" />
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success pull-right">Speichern</button>
+            </div>
+        </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-<p>Lorem ipsum</p>
+<p>Wenn du eine Critical-Mass-Tour aufgezeichnet ist, kannst du hier deren Track als GPX-Datei hochladen.</p>
 
 {{ form_start(form, {'attr': {'role': 'form'}}) }}
 
@@ -7,5 +7,21 @@
     {{ form_widget(form.file, {'attr': {'class': 'form-control' }}) }}
 </div>
 
-<button type="submit" class="btn btn-default">Track hochladen</button>
+<button id="uploadGpxButton" type="submit" class="btn btn-default">Track hochladen</button>
 {{ form_end(form) }}
+
+<script type="text/javascript">
+    $('#uploadGpxButton').on('click', function()
+    {
+        $('#uploadGpxButton').prop('disabled', 'true');
+        $('#uploadGpxButton').html('Einen Moment bitte…');
+    });
+
+    window.onload = function()
+    {
+        $('#modalTrackUpload').on('hidden.bs.modal', function () {
+            $('#uploadGpxButton').prop('disabled', '');
+            $('#uploadGpxButton').html('Track hochladen');
+        });
+    }
+</script>

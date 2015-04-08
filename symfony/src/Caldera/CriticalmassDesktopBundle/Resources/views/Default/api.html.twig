@@ -1,0 +1,67 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}criticalmass.in REST Api{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+        <li class="active">criticalmass.in REST api</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Alles wird aus Crowd gemacht.</h1>
+
+            <p class="lead">Lorem ipsum.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>So geht’s</h2>
+
+            <p>Um auf die criticalmass.in-Api zugreifen zu können, brauchst du lediglich einen eigenen Zugriffsschlüssel. Als angemeldeter Benutzer kannst du dir <a href="{{ path('caldera_criticalmass_api_app_list') }}">in deinem Benutzerkonto</a> einen Schlüssel anfordern, indem du eine so genannte App registrierst. Bei einer solchen App muss es sich nicht um eine Smartphone-App in dem Sinne handeln, wie das Wort mittlerweile häufig verwendet wird, du kannst auch einfach für deine eigene Webseite eine solche App anmelden, um anschließend beispielsweise eine Karte darauf einzubinden.</p>
+
+            <h2>Was ist ein Slug?</h2>
+
+            <p>Ein Slug ist der Name der Stadt ohne Großbuchstaben, Umlaute und Sonderzeichen. Aus Berlin würde etwa <code>berlin</code>, die Critical Mass Hamburg-Harburg liefe unter <code>hamburgharburg</code> und aus Düsseldorf würde <code>duesseldorf</code>. Anhand dieses Slugs können Städte auf criticalmass.in eindeutig idenifiziert werden.</p>
+
+            <h2>Authentifizierung</h2>
+
+            <p>Damit die Api weiß, mit wem sie hier redet, muss bei jeder Anfrage das Header-Feld <code>X-CriticalMassIn-Access-Token</code> mit deinem eigenen Zugangs-Token mitgeschickt werden.</p>
+
+            <h2>Beispiele</h2>
+
+            <p>Weil diese Dokumentation noch nicht so ganz viel taugt, kannst du dir noch zwei unserer Widgets in unserem <a href="https://github.com/calderacc/criticalmass.in-widgets">GitHub-Repository</a> ansehen.</p>
+
+            <h2>Api-Aufrufe</h2>
+
+            <h3>Liste aller Städte</h3>
+
+            <code>GET /api/citylist</code>
+
+            <p>Gibt eine Liste aller Städte inklusive der aktuellen Tour zurück.</p>
+
+            <h3>Informationen über eine einzelne Stadt</h3>
+
+            <code>GET /api/city/?slug</code>
+
+            <p>Gibt Informationen über die als Parameter <code>slug</code> angeforderte Stadt zurück. Zusätzlich werden Informationen der aktuellen Tour angehängt.</p>
+
+            <h3>Informationen über eine spezielle Tour</h3>
+
+            <code>GET /api/city/?slug/ride/?rideDate</code>
+
+            <p>Funktioniert wie der vorige Aufruf, gibt aber anstatt der letzten Tour die anhand des <code>?rideDate</code> identifizierte Tour zurück. Als <code>?rideDate</code> wird eine Datumsangabe im Format <code>yyyy-mm-dd</code> erwartet, beispielsweise <code>{{ currentDateTime.format('Y-m-d') }}</code>.</p>
+
+            <h3>Teilnehmer-Positionen einer Stadt</h3>
+
+            <code>GET /api/positions/?slug</code>
+
+            <p>Gibt die Positionsdaten aller Teilnehmer der mit <code>?slug</code> identifierten Stadt zurück, die ihren Aufenthaltsort öffentlich teilen.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

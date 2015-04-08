@@ -11,12 +11,11 @@
         </ol>
 
         <div class="row">
-            <a class="btn btn-success pull-right" href="#" data-toggle="modal" data-target="#modalTrackUpload" style="margin-top: 24px;"><i class="fa fa-cloud-upload"></i>&nbsp;&nbsp;Track hinzufügen</a>
-            <h1>Hier warst du schon mal.</h1>
-        </div>
-
-        <div class="row">
-            <p>Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast. Du kannst entweder neue Tracks über den grünen Button oben rechts ergänzen oder künftig deine aufgezeichneten Tracks direkt mit deinem Benutzerkonto verknüpfen.</p>
+            <div class="col-md-12">
+                <a class="btn btn-success pull-right" href="#" data-toggle="modal" data-target="#modalTrackUpload" style="margin-top: 24px;"><i class="halflings cloud_upload"></i>&nbsp;&nbsp;Track hinzufügen</a>
+                <h1>Hier warst du schon mal.</h1>
+                <p>Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast. Du kannst entweder neue Tracks über den grünen Button oben rechts ergänzen oder künftig deine aufgezeichneten Tracks direkt mit deinem Benutzerkonto verknüpfen.</p>
+            </div>
         </div>
 
         <table class="table">
@@ -27,23 +26,37 @@
                 <th>Beginn</th>
                 <th>Ende</th>
                 <th>Distanz</th>
-                {#<th>Optionen</th>#}
+                <th>Optionen</th>
             </tr>
             {% for track in tracks %}{% if track.getRide() %}
+            {% if not track.getActivated() %}
+            <tr style="text-decoration: line-through;">
+            {% else %}
             <tr>
+            {% endif %}
                 <td><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
-                <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">{% if track.getRide().getTitle() %}
-                {{ track.getRide().getTitle() }}
+                <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
+                {% if track.getRide().getTitle() %}
+                    {{ track.getRide().getTitle() }}
                 {% else %}
-                {{ track.getRide().getCity().getTitle() }}
+                    {{ track.getRide().getCity().getTitle() }}
                 {% endif %}</a></td>
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getDistance()|round(2) }} Kilometer</td>
-                {#<td><button type="button" class="btn btn-default btn-xs"><span class="fa fa-trash-o"></span></button></td>#}
+                <td><a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_statistic_track_download', {'trackId': track.getId()}) }}"><i class="halflings download"></i></a>
+                {% if track.getActivated() %}
+                <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="halflings eye-close"></i></a>
+                {% else %}
+                <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_statistic_track_toggle', {'trackId': track.getId()}) }}"><i class="halflings eye-open"></i></a>
+                {% endif %}
+                <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-trackid={{ track.getId() }}><i class="halflings trash"></i></a></td>
             </tr>
             {% endif %}{% endfor %}
+            {% if tracks|length == 0 %}
+                <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen. Greif dir eine GPX-Datei und <a href="#" data-toggle="modal" data-target="#modalTrackUpload">lege los</a>!</td>
+            {% endif %}
         </table>
     </div>
 
@@ -60,4 +73,39 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Track löschen</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="trackIdLabel"></span>
+                    <p>Willst Du diesen Track wirklich löschen?</p>
+
+                    <a id="deleteButton" href="" class="btn btn-success">Ja, löschen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% javascripts
+    '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        function prepareDeleteModal()
+        {
+            var trackId = $(this).data('trackid');
+            $('#deleteButton').prop('href', '/track/delete/' + trackId);
+            $('#modalDelete').modal('show');
+        }
+
+        $('.trackDeleteButton').on('click', prepareDeleteModal);
+
+    </script>
+
 {% endblock %}

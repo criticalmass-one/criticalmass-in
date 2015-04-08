@@ -1,0 +1,188 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% if subRide %}
+{% set title = 'Mini-Mass editieren' %}
+{% else %}
+{% set title = 'Mini-Mass hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if subRide %}
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Mini-Mass editieren</li>
+        </ol>
+        {% else %}
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Mini-Mass hinzufügen</li>
+        </ol>
+        {% endif %}
+
+        <h1>{{ title }}</h1>
+        <p>Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.</p>
+
+        {% if hasErrors is not null %}
+        {% if hasErrors == true %}
+        <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+        {% elseif hasErrors == false %}
+        <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">Zurück zur Tour?</a></div>
+        {% endif %}
+        {% endif %}
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 250px;"></div>
+            </div>
+            {% javascripts
+            '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            <script>
+                window.onload = function()
+                {
+                    {% if subRide %}
+                    var mapCenter = L.latLng({{ subRide.getLatitude() }}, {{ subRide.getLongitude() }});
+                    {% elseif not subRide and ride.hasLocation() %}
+                    var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+                    {% else %}
+                    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+                    {% endif %}
+
+                    var map = L.map('map');
+                    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                        detectRetina: true
+                    });
+
+                    tileLayer.addTo(map);
+                    map.setView(mapCenter, 12);
+
+                    var locationIcon = L.icon({
+                        iconUrl: '/images/marker/marker-blue.png',
+                        iconRetinaUrl: '/images/marker/marker-blue-2x.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [13, 41],
+                        popupAnchor: [0, -36],
+                        shadowUrl: '/images/marker/defaultshadow.png',
+                        shadowSize: [41, 41],
+                        shadowAnchor: [13, 41]
+                    });
+
+                    var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
+                    marker.addTo(map);
+                    marker.bindPopup('Schieb mich auf den Treffpunkt!');
+                    marker.openPopup();
+
+                    marker.on('dragend', function(event){
+                        var marker = event.target;
+                        var position = marker.getLatLng();
+
+                        $('#subride_latitude').val(position.lat);
+                        $('#subride_longitude').val(position.lng);
+                    });
+                };
+            </script>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="title">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+                    <p class="help-block">Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal aussagekräftig sein — Hauptsache man weiß, worum es geht.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="description">Beschreibung:</label>
+                    {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
+                    <p class="help-block">Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier zum Beispiel eine ungefähre Route fest.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="description">Treffpunkt:</label>
+                    {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                    <p class="help-block">Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte zu markieren.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="description">Datum:</label>
+                    <div class="form-control">{{ ride.getDateTime().format('d. F Y') }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="description">Uhrzeit:</label>
+                    {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="facebook">Link zu einer Veranstaltungsseite auf facebook:</label>
+                    {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="twitter">Link zu einem Tweet:</label>
+                    {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="url">Link zu einer Webseite:</label>
+                    {{ form_widget(form.url, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success pull-right" id="rideSubmitButton">Speichern</button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_widget(form.latitude) }}
+        {{ form_widget(form.longitude) }}
+        {{ form_widget(form._token) }}
+
+    </form>
+</div>
+{% endblock %}

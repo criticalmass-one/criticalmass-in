@@ -29,7 +29,7 @@ class CityController extends Controller
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "'.$citySlug.'" finden :(');
         }
 
-        $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array('city' => $city->getId()), array('dateTime' => 'DESC'));
+        $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array('city' => $city->getId(), 'isArchived' => false), array('dateTime' => 'DESC'));
 
         if ($city->getCurrentRide())
         {
@@ -37,16 +37,11 @@ class CityController extends Controller
             // shift the first ride from the array as the first one is the current and should not be displayed at the recent rides list
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'rides' => $rides));
+        return $this->render('CalderaCriticalmassDesktopBundle:City:show.html.twig', array('city' => $city, 'rides' => $rides, 'dateTime' => new \DateTime()));
     }
 
     public function addAction(Request $request)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Stadt hinzufügen zu können.');
-        }
-
         $city = new City();
 
         $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')));
@@ -81,11 +76,6 @@ class CityController extends Controller
 
     public function editAction(Request $request, $citySlug)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Stadt bearbeiten zu können.');
-        }
-
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
         $form = $this->createForm(new StandardCityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));

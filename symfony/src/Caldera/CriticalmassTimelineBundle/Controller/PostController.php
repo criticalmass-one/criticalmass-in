@@ -115,4 +115,30 @@ class PostController extends Controller
         /* And render our shit. */
         return $this->render('CalderaCriticalmassTimelineBundle:Post:list.html.twig', array('posts' => $posts));
     }
+
+    public function deleteconfirmAction(Request $request, $postId = 0)
+    {
+        if ($postId > 0) {
+            $em = $this->getDoctrine()->getManager();
+            $post = $em->find('CalderaCriticalmassTimelineBundle:Post',$postId);
+            $em->remove($post);
+            $em->flush();
+        }
+
+        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+    }
+
+    public function reportconfirmAction(Request $request, $postId = 0)
+    {
+        if ($postId > 0) {
+            $em = $this->getDoctrine()->getManager();
+            $post = $em->find('CalderaCriticalmassTimelineBundle:Post',$postId);
+
+            $content = "Es wurde der Kommentar mit der ID " + $postId + "gemeldet.\n" + "Der Inhalt:\n" + $post->getMessage();
+
+            mail("malte@criticalmass.in", "Kommentar gemeldet", $content, "malte@criticalmass.in");
+        }
+
+        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+    }
 }

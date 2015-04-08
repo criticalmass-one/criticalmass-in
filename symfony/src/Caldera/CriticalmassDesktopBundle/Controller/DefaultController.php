@@ -29,6 +29,11 @@ class DefaultController extends Controller
         return $this->render('CalderaCriticalmassDesktopBundle:Default:glympse.html.twig');
     }
 
+    public function apiAction()
+    {
+        return $this->render('CalderaCriticalmassDesktopBundle:Default:api.html.twig', array('currentDateTime' => new \DateTime()));
+    }
+
     public function criticalmassAction()
     {
         return $this->render('CalderaCriticalmassDesktopBundle:Default:criticalmass.html.twig');

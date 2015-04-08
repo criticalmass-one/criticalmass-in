@@ -2,6 +2,8 @@ symfony/web/css
 symfony/web/js
 symfony/composer.lock
 symfony/app/config/database.yml
+symfony/app/config/parameters.yml
+symfony/app/config/parameters.yml.dist
 .sonar
 symfony/web/images/*
 symfony/web/fonts
