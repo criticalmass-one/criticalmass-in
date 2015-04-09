@@ -1,0 +1,7 @@
+parameters:
+#    caldera_criticalmass_track.example.class: Caldera\CriticalmassTrackBundle\Example
+
+services:
+#    caldera_criticalmass_track.example:
+#        class: %caldera_criticalmass_track.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

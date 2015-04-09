@@ -1,0 +1,3 @@
+caldera_criticalmass_track_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CalderaCriticalmassTrackBundle:Default:index }

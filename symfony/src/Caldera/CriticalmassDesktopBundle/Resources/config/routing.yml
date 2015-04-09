@@ -30,11 +30,10 @@ caldera_criticalmass_desktop_content_show:
     pattern: /static/{classSlug}/{itemSlug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Content:show }
 
-<<<<<<< HEAD
 caldera_criticalmass_desktop_ride_estimate:
     pattern: /ride/estimate/{rideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:estimateride }
-=======
+
 caldera_criticalmass_desktop_subride:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing/subride.yml"
     prefix: /subride
@@ -50,4 +49,3 @@ caldera_criticalmass_desktop_ride:
 caldera_criticalmass_desktop_slugindex:
     pattern:  /{slug}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:slugindex }
->>>>>>> working
