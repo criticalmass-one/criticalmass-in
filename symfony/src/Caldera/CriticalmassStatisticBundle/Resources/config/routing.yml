@@ -17,7 +17,3 @@ caldera_criticalmass_statistic_ride_estimate:
 caldera_criticalmass_heatmap_homepage:
     pattern:  /heatmap/generate/{heatmapId}
     defaults: { _controller: CalderaCriticalmassStatisticBundle:Default:generate }
-
-caldera_criticalmass_desktop_ride:
-    resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing/track.yml"
-    prefix: /track
