@@ -1,11 +1,9 @@
 <?php
 
-namespace Caldera\CriticalmassStatisticBundle\Controller;
+namespace Caldera\CriticalmassTrackBundle\Controller;
 
-use Caldera\CriticalmassCoreBundle\Entity\Track;
-use Caldera\CriticalmassCoreBundle\Utility\GeoJsonUtility\GeoJsonUtility;
+use Caldera\CriticalmassTrackBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
-use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -61,14 +59,14 @@ class TrackController extends Controller
 
     public function listAction()
     {
-        $tracks = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
+        $tracks = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
 
         foreach ($tracks as $track) {
             $track->setStartDateTime($track->getStartDateTime()->add(new \DateInterval('PT2H')));
             $track->setEndDateTime($track->getEndDateTime()->add(new \DateInterval('PT2H')));
         }
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:list.html.twig', array('tracks' => $tracks));
+        return $this->render('CalderaCriticalmassTrackBundle:Track:list.html.twig', array('tracks' => $tracks));
     }
 
     public function uploadAction(Request $request)
@@ -76,7 +74,7 @@ class TrackController extends Controller
         $errorList = array();
         $track = new Track();
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_statistic_track_upload'))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_track_upload'))
             ->add('file')
             ->getForm();
 
@@ -115,7 +113,7 @@ class TrackController extends Controller
                 }
                 elseif ($rg->isDuplicate())
                 {
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
                 }
                 /* Okay, it found a distinct ride, so let’s bring up the magic. */
                 elseif (($rg->isDistinct()) && (sizeof($errorList) == 0))
@@ -138,7 +136,7 @@ class TrackController extends Controller
                     $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
                     /* Throw the user back to his track list. */
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_strack_track_list'));
                 }
                 /* No, that didn’t work. We cannot detect a distinct ride, so the user has to set a ride hisself. */
                 elseif (sizeof($errorList) == 0) {
@@ -147,7 +145,7 @@ class TrackController extends Controller
 
                     $track->saveTrack();
 
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_setride', array('trackId' => $track->getId())));
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_setride', array('trackId' => $track->getId())));
                 }
             } else {
                 array_push($errorList, "noXML");
@@ -157,15 +155,15 @@ class TrackController extends Controller
         }
 
         if (sizeof($errorList) > 0) {
-            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_upload_failed', array('errorList' => $errorList)));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_upload_failed', array('errorList' => $errorList)));
         }
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassTrackBundle:Track:upload.html.twig', array('form' => $form->createView()));
     }
 
     public function setrideAction(Request $request, $trackId)
     {
-        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
+        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneById($trackId);
 
         /* Well, when this action is called, the RideGuesser seemed to fail to detect a distinct ride. We need to catch a new list of the possible rides to present it to the user. */
         $rg = new RideGuesser($this);
@@ -204,24 +202,24 @@ class TrackController extends Controller
             $em->persist($track);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
         }
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:setride.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassTrackBundle:Track:setride.html.twig', array('form' => $form->createView()));
     }
 
     public function uploadfailedAction()
     {
-        return $this->render('CalderaCriticalmassStatisticBundle:Track:uploadfailed.html.twig');
+        return $this->render('CalderaCriticalmassTrackBundle:Track:uploadfailed.html.twig');
     }
 
     public function viewAction(Request $request, $trackId)
     {
-        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneById($trackId);
+        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneById($trackId);
 
         if ($track && $track->getUser()->equals($this->getUser()))
         {
-            return $this->render('CalderaCriticalmassStatisticBundle:Track:view.html.twig', array('track' => $track));
+            return $this->render('CalderaCriticalmassTrackBundle:Track:view.html.twig', array('track' => $track));
         }
 
         throw new AccessDeniedException('');
@@ -230,7 +228,7 @@ class TrackController extends Controller
     public function downloadAction(Request $request, $trackId)
     {
         $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+        $track = $em->find('CalderaCriticalmassTrackBundle:Track', $trackId);
 
         if ($track->getUser()->equals($this->getUser()))
         {
@@ -242,7 +240,7 @@ class TrackController extends Controller
             echo $track->getGpx();
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
     }
 
     /**
@@ -257,7 +255,7 @@ class TrackController extends Controller
     public function toggleAction(Request $request, $trackId)
     {
         $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+        $track = $em->find('CalderaCriticalmassTrackBundle:Track', $trackId);
 
         if ($track->getUser()->equals($this->getUser()))
         {
@@ -266,13 +264,13 @@ class TrackController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
     }
 
     public function deleteAction(Request $request, $trackId)
     {
         $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassCoreBundle:Track', $trackId);
+        $track = $em->find('CalderaCriticalmassTrackBundle:Track', $trackId);
 
         if ($track && $track->getUser()->equals($this->getUser()))
         {
@@ -282,6 +280,6 @@ class TrackController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_statistic_track_list'));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
     }
 }
