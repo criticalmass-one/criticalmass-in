@@ -36,7 +36,7 @@ class User extends BaseUser
     protected $currentCity;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $tracks;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\CriticalmassTrackBundle\Entity;
 
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Caldera\CriticalmassCoreBundle\Utility\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
@@ -27,7 +27,7 @@ class Track
     protected $username;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;

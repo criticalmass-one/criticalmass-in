@@ -34,7 +34,7 @@ class Ride
     protected $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track", mappedBy="ride")
      */
     protected $tracks;
 
@@ -763,10 +763,10 @@ class Ride
     /**
      * Add tracks
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
      * @return Ride
      */
-    public function addTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    public function addTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
     {
         $this->tracks[] = $tracks;
 
@@ -776,9 +776,9 @@ class Ride
     /**
      * Remove tracks
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
      */
-    public function removeTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    public function removeTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
     {
         $this->tracks->removeElement($tracks);
     }
