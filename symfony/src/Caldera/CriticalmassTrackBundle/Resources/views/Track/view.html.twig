@@ -29,6 +29,7 @@
 
         {% javascripts
         '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+        '@CalderaCriticalmassTrackBundle/Resources/public/js/track/*'
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -43,11 +44,10 @@
 
             map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
 
-            // create a red polyline from an arrays of LatLng points
-            var polyline = L.polyline({{ track.getPreviewJsonArray() }}, { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }).addTo(map);
-
-            // zoom the map to the polyline
-            map.fitBounds(polyline.getBounds());
+            var track = new Track();
+            track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+            track.addTo(map);
+            map.fitBounds(track.getBounds());
         </script>
 
         <div class="row">
