@@ -201,10 +201,10 @@ class User extends BaseUser
     /**
      * Add tracks
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
      * @return User
      */
-    public function addTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    public function addTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
     {
         $this->tracks[] = $tracks;
 
@@ -214,9 +214,9 @@ class User extends BaseUser
     /**
      * Remove tracks
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
      */
-    public function removeTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    public function removeTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
     {
         $this->tracks->removeElement($tracks);
     }
