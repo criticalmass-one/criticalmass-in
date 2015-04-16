@@ -6,8 +6,59 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function standardridesAction($year, $month)
     {
-        return $this->render('CalderaCriticalmassStandardridesBundle:Default:index.html.twig', array('name' => $name));
+        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
+
+        echo '<ul>';
+
+        foreach ($cities as $city)
+        {
+            echo '<li>';
+            echo '<strong>'.$city->getTitle().'</strong>';
+
+            if ($city->getIsStandardable()) {
+                $srg = new StandardRideGenerator($city, $year, $month);
+                $ride = $srg->execute();
+
+                if ($srg->isRideDuplicate())
+                {
+                    echo '<br />Tour existiert bereits.';
+                }
+                else {
+                    echo '<br />Lege folgende Tour an:';
+                    echo '<ul>';
+
+                    if ($ride->getHasTime()) {
+                        echo '<li>Datum und Uhrzeit: ' . $ride->getDateTime()->format('Y-m-d H:i') . '</li>';
+                    } else {
+                        echo '<li>Datum: ' . $ride->getDateTime()->format('Y-m-d') . ', Uhrzeit ist bislang unbekannt</li>';
+                    }
+
+                    if ($ride->getHasLocation()) {
+                        echo '<li>Treffpunkt: ' . $ride->getLocation() . ' (' . $ride->getLatitude() . '/' . $ride->getLongitude() . ')</li>';
+                    } else {
+                        echo '<li>Treffpunkt ist bislang unbekannt</li>';
+                    }
+
+                    echo '<li>sichtbar von ' . $ride->getVisibleSince()->format('Y-m-d H:i') . ' bis ' . $ride->getVisibleUntil()->format('Y-m-d H:i') . '</li>';
+                    echo '</ul>';
+
+                    $em = $this->getDoctrine()->getManager();
+                    //$em->persist($ride);
+                    $em->flush();
+                }
+            }
+            else
+            {
+                echo '<br />Lege keine Tourdaten für diese Stadt an.';
+            }
+
+            echo '</li>';
+        }
+
+        echo '</ul>';
+
+        return new Response();
     }
 }
