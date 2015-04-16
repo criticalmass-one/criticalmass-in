@@ -1,8 +1,9 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Utility\StandardRideGenerator;
+namespace Caldera\CriticalmassStandardridesBundle\Tests\StandardRideGenerator;
 
 use Caldera\CriticalmassCoreBundle\Entity\City;
+use Caldera\CriticalmassStandardridesBundle\Utility\StandardRideGenerator\StandardRideGenerator;
 use PHPUnit_Framework_TestCase;
 
 class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {

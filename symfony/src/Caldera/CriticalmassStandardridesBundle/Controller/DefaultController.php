@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassStandardridesBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Utility\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
