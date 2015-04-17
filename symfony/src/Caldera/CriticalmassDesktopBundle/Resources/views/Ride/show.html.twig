@@ -2,47 +2,6 @@
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
-{% block additionalHeaderElements %}
-    {% stylesheets
-    '@CalderaCriticalmassGalleryBundle/Resources/public/css/external/*.css'
-    filter="cssrewrite" %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-{% endblock %}
-
-{% block additionalFooterElements %}
-    {% javascripts
-    '@CalderaCriticalmassGalleryBundle/Resources/public/js/gallery/Photo.js'
-    '@CalderaCriticalmassGalleryBundle/Resources/public/js/gallery/DragablePhoto.js'
-    '@CalderaCriticalmassGalleryBundle/Resources/public/js/gallery/Gallery.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-    {% javascripts
-    '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/jquery.fancybox.js'
-    '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-    <script type="text/javascript">
-    var gallery = new Gallery();
-    
-    {% for photo in ride.getPhotos() %}
-        {% if photo.getLatitude() and photo.getLongitude() %}
-            {% if app.getUser() and app.getUser().getId() == photo.getUser().getId() %}
-                gallery.addPhoto(new DragablePhoto({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo #{{ photo.getId() }}'));
-            {% else %}
-                 gallery.addPhoto(new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo #{{ photo.getId() }}'));
-            {% endif %}
-        {% endif %}
-    {% endfor %}
-
-    gallery.addTo(map);
-    </script>
-{% endblock %}
-
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
@@ -55,143 +14,6 @@
         {% if not app.getUser() %}
             <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.</div>
         {% endif %}
-
-        <div class="row">
-            {% if app.getUser() %}
-            <div class="btn-group  pull-right" style="margin-top: 24px;">
-                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalComment"><i class="fa fa-pencil"></i></a>
-                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate"><i class="fa fa-signal"></i></a>
-                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload"><i class="fa fa-cloud-upload"></i></a>
-                <a class="btn btn-default" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-camera"></i></a>
-                <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"><i class="fa fa-wrench"></i></a>
-            </div>
-            {% endif %}
-            <h1>{{ ride.getFancyTitle() }}</h1>
-        </div>
-
-        <div class="row">
-            <div id="map" class="col-md-12" style="height: 350px;"></div>
-        </div>
-
-        {% javascripts
-        '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        <script>
-
-            var map = L.map('map');
-            var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                detectRetina: true
-            });
-
-            tileLayer.addTo(map);
-            
-            var locationIcon = L.icon({
-                iconUrl: 'https://www.criticalmass.in/images/marker/marker-red.png',
-                iconRetinaUrl: '/images/marker/marker-red-2x.png',
-                iconSize: [25, 41],
-                iconAnchor: [13, 41],
-                popupAnchor: [0, -36],
-                shadowUrl: '/images/marker/defaultshadow.png',
-                shadowSize: [41, 41],
-                shadowAnchor: [13, 41]
-            });
-
-            {% if ride.hasLocation %}
-            var marker = L.marker([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], { icon: locationIcon });
-            marker.addTo(map);
-
-            map.setView([{{ ride.getLatitude() }}, {{ ride.getLongitude() }}], 14);
-            {% else %}
-            map.setView([{{ city.getLatitude() }}, {{ city.getLongitude() }}], 14);
-            {% endif %}
-
-            {% for track in ride.getTracks() %}
-            {% if track.getJson() %}
-            {% if track.getUser() %}
-            var options = { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }
-            {% elseif track.getTicket() %}
-            var options = { color: 'rgb({{ track.getTicket().getColorRed() }}, {{ track.getTicket().getColorGreen() }}, {{ track.getTicket().getColorBlue() }})' }
-            {% endif %}
-
-            var polyline = L.polyline({{ track.getJson() }}, options).addTo(map);
-            {% endif %}
-            {% endfor %}
-
-            // zoom the map to the polyline
-            //map.fitBounds(polyline.getBounds());
-
-
-        </script>
-
-        <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-6">Treffpunkt:<br />{{ ride.getLocation() }}</div>
-            <div class="col-md-3 col-sm-6 col-xs-6">{{ ride.getDateTime.format('d.m.Y') }}<br />{{ ride.getDateTime.format('H:i') }} Uhr</div>
-            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedParticipants()|round }}</span><br />Teilnehmer</div>
-            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedDistance()|round(2) }}</span><br />Kilometer</div>
-            <div class="col-md-2 col-sm-4 col-xs-4"><span style="font-size: 20px;">{{ ride.getEstimatedDuration()|round(2) }}</span><br />Stunden</div>
-        </div>
-        <div class="row">
-            {% if hasSocialMedia %}
-            <div class="col-lg-8">
-            {% else %}
-            <div class="col-lg-12">
-            {% endif %}
-                {% if ride.getDescription() %}
-                <div class="row">
-                    <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
-                </div>
-                {% endif %}
-
-                <ul class="nav nav-tabs" id="cityModalTabs">
-                    <li class="active"><a href="#commentTab" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> Kommentare <span class="badge">{{ ride.getPosts()|length }}</span></a></li>
-                    <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder <span class="badge">{{ ride.getPhotos()|length }}</span></a></li>
-                </ul>
-
-                <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
-                    <div class="tab-pane fade in active" id="commentTab">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>Kommentare zu dieser Tour</h4>
-                                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade in" id="galleryTab">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>Bilder zu dieser Tour</h4>
-                                {{ render(controller('CalderaCriticalmassGalleryBundle:Photos:list', {'rideId': ride.getId() })) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            {% if hasSocialMedia %}
-            <div class="col-lg-4">
-                {% if hasSocialMedia %}
-                <h4>Mehr im Netz</h4>
-
-                {% if ride.getUrl() %}
-                <a class="btn btn-link" href="{{ ride.getUrl() }}">Homepage</a>
-                {% endif %}
-
-                {% if ride.getFacebook() %}
-                <a class="btn btn-link" href="{{ ride.getFacebook() }}">facebook</a>
-                {% endif %}
-
-                {% if ride.getTwitter() %}
-                <a class="btn btn-link" href="{{ ride.getTwitter() }}">twitter</a>
-                {% endif %}
-                {% endif %}
-
-            </div>
-            {% endif %}
-        </div>
 
         {% include('CalderaCriticalmassDesktopBundle:Common:Ride.html.twig') with { 'ride': ride } %}
 
@@ -261,7 +83,7 @@
                     <h4 class="modal-title">Track zu dieser Tour hochladen</h4>
                 </div>
                 <div class="modal-body">
-                    {{ render(controller('CalderaCriticalmassStatisticBundle:Track:upload')) }}
+                    {{ render(controller('CalderaCriticalmassTrackBundle:Track:upload')) }}
                 </div>
             </div>
         </div>
