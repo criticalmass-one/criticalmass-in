@@ -858,12 +858,12 @@ class City
 
         foreach ($this->getRides() as $ride)
         {
-            if ($ride && !$currentRide && $ride->getDateTime() > $dateTime)
+            if ($ride && !$currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() > $dateTime)
             {
                 $currentRide = $ride;
             }
             else
-            if ($ride && $currentRide && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime)
+            if ($ride && $currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime)
             {
                 $currentRide = $ride;
             }
