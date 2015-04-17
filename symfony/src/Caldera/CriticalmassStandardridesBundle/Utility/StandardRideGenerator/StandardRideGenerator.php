@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Utility\StandardRideGenerator;
+namespace Caldera\CriticalmassStandardridesBundle\Utility\StandardRideGenerator;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
 
