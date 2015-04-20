@@ -145,29 +145,40 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="details">
-            {% if ride.getDescription() %}
-                <div class="row">
-                    <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
+            <div class="row">
+                <div class="col-md-8">
+                    {% if app.getUser() %}
+                        <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
+                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i></a>
+                        </div>
+                    {% endif %}
+                    
+                    <h3>{{ ride.getFancyTitle() }}</h3>
+                    
+                    {% if ride.getDescription() %}
+                    {{ ride.getDescription()|nl2br }}
+                    {% endif %}
                 </div>
-            {% endif %}
-            <div class="col-lg-4">
 
+                <div class="col-md-4">
+                    {% if hasSocialMedia %}
+                        <h4>Mehr im Netz</h4>
+                        {% if ride.getUrl() %}
+                            <a class="btn btn-default" href="{{ ride.getUrl() }}"><i class="social rss"></i> Homepage</a>
+                        {% endif %}
 
-                {% if hasSocialMedia %}
-                    <h4>Mehr im Netz</h4>
-                    {% if ride.getUrl() %}
-                        <a class="btn btn-default" href="{{ ride.getUrl() }}"><i class="social rss"></i> Homepage</a>
+                        {% if ride.getFacebook() %}
+                            <a class="btn btn-default" href="{{ ride.getFacebook() }}"><i class="social facebook"></i> facebook</a>
+                        {% endif %}
+
+                        {% if ride.getTwitter() %}
+                            <a class="btn btn-default" href="{{ ride.getTwitter() }}"><i class="social twitter"></i> twitter</a>
+                        {% endif %}
                     {% endif %}
-
-                    {% if ride.getFacebook() %}
-                        <a class="btn btn-default" href="{{ ride.getFacebook() }}"><i class="social facebook"></i> facebook</a>
-                    {% endif %}
-
-                    {% if ride.getTwitter() %}
-                        <a class="btn btn-default" href="{{ ride.getTwitter() }}"><i class="social twitter"></i> twitter</a>
-                    {% endif %}
-                {% endif %}
+                </div>
             </div>
+            
+            
         </div>
         
         <div role="tabpanel" class="tab-pane" id="minimass">
