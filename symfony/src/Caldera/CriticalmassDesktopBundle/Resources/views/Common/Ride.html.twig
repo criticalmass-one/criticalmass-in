@@ -132,6 +132,32 @@
     locationMarker.openPopup();
     {% endif %}
 </script>
+
+<div role="tabpanel">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab">Details</a></li>
+        <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">Mini-Masses</a></li>
+        <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab">Statistik</a></li>
+        <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Kommentare</a></li>
+        <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab">Galerie</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="details">        {% if ride.getDescription() %}
+                <div class="row">
+                    <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
+                </div>
+            {% endif %}</div>
+        <div role="tabpanel" class="tab-pane" id="minimass">...</div>
+        <div role="tabpanel" class="tab-pane" id="stats">...</div>
+        <div role="tabpanel" class="tab-pane" id="comments">...</div>
+        <div role="tabpanel" class="tab-pane" id="gallery">...</div>
+    </div>
+</div>
+
+
 {% if pastRide %}
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-6">Treffpunkt:<br />{{ ride.getLocation() }}</div>
@@ -143,11 +169,7 @@
 {% endif %}
 <div class="row">
     <div class="col-lg-8">
-        {% if ride.getDescription() %}
-        <div class="row">
-            <div class="col-md-12">{{ ride.getDescription()|nl2br }}</div>
-        </div>
-        {% endif %}
+
 
         <div class="row">
             <div class="col-md-12">
