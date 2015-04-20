@@ -203,8 +203,10 @@
             <div class="row">
                 <div class="col-md-12">
                 {% if pastRide %}
-                    <a class="btn btn-default pull-right" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i></a>
-                    <a class="btn btn-default pull-right" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
+                    <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
+                        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i></a>
+                        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
+                    </div>
                 {% endif %}
 
                     <h3>Statistik</h3>
