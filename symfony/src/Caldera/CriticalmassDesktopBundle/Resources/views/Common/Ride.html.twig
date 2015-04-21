@@ -20,6 +20,7 @@
 
 {% javascripts
 '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
@@ -97,14 +98,15 @@
 
     var subRideMarkers = new Array();
 
+    var subrideContainer = new SubrideContainer();
+    
     {% for subRide in ride.getActiveSubRides() %}
-    var subRideMarker = L.marker([{{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}], { icon: subRideIcon });
-    subRideMarker.addTo(map);
-    subRideMarker.bindPopup('<h5>{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>{{ subRide.getDateTime().format('H:i') }}</dd><dt>Treffpunkt:</dt> <dd>{{ subRide.getLocation() }}</dd></dl>{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}</p>{% endif %}');
-    subRideMarkers[{{ subRide.getId() }}] = subRideMarker;
-    markerGroup.addLayer(subRideMarker);
+    var subride = new Subride('{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subRide.getDateTime().format('H:i') }}', {{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}, '{{ subRide.getLocation() }}');
+    subrideContainer.add(subride);
     {% endfor %}
 
+    subrideContainer.addTo(map);
+    
     markerGroup.addTo(map);
 
     {% for track in ride.getActiveTracks() %}
