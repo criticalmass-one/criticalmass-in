@@ -186,7 +186,7 @@
 
                     {% if ride.getActiveSubRides() %}
                         {% for subRide in ride.getActiveSubRides() %}
-                        <div class="media subride">
+                        <div class="media subride col-md-4">
                             {% if app.getUser() %}<a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>{% endif %}
                             <a class="pull-left subride" href="#" data-subrideid="{{ subRide.getId() }}">
                                 <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
