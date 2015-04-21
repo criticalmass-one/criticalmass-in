@@ -229,22 +229,27 @@
                         <tr>
                             <th>Treffpunkt</th>
                             <td>{{ ride.getLocation() }}</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>Datum</th>
                             <td>{{ ride.getDateTime.format('d.m.Y H:i') }} Uhr</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>Teilnehmer</th>
                             <td>{{ ride.getEstimatedParticipants()|round }}</td>
+                            <td><a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a></td>
                         </tr>
                         <tr>
                             <th>Kilometer</th>
                             <td>{{ ride.getEstimatedDistance()|round(2) }}</td>
+                            <td><a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a></td>
                         </tr>
                         <tr>
                             <th>Stunden</th>
                             <td>{{ ride.getEstimatedDuration()|round(2) }}</td>
+                            <td><a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a></td>
                         </tr>
                     </table>
                 </div>
