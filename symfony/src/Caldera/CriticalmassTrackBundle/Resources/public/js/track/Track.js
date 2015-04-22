@@ -11,9 +11,9 @@ Track.prototype.setPolyline = function(jsonData, colorRed, colorGreen, colorBlue
     this.polyline = L.polyline(jsonData, { color: 'rgb(' + colorRed + ',' + colorGreen + ', ' + colorBlue + ')' });
 };
 
-Track.prototype.addTo = function(map)
+Track.prototype.addTo = function(trackLayer)
 {
-    this.polyline.addTo(map);
+    trackLayer.addLayer(this.polyline);
 };
 
 Track.prototype.getBounds = function()
