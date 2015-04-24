@@ -15,7 +15,28 @@ City.prototype.description = null;
 City.prototype.latitude = null;
 City.prototype.longitude = null;
 
-City.prototype.addTo = function(markerLayer)
+City.prototype.buildPopup = function(ride)
+{
+    var html = '<h5>' + this.title + '</h5>';
+    
+    if (ride != null)
+    {
+        html += '<dl class="dl-horizontal">';
+        html += '<dt>Uhrzeit:</dt><dd>' + ride.date + ' ' + ride.time + ' Uhr</dd>';
+        html += '<dt>Treffpunkt:</dt><dd><em>noch nicht bekannt</em></dd>';
+        html += '</dl>';
+    }
+    else
+    {
+        html += '<p><em>Zu dieser Stadt sind momentan leider keine Tourinformationen bekannt.</em>';
+    }
+    
+    html += '<p>' + this.description + '</p>';
+    
+    return html;
+};
+
+City.prototype.addTo = function(markerLayer, ride)
 {
     var cityIcon = L.icon({
         iconUrl: '/images/marker/marker-gray.png',
@@ -27,8 +48,8 @@ City.prototype.addTo = function(markerLayer)
         shadowSize: [41, 41],
         shadowAnchor: [13, 41]
     });
-    
-    var cityMarker = L.marker([this.latitude, this.longitude], { icon: cityIcon });
-    cityMarker.bindPopup('<h5>' + this.title + '</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>' + this.datetime + '</dd><dt>Treffpunkt:</dt><dd>' + this.location + '</dd></dl><p>' + this.description + '</p>');
+
+    var cityMarker = L.marker([this.latitude, this.longitude], {icon: cityIcon});
+    cityMarker.bindPopup(this.buildPopup(ride));
     markerLayer.addLayer(cityMarker);
 };
