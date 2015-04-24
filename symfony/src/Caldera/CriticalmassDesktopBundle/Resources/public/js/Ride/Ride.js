@@ -36,12 +36,12 @@ Ride.prototype.buildPopup = function()
 
 Ride.prototype.hasLocation = function()
 {
-    return (this.latitude && this.longitude && this.location);
+    return (this.latitude != null && this.longitude != null && this.location != null && this.location != '');
 };
 
 Ride.prototype.addTo = function(markerLayer)
 {
-    if (this.hasLocation)
+    if (this.hasLocation())
     {
         var locationIcon = L.icon({
             iconUrl: '/images/marker/marker-red.png',
@@ -55,9 +55,12 @@ Ride.prototype.addTo = function(markerLayer)
         });
 
         var rideMarker = L.marker([this.latitude, this.longitude], {icon: locationIcon});
-        rideMarker.addTo(map);
         rideMarker.bindPopup(this.buildPopup());
 
         markerLayer.addLayer(rideMarker);
+    }
+    else
+    {
+        this.city.addTo(markerLayer, this);
     }
 };
