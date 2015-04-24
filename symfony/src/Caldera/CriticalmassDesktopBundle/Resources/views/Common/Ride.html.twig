@@ -206,7 +206,8 @@
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/City/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/Ride/*'
-'@CalderaCriticalmassTrackBundle/Resources/public/js/track/*'
+'@CalderaCriticalmassTrackBundle/Resources/public/js/Track/*'
+'@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
 %}
@@ -258,12 +259,23 @@
 
     trackContainer.addTo(map);
 
-
+    /* Photos */
+    var photoContainer = new PhotoContainer();
+    
+    {% for photo in ride.getPhotos() %}
+    var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
+    photoContainer.add(photo);
+    {% endfor %}
+    
+    photoContainer.addTo(map);
+    
+    /* LayerControl */
     var layerControl = L.control.groupedLayers({}, {
         "Critical Mass": {
-            "Tracks": trackContainer.layer,
-            "Touren": rideContainer.layer,
-            "Mini-Masses": subrideContainer.layer
+            'Tracks': trackContainer.layer,
+            'Touren': rideContainer.layer,
+            'Mini-Masses': subrideContainer.layer,
+            'Fotos': photoContainer.layer
         }
     }, {
         collapsed: false

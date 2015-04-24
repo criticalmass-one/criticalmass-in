@@ -1,34 +1,23 @@
 PhotoContainer = function()
 {
+
 };
 
-PhotoContainer.prototype.photoArray = new Array();
+PhotoContainer.prototype.list = new Array();
+PhotoContainer.prototype.layer = null;
 
-PhotoContainer.prototype.addPhotos = function(photoArray)
+PhotoContainer.prototype.add = function(photo)
 {
-    this.photoArray = $.merge(this.photoArray, photoArray);
+    this.list.push(photo);
 };
-
-PhotoContainer.prototype.addPhoto = function(photo)
-{
-    this.photoArray[photo.getId()] = photo;
-};
-
-PhotoContainer.prototype.map = null;
 
 PhotoContainer.prototype.addTo = function(map)
 {
-    this.map = map;
-    
-    this.init();
-};
+    this.layer = L.featureGroup();
 
-PhotoContainer.prototype.init = function()
-{
-    var photo;
-
-    while (photo = this.photoArray.pop())
-    {
-        photo.addTo(this.map);
+    for (index = 0; index < this.list.length; ++index) {
+        this.list[index].addTo(this.layer);
     }
+
+    this.layer.addTo(map);
 };
