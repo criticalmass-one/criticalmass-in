@@ -18,112 +18,6 @@
     </div>
 </div>
 
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-<script>
-    var map = L.map('map');
-    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        detectRetina: true
-    });
-
-    tileLayer.addTo(map);
-
-    var markerGroup = L.featureGroup();
-    var trackGroup = L.featureGroup();
-
-    var popupContent = '<dl class="dl-horizontal">';
-    popupContent += '<dt>Datum:</dt><dd>{{ ride.getDateTime.format('d.m.Y') }}</dd>';
-    popupContent += '<dt>Uhrzeit:</dt><dd>{{ ride.getDateTime.format('H:i') }}</dd>';
-
-    {% if ride.getWeatherForecast() %}
-    popupContent += '<dt>Wetter:</dt><dd>{{ ride.getWeatherForecast() }}</dd>';
-    {% endif %}
-
-    {% if ride.hasLocation() %}
-    popupContent += '<dt>Treffpunkt:</dt><dd>{{ ride.getLocation() }}</dd>';
-
-    var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
-
-    var locationIcon = L.icon({
-        iconUrl: '/images/marker/marker-red.png',
-        iconRetinaUrl: '/images/marker/marker-red-2x.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-
-    var locationMarker = L.marker(mapCenter, { icon: locationIcon });
-    {% else %}
-    popupContent += '<dt>Treffpunkt:</td><dd>Der Treffpunkt ist leider noch nicht bekannt</dd>';
-
-    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-
-    var cityIcon = L.icon({
-        iconUrl: '/images/marker/marker-gray.png',
-        iconRetinaUrl: '/images/marker/marker-gray-2x.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-
-    var locationMarker = L.marker(mapCenter, { icon: cityIcon });
-    {% endif %}
-
-    popupContent += '</dl>';
-
-    locationMarker.addTo(markerGroup);
-    locationMarker.bindPopup(popupContent);
-
-    var subRideIcon = L.icon({
-        iconUrl: '/images/marker/marker-blue.png',
-        iconRetinaUrl: '/images/marker/marker-blue-2x.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-
-    var subRideMarkers = new Array();
-
-    var subrideContainer = new SubrideContainer();
-    
-    {% for subRide in ride.getActiveSubRides() %}
-    var subride = new Subride('{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subRide.getDateTime().format('H:i') }}', {{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}, '{{ subRide.getLocation() }}');
-    subrideContainer.add(subride);
-    {% endfor %}
-
-    subrideContainer.addTo(map);
-    
-    markerGroup.addTo(map);
-
-    {% for track in ride.getActiveTracks() %}
-    var trackLine = L.polyline({{ track.getPreviewJsonArray() }}, { color: 'rgb({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }})' }).addTo(map);
-    trackGroup.addLayer(trackLine);
-    {% endfor %}
-
-    trackGroup.addTo(map);
-
-    {% if pastRide and ride.getActiveTracks()|length > 0 %}
-    map.fitBounds(trackGroup.getBounds());
-    {% else %}
-    map.fitBounds(markerGroup.getBounds());
-    locationMarker.openPopup();
-    {% endif %}
-</script>
-
 <div class="row" style="margin-top: 1em;">
     <div class="col-md-12">
         <div role="tabpanel">
@@ -306,3 +200,82 @@
 </div>
 {% endif %}
 {% endif %}
+
+{% javascripts
+'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/City/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/Ride/*'
+'@CalderaCriticalmassTrackBundle/Resources/public/js/track/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script>
+    /* Map */
+    var map = L.map('map');
+    
+    /* Tilelayer */
+    var tileLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        detectRetina: true
+    });
+
+    tileLayer.addTo(map);
+
+    /* View */
+    map.setView([53.550556, 9.993333], 13);
+    
+    /* City */
+    var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
+    
+    /* Rides */
+    var rideContainer = new RideContainer();
+    //var ride = new Ride(city, 'Critical Mass', 'foo', null, null, '', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
+    var ride = new Ride(city, 'Critical Mass', 'foo', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
+    rideContainer.add(ride);
+    rideContainer.addTo(map);
+
+    /* Subrides */
+    var subrideContainer = new SubrideContainer();
+
+    {% for subRide in ride.getActiveSubRides() %}
+    var subride = new Subride('{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subRide.getDateTime().format('H:i') }}', {{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}, '{{ subRide.getLocation() }}');
+    subrideContainer.add(subride);
+    {% endfor %}
+
+    subrideContainer.addTo(map);
+    
+    /* Tracks */
+    var trackContainer = new TrackContainer();
+
+    {% for track in ride.getActiveTracks() %}
+    var track = new Track();
+    track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+    trackContainer.add(track);
+    {% endfor %}
+
+    trackContainer.addTo(map);
+
+
+    var layerControl = L.control.groupedLayers({}, {
+        "Critical Mass": {
+            "Tracks": trackContainer.layer,
+            "Touren": rideContainer.layer,
+            "Mini-Masses": subrideContainer.layer
+        }
+    }, {
+        collapsed: false
+    });
+
+    layerControl.addTo(map);
+
+
+    {% if pastRide and ride.getActiveTracks()|length > 0 %}
+    //map.fitBounds(trackContainer.getBounds());
+    {% else %}
+    //map.fitBounds(markerGroup.getBounds());
+    //locationMarker.openPopup();
+    {% endif %}
+</script>
