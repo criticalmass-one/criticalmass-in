@@ -1,5 +1,6 @@
-Ride = function(title, description, latitude, longitude, location, date, time, weather)
+Ride = function(city, title, description, latitude, longitude, location, date, time, weather)
 {
+    this.city = city;
     this.title = title;
     this.description = description;
     this.latitude = latitude;
@@ -10,6 +11,7 @@ Ride = function(title, description, latitude, longitude, location, date, time, w
     this.weather = weather;
 };
 
+Ride.prototype.city = null;
 Ride.prototype.title = null;
 Ride.prototype.description = null;
 Ride.prototype.latitude = null;
