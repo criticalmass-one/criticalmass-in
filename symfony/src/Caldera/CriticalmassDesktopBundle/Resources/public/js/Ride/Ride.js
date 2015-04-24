@@ -34,23 +34,30 @@ Ride.prototype.buildPopup = function()
     return html;
 };
 
+Ride.prototype.hasLocation = function()
+{
+    return (this.latitude && this.longitude && this.location);
+};
 
 Ride.prototype.addTo = function(markerLayer)
 {
-    var locationIcon = L.icon({
-        iconUrl: '/images/marker/marker-red.png',
-        iconRetinaUrl: '/images/marker/marker-red-2x.png',
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowUrl: '/images/marker/defaultshadow.png',
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41]
-    });
-    
-    var rideMarker = L.marker([this.latitude, this.longitude], { icon: locationIcon });
-    rideMarker.addTo(map);
-    rideMarker.bindPopup(this.buildPopup());
-    
-    markerLayer.addLayer(rideMarker);
+    if (this.hasLocation)
+    {
+        var locationIcon = L.icon({
+            iconUrl: '/images/marker/marker-red.png',
+            iconRetinaUrl: '/images/marker/marker-red-2x.png',
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            popupAnchor: [0, -36],
+            shadowUrl: '/images/marker/defaultshadow.png',
+            shadowSize: [41, 41],
+            shadowAnchor: [13, 41]
+        });
+
+        var rideMarker = L.marker([this.latitude, this.longitude], {icon: locationIcon});
+        rideMarker.addTo(map);
+        rideMarker.bindPopup(this.buildPopup());
+
+        markerLayer.addLayer(rideMarker);
+    }
 };
