@@ -1,29 +1,29 @@
-Gallery = function()
+PhotoContainer = function()
 {
 };
 
-Gallery.prototype.photoArray = new Array();
+PhotoContainer.prototype.photoArray = new Array();
 
-Gallery.prototype.addPhotos = function(photoArray)
+PhotoContainer.prototype.addPhotos = function(photoArray)
 {
     this.photoArray = $.merge(this.photoArray, photoArray);
 };
 
-Gallery.prototype.addPhoto = function(photo)
+PhotoContainer.prototype.addPhoto = function(photo)
 {
     this.photoArray[photo.getId()] = photo;
 };
 
-Gallery.prototype.map = null;
+PhotoContainer.prototype.map = null;
 
-Gallery.prototype.addTo = function(map)
+PhotoContainer.prototype.addTo = function(map)
 {
     this.map = map;
     
     this.init();
 };
 
-Gallery.prototype.init = function()
+PhotoContainer.prototype.init = function()
 {
     var photo;
 
