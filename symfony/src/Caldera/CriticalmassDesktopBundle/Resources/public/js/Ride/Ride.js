@@ -21,6 +21,20 @@ Ride.prototype.date = null;
 Ride.prototype.time = null;
 Ride.prototype.weather = null;
 
+Ride.prototype.buildPopup = function()
+{
+    var html = '<h5>' + this.title + '</h5>';
+    html += '<dl class="dl-horizontal">';
+    html += '<dt>Datum:</dt><dd>' + this.date + '</dd>';
+    html += '<dt>Uhrzeit:</dt><dd>' + this.time + '</dd>';
+    html += '<dt>Treffpunkt:</dt><dd>' + this.location + '</dd>';
+    html += '</dl>';
+    html += '<p>' + this.description + '</p>';
+    
+    return html;
+};
+
+
 Ride.prototype.addTo = function(markerLayer)
 {
     var locationIcon = L.icon({
@@ -36,6 +50,7 @@ Ride.prototype.addTo = function(markerLayer)
     
     var rideMarker = L.marker([this.latitude, this.longitude], { icon: locationIcon });
     rideMarker.addTo(map);
-    rideMarker.bindPopup('<h5>' + this.title + '</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>' + this.datetime + '</dd><dt>Treffpunkt:</dt><dd>' + this.location + '</dd></dl><p>' + this.description + '</p>');
+    rideMarker.bindPopup(this.buildPopup());
+    
     markerLayer.addLayer(rideMarker);
 };
