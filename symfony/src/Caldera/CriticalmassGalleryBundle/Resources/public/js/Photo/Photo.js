@@ -11,26 +11,6 @@ Photo.prototype.latitude = null;
 Photo.prototype.longitude = null;
 Photo.prototype.title = null;
 
-Photo.prototype.getId = function()
-{
-    return this.id;
-};
-
-Photo.prototype.getLatitude = function()
-{
-    return this.latitude;
-};
-
-Photo.prototype.getLongitude = function()
-{
-    return this.longitude;
-};
-
-Photo.prototype.getTitle = function()
-{
-    return this.title;
-};
-
 Photo.prototype.addTo = function(map)
 {
     var locationIcon = L.icon({
@@ -44,7 +24,7 @@ Photo.prototype.addTo = function(map)
         shadowAnchor: [13, 41]
     });
 
-    var photoMarker = L.marker([this.getLatitude(), this.getLongitude()], { icon:locationIcon, draggable: false });
+    var photoMarker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: false });
     photoMarker.addTo(map);
 
     var this2 = this;
@@ -52,6 +32,6 @@ Photo.prototype.addTo = function(map)
     photoMarker.on('click', function()
     {
         var photoPath = '/photos/' + this2.getId() + '.jpg';
-        $.fancybox( { href : photoPath, title : this2.getTitle() } );
+        $.fancybox( { href : photoPath, title : this2.title } );
     });
 };
