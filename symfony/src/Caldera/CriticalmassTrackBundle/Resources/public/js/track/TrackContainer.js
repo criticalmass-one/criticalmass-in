@@ -4,7 +4,7 @@ TrackContainer = function()
 };
 
 TrackContainer.prototype.list = new Array();
-TrackContainer.prototype.trackGroup = null;
+TrackContainer.prototype.layer = null;
 
 TrackContainer.prototype.add = function(track)
 {
@@ -13,11 +13,16 @@ TrackContainer.prototype.add = function(track)
 
 TrackContainer.prototype.addTo = function(map)
 {
-    this.trackGroup = L.featureGroup();
+    this.layer = L.featureGroup();
     
     for (index = 0; index < this.list.length; ++index) {
-        this.list[index].addTo(this.trackGroup);
+        this.list[index].addTo(this.layer);
     }
 
-    this.trackGroup.addTo(map);
+    this.layer.addTo(map);
+};
+
+TrackContainer.prototype.getBounds = function()
+{
+    return this.layer.getBounds();
 };

@@ -4,7 +4,7 @@ SubrideContainer = function()
 };
 
 SubrideContainer.prototype.list = new Array();
-SubrideContainer.prototype.markerGroup = null;
+SubrideContainer.prototype.layer = null;
 
 SubrideContainer.prototype.add = function(subride)
 {
@@ -13,11 +13,11 @@ SubrideContainer.prototype.add = function(subride)
 
 SubrideContainer.prototype.addTo = function(map)
 {
-    this.markerGroup = L.featureGroup();
+    this.layer = L.featureGroup();
     
     for (index = 0; index < this.list.length; ++index) {
-        this.list[index].addTo(this.markerGroup);
+        this.list[index].addTo(this.layer);
     }
 
-    this.markerGroup.addTo(map);
+    this.layer.addTo(map);
 };

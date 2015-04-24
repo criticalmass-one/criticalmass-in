@@ -4,7 +4,7 @@ CityContainer = function()
 };
 
 CityContainer.prototype.list = new Array();
-CityContainer.prototype.markerGroup = null;
+CityContainer.prototype.layer = null;
 
 CityContainer.prototype.add = function(city)
 {
@@ -13,11 +13,11 @@ CityContainer.prototype.add = function(city)
 
 CityContainer.prototype.addTo = function(map)
 {
-    this.markerGroup = L.featureGroup();
+    this.layer = L.layer();
     
     for (index = 0; index < this.list.length; ++index) {
-        this.list[index].addTo(this.markerGroup);
+        this.list[index].addTo(this.layer);
     }
 
-    this.markerGroup.addTo(map);
+    this.layer.addTo(map);
 };

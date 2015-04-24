@@ -4,7 +4,7 @@ RideContainer = function()
 };
 
 RideContainer.prototype.list = new Array();
-RideContainer.prototype.markerGroup = null;
+RideContainer.prototype.layer = null;
 
 RideContainer.prototype.add = function(ride)
 {
@@ -13,11 +13,11 @@ RideContainer.prototype.add = function(ride)
 
 RideContainer.prototype.addTo = function(map)
 {
-    this.markerGroup = L.featureGroup();
+    this.layer = L.featureGroup();
     
     for (index = 0; index < this.list.length; ++index) {
-        this.list[index].addTo(this.markerGroup);
+        this.list[index].addTo(this.layer);
     }
 
-    this.markerGroup.addTo(map);
+    this.layer.addTo(map);
 };
