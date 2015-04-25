@@ -155,18 +155,18 @@
                                 <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
                             </tr>
                             <tr>
-                                <th>Kilometer</th>
-                                <td>{{ ride.getEstimatedDistance()|round(2) }}</td>
+                                <th>Distanz</th>
+                                <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
                                 <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
                             </tr>
                             <tr>
-                                <th>Stunden</th>
-                                <td>{{ ride.getEstimatedDuration()|round(2) }}</td>
+                                <th>Dauer</th>
+                                <td>{{ ride.getEstimatedDuration()|round(2) }} Stunden</td>
                                 <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
                             </tr>
                             <tr>
                                 <th>Durchschnittsgeschwindigkeit</th>
-                                <td>{{ ride.getAverageVelocity()|round(2) }}</td>
+                                <td>{{ ride.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
                                 <td></td>
                             </tr>
                         {% endif %}
