@@ -24,9 +24,9 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab">Details</a></li>
                 <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a></li>
-                <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab">Statistik</a></li>
                 <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
                 <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab">Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a></li>
+                <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab">Statistik</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -107,15 +107,30 @@
                     {% endif %}
                 </div>
 
+                <div role="tabpanel" class="tab-pane" id="comments">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Kommentare zu dieser Tour</h3>
+                            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
+
+                            {% if app.getUser() %}
+                            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div role="tabpanel" class="tab-pane" id="gallery">...</div>
+
                 <div role="tabpanel" class="tab-pane" id="stats">
                     <div class="row">
                         <div class="col-md-12">
-                        {% if pastRide and app.getUser() %}
-                            <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
-                                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i></a>
-                                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
-                            </div>
-                        {% endif %}
+                            {% if pastRide and app.getUser() %}
+                                <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
+                                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i></a>
+                                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
+                                </div>
+                            {% endif %}
 
                             <h3>Statistik</h3>
                         </div>
@@ -133,38 +148,24 @@
                             <td></td>
                         </tr>
                         {% if pastRide %}
-                        <tr>
-                            <th>Teilnehmer</th>
-                            <td>{{ ride.getEstimatedParticipants()|round }}</td>
-                            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th>Kilometer</th>
-                            <td>{{ ride.getEstimatedDistance()|round(2) }}</td>
-                            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th>Stunden</th>
-                            <td>{{ ride.getEstimatedDuration()|round(2) }}</td>
-                            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
-                        </tr>
+                            <tr>
+                                <th>Teilnehmer</th>
+                                <td>{{ ride.getEstimatedParticipants()|round }}</td>
+                                <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Kilometer</th>
+                                <td>{{ ride.getEstimatedDistance()|round(2) }}</td>
+                                <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Stunden</th>
+                                <td>{{ ride.getEstimatedDuration()|round(2) }}</td>
+                                <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+                            </tr>
                         {% endif %}
                     </table>
                 </div>
-
-                <div role="tabpanel" class="tab-pane" id="comments">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>Kommentare zu dieser Tour</h3>
-                            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
-
-                            {% if app.getUser() %}
-                            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="gallery">...</div>
             </div>
         </div>
     </div>
