@@ -20,3 +20,8 @@ Track.prototype.getBounds = function()
 {
     return this.polyline.getBounds();
 };
+
+Track.prototype.removeLayer = function(trackLayer)
+{
+    trackLayer.removeLayer(this.polyline);
+};
