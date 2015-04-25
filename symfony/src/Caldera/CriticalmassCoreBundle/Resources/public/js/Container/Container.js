@@ -28,5 +28,8 @@ Container.prototype.isEmpty = function()
 
 Container.prototype.addControl = function(layerArray, title)
 {
-    layerArray[title] = this.layer;
+    if (!this.isEmpty())
+    {
+        layerArray[title] = this.layer;
+    }
 };
