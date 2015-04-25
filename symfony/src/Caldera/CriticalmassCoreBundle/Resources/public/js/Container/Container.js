@@ -33,3 +33,8 @@ Container.prototype.addControl = function(layerArray, title)
         layerArray[title] = this.layer;
     }
 };
+
+Container.prototype.getBounds = function()
+{
+    return this.layer.getBounds();
+};

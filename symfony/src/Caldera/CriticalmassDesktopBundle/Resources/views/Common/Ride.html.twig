@@ -289,9 +289,12 @@
     layerControl.addTo(map);
 
     {% if pastRide and ride.getActiveTracks()|length > 0 %}
-    //map.fitBounds(trackContainer.getBounds());
+    map.fitBounds(trackContainer.getBounds());
+    {% elseif ride.getActiveSubRides()|length > 0 %}
+    map.fitBounds(subrideContainer.getBounds());
+    //locationMarker.openPopup();
     {% else %}
-    //map.fitBounds(markerGroup.getBounds());
+    map.fitBounds(rideContainer.getBounds());
     //locationMarker.openPopup();
     {% endif %}
 </script>
