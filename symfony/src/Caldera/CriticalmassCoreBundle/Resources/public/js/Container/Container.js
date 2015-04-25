@@ -26,6 +26,11 @@ Container.prototype.isEmpty = function()
     return this.list.length == 0;
 };
 
+Container.prototype.countEntities = function()
+{
+    return this.list.length;
+};
+
 Container.prototype.addControl = function(layerArray, title)
 {
     if (!this.isEmpty())
@@ -37,4 +42,9 @@ Container.prototype.addControl = function(layerArray, title)
 Container.prototype.getBounds = function()
 {
     return this.layer.getBounds();
+};
+
+Container.prototype.getEntity = function(index)
+{
+    return this.list[index];
 };
