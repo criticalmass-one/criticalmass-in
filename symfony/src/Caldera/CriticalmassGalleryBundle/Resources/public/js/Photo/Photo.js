@@ -31,7 +31,7 @@ Photo.prototype.addTo = function(map)
 
     photoMarker.on('click', function()
     {
-        var photoPath = '/photos/' + this2.getId() + '.jpg';
+        var photoPath = '/photos/' + this2.id + '.jpg';
         $.fancybox( { href : photoPath, title : this2.title } );
     });
 };
