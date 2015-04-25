@@ -164,6 +164,11 @@
                                 <td>{{ ride.getEstimatedDuration()|round(2) }}</td>
                                 <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
                             </tr>
+                            <tr>
+                                <th>Durchschnittsgeschwindigkeit</th>
+                                <td>{{ ride.getAverageVelocity()|round(2) }}</td>
+                                <td></td>
+                            </tr>
                         {% endif %}
                     </table>
                 </div>
