@@ -14,6 +14,7 @@ Subride.prototype.latitude = null;
 Subride.prototype.longitude = null;
 Subride.prototype.datetime = null;
 Subride.prototype.location = null;
+Subride.prototype.marker = null;
 
 Subride.prototype.addTo = function(markerLayer)
 {
@@ -28,12 +29,13 @@ Subride.prototype.addTo = function(markerLayer)
         shadowAnchor: [13, 41]
     });
     
-    var subRideMarker = L.marker([this.latitude, this.longitude], { icon: subRideIcon });
-    subRideMarker.addTo(map);
-    subRideMarker.bindPopup('<h5>' + this.title + '</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>' + this.datetime + '</dd><dt>Treffpunkt:</dt><dd>' + this.location + '</dd></dl><p>' + this.description + '</p>');
-//subRideMarkers[{{ subRide.getId() }}] = subRideMarker;
-    markerLayer.addLayer(subRideMarker);
+    this.marker = L.marker([this.latitude, this.longitude], { icon: subRideIcon });
+    this.marker.addTo(map);
+    this.marker.bindPopup('<h5>' + this.title + '</h5><dl class="dl-horizontal"><dt>Uhrzeit:</dt><dd>' + this.datetime + '</dd><dt>Treffpunkt:</dt><dd>' + this.location + '</dd></dl><p>' + this.description + '</p>');
+    markerLayer.addLayer(this.marker);
+};
 
-
-    
-}
+Subride.prototype.openPopup = function()
+{
+    this.marker.openPopup();
+};

@@ -14,6 +14,7 @@ City.prototype.slug = null;
 City.prototype.description = null;
 City.prototype.latitude = null;
 City.prototype.longitude = null;
+City.prototype.marker = null;
 
 City.prototype.buildPopup = function(ride)
 {
@@ -49,7 +50,12 @@ City.prototype.addTo = function(markerLayer, ride)
         shadowAnchor: [13, 41]
     });
 
-    var cityMarker = L.marker([this.latitude, this.longitude], {icon: cityIcon});
-    cityMarker.bindPopup(this.buildPopup(ride));
-    markerLayer.addLayer(cityMarker);
+    this.marker = L.marker([this.latitude, this.longitude], {icon: cityIcon});
+    this.marker.bindPopup(this.buildPopup(ride));
+    markerLayer.addLayer(this.marker);
+};
+
+City.prototype.openPopup = function()
+{
+    this.marker.openPopup();
 };

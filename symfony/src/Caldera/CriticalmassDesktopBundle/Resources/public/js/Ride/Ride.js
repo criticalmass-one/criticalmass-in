@@ -20,6 +20,7 @@ Ride.prototype.location = null;
 Ride.prototype.date = null;
 Ride.prototype.time = null;
 Ride.prototype.weather = null;
+Ride.prototype.marker = null;
 
 Ride.prototype.buildPopup = function()
 {
@@ -54,13 +55,25 @@ Ride.prototype.addTo = function(markerLayer)
             shadowAnchor: [13, 41]
         });
 
-        var rideMarker = L.marker([this.latitude, this.longitude], {icon: locationIcon});
-        rideMarker.bindPopup(this.buildPopup());
+        this.marker = L.marker([this.latitude, this.longitude], {icon: locationIcon});
+        this.marker.bindPopup(this.buildPopup());
 
-        markerLayer.addLayer(rideMarker);
+        markerLayer.addLayer(this.marker);
     }
     else
     {
         this.city.addTo(markerLayer, this);
+    }
+};
+
+Ride.prototype.openPopup = function()
+{
+    if (this.hasLocation())
+    {
+        this.marker.openPopup();
+    }
+    else
+    {
+        this.city.openPopup();
     }
 };
