@@ -1098,6 +1098,11 @@ class Ride
     
     public function getAverageVelocity()
     {
+        if (!$this->getEstimatedDuration() || !$this->getEstimatedDistance())
+        {
+            return 0;
+        }
+        
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 }
