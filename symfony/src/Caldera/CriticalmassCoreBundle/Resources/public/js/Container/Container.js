@@ -25,3 +25,8 @@ Container.prototype.isEmpty = function()
 {
     return this.list.length == 0;
 };
+
+Container.prototype.addControl = function(layerArray, title)
+{
+    layerArray[title] = this.layer;
+};

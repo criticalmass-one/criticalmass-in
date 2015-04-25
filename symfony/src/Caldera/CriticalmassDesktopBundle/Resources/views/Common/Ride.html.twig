@@ -273,19 +273,20 @@
     photoContainer.addTo(map);
     
     /* LayerControl */
+    var layers = [];
+
+    rideContainer.addControl(layers, 'Tour');
+    subrideContainer.addControl(layers, 'Mini-Masses');
+    trackContainer.addControl(layers, 'Tracks');
+    photoContainer.addControl(layers, 'Fotos');
+    
     var layerControl = L.control.groupedLayers({}, {
-        "Critical Mass": {
-            'Tracks': trackContainer.layer,
-            'Touren': rideContainer.layer,
-            'Mini-Masses': subrideContainer.layer,
-            'Fotos': photoContainer.layer
-        }
+        'Critical Mass': layers
     }, {
         collapsed: false
     });
 
     layerControl.addTo(map);
-
 
     {% if pastRide and ride.getActiveTracks()|length > 0 %}
     //map.fitBounds(trackContainer.getBounds());
