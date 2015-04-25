@@ -27,6 +27,7 @@
                 <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
                 <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab">Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a></li>
                 <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab">Statistik</a></li>
+                <li role="presentation"><a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -164,6 +165,31 @@
                                 <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
                             </tr>
                         {% endif %}
+                    </table>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="tracks">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if app.getUser() %}
+                                <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
+                                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
+                                </div>
+                            {% endif %}
+
+                            <h3>GPX-Tracks</h3>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <tr>
+                            <th>Teilnehmer</th>
+                        </tr>
+                        {% for track in ride.getActiveTracks() %}
+                        <tr>
+                            <td>{{ track.getUsername() }}</td>
+                        </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </div>
