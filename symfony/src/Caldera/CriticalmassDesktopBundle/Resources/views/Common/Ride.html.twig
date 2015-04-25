@@ -183,12 +183,24 @@
 
                     <table class="table">
                         <tr>
+                            <th></th>
                             <th>Teilnehmer</th>
+                            <th>Dauer</th>
+                            <th>Länge</th>
+                            <th>Durchschnittsgeschwindigkeit</th>
                         </tr>
+                        {% set trackNumber = 0 %}
                         {% for track in ride.getActiveTracks() %}
                         <tr>
+                            <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
+                                <input type="checkbox" class="trackVisibility" data-track="{{ trackNumber }}" checked="checked" />
+                            </td>
                             <td>{{ track.getUsername() }}</td>
+                            <td>{{ track.getDuration() }} Stunden</td>
+                            <td>{{ track.getDistance() }} Kilometer</td>
+                            <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
                         </tr>
+                        {% set trackNumber = trackNumber + 1 %}
                         {% endfor %}
                     </table>
                 </div>
@@ -290,6 +302,19 @@
     {% endfor %}
 
     trackContainer.addTo(map);
+    
+    $('.trackVisibility').on('click', function() {
+        var trackNumber = $(this).data('track');
+
+        if ($(this).prop('checked'))
+        {
+            trackContainer.addLayer(trackNumber);
+        }
+        else
+        {
+            trackContainer.removeLayer(trackNumber);
+        }
+    });
 
     /* Photos */
     var photoContainer = new Container();
