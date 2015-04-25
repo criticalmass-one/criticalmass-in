@@ -38,8 +38,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             {% if app.getUser() %}
-                                <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
-                                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i></a>
+                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i> Tour editieren</a>
                                 </div>
                             {% endif %}
 
@@ -75,8 +75,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             {% if app.getUser() %}
-                            <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
-                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="halflings map-marker"></i></a>
+                            <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="halflings map-marker"></i> Mini-Mass eintragen</a>
                             </div>
                             {% endif %}
                             <h3>Mini-Masses zu dieser Tour</h3>
@@ -130,8 +130,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             {% if pastRide and app.getUser() %}
-                                <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
-                                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i></a>
+                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
                                 </div>
                             {% endif %}
 
@@ -177,8 +177,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             {% if app.getUser() %}
-                                <div class="btn-group btn-group-xs pull-right" style="margin-top: 24px;">
-                                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i></a>
+                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i> GPX-Datei hochladen</a>
                                 </div>
                             {% endif %}
 
