@@ -20,3 +20,8 @@ Container.prototype.addTo = function(map)
 
     this.layer.addTo(map);
 };
+
+Container.prototype.isEmpty = function()
+{
+    return this.list.length == 0;
+};
