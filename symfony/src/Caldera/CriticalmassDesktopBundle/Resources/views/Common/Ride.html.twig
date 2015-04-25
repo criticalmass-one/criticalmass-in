@@ -285,7 +285,7 @@
 
     {% for track in ride.getActiveTracks() %}
     var track = new Track();
-    track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+    track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
     trackContainer.add(track);
     {% endfor %}
 
