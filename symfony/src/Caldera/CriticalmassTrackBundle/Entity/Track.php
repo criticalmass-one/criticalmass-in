@@ -446,6 +446,15 @@ class Track
 
         return $diff->format('%h.%i');
     }
+    
+    public function getAverageVelocity()
+    {
+        $diff = $this->endDateTime->diff($this->startDateTime);
+        
+        $averageVelocity = $this->getDistance() / $diff->format('%h');
+        
+        return $averageVelocity;
+    }
 
     public function loadGpx()
     {
