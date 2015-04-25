@@ -281,7 +281,7 @@
     subrideContainer.addControl(layers, 'Mini-Masses');
     trackContainer.addControl(layers, 'Tracks');
     photoContainer.addControl(layers, 'Fotos');
-    
+
     var layerControl = L.control.groupedLayers({}, {
         'Critical Mass': layers
     }, {
@@ -294,9 +294,9 @@
     map.fitBounds(trackContainer.getBounds());
     {% elseif ride.getActiveSubRides()|length > 0 %}
     map.fitBounds(subrideContainer.getBounds());
-    //locationMarker.openPopup();
+    rideContainer.getEntity(0).openPopup();
     {% else %}
     map.fitBounds(rideContainer.getBounds());
-    //locationMarker.openPopup();
+    rideContainer.getEntity(0).openPopup();
     {% endif %}
 </script>
