@@ -203,13 +203,16 @@
 
 {% javascripts
 '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
+'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/City/*'
 '@CalderaCriticalmassDesktopBundle/Resources/public/js/Ride/*'
 '@CalderaCriticalmassTrackBundle/Resources/public/js/Track/*'
+'@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/Photo.js'
 '@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
+'@CalderaCriticalmassCoreBundle/Resources/public/js/Container/Container.js'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
@@ -232,14 +235,14 @@
     var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
     
     /* Rides */
-    var rideContainer = new RideContainer();
+    var rideContainer = new Container();
     //var ride = new Ride(city, 'Critical Mass', 'foo', null, null, '', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
     var ride = new Ride(city, 'Critical Mass', 'foo', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
     rideContainer.add(ride);
     rideContainer.addTo(map);
 
     /* Subrides */
-    var subrideContainer = new SubrideContainer();
+    var subrideContainer = new Container();
 
     {% for subRide in ride.getActiveSubRides() %}
     var subride = new Subride('{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subRide.getDateTime().format('H:i') }}', {{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}, '{{ subRide.getLocation() }}');
@@ -249,7 +252,7 @@
     subrideContainer.addTo(map);
     
     /* Tracks */
-    var trackContainer = new TrackContainer();
+    var trackContainer = new Container();
 
     {% for track in ride.getActiveTracks() %}
     var track = new Track();
@@ -260,7 +263,7 @@
     trackContainer.addTo(map);
 
     /* Photos */
-    var photoContainer = new PhotoContainer();
+    var photoContainer = new Container();
     
     {% for photo in ride.getPhotos() %}
     var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
