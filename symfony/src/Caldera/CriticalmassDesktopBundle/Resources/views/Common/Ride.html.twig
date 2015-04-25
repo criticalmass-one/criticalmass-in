@@ -25,9 +25,11 @@
                 <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab">Details</a></li>
                 <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a></li>
                 <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
+                {% if pastRide %}
                 <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab">Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a></li>
                 <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab">Statistik</a></li>
                 <li role="presentation"><a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a></li>
+                {% endif %}
             </ul>
 
             <!-- Tab panes -->
@@ -120,7 +122,8 @@
                         </div>
                     </div>
                 </div>
-                
+
+                {% if pastRide %}
                 <div role="tabpanel" class="tab-pane" id="gallery">...</div>
 
                 <div role="tabpanel" class="tab-pane" id="stats">
@@ -148,7 +151,6 @@
                             <td>{{ ride.getDateTime.format('d.m.Y H:i') }} Uhr</td>
                             <td></td>
                         </tr>
-                        {% if pastRide %}
                             <tr>
                                 <th>Teilnehmer</th>
                                 <td>{{ ride.getEstimatedParticipants()|round }}</td>
@@ -169,7 +171,6 @@
                                 <td>{{ ride.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
                                 <td></td>
                             </tr>
-                        {% endif %}
                     </table>
                 </div>
 
@@ -210,6 +211,7 @@
                     </table>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
