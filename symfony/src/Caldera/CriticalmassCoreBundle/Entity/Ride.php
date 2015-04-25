@@ -1095,4 +1095,9 @@ class Ride
 
         return $subRides;
     }
+    
+    public function getAverageVelocity()
+    {
+        return $this->getEstimatedDistance() / $this->getEstimatedDuration();
+    }
 }
