@@ -36,7 +36,7 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="details">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             {% if app.getUser() %}
                                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
                                     <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i> Tour editieren</a>
@@ -44,7 +44,11 @@
                             {% endif %}
 
                             <h3>{{ ride.getFancyTitle() }}</h3>
-
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-8">
                             {% if ride.getDescription() %}
                             {{ ride.getDescription()|nl2br }}
                             {% endif %}
@@ -107,6 +111,16 @@
                                 });
                             }
                         </script>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if app.getUser() %}
+                                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour hochgeladen &mdash; <a href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a>.</div>
+                                {% else %}
+                                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+                                {% endif %}
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
 
@@ -124,7 +138,29 @@
                 </div>
 
                 {% if pastRide %}
-                <div role="tabpanel" class="tab-pane" id="gallery">...</div>
+                <div role="tabpanel" class="tab-pane" id="gallery">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if pastRide and app.getUser() %}
+                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen"><i class="halflings camera"></i> Fotos hochladen</a>
+                                </div>
+                            {% endif %}
+                            
+                            <h3>Galerie</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                        {% if app.getUser() %}
+                            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.</div>
+                        {% else %}
+                            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
 
                 <div role="tabpanel" class="tab-pane" id="stats">
                     <div class="row">
@@ -186,6 +222,7 @@
                         </div>
                     </div>
 
+                    {% if ride.getActiveTracks()|length > 0 %}
                     <table class="table">
                         <tr>
                             <th></th>
@@ -208,6 +245,13 @@
                         {% set trackNumber = trackNumber + 1 %}
                         {% endfor %}
                     </table>
+                    {% else %}
+                    {% if app.getUser() %}
+                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen">Du kannst noch immer der Erste sein</a>.</div>
+                    {% else %}
+                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
             {% endif %}
