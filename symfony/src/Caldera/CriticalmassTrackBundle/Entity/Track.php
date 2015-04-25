@@ -593,4 +593,19 @@ class Track
 
         return $nextTrack;
     }
+
+    public function getColorRed()
+    {
+        return ($this->getUser() != null ? $this->getUser()->getColorRed() : $this->getTicket()->getColorRed());
+    }
+
+    public function getColorGreen()
+    {
+        return ($this->getUser() != null ? $this->getUser()->getColorGreen() : $this->getTicket()->getColorGreen());
+    }
+
+    public function getColorBlue()
+    {
+        return ($this->getUser() != null ? $this->getUser()->getColorBlue() : $this->getTicket()->getColorBlue());
+    }
 }
