@@ -3,7 +3,7 @@
 namespace Caldera\CriticalmassStatisticBundle\Service;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
-use Caldera\CriticalmassCoreBundle\Entity\Track;
+use Caldera\CriticalmassTrackBundle\Entity\Track;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
 use Caldera\CriticalmassStatisticBundle\Utility\RideEstimateCalculator\RideEstimateCalculator;
 

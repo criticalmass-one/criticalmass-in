@@ -58,7 +58,7 @@ class RideGuesser {
             $ride = $this->rides[0];
             $user = $this->controller->getUser();
             
-            $duplicate = $this->controller->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(
+            $duplicate = $this->controller->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findBy(
                 array('ride' => $ride, 'user' => $user)
             );
             

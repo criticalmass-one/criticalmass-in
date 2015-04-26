@@ -136,7 +136,7 @@ class TrackController extends Controller
                     $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
 
                     /* Throw the user back to his track list. */
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_strack_track_list'));
+                    return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
                 }
                 /* No, that didn’t work. We cannot detect a distinct ride, so the user has to set a ride hisself. */
                 elseif (sizeof($errorList) == 0) {

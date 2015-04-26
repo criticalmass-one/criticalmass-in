@@ -63,7 +63,7 @@ class PhotoUploader {
         $pg = new PhotoGps();
         $pg->setPhoto($this->photo);
 
-        $track = $this->doctrine->getRepository('CalderaCriticalmassCoreBundle:Track')->findOneBy(array('ride' => $this->ride, 'user' => $this->user));
+        $track = $this->doctrine->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneBy(array('ride' => $this->ride, 'user' => $this->user, 'activated' => true));
         $pg->setTrack($track);
 
         $pg->execute();

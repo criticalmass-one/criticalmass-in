@@ -2,11 +2,8 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Entity;
 
-use Caldera\CriticalmassGalleryBundle\Utility\PhotoUtility;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Photo

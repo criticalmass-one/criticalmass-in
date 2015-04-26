@@ -3,7 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Utility\GpxReader;
 
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxCoordLoop\GpxCoordLoop;
-use Caldera\CriticalmassCoreBundle\Entity\Track;
+use Caldera\CriticalmassTrackBundle\Entity\Track;
 
 class GpxReader {
     protected $path;

@@ -2,7 +2,7 @@
 
 namespace Caldera\CriticalmassCoreBundle\Utility\LatLngArrayGenerator;
 
-use Caldera\CriticalmassCoreBundle\Entity\Track;
+use Caldera\CriticalmassTrackBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 
 abstract class AbstractLatLngArrayGenerator

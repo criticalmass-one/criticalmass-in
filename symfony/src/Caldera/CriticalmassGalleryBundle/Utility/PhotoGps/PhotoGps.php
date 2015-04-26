@@ -2,10 +2,10 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoGps;
 
-use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
 use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
+use Caldera\CriticalmassTrackBundle\Entity\Track;
 
 class PhotoGps {
     protected $track;
