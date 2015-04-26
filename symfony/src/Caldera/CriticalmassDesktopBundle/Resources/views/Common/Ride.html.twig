@@ -22,13 +22,13 @@
     <div class="col-md-12">
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab">Details</a></li>
-                <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a></li>
-                <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
+                <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab"><i class="halflings flag"></i> Details</a></li>
+                <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings map-marker"></i>Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a></li>
+                <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
                 {% if pastRide %}
-                <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab">Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a></li>
-                <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab">Statistik</a></li>
-                <li role="presentation"><a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a></li>
+                <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a></li>
+                <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings signal"></i> Statistik</a></li>
+                <li role="presentation"><a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a></li>
                 {% endif %}
             </ul>
 
