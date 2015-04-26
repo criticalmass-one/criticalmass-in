@@ -114,8 +114,7 @@
     
     /* Rides */
     var rideContainer = new Container();
-    //var ride = new Ride(city, 'Critical Mass', 'foo', null, null, '', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
-    var ride = new Ride(city, 'Critical Mass', 'foo', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
+    var ride = new Ride(city, '{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
     rideContainer.add(ride);
     rideContainer.addTo(map);
 
