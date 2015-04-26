@@ -167,8 +167,10 @@
     var photoContainer = new Container();
     
     {% for photo in ride.getPhotos() %}
+    {% if photo.hasCoordinates() %}
     var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
     photoContainer.add(photo);
+    {% endif %}
     {% endfor %}
     
     photoContainer.addTo(map);

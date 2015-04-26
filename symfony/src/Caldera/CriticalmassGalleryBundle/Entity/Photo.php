@@ -309,4 +309,9 @@ class Photo
     public function toThumbnailPath($path) {
         return str_replace("" . $this->id, $this->id . "_thumbnail", $path);
     }
+    
+    public function hasCoordinates()
+    {
+        return ($this->latitude && $this->longitude);
+    }
 }
