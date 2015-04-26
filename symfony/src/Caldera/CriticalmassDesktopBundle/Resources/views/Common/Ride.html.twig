@@ -18,6 +18,7 @@
     </div>
 </div>
 
+
 <div class="row" style="margin-top: 1em;">
     <div class="col-md-12">
         <div role="tabpanel">
@@ -32,221 +33,19 @@
                 {% endif %}
             </ul>
 
-            <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="details">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {% if app.getUser() %}
-                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i> Tour editieren</a>
-                                </div>
-                            {% endif %}
-
-                            <h3>{{ ride.getFancyTitle() }}</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-8">
-                            {% if ride.getDescription() %}
-                            {{ ride.getDescription()|nl2br }}
-                            {% endif %}
-                        </div>
-
-                        <div class="col-md-4">
-                            {% if hasSocialMedia %}
-                                <h4>Mehr im Netz</h4>
-                                {% if ride.getUrl() %}
-                                    <a class="btn btn-default" href="{{ ride.getUrl() }}"><i class="social rss"></i> Homepage</a>
-                                {% endif %}
-
-                                {% if ride.getFacebook() %}
-                                    <a class="btn btn-default" href="{{ ride.getFacebook() }}"><i class="social facebook"></i> facebook</a>
-                                {% endif %}
-
-                                {% if ride.getTwitter() %}
-                                    <a class="btn btn-default" href="{{ ride.getTwitter() }}"><i class="social twitter"></i> twitter</a>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="minimass">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {% if app.getUser() %}
-                            <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="halflings map-marker"></i> Mini-Mass eintragen</a>
-                            </div>
-                            {% endif %}
-                            <h3>Mini-Masses zu dieser Tour</h3>
-                        </div>
-                    </div>
-
-                    {% if ride.getActiveSubRides() %}
-                        {% set subrideNumber = 0 %}
-                        {% for subRide in ride.getActiveSubRides() %}
-                        <div class="media subride col-md-4">
-                            {% if app.getUser() %}<a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>{% endif %}
-                            <a class="pull-left subride" href="#" data-subride="{{ subrideNumber }}">
-                                <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
-                            </a>
-                            <div class="media-body">
-                                <h5 class="media-heading">{{ subRide.getDateTime().format('H.i') }} Uhr: {{ subRide.getTitle() }}</h5>
-                                <p>{{ subRide.getDescription()|nl2br }}</p>
-                            </div>
-                        </div>
-                        {% set subrideNumber = subrideNumber + 1 %}
-                        {% endfor %}
-                    {% else %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                {% if app.getUser() %}
-                                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour hochgeladen &mdash; <a href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a>.</div>
-                                {% else %}
-                                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="comments">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>Kommentare zu dieser Tour</h3>
-                            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'rideId': ride.getId() })) }}
-
-                            {% if app.getUser() %}
-                            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'rideId': ride.getId() })) }}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
+                {% include('CalderaCriticalmassDesktopBundle:Ride:DetailsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Ride:SubridesTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Ride:CommentsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                
                 {% if pastRide %}
-                <div role="tabpanel" class="tab-pane" id="gallery">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {% if pastRide and app.getUser() %}
-                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen"><i class="halflings uni-camera"></i> Fotos hochladen</a>
-                                </div>
-                            {% endif %}
-                            
-                            <h3>Galerie</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                        {% if app.getUser() %}
-                            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.</div>
-                        {% else %}
-                            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
-                        {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="stats">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {% if pastRide and app.getUser() %}
-                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
-                                </div>
-                            {% endif %}
-
-                            <h3>Statistik</h3>
-                        </div>
-                    </div>
-
-                    <table class="table">
-                        <tr>
-                            <th>Treffpunkt</th>
-                            <td>{{ ride.getLocation() }}</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Datum</th>
-                            <td>{{ ride.getDateTime.format('d.m.Y H:i') }} Uhr</td>
-                            <td></td>
-                        </tr>
-                            <tr>
-                                <th>Teilnehmer</th>
-                                <td>{{ ride.getEstimatedParticipants()|round }}</td>
-                                <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Distanz</th>
-                                <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
-                                <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Dauer</th>
-                                <td>{{ ride.getEstimatedDuration()|round(2) }} Stunden</td>
-                                <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Durchschnittsgeschwindigkeit</th>
-                                <td>{{ ride.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
-                                <td></td>
-                            </tr>
-                    </table>
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="tracks">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {% if app.getUser() %}
-                                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i> GPX-Datei hochladen</a>
-                                </div>
-                            {% endif %}
-
-                            <h3>GPX-Tracks</h3>
-                        </div>
-                    </div>
-
-                    {% if ride.getActiveTracks()|length > 0 %}
-                    <table class="table">
-                        <tr>
-                            <th></th>
-                            <th>Teilnehmer</th>
-                            <th>Dauer</th>
-                            <th>Länge</th>
-                            <th>Durchschnittsgeschwindigkeit</th>
-                        </tr>
-                        {% set trackNumber = 0 %}
-                        {% for track in ride.getActiveTracks() %}
-                        <tr>
-                            <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                <input type="checkbox" class="trackVisibility" data-track="{{ trackNumber }}" checked="checked" />
-                            </td>
-                            <td>{{ track.getUsername() }}</td>
-                            <td>{{ track.getDuration() }} Stunden</td>
-                            <td>{{ track.getDistance() }} Kilometer</td>
-                            <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
-                        </tr>
-                        {% set trackNumber = trackNumber + 1 %}
-                        {% endfor %}
-                    </table>
-                    {% else %}
-                    {% if app.getUser() %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen">Du kannst noch immer der Erste sein</a>.</div>
-                    {% else %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
-                    {% endif %}
-                    {% endif %}
-                </div>
+                {% include('CalderaCriticalmassDesktopBundle:Ride:GalleryTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Ride:StatisticTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Ride:TracksTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
-</div>
 </div>
 
 {% if app.getUser() %}

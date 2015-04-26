@@ -1,0 +1,44 @@
+<div role="tabpanel" class="tab-pane" id="tracks">
+    <div class="row">
+        <div class="col-md-12">
+            {% if app.getUser() %}
+                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i> GPX-Datei hochladen</a>
+                </div>
+            {% endif %}
+
+            <h3>GPX-Tracks</h3>
+        </div>
+    </div>
+
+    {% if ride.getActiveTracks()|length > 0 %}
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Teilnehmer</th>
+                <th>Dauer</th>
+                <th>Länge</th>
+                <th>Durchschnittsgeschwindigkeit</th>
+            </tr>
+            {% set trackNumber = 0 %}
+            {% for track in ride.getActiveTracks() %}
+                <tr>
+                    <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
+                        <input type="checkbox" class="trackVisibility" data-track="{{ trackNumber }}" checked="checked" />
+                    </td>
+                    <td>{{ track.getUsername() }}</td>
+                    <td>{{ track.getDuration() }} Stunden</td>
+                    <td>{{ track.getDistance() }} Kilometer</td>
+                    <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
+                </tr>
+                {% set trackNumber = trackNumber + 1 %}
+            {% endfor %}
+        </table>
+    {% else %}
+        {% if app.getUser() %}
+            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen">Du kannst noch immer der Erste sein</a>.</div>
+        {% else %}
+            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+        {% endif %}
+    {% endif %}
+</div>

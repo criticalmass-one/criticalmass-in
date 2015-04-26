@@ -1,0 +1,38 @@
+<div role="tabpanel" class="tab-pane active" id="details">
+    <div class="row">
+        <div class="col-md-12">
+            {% if app.getUser() %}
+                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i> Tour editieren</a>
+                </div>
+            {% endif %}
+
+            <h3>{{ ride.getFancyTitle() }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            {% if ride.getDescription() %}
+                {{ ride.getDescription()|nl2br }}
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            {% if hasSocialMedia %}
+                <h4>Mehr im Netz</h4>
+                {% if ride.getUrl() %}
+                    <a class="btn btn-default" href="{{ ride.getUrl() }}"><i class="social rss"></i> Homepage</a>
+                {% endif %}
+
+                {% if ride.getFacebook() %}
+                    <a class="btn btn-default" href="{{ ride.getFacebook() }}"><i class="social facebook"></i> facebook</a>
+                {% endif %}
+
+                {% if ride.getTwitter() %}
+                    <a class="btn btn-default" href="{{ ride.getTwitter() }}"><i class="social twitter"></i> twitter</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
