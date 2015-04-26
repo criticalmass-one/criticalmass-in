@@ -48,9 +48,8 @@
     </div>
 </div>
 
-{% if app.getUser() %}
 
-{% if pastRide %}
+{% if app.getUser() and pastRide %}
 <div class="modal fade" id="modalEstimate" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -78,7 +77,6 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endif %}
 
 {% javascripts
