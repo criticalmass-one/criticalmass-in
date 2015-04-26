@@ -51,3 +51,8 @@ Subride.prototype.openPopup = function()
 {
     this.marker.openPopup();
 };
+
+Subride.prototype.getLatLng = function()
+{
+    return [this.latitude, this.longitude];
+};

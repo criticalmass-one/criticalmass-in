@@ -88,10 +88,11 @@
                     </div>
 
                     {% if ride.getActiveSubRides() %}
+                        {% set subrideNumber = 0 %}
                         {% for subRide in ride.getActiveSubRides() %}
                         <div class="media subride col-md-4">
                             {% if app.getUser() %}<a href="{{ path('caldera_criticalmass_desktop_subride_edit', { subRideId: subRide.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>{% endif %}
-                            <a class="pull-left subride" href="#" data-subrideid="{{ subRide.getId() }}">
+                            <a class="pull-left subride" href="#" data-subride="{{ subrideNumber }}">
                                 <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
                             </a>
                             <div class="media-body">
@@ -99,18 +100,8 @@
                                 <p>{{ subRide.getDescription()|nl2br }}</p>
                             </div>
                         </div>
+                        {% set subrideNumber = subrideNumber + 1 %}
                         {% endfor %}
-                        <script>
-                            window.onload = function() {
-                                $('.subride').on('click', function () {
-                                    var subRideId = $(this).data('subrideid');
-                                    var marker = subRideMarkers[subRideId];
-
-                                    map.panTo(marker.getLatLng());
-                                    marker.openPopup();
-                                });
-                            }
-                        </script>
                     {% else %}
                         <div class="row">
                             <div class="col-md-12">
@@ -341,7 +332,16 @@
     {% endfor %}
 
     subrideContainer.addTo(map);
-    
+
+    $('.subride').on('click', function ()
+    {
+        var subRideId = $(this).data('subride');
+        var subRide = subrideContainer.getEntity(subRideId);
+        
+        map.panTo(subRide.getLatLng());
+        subRide.openPopup();
+    });
+
     /* Tracks */
     var trackContainer = new Container();
 
@@ -353,7 +353,8 @@
 
     trackContainer.addTo(map);
     
-    $('.trackVisibility').on('click', function() {
+    $('.trackVisibility').on('click', function()
+    {
         var trackNumber = $(this).data('track');
 
         if ($(this).prop('checked'))
