@@ -58,3 +58,11 @@ Container.prototype.removeLayer = function(index)
 {
     return this.list[index].removeLayer(this.layer);
 };
+
+Container.prototype.snapTo = function(map, polyline)
+{
+    for (var index in this.list)
+    {
+        this.list[index].snapTo(map, polyline);
+    }
+};

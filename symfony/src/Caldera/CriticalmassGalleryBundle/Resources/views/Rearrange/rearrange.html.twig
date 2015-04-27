@@ -138,12 +138,10 @@
                     if (timestamp > photoData.dateTime)
                     {
                         var latLng = coords[timestamp];
-
-                        alert(timestamp + ' ' + latLng.lat);
-                        var photo = new Photo(photoData.id, latLng.lat, latLng.lng, 'Foo');
+                        var photo = new DragablePhoto(photoData.id, latLng.lat, latLng.lng, 'Foo');
 
                         photoContainer.add(photo);
-
+                        
                         ++photoNumber;
                         photoData = ajaxResponse[photoNumber];
                     }
@@ -151,6 +149,7 @@
                 }
                 
                 photoContainer.addTo(map);
+                photoContainer.snapTo(map, polyline);
             }
             
             $('#trackSelect').on('change', function()

@@ -8,6 +8,13 @@ DragablePhoto = function(id, latitude, longitude, title)
 
 DragablePhoto.prototype = new Photo();
 
+DragablePhoto.prototype.snapTo = function(map, polyline)
+{
+    this.marker.snapediting = new L.Handler.MarkerSnap(map, this.marker);
+    this.marker.snapediting.addGuideLayer(polyline);
+    this.marker.snapediting.enable();
+};
+
 DragablePhoto.prototype.addTo = function(map)
 {
     var locationIcon = L.icon({
@@ -26,13 +33,13 @@ DragablePhoto.prototype.addTo = function(map)
 
     var this2 = this;
 
-    photoMarker.on('click', function()
+    this.marker.on('click', function()
     {
         var photoPath = '/photos/' + this2.getId() + '.jpg';
         $.fancybox( { href : photoPath, title : this2.getTitle() } );
     });
 
-    photoMarker.on('dragend', function(event)
+    this.marker.on('dragend', function(event)
     {
         var marker = event.target;
 
