@@ -74,7 +74,10 @@
             /* View */
             map.setView([53.550556, 9.993333], 13);
             
+            var coords = {};
+            
             var polyline = null;
+            var photoContainer = new Container();
             
             function resetPolyline()
             {
@@ -102,12 +105,40 @@
                 
                 for (var index = 0; index < ajaxResponse.length; ++index)
                 {
-                    polylineLatLngArray.push([parseFloat(ajaxResponse[index].lat), parseFloat(ajaxResponse[index].lng)]);
+                    var latLng = [parseFloat(ajaxResponse[index].lat), parseFloat(ajaxResponse[index].lng)];
+                    coords[ajaxResponse[index].dateTime] = latLng;
+                    polylineLatLngArray.push(latLng);
                 }
                 
                 polyline = L.polyline(polylineLatLngArray, { color: 'red' });
                 polyline.addTo(map);
                 map.fitBounds(polyline.getBounds());
+                
+                loadPhotos();
+            }
+            
+            function loadPhotos()
+            {
+                $.ajax({
+                    url: '/app_dev.php/gallery/loadphotos/{{ ride.getId() }}',
+                    success: function(result)
+                    {
+                        placePhotos(JSON.parse(result));
+                    }
+                });
+            }
+            
+            function placePhotos(ajaxResponse)
+            {
+                for (var index = 0; index < ajaxResponse.length; ++index)
+                {
+                    var photoData = ajaxResponse[index];
+                    var photo = new Photo(photoData.id, parseFloat(photoData.lat), parseFloat(photoData.lng), 'Foo');
+                    
+                    photoContainer.add(photo);
+                }
+                
+                photoContainer.addTo(map);
             }
             
             $('#trackSelect').on('change', function()

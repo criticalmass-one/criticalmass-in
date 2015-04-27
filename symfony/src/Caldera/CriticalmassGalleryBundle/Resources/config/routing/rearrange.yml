@@ -5,3 +5,7 @@ caldera_criticalmass_gallery_photos_rearrange:
 caldera_criticalmass_gallery_photos_loadtrack:
     pattern: /gallery/loadtrack/{trackId}
     defaults: { _controller: CalderaCriticalmassGalleryBundle:Rearrange:loadtrack }
+
+caldera_criticalmass_gallery_photos_loadphotos:
+    pattern: /gallery/loadphotos/{rideId}
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Rearrange:loadPhotos }

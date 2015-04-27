@@ -38,17 +38,42 @@ class RearrangeController extends Controller
 
         return $this->render('CalderaCriticalmassGalleryBundle:Rearrange:rearrange.html.twig', array('city' => $city, 'ride' => $ride, 'dateTime' => new \DateTime()));
     }
-    
+
     public function loadtrackAction(Request $request, $trackId)
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->find($trackId);
-        
+
         $gr = new GpxReader();
         $gr->loadTrack($track);
+
+        $json = $gr->generateJsonDateTimeArray(25);
+
+        return new Response($json);
+    }
+
+    public function loadphotosAction(Request $request, $rideId)
+    {
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+
+        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy(array('ride' => $ride, 'user' => $this->getUser()), array('dateTime' => 'ASC'));
         
-        $json = $gr->generateJsonDateTimeArray(50);
+        $json = '[';
+        $first = true;
+        
+        foreach ($photos as $photo)
+        {
+            if (!$first)
+            {
+                $json .= ', ';
+            }
+
+            $json .= '{ "id": "'.$photo->getId().'", "lat": "'.$photo->getLatitude().'", "lng": "'.$photo->getLongitude().'", "dateTime": "'.$photo->getDateTime()->format('U').'" }';
+            
+            $first = false;
+        }
+        
+        $json .= ']';
         
         return new Response($json);
-        
     }
 }
