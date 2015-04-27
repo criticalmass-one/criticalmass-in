@@ -15,6 +15,11 @@ DragablePhoto.prototype.snapTo = function(map, polyline)
     this.marker.snapediting.enable();
 };
 
+DragablePhoto.prototype.addEvent = function(type, callback)
+{
+    this.marker.on(type, callback);
+};
+
 DragablePhoto.prototype.addTo = function(map)
 {
     var locationIcon = L.icon({

@@ -66,3 +66,11 @@ Container.prototype.snapTo = function(map, polyline)
         this.list[index].snapTo(map, polyline);
     }
 };
+
+Container.prototype.addEvent = function(type, callback)
+{
+    for (var index in this.list)
+    {
+        this.list[index].addEvent(type, callback);
+    }
+};
