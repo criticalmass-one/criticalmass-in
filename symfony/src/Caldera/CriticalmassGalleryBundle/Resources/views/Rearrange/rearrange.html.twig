@@ -85,6 +85,17 @@
                 }
             }
             
+            function loadTrack(trackId)
+            {
+                $.ajax({
+                    url: '/app_dev.php/gallery/loadtrack/' + trackId,
+                    success: function(result)
+                    {
+                        createPolyline(JSON.parse(result));
+                    }
+                });
+            }
+            
             function createPolyline(ajaxResponse) {
                 var polylineLatLngArray = new Array();
                 resetPolyline();
@@ -94,21 +105,16 @@
                     polylineLatLngArray.push([parseFloat(ajaxResponse[index].lat), parseFloat(ajaxResponse[index].lng)]);
                 }
                 
-                polyline = L.polyline(polylineLatLngArray, {color: 'red'});
+                polyline = L.polyline(polylineLatLngArray, { color: 'red' });
                 polyline.addTo(map);
+                map.fitBounds(polyline.getBounds());
             }
             
             $('#trackSelect').on('change', function()
             {
                 var trackId = this.value;
                 
-                $.ajax({
-                    url: '/app_dev.php/gallery/loadtrack/' + trackId,
-                    success: function(result)
-                    {
-                        createPolyline(JSON.parse(result));
-                    }
-                });
+                loadTrack(trackId);
             });
         </script>
     </div>
