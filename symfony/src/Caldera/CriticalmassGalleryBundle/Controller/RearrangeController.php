@@ -4,6 +4,7 @@ namespace Caldera\CriticalmassGalleryBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RearrangeController extends Controller
@@ -35,5 +36,13 @@ class RearrangeController extends Controller
         }
 
         return $this->render('CalderaCriticalmassGalleryBundle:Rearrange:rearrange.html.twig', array('city' => $city, 'ride' => $ride, 'dateTime' => new \DateTime()));
+    }
+    
+    public function loadtrackAction(Request $request, $trackId)
+    {
+        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->find($trackId);
+        
+        return new Response($track->getPreviewJsonArray());
+        
     }
 }
