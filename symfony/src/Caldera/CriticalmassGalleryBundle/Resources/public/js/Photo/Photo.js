@@ -10,6 +10,7 @@ Photo.prototype.id = null;
 Photo.prototype.latitude = null;
 Photo.prototype.longitude = null;
 Photo.prototype.title = null;
+Photo.prototype.marker = null;
 
 Photo.prototype.addTo = function(map)
 {
@@ -24,8 +25,8 @@ Photo.prototype.addTo = function(map)
         shadowAnchor: [13, 41]
     });
 
-    var photoMarker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: false });
-    photoMarker.addTo(map);
+    this.marker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: false });
+    this.marker.addTo(map);
 
     var this2 = this;
 

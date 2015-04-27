@@ -21,8 +21,8 @@ DragablePhoto.prototype.addTo = function(map)
         shadowAnchor: [13, 41]
     });
 
-    var photoMarker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: true });
-    photoMarker.addTo(map);
+    this.marker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: true });
+    this.marker.addTo(map);
 
     var this2 = this;
 
@@ -52,3 +52,4 @@ DragablePhoto.prototype.addTo = function(map)
         });
     });
 };
+
