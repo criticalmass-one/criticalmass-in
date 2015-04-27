@@ -74,15 +74,27 @@
             /* View */
             map.setView([53.550556, 9.993333], 13);
             
+            var polyline = null;
+            
+            function resetPolyline()
+            {
+                if (polyline != null)
+                {
+                    map.removeLayer(polyline);
+                    polyline = null;
+                }
+            }
+            
             function createPolyline(ajaxResponse) {
                 var polylineLatLngArray = new Array();
-
+                resetPolyline();
+                
                 for (var index = 0; index < ajaxResponse.length; ++index)
                 {
                     polylineLatLngArray.push([parseFloat(ajaxResponse[index].lat), parseFloat(ajaxResponse[index].lng)]);
                 }
                 
-                var polyline = L.polyline(polylineLatLngArray, {color: 'red'});
+                polyline = L.polyline(polylineLatLngArray, {color: 'red'});
                 polyline.addTo(map);
             }
             
