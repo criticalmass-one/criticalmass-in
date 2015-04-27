@@ -2,10 +2,13 @@ CalderaCriticalmassGalleryBundle_Upload:
     resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/upload.yml"
     prefix:   /
 
+CalderaCriticalmassGalleryBundle_Rearrange:
+    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/rearrange.yml"
+    prefix:   /
+
 CalderaCriticalmassGalleryBundle_Edit_Photo:
     resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing/editphoto.yml"
     prefix:   /gallery/photo/edit
-
 
 caldera_criticalmass_gallery_photos_index:
     path:     /photos/index

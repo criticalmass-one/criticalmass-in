@@ -1,0 +1,50 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Fotos sortieren{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Fotos sortieren</li>
+        </ol>
+        
+        <div id="map" style="height: 350px;">
+            
+        </div>
+
+        {% javascripts
+        '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
+        '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*'
+        '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
+        '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
+        '@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
+        '@CalderaCriticalmassDesktopBundle/Resources/public/js/City/*'
+        '@CalderaCriticalmassDesktopBundle/Resources/public/js/Ride/*'
+        '@CalderaCriticalmassTrackBundle/Resources/public/js/Track/*'
+        '@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/Photo.js'
+        '@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/*'
+        '@CalderaCriticalmassCoreBundle/Resources/public/js/Container/Container.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script type="text/javascript">
+            /* Map */
+            var map = L.map('map');
+
+            /* Tilelayer */
+            var tileLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                detectRetina: true
+            });
+
+            tileLayer.addTo(map);
+
+            /* View */
+            map.setView([53.550556, 9.993333], 13);
+        </script>
+    </div>
+{% endblock %}

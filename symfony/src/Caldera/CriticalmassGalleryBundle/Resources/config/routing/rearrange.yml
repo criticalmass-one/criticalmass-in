@@ -1,0 +1,3 @@
+caldera_criticalmass_gallery_photos_rearrange:
+    pattern: /{citySlug}/{rideDate}/gallery/rearrange
+    defaults: { _controller: CalderaCriticalmassGalleryBundle:Rearrange:rearrange }
