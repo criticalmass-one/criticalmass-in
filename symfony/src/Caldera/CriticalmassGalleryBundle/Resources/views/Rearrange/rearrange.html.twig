@@ -73,6 +73,31 @@
 
             /* View */
             map.setView([53.550556, 9.993333], 13);
+            
+            function createPolyline(ajaxResponse) {
+                var polylineLatLngArray = new Array();
+
+                for (var index = 0; index < ajaxResponse.length; ++index)
+                {
+                    polylineLatLngArray.push([parseFloat(ajaxResponse[index].lat), parseFloat(ajaxResponse[index].lng)]);
+                }
+                
+                var polyline = L.polyline(polylineLatLngArray, {color: 'red'});
+                polyline.addTo(map);
+            }
+            
+            $('#trackSelect').on('change', function()
+            {
+                var trackId = this.value;
+                
+                $.ajax({
+                    url: '/app_dev.php/gallery/loadtrack/' + trackId,
+                    success: function(result)
+                    {
+                        createPolyline(JSON.parse(result));
+                    }
+                });
+            });
         </script>
     </div>
 {% endblock %}

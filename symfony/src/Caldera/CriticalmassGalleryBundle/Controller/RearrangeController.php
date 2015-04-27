@@ -2,6 +2,7 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Controller;
 
+use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +43,12 @@ class RearrangeController extends Controller
     {
         $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->find($trackId);
         
-        return new Response($track->getPreviewJsonArray());
+        $gr = new GpxReader();
+        $gr->loadTrack($track);
+        
+        $json = $gr->generateJsonDateTimeArray(50);
+        
+        return new Response($json);
         
     }
 }

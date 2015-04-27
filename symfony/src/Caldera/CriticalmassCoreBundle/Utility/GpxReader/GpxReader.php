@@ -124,6 +124,37 @@ class GpxReader {
         return $result;
     }
 
+    public function generateJsonDateTimeArray($skip = 0)
+    {
+        $result = '[';
+
+        $first = true;
+        $counter = 0;
+
+        foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
+        {
+            if ($counter == $skip) {
+                if (!$first)
+                {
+                    $result .= ', ';
+                }
+                
+                $result .= '{ "dateTime": "2015-02-02", "lat": "'.((float)$point['lat']).'", "lng": "'.((float)$point['lon']).'" }';
+                
+                $counter = 0;
+                $first = false;
+            }
+            else
+            {
+                ++$counter;
+            }
+        }
+
+        $result .= ']';
+        
+        return $result;
+    }
+
     /**
      * The earth is flat, stupid. As we struggle with PHP and it’s acos calculations we assume the earth to be flat, so
      * we can use Pythagoras here. As we have only small distances about twenty or thirty kilometres, this works well
