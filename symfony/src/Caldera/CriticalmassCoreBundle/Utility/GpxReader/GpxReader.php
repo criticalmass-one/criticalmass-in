@@ -139,7 +139,7 @@ class GpxReader {
                     $result .= ', ';
                 }
                 
-                $result .= '{ "dateTime": "2015-02-02", "lat": "'.((float)$point['lat']).'", "lng": "'.((float)$point['lon']).'" }';
+                $result .= '{ "dateTime": "'.(new \DateTime($point->time))->format('U').'", "lat": "'.((float)$point['lat']).'", "lng": "'.((float)$point['lon']).'" }';
                 
                 $counter = 0;
                 $first = false;
