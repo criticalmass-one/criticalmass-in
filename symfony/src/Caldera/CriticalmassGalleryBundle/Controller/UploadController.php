@@ -52,7 +52,7 @@ class UploadController extends Controller
             $em->persist($photo);
             $em->flush();
 
-            $pu = new PhotoUploader($photo, $this->getDoctrine(), $ride, $this->getUser());
+            $pu = new PhotoUploader($this, $photo, $ride);
             $pu->execute();
 
             $em->persist($photo);

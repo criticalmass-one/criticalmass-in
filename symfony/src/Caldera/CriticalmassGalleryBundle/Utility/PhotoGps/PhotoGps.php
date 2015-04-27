@@ -11,10 +11,11 @@ class PhotoGps {
     protected $track;
     protected $photo;
     protected $exifData;
+    protected $controller;
     
-    public function __construct()
+    public function __construct($controller)
     {
-
+        $this->controller = $controller;
     }
 
     public function setPhoto(Photo $photo)
@@ -72,8 +73,10 @@ class PhotoGps {
 
     public function approximateCoordinates()
     {
+        $filename = $this->controller->get('kernel')->getRootDir() . '/../web/gpx/'.$this->track->getId().'.gpx';
+        
         $gpxReader = new GpxReader();
-        $gpxReader->loadFile('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/2.gpx');
+        $gpxReader->loadFile($filename);
 
         $result = $gpxReader->findCoordNearDateTime($this->photo->getDateTime());
 

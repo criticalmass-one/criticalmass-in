@@ -3,6 +3,8 @@
 namespace Caldera\CriticalmassDesktopBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+use Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader\PhotoUploader;
 use Caldera\CriticalmassStatisticBundle\Type\RideEstimateType;
 use Caldera\CriticalmassCoreBundle\Type\RideType;
 use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
@@ -60,7 +62,7 @@ class RideController extends Controller
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
         }
-
+        
         return $this->render('CalderaCriticalmassDesktopBundle:Ride:show.html.twig', array('city' => $city, 'ride' => $ride, 'dateTime' => new \DateTime()));
     }
 

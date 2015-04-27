@@ -14,13 +14,15 @@ class PhotoUploader {
     protected $doctrine;
     protected $ride;
     protected $user;
+    protected $controller;
 
-    public function __construct(Photo $photo, $doctrine, Ride $ride, $user)
+    public function __construct($controller, Photo $photo, Ride $ride)
     {
+        $this->controller = $controller;
         $this->photo = $photo;
-        $this->doctrine = $doctrine;
+        $this->doctrine = $controller->getDoctrine();
         $this->ride = $ride;
-        $this->user = $user;
+        $this->user = $controller->getUser();
     }
 
     public function execute()
@@ -58,9 +60,9 @@ class PhotoUploader {
         $this->photo->setDateTime($dtr->getDateTime());
     }
     
-    protected function computeGpsCoordinates()
+    public function computeGpsCoordinates()
     {
-        $pg = new PhotoGps();
+        $pg = new PhotoGps($this->controller);
         $pg->setPhoto($this->photo);
 
         $track = $this->doctrine->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneBy(array('ride' => $this->ride, 'user' => $this->user, 'activated' => true));
