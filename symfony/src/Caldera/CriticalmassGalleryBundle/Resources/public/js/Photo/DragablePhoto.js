@@ -21,7 +21,7 @@ DragablePhoto.prototype.addTo = function(map)
         shadowAnchor: [13, 41]
     });
 
-    var photoMarker = L.marker([this.getLatitude(), this.getLongitude()], { icon:locationIcon, draggable: true });
+    var photoMarker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: true });
     photoMarker.addTo(map);
 
     var this2 = this;
@@ -37,7 +37,7 @@ DragablePhoto.prototype.addTo = function(map)
         var marker = event.target;
 
         $.ajax({
-            url: 'https://beta.criticalmass.cm/app_dev.php/gallery/photo/edit/relocate/' + this2.getId(),
+            url: 'https://beta.criticalmass.cm/app_dev.php/gallery/photo/edit/relocate/' + this2.id,
             method: 'POST',
             data: {
                 latitude: marker.getLatLng().lat,
