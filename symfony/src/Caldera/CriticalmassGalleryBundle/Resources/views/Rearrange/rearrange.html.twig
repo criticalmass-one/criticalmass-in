@@ -150,6 +150,41 @@
                 
                 photoContainer.addTo(map);
                 photoContainer.snapTo(map, polyline);
+                photoContainer.addEvent('snap', function(result)
+                {
+                    alert(this.foo);
+                    alert(findTimestampForLatLng(result.latlng));
+                });
+            }
+
+            function findTimestampForLatLng(latLng)
+            {
+                var smallestDistance = null;
+                var smallestTimestamp = null;
+                
+                for (var timestamp in coords)
+                {
+                    var coord = coords[timestamp];
+                    
+                    if (smallestDistance == null)
+                    {
+                        smallestDistance = coord.distanceTo(latLng);
+                        smallestTimestamp = timestamp;
+                    }
+                    else
+                    {
+                        var distance = coord.distanceTo(latLng);
+                        
+                        if (distance < smallestDistance)
+                        {
+                            smallestDistance = distance;
+                            smallestTimestamp = timestamp;
+                        }
+                    }
+                    
+                }
+                
+                return smallestTimestamp;
             }
             
             $('#trackSelect').on('change', function()
