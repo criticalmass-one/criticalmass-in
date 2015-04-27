@@ -20,6 +20,11 @@ DragablePhoto.prototype.addEvent = function(type, callback)
     this.marker.on(type, callback);
 };
 
+DragablePhoto.prototype.setTag = function(value)
+{
+    this.marker.tag = value;
+};
+
 DragablePhoto.prototype.addTo = function(map)
 {
     var locationIcon = L.icon({
