@@ -139,7 +139,8 @@
                     {
                         var latLng = coords[timestamp];
                         var photo = new DragablePhoto(photoData.id, latLng.lat, latLng.lng, 'Foo');
-
+                        photo.setTimestamp(timestamp);
+                        
                         photoContainer.add(photo);
                         
                         ++photoNumber;
@@ -152,8 +153,7 @@
                 photoContainer.snapTo(map, polyline);
                 photoContainer.addEvent('snap', function(result)
                 {
-                    alert(this.foo);
-                    alert(findTimestampForLatLng(result.latlng));
+                     rearrangePhotos(findTimestampForLatLng(result.latlng) - this.timestamp);
                 });
             }
 

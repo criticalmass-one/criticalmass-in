@@ -8,6 +8,8 @@ DragablePhoto = function(id, latitude, longitude, title)
 
 DragablePhoto.prototype = new Photo();
 
+DragablePhoto.prototype.timestamp = null;
+
 DragablePhoto.prototype.snapTo = function(map, polyline)
 {
     this.marker.snapediting = new L.Handler.MarkerSnap(map, this.marker);
@@ -20,9 +22,9 @@ DragablePhoto.prototype.addEvent = function(type, callback)
     this.marker.on(type, callback);
 };
 
-DragablePhoto.prototype.setTag = function(value)
+DragablePhoto.prototype.setTimestamp = function(timestamp)
 {
-    this.marker.tag = value;
+    this.setTimestamp = timestamp;
 };
 
 DragablePhoto.prototype.addTo = function(map)
@@ -39,6 +41,7 @@ DragablePhoto.prototype.addTo = function(map)
     });
 
     this.marker = L.marker([this.latitude, this.longitude], { icon:locationIcon, draggable: true });
+    this.marker.timestamp = this.timestamp;
     this.marker.addTo(map);
 
     var this2 = this;
