@@ -12,7 +12,29 @@
             <li class="active">Fotos sortieren</li>
         </ol>
         
-        <div id="map" style="height: 350px;">
+        <div class="row">
+            <div class="col-md-6">
+                <p>Hier kannst du deine Fotos neu ausrichten. Wähle zuerst einen der für diese Tour gespeicherten Track aus. Anschließend kannst du einzelne Fotos neu auf diesem Track ausrichten, deine übrigen Fotos werden anschließend automatisch neu positioniert.</p>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="trackSelect">Track</label>
+                    <select id="trackSelect" class="form-control">
+                        <option>Wähle einen Track</option>
+                        {% for track in ride.getActiveTracks() %}
+                        <option value="{{ track.getId() }}">{{ track.getUser().getUsername() }} ({{ track.getDistance() }} Kilometer)</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;">
+            </div>
+        </div>
+
             
         </div>
 
