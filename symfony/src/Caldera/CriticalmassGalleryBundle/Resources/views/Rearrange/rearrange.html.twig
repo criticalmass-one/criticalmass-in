@@ -180,11 +180,16 @@
             
             function findLatLngForTimestamp(timestamp)
             {
-                var smallerTimestamp = 0;
+                var smallerTimestamp = null;
                 
                 for (var coordTimestamp in coords)
                 {
-                    if (coordTimestamp < timestamp)
+                    if (smallerTimestamp == null)
+                    {
+                        smallerTimestamp = coordTimestamp;
+                        
+                    }
+                    else if (coordTimestamp < timestamp)
                     {
                         smallerTimestamp = coordTimestamp;
                     }
