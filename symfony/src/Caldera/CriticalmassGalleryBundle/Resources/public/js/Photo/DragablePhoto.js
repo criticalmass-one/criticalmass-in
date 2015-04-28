@@ -24,7 +24,7 @@ DragablePhoto.prototype.addEvent = function(type, callback)
 
 DragablePhoto.prototype.setTimestamp = function(timestamp)
 {
-    this.setTimestamp = timestamp;
+    this.timestamp = timestamp;
 };
 
 DragablePhoto.prototype.addTo = function(map)
