@@ -151,12 +151,52 @@
                 
                 photoContainer.addTo(map);
                 photoContainer.snapTo(map, polyline);
-                photoContainer.addEvent('snap', function(result)
+                photoContainer.addEvent('dragend', function(event)
                 {
-                     rearrangePhotos(findTimestampForLatLng(result.latlng) - this.timestamp);
+                    var marker = event.target;
+                    
+                    rearrangePhotos(findTimestampForLatLng(marker.getLatLng()) - marker.timestamp, marker.timestamp);
                 });
             }
 
+            function rearrangePhotos(offset, ignoreTimestamp)
+            {
+                var index;
+                
+                for (index = 0; index < photoContainer.countEntities(); ++index)
+                {
+                    var photo = photoContainer.getEntity(index);
+                    
+                    if (photo.timestamp != ignoreTimestamp)
+                    {
+                        var newTimestamp = parseInt(photo.timestamp) + parseInt(offset);
+
+                        var newLatLng = findLatLngForTimestamp(newTimestamp);
+
+                        photo.setMarkerLatLng(newLatLng);
+                    }
+                }
+            }
+            
+            function findLatLngForTimestamp(timestamp)
+            {
+                var smallerTimestamp = 0;
+                
+                for (var coordTimestamp in coords)
+                {
+                    if (coordTimestamp < timestamp)
+                    {
+                        smallerTimestamp = coordTimestamp;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                
+                return coords[smallerTimestamp];
+            }
+            
             function findTimestampForLatLng(latLng)
             {
                 var smallestDistance = null;
