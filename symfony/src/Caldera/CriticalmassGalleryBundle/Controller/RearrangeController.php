@@ -55,7 +55,7 @@ class RearrangeController extends Controller
     {
         $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
 
-        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy(array('ride' => $ride, 'user' => $this->getUser()), array('dateTime' => 'ASC'));
+        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy(array('ride' => $ride, 'user' => $this->getUser(), 'enabled' => true), array('dateTime' => 'ASC'));
         
         $json = '[';
         $first = true;
