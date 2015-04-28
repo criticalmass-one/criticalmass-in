@@ -48,28 +48,12 @@ DragablePhoto.prototype.addTo = function(map)
 
     this.marker.on('click', function()
     {
-        var photoPath = '/photos/' + this2.getId() + '.jpg';
-        $.fancybox( { href : photoPath, title : this2.getTitle() } );
-    });
-
-    this.marker.on('dragend', function(event)
-    {
-        var marker = event.target;
-
-        $.ajax({
-            url: 'https://beta.criticalmass.cm/app_dev.php/gallery/photo/edit/relocate/' + this2.id,
-            method: 'POST',
-            data: {
-                latitude: marker.getLatLng().lat,
-                longitude: marker.getLatLng().lng
-            }
-        }).done(function(data)
-        {
-            if (console && console.log)
-            {
-                console.log("Sample of data:", data.slice(0, 100));
-            }
-        });
+        //var photoPath = '/photos/' + this2.getId() + '.jpg';
+        //$.fancybox( { href : photoPath, title : this2.getTitle() } );
     });
 };
 
+DragablePhoto.prototype.setMarkerLatLng = function(latLng)
+{
+    this.marker.setLatLng(latLng);
+};
