@@ -1,0 +1,17 @@
+{% set participants = ride.getEstimatedParticipants %}
+{% set colSize = 100 %}
+
+{% if participants > 0 %}
+    {% set cols = participants // colSize %}
+    {% set remainder = participants % colSize %}
+    
+<svg width="100px" height="10px">
+    {% for i in 0..(cols - 1) %}
+        <rect x="{{ (i * 10 + i) }}px" width="10px" height="10px" fill="#000000"></rect>
+    {% endfor %}
+    
+    {% set remainderWidth = 10 // colSize * remainder %}
+    <rect x="{{ (cols * 10 + cols) }}px" width="{{ remainderWidth }}px" height="10px" fill="#000000"></rect>
+</svg>
+
+{% endif %}
