@@ -56,7 +56,7 @@ class Heatmap
     protected $rides;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Track")
+     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track")
      * @ORM\JoinTable(name="heatmap_track",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="track_id", referencedColumnName="id")}
@@ -250,7 +250,7 @@ class Heatmap
      * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
      * @return Heatmap
      */
-    public function addTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    public function addTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
     {
         $this->tracks[] = $tracks;
 
@@ -262,7 +262,7 @@ class Heatmap
      *
      * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
      */
-    public function removeTrack(\Caldera\CriticalmassCoreBundle\Entity\Track $tracks)
+    public function removeTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
     {
         $this->tracks->removeElement($tracks);
     }
