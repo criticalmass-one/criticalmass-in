@@ -1,17 +1,30 @@
 {% set participants = ride.getEstimatedParticipants %}
-{% set colSize = 100 %}
+{% set participants = 5675 %}
+{% set blockSize = 100 %}
 
 {% if participants > 0 %}
-    {% set cols = participants // colSize %}
-    {% set remainder = participants % colSize %}
+    {% set participantsPerBlock = 100 %}
+    {% set blocksPerRow = 10 %}
     
-<svg width="100px" height="10px">
-    {% for i in 0..(cols - 1) %}
-        <rect x="{{ (i * 10 + i) }}px" width="10px" height="10px" fill="#000000"></rect>
+    {% set blocks = participants // participantsPerBlock %}
+    {% set remainder = participants % participantsPerBlock %}
+    
+    {% set rows = blocks // blocksPerRow %}
+
+<svg width="{{ blocksPerRow * 11 - 1 }}" height="{{ (rows + 1) * 11 }}px">
+    {% for y in 0..(rows - 1) %}
+        {% for x in 0..(blocksPerRow - 1) %}
+            <rect x="{{ (x * 10 + x) }}px" y="{{ (y * 10 + y) }}px" width="10px" height="10px" fill="#000000"></rect>
+        {% endfor %}
     {% endfor %}
     
-    {% set remainderWidth = 10 // colSize * remainder %}
-    <rect x="{{ (cols * 10 + cols) }}px" width="{{ remainderWidth }}px" height="10px" fill="#000000"></rect>
+    {% set remainingBlocks = blocks % blocksPerRow %}
+    {% for x in 0..(remainingBlocks - 1) %}
+        <rect x="{{ (x * 10 + x) }}px" y="{{ (rows * 11) }}px" width="10px" height="10px" fill="#000000"></rect>
+    {% endfor %}
+        
+    {% set remainderWidth = 0.1 * remainder %}
+    <rect x="{{ (remainingBlocks * 11) }}px" y="{{ (rows * 11) }}px" width="{{ remainderWidth }}px" height="10px" fill="#000000"></rect>
 </svg>
 
 {% endif %}
