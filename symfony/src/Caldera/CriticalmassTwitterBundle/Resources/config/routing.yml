@@ -1,3 +1,3 @@
 caldera_criticalmass_twitter_homepage:
-    path:     /hello/{name}
+    path:     /twitter/fetch
     defaults: { _controller: CalderaCriticalmassTwitterBundle:Default:index }
