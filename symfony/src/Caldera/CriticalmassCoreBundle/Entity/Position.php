@@ -22,13 +22,19 @@ class Position
 	 */
 	protected $id;
 
-	/**
-	 * Sender dieses Datums.
-	 *
-	 * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="positions")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 */
-	protected $user;
+    /**
+     * Sender dieses Datums.
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="positions")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassApiBundle\Entity\ApiUser", inversedBy="positions")
+     * @ORM\JoinColumn(name="apiuser_id", referencedColumnName="id")
+     */
+    protected $apiUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGlympseBundle\Entity\Ticket", inversedBy="positions")
@@ -322,29 +328,6 @@ class Position
     }
 
     /**
-     * Set user_id
-     *
-     * @param \Application\Sonata\UserBundle\Entity\User $userId
-     * @return Position
-     */
-    public function setUserId(\Application\Sonata\UserBundle\Entity\User $userId = null)
-    {
-        $this->user_id = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get user_id
-     *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\User
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
      * Set user
      *
      * @param \Application\Sonata\UserBundle\Entity\User $user
@@ -363,6 +346,29 @@ class Position
      * @return \Caldera\CriticalmassCoreBundle\Entity\User
      */
     public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set api user
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @return Position
+     */
+    public function setApiUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Caldera\CriticalmassApiBundle\Entity\ApiUser
+     */
+    public function getApiUser()
     {
         return $this->user;
     }
