@@ -159,6 +159,11 @@ class Ride
     protected $weatherForecast;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $hashtag;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archive_rides")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
@@ -616,6 +621,25 @@ class Ride
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * @param string $hashtag
+     * @return Ride
+     */
+    public function setHashtag($hashtag)
+    {
+        $this->hashtag = $hashtag;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHashtag()
+    {
+        return $this->hashtag;
     }
 
     public function getDate()
