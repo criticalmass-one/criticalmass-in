@@ -19,7 +19,7 @@ class ContentItem
 
     /**
      * @ORM\ManyToOne(targetEntity="ContentClass", inversedBy="content_items")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="contentclass_id", referencedColumnName="id")
      */
     protected $contentClass;
 
@@ -47,7 +47,6 @@ class ContentItem
      * @ORM\Column(type="integer")
      */
     protected $positionOrder;
- 
 
     /**
      * Get id
