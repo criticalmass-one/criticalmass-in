@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new Caldera\CriticalmassTrackBundle\CalderaCriticalmassTrackBundle(),
             new Caldera\CriticalmassStandardridesBundle\CalderaCriticalmassStandardridesBundle(),
             new Caldera\CriticalmassOpenweatherBundle\CalderaCriticalmassOpenweatherBundle(),
+            new Caldera\CriticalmassTwitterBundle\CalderaCriticalmassTwitterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

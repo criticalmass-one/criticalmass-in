@@ -1,0 +1,3 @@
+caldera_criticalmass_twitter_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CalderaCriticalmassTwitterBundle:Default:index }

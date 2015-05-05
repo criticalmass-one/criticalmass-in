@@ -1,3 +1,7 @@
+caldera_criticalmass_twitter:
+    resource: "@CalderaCriticalmassTwitterBundle/Resources/config/routing.yml"
+    prefix:   /
+
 caldera_criticalmass_standardrides:
     resource: "@CalderaCriticalmassStandardridesBundle/Resources/config/routing.yml"
     prefix:   /
