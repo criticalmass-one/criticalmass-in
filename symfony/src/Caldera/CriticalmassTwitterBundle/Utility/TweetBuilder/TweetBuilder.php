@@ -34,6 +34,7 @@ class TweetBuilder {
             $tweet->setScreenname($status->user->screen_name);
             $tweet->setProfileImageUrl($status->user->profile_image_url);
             $tweet->setTwitterId($status->id);
+            $tweet->setRawResponse(json_encode($status));
 
             $this->tweets[$tweet->getTwitterId()] = $tweet;
         }
