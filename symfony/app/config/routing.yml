@@ -10,8 +10,12 @@ caldera_criticalmass_gallery:
     resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing.yml"
     prefix:   /
 
-caldera_criticalmass_timeline:
-    resource: "@CalderaCriticalmassTimelineBundle/Resources/config/routing.yml"
+caldera_criticalmass_openweather:
+    resource: "@CalderaCriticalmassOpenweatherBundle/Resources/config/routing.yml"
+    prefix:   /
+
+caldera_criticalmass_asset:
+    resource: "@CalderaCriticalmassAssetBundle/Resources/config/routing.yml"
     prefix:   /
 
 caldera_criticalmass_timeline:
