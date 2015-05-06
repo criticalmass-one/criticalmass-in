@@ -11,7 +11,7 @@ class ContentController extends Controller
 {
     public function showAction(Request $request, $slug)
     {
-        $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBy(array('slug' => $slug, 'enabled' => true));
+        $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBy(array('slug' => $slug, 'enabled' => true, 'isArchived' => false));
         
         $content = array_pop($content);
         
@@ -23,7 +23,7 @@ class ContentController extends Controller
     
     public function editAction(Request $request, $slug)
     {
-        $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBy(array('slug' => $slug, 'enabled' => true));
+        $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBy(array('slug' => $slug, 'enabled' => true, 'isArchived' => false));
 
         $content = array_pop($content);
         
