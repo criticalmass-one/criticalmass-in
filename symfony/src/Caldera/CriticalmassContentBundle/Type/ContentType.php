@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Type;
+namespace Caldera\CriticalmassContentBundle\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
