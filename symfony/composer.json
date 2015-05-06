@@ -33,7 +33,8 @@
         "sonata-project/datagrid-bundle": "dev-master",
         "sonata-project/user-bundle": "dev-master",
         "phpunit/phpunit": "4.0.*",
-        "abraham/twitteroauth": "dev-master"
+        "abraham/twitteroauth": "dev-master",
+        "erusev/parsedown": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
