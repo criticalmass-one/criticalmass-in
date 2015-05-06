@@ -11,5 +11,7 @@
         </ol>
 
         {{ parsedText|raw }}
+
+        <div class="well well-sm">Diese Seite wurde am 1. Januar 2015 um 19:45 Uhr zuletzt geändert. <a href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}">Diese Seite jetzt editieren</a></div>
     </div>
 {% endblock %}
