@@ -37,6 +37,11 @@ class ContentController extends Controller
         {
             throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
         }
+
+        if (!$content->getIsPublicEditable())
+        {
+            throw new NotFoundHttpException('Nein, nein, du darfst diesen Inhalt nicht ändern.');
+        }
         
         $archiveContent = clone $content;
         $archiveContent->setArchiveUser($this->getUser());
