@@ -58,6 +58,10 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
+caldera_criticalmass_content:
+    resource: "@CalderaCriticalmassContentBundle/Resources/config/routing.yml"
+    prefix:   /
+    
 caldera_criticalmass_core:
     resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
     prefix:   /
@@ -79,10 +83,6 @@ caldera_criticalmass_desktop:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
     prefix:   /
     host: beta.criticalmass.cm
-
-caldera_criticalmass_content:
-    resource: "@CalderaCriticalmassContentBundle/Resources/config/routing.yml"
-    prefix:   /
 
 caldera_criticalmass_plus:
     resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
