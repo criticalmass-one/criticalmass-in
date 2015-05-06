@@ -12,6 +12,6 @@
 
         {{ parsedText|raw }}
 
-        <div class="well well-sm">Diese Seite wurde am 1. Januar 2015 um 19:45 Uhr zuletzt geändert. <a class="btn btn-xs btn-success" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a></div>
+        <div class="well well-sm">Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert. <a class="btn btn-xs btn-success" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a></div>
     </div>
 {% endblock %}
