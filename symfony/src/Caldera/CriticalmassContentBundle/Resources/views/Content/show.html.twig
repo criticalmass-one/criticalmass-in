@@ -1,1 +1,15 @@
-Hello {{ name }}!
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}{{ content.getTitle() }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li class="active">{{ content.getTitle() }}</li>
+        </ol>
+
+        {{ parsedText }}
+    </div>
+{% endblock %}
