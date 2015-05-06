@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="content")
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassContentBundle\Entity\ContentRepository")
  */
 class Content
 {
