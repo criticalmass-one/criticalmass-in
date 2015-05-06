@@ -1,0 +1,45 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Inhalt editieren{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Inhalt editieren</h1>
+        </div>
+    </div>
+    
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label" for="title">Titel:</label>
+                {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label" for="description">Beschreibung:</label>
+                {{ form_widget(form.text, { 'attr' : { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label" for="title">Slug:</label>
+                {{ form_widget(form.slug, { 'attr' : { 'class': 'form-control' } }) }}
+            </div>
+        </div>
+    </div>
+    
+    {{ form_widget(form._token) }}
+    <button type="submit" class="btn btn-success pull-right"><i class="halflings floppy_disk"></i> Speichern</button>
+    </form>
+</div>
+{% endblock %}
