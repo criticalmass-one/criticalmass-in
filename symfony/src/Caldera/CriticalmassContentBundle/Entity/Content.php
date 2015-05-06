@@ -38,6 +38,28 @@ class Content
     protected $enabled = true;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Content", inversedBy="archive_contents")
+     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
+     */
+    protected $archiveParent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isArchived = false;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $archiveDateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_rides")
+     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
+     */
+    protected $archiveUser;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -146,5 +168,104 @@ class Content
         $text = str_replace(array("&lt;", "&gt;", "&quot;"), array("<", ">", "\""), $text);
 
         return $text;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+        $this->setIsArchived(true);
+        $this->setArchiveDateTime(new \DateTime());
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param boolean $isArchived
+     * @return Content
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set archiveDateTime
+     *
+     * @param \DateTime $archiveDateTime
+     * @return Content
+     */
+    public function setArchiveDateTime($archiveDateTime)
+    {
+        $this->archiveDateTime = $archiveDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getArchiveDateTime()
+    {
+        return $this->archiveDateTime;
+    }
+
+    /**
+     * Set archiveParent
+     *
+     * @param \Caldera\CriticalmassContentBundle\Entity\Content $archiveParent
+     * @return Content
+     */
+    public function setArchiveParent(\Caldera\CriticalmassContentBundle\Entity\Content $archiveParent = null)
+    {
+        $this->archiveParent = $archiveParent;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveParent
+     *
+     * @return \Caldera\CriticalmassContentBundle\Entity\Content
+     */
+    public function getArchiveParent()
+    {
+        return $this->archiveParent;
+    }
+
+    /**
+     * Set archiveUser
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @return Content
+     */
+    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    {
+        $this->archiveUser = $archiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveUser
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getArchiveUser()
+    {
+        return $this->archiveUser;
     }
 }
