@@ -39,6 +39,16 @@ class Content
     protected $enabled = true;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isPublicEditable = true;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $lastEditionDateTime = true;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Content", inversedBy="archive_contents")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
@@ -268,5 +278,51 @@ class Content
     public function getArchiveUser()
     {
         return $this->archiveUser;
+    }
+
+    /**
+     * Set isPublicEditable
+     *
+     * @param boolean $isPublicEditable
+     * @return Content
+     */
+    public function setIsPublicEditable($isPublicEditable)
+    {
+        $this->isPublicEditable = $isPublicEditable;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublicEditable
+     *
+     * @return boolean 
+     */
+    public function getIsPublicEditable()
+    {
+        return $this->isPublicEditable;
+    }
+
+    /**
+     * Set lastEditionDateTime
+     *
+     * @param \DateTime $lastEditionDateTime
+     * @return Content
+     */
+    public function setLastEditionDateTime($lastEditionDateTime)
+    {
+        $this->lastEditionDateTime = $lastEditionDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get lastEditionDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getLastEditionDateTime()
+    {
+        return $this->lastEditionDateTime;
     }
 }
