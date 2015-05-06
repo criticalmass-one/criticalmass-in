@@ -51,6 +51,8 @@ class ContentController extends Controller
 
         if ($form->isValid())
         {
+            $content->setLastEditionDateTime(new \DateTime());
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->persist($archiveContent);
