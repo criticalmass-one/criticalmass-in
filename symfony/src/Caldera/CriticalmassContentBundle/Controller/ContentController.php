@@ -6,6 +6,7 @@ use Caldera\CriticalmassContentBundle\Type\ContentType;
 use Michelf\Markdown;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContentController extends Controller
 {
@@ -14,6 +15,11 @@ class ContentController extends Controller
         $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBySlug($slug);
         
         $content = array_pop($content);
+
+        if (!$content)
+        {
+            throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
+        }
         
         $markdown = new Markdown();
         $parsedText = $markdown->transform($content->getText());
@@ -26,6 +32,11 @@ class ContentController extends Controller
         $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBySlug($slug);
 
         $content = array_pop($content);
+
+        if (!$content)
+        {
+            throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
+        }
         
         $archiveContent = clone $content;
         $archiveContent->setArchiveUser($this->getUser());
