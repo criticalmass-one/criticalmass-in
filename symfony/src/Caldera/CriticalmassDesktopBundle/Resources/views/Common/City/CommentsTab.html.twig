@@ -1,11 +1,10 @@
 <div class="tab-pane fade in" id="timelineTab">
     <div class="row">
-        <div class="col-md-12">
-            <h1>Kommentare</h1>
-
-            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
-
+        <div class="col-md-8">
             {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
+        </div>
+        <div class="col-md-4">
+            {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
         </div>
     </div>
 </div>
