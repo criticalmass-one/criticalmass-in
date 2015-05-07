@@ -29,6 +29,11 @@ class ContentController extends Controller
     
     public function editAction(Request $request, $slug)
     {
+        if (!$this->getUser())
+        {
+            throw new NotFoundHttpException('Dieser Inhalt darf nur von angemeldeten Teilnehmern editiert werden.');
+        }
+        
         $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBySlug($slug);
 
         $content = array_pop($content);

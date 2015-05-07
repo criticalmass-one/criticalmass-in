@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     <p>Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert.</p>
     
-                    {% if content.isPublicEditable() %}
+                    {% if content.isPublicEditable() and app.getUser() %}
                     <a class="btn btn-success center-block" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a>
                     {% endif %}
                 </div>
