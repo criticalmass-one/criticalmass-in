@@ -11,8 +11,7 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('title', 'text', array('required' => true))
-            ->add('text', 'textarea', array('required' => true))
-            ->add('slug', 'text', array('required' => false));
+            ->add('text', 'textarea', array('required' => true));
     }
 
     public function getName()
