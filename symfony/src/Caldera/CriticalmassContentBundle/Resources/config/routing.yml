@@ -5,7 +5,7 @@ caldera_criticalmass_content_display:
         slug: .+
 
 caldera_criticalmass_content_edit:
-    pattern:  /content/{slug}/edit
+    pattern:  /content/edit/{slug}
     defaults: { _controller: CalderaCriticalmassContentBundle:Content:edit }
     requirements:
         slug: .+
