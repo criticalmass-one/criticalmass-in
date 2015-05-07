@@ -34,14 +34,14 @@
             </ul>
 
             <div class="tab-content">
-                {% include('CalderaCriticalmassDesktopBundle:Ride:DetailsTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Ride:SubridesTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Ride:CommentsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:DetailsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:SubridesTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:CommentsTab.html.twig') with { 'ride': ride, 'city': city } %}
                 
                 {% if pastRide %}
-                {% include('CalderaCriticalmassDesktopBundle:Ride:GalleryTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Ride:StatisticTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Ride:TracksTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:GalleryTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:StatisticTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:TracksTab.html.twig') with { 'ride': ride, 'city': city } %}
                 {% endif %}
             </div>
         </div>
