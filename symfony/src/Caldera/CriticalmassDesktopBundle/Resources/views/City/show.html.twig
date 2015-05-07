@@ -30,7 +30,7 @@
             <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="halflings info-sign"></i> {{ city.getCity() }}</a></li>
             {% endif %}
             {% if hasRides %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
+            <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Tourübersicht <span class="badge">{{ rides|length }}</span></a></li>
             {% endif %}
             <li><a href="#timelineTab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
         </ul>
