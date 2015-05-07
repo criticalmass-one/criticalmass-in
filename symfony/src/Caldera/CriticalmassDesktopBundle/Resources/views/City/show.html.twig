@@ -1,11 +1,10 @@
 {% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
 
+{% block title %}{{ city.getTitle }}{% endblock %}
+
 {% set hasSocialMedia = city.getUrl() or city.getFacebook() or city.getTwitter() %}
 {% set hasCurrentRide = city.getCurrentRide() != null %}
 {% set hasRides = rides|length > 0 %}
-
-{% block title %}{{ city.getTitle }}{% endblock %}
-
 
 {% block additionalFooterElements %}
     {% javascripts
@@ -34,115 +33,13 @@
             <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Vergangene Touren <span class="badge">{{ rides|length }}</span></a></li>
             {% endif %}
             <li><a href="#timelineTab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
-            <li><a href="#galleryTab" data-toggle="tab"><i class="glyphicon glyphicon-camera"></i> Bilder <span class="badge">{{ city.getPhotos()|length }}</span></a></li>
         </ul>
 
         <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
-            {% if hasCurrentRide %}
-            <div class="tab-pane fade in" id="cityInfoTab">
-            {% else %}
-            <div class="tab-pane fade in active" id="cityInfoTab">
-            {% endif %}
-                <div class="jumbotron">
-                    {% if app.getUser() %}
-                    <div class="btn-group pull-right" style="margin-top: 24px;">
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings uni-wrench"></i></a>
-                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings plus"></i></a>
-                    </div>
-                    {% endif %}
-
-                    <h1>{{ city.getTitle() }}</h1>
-                    <p>{{ city.getDescription() }}</p>
-                </div>
-
-                <div class="row">
-                    {% if hasSocialMedia %}
-                    <div class="col-lg-8">
-                    {% else %}
-                    <div class="col-lg-12">
-                    {% endif %}
-                    {% if city.getLongDescription() %}
-                        {{ city.getLongDescription()|nl2br }}
-                    {% else %}
-                        <div class="alert alert-info" role="alert">Hier fehlen noch einige kluge Worte über diese Stadt.</div>
-                    {% endif %}
-                    </div>
-                    {% if hasSocialMedia %}
-                    <div class="col-lg-4">
-                        <h2>Mehr im Netz</h2>
-
-                        {% if city.getUrl() %}
-                        <a class="btn btn-default" href="{{ city.getUrl() }}"><i class="social rss"></i> Homepage</a>
-                        {% endif %}
-
-                        {% if city.getFacebook() %}
-                        <a class="btn btn-default" href="{{ city.getFacebook() }}"><i class="social facebook"></i> facebook</a>
-                        {% endif %}
-
-                        {% if city.getTwitter() %}
-                        <a class="btn btn-default" href="{{ city.getTwitter() }}"><i class="social twitter"></i> twitter</a>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            {% if hasCurrentRide %}
-            <div class="tab-pane fade in active" id="nextRideTab">
-            {% include('CalderaCriticalmassDesktopBundle:Common:Ride.html.twig') with { 'ride': city.getCurrentRide() } %}
-            </div>
-            {% endif %}
-            {% if hasRides %}
-            <div class="tab-pane fade in" id="recentRidesTab">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Vergangene Touren</h1>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <tr>
-                                <th class="col-xs-3 col-sm-2 col-md-2 col-lg-2">Datum</th>
-                                <th class="col-xs-9 col-sm-6 col-md-6 col-lg-6">Titel</th>
-                                <th class="hidden-xs col-sm-2 col-md-2 col-lg-2">Teilnehmer</th>
-                                <th class="hidden-xs col-sm-2 col-md-2 col-lg-2">Streckenlänge</th>
-                            </tr>
-                            {% for ride in rides %}
-                            <tr>
-                                <td class="col-xs-3 col-sm-2 col-md-2 col-lg-2"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{{ ride.getDateTime.format('d. m. Y') }}</a></td>
-                                <td class="col-xs-9 col-sm-6 col-md-6 col-lg-6"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getDateTime().format('Y-m-d') } ) }}">{% if ride.getTitle() %}{{ ride.getTitle() }}{% else %}{{ city.getTitle() }}{% endif %}</a></td>
-                                <td class="hidden-xs col-sm-2 col-md-2 col-lg-2">{% if ride.getEstimatedParticipants() %}{{ ride.getEstimatedParticipants()|round }}{% endif %}</td>
-                                <td class="hidden-xs col-sm-2 col-md-2 col-lg-2">{% if ride.getEstimatedDistance() %}{{ ride.getEstimatedDistance()|round(2) }} Kilometer{% endif %}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            <div class="tab-pane fade in" id="timelineTab">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Kommentare</h1>
-
-                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'cityId': city.getId() })) }}
-
-                        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'cityId': city.getId() })) }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade in" id="galleryTab">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Bilder</h1>
-                        
-                        {{ render(controller('CalderaCriticalmassGalleryBundle:Photos:list', { 'cityId': city.getId() } )) }}
-                    </div>
-                </div>
-            </div>
+            {% include('CalderaCriticalmassDesktopBundle:Common/City:CityTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassDesktopBundle:Common/City:CurrentRideTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassDesktopBundle:Common/City:RidesTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassDesktopBundle:Common/City:CommentsTab.html.twig') with { 'city': city } %}
         </div>
     </div>
 {% endblock %}
