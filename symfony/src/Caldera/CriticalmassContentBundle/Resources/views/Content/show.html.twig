@@ -9,10 +9,21 @@
             <li class="active">{{ content.getTitle() }}</li>
         </ol>
 
+        <div class="col-md-3 pull-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Seiteninformationen</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert.</p>
+    
+                    {% if content.isPublicEditable() %}
+                    <a class="btn btn-success center-block" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
         {{ parsedText|raw }}
-
-        {% if content.isPublicEditable() %}
-        <div class="well well-sm">Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert. <a class="btn btn-xs btn-success" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a></div>
-        {% endif %}
     </div>
 {% endblock %}
