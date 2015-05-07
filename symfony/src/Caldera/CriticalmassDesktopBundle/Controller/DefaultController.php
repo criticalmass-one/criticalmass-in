@@ -18,29 +18,4 @@ class DefaultController extends Controller
 
         return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig', array('citySlug' => $city->getMainSlugString()));
     }
-
-    public function aboutusAction()
-    {
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:aboutus.html.twig');
-    }
-
-    public function glympseAction()
-    {
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:glympse.html.twig');
-    }
-
-    public function apiAction()
-    {
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:api.html.twig', array('currentDateTime' => new \DateTime()));
-    }
-
-    public function criticalmassAction()
-    {
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:criticalmass.html.twig');
-    }
-
-    public function impressAction()
-    {
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:impress.html.twig');
-    }
 }

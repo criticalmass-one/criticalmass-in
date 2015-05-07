@@ -2,26 +2,6 @@ caldera_criticalmass_desktop_index:
     pattern:  /
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:index }
 
-caldera_criticalmass_desktop_content_impress:
-    pattern:  /content/about-us/impress
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:impress }
-
-caldera_criticalmass_desktop_content_aboutus:
-    pattern:  /content/about-us
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:aboutus }
-
-caldera_criticalmass_desktop_content_criticalmass:
-    pattern:  /content/criticalmass
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:criticalmass }
-
-caldera_criticalmass_desktop_content_glympse:
-    pattern:  /content/glympse
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:glympse }
-
-caldera_criticalmass_desktop_content_api:
-    pattern:  /content/api
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:api }
-
 caldera_criticalmass_desktop_statistic_participants:
     pattern: /statistic/participants
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Statistic:participants }
