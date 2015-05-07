@@ -4,6 +4,12 @@
 
 {% block content %}
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">{{ content.getTitle() }}</a></li>
+        <li class="active">Inhalt bearbeiten</li>
+    </ol>
+    
     <div class="row">
         <div class="col-md-12">
             <h1>Inhalt editieren</h1>
