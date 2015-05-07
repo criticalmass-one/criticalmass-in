@@ -10,8 +10,7 @@
         <div class="jumbotron">
             {% if app.getUser() %}
                 <div class="btn-group pull-right" style="margin-top: 24px;">
-                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings uni-wrench"></i></a>
-                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings plus"></i></a>
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings uni-wrench"></i> Stadt editieren</a>
                 </div>
             {% endif %}
 

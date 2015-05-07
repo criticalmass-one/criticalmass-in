@@ -6,6 +6,11 @@
     <div class="tab-pane fade in" id="recentRidesTab">
         <div class="row">
             <div class="col-md-12">
+                {% if app.getUser() %}
+                    <div class="btn-group pull-right" style="margin-top: 16px;">
+                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings plus"></i> neue Tour hinzufügen</a>
+                    </div>
+                {% endif %}
                 <h1>Tourübersicht</h1>
             </div>
         </div>
