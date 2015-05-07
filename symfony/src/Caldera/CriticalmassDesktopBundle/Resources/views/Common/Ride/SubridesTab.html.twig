@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             {% if app.getUser() %}
-                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                <div class="btn-group pull-right" style="margin-top: 16px;">
                     <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen"><i class="halflings map-marker"></i> Mini-Mass eintragen</a>
                 </div>
             {% endif %}
