@@ -1,7 +1,11 @@
 caldera_criticalmass_content_display:
     pattern:  /content/{slug}
     defaults: { _controller: CalderaCriticalmassContentBundle:Content:show }
+    requirements:
+        slug: .+
 
 caldera_criticalmass_content_edit:
     pattern:  /content/{slug}/edit
     defaults: { _controller: CalderaCriticalmassContentBundle:Content:edit }
+    requirements:
+        slug: .+
