@@ -1,0 +1,26 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}criticalmass.in-Blog{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li class="active">criticalmass.in-Blog</li>
+        </ol>
+        
+        {% for article in articles %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>{{ article.getTitle() }}</h2>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    {{ article.getFormattedText()|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
