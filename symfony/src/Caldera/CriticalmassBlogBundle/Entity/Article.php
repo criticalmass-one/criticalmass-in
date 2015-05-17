@@ -23,6 +23,11 @@ class Article
     protected $title;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $abstract;
@@ -32,6 +37,8 @@ class Article
      */
     protected $text;
 
+    protected $formattedText;
+    
     /**
      * @ORM\Column(type="datetime")
      */
@@ -115,11 +122,23 @@ class Article
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
         return $this->text;
+    }
+
+    public function setFormattedText($formattedText)
+    {
+        $this->formattedText = $formattedText;
+
+        return $this;
+    }
+
+    public function getFormattedText()
+    {
+        return $this->formattedText;
     }
 
     /**
@@ -166,5 +185,28 @@ class Article
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
