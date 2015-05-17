@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\CriticalmassBlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
