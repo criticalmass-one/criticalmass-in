@@ -1,0 +1,3 @@
+caldera_criticalmass_blog_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Default:index }

@@ -1,0 +1,7 @@
+parameters:
+#    caldera_criticalmass_blog.example.class: Caldera\CriticalmassBlogBundle\Example
+
+services:
+#    caldera_criticalmass_blog.example:
+#        class: %caldera_criticalmass_blog.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
