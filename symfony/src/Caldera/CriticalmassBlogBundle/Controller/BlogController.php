@@ -2,9 +2,11 @@
 
 namespace Caldera\CriticalmassBlogBundle\Controller;
 
+use Michelf\Markdown;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class BlogController extends Controller
 {
     public function listAction(Request $request)
     {
@@ -17,6 +19,6 @@ class DefaultController extends Controller
             $article->setFormattedText($markdown->transform($article->getText()));
         }
 
-        return $this->render('CalderaCriticalmassBlogBundle:Content:list.html.twig', array('articles' => $articles));
+        return $this->render('CalderaCriticalmassBlogBundle:Blog:list.html.twig', array('articles' => $articles));
     }
 }
