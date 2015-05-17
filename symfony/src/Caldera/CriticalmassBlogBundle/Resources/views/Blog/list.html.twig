@@ -31,7 +31,8 @@
                             <h3 class="panel-title">Über diesen Artikel</h3>
                         </div>
                         <div class="panel-body">
-                            fpp bar baz
+                            Autor: {{ article.getUser().getUsername() }}<br />
+                            Veröffentlicht: {{ article.getDateTime().format('d.m.Y H:i') }} Uhr
                         </div>
                     </div>
                 </div>
