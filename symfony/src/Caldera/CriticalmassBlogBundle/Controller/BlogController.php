@@ -10,7 +10,7 @@ class BlogController extends Controller
 {
     public function listAction(Request $request)
     {
-        $articles = $this->getDoctrine()->getRepository('CalderaCriticalmassBlogBundle:Article')->findAll();
+        $articles = $this->getDoctrine()->getRepository('CalderaCriticalmassBlogBundle:Article')->findBy(array(), array('dateTime' => 'DESC'));
 
         $markdown = new Markdown();
         
