@@ -11,14 +11,29 @@
         
         {% for article in articles %}
             <div class="row">
-                <div class="col-md-12">
-                    <h2>{{ article.getTitle() }}</h2>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>{{ article.getTitle() }}</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ article.getFormattedText()|raw }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-12">
-                    {{ article.getFormattedText()|raw }}
+
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Über diesen Artikel</h3>
+                        </div>
+                        <div class="panel-body">
+                            fpp bar baz
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}
