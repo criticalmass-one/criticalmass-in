@@ -1,0 +1,3 @@
+caldera_criticalmass_timelapse_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CalderaCriticalmassTimelapseBundle:Default:index }
