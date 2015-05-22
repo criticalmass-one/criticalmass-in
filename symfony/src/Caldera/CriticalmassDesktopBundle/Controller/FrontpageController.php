@@ -9,13 +9,15 @@ class FrontpageController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig');
+        $articles = $this->getDoctrine()->getRepository('CalderaCriticalmassBlogBundle:Article')->findBy(array());
+            
+        return $this->render('CalderaCriticalmassDesktopBundle:Frontpage:index.html.twig', array('blogArticles' => $articles));
     }
 
     public function slugindexAction($slug)
     {
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($slug)->getCity();
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Default:index.html.twig', array('citySlug' => $city->getMainSlugString()));
+        return $this->render('CalderaCriticalmassDesktopBundle:Frontpage:index.html.twig', array('citySlug' => $city->getMainSlugString()));
     }
 }
