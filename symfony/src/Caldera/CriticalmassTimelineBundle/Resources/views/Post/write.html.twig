@@ -39,25 +39,26 @@
         {
             $('#postForm').submit();
         }
-
-        $('#postForm').on('submit', function(element)
+        
+        window.onload = function()
         {
-            $('#submitPostButton').prop('disabled', 'disabled');
+            $('#postForm').on('submit', function (element) {
+                $('#submitPostButton').prop('disabled', 'disabled');
 
-            if ($('#shareLocation').attr('checked')) {
-                element.preventDefault();
+                if ($('#shareLocation').attr('checked')) {
+                    element.preventDefault();
 
-                _paq.push(['trackEvent', 'writeComment', 'withLocation']);
+                    _paq.push(['trackEvent', 'writeComment', 'withLocation']);
 
-                getLocation();
-            }
-            else
-            {
-                _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
+                    getLocation();
+                }
+                else {
+                    _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
 
-                $('#postForm').submit();
-            }
-        });
+                    $('#postForm').submit();
+                }
+            });
+        }
     </script>
     {% else %}
     <p>Mit einem criticalmass.in-Benutzerkonto könntest du an dieser Stelle einen Kommentar verfassen. Wenn du Lust und Zeit hast, kannst du dich hier drüben <a href="{{ path('fos_user_security_login') }}">einloggen oder anmelden</a>.</p>
