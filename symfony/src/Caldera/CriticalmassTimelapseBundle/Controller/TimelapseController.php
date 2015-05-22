@@ -3,11 +3,36 @@
 namespace Caldera\CriticalmassTimelapseBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class TimelapseController extends Controller
 {
-    public function indexAction($name)
+    public function showAction(Request $request, $citySlug, $rideDate)
     {
-        return $this->render('CalderaCriticalmassTimelapseBundle:Default:index.html.twig', array('name' => $name));
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
+
+        try {
+            $rideDateTime = new \DateTime($rideDate);
+        }
+        catch (\Exception $e)
+        {
+            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+        }
+
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
+        }
+
+        return $this->render('CalderaCriticalmassTimelapseBundle:Timelapse:show.html.twig', array('ride' => $ride));
     }
 }
