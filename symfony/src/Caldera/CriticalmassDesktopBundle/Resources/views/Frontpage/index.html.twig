@@ -1,0 +1,36 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}criticalmass.in{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li class="active">Startseite</li>
+        </ol>
+
+
+        <div class="jumbotron">
+            <h1>Freitagnachtfieber</h1>
+            
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <a class="btn btn-success btn-lg" href="{{ path('caldera_criticalmass_desktop_city_list') }}" role="button">Städte</a>
+                <a class="btn btn-success btn-lg" href="{{ path('caldera_criticalmass_desktop_ride_list') }}" role="button">Kalender</a>
+            </div>
+            
+            <p class="heading">Foo</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Was ist die Masse?</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>So geht’s: Live-Tracking</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>criticalmass.in-Blog</h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}
