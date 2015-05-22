@@ -1,7 +1,3 @@
-caldera_criticalmass_desktop_index:
-    pattern:  /
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Default:index }
-
 caldera_criticalmass_desktop_statistic_participants:
     pattern: /statistic/participants
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Statistic:participants }
@@ -10,6 +6,10 @@ caldera_criticalmass_desktop_ride_estimate:
     pattern: /ride/estimate/{rideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:estimateride }
 
+caldera_criticalmass_desktop_frontpage:
+    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing/frontpage.yml"
+    prefix: /
+    
 caldera_criticalmass_desktop_subride:
     resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing/subride.yml"
     prefix: /subride
