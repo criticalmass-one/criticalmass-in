@@ -33,3 +33,20 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/halflings/glyphicons-halflings-regular.woff
             output: "fonts/glyphicons-halflings-regular.woff"
+
+        glyphicons_ttf:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/glyphicons/glyphicons-regular.ttf
+            output: "fonts/glyphicons-regular.ttf"
+        glyphicons_eot:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/glyphicons/glyphicons-regular.eot
+            output: "fonts/glyphicons-regular.eot"
+        glyphicons_svg:
+            inputs:
+                 - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/glyphicons/glyphicons-regular.svg
+            output: "fonts/glyphicons-regular.svg"
+        glyphicons_woff:
+            inputs:
+                - %kernel.root_dir%/../src/Caldera/CriticalmassAssetBundle/Resources/public/fonts/glyphicons/glyphicons/glyphicons-regular.woff
+            output: "fonts/glyphicons-regular.woff"
