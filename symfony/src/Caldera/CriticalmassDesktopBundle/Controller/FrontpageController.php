@@ -13,11 +13,4 @@ class FrontpageController extends Controller
             
         return $this->render('CalderaCriticalmassDesktopBundle:Frontpage:index.html.twig', array('blogArticles' => $articles));
     }
-
-    public function slugindexAction($slug)
-    {
-        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($slug)->getCity();
-
-        return $this->render('CalderaCriticalmassDesktopBundle:Frontpage:index.html.twig', array('citySlug' => $city->getMainSlugString()));
-    }
 }
