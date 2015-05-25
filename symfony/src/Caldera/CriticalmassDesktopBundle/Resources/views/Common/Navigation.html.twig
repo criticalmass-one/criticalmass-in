@@ -12,10 +12,10 @@
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             {% if fullscreenMap == 'true' %}
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="navigationButtonSidebar"><i class="halflings list" style="color: white"></i>&nbsp;&nbsp;Städte</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="navigationButtonSidebar"><i class="halflings list" style="color: white"></i> Städte</a></li>
             {% else %}
             <li class="dropdown">
-                <a href="{{ path('caldera_criticalmass_desktop_city_list') }}" class="dropdown-toggle" data-toggle="dropdown"><i class="halflings list" style="color: white"></i>&nbsp;&nbsp;Städte <span class="caret"></span></a>
+                <a href="{{ path('caldera_criticalmass_desktop_city_list') }}" class="dropdown-toggle" data-toggle="dropdown"><i class="halflings list" style="color: white"></i> Städte <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
                     <li><a href="{{ path('caldera_criticalmass_desktop_ride_list') }}">Kalender</a></li>
@@ -23,7 +23,7 @@
             </li>
             {% endif %}
             <li class="dropdown">
-                <a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle"><i class="halflings globe" style="color: white"></i>&nbsp;&nbsp;Critical Mass <span class="caret"></span></a>
+                <a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle"><i class="halflings globe" style="color: white"></i> Critical Mass <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">Über die Critical Mass</a></li>
                     <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'faq' }) }}">Häufig gestellte Fragen</a></li>
@@ -32,18 +32,11 @@
                     <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'about-us/caldera' }) }}">Über criticalmass.in</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="halflings map-marker" style="color: white"></i>&nbsp;&nbsp;Live-Tracking</a></li>
-            {#<li class="dropdown"><a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle"><i class="glyphicon glyphicon-signal" style="color: white"></i>&nbsp;&nbsp;Statistiken <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ path('caldera_criticalmass_statistic_index') }}">Übersicht</a></li>
-                    <li><a href="{{ path('caldera_criticalmass_statistic_ride_participants') }}">Aktueller Monat</a></li>
-                </ul>
-            </li>#}
-            {#<li><a href="{{ path('caldera_criticalmass_timeline_list') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="glyphicon glyphicon-dashboard" style="color: white"></i>&nbsp;&nbsp;Chronik</a></li>#}
+            <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="halflings map-marker" style="color: white"></i> Live-Tracking</a></li>
             {% if app.getUser() %}
-            <li><a href="{{ path('fos_user_security_login') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="halflings user" style="color: white"></i>&nbsp;&nbsp;Benutzerkonto</a></li>
+            <li><a href="{{ path('fos_user_security_login') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="halflings user" style="color: white"></i> Benutzerkonto</a></li>
             {% else %}
-            <li><a href="{{ path('fos_user_security_login') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="halflings user" style="color: white"></i>&nbsp;&nbsp;Login</a></li>
+            <li><a href="{{ path('fos_user_security_login') }}" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="halflings user" style="color: white"></i> Login</a></li>
             {% endif %}
         </ul>
     </div>
