@@ -10,6 +10,10 @@ caldera_criticalmass_desktop_city_show:
     pattern:  /{citySlug}/show
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
 
+caldera_criticalmass_desktop_city_show_short:
+    pattern:  /{citySlug}
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
+
 caldera_criticalmass_desktop_city_edit:
     pattern:  /{citySlug}/edit
     defaults: { _controller: CalderaCriticalmassDesktopBundle:City:edit }
