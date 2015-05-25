@@ -44,6 +44,11 @@ class Content
     protected $isPublicEditable = true;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $showInfobox = true;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $lastEditionDateTime = true;
@@ -324,5 +329,28 @@ class Content
     public function getLastEditionDateTime()
     {
         return $this->lastEditionDateTime;
+    }
+
+    /**
+     * Set showInfobox
+     *
+     * @param boolean $showInfobox
+     * @return Content
+     */
+    public function setShowInfobox($showInfobox)
+    {
+        $this->showInfobox = $showInfobox;
+
+        return $this;
+    }
+
+    /**
+     * Get showInfobox
+     *
+     * @return boolean 
+     */
+    public function getShowInfobox()
+    {
+        return $this->showInfobox;
     }
 }
