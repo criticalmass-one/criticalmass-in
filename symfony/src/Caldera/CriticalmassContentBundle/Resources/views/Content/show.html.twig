@@ -9,29 +9,31 @@
             <li class="active">{{ content.getTitle() }}</li>
         </ol>
 
-        {% if content.getShowInfobox() %}
-        <div class="col-md-3 pull-right">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Seiteninformationen</h3>
-                </div>
-                <div class="panel-body">
-                    <p>Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert.</p>
-    
-                    {% if content.isPublicEditable() and app.getUser() %}
-                    <a class="btn btn-success center-block" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a>
-                    {% endif %}
+        <div class="row">
+            {% if content.getShowInfobox() %}
+            <div class="col-md-3 pull-right">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Seiteninformationen</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert.</p>
+
+                        {% if content.isPublicEditable() and app.getUser() %}
+                        <a class="btn btn-success center-block" href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}"><i class="halflings pencil"></i> Diese Seite jetzt editieren</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+
+            <div class="col-md-9">
+            {{ parsedText|raw }}
+            </div>
+            {% else %}
+            <div class="col-md-12">
+            {{ parsedText|raw }}
+            </div>
+            {% endif %}
         </div>
-            
-        <div class="col-md-9">    
-        {{ parsedText|raw }}
-        </div>
-        {% else %}
-        <div class="col-md-12">
-        {{ parsedText|raw }}
-        </div>
-        {% endif %}
     </div>
 {% endblock %}
