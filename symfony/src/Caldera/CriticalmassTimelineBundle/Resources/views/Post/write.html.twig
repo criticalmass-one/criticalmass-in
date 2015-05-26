@@ -23,7 +23,13 @@
         function getLocation() {
             if (navigator.geolocation)
             {
-                navigator.geolocation.getCurrentPosition(successPosition, failurePosition);
+                var options = {
+                    enableHighAccuracy: false,
+                    timeout: 2500,
+                    maximumAge: 0
+                };
+                
+                navigator.geolocation.getCurrentPosition(successPosition, failurePosition, options);
             }
         }
 
@@ -32,12 +38,14 @@
             $('#form_latitude').val(position.coords.latitude);
             $('#form_longitude').val(position.coords.longitude);
 
-            $('#postForm').submit();
+            alert('fooo');
+            //$('#postForm').submit();
         }
 
         function failurePosition(position)
         {
-            $('#postForm').submit();
+            alert('barrrr');
+            //$('#postForm').submit();
         }
         
         window.onload = function()
@@ -46,7 +54,7 @@
                 $('#submitPostButton').prop('disabled', 'disabled');
 
                 if ($('#shareLocation').attr('checked')) {
-                    element.preventDefault();
+                    //element.preventDefault();
 
                     _paq.push(['trackEvent', 'writeComment', 'withLocation']);
 
@@ -55,7 +63,7 @@
                 else {
                     _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
 
-                    $('#postForm').submit();
+                    //$('#postForm').submit();
                 }
             });
         }
