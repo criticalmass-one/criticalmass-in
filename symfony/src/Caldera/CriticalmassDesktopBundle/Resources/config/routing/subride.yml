@@ -6,6 +6,6 @@ caldera_criticalmass_desktop_subride_edit:
     pattern:  /edit/{subRideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:SubRide:edit }
     
-caldera_criticalmass_desktop_subride_copy:
-    pattern:  /{citySlug}/{rideDate}/copysubrides
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:SubRide:copy }
+caldera_criticalmass_desktop_subride_preparecopy:
+    pattern:  /{citySlug}/{rideDate}/preparecopysubrides
+    defaults: { _controller: CalderaCriticalmassDesktopBundle:SubRide:preparecopy }

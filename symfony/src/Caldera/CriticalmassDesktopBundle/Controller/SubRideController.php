@@ -124,7 +124,7 @@ class SubRideController extends Controller
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('ride' => $subRide->getRide(), 'subRide' => $subRide, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
     }
     
-    public function copyAction(Request $request, $citySlug, $rideDate)
+    public function preparecopyAction(Request $request, $citySlug, $rideDate)
     {
         if (!$this->getUser()) {
             throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
