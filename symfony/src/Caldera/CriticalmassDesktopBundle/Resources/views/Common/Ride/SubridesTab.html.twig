@@ -29,9 +29,9 @@
         <div class="row">
             <div class="col-md-12">
                 {% if app.getUser() %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour hochgeladen &mdash; <a href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a>.</div>
+                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash; <a href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a> oder die <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">Mini-Masses der letzten Tour kopieren</a>.</div>
                 {% else %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
                 {% endif %}
             </div>
         </div>

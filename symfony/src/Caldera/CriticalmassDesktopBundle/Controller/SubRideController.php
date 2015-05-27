@@ -123,4 +123,32 @@ class SubRideController extends Controller
 
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('ride' => $subRide->getRide(), 'subRide' => $subRide, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
     }
+    
+    public function copyAction(Request $request, $citySlug, $rideDate)
+    {
+        if (!$this->getUser()) {
+            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
+        }
+
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj) {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
+
+        $rideDateTime = new \DateTime($rideDate);
+
+        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+
+        if (!$ride)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.');
+        }
+        
+        $ride = $ride->getPreviousRide();
+
+        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:copy.html.twig', array('ride' => $ride));
+    }
 }
