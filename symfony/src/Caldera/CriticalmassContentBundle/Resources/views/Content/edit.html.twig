@@ -36,7 +36,11 @@
     </div>
 
     {{ form_widget(form._token) }}
-    <button type="submit" class="btn btn-success pull-right"><i class="halflings floppy_disk"></i> Speichern</button>
+
+    <div class="btn-group pull-right" role="group" aria-label="...">
+        <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}" class="btn btn-default"><i class="halflings remove"></i> Abbrechen</a>
+        <button type="submit" class="btn btn-success"><i class="halflings floppy_disk"></i> Speichern</button>
+    </div>
     </form>
 </div>
 {% endblock %}
