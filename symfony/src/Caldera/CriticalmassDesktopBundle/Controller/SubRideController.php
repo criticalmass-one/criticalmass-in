@@ -140,15 +140,15 @@ class SubRideController extends Controller
 
         $rideDateTime = new \DateTime($rideDate);
 
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
+        $newRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
 
-        if (!$ride)
+        if (!$newRide)
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.');
         }
         
-        $ride = $ride->getPreviousRide();
+        $oldRide = $newRide->getPreviousRide();
 
-        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:copy.html.twig', array('ride' => $ride));
+        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:copy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
 }
