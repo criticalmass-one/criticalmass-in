@@ -33,6 +33,8 @@ class Content
      */
     protected $text;
 
+    protected $formattedText;
+    
     /**
      * @ORM\Column(type="boolean")
      */
@@ -129,6 +131,18 @@ class Content
     public function getText()
     {
         return $this->text;
+    }
+
+    public function setFormattedText($formattedText)
+    {
+        $this->formattedText = $formattedText;
+
+        return $this;
+    }
+
+    public function getFormattedText()
+    {
+        return $this->formattedText;
     }
 
     /**

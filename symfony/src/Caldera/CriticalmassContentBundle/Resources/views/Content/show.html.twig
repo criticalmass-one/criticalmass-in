@@ -27,11 +27,11 @@
             </div>
 
             <div class="col-md-9">
-            {{ parsedText|raw }}
+            {{ content.getFormattedText()|raw }}
             </div>
             {% else %}
             <div class="col-md-12">
-            {{ parsedText|raw }}
+            {{ content.getFormattedText()|raw }}
             </div>
             {% endif %}
         </div>

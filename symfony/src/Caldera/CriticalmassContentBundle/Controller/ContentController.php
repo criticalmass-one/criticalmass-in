@@ -22,9 +22,9 @@ class ContentController extends Controller
         }
         
         $markdown = new Markdown();
-        $parsedText = $markdown->transform($content->getText());
+        $content->setFormattedText($markdown->transform($content->getText()));
         
-        return $this->render('CalderaCriticalmassContentBundle:Content:show.html.twig', array('content' => $content, 'parsedText' => $parsedText));
+        return $this->render('CalderaCriticalmassContentBundle:Content:show.html.twig', array('content' => $content));
     }
     
     public function editAction(Request $request, $slug)
