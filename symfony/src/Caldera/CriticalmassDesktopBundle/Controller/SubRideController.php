@@ -123,7 +123,7 @@ class SubRideController extends Controller
 
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('ride' => $subRide->getRide(), 'subRide' => $subRide, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
     }
-    
+
     public function preparecopyAction(Request $request, $citySlug, $rideDate)
     {
         if (!$this->getUser()) {
@@ -146,9 +146,19 @@ class SubRideController extends Controller
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.');
         }
+
+        if (count($newRide->getSubrides()) > 0)
+        {
+            throw new NotFoundHttpException('Für die Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' wurden schon Mini-Masses erstellt. Alte Mini-Masses können darum nicht mehr kopiert werden.');
+        }
         
         $oldRide = $newRide->getPreviousRide();
 
+        if (count($newRide->getSubrides()) == 0)
+        {
+            throw new NotFoundHttpException('Die Tour in ' . $city->getCity() . ' am ' . $oldRide->getDateTime()->format('d. m. Y') . ' hat keine Mini-Masses, die kopiert werden können.');
+        }
+        
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:copy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
 
@@ -174,6 +184,11 @@ class SubRideController extends Controller
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' gefunden.');
         }
+        
+        if (count($newRide->getSubrides()) > 0)
+        {
+            throw new NotFoundHttpException('Für die Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' wurden schon Mini-Masses erstellt. Alte Mini-Masses können darum nicht mehr kopiert werden.');
+        }
 
         $oldRideDateTime = new \DateTime($oldDate);
 
@@ -184,6 +199,11 @@ class SubRideController extends Controller
             throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $oldRideDateTime->format('d. m. Y') . ' gefunden.');
         }
 
+        if (count($newRide->getSubrides()) == 0)
+        {
+            throw new NotFoundHttpException('Die Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' hat keine Mini-Masses, die kopiert werden können.');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         
         foreach ($oldRide->getSubrides() as $oldSubride)
