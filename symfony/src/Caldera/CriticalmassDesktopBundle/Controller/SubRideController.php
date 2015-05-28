@@ -151,4 +151,61 @@ class SubRideController extends Controller
 
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:copy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
+
+    public function copyAction(Request $request, $citySlug, $oldDate, $newDate)
+    {
+        if (!$this->getUser()) {
+            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
+        }
+
+        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlugObj) {
+            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.');
+        }
+
+        $city = $citySlugObj->getCity();
+
+        $newRideDateTime = new \DateTime($newDate);
+
+        $newRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $newRideDateTime);
+
+        if (!$newRide)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' gefunden.');
+        }
+
+        $oldRideDateTime = new \DateTime($oldDate);
+
+        $oldRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $oldRideDateTime);
+
+        if (!$oldRide)
+        {
+            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $oldRideDateTime->format('d. m. Y') . ' gefunden.');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        
+        foreach ($oldRide->getSubrides() as $oldSubride)
+        {
+            $newSubride = new SubRide();
+            $newSubride->setTitle($oldSubride->getTitle());
+            $newSubride->setDescription($oldSubride->getDescription());
+            $newSubride->setLatitude($oldSubride->getLatitude());
+            $newSubride->setLongitude($oldSubride->getLongitude());
+            $newSubride->setLocation($oldSubride->getLocation());
+            $newSubride->setCreationDateTime(new \DateTime());
+            $newSubride->setUser($oldSubride->getUser());
+            $newSubride->setRide($newRide);
+            
+            $newSubrideDateTime = new \DateTime($newRide->getDateTime()->format('Y-m-d').' '.$oldSubride->getDateTime()->format('H:i:s'));
+            $newSubride->setDateTime($newSubrideDateTime);
+            
+            $em->persist($newSubride);
+        }
+        
+        $em->flush();
+        
+        return $this->redirectToRoute('caldera_criticalmass_desktop_ride_show', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $newRide->getFormattedDate()));
+    }
 }
