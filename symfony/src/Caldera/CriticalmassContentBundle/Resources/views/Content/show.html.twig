@@ -35,5 +35,16 @@
             </div>
             {% endif %}
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Kommentare zu dieser Seite</h3>
+                {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'contentId': content.getId() })) }}
+
+                {% if app.getUser() %}
+                    {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'contentId': content.getId() })) }}
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}
