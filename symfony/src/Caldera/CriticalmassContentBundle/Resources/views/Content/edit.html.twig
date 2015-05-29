@@ -9,6 +9,10 @@
         <li><a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">{{ content.getTitle() }}</a></li>
         <li class="active">Inhalt bearbeiten</li>
     </ol>
+
+    {% if hasSaved %}
+    <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">Zurück zur vorigen Seite?</a></div>
+    {% endif %}
     
     <div class="row">
         <div class="col-md-12">

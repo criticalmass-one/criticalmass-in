@@ -58,7 +58,8 @@ class ContentController extends Controller
 
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
-
+        $hasSaved = false;
+        
         if ($form->isValid())
         {
             $content->setLastEditionDateTime(new \DateTime());
@@ -70,13 +71,15 @@ class ContentController extends Controller
 
             // TODO: remove also this
             $hasErrors = false;
+            $hasSaved = true;
         }
         elseif ($form->isSubmitted())
         {
             // TODO: remove even more shit
             $hasErrors = true;
+            $hasSaved = true;
         }
 
-        return $this->render('CalderaCriticalmassContentBundle:Content:edit.html.twig', array('content' => $content, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassContentBundle:Content:edit.html.twig', array('content' => $content, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'hasSaved' => $hasSaved));
     }
 }
