@@ -18,6 +18,10 @@ caldera_criticalmass_timeline_post_write_photo:
     path:     /timeline/write/photo/{photoId}
     defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
 
+caldera_criticalmass_timeline_post_write_content:
+    path:     /timeline/write/content/{contentId}
+    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
+
 caldera_criticalmass_timeline_post_deleteconfirm:
     pattern:  /post/deleteconfirm/{postId}
     defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:deleteconfirm }

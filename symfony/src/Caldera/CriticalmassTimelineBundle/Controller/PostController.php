@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
-    public function writeAction(Request $request, $cityId = null, $rideId = null, $photoId = null)
+    public function writeAction(Request $request, $cityId = null, $rideId = null, $photoId = null, $contentId = null)
     {
         $post = new Post();
 
@@ -38,10 +38,18 @@ class PostController extends Controller
         elseif ($photoId)
         {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', array('photoId' => $photoId))));
-            $photo = $this->getDoctrine()->getRepository('CriticalmassGalleryBundle:Photos')->find($photoId);
+            $photo = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photos')->find($photoId);
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateUrl('criticalmass_gallery_photos_show', array('photoId' => $photoId));
+        }
+        elseif ($contentId)
+        {
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
+            $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->find($contentId);
+            $post->setContent($content);
+
+            $redirectUrl = $this->generateUrl('caldera_criticalmass_content_display', array('slug' => $content->getSlug()));
         }
         else
         {
@@ -87,7 +95,7 @@ class PostController extends Controller
      * @param null $rideId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request, $cityId = null, $rideId = null, $photoId = null)
+    public function listAction(Request $request, $cityId = null, $rideId = null, $photoId = null, $contentId = null)
     {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
@@ -107,6 +115,11 @@ class PostController extends Controller
         if ($photoId)
         {
             $criteria['photo'] = $photoId;
+        }
+
+        if ($contentId)
+        {
+            $criteria['content'] = $contentId;
         }
 
         /* Now fetch all posts with matching criteria. */

@@ -54,6 +54,12 @@ class Post
     protected $photo;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassContentBundle\Entity\Content", inversedBy="posts")
+     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
+     */
+    protected $content;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -348,5 +354,28 @@ class Post
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set content
+     *
+     * @param \Caldera\CriticalmassContentBundle\Entity\Content $content
+     * @return Post
+     */
+    public function setContent(\Caldera\CriticalmassContentBundle\Entity\Content $content = null)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return \Caldera\CriticalmassContentBundle\Entity\Content 
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }
