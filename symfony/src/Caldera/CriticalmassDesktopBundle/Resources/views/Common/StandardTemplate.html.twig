@@ -10,6 +10,11 @@
     <meta name="author" content="">
     <title>{% block title %}{% endblock %} — criticalmass.in</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
     {% stylesheets
     '@CalderaCriticalmassCoreBundle/Resources/public/css/external/*.css'
     '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
@@ -41,13 +46,9 @@
             <p class="text-muted">Seit 2011 im Sattel. <a href="{{ path('caldera_criticalmass_content_display', { slug: 'impress' }) }}">Impressum</a>. criticalmass.in by Caldera.</p>
         </div>
     </footer>
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/jquery-2.1.3.min.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/bootstrap.min.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+
 {% block additionalFooterElements %}{% endblock %}
+    
     <!-- Piwik -->
     <script type="text/javascript">
         var _paq = _paq || [];
