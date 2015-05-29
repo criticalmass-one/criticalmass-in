@@ -30,7 +30,7 @@
         
         <div class="row">
             <div class="col-md-12">
-                <a href="" class="btn btn-success pull-right"><i class="halflings map-marker"></i> Kopieren</a>
+                <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.getCity().getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}" class="btn btn-success pull-right"><i class="halflings map-marker"></i> Kopieren</a>
             </div>
         </div>
     </div>
