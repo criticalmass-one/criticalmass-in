@@ -11,3 +11,4 @@ symfony/web/geojson
 symfony/web/gpx
 symfony/web/photos
 .idea/*
+.vagrant/*
