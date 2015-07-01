@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity
  * @ORM\Table(name="ride")
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Entity\RideRepository")
+ * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Repository\RideRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Ride
