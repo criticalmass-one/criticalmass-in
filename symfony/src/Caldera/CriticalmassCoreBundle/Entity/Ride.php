@@ -154,6 +154,14 @@ class Ride
     protected $url;
 
     /**
+     * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
+     *
+     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", inversedBy="rides")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     */
+    protected $featuredPhoto;
+    
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $weatherForecast;
@@ -1128,5 +1136,28 @@ class Ride
         }
         
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
+    }
+
+    /**
+     * Set featuredPhoto
+     *
+     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photo $featuredPhoto
+     * @return Ride
+     */
+    public function setFeaturedPhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photo $featuredPhoto = null)
+    {
+        $this->featuredPhoto = $featuredPhoto;
+
+        return $this;
+    }
+
+    /**
+     * Get featuredPhoto
+     *
+     * @return \Caldera\CriticalmassGalleryBundle\Entity\Photo 
+     */
+    public function getFeaturedPhoto()
+    {
+        return $this->featuredPhoto;
     }
 }
