@@ -73,6 +73,9 @@ doctrine:
         dql:
             datetime_functions:
                 date: Caldera\CriticalmassCoreBundle\DQL\DateFunction
+                month: Caldera\CriticalmassCoreBundle\DQL\MonthFunction
+                year: Caldera\CriticalmassCoreBundle\DQL\YearFunction
+
 
 # Swiftmailer Configuration
 swiftmailer:
