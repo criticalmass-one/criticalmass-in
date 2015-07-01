@@ -24,15 +24,13 @@ class CityController extends Controller
     {
         $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
 
-        if (!$city->getEnabled())
-        {
-            throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "'.$citySlug.'" finden :(');
+        if (!$city->getEnabled()) {
+            throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
         }
 
         $rides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array('city' => $city->getId(), 'isArchived' => false), array('dateTime' => 'DESC'));
 
-        if ($city->getCurrentRide())
-        {
+        if ($city->getCurrentRide()) {
             array_shift($rides);
             // shift the first ride from the array as the first one is the current and should not be displayed at the recent rides list
         }
@@ -50,8 +48,7 @@ class CityController extends Controller
 
         $hasErrors = null;
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $csg = new CitySlugGenerator($city);
@@ -65,9 +62,7 @@ class CityController extends Controller
             $hasErrors = false;
 
             $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
-        }
-        elseif ($form->isSubmitted())
-        {
+        } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
 
@@ -88,20 +83,22 @@ class CityController extends Controller
 
         $hasErrors = null;
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($city);
             $em->persist($archiveCity);
             $em->flush();
 
             $hasErrors = false;
-        }
-        elseif ($form->isSubmitted())
-        {
+        } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
 
         return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
     }
+
+    public function liveAction(Request $request, $citySlug)
+    {
+    }
+
 }
