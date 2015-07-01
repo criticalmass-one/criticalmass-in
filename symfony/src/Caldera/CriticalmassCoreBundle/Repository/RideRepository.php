@@ -1,11 +1,41 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\CriticalmassCoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
 {
+    public function findRecentRides($year = null, $month = null, $maxResults = null, $minParticipants = 0, $postShuffle = false)
+    {
+        $builder = $this->createQueryBuilder('ride');
+        
+        $builder->select('ride');
+        
+        $builder->where($builder->expr()->gte('ride.estimatedParticipants', $minParticipants));
+        
+        if ($month && $year) {
+            $builder->andWhere($builder->expr()->eq('MONTH(ride.dateTime)', $month));
+            $builder->andWhere($builder->expr()->eq('YEAR(ride.dateTime)', $month));
+        }
+        
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+        
+        $query = $builder->getQuery();
+        
+        if ($maxResults) {
+            $query->setMaxResults($maxResults);
+        }
+        
+        $result = $query->getResult();
+        
+        if ($postShuffle) {
+            $result = array_rand($result);
+        }
+        
+        return $result;
+    }
+    
     public function findRidesByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
     {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND SQRT((r.latitude - '.$latitude.') * (r.latitude - '.$latitude.') + (r.longitude - '.$longitude.') * (r.longitude - '.$longitude.')) < 0.1 AND DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' ORDER BY r.city DESC');
