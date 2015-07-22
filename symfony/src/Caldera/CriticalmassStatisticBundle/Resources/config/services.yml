@@ -1,7 +1,0 @@
-parameters:
-#    caldera_criticalmass_statistic.example.class: Caldera\CriticalmassStatisticBundle\Example
-
-services:
-    caldera.criticalmassstatistic.rideestimate:
-        class: Caldera\CriticalmassStatisticBundle\Service\RideEstimateService
-        arguments: [ @doctrine.orm.entity_manager ]

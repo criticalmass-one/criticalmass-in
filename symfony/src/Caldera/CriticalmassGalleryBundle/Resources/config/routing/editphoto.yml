@@ -1,3 +1,0 @@
-criticalmass_gallery_photo_relocate:
-    pattern: /relocate/{photoId}
-    defaults: { _controller: CalderaCriticalmassGalleryBundle:Editphoto:relocate }

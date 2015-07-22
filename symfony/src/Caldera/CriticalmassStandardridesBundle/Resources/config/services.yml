@@ -1,7 +1,0 @@
-parameters:
-#    caldera_criticalmass_standardrides.example.class: Caldera\CriticalmassStandardridesBundle\Example
-
-services:
-#    caldera_criticalmass_standardrides.example:
-#        class: %caldera_criticalmass_standardrides.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

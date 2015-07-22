@@ -1,7 +1,0 @@
-caldera_criticalmass_api_ride_getcurrent:
-    pattern: /getcurrent
-    defaults: { _controller: CalderaCriticalmassApiBundle:Ride:getcurrent }
-
-caldera_criticalmass_api_ride_writecomment:
-    pattern: /writecomment
-    defaults: { _controller: CalderaCriticalmassApiBundle:Ride:writecomment }

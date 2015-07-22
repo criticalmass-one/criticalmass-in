@@ -1,6 +1,0 @@
-caldera_criticalmass_plus_homepage:
-    pattern:  /generateVoucherCodes/{voucherClassId}/{number}
-    defaults: { _controller: CalderaCriticalmassPlusBundle:Default:index }
-caldera_criticalmass_plus_homepage2:
-    pattern:  /foo/{action}
-    defaults: { _controller: CalderaCriticalmassPlusBundle:Default:foo }

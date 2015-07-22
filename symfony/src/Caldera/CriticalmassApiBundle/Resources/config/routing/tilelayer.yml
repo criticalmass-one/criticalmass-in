@@ -1,3 +1,0 @@
-caldera_criticalmass_api_tilelayer_listtilelayers:
-    pattern: /listtilelayers
-    defaults: { _controller: CalderaCriticalmassApiBundle:TileLayer:listtilelayers }
