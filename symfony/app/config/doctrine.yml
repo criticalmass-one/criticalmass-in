@@ -1,0 +1,22 @@
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: %kernel.root_dir%/data/data.db3
+        # path:     %database_path%
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        dql:
+            datetime_functions:
+                date: Caldera\Bundle\CriticalmassCoreBundle\DQL\DateFunction
+                month: Caldera\Bundle\CriticalmassCoreBundle\DQL\MonthFunction
+                year: Caldera\Bundle\CriticalmassCoreBundle\DQL\YearFunction

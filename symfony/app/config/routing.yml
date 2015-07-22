@@ -1,35 +1,3 @@
-caldera_criticalmass_timelapse:
-    resource: "@CalderaCriticalmassTimelapseBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_blog:
-    resource: "@CalderaCriticalmassBlogBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_twitter:
-    resource: "@CalderaCriticalmassTwitterBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_track:
-    resource: "@CalderaCriticalmassTrackBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_gallery:
-    resource: "@CalderaCriticalmassGalleryBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_openweather:
-    resource: "@CalderaCriticalmassOpenweatherBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_asset:
-    resource: "@CalderaCriticalmassAssetBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_timeline:
-    resource: "@CalderaCriticalmassTimelineBundle/Resources/config/routing.yml"
-    prefix:   /
-
 sonata_user_security:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"
 
@@ -62,32 +30,6 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
-caldera_criticalmass_content:
-    resource: "@CalderaCriticalmassContentBundle/Resources/config/routing.yml"
-    prefix:   /
-    
-caldera_criticalmass_core:
-    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_api:
-    resource: "@CalderaCriticalmassApiBundle/Resources/config/routing.yml"
-    prefix:   /
-
-caldera_criticalmass_mobile:
-    resource: "@CalderaCriticalmassMobileBundle/Resources/config/routing.yml"
-    prefix:   /
-    host: criticalmass.cm
-
-caldera_criticalmass_statistic:
-    resource: "@CalderaCriticalmassStatisticBundle/Resources/config/routing.yml"
-    prefix:   /
-    
-caldera_criticalmass_desktop:
-    resource: "@CalderaCriticalmassDesktopBundle/Resources/config/routing.yml"
-    prefix:   /
-    host: beta.criticalmass.cm
-
-caldera_criticalmass_plus:
-    resource: "@CalderaCriticalmassPlusBundle/Resources/config/routing.yml"
+caldera_criticalmass_site:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing.yml"
     prefix:   /

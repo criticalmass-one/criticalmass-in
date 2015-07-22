@@ -1,28 +1,24 @@
 caldera_criticalmass_desktop_ride_list:
     pattern:  /ride/list
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:list }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:list }
 
 caldera_criticalmass_desktop_ride_add:
     pattern:  /{citySlug}/add
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:add }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:add }
 
 caldera_criticalmass_desktop_ride_show:
     pattern:  /{citySlug}/{rideDate}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:show }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:show }
 
 caldera_criticalmass_desktop_ride_edit:
     pattern:  /{citySlug}/{rideDate}/edit
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:edit }
-
-caldera_criticalmass_desktop_ride_estimate:
-    pattern: /ride/estimate/{rideId}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:estimateride }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:edit }
 
 caldera_criticalmass_desktop_ride_showcurrent:
     pattern:  /ride/showcurrent/{citySlug}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:showcurrent }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:showcurrent }
 
 caldera_criticalmass_desktop_ride_propose:
     pattern:  /ride/propose/{citySlug}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:Ride:propose }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:propose }
 

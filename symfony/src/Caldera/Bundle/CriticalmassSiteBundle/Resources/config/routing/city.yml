@@ -1,23 +1,23 @@
 caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:list }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:list }
 
 caldera_criticalmass_desktop_city_add:
     pattern:  /city/add
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:add }
-
-caldera_criticalmass_desktop_city_show:
-    pattern:  /{citySlug}/live
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:live }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:add }
 
 caldera_criticalmass_desktop_city_show:
     pattern:  /{citySlug}/show
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
+
+caldera_criticalmass_desktop_city_live:
+    pattern:  /{citySlug}/live
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:live }
 
 caldera_criticalmass_desktop_city_show_short:
     pattern:  /{citySlug}
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:show }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
 
 caldera_criticalmass_desktop_city_edit:
     pattern:  /{citySlug}/edit
-    defaults: { _controller: CalderaCriticalmassDesktopBundle:City:edit }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:edit }
