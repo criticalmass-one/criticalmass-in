@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer;
+namespace Caldera\Bundle\CriticalmassGalleryBundle\Utility\PhotoResizer;
 
 use Caldera\CriticalmassGalleryBundle\Entity\Photo;
 
