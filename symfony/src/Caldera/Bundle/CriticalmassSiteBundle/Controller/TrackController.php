@@ -1,20 +1,21 @@
 <?php
 
-namespace Caldera\CriticalmassTrackBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\CriticalmassTrackBundle\Entity\Track;
-use Caldera\CriticalmassCoreBundle\Utility\GpxWriter\GpxWriter;
-use Caldera\CriticalmassStatisticBundle\Utility\RideGuesser\RideGuesser;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
+use Caldera\Bundle\CriticalmassCoreBundle\Uploader\TrackUploader\TrackUploader;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TrackController extends Controller
+class TrackController extends AbstractController
 {
     public function gpxgenerateAction($rideId)
     {
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+        $ride = $this->getRideRepository()->find($rideId);
 
         $tickets = $this->getDoctrine()->getRepository('CalderaCriticalmassGlympseBundle:Ticket')->findBy(array('city' => $ride->getCity()));
 
@@ -59,167 +60,81 @@ class TrackController extends Controller
 
     public function listAction()
     {
-        $tracks = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
+        $tracks = $this->getTrackRepository()->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
 
         foreach ($tracks as $track) {
             $track->setStartDateTime($track->getStartDateTime()->add(new \DateInterval('PT2H')));
             $track->setEndDateTime($track->getEndDateTime()->add(new \DateInterval('PT2H')));
         }
 
-        return $this->render('CalderaCriticalmassTrackBundle:Track:list.html.twig', array('tracks' => $tracks));
+        return $this->render('CalderaCriticalmassSiteBundle:Track:list.html.twig', 
+            array(
+                'tracks' => $tracks
+            )
+        );
     }
 
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request, $citySlug, $rideDate)
     {
-        $errorList = array();
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $track = new Track();
+
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_track_upload'))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_track_upload', array(
+                'citySlug' => $ride->getCity()->getMainSlugString(), 
+                'rideDate' => $ride->getFormattedDate())))
             ->add('file')
             ->getForm();
-
+        
+        if ('POST' == $request->getMethod()) {
+            return $this->uploadPostAction($request, $track, $ride, $form);
+        } else {
+            return $this->uploadGetAction($request, $form);
+        }
+    }
+    
+    protected function uploadGetAction(Request $request, Form $form)
+    {
+        return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig', array('form' => $form->createView()));
+    }
+    
+    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form)
+    {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-/*
-            if (!($track->getFile())) {
-                return $this->render('CalderaCriticalmassStatisticBundle:Track:upload.html.twig', array('form' => $form->createView()));
-            }*/
+            $trackUploaderOptions = [
+                'trackDirectory' => $this->container->getParameter('directory.track')
+            ];
 
-            if ($track->handleUpload())
-            {
-                /* User and user name are redundant, yes. This is a preparation to have a chance to change the user name later without losing the dependency to the user. */
-                $track->setUser($this->getUser());
-                $track->setUsername($this->getUser()->getUsername());
-
-                /* Now, bring up the RideGuesser. We wanna know where the user was riding. */
-                $rg = new RideGuesser($this);
-                $rg->setGpx($track->getGpx());
-                $rg->guess();
-
-                if ($track->getPoints() < 100) {
-                    array_push($errorList, "tooFewPoints");
-                }
-
-                if ($track->getPoints() != $track->getTimeStamps()) {
-                    array_push($errorList, "tooFewTimeStamps");
-                }
-
-                /* Let’s see. The RideGuesser could not detect a ride. */
-                if ($rg->isImpossible())
-                {
-                    array_push($errorList, "noTourFound");
-                }
-                elseif ($rg->isDuplicate())
-                {
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
-                }
-                /* Okay, it found a distinct ride, so let’s bring up the magic. */
-                elseif (($rg->isDistinct()) && (sizeof($errorList) == 0))
-                {
-                    /* Save the concurrent ride. */
-                    $rides = $rg->getRides();
-                    $ride = array_pop($rides);
-                    $track->setRide($ride);
-
-                    /* Extract distance and duration from the track. */
-                    $this->get('caldera.criticalmassstatistic.rideestimate')->addEstimate($track);
-
-                    /* Save the shit… */
-                    $em->persist($track);
-                    $em->flush();
-
-                    $track->saveTrack();
-
-                    /* … aaaand recalculate all estimates for this ride. */
-                    $this->get('caldera.criticalmassstatistic.rideestimate')->calculateEstimates($ride);
-
-                    /* Throw the user back to his track list. */
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
-                }
-                /* No, that didn’t work. We cannot detect a distinct ride, so the user has to set a ride hisself. */
-                elseif (sizeof($errorList) == 0) {
-                    $em->persist($track);
-                    $em->flush();
-
-                    $track->saveTrack();
-
-                    return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_setride', array('trackId' => $track->getId())));
-                }
-            } else {
-                array_push($errorList, "noXML");
-            }
-        } else {
-            //array_push($errorList, "tooBig");
-        }
-
-        if (sizeof($errorList) > 0) {
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_upload_failed', array('errorList' => $errorList)));
-        }
-
-        return $this->render('CalderaCriticalmassTrackBundle:Track:upload.html.twig', array('form' => $form->createView()));
-    }
-
-    public function setrideAction(Request $request, $trackId)
-    {
-        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneById($trackId);
-
-        /* Well, when this action is called, the RideGuesser seemed to fail to detect a distinct ride. We need to catch a new list of the possible rides to present it to the user. */
-        $rg = new RideGuesser($this);
-        $track->loadTrack();
-        $rg->setGpx($track->getGpx());
-        $rg->guess();
-        $rides = $rg->getRides();
-
-        /* Now we build our select input field with the values from the possible rides. */
-        $choices = array();
-
-        foreach ($rides as $ride) {
-            $choices[] = $ride;
-        }
-
-        /* Here we go. The "entity" form field will be converted into a select box. */
-        $form = $this->createFormBuilder($track)
-            ->add('ride', 'entity', array
-            (
-                'class' => 'CalderaCriticalmassCoreBundle:Ride',
-                'property' => 'cityTitle',
-                'label' => 'Tour auswählen',
-                'required' => true,
-                'choices' => $choices
-            ))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid())
-        {
-            /* Extract distance and duration from the track. */
-            $this->get('caldera.criticalmassstatistic.rideestimate')->addEstimate($track);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($track);
-            $em->flush();
+            $trackUploader = new TrackUploader($this->getDoctrine(), $trackUploaderOptions);
+            $trackUploader->setUser($this->getUser())
+                ->setRide($ride)
+                ->setTrack($track)
+                ->processUpload();
+            
+            $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate');
+            $estimateService->addEstimate($track);
+            $estimateService->calculateEstimates($ride);
 
             return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
+
         }
 
-        return $this->render('CalderaCriticalmassTrackBundle:Track:setride.html.twig', array('form' => $form->createView()));
-    }
-
-    public function uploadfailedAction()
-    {
-        return $this->render('CalderaCriticalmassTrackBundle:Track:uploadfailed.html.twig');
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Track:upload.html.twig', 
+            array(
+                'form' => $form->createView()
+            )
+        );
     }
 
     public function viewAction(Request $request, $trackId)
     {
-        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneById($trackId);
+        $track = $this->getTrackRepository()->findOneById($trackId);
 
-        if ($track && $track->getUser()->equals($this->getUser()))
-        {
-            return $this->render('CalderaCriticalmassTrackBundle:Track:view.html.twig', array('track' => $track));
+        if ($track && $track->getUser()->equals($this->getUser())) {
+            return $this->render('CalderaCriticalmassSiteBundle:Track:view.html.twig', array('track' => $track));
         }
 
         throw new AccessDeniedException('');
@@ -227,10 +142,9 @@ class TrackController extends Controller
 
     public function downloadAction(Request $request, $trackId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassTrackBundle:Track', $trackId);
+        $track = $this->getTrackRepository()->find($trackId);
 
-        if ($track->getUser()->equals($this->getUser()))
+        if ($track && $track->getUser()->equals($this->getUser()))
         {
             header('Content-disposition: attachment; filename=track.gpx');
             header('Content-type: text/plain');
@@ -254,14 +168,17 @@ class TrackController extends Controller
      */
     public function toggleAction(Request $request, $trackId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassTrackBundle:Track', $trackId);
+        $track = $this->getTrackRepository()->find($trackId);
+        $ride = $track->getRide();
 
-        if ($track->getUser()->equals($this->getUser()))
+        if ($track && $track->getUser()->equals($this->getUser()))
         {
+            $em = $this->getDoctrine()->getManager();
             $track->setActivated(!$track->getActivated());
             $em->merge($track);
             $em->flush();
+
+            $this->get('caldera.criticalmass.statistic.rideestimate')->calculateEstimates($ride);
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
@@ -269,15 +186,16 @@ class TrackController extends Controller
 
     public function deleteAction(Request $request, $trackId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $track = $em->find('CalderaCriticalmassTrackBundle:Track', $trackId);
-
+        $track = $this->getTrackRepository()->find($trackId);
+        $ride = $track->getRide();
+        
         if ($track && $track->getUser()->equals($this->getUser()))
         {
-            //$re = $em->find('CalderaCriticalmassStatisticBundle:RideEstimate', $track->getRideEstimate());
+            $em = $this->getDoctrine()->getManager();
             $em->remove($track);
-            //$em->remove($re);
             $em->flush();
+
+            $this->get('caldera.criticalmass.statistic.rideestimate')->calculateEstimates($ride);
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));

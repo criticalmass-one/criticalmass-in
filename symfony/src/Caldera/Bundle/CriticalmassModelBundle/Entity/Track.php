@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassTrackBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 use Caldera\CriticalmassCoreBundle\Utility\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
@@ -27,7 +27,7 @@ class Track
     protected $username;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
@@ -39,10 +39,15 @@ class Track
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGlympseBundle\Entity\Ticket", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket", inversedBy="tracks")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
     protected $ticket;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $rideEstimate;
 
     /**
      * @ORM\Column(type="datetime")
@@ -70,16 +75,6 @@ class Track
     protected $points;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $timeStamps;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassStatisticBundle\Entity\RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
-     */
-    protected $rideEstimate;
-
-    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
@@ -105,8 +100,7 @@ class Track
     {
         $this->setCreationDateTime(new \DateTime());
 
-        if ($this->id)
-        {
+        if ($this->id) {
             $this->loadTrack();
         }
     }
@@ -147,10 +141,10 @@ class Track
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return Track
      */
-    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -160,7 +154,7 @@ class Track
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride 
+     * @return Ride
      */
     public function getRide()
     {
@@ -193,10 +187,10 @@ class Track
     /**
      * Set ticket
      *
-     * @param \Caldera\CriticalmassGlympseBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      * @return Track
      */
-    public function setTicket(\Caldera\CriticalmassGlympseBundle\Entity\Ticket $ticket = null)
+    public function setTicket(Ticket $ticket = null)
     {
         $this->ticket = $ticket;
 
@@ -206,7 +200,7 @@ class Track
     /**
      * Get ticket
      *
-     * @return \Caldera\CriticalmassGlympseBundle\Entity\Ticket 
+     * @return Ticket
      */
     public function getTicket()
     {
@@ -240,13 +234,11 @@ class Track
     {
         $result = $this->getUsername().'(';
 
-        if ($this->getCreationDateTime())
-        {
+        if ($this->getCreationDateTime()) {
             $result .= $this->getCreationDateTime()->format('Y-m-d');
         }
 
-        if ($this->getRide())
-        {
+        if ($this->getRide()) {
             $result .= ', '.$this->getRide()->getCity()->getCity();
         }
 
@@ -376,22 +368,6 @@ class Track
     }
 
     /**
-     * @return mixed
-     */
-    public function getTimeStamps()
-    {
-        return $this->timeStamps;
-    }
-
-    /**
-     * @param mixed $timeStamps
-     */
-    public function setTimeStamps($timeStamps)
-    {
-        $this->timeStamps = $timeStamps;
-    }
-
-    /**
      * @Assert\File(maxSize="6000000")
      */
     protected $file;
@@ -404,40 +380,6 @@ class Track
     public function getFile()
     {
         return $this->file;
-    }
-
-    public function handleUpload()
-    {
-        $gpxReader = new GpxReader();
-
-        if ($gpxReader->loadFile($this->file->getPathname()))
-        {
-            $this->setStartDateTime($gpxReader->getStartDateTime());
-            $this->setEndDateTime($gpxReader->getEndDateTime());
-            $this->setPoints($gpxReader->countPoints());
-            $this->setMd5Hash($gpxReader->getMd5Hash());
-            $this->setGpx($gpxReader->getFileContent());
-            $this->setDistance($gpxReader->calculateDistance());
-            $this->setActivated(1);
-
-            $sag = new SimpleLatLngArrayGenerator();
-            $sag->loadTrack($this);
-            $sag->execute();
-
-            $this->setPreviewJsonArray($sag->getJsonArray());
-
-            $this->timeStamps = 0;
-
-            for ($i = 0; $i < $this->points; $i++) {
-                if ($gpxReader->getTimeOfPoint($i) != "") {
-                    $this->timeStamps++;
-                }
-            }
-
-            return true;
-        }
-
-        return false;
     }
 
     public function getDuration()
@@ -456,9 +398,9 @@ class Track
         return $averageVelocity;
     }
 
-    public function loadGpx()
+    public function loadGpx($trackDirectory)
     {
-        $this->gpx = file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx');
+        $this->gpx = file_get_contents($trackDirectory.$this->getId().'.gpx');
     }
     
     public function setGpx($gpx)
@@ -488,10 +430,10 @@ class Track
     /**
      * Set rideEstimate
      *
-     * @param \Caldera\CriticalmassStatisticBundle\Entity\RideEstimate $rideEstimate
+     * @param RideEstimate $rideEstimate
      * @return Track
      */
-    public function setRideEstimate(\Caldera\CriticalmassStatisticBundle\Entity\RideEstimate $rideEstimate = null)
+    public function setRideEstimate(RideEstimate $rideEstimate = null)
     {
         $this->rideEstimate = $rideEstimate;
 
@@ -501,7 +443,7 @@ class Track
     /**
      * Get rideEstimate
      *
-     * @return \Caldera\CriticalmassStatisticBundle\Entity\RideEstimate 
+     * @return RideEstimate
      */
     public function getRideEstimate()
     {
@@ -511,24 +453,6 @@ class Track
     public function getGpx()
     {
         return $this->gpx;
-    }
-
-    public function saveTrack()
-    {
-        if (!$handle = fopen('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx', "a")) {
-            print "Kann die Datei nicht öffnen";
-            exit;
-        }
-
-        // Schreibe $somecontent in die geöffnete Datei.
-        if (!fwrite($handle, $this->getGpx())) {
-            print "Kann in die Datei nicht schreiben";
-            exit;
-        }
-
-        print "Fertig, in Datei wurde geschrieben";
-
-        fclose($handle);
     }
 
     public function loadTrack()
@@ -565,17 +489,12 @@ class Track
 
         $prevTrack = null;
 
-        foreach ($tracks as $track)
-        {
-            if ($track && !$prevTrack && $track->getStartDateTime() < $this->getStartDateTime())
-            {
+        foreach ($tracks as $track) {
+            if ($track && !$prevTrack && $track->getStartDateTime() < $this->getStartDateTime()) {
+                $prevTrack = $track;
+            } else if ($track && $prevTrack && $track->getStartDateTime() > $prevTrack->getStartDateTime() && $track->getStartDateTime() < $this->getStartDateTime()) {
                 $prevTrack = $track;
             }
-            else
-                if ($track && $prevTrack && $track->getStartDateTime() > $prevTrack->getStartDateTime() && $track->getStartDateTime() < $this->getStartDateTime())
-                {
-                    $prevTrack = $track;
-                }
         }
 
         return $prevTrack;
@@ -587,17 +506,12 @@ class Track
 
         $nextTrack = null;
 
-        foreach ($tracks as $track)
-        {
-            if ($track && !$nextTrack && $track->getStartDateTime() > $this->getStartDateTime())
-            {
+        foreach ($tracks as $track) {
+            if ($track && !$nextTrack && $track->getStartDateTime() > $this->getStartDateTime()) {
+                $nextTrack = $track;
+            } else if ($track && $nextTrack && $track->getStartDateTime() < $nextTrack->getStartDateTime() && $track->getStartDateTime() > $this->getStartDateTime()) {
                 $nextTrack = $track;
             }
-            else
-                if ($track && $nextTrack && $track->getStartDateTime() < $nextTrack->getStartDateTime() && $track->getStartDateTime() > $this->getStartDateTime())
-                {
-                    $nextTrack = $track;
-                }
         }
 
         return $nextTrack;

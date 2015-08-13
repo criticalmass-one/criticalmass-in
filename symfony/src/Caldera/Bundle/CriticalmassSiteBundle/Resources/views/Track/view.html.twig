@@ -1,11 +1,35 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}Deine Tracks{% endblock %}
+
+{% block additionalHeaderElements %}
+{% javascripts
+'@CalderaCriticalmassSiteBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script>
+    var map = L.map('map');
+    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    tileLayer.addTo(map);
+
+    map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
+
+    var track = new Track();
+    track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+    track.addTo(map);
+    map.fitBounds(track.getBounds());
+</script>
+{% endblock %}
 
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
             <li><a href="{{ path('caldera_criticalmass_track_track_list') }}">Deine Tracks</a></li>
             <li class="active">Track anzeigen</li>
@@ -27,28 +51,6 @@
             </div>
         </div>
 
-        {% javascripts
-        '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-        '@CalderaCriticalmassTrackBundle/Resources/public/js/track/*'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        <script>
-            var map = L.map('map');
-            var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            });
-
-            tileLayer.addTo(map);
-
-            map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
-
-            var track = new Track();
-            track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
-            track.addTo(map);
-            map.fitBounds(track.getBounds());
-        </script>
-
         <div class="row">
             <div class="col-md-3">Tour:<br /><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: track.getRide().getCity().getMainSlugString(), rideDate: track.getRide().getFormattedDate() }) }}">{{ track.getRide().getFancyTitle() }}</a></div>
             <div class="col-md-2">{{ track.getRide().getDateTime.format('d.m.Y') }}<br />{{ track.getRide().getDateTime.format('H:i') }} Uhr</div>
@@ -61,13 +63,13 @@
             <div class="col-md-12">
                 <ul class="pager">
                     {% if track.getPreviousTrack() %}
-                    <li class="previous"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getPreviousTrack().getId() }) }}">&larr; Voriger Track</a></li>
+                    <li class="previous"><a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getPreviousTrack().getId() }) }}">&larr; Voriger Track</a></li>
                     {% else %}
                     <li class="previous disabled"><a href="#">&larr; Voriger Track</a></li>
                     {% endif %}
 
                     {% if track.getNextTrack() %}
-                    <li class="next"><a href="{{ path('caldera_criticalmass_statistic_track_view', { 'trackId': track.getNextTrack().getId() }) }}">Nächster Track &rarr;</a></li>
+                    <li class="next"><a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getNextTrack().getId() }) }}">Nächster Track &rarr;</a></li>
                     {% else %}
                     <li class="next disabled"><a href="#">Nächster Track &rarr;</a></li>
                     {% endif %}

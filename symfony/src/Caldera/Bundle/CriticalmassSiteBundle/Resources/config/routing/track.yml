@@ -1,35 +1,27 @@
 caldera_criticalmass_track_track_deleteconfirm:
     pattern:  /track/delete/{trackId}
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:delete }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:delete }
 
 caldera_criticalmass_track_track_toggle:
     pattern:  /track/toggle/{trackId}
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:toggle }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:toggle }
 
 caldera_criticalmass_track_track_download:
     pattern:  /track/download/{trackId}
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:download }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:download }
 
 caldera_criticalmass_track_gpxgenerate:
     pattern:  /track/generate/{rideId}
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:gpxgenerate }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:gpxgenerate }
 
 caldera_criticalmass_track_track_list:
     pattern:  /track/list
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:list }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:list }
 
 caldera_criticalmass_track_track_upload:
-    pattern:  /track/upload
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:upload }
+    pattern:  /{citySlug}/{rideDate}/addtrack
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:upload }
 
-caldera_criticalmass_track_track_setride:
-    pattern:  /track/setride/{trackId}
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:setRide }
-
-caldera_criticalmass_track_track_upload_failed:
-    pattern:  /track/upload/failed
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:uploadFailed }
-
-caldera_criticalmass_track_track_view:
+caldera_criticalmass_track_view:
     pattern:  /track/view/{trackId}
-    defaults: { _controller: CalderaCriticalmassTrackBundle:Track:view }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:view }
