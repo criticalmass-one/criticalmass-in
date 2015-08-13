@@ -1,14 +1,15 @@
 <?php
 
-namespace Caldera\CriticalmassGalleryBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\Bundle\CriticalmassCoreBundle\Uploader\PhotoUploader\PhotoUploader;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PhotosController extends Controller
+class GalleryController extends AbstractController
 {
     public function indexAction() {
         $criteria = array('enabled' => true);

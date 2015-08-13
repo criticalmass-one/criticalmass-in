@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
  * derer einzelne Critical-Mass-Touren stattfinden.
  *
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Entity\CityRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository")
  * @ORM\Table(name="city")
  */
 class City
@@ -101,14 +101,14 @@ class City
     /**
      * Array mit den Kommentaren zu dieser Stadt.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post", mappedBy="city")
      */
     protected $posts;
 
     /**
      * Array mit den Bildern zu dieser Stadt.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", mappedBy="city")
      */
     protected $photos;
 
@@ -432,10 +432,10 @@ class City
     /**
      * Add rides
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
+     * @param Ride $rides
      * @return City
      */
-    public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
+    public function addRide(Ride $rides)
     {
         $this->rides[] = $rides;
     
@@ -445,9 +445,9 @@ class City
     /**
      * Remove rides
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
+     * @param Ride $rides
      */
-    public function removeRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
+    public function removeRide(Ride $rides)
     {
         $this->rides->removeElement($rides);
     }
@@ -465,10 +465,10 @@ class City
     /**
      * Add slugs
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs
+     * @param CitySlug $slugs
      * @return City
      */
-    public function addSlug(\Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs)
+    public function addSlug(CitySlug $slugs)
     {
         $this->slugs[] = $slugs;
     
@@ -478,9 +478,9 @@ class City
     /**
      * Remove slugs
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs
+     * @param CitySlug $slugs
      */
-    public function removeSlug(\Caldera\CriticalmassCoreBundle\Entity\CitySlug $slugs)
+    public function removeSlug(CitySlug $slugs)
     {
         $this->slugs->removeElement($slugs);
     }
@@ -875,10 +875,10 @@ class City
     /**
      * Add posts
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     * @param Post $posts
      * @return City
      */
-    public function addPost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -888,9 +888,9 @@ class City
     /**
      * Remove posts
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -954,10 +954,10 @@ class City
     /**
      * Set archiveParent
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $archiveParent
+     * @param City $archiveParent
      * @return City
      */
-    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\City $archiveParent = null)
+    public function setArchiveParent(City $archiveParent = null)
     {
         $this->archiveParent = $archiveParent;
 
@@ -967,7 +967,7 @@ class City
     /**
      * Get archiveParent
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return City
      */
     public function getArchiveParent()
     {

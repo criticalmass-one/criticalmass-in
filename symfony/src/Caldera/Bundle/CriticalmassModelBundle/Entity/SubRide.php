@@ -1,16 +1,15 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="subride")
  */
-class SubRide
+class Subride
 {
 	/**
 	 * Numerische ID der Tour.
@@ -90,7 +89,7 @@ class SubRide
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="SubRide", inversedBy="archive_subrides")
+     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="archive_subrides")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
     protected $archiveParent;
@@ -337,10 +336,10 @@ class SubRide
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return SubRide
      */
-    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -350,7 +349,7 @@ class SubRide
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride 
+     * @return Ride
      */
     public function getRide()
     {
@@ -462,10 +461,10 @@ class SubRide
     /**
      * Set archiveParent
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $archiveParent
-     * @return SubRide
+     * @param Subride $archiveParent
+     * @return Subride
      */
-    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\SubRide $archiveParent = null)
+    public function setArchiveParent(Subride $archiveParent = null)
     {
         $this->archiveParent = $archiveParent;
 
@@ -475,7 +474,7 @@ class SubRide
     /**
      * Get archiveParent
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\SubRide 
+     * @return Subride
      */
     public function getArchiveParent()
     {
@@ -486,7 +485,7 @@ class SubRide
      * Set archiveUser
      *
      * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
-     * @return SubRide
+     * @return Subride
      */
     public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
     {

@@ -1,13 +1,12 @@
 <?php
 
-namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoUploader;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Uploader\PhotoUploader;
 
-use Caldera\CriticalmassCoreBundle\Entity\Ride;
-use Caldera\CriticalmassCoreBundle\Entity\Track;
-use Caldera\CriticalmassGalleryBundle\Entity\Photo;
-use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\DateTimeReader;
-use Caldera\CriticalmassGalleryBundle\Utility\PhotoGps\PhotoGps;
-use Caldera\CriticalmassGalleryBundle\Utility\PhotoResizer\PhotoResizer;
+use Caldera\Bundle\CriticalmassCoreBundle\Gallery\ExifReader\DateTimeReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Gallery\PhotoGps\PhotoGps;
+use Caldera\Bundle\CriticalmassCoreBundle\Gallery\PhotoResizer\PhotoResizer;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 
 class PhotoUploader {
     protected $photo;
@@ -65,7 +64,7 @@ class PhotoUploader {
         $pg = new PhotoGps($this->controller);
         $pg->setPhoto($this->photo);
 
-        $track = $this->doctrine->getRepository('CalderaCriticalmassTrackBundle:Track')->findOneBy(array('ride' => $this->ride, 'user' => $this->user, 'activated' => true));
+        $track = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findOneBy(array('ride' => $this->ride, 'user' => $this->user, 'activated' => true));
         $pg->setTrack($track);
 
         $pg->execute();

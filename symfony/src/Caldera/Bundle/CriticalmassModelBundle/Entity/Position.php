@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,13 +31,13 @@ class Position
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassApiBundle\Entity\ApiUser", inversedBy="positions")
+     * @ORM\ManyToOne(targetEntity="ApiUser", inversedBy="positions")
      * @ORM\JoinColumn(name="apiuser_id", referencedColumnName="id")
      */
     protected $apiUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGlympseBundle\Entity\Ticket", inversedBy="positions")
+     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="positions")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
     protected $ticket;

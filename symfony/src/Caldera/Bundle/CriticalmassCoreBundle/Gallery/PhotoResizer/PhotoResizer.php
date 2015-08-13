@@ -1,8 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassGalleryBundle\Utility\PhotoResizer;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Gallery\PhotoResizer;
 
-use Caldera\CriticalmassGalleryBundle\Entity\Photo;
+
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 
 class PhotoResizer {
     protected $filename;

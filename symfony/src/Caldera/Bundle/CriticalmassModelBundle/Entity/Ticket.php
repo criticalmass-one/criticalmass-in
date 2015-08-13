@@ -1,8 +1,7 @@
 <?php
 
-namespace Caldera\CriticalmassGlympseBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
-use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +18,7 @@ class Ticket
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="tickets")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
@@ -144,10 +143,10 @@ class Ticket
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @param City $city
      * @return Ticket
      */
-    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -157,7 +156,7 @@ class Ticket
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City 
+     * @return City
      */
     public function getCity()
     {

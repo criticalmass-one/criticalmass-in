@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassApiBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,7 +19,7 @@ class ApiCall
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassApiBundle\Entity\App", inversedBy="api_calls")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\App", inversedBy="api_calls")
      * @ORM\JoinColumn(name="app_id", referencedColumnName="id")
      */
     protected $app;
@@ -121,10 +121,10 @@ class ApiCall
     /**
      * Set app
      *
-     * @param \Caldera\CriticalmassApiBundle\Entity\App $app
+     * @param App $app
      * @return ApiCall
      */
-    public function setApp(\Caldera\CriticalmassApiBundle\Entity\App $app = null)
+    public function setApp(App $app = null)
     {
         $this->app = $app;
 
@@ -134,7 +134,7 @@ class ApiCall
     /**
      * Get app
      *
-     * @return \Caldera\CriticalmassApiBundle\Entity\App
+     * @return App
      */
     public function getApp()
     {

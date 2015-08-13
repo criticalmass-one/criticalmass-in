@@ -2,6 +2,8 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
@@ -30,13 +32,13 @@ class User extends BaseUser
     /**
      * Vom Benutzer momentan ausgewaehlte Stadt.
      *
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $currentCity;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $tracks;
 
@@ -113,7 +115,7 @@ class User extends BaseUser
      * @param \Caldera\CriticalmassCoreBundle\Entity\City $currentCity
      * @return User
      */
-    public function setCurrentCity(\Caldera\CriticalmassCoreBundle\Entity\City $currentCity = null)
+    public function setCurrentCity(City $currentCity = null)
     {
         $this->currentCity = $currentCity;
 
@@ -201,10 +203,10 @@ class User extends BaseUser
     /**
      * Add tracks
      *
-     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
+     * @param Track $tracks
      * @return User
      */
-    public function addTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
+    public function addTrack(Track $tracks)
     {
         $this->tracks[] = $tracks;
 
@@ -214,9 +216,9 @@ class User extends BaseUser
     /**
      * Remove tracks
      *
-     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
+     * @param Track $tracks
      */
-    public function removeTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
+    public function removeTrack(Track $tracks)
     {
         $this->tracks->removeElement($tracks);
     }

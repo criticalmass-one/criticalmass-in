@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity
  * @ORM\Table(name="ride")
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassCoreBundle\Repository\RideRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Ride
@@ -34,14 +34,14 @@ class Ride
     protected $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track", mappedBy="ride")
      */
     protected $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="SubRide", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride")
      */
-    protected $subRides;
+    protected $subrides;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -156,7 +156,7 @@ class Ride
     /**
      * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
      *
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", inversedBy="rides")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", inversedBy="rides")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $featuredPhoto;
@@ -196,14 +196,14 @@ class Ride
     /**
      * Array mit den Kommentaren zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post", mappedBy="ride")
      */
     protected $posts;
 
     /**
      * Array mit den Bildern zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", mappedBy="ride")
      */
     protected $photos;
 
@@ -312,10 +312,10 @@ class Ride
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @param City $city
      * @return Ride
      */
-    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -795,10 +795,10 @@ class Ride
     /**
      * Add tracks
      *
-     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
+     * @param Track $tracks
      * @return Ride
      */
-    public function addTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
+    public function addTrack(Track $tracks)
     {
         $this->tracks[] = $tracks;
 
@@ -808,9 +808,9 @@ class Ride
     /**
      * Remove tracks
      *
-     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $tracks
+     * @param Track $tracks
      */
-    public function removeTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
+    public function removeTrack(Track $tracks)
     {
         $this->tracks->removeElement($tracks);
     }
@@ -998,10 +998,10 @@ class Ride
     /**
      * Set archiveParent
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $archiveParent
+     * @param $archiveParent
      * @return Ride
      */
-    public function setArchiveParent(\Caldera\CriticalmassCoreBundle\Entity\Ride $archiveParent = null)
+    public function setArchiveParent(Ride $archiveParent = null)
     {
         $this->archiveParent = $archiveParent;
 
@@ -1011,7 +1011,7 @@ class Ride
     /**
      * Get archiveParent
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride 
+     * @return Ride
      */
     public function getArchiveParent()
     {
@@ -1021,23 +1021,23 @@ class Ride
     /**
      * Add posts
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     * @param Post $posts
      * @return City
      */
-    public function addPost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
     }
     
     /**
-     * Add subRides
+     * Add subrides
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides
+     * @param Subride $subrides
      * @return Ride
      */
-    public function addSubRide(\Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides)
+    public function addSubride(Subride $subrides)
     {
-        $this->subRides[] = $subRides;
+        $this->subrides[] = $subrides;
 
         return $this;
     }
@@ -1045,9 +1045,9 @@ class Ride
     /**
      * Remove posts
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\Caldera\CriticalmassTimelineBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -1063,10 +1063,10 @@ class Ride
     /**
      * Add photos
      *
-     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photo $photos
+     * @param Photo $photos
      * @return Ride
      */
-    public function addPhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photo $photos)
+    public function addPhoto(Photo $photos)
     {
         $this->photos[] = $photos;
 
@@ -1076,9 +1076,9 @@ class Ride
     /**
      * Remove photos
      *
-     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photo $photos
+     * @param Photo $photos
      */
-    public function removePhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photo $photos)
+    public function removePhoto(Photo $photos)
     {
         $this->photos->removeElement($photos);
     }
@@ -1094,38 +1094,38 @@ class Ride
     }
     
     /**
-     * Remove subRides
+     * Remove subrides
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides
+     * @param Subride $subrides
      */
-    public function removeSubRide(\Caldera\CriticalmassCoreBundle\Entity\SubRide $subRides)
+    public function removeSubride(Subride $subrides)
     {
-        $this->subRides->removeElement($subRides);
+        $this->subrides->removeElement($subrides);
     }
 
     /**
-     * Get subRides
+     * Get subrides
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSubRides()
+    public function getSubrides()
     {
-        return $this->subRides;
+        return $this->subrides;
     }
 
-    public function getActiveSubRides()
+    public function getActiveSubrides()
     {
-        $subRides = array();
+        $subrides = array();
 
-        foreach ($this->subRides as $subRide)
+        foreach ($this->subrides as $subride)
         {
-            if (!$subRide->getIsArchived())
+            if (!$subride->getIsArchived())
             {
-                $subRides[] = $subRide;
+                $subrides[] = $subride;
             }
         }
 
-        return $subRides;
+        return $subrides;
     }
     
     public function getAverageVelocity()
@@ -1141,10 +1141,10 @@ class Ride
     /**
      * Set featuredPhoto
      *
-     * @param \Caldera\CriticalmassGalleryBundle\Entity\Photo $featuredPhoto
+     * @param Photo $featuredPhoto
      * @return Ride
      */
-    public function setFeaturedPhoto(\Caldera\CriticalmassGalleryBundle\Entity\Photo $featuredPhoto = null)
+    public function setFeaturedPhoto(Photo $featuredPhoto = null)
     {
         $this->featuredPhoto = $featuredPhoto;
 
@@ -1154,7 +1154,7 @@ class Ride
     /**
      * Get featuredPhoto
      *
-     * @return \Caldera\CriticalmassGalleryBundle\Entity\Photo 
+     * @return Photo
      */
     public function getFeaturedPhoto()
     {

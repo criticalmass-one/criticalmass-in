@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassOpenweatherBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,7 +18,7 @@ class Weather {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="weather")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="weather")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;

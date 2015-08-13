@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassTimelineBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -10,7 +10,7 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(post.id)');
-        $qb->from('CalderaCriticalmassTimelineBundle:Post', 'post');
+        $qb->from('CalderaCriticalmassModelBundle:Post', 'post');
 
         return $qb->getQuery()->getSingleScalarResult();
     }

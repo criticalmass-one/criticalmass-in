@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassTwitterBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,12 +19,12 @@ class Tweet
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="City", mappedBy="city")
      */
     protected $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="ride")
      */
     protected $ride;
 

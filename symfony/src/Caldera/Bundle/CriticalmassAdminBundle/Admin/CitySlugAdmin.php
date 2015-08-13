@@ -1,7 +1,8 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Admin;
+namespace Caldera\Bundle\CriticalmassAdminBundle\Admin;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;

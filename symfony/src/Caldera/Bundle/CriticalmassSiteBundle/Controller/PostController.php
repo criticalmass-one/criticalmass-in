@@ -1,14 +1,13 @@
 <?php
 
-namespace Caldera\CriticalmassTimelineBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\CriticalmassTimelineBundle\Entity\Post;
-use Caldera\CriticalmassTimelineBundle\Type\PostType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class PostController extends Controller
+class PostController extends AbstractController
 {
     public function writeAction(Request $request, $cityId = null, $rideId = null, $photoId = null, $contentId = null)
     {
@@ -20,7 +19,7 @@ class PostController extends Controller
         if ($cityId)
         {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($cityId);
+            $city = $this->getCityRepository()->find($cityId);
             $post->setCity($city);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', array('citySlug' => $city->getMainSlugString()));
@@ -28,8 +27,8 @@ class PostController extends Controller
         elseif ($rideId)
         {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId))));
-            $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
-            $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->find($ride->getCity());
+            $ride = $this->getRideRepository()->find($rideId);
+            $city = $this->getCityRepository()->find($ride->getCity());
             $post->setCity($city);
             $post->setRide($ride);
 
@@ -38,7 +37,7 @@ class PostController extends Controller
         elseif ($photoId)
         {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', array('photoId' => $photoId))));
-            $photo = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photos')->find($photoId);
+            $photo = $this->getPhotoRepository()->find($photoId);
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateUrl('criticalmass_gallery_photos_show', array('photoId' => $photoId));
@@ -46,7 +45,7 @@ class PostController extends Controller
         elseif ($contentId)
         {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
-            $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->find($contentId);
+            $content = $this->getContentRepository()->find($contentId);
             $post->setContent($content);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_content_display', array('slug' => $content->getSlug()));
@@ -74,10 +73,10 @@ class PostController extends Controller
         }
         elseif ($form->isSubmitted())
         {
-            return $this->render('CalderaCriticalmassTimelineBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
+            return $this->render('CalderaCriticalmassSiteBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
         }
 
-        return $this->render('CalderaCriticalmassTimelineBundle:Post:write.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassSiteBundle:Post:write.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -123,10 +122,10 @@ class PostController extends Controller
         }
 
         /* Now fetch all posts with matching criteria. */
-        $posts = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy($criteria, array('dateTime' => 'DESC'));
+        $posts = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
 
         /* And render our shit. */
-        return $this->render('CalderaCriticalmassTimelineBundle:Post:list.html.twig', array('posts' => $posts));
+        return $this->render('CalderaCriticalmassSiteBundle:Post:list.html.twig', array('posts' => $posts));
     }
 
     public function deleteconfirmAction(Request $request, $postId = 0)

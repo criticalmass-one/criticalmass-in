@@ -1,18 +1,19 @@
 <?php
 
-namespace Caldera\CriticalmassContentBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\CriticalmassContentBundle\Type\ContentType;
 use Michelf\Markdown;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ContentController extends Controller
+class ContentController extends AbstractController
 {
     public function showAction(Request $request, $slug)
     {
-        $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBySlug($slug);
+        $content = $this->getContentRepository()->findBySlug($slug);
         
         $content = array_pop($content);
 
@@ -24,7 +25,7 @@ class ContentController extends Controller
         $markdown = new Markdown();
         $content->setFormattedText($markdown->transform($content->getText()));
         
-        return $this->render('CalderaCriticalmassContentBundle:Content:show.html.twig', array('content' => $content));
+        return $this->render('CalderaCriticalmassSiteBundle:Content:show.html.twig', array('content' => $content));
     }
     
     public function editAction(Request $request, $slug)
@@ -34,7 +35,7 @@ class ContentController extends Controller
             throw new NotFoundHttpException('Dieser Inhalt darf nur von angemeldeten Teilnehmern editiert werden.');
         }
         
-        $content = $this->getDoctrine()->getRepository('CalderaCriticalmassContentBundle:Content')->findBySlug($slug);
+        $content = $this->getContentRepository()->findBySlug($slug);
 
         $content = array_pop($content);
 
@@ -80,6 +81,6 @@ class ContentController extends Controller
             $hasSaved = true;
         }
 
-        return $this->render('CalderaCriticalmassContentBundle:Content:edit.html.twig', array('content' => $content, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'hasSaved' => $hasSaved));
+        return $this->render('CalderaCriticalmassSiteBundle:Content:edit.html.twig', array('content' => $content, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'hasSaved' => $hasSaved));
     }
 }

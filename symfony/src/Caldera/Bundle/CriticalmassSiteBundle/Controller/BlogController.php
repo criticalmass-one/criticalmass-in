@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\CriticalmassBlogBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Michelf\Markdown;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class BlogController extends Controller
+class BlogController extends AbstractController
 {
     public function listAction(Request $request)
     {

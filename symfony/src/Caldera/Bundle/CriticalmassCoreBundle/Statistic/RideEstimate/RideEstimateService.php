@@ -1,9 +1,10 @@
 <?php
 
-namespace Caldera\CriticalmassStatisticBundle\Service;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\CriticalmassStatisticBundle\Utility\RideEstimateCalculator\RideEstimateCalculator;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 
 class RideEstimateService
 {
@@ -16,7 +17,7 @@ class RideEstimateService
 
     public function calculateEstimates(Ride $ride)
     {
-        $estimates = $this->doctrine->getRepository('CalderaCriticalmassStatisticBundle:RideEstimate')->findByRide($ride->getId());
+        $estimates = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findByRide($ride->getId());
 
         $rec = new RideEstimateCalculator();
         $rec->setRide($ride);

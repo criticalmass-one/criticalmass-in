@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\CriticalmassStandardridesBundle\Command;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\CriticalmassStandardridesBundle\Utility\StandardRideGenerator\StandardRideGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,7 +39,7 @@ class StandardRideCommand extends ContainerAwareCommand
         $year = $input->getArgument('year');
         $month = $input->getArgument('month');
 
-        $cities = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassCoreBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
+        $cities = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
         
         foreach ($cities as $city)
         {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassStatisticBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,7 +38,7 @@ class Heatmap
     protected $public;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City")
+     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City")
      * @ORM\JoinTable(name="heatmap_city",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="city_id", referencedColumnName="id")}
@@ -47,7 +47,7 @@ class Heatmap
     protected $cities;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride")
+     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride")
      * @ORM\JoinTable(name="heatmap_ride",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="ride_id", referencedColumnName="id")}
@@ -56,7 +56,7 @@ class Heatmap
     protected $rides;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track")
+     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track")
      * @ORM\JoinTable(name="heatmap_track",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="track_id", referencedColumnName="id")}
@@ -181,10 +181,10 @@ class Heatmap
     /**
      * Add cities
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $cities
+     * @param City $cities
      * @return Heatmap
      */
-    public function addCity(\Caldera\CriticalmassCoreBundle\Entity\City $cities)
+    public function addCity(City $cities)
     {
         $this->cities[] = $cities;
 
@@ -194,9 +194,9 @@ class Heatmap
     /**
      * Remove cities
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $cities
+     * @param City $cities
      */
-    public function removeCity(\Caldera\CriticalmassCoreBundle\Entity\City $cities)
+    public function removeCity(City $cities)
     {
         $this->cities->removeElement($cities);
     }
@@ -214,10 +214,10 @@ class Heatmap
     /**
      * Add rides
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
+     * @param Ride $rides
      * @return Heatmap
      */
-    public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
+    public function addRide(Ride $rides)
     {
         $this->rides[] = $rides;
 
@@ -227,9 +227,9 @@ class Heatmap
     /**
      * Remove rides
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $rides
+     * @param Ride $rides
      */
-    public function removeRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $rides)
+    public function removeRide(Ride $rides)
     {
         $this->rides->removeElement($rides);
     }
@@ -247,10 +247,10 @@ class Heatmap
     /**
      * Add tracks
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @param Track $tracks
      * @return Heatmap
      */
-    public function addTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
+    public function addTrack(Track $tracks)
     {
         $this->tracks[] = $tracks;
 
@@ -260,9 +260,9 @@ class Heatmap
     /**
      * Remove tracks
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Track $tracks
+     * @param Track $tracks
      */
-    public function removeTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $tracks)
+    public function removeTrack(Track $tracks)
     {
         $this->tracks->removeElement($tracks);
     }

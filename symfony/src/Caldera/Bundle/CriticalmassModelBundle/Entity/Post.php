@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\CriticalmassTimelineBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="post")
- * @ORM\Entity(repositoryClass="Caldera\CriticalmassTimelineBundle\Entity\PostRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository")
  */
 class Post
 {
@@ -19,13 +19,13 @@ class Post
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\CriticalmassTimelineBundle\Entity\Post", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post", mappedBy="parent")
      */
     protected $children;
 
@@ -36,25 +36,25 @@ class Post
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="posts")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="posts")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassGalleryBundle\Entity\Photo", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", inversedBy="posts")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassContentBundle\Entity\Content", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Content", inversedBy="posts")
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     protected $content;
@@ -241,10 +241,10 @@ class Post
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return Post
      */
-    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -254,7 +254,7 @@ class Post
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride
+     * @return Ride
      */
     public function getRide()
     {
@@ -264,10 +264,10 @@ class Post
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @param City $city
      * @return Post
      */
-    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -277,7 +277,7 @@ class Post
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {
@@ -303,10 +303,10 @@ class Post
     /**
      * Set parent
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $parent
+     * @param Post $parent
      * @return Post
      */
-    public function setParent(\Caldera\CriticalmassTimelineBundle\Entity\Post $parent = null)
+    public function setParent(Post $parent = null)
     {
         $this->parent = $parent;
 
@@ -316,7 +316,7 @@ class Post
     /**
      * Get parent
      *
-     * @return \Caldera\CriticalmassTimelineBundle\Entity\Post 
+     * @return Post
      */
     public function getParent()
     {
@@ -326,10 +326,10 @@ class Post
     /**
      * Add children
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $children
+     * @param Post $children
      * @return Post
      */
-    public function addChild(\Caldera\CriticalmassTimelineBundle\Entity\Post $children)
+    public function addChild(Post $children)
     {
         $this->children[] = $children;
 
@@ -339,9 +339,9 @@ class Post
     /**
      * Remove children
      *
-     * @param \Caldera\CriticalmassTimelineBundle\Entity\Post $children
+     * @param Post $children
      */
-    public function removeChild(\Caldera\CriticalmassTimelineBundle\Entity\Post $children)
+    public function removeChild(Post $children)
     {
         $this->children->removeElement($children);
     }
@@ -359,10 +359,10 @@ class Post
     /**
      * Set content
      *
-     * @param \Caldera\CriticalmassContentBundle\Entity\Content $content
+     * @param Content $content
      * @return Post
      */
-    public function setContent(\Caldera\CriticalmassContentBundle\Entity\Content $content = null)
+    public function setContent(Content $content = null)
     {
         $this->content = $content;
 
@@ -372,7 +372,7 @@ class Post
     /**
      * Get content
      *
-     * @return \Caldera\CriticalmassContentBundle\Entity\Content 
+     * @return Content
      */
     public function getContent()
     {

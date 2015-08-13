@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassStatisticBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,13 +29,13 @@ class RideEstimate
 	/**
 	 * Tour, zu der diese Entitaet abgespeichert wurde.
 	 *
-	 * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassCoreBundle\Entity\Ride", inversedBy="estimates")
+	 * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="estimates")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
 	 */
 	protected $ride;
 
     /**
-     * @ORM\OneToOne(targetEntity="Caldera\CriticalmassTrackBundle\Entity\Track", mappedBy="rideEstimate", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track", mappedBy="rideEstimate", cascade={"persist"})
      * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
      */
     protected $track;
@@ -196,10 +196,10 @@ class RideEstimate
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return RideEstimate
      */
-    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -209,7 +209,7 @@ class RideEstimate
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride
+     * @return Ride
      */
     public function getRide()
     {
@@ -219,10 +219,10 @@ class RideEstimate
     /**
      * Set track
      *
-     * @param \Caldera\CriticalmassTrackBundle\Entity\Track $track
+     * @param Track $track
      * @return RideEstimate
      */
-    public function setTrack(\Caldera\CriticalmassTrackBundle\Entity\Track $track = null)
+    public function setTrack(Track $track = null)
     {
         $this->track = $track;
 
@@ -232,7 +232,7 @@ class RideEstimate
     /**
      * Get track
      *
-     * @return \Caldera\CriticalmassTrackBundle\Entity\Track
+     * @return Track
      */
     public function getTrack()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassApiBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,13 +24,13 @@ class ApiUser
     protected $token;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\CriticalmassApiBundle\Entity\App", inversedBy="api_users")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\App", inversedBy="api_users")
      * @ORM\JoinColumn(name="app_id", referencedColumnName="id", nullable=false)
      */
     protected $app;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Caldera\CriticalmassCoreBundle\Entity\City", inversedBy="api_users")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="api_users")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
     protected $city;
@@ -63,10 +63,10 @@ class ApiUser
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City
+     * @param City
      * @return ApiUser
      */
-    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -76,7 +76,7 @@ class ApiUser
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {

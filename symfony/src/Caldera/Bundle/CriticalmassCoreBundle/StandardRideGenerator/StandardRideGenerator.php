@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\CriticalmassStandardridesBundle\Utility\StandardRideGenerator;
+namespace Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator;
 
-use Caldera\CriticalmassCoreBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 
 class StandardRideGenerator {
     protected $year;

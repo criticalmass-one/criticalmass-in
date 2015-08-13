@@ -1,11 +1,12 @@
 <?php
 
-namespace Caldera\CriticalmassStatisticBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
 use Symfony\Component\HttpFoundation\Request;
 
-class StatisticController extends Controller
+class StatisticController extends AbstractController
 {
     public function indexAction(Request $request)
     {
@@ -88,12 +89,12 @@ class StatisticController extends Controller
 
     public function estimateformAction(Request $request, $rideId)
     {
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->find($rideId);
+        $ride = $this->getRideRepository()->find($rideId);
 
         $estimate = new RideEstimate();
         $form = $this->createForm(new RideEstimateType(), $estimate, array('action' => $this->generateUrl('caldera_criticalmass_statistic_ride_estimate', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
 
-        return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimateform.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassSiteBundle:Statistic:estimateform.html.twig', array('form' => $form->createView()));
     }
 
     public function estimateAction(Request $request, $citySlug, $rideDate)

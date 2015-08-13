@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassApiBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;

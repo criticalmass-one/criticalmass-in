@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassContentBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;

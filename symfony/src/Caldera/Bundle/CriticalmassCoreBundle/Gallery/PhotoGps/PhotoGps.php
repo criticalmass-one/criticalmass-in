@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\CriticalmassGalleryBundle\Utility\PhotoGps;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Gallery\PhotoGps;
 
-use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
-use Caldera\CriticalmassGalleryBundle\Entity\Photo;
-use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
-use Caldera\CriticalmassTrackBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassCoreBundle\Gallery\ExifReader\GpsReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 
 class PhotoGps {
     protected $track;
@@ -61,7 +61,8 @@ class PhotoGps {
         return new \DateTime(str_replace("T", " ", str_replace("Z", "", $xml)));
     }
 
-    function timeDiffinSec($difference) {
+    function timeDiffinSec($difference)
+    {
         return $difference->format('%s') + 60 * $difference->format("%i") + 3600 * $difference->format("%H");
     }
 
