@@ -42,7 +42,6 @@ Subride.prototype.addTo = function(markerLayer)
     });
     
     this.marker = L.marker([this.latitude, this.longitude], { icon: subRideIcon });
-    this.marker.addTo(map);
     this.marker.bindPopup(this.buildPopup());
     markerLayer.addLayer(this.marker);
 };

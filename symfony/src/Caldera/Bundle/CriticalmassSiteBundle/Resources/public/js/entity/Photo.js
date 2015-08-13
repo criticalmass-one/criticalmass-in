@@ -30,7 +30,7 @@ Photo.prototype.addTo = function(map)
 
     var this2 = this;
 
-    photoMarker.on('click', function()
+    this.marker.on('click', function()
     {
         var photoPath = '/photos/' + this2.id + '.jpg';
         $.fancybox( { href : photoPath, title : this2.title } );

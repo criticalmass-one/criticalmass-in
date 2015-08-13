@@ -42,8 +42,7 @@ Ride.prototype.hasLocation = function()
 
 Ride.prototype.addTo = function(markerLayer)
 {
-    if (this.hasLocation())
-    {
+    if (this.hasLocation()) {
         var locationIcon = L.icon({
             iconUrl: '/images/marker/marker-red.png',
             iconRetinaUrl: '/images/marker/marker-red-2x.png',
@@ -59,21 +58,16 @@ Ride.prototype.addTo = function(markerLayer)
         this.marker.bindPopup(this.buildPopup());
 
         markerLayer.addLayer(this.marker);
-    }
-    else
-    {
+    } else if (this.city != null) {
         this.city.addTo(markerLayer, this);
     }
 };
 
 Ride.prototype.openPopup = function()
 {
-    if (this.hasLocation())
-    {
+    if (this.hasLocation()) {
         this.marker.openPopup();
-    }
-    else
-    {
+    } else if (this.city != null) {
         this.city.openPopup();
     }
 };

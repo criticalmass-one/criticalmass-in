@@ -1,8 +1,6 @@
-MapPositions = function(map)
+MapPositions = function()
 {
-    this.map = map;
-    this.layerGroup = L.layerGroup();
-    this.layerGroup.addTo(this.map);
+
 };
 
 MapPositions.prototype.map = null;
@@ -15,7 +13,15 @@ MapPositions.prototype.positionsCounter = 0;
 
 MapPositions.prototype.timer = null;
 
-MapPositions.prototype.startLoop = function()
+MapPositions.prototype.addTo = function(map) 
+{
+    this.map = map;
+
+    this.layerGroup = L.layerGroup();
+    this.layerGroup.addTo(this.map.map);
+};
+
+MapPositions.prototype.start = function()
 {
     this.drawPositions();
 

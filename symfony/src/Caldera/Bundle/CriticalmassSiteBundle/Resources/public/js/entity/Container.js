@@ -18,7 +18,7 @@ Container.prototype.addTo = function(map)
         this.list[index].addTo(this.layer);
     }
 
-    this.layer.addTo(map);
+    this.layer.addTo(map.map);
 };
 
 Container.prototype.isEmpty = function()
@@ -33,8 +33,7 @@ Container.prototype.countEntities = function()
 
 Container.prototype.addControl = function(layerArray, title)
 {
-    if (!this.isEmpty())
-    {
+    if (!this.isEmpty()) {
         layerArray[title] = this.layer;
     }
 };
@@ -61,16 +60,14 @@ Container.prototype.removeLayer = function(index)
 
 Container.prototype.snapTo = function(map, polyline)
 {
-    for (var index in this.list)
-    {
-        this.list[index].snapTo(map, polyline);
+    for (var index in this.list) {
+        this.list[index].snapTo(map.map, polyline);
     }
 };
 
 Container.prototype.addEvent = function(type, callback)
 {
-    for (var index in this.list)
-    {
+    for (var index in this.list) {
         this.list[index].addEvent(type, callback);
     }
 };
