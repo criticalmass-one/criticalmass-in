@@ -1,11 +1,25 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
+
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+    {% javascripts
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/jquery/*.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
             <li class="active">{{ ride.getFancyTitle() }}</li>
@@ -15,7 +29,7 @@
             <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.</div>
         {% endif %}
 
-        {% include('CalderaCriticalmassDesktopBundle:Common:Ride.html.twig') with { 'ride': ride } %}
+        {% include('CalderaCriticalmassSiteBundle:Common:Ride.html.twig') with { 'ride': ride } %}
 
         <ul class="pager">
             {% if ride.getPreviousRide() %}

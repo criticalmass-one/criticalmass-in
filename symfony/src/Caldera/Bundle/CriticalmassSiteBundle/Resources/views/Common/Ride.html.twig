@@ -27,21 +27,21 @@
                 <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings map-marker"></i> Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a></li>
                 <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
                 {% if pastRide %}
-                <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a></li>
+                <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ ride.getEnabledPhotos|length }}</span></a></li>
                 <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings signal"></i> Statistik</a></li>
                 <li role="presentation"><a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a></li>
                 {% endif %}
             </ul>
 
             <div class="tab-content">
-                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:DetailsTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:SubridesTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:CommentsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassSiteBundle:Common/Ride:DetailsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassSiteBundle:Common/Ride:SubridesTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassSiteBundle:Common/Ride:CommentsTab.html.twig') with { 'ride': ride, 'city': city } %}
                 
                 {% if pastRide %}
-                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:GalleryTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:StatisticTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassDesktopBundle:Common/Ride:TracksTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassSiteBundle:Common/Ride:GalleryTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassSiteBundle:Common/Ride:StatisticTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% include('CalderaCriticalmassSiteBundle:Common/Ride:TracksTab.html.twig') with { 'ride': ride, 'city': city } %}
                 {% endif %}
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <h4 class="modal-title">Tour schätzen</h4>
             </div>
             <div class="modal-body">
-                {{ render(controller('CalderaCriticalmassStatisticBundle:Ride:estimateform', { 'rideId': ride.getId() })) }}
+                {{ render(controller('CalderaCriticalmassSiteBundle:Statistic:estimateform', { 'rideId': ride.getId() })) }}
             </div>
         </div>
     </div>
@@ -72,43 +72,16 @@
                 <h4 class="modal-title">Track zu dieser Tour hochladen</h4>
             </div>
             <div class="modal-body">
-                {{ render(controller('CalderaCriticalmassTrackBundle:Track:upload')) }}
+                {{ render(controller('CalderaCriticalmassSiteBundle:Track:upload', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() })) }}
             </div>
         </div>
     </div>
 </div>
 {% endif %}
 
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-'@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/City/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/Ride/*'
-'@CalderaCriticalmassTrackBundle/Resources/public/js/Track/*'
-'@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/Photo.js'
-'@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/Container/Container.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
 <script>
-    /* Map */
-    var map = L.map('map');
-    
-    /* Tilelayer */
-    var tileLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        detectRetina: true
-    });
+    var map = new Map('map', []);
 
-    tileLayer.addTo(map);
-
-    /* View */
-    map.setView([53.550556, 9.993333], 13);
-    
     /* City */
     var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
     
@@ -121,8 +94,8 @@
     /* Subrides */
     var subrideContainer = new Container();
 
-    {% for subRide in ride.getActiveSubRides() %}
-    var subride = new Subride('{% if subRide.getTitle() %}{{ subRide.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subRide.getDescription() %}<p>{{ subRide.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subRide.getDateTime().format('H:i') }}', {{ subRide.getLatitude() }}, {{ subRide.getLongitude() }}, '{{ subRide.getLocation() }}');
+    {% for subride in ride.getActiveSubrides() %}
+    var subride = new Subride('{% if subride.getTitle() %}{{ subride.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subride.getDescription() %}<p>{{ subride.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subride.getDateTime().format('H:i') }}', {{ subride.getLatitude() }}, {{ subride.getLongitude() }}, '{{ subride.getLocation() }}');
     subrideContainer.add(subride);
     {% endfor %}
 
@@ -165,7 +138,7 @@
     /* Photos */
     var photoContainer = new Container();
     
-    {% for photo in ride.getPhotos() %}
+    {% for photo in ride.getEnabledPhotos() %}
     {% if photo.hasCoordinates() %}
     var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
     photoContainer.add(photo);
@@ -188,15 +161,15 @@
         collapsed: false
     });
 
-    layerControl.addTo(map);
+    layerControl.addTo(map.map);
 
     {% if pastRide and ride.getActiveTracks()|length > 0 %}
-    map.fitBounds(trackContainer.getBounds());
+    map.map.fitBounds(trackContainer.getBounds());
     {% elseif ride.getActiveSubRides()|length > 0 %}
-    map.fitBounds(subrideContainer.getBounds());
+    map.map.fitBounds(subrideContainer.getBounds());
     rideContainer.getEntity(0).openPopup();
     {% else %}
-    map.fitBounds(rideContainer.getBounds());
+    map.map.fitBounds(rideContainer.getBounds());
     rideContainer.getEntity(0).openPopup();
     {% endif %}
 </script>

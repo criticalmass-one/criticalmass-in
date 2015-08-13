@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 
@@ -6,10 +6,15 @@
 {% set hasCurrentRide = city.getCurrentRide() != null %}
 {% set hasRides = rides|length > 0 %}
 
-{% block additionalFooterElements %}
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
     {% javascripts
-    '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*.js'
-    '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/RidePage.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -18,7 +23,7 @@
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li class="active">{{ city.getCity() }}</li>
         </ol>
@@ -37,10 +42,10 @@
         </ul>
 
         <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
-            {% include('CalderaCriticalmassDesktopBundle:Common/City:CityTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassDesktopBundle:Common/City:CurrentRideTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassDesktopBundle:Common/City:RidesTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassDesktopBundle:Common/City:CommentsTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassSiteBundle:Common/City:CityTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassSiteBundle:Common/City:CurrentRideTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassSiteBundle:Common/City:RidesTab.html.twig') with { 'city': city } %}
+            {% include('CalderaCriticalmassSiteBundle:Common/City:CommentsTab.html.twig') with { 'city': city } %}
         </div>
     </div>
 {% endblock %}

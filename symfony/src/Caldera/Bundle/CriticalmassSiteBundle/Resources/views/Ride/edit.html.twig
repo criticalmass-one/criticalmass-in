@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% if ride %}
 {% set title = 'Tour editieren' %}
@@ -10,11 +10,44 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+    {% javascripts
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/EditRidePage.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $(function() {
+            var editRidePage = new EditRidePage();
+
+            var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+            
+            editRidePage.setCityLatLng(cityLatLng);
+
+            {% for ride in city.getRides() %}
+            editRidePage.addRideDate(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+            {% endfor %}
+
+            {% if ride %}
+            editRidePage.setRideDateTime(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+            {% else %}
+            editRidePage.setRideDateTime(null);
+            {% endif %}
+
+            editRidePage.init();
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         {% if ride %}
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
@@ -22,7 +55,7 @@
         </ol>
         {% else %}
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
             <li class="active">Tour hinzufügen</li>
@@ -48,144 +81,6 @@
                 <div class="col-md-12">
                     <div id="map" style="height: 250px;"></div>
                 </div>
-                {% javascripts
-                '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-                %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-                {% endjavascripts %}
-                <script>
-                    function toggleLocation()
-                    {
-                        $('#ride_location').prop('disabled', !$('#ride_hasLocation').prop('checked'));
-                    }
-
-                    function toggleTime()
-                    {
-                        $('#ride_time_minute').prop('disabled', !$('#ride_hasTime').prop('checked'));
-                        $('#ride_time_hour').prop('disabled', !$('#ride_hasTime').prop('checked'));
-                    }
-
-                    window.onload = function()
-                    {
-                        $('#ride_hasLocation').on('click', toggleLocation);
-                        $('#ride_hasTime').on('click', toggleTime);
-                        $('#ride_date_day').on('click', checkRideDate);
-                        $('#ride_date_month').on('click', checkRideDate);
-                        $('#ride_date_year').on('click', checkRideDate);
-
-                        {% if ride and ride.hasLocation() %}
-                        var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
-                        {% else %}
-                        var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-                        {% endif %}
-                        var map = L.map('map');
-                        var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                            detectRetina: true
-                        });
-
-                        tileLayer.addTo(map);
-                        map.setView(mapCenter, 12);
-
-                        var locationIcon = L.icon({
-                            iconUrl: '/images/marker/marker-red.png',
-                            iconRetinaUrl: '/images/marker/marker-red-2x.png',
-                            iconSize: [25, 41],
-                            iconAnchor: [13, 41],
-                            popupAnchor: [0, -36],
-                            shadowUrl: '/images/marker/defaultshadow.png',
-                            shadowSize: [41, 41],
-                            shadowAnchor: [13, 41]
-                        });
-
-                        var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
-                        marker.addTo(map);
-                        marker.bindPopup('Schieb mich auf den Treffpunkt!');
-                        marker.openPopup();
-
-                        marker.on('dragend', function(event){
-                            var marker = event.target;
-                            var position = marker.getLatLng();
-
-                            $('#ride_latitude').val(position.lat);
-                            $('#ride_longitude').val(position.lng);
-                        });
-                    };
-
-                    var rideDates = [];
-
-                    {% for ride in city.getRides() %}
-                    rideDates.push(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
-                    {% endfor %}
-
-                    {% if ride %}
-                    var rideDateTime = new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }});
-                    {% else %}
-                    var rideDateTime = null;
-                    {% endif %}
-
-                    function searchForMonth(year, month)
-                    {
-                        for (index in rideDates)
-                        {
-                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month  && !isSelfMonth(year, month))
-                            {
-                                return true;
-                            }
-                        }
-
-                        return false;
-                    }
-
-                    function searchForMonthDay(year, month, day)
-                    {
-                        for (index in rideDates)
-                        {
-                            if (rideDates[index].getFullYear() == year && rideDates[index].getMonth() + 1 == month && rideDates[index].getDate() == day && !isSelfDateTime(year, month, day))
-                            {
-                                return true;
-                            }
-                        }
-
-                        return false;
-                    }
-
-                    function isSelfDateTime(year, month, day)
-                    {
-                        return (rideDateTime && rideDateTime.getFullYear() == year && rideDateTime.getMonth() + 1 == month && rideDateTime.getDate() == day);
-                    }
-
-                    function isSelfMonth(year,  month)
-                    {
-                        return (rideDateTime && rideDateTime.getFullYear() == year && rideDateTime.getMonth() + 1 == month);
-                    }
-
-                    function checkRideDate()
-                    {
-                        var day = $('#ride_date_day').val();
-                        var month = $('#ride_date_month').val();
-                        var year = $('#ride_date_year').val();
-
-                        if (searchForMonthDay(year, month, day))
-                        {
-                            $('#doubleMonthRide').hide();
-                            $('#doubleDayRide').show();
-                            $('#rideSubmitButton').prop('disabled', 'disabled');
-                        }
-                        else if (searchForMonth(year, month))
-                        {
-                            $('#doubleMonthRide').show();
-                            $('#doubleDayRide').hide();
-                            $('#rideSubmitButton').prop('disabled', '');
-                        }
-                        else
-                        {
-                            $('#doubleMonthRide').hide();
-                            $('#doubleDayRide').hide();
-                            $('#rideSubmitButton').prop('disabled', '');
-                        }
-                    }
-                </script>
             </div>
 
             <div class="row">

@@ -1,135 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>criticalmass.in</title>
+{% extends 'CalderaCriticalmassSiteBundle:Template:FullscreenTemplate.html.twig' %}
 
-    {% stylesheets
-    '@CalderaCriticalmassCoreBundle/Resources/public/css/external/*.css'
-    '@CalderaCriticalmassDesktopBundle/Resources/public/css/external/*.css'
-    '@CalderaCriticalmassTimelineBundle/Resources/public/css/*.css'
-    '@CalderaCriticalmassAssetBundle/Resources/public/css/glyphicons/social/*.css'
-    '@CalderaCriticalmassAssetBundle/Resources/public/css/glyphicons/halflings/*.css'
-    '@CalderaCriticalmassDesktopBundle/Resources/public/css/*.css'
-    filter="cssrewrite" %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+{% block title %}Live{% endblock %}
 
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon-120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
-    <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
+    {% javascripts
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/core/Url.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/MapPositions.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <style>
+        #map {
+            position: absolute;
+            top: 30px;
+            bottom: 0;
+            width: 100%;
+            z-index: 0;
+
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="map">
+
+    </div>
+
+
+{% endblock %}
+
+{% block additionalFooterElements %}
     <script>
-        var citySlug = null;
+        $(function() {
+            $('#map').css('top', $('nav#navigation').css('height'));
 
-        window.onload = function()
-        {
-            function loadingCompletedCallback()
-            {
-                if (CallbackHell.hasEventListenerBeenFired('cityListRefreshed') &&
-                        CallbackHell.hasEventListenerBeenFired('rideListRefreshed') &&
-                        CallbackHell.hasEventListenerBeenFired('tileLayerListRefreshed')
-                        )
-                {
-                    {% if citySlug is defined %}
-                    citySlug = '{{ citySlug }}';
-                    {% endif %}
+            var map = new Map('map', []);
+            map.setView([50, 9], 12);
+            
+            var rideContainer = new Container();
+            var cityContainer = new Container();
+            
+            var ride;
+            var city;
+            
+            {% for ride in rides %}
+            city = new City('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription() }}', {{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
 
-                    initApp();
+            ride = new Ride(
+                    null,
+                    '{{ ride.getFancyTitle() }}', 
+                    '{{ ride.getDescription() }}', 
+                    {{ ride.getLatitude() }}, 
+                    {{ ride.getLongitude() }}, 
+                    '{{ ride.getLocation() }}', 
+                    '{{ ride.getDateTime.format('d.m.Y') }}', 
+                    '{{ ride.getDateTime.format('H:i') }}', 
+                    '{{ ride.getWeatherForecast() }}'
+            );
+            
+            rideContainer.add(ride);
+            
+            {% if not ride.hasLocation() %}
+            cityContainer.add(city);
+            {% endif %}
+            {% endfor %}
+            
+            rideContainer.addTo(map);
+            cityContainer.addTo(map);
 
-                    {% if citySlug is defined %}
-                    showCityInfo('{{ citySlug }}');
-                    {% endif %}
-                }
-            }
+            /* LayerControl */
+            var layers = [];
 
-            CallbackHell.registerEventListener('cityListRefreshed', loadingCompletedCallback);
-            CallbackHell.registerEventListener('rideListRefreshed', loadingCompletedCallback);
-            CallbackHell.registerEventListener('tileLayerListRefreshed', loadingCompletedCallback);
+            rideContainer.addControl(layers, 'Tour');
+            cityContainer.addControl(layers, 'Städte');
+            
+            var layerControl = L.control.groupedLayers({}, {
+                'Critical Mass': layers
+            }, {
+                collapsed: false
+            });
 
-            CityFactory.refreshAllStoredCities();
-            RideFactory.refreshAllStoredRides();
-            TileLayerFactory.refreshAllStoredTileLayers();
-        };
+            layerControl.addTo(map.map);
+            
+            var mapPositions = new MapPositions();
+            mapPositions.addTo(map);
+            mapPositions.start();
+        });
     </script>
-</head>
-
-<body class="fullscreenMapBody">
-    {% include('CalderaCriticalmassDesktopBundle:Common:Navigation.html.twig') with { 'fullscreenMap': 'true' } %}
-
-<div id="map">
-    <div id="glympseLogoContainer">
-        <a href="http://www.glympse.com/">
-            <img id="glympseLogo" src="/images/glympse/glympse-150.png" />
-        </a>
-    </div>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar-wrapper">
-        <div class="panel panel-default" style="margin: 0px; border: none; border-radius: 0px; -webkit-box-shadow: none; box-shadow: none;">
-            <div class="panel-heading">
-                <h3 class="panel-title" style="display: inline;">Critical Mass
-                    <a href="/city/list" class="btn btn-xs pull-right btn-default">Vollständige Ansicht</a>
-                    <!--<button type="button" class="btn btn-xs btn-default pull-right" id="sidebarButtonToggle"><i class="glyphicon glyphicon-chevron-left"></i></button>--></h3>
-            </div>
-            <div class="panel-body">
-                <div class="sidebar-table">
-                    <table class="table table-hover" id="theater-table">
-                        <tbody class="list" id="cityList">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-{% include 'CalderaCriticalmassDesktopBundle:Modal:aboutModal.html.twig' %}
-
-{% include 'CalderaCriticalmassDesktopBundle:Modal:cityModal.html.twig' %}
-
-{% include 'CalderaCriticalmassDesktopBundle:Modal:glympseModal.html.twig' %}
-
-{% javascripts
-'@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/factories/*'
-'@CalderaCriticalmassCoreBundle/Resources/public/js/entities/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/bootstrap.min.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.activearea.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/*'
-'@CalderaCriticalmassDesktopBundle/Resources/public/js/map/*'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-    <!-- Piwik -->
-    <script type="text/javascript">
-        var _paq = _paq || [];
-        _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-        _paq.push(["setCookieDomain", "*.www.criticalmass.in"]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.caldera.cc/";
-            _paq.push(['setTrackerUrl', u+'piwik.php']);
-            _paq.push(['setSiteId', 2]);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
-            g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-    </script>
-    <noscript><p><img src="http://piwik.caldera.cc/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
-    <!-- End Piwik Code -->
-
-</body>
-</html>
+{% endblock %}

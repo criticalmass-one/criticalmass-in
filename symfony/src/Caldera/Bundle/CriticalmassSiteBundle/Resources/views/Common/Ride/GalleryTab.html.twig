@@ -1,7 +1,13 @@
+{% if pastRide and ride.enablePhotoUpload and city.enablePhotoUpload and app.getUser() and app.getUser().enablePhotoUpload %}
+{% set photoUploadEnabled = true %}
+{% else %}
+{% set photoUploadEnabled = false %}
+{% endif %}
+
 <div role="tabpanel" class="tab-pane" id="gallery">
     <div class="row">
         <div class="col-md-12">
-            {% if pastRide and app.getUser() %}
+            {% if photoUploadEnabled %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
                     <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen"><i class="halflings uni-camera"></i> Fotos hochladen</a>
                 </div>
@@ -13,10 +19,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            {% if app.getUser() %}
+            {% if ride.getPhotos()|length == 0 and photoUploadEnabled %}
                 <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.</div>
-            {% else %}
+            {% elseif ride.getPhotos()|length == 0 %}
                 <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+            {% else %}
+                <div class="row">
+                {% for photo in ride.getEnabledPhotos() %}
+                    <div class="col-md-4 photo">
+                        <img src="/photos/{{ photo.getId() }}.thumbnail.jpg" />
+                    </div>
+                {% endfor %}
+                </div>
             {% endif %}
         </div>
     </div>

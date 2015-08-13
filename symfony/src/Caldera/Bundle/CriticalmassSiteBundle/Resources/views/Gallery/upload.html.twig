@@ -1,16 +1,16 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}Fotos hochladen{% endblock %}
 
 {% block content %}
 {% stylesheets
-'@CalderaCriticalmassGalleryBundle/Resources/public/css/external/*.css'
+'@CalderaCriticalmassSiteBundle/Resources/public/css/external/*.css'
 filter="cssrewrite" %}
 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
 {% endstylesheets %}
 
 {% javascripts
-'@CalderaCriticalmassGalleryBundle/Resources/public/js/external/dropzone.min.js'
+'@CalderaCriticalmassSiteBundle/Resources/public/js/external/dropzone/*.js'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 <script>
@@ -18,7 +18,7 @@ filter="cssrewrite" %}
 {% endjavascripts %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="#">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>

@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% if city != null %}
     {% set title = 'Stadt editieren' %}
@@ -8,19 +8,36 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+    {% javascripts
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/EditCityPage.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $(function() {
+            var editCityPage = new EditCityPage();
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     {{ form_errors(form) }}
     <div class="container">
         {% if city != null %}
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a></li>
             <li class="active">Stadt editieren</li>
         </ol>
         {% else %}
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li class="active">Stadt hinzufügen</li>
         </ol>
@@ -46,121 +63,6 @@
             <div class="col-md-12">
                 <div id="map" style="height: 250px;"></div>
             </div>
-            {% javascripts
-            '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-            %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-            <script>
-                window.onload = function()
-                {
-                    {% if city != null %}
-                    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-                    {% else %}
-                    var mapCenter = L.latLng(51.163375, 10.447683);
-                    {% endif %}
-
-                    var map = L.map('map');
-                    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    });
-
-                    tileLayer.addTo(map);
-
-                    {% if city != null %}
-                    map.setView(mapCenter, 12);
-                    {% else %}
-                    map.setView(mapCenter, 6);
-                    {% endif %}
-
-                    var locationIcon = L.icon({
-                        iconUrl: '/images/marker/marker-red.png',
-                        iconRetinaUrl: '/images/marker/marker-red-2x.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [13, 41],
-                        popupAnchor: [0, -36],
-                        shadowUrl: '/images/marker/defaultshadow.png',
-                        shadowSize: [41, 41],
-                        shadowAnchor: [13, 41]
-                    });
-
-
-                    var standardLocationIcon = L.icon({
-                        iconUrl: '/images/marker/marker-yellow.png',
-                        iconRetinaUrl: '/images/marker/marker-yellow-2x.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [13, 41],
-                        popupAnchor: [0, -36],
-                        shadowUrl: '/images/marker/defaultshadow.png',
-                        shadowSize: [41, 41],
-                        shadowAnchor: [13, 41]
-                    });
-
-                    var locationMarker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
-                    locationMarker.addTo(map);
-                    locationMarker.bindPopup('Schieb mich auf den Mittelpunkt der Stadt!');
-                    locationMarker.openPopup();
-
-                    locationMarker.on('dragend', function(event){
-                        var marker = event.target;
-                        var position = marker.getLatLng();
-
-                        $('#city_latitude').val(position.lat);
-                        $('#city_longitude').val(position.lng);
-                    });
-
-                    var standardLocationMarker = null;
-
-                    function addStandardLocationMarker() {
-                        var standardLocation = L.latLng($('#city_standardLatitude').val(), $('#city_standardLongitude').val());
-
-                        standardLocationMarker = L.marker(standardLocation, {
-                            draggable: 'true',
-                            icon: standardLocationIcon
-                        });
-                        standardLocationMarker.addTo(map);
-                        standardLocationMarker.bindPopup('Schieb mich auf den Treffpunkt der Touren!');
-                        standardLocationMarker.openPopup();
-
-                        standardLocationMarker.on('dragend', function (event) {
-                            var marker = event.target;
-                            var position = marker.getLatLng();
-
-                            $('#city_standardLatitude').val(position.lat);
-                            $('#city_standardLongitude').val(position.lng);
-                        });
-                    }
-
-                    function removeStandardLocationMarker()
-                    {
-                        map.removeLayer(standardLocationMarker);
-                    }
-
-                    {% if city.getIsStandardableLocation() %}
-                    addStandardLocationMarker();
-                    {% endif %}
-
-                    $('#city_isStandardableLocation').on('click', function()
-                    {
-                        if ($(this).prop('checked'))
-                        {
-                            addStandardLocationMarker();
-                            $('#city_standardLocation').prop('disabled', '');
-                        }
-                        else
-                        {
-                            removeStandardLocationMarker();
-                            $('#city_standardLocation').prop('disabled', 'disabled');
-                        }
-                    });
-
-                    $('#city_isStandardableTime').on('click', function()
-                    {
-                        $('#city_standardTime_hour').prop('disabled', !$('#city_isStandardableTime').prop('checked'));
-                        $('#city_standardTime_minute').prop('disabled', !$('#city_isStandardableTime').prop('checked'));
-                    });
-                };
-            </script>
         </div>
 
         <div class="row">
@@ -304,7 +206,7 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.isStandardableTime) }}
                         </span>
-                        {% if city.getIsStandardableTime() %}
+                        {% if city != null and city.getIsStandardableTime() %}
                             {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control' } }) }}
                         {% else %}
                             {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
@@ -323,7 +225,7 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.isStandardableLocation) }}
                         </span>
-                        {% if city.getIsStandardableLocation() %}
+                        {% if city != null and city.getIsStandardableLocation() %}
                             {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control' } }) }}
                         {% else %}
                             {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}

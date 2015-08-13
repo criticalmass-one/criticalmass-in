@@ -1,6 +1,6 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% if subRide %}
+{% if subride %}
 {% set title = 'Mini-Mass editieren' %}
 {% else %}
 {% set title = 'Mini-Mass hinzufügen' %}
@@ -8,11 +8,39 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+    {% javascripts
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/EditSubridePage.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $(function() {
+            var editSubridePage = new EditSubridePage();
+
+            var cityLatLng = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+            editSubridePage.setCityLatLng(cityLatLng);
+
+            {% if ride.hasLocation() %}
+            var rideLatLng = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+            editSubridePage.setRideLatLng(rideLatLng);
+            {% endif %}
+
+            editSubridePage.init();
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
-        {% if subRide %}
+        {% if subride %}
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
@@ -20,7 +48,7 @@
         </ol>
         {% else %}
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
             <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
@@ -44,56 +72,6 @@
             <div class="col-md-12">
                 <div id="map" style="height: 250px;"></div>
             </div>
-            {% javascripts
-            '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-            %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-            <script>
-                window.onload = function()
-                {
-                    {% if subRide %}
-                    var mapCenter = L.latLng({{ subRide.getLatitude() }}, {{ subRide.getLongitude() }});
-                    {% elseif not subRide and ride.hasLocation() %}
-                    var mapCenter = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
-                    {% else %}
-                    var mapCenter = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-                    {% endif %}
-
-                    var map = L.map('map');
-                    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                        detectRetina: true
-                    });
-
-                    tileLayer.addTo(map);
-                    map.setView(mapCenter, 12);
-
-                    var locationIcon = L.icon({
-                        iconUrl: '/images/marker/marker-blue.png',
-                        iconRetinaUrl: '/images/marker/marker-blue-2x.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [13, 41],
-                        popupAnchor: [0, -36],
-                        shadowUrl: '/images/marker/defaultshadow.png',
-                        shadowSize: [41, 41],
-                        shadowAnchor: [13, 41]
-                    });
-
-                    var marker = L.marker(mapCenter, { draggable: 'true', icon: locationIcon });
-                    marker.addTo(map);
-                    marker.bindPopup('Schieb mich auf den Treffpunkt!');
-                    marker.openPopup();
-
-                    marker.on('dragend', function(event){
-                        var marker = event.target;
-                        var position = marker.getLatLng();
-
-                        $('#subride_latitude').val(position.lat);
-                        $('#subride_longitude').val(position.lng);
-                    });
-                };
-            </script>
         </div>
 
         <div class="row">
