@@ -1,0 +1,3 @@
+caldera_criticalmass_live:
+    pattern:  /live
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Live:index }

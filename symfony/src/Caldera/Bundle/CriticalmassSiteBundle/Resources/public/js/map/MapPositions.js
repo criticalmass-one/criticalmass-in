@@ -26,46 +26,40 @@ MapPositions.prototype.start = function()
     this.drawPositions();
 
     var this2 = this;
-    this.timer = window.setInterval(function()
-    {
+    this.timer = window.setInterval(function() {
         this2.drawPositions();
 
     }, 5000);
 };
 
-MapPositions.prototype.clearOldPositions = function(ajaxResultData)
+MapPositions.prototype.clearOldPositions = function(resultArray)
 {
-    for (existingUsername in this.positionsArray)
-    {
+    for (existingDisplayName in this.positionsArray) {
         var found = false;
 
-        for (index in ajaxResultData)
-        {
-            if (existingUsername == ajaxResultData[index].username)
-            {
+        for (index in resultArray) {
+            if (existingDisplayName == resultArray[index].displayName) {
                 found = true;
                 break;
             }
         }
 
-        if (!found)
-        {
-            this.removeUsernamePosition(existingUsername);
+        if (!found) {
+            this.removeUsernamePosition(existingDisplayName);
         }
     }
 };
 
-MapPositions.prototype.removeUsernamePosition = function(username)
+MapPositions.prototype.removeUsernamePosition = function(displayName)
 {
-    this.layerGroup.removeLayer(this.positionsArray[username]);
-    delete this.positionsArray[username];
+    this.layerGroup.removeLayer(this.positionsArray[displayName]);
+    delete this.positionsArray[displayName];
     --this.positionsCounter;
 };
 
 MapPositions.prototype.createUsernamePosition = function(position)
 {
-    var this2 = this;
-    var userColor = 'rgb(' + position.colorRed + ', ' + position.colorGreen + ', ' + position.colorBlue + ')';
+    var userColor = 'rgb(' + position.displayColor.red + ', ' + position.displayColor.green + ', ' + position.displayColor.blue + ')';
 
     var circleOptions = {
         color: userColor,
@@ -73,76 +67,79 @@ MapPositions.prototype.createUsernamePosition = function(position)
         opacity: 1,
         fillOpacity: 0.75,
         weight: 3,
-        username: position.username,
+        username: position.displayName,
         timestamp: position.timestamp,
         citySlug: position.citySlug
     };
 
-    var circle = L.circle([position.latitude, position.longitude], 35, circleOptions);
-    circle.addTo(this.layerGroup);
-    circle.bindPopup(position.username);
+    var circle = L.circle([position.coord.latitude, position.coord.longitude], 35, circleOptions);
+    //circle.addTo(this.layerGroup);
+    circle.addTo(this.map.map);
+    circle.bindPopup(position.displayName);
 
-    this.positionsArray[position.username] = circle;
+    this.positionsArray[position.displayName] = circle;
     ++this.positionsCounter;
+    //console.log('erstelle ' + position.displayName);
+    console.log('Jetzt ' + this.positionsCounter + ' Positionen gespeichert');
 };
 
-MapPositions.prototype.moveUsernamePosition = function(username, latitude, longitude)
+MapPositions.prototype.moveUsernamePosition = function(displayName, coord)
 {
-    this.positionsArray[username].setLatLng([latitude, longitude]);
+    this.positionsArray[displayName].setLatLng([coord.latitude, coord.longitude]);
 };
 
 MapPositions.prototype.drawPositions = function()
 {
+    /* yeah: normally this should work this the context option of the jquery stuff, but somehow it does not, so we use
+    this nasty workaround here. */
+    var that = this;
+    
     function callback(ajaxResultData)
     {
-        for (index in ajaxResultData)
-        {
-            if (!this.positionsArray[ajaxResultData[index].username])
-            {
-                this.createUsernamePosition(ajaxResultData[index]);
-            }
-            else
-            {
-                this.moveUsernamePosition(ajaxResultData[index].username, ajaxResultData[index].latitude, ajaxResultData[index].longitude);
+        console.log('Bislang ' + that.positionsCounter + ' Positionen gespeichert');
+        var resultArray = ajaxResultData.result;
+        
+        for (index in resultArray) {
+            if (!that.positionsArray[resultArray[index].displayName]) {
+                that.createUsernamePosition(resultArray[index]);
+                console.log(resultArray[index].displayName + ' existiert noch nicht');
+            } else {
+                console.log(resultArray[index].displayName + ' existiert bereits');
+                that.moveUsernamePosition(resultArray[index].displayName, resultArray[index].coord);
 
-                if (!this.isUserPositionColor(ajaxResultData[index].username, ajaxResultData[index].colorRed, ajaxResultData[index].colorGreen, ajaxResultData[index].colorBlue))
-                {
-                    this.setUserPositionColor(ajaxResultData[index].username, ajaxResultData[index].colorRed, ajaxResultData[index].colorGreen, ajaxResultData[index].colorBlue);
+                if (!that.isUserPositionColor(resultArray[index].displayName, resultArray[index].displayColor)) {
+                    that.setUserPositionColor(resultArray[index].displayName, resultArray[index].displayColor);
                 }
             }
         }
 
-        this.clearOldPositions(ajaxResultData);
-
-        CallbackHell.executeEventListener('mapPositionsMarkersDrawn');
+        that.clearOldPositions(resultArray);
     }
 
     $.support.cors = true;
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: Url.getNodeJSApiPrefix() + '?action=fetchPositions&citySlug=all',
+        url: 'http://beta.criticalmass.cm:1338/api/positions/hamburg?token=123',
         cache: false,
-        context: this,
-        crossDomain: true,
         success: callback
     });
 };
 
-MapPositions.prototype.isUserPositionColor = function(username, colorRed, colorGreen, colorBlue)
+MapPositions.prototype.isUserPositionColor = function(displayName, displayColor)
 {
-    return this.positionsArray[username].options.color == 'rgb(' + colorRed + ', ' + colorGreen + ', ' + colorBlue + ')';
+    return this.positionsArray[displayName].options.color == 'rgb(' + displayColor.red + ', ' + displayColor.green + ', ' + displayColor.blue + ')';
 };
 
-MapPositions.prototype.setUserPositionColor = function(username, colorRed, colorGreen, colorBlue)
+MapPositions.prototype.setUserPositionColor = function(displayName, displayColor)
 {
-    var userColor = 'rgb(' + colorRed + ', ' + colorGreen + ', ' + colorBlue + ')';
+    var userColor = 'rgb(' + displayColor.red + ', ' + displayColor.green + ', ' + displayColor.blue + ')';
     var circleOptions = {
         color: userColor,
         fillColor: userColor
     };
 
-    this.positionsArray[username].setStyle(circleOptions);
+    this.positionsArray[displayName].setStyle(circleOptions);
 };
 
 MapPositions.prototype.getLatestPosition = function(requestedSlug)

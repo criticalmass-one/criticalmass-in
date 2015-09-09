@@ -1,5 +1,7 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:FullscreenTemplate.html.twig' %}
 
+{% set menu_selected = 'two' %}
+
 {% block title %}Live{% endblock %}
 
 {% block additionalHeaderElements %}
@@ -11,6 +13,7 @@
     '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/map/MapPositions.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/leaflet.groupedlayercontrol.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -23,6 +26,13 @@
             width: 100%;
             z-index: 0;
 
+        }
+        
+        div.user-position {
+            background-image: url(https://www.gravatar.com/avatar/0cf33267893fa9eb18e8b227dcb05a65);
+            border-radius: 50%;
+            border: 3px red solid;
+            box-shadow: 0 0 15px 0 black;
         }
     </style>
 {% endblock %}
@@ -41,7 +51,6 @@
             $('#map').css('top', $('nav#navigation').css('height'));
 
             var map = new Map('map', []);
-            map.setView([50, 9], 12);
             
             var rideContainer = new Container();
             var cityContainer = new Container();
@@ -50,19 +59,9 @@
             var city;
             
             {% for ride in rides %}
-            city = new City('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription() }}', {{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+            city = new City('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
 
-            ride = new Ride(
-                    null,
-                    '{{ ride.getFancyTitle() }}', 
-                    '{{ ride.getDescription() }}', 
-                    {{ ride.getLatitude() }}, 
-                    {{ ride.getLongitude() }}, 
-                    '{{ ride.getLocation() }}', 
-                    '{{ ride.getDateTime.format('d.m.Y') }}', 
-                    '{{ ride.getDateTime.format('H:i') }}', 
-                    '{{ ride.getWeatherForecast() }}'
-            );
+            ride = new Ride(null, '{{ ride.getFancyTitle() }}', '{{ ride.getDescription()|e('js') }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
             
             rideContainer.add(ride);
             
@@ -87,10 +86,21 @@
             });
 
             layerControl.addTo(map.map);
-            
+
             var mapPositions = new MapPositions();
             mapPositions.addTo(map);
             mapPositions.start();
+
+            var myIcon = L.divIcon({
+                iconSize: new L.Point(50, 50),
+                className: 'user-position',
+                html: ''
+            });
+
+            L.marker([53.4015275, 9.7984212], {icon: myIcon}).addTo(map.map);
+
+            map.map.setView([53.4015275, 9.7984212], 12);
+
         });
     </script>
 {% endblock %}
