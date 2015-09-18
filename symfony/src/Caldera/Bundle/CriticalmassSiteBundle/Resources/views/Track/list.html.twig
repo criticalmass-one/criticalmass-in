@@ -48,24 +48,40 @@
             {% else %}
             <tr>
             {% endif %}
-                <td><a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a></td>
-                <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a></td>
-                <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
+                <td>
+                    <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
                 {% if track.getRide().getTitle() %}
                     {{ track.getRide().getTitle() }}
                 {% else %}
                     {{ track.getRide().getCity().getTitle() }}
-                {% endif %}</a></td>
+                {% endif %}</a>
+                </td>
                 <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
                 <td>{{ track.getDistance()|round(2) }} Kilometer</td>
-                <td><a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}"><i class="halflings save"></i></a>
+                <td>
+                    <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
+                        <i class="halflings save"></i>
+                    </a>
                 {% if track.getActivated() %}
-                <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}"><i class="halflings eye-close"></i></a>
-                {% else %}
-                <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}"><i class="halflings eye-open"></i></a>
-                {% endif %}
-                <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}><i class="halflings trash"></i></a></td>
+                    <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                        <i class="halflings eye-close"></i>
+                    </a>
+                    {% else %}
+                    <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                        <i class="halflings eye-open"></i>
+                    </a>
+                    {% endif %}
+                    <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}>
+                        <i class="halflings trash"></i>
+                    </a>
+                </td>
             </tr>
             {% endif %}{% endfor %}
             {% if tracks|length == 0 %}
