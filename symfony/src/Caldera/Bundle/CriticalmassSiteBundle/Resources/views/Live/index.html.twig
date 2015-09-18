@@ -73,6 +73,10 @@
             rideContainer.addTo(map);
             cityContainer.addTo(map);
 
+            var mapPositions = new MapPositions();
+            mapPositions.addTo(map);
+            mapPositions.start();
+            
             /* LayerControl */
             var layers = [];
 
@@ -86,18 +90,6 @@
             });
 
             layerControl.addTo(map.map);
-
-            var mapPositions = new MapPositions();
-            mapPositions.addTo(map);
-            mapPositions.start();
-
-            var myIcon = L.divIcon({
-                iconSize: new L.Point(50, 50),
-                className: 'user-position',
-                html: ''
-            });
-
-            L.marker([53.4015275, 9.7984212], {icon: myIcon}).addTo(map.map);
 
             map.map.setView([53.4015275, 9.7984212], 12);
 
