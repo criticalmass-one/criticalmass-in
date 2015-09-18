@@ -3,27 +3,15 @@
 {% block title %}Deine Tracks{% endblock %}
 
 {% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 {% javascripts
-'@CalderaCriticalmassSiteBundle/Resources/public/js/external/*'
+'@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*'
 '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*'
+'@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-<script>
-    var map = L.map('map');
-    var tileLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    });
-
-    tileLayer.addTo(map);
-
-    map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
-
-    var track = new Track();
-    track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
-    track.addTo(map);
-    map.fitBounds(track.getBounds());
-</script>
 {% endblock %}
 
 {% block content %}
@@ -109,4 +97,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            var map = new Map('map', []);
+
+           //map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
+
+            var track = new Track();
+            track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+            track.addTo(map.map);
+            map.map.fitBounds(track.getBounds());
+        });
+
+    </script>
 {% endblock %}
