@@ -13,7 +13,9 @@ Map.prototype.$$defaults = {
     detectRetina: true,
     defaultLatitude: 37.680349,
     defaultLongitude: -1.335927,
-    defaultZoom: 5
+    defaultZoom: 5,
+    showZoomControl: true,
+    zoomControlPosition: 'bottomright'
 };
 
 Map.prototype.$$init = function() {
@@ -24,8 +26,19 @@ Map.prototype.$$init = function() {
 Map.prototype.$$initMap = function() {
     var defaultLatLng = L.latLng(this.settings.defaultLatitude, this.settings.defaultLongitude);
     
-    this.map = L.map(this.$$mapId);
+    this.map = L.map(this.$$mapId, { zoomControl: false });
+    
+    if (this.settings.showZoomControl) {
+        this.addZoomControl(this.settings.zoomControlPosition);
+    }
+    
     this.map.setView(defaultLatLng, this.settings.defaultZoom);
+};
+
+Map.prototype.addZoomControl = function(zoomControlPosition) {
+    var zoomControl = new L.Control.Zoom({ position: zoomControlPosition });
+    
+    zoomControl.addTo(this.map);
 };
 
 Map.prototype.$$addTileLayer = function() {
