@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\ORM\EntityRepository;
 
@@ -68,6 +69,22 @@ class TrackRepository extends EntityRepository
         $query = $builder->getQuery();
 
         $result = $query->getOneOrNullResult();
+
+        return $result;
+    }
+
+    public function getTracksForRide(Ride $ride)
+    {
+        $builder = $this->createQueryBuilder('track');
+
+        $builder->select('track');
+        $builder->where($builder->expr()->eq('track.ride', $ride));
+        $builder->where($builder->expr()->eq('track.activated', true));
+        $builder->addOrderBy('track.startDateTime', 'ASC');
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
 
         return $result;
     }

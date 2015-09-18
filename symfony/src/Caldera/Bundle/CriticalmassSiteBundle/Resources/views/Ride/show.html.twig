@@ -29,17 +29,21 @@
             <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.</div>
         {% endif %}
 
-        {% include('CalderaCriticalmassSiteBundle:Common:Ride.html.twig') with { 'ride': ride } %}
+        {% include('CalderaCriticalmassSiteBundle:Ride:Ride.html.twig') with { 'ride': ride } %}
 
         <ul class="pager">
-            {% if ride.getPreviousRide() %}
-            <li class="previous"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getPreviousRide().getDateTime().format('Y-m-d') }) }}">&larr; Vorige Tour</a></li>
+            {% if previousRide %}
+            <li class="previous">
+                <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': previousRide.getCity().getMainSlugString(), 'rideDate': previousRide.getDateTime().format('Y-m-d') }) }}">&larr; Vorige Tour</a>
+            </li>
             {% else %}
             <li class="previous disabled"><a href="#">&larr; Vorige Tour</a></li>
             {% endif %}
 
-            {% if ride.getNextRide() %}
-            <li class="next"><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getNextRide().getDateTime().format('Y-m-d') }) }}">Nächste Tour &rarr;</a></li>
+            {% if nextRide %}
+            <li class="next">
+                <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': nextRide.getCity().getMainSlugString(), 'rideDate': nextRide.getDateTime().format('Y-m-d') }) }}">Nächste Tour &rarr;</a>
+            </li>
             {% else %}
             <li class="next disabled"><a href="#">Nächste Tour &rarr;</a></li>
             {% endif %}

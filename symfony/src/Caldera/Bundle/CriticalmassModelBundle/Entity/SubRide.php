@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository")
  * @ORM\Table(name="subride")
  */
 class Subride
@@ -86,7 +86,6 @@ class Subride
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="Subride", inversedBy="archive_subrides")

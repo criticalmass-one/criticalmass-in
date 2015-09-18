@@ -3,7 +3,7 @@ caldera_criticalmass_desktop_subride_add:
     defaults: { _controller: CalderaCriticalmassDesktopBundle:SubRide:add }
 
 caldera_criticalmass_desktop_subride_edit:
-    pattern:  /edit/{subRideId}
+    pattern:  /edit/{subrideId}
     defaults: { _controller: CalderaCriticalmassDesktopBundle:SubRide:edit }
     
 caldera_criticalmass_desktop_subride_preparecopy:

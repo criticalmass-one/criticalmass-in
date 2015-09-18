@@ -23,25 +23,37 @@
     <div class="col-md-12">
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab"><i class="halflings flag"></i> Details</a></li>
-                <li role="presentation"><a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings map-marker"></i> Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a></li>
-                <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a></li>
+                <li role="presentation" class="active">
+                    <a href="#details" aria-controls="home" role="tab" data-toggle="tab"><i class="halflings flag"></i> Details</a>
+                </li>
+                <li role="presentation">
+                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings map-marker"></i> Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a>
+                </li>
+                <li role="presentation">
+                    <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a>
+                </li>
                 {% if pastRide %}
-                <li role="presentation"><a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ ride.getEnabledPhotos|length }}</span></a></li>
-                <li role="presentation"><a href="#stats" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings signal"></i> Statistik</a></li>
-                <li role="presentation"><a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a></li>
+                <li role="presentation">
+                    <a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ ride.getPhotos|length }}</span></a>
+                </li>
+                <li role="presentation">
+                    <a href="#stats" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings signal"></i> Statistik</a>
+                </li>
+                <li role="presentation">
+                    <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a>
+                </li>
                 {% endif %}
             </ul>
 
             <div class="tab-content">
-                {% include('CalderaCriticalmassSiteBundle:Common/Ride:DetailsTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassSiteBundle:Common/Ride:SubridesTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassSiteBundle:Common/Ride:CommentsTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderDetailsTab', { 'ride': ride } )) %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderSubridesTab', { 'ride': ride } )) %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPostsTab', { 'ride': ride } )) %}
                 
                 {% if pastRide %}
-                {% include('CalderaCriticalmassSiteBundle:Common/Ride:GalleryTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassSiteBundle:Common/Ride:StatisticTab.html.twig') with { 'ride': ride, 'city': city } %}
-                {% include('CalderaCriticalmassSiteBundle:Common/Ride:TracksTab.html.twig') with { 'ride': ride, 'city': city } %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPhotosTab', { 'ride': ride } )) %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderStatisticTab', { 'ride': ride } )) %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderTracksTab', { 'ride': ride } )) %}
                 {% endif %}
             </div>
         </div>
@@ -138,7 +150,7 @@
     /* Photos */
     var photoContainer = new Container();
     
-    {% for photo in ride.getEnabledPhotos() %}
+    {% for photo in ride.getPhotos() %}
     {% if photo.hasCoordinates() %}
     var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
     photoContainer.add(photo);

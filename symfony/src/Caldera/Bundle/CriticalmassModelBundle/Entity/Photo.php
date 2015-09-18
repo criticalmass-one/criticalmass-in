@@ -6,10 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Photo
- *
  * @ORM\Table(name="photo")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository")
  */
 class Photo
 {

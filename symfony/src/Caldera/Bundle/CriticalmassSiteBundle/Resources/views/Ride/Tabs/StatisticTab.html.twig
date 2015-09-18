@@ -1,3 +1,9 @@
+{% if dateTime > ride.getDateTime() %}
+    {% set pastRide = true %}
+{% else %}
+    {% set pastRide = false %}
+{% endif %}
+
 <div role="tabpanel" class="tab-pane" id="stats">
     <div class="row">
         <div class="col-md-12">

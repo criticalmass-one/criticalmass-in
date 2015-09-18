@@ -1,9 +1,11 @@
+{% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
+
 <div role="tabpanel" class="tab-pane active" id="details">
     <div class="row">
         <div class="col-md-12">
             {% if app.getUser() %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: city.getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i> Tour editieren</a>
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten"><i class="halflings uni-wrench"></i> Tour editieren</a>
                 </div>
             {% endif %}
 
