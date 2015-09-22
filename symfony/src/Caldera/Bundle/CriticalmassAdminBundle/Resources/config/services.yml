@@ -1,0 +1,33 @@
+services:
+    sonata.admin.ride:
+        class: Caldera\Bundle\CriticalmassAdminBundle\Admin\RideAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Ride" }
+        arguments:
+            - ~
+            - Caldera\Bundle\CriticalmassModelBundle\Entity\Ride
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassModelBundle]]
+            
+    sonata.admin.city:
+        class: Caldera\Bundle\CriticalmassAdminBundle\Admin\CityAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "City" }
+        arguments:
+            - ~
+            - Caldera\Bundle\CriticalmassModelBundle\Entity\City
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassModelBundle]]
+
+    sonata.admin.cityslug:
+        class: Caldera\Bundle\CriticalmassAdminBundle\Admin\CitySlugAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "CitySlug" }
+        arguments:
+            - ~
+            - Caldera\Bundle\CriticalmassModelBundle\Entity\CitySlug
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassModelBundle]]

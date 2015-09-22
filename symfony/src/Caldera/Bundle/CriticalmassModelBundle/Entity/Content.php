@@ -256,10 +256,10 @@ class Content
     /**
      * Set archiveParent
      *
-     * @param \Caldera\CriticalmassContentBundle\Entity\Content $archiveParent
+     * @param Content $archiveParent
      * @return Content
      */
-    public function setArchiveParent(\Caldera\CriticalmassContentBundle\Entity\Content $archiveParent = null)
+    public function setArchiveParent(Content $archiveParent = null)
     {
         $this->archiveParent = $archiveParent;
 
@@ -269,7 +269,7 @@ class Content
     /**
      * Get archiveParent
      *
-     * @return \Caldera\CriticalmassContentBundle\Entity\Content
+     * @return Content
      */
     public function getArchiveParent()
     {

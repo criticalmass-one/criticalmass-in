@@ -1,0 +1,19 @@
+parameters:
+
+services:
+    caldera.criticalmass.statistic.rideestimate:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ @doctrine.orm.entity_manager ]
+
+    caldera_criticalmass.language.kernel_request_listener:
+        class: Caldera\Bundle\CriticalmassCoreBundle\EventListener\LanguageListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: setLocale }
+
+    caldera_criticalmass.twig.extension:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\SiteTwigExtension
+        arguments:
+            - @translator
+            - @service_container
+        tags:
+            - { name: twig.extension }
