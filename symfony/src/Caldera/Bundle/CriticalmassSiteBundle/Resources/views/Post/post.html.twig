@@ -3,11 +3,12 @@
 {% else %}
 {% set indent = 0 %}
 {% endif %}
-<div class="row">
+
+<div class="row post">
     <div class="col-md-12">
         <div class="media post">
             <span class="pull-left">
-                <img class="media-object" src="https://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" class="gravatar" />
+                <img class="media-object gravatar round-media-object" src="https://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" />
             </span>
 
             <div class="media-body">
@@ -27,7 +28,7 @@
                 {% endif %}</h4>
 
                 <time>{{ post.getDateTime().format('d.m.Y H:i') }} Uhr</time>
-                {{ post.getMessage()|nl2br }}
+                {{ post.getMessage()|markdown }}
             </div>
         </div>
     </div>
