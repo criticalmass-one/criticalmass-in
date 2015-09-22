@@ -14,3 +14,6 @@ parameters:
     database_password:
 
     directory.track: '/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'
+    
+    domain.cycleways: www.cycleways.cw
+    domain.criticalmass: www.criticalmass.cm
