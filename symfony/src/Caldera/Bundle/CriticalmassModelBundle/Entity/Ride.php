@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Stellt eine einzelne Tour einer Critical Mass dar.
- *
- * @ORM\Entity
  * @ORM\Table(name="ride")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository")
  * @ORM\HasLifecycleCallbacks()
@@ -873,50 +870,6 @@ class Ride
         }
 
         return $this->getTitle();
-    }
-
-    public function getPreviousRide()
-    {
-        $rides = $this->getCity()->getRides();
-
-        $prevRide = null;
-
-        foreach ($rides as $ride)
-        {
-            if ($ride && !$prevRide && $ride->getDateTime() < $this->getDateTime())
-            {
-                $prevRide = $ride;
-            }
-            else
-            if ($ride && $prevRide && $ride->getDateTime() > $prevRide->getDateTime() && $ride->getDateTime() < $this->getDateTime())
-            {
-                $prevRide = $ride;
-            }
-        }
-
-        return $prevRide;
-    }
-
-    public function getNextRide()
-    {
-        $rides = $this->getCity()->getRides();
-
-        $nextRide = null;
-
-        foreach ($rides as $ride)
-        {
-            if ($ride && !$nextRide && $ride->getDateTime() > $this->getDateTime())
-            {
-                $nextRide = $ride;
-            }
-            else
-                if ($ride && $nextRide && $ride->getDateTime() < $nextRide->getDateTime() && $ride->getDateTime() > $this->getDateTime())
-                {
-                    $nextRide = $ride;
-                }
-        }
-
-        return $nextRide;
     }
 
     public function __clone()

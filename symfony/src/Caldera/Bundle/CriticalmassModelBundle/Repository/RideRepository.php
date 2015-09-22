@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Validator\Constraints\DateTime;
 
@@ -173,6 +174,54 @@ class RideRepository extends EntityRepository
                 $result[$ride->getCity()->getMainSlugString()] = $ride;
             }
         }
+        return $result;
+    }
+
+    /**
+     * @param Ride $ride
+     * @return Ride
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @author maltehuebner
+     * @since 2015-09-18
+     */
+    public function getPreviousRide(Ride $ride)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->lt('ride.dateTime', '\''.$ride->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('ride.city', $ride->getCity()->getId()));
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+        $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        $result = $query->getOneOrNullResult();
+
+        return $result;
+    }
+
+    /**
+     * @param Ride $ride
+     * @return Ride
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @author maltehuebner
+     * @since 2015-09-18
+     */
+    public function getNextRide(Ride $ride)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->gt('ride.dateTime', '\''.$ride->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('ride.city', $ride->getCity()->getId()));
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+        $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        $result = $query->getOneOrNullResult();
+
         return $result;
     }
 }
