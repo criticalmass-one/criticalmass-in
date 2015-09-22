@@ -1,3 +1,4 @@
-caldera_cycleways_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: CalderaCyclewaysBundle:Default:index }
+caldera_cycleways_map:
+    path:     /
+    defaults:
+        _controller: CalderaCyclewaysBundle:Cycleways:map
