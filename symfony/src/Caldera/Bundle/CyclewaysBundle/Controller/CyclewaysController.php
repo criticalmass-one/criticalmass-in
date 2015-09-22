@@ -2,12 +2,16 @@
 
 namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class DefaultController extends Controller
+class CyclewaysController extends AbstractController
 {
-    public function indexAction($name)
+    public function mapAction()
     {
-        return $this->render('CalderaCyclewaysBundle:Default:index.html.twig', array('name' => $name));
+        $incidents = $this->getIncidentRepository()->findAll();
+        
+        return $this->render(
+            'CalderaCyclewaysBundle:Cycleways:map.html.twig', 
+            [
+                'incidents' => $incidents
+            ]);
     }
 }
