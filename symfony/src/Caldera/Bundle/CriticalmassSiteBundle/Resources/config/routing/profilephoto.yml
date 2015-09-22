@@ -1,0 +1,3 @@
+caldera_criticalmass_profile_photo:
+    path:     /photo
+    defaults: { _controller: CalderaCriticalmassSiteBundle:ProfilePhoto:edit }

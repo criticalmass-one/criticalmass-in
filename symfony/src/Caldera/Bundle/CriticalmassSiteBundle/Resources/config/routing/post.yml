@@ -1,0 +1,19 @@
+caldera_criticalmass_timeline_post_write:
+    path:     /write
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_ride:
+    path:     /write/ride/{rideId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_city:
+    path:     /write/city/{cityId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_photo:
+    path:     /write/photo/{photoId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_content:
+    path:     /write/content/{contentId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }

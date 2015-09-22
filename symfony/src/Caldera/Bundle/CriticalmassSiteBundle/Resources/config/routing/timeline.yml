@@ -1,31 +1,3 @@
 caldera_criticalmass_timeline_list:
     path:     /timeline/list/{page}
     defaults: { _controller: CalderaCriticalmassTimelineBundle:Timeline:list, page: 1 }
-
-caldera_criticalmass_timeline_post_write:
-    path:     /timeline/write
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
-
-caldera_criticalmass_timeline_post_write_ride:
-    path:     /timeline/write/ride/{rideId}
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
-
-caldera_criticalmass_timeline_post_write_city:
-    path:     /timeline/write/city/{cityId}
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
-
-caldera_criticalmass_timeline_post_write_photo:
-    path:     /timeline/write/photo/{photoId}
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
-
-caldera_criticalmass_timeline_post_write_content:
-    path:     /timeline/write/content/{contentId}
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:write }
-
-caldera_criticalmass_timeline_post_deleteconfirm:
-    pattern:  /post/deleteconfirm/{postId}
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:deleteconfirm }
-
-caldera_criticalmass_timeline_post_reportconfirm:
-    pattern:  /post/reportconfirm/{postId}
-    defaults: { _controller: CalderaCriticalmassTimelineBundle:Post:reportconfirm }
