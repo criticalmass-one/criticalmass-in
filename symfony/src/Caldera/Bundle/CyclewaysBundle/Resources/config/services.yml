@@ -1,0 +1,7 @@
+parameters:
+#    caldera_cycleways.example.class: Caldera\Bundle\CyclewaysBundle\Example
+
+services:
+#    caldera_cycleways.example:
+#        class: %caldera_cycleways.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,3 @@
+caldera_cycleways_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CalderaCyclewaysBundle:Default:index }
