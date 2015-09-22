@@ -69,10 +69,32 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
+    /**
+     * Fetches all rides in a datetime range of three weeks before and three days after.
+     *
+     * @return array
+     */
     public function findCurrentRides()
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r WHERE r.visibleSince <= CURRENT_TIMESTAMP() AND r.visibleUntil >= CURRENT_TIMESTAMP() GROUP BY r.city ORDER BY r.dateTime DESC');
-        //$query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassCoreBundle:Ride r GROUP BY r.city ORDER BY r.dateTime DESC');
+        $startDateTime = new \DateTime();
+        $startDateTimeInterval = new \DateInterval('P3W'); // three weeks ago
+        $startDateTime->sub($startDateTimeInterval);
+        
+        $endDateTime = new \DateTime();
+        $endDateTimeInterval = new \DateInterval('P3D'); // three days after
+        $endDateTime->add($endDateTimeInterval);
+        
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->gte('ride.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lte('ride.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
+
+        $builder->orderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
 
         return $query->getResult();
     }
