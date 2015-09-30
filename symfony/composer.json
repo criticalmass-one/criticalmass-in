@@ -34,7 +34,8 @@
         "sonata-project/user-bundle": "dev-master",
         "phpunit/phpunit": "4.0.*",
         "abraham/twitteroauth": "dev-master",
-        "erusev/parsedown": "dev-master"
+        "erusev/parsedown": "dev-master",
+        "vich/uploader-bundle": "^0.14.0"
     },
     "scripts": {
         "post-install-cmd": [

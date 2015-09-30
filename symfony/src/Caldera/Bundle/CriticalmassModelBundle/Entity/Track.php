@@ -2,15 +2,16 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
-use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
-use Caldera\CriticalmassCoreBundle\Utility\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="track")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository")
+ * @Vich\Uploadable
  */
 class Track
 {
@@ -82,7 +83,7 @@ class Track
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $activated;
+    protected $activated = true;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -90,11 +91,27 @@ class Track
     protected $previewJsonArray;
 
     /**
-     * This property contains the content of the gpx file, but will NOT be mapped to the database.
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @var
+     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
+     *
+     * @var File
      */
-    protected $gpx;
+    protected $trackFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    protected $trackFilename;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    protected $updatedAt;
 
     public function __construct()
     {
@@ -230,23 +247,6 @@ class Track
         return $this->creationDateTime;
     }
 
-    public function __toString()
-    {
-        $result = $this->getUsername().'(';
-
-        if ($this->getCreationDateTime()) {
-            $result .= $this->getCreationDateTime()->format('Y-m-d');
-        }
-
-        if ($this->getRide()) {
-            $result .= ', '.$this->getRide()->getCity()->getCity();
-        }
-
-        $result .= ')';
-
-        return $result;
-    }
-
     /**
      * Set md5Hash
      *
@@ -268,11 +268,6 @@ class Track
     public function getMd5Hash()
     {
         return $this->md5Hash;
-    }
-
-    public function generateMD5Hash()
-    {
-        $this->setMd5Hash(md5($this->getGpx()));
     }
 
     /**
@@ -367,21 +362,6 @@ class Track
         return $this->points;
     }
 
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    protected $file;
-
-    public function setFile(UploadedFile $file = null)
-    {
-        $this->file = $file;
-    }
-
-    public function getFile()
-    {
-        return $this->file;
-    }
-
     public function getDuration()
     {
         $diff = $this->endDateTime->diff($this->startDateTime);
@@ -396,18 +376,6 @@ class Track
         $averageVelocity = $this->getDistance() / $diff->format('%h');
         
         return $averageVelocity;
-    }
-
-    public function loadGpx($trackDirectory)
-    {
-        $this->gpx = file_get_contents($trackDirectory.$this->getId().'.gpx');
-    }
-    
-    public function setGpx($gpx)
-    {
-        $this->gpx = $gpx;
-
-        return $this;
     }
     
     /**
@@ -425,8 +393,7 @@ class Track
     {
         $this->activated = $activated;
     }
-
-
+    
     /**
      * Set rideEstimate
      *
@@ -448,16 +415,6 @@ class Track
     public function getRideEstimate()
     {
         return $this->rideEstimate;
-    }
-
-    public function getGpx()
-    {
-        return $this->gpx;
-    }
-
-    public function loadTrack()
-    {
-        $this->setGpx(file_get_contents('/Users/maltehuebner/Documents/criticalmass.in/criticalmass/symfony/web/gpx/'.$this->getId().'.gpx'));
     }
 
     /**
@@ -496,5 +453,66 @@ class Track
     public function getColorBlue()
     {
         return ($this->getUser() != null ? $this->getUser()->getColorBlue() : $this->getTicket()->getColorBlue());
+    }
+
+    public function __toString()
+    {
+        $result = $this->getUsername().'(';
+
+        if ($this->getCreationDateTime()) {
+            $result .= $this->getCreationDateTime()->format('Y-m-d');
+        }
+
+        if ($this->getRide()) {
+            $result .= ', '.$this->getRide()->getCity()->getCity();
+        }
+
+        $result .= ')';
+
+        return $result;
+    }
+    
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $track
+     */
+    public function setTrackFile(File $track = null)
+    {
+        $this->trackFile = $track;
+
+        if ($track) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getTrackFile()
+    {
+        return $this->trackFile;
+    }
+
+    /**
+     * @param string $trackFilename
+     */
+    public function setTrackFilename($trackFilename)
+    {
+        $this->trackFilename = $trackFilename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrackFilename()
+    {
+        return $this->trackFilename;
     }
 }

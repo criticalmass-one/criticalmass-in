@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
 use Caldera\Bundle\CriticalmassCoreBundle\Uploader\TrackUploader\TrackUploader;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -60,8 +61,21 @@ class TrackController extends AbstractController
 
     public function listAction()
     {
-        $tracks = $this->getTrackRepository()->findBy(array('user' => $this->getUser()->getId()), array('startDateTime' => 'DESC'));
+        /**
+         * @var array Track
+         */
+        $tracks = $this->getTrackRepository()->findBy(
+            [
+                'user' => $this->getUser()->getId()
+            ],
+            [
+                'startDateTime' => 'DESC'
+            ]
+        );
 
+        /**
+         * TODO Fix this timeshift shit
+         */
         foreach ($tracks as $track) {
             $track->setStartDateTime($track->getStartDateTime()->add(new \DateInterval('PT2H')));
             $track->setEndDateTime($track->getEndDateTime()->add(new \DateInterval('PT2H')));
@@ -80,10 +94,10 @@ class TrackController extends AbstractController
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_track_upload', array(
+            ->setAction($this->generateUrl('caldera_criticalmass_track_upload', array(
                 'citySlug' => $ride->getCity()->getMainSlugString(), 
                 'rideDate' => $ride->getFormattedDate())))
-            ->add('file')
+            ->add('trackFile', 'vich_file')
             ->getForm();
         
         if ('POST' == $request->getMethod()) {
@@ -98,26 +112,41 @@ class TrackController extends AbstractController
         return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig', array('form' => $form->createView()));
     }
     
+    protected function loadTrackProperties(Track $track)
+    {
+        $gr = new GpxReader();
+        $gr->loadTrack($track);
+
+        $track->setStartDateTime($gr->getStartDateTime());
+        $track->setEndDateTime($gr->getEndDateTime());
+        $track->setDistance($gr->calculateDistance());
+        $track->setPoints($gr->countPoints());
+        $track->setMd5Hash($gr->getMd5Hash());
+        $track->setPreviewJsonArray($gr->generateJsonArray());
+    }
+    
     public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form)
     {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $trackUploaderOptions = [
-                'trackDirectory' => $this->container->getParameter('directory.track')
-            ];
+            $track = $form->getData();
 
-            $trackUploader = new TrackUploader($this->getDoctrine(), $trackUploaderOptions);
-            $trackUploader->setUser($this->getUser())
-                ->setRide($ride)
-                ->setTrack($track)
-                ->processUpload();
+            $this->loadTrackProperties($track);
             
+            $track->setRide($ride);
+            $track->setUser($this->getUser());
+            $track->setUsername($this->getUser()->getUsername());
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($track);
+            $em->flush();
+
             $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate');
             $estimateService->addEstimate($track);
             $estimateService->calculateEstimates($ride);
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
 
         }
 
@@ -134,7 +163,14 @@ class TrackController extends AbstractController
         $track = $this->getTrackRepository()->findOneById($trackId);
 
         if ($track && $track->getUser()->equals($this->getUser())) {
-            return $this->render('CalderaCriticalmassSiteBundle:Track:view.html.twig', array('track' => $track));
+            return $this->render(
+                'CalderaCriticalmassSiteBundle:Track:view.html.twig',
+                [
+                    'track' => $track,
+                    'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
+                    'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track)
+                ]
+            );
         }
 
         throw new AccessDeniedException('');

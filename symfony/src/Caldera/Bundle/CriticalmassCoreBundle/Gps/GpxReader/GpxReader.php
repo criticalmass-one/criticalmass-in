@@ -33,13 +33,7 @@ class GpxReader {
 
     public function loadTrack(Track $track)
     {
-        if (!$track->getGpx()) {
-            $track->loadTrack();
-        }
-
-        $this->rawFileContent = $track->getGpx();
-        
-        $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+        $this->loadFile($track->getTrackFile());
     }
 
     public function getCreationDateTime()

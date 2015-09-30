@@ -10,3 +10,4 @@ imports:
     - { resource: sonata.yml }
     - { resource: swiftmailer.yml }
     - { resource: twig.yml }
+    - { resource: vich.yml }
