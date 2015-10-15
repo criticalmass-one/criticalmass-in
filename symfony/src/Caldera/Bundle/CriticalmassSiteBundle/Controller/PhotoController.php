@@ -2,22 +2,21 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Uploader\PhotoUploader\PhotoUploader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GalleryController extends AbstractController
 {
-    public function indexAction() {
+    public function indexAction()
+    {
         $criteria = array('enabled' => true);
         $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
         return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
-    public function listAction(Request $request, $cityId = null, $rideId = null) {
+    public function listAction(Request $request, $cityId = null, $rideId = null)
+    {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
 
@@ -38,7 +37,8 @@ class GalleryController extends AbstractController
         return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
-    public function editAction(Request $request, $photoId=0) {
+    public function editAction(Request $request, $photoId=0)
+    {
         if ($photoId > 0) {
             $em = $this->getDoctrine()->getManager();
             $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
@@ -60,7 +60,8 @@ class GalleryController extends AbstractController
         }
     }
 
-    public function showAction(Request $request, $photoId) {
+    public function showAction(Request $request, $photoId)
+    {
         $em = $this->getDoctrine()->getManager();
         $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
 
@@ -95,5 +96,12 @@ class GalleryController extends AbstractController
         }
 
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+    }
+
+    public function uploadAction(Request $request, $rideId)
+    {
+
+
+        return $this->render('CriticalmassSiteBundle:Photo:upload.html.twig');
     }
 }

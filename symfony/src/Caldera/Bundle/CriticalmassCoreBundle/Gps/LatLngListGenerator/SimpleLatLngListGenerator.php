@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator;
 
-class SimpleLatLngArrayGenerator extends AbstractLatLngArrayGenerator
+class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
 {
     public function execute()
     {
