@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
 
 class RideEstimateCalculator
 {
@@ -36,6 +37,9 @@ class RideEstimateCalculator
         $distance = 0;
         $distanceCounter = 0;
 
+        /**
+         * @var RideEstimate $estimate
+         */
         foreach ($this->estimates as $estimate)
         {
             if ($estimate->getEstimatedDistance())

@@ -1,0 +1,6 @@
+parameters:
+    imagessizes.format_collection:
+        thumbnail: [800, 0]
+
+    imagessizes.sets:
+        image_standard: [thumbnail]

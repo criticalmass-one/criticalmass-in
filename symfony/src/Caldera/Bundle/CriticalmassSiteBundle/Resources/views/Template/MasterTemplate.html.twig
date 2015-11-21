@@ -5,11 +5,12 @@
 
     <title>{% block title %}{% endblock %} — criticalmass.in</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
 
+    <script type="text/javascript">
+        var domReadyQueue = [];
+    </script>
+    
     {% block additionalHeaderElements %}{% endblock %}
 </head>
 
@@ -17,5 +18,14 @@
     {% block masterContent %}{% endblock %}
 
     {% block additionalFooterElements %}{% endblock %}
+    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap3/bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(function(){
+            while (domReadyQueue.length) {
+                domReadyQueue.shift()(jQuery);
+            }
+        });
+    </script>
 </body>
 </html>

@@ -8,7 +8,6 @@
 
     {% javascripts
     '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/jquery/*.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
     %}
@@ -16,17 +15,21 @@
     {% endjavascripts %}
 {% endblock %}
 
+{% block breadcrumb %}
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
+    <li class="active">{{ ride.getFancyTitle() }}</li>
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
-            <li class="active">{{ ride.getFancyTitle() }}</li>
-        </ol>
-    
+    <div class="container main-container">
         {% if not app.getUser() %}
-            <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.</div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.</div>
+                </div>
+            </div>
+
         {% endif %}
 
         {% include('CalderaCriticalmassSiteBundle:Ride:Ride.html.twig') with { 'ride': ride } %}

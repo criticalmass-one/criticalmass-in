@@ -26,17 +26,23 @@ filter="cssrewrite" %}
         </ol>
         
         <div class="row">
-            <h1>Fotos hochladen</h1>
+            <div class="col-md-12">
+                <h1>Fotos hochladen</h1>
+            </div>
         </div>
         
         <div class="row">
-            <p>Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst, werden deine Fotos automatisch auf der Karte verortet.</p>
+            <div class="col-md-12">
+                <p>Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst, werden deine Fotos automatisch auf der Karte verortet.</p>
+            </div>
         </div>
         
         <div class="row">
-            <div class="form-group">
-                <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride_process', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="my-awesome-dropzone">
-                </form>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="my-awesome-dropzone">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

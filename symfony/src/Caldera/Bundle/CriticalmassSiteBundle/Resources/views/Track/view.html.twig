@@ -14,21 +14,14 @@
 {% endjavascripts %}
 {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a>
-            </li>
-            <li>
-                <a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a>
-            </li>
-            <li>
-                <a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a>
-            </li>
-            <li class="active">Track anzeigen</li>
-        </ol>
+{% block breadcrumb %}
+    <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
+    <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
+    <li class="active">Track anzeigen</li>
+{% endblock %}
 
+{% block content %}
+    <div class="container main-container">
         <div class="row">
             <div class="col-md-12">
                 {% if track.getRide().getTitle() %}
@@ -105,7 +98,7 @@
            //map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
 
             var track = new Track();
-            track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+            track.setPolyline({{ track.getLatLngList() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
             track.addTo(map.map);
             map.map.fitBounds(track.getBounds());
         });

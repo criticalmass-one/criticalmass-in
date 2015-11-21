@@ -3,11 +3,27 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractController extends Controller
 {
+    /**
+     * Returns a city entity identified by its slug.
+     *
+     * @param $citySlug
+     * @return City
+     * @throws NotFoundHttpException
+     */
     protected function getCityBySlug($citySlug)
     {
         $citySlug = $this->getCitySlugRepository()->findOneBySlug($citySlug);
@@ -18,12 +34,18 @@ abstract class AbstractController extends Controller
             throw new NotFoundHttpException();
         }
     }
-    
+
+    /**
+     * @return ObjectRepository
+     */
     protected function getBlogArticleRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Article');
     }
 
+    /**
+     * @return ContentRepository
+     */
     protected function getContentRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Content');
@@ -37,41 +59,65 @@ abstract class AbstractController extends Controller
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Ride');
     }
 
+    /**
+     * @return ObjectRepository
+     */
     protected function getCitySlugRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:CitySlug');
     }
 
+    /**
+     * @return CityRepository
+     */
     protected function getCityRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:City');
     }
-
+    
+    /**
+     * @return PhotoRepository
+     */
     protected function getPhotoRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Photo');
     }
 
+    /**
+     * @return PostRepository
+     */
     protected function getPostRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Post');
     }
 
+    /**
+     * @return TrackRepository
+     */
     protected function getTrackRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Track');
     }
 
+    /**
+     * @return ObjectRepository
+     */
     protected function getPositionRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Position');
     }
 
+    /**
+     * @return SubrideRepository
+     */
     protected function getSubrideRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Subride');
     }
 
+    /**
+     * @return ObjectRepository
+     */
     protected function getGlympseTicketRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Ticket');
@@ -88,6 +134,14 @@ abstract class AbstractController extends Controller
         return $city;
     }
 
+    /**
+     * Returns a ride entity for a city entity and a datetime parameter. Will throw an exception if the ride does not exist.
+     *
+     * @param City $city
+     * @param \DateTime $rideDateTime
+     * @throws NotFoundHttpException
+     * @return Ride
+     */
     protected function getCheckedRide(City $city, \DateTime $rideDateTime)
     {
         $ride = $this->getRideRepository()->findCityRideByDate($city, $rideDateTime);

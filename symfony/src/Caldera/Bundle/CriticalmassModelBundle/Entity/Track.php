@@ -76,6 +76,16 @@ class Track
     protected $points;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $startPoint;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $endPoint;
+
+    /**
      * @ORM\Column(type="string", length=32)
      */
     protected $md5Hash;
@@ -88,7 +98,7 @@ class Track
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $previewJsonArray;
+    protected $latLngList;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -117,9 +127,6 @@ class Track
     {
         $this->setCreationDateTime(new \DateTime());
 
-        if ($this->id) {
-            $this->loadTrack();
-        }
     }
 
     /**
@@ -361,22 +368,6 @@ class Track
     {
         return $this->points;
     }
-
-    public function getDuration()
-    {
-        $diff = $this->endDateTime->diff($this->startDateTime);
-
-        return $diff->format('%h.%i');
-    }
-    
-    public function getAverageVelocity()
-    {
-        $diff = $this->endDateTime->diff($this->startDateTime);
-        
-        $averageVelocity = $this->getDistance() / $diff->format('%h');
-        
-        return $averageVelocity;
-    }
     
     /**
      * @return mixed
@@ -418,26 +409,26 @@ class Track
     }
 
     /**
-     * Set previewJsonArray
+     * Set latLngList
      *
-     * @param boolean $previewJsonArray
+     * @param string $latLngList
      * @return Track
      */
-    public function setPreviewJsonArray($previewJsonArray)
+    public function setLatLngList($latLngList)
     {
-        $this->previewJsonArray = $previewJsonArray;
+        $this->latLngList = $latLngList;
 
         return $this;
     }
 
     /**
-     * Get previewJsonArray
+     * Get latLngList
      *
      * @return boolean 
      */
-    public function getPreviewJsonArray()
+    public function getLatLngList()
     {
-        return $this->previewJsonArray;
+        return $this->latLngList;
     }
 
     public function getColorRed()
@@ -514,5 +505,103 @@ class Track
     public function getTrackFilename()
     {
         return $this->trackFilename;
+    }
+
+    /**
+     * Set startPoint
+     *
+     * @param integer $startPoint
+     * @return Track
+     */
+    public function setStartPoint($startPoint)
+    {
+        if ($startPoint >= 1) {
+            $this->startPoint = $startPoint;
+        } else {
+            $this->startPoint = 1;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get startPoint
+     *
+     * @return integer 
+     */
+    public function getStartPoint()
+    {
+        return $this->startPoint;
+    }
+
+    /**
+     * Set endPoint
+     *
+     * @param integer $endPoint
+     * @return Track
+     */
+    public function setEndPoint($endPoint)
+    {
+        if ($endPoint <= $this->points) {
+            $this->endPoint = $endPoint;
+        } else {
+            $this->endPoint = $this->points - 1;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get endPoint
+     *
+     * @return integer 
+     */
+    public function getEndPoint()
+    {
+        return $this->endPoint;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Track
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+    
+    public function getDurationInterval()
+    {
+        return $this->getEndDateTime()->diff($this->getStartDateTime());
+    }
+    
+    public function getDurationInSeconds()
+    {
+        return $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
+    }
+    
+    public function getAverageVelocity()
+    {
+        $kilometres = $this->getDistance();
+        $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
+        
+        $hours = (float) $seconds / 3600;
+        $velocity = $kilometres / $hours;
+        
+        return $velocity;
     }
 }

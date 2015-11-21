@@ -10,6 +10,10 @@ caldera_criticalmass_track:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/track.yml"
     prefix: /
 
+caldera_criticalmass_trackimport:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/trackimport.yml"
+    prefix: /
+    
 caldera_criticalmass_profilephoto:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/profilephoto.yml"
     prefix: /profile
@@ -30,6 +34,14 @@ caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /
 
+caldera_criticalmass_gallery:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/gallery.yml"
+    prefix:   /
+
+caldera_criticalmass_timelapse:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timelapse.yml"
+    prefix:   /
+    
 caldera_criticalmass_ride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/ride.yml"
     prefix: /
@@ -45,13 +57,6 @@ caldera_criticalmass_api:
 caldera_criticalmass_sudride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/subride.yml"
     prefix: /
-
-
-    
-
-caldera_criticalmass_gallery:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/gallery.yml"
-    prefix:   /
 
 caldera_criticalmass_statistic:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"

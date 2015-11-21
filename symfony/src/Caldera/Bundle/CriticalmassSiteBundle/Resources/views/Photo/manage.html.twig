@@ -1,0 +1,25 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Foasasdd{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">asdasd</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Fotos sortieren</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {% for photo in photos %}
+                    <img src="{{ photoPath(photo, 'thumbnail') }}" />
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

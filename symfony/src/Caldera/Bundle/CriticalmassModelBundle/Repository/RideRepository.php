@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
@@ -80,18 +81,36 @@ class RideRepository extends EntityRepository
         $startDateTime = new \DateTime();
         $startDateTimeInterval = new \DateInterval('P3W'); // three weeks ago
         $startDateTime->sub($startDateTimeInterval);
-        
+
         $endDateTime = new \DateTime();
         $endDateTimeInterval = new \DateInterval('P3D'); // three days after
         $endDateTime->add($endDateTimeInterval);
-        
+
         $builder = $this->createQueryBuilder('ride');
 
         $builder->select('ride');
         $builder->where($builder->expr()->gte('ride.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
         $builder->andWhere($builder->expr()->lte('ride.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
-        
+
         $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
+
+        $builder->orderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findEstimatedRides()
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->gt('ride.estimatedParticipants', 0));
+        $builder->andWhere($builder->expr()->gt('ride.estimatedDuration', 0));
+        $builder->andWhere($builder->expr()->gt('ride.estimatedDuration', 0));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->orderBy('ride.dateTime', 'DESC');
 
@@ -221,6 +240,17 @@ class RideRepository extends EntityRepository
         $query = $builder->getQuery();
 
         $result = $query->getOneOrNullResult();
+
+        return $result;
+    }
+
+    public function findRidesWithPhotosByUser(User $user)
+    {
+        $builder = $this->createQueryBuilder('photo');
+
+
+        $query = $builder->getQuery();
+        $result = $query->getResult();
 
         return $result;
     }

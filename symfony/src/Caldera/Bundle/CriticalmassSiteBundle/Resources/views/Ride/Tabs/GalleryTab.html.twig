@@ -5,9 +5,9 @@
 {% endif %}
 
 {% if pastRide and false and ride.enablePhotoUpload and city.enablePhotoUpload and app.getUser() and app.getUser().enablePhotoUpload %}
-{% set photoUploadEnabled = true %}
+    {% set photoUploadEnabled = true %}
 {% else %}
-{% set photoUploadEnabled = false %}
+    {% set photoUploadEnabled = false %}
 {% endif %}
 
 <div role="tabpanel" class="tab-pane" id="gallery">
@@ -35,11 +35,11 @@
                 </div>
             {% else %}
                 <div class="row">
-                {% for photo in photos %}
-                    <div class="col-md-4 photo">
-                        <img src="/photos/{{ photo.getId() }}.thumbnail.jpg" />
-                    </div>
-                {% endfor %}
+                    {% for photo in photos %}
+                        <div class="col-md-4 photo">
+                            <img src="/photos/{{ photo.getId() }}.thumbnail.jpg" />
+                        </div>
+                    {% endfor %}
                 </div>
             {% endif %}
         </div>

@@ -25,3 +25,8 @@ Track.prototype.removeLayer = function(trackLayer)
 {
     trackLayer.removeLayer(this.polyline);
 };
+
+Track.prototype.setLatLngs = function(latLngs)
+{
+    return this.polyline.setLatLngs(latLngs);
+};

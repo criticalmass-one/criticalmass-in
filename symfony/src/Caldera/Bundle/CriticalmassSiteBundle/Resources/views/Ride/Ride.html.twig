@@ -49,7 +49,7 @@
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderDetailsTab', { 'ride': ride } )) %}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderSubridesTab', { 'ride': ride } )) %}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPostsTab', { 'ride': ride } )) %}
-                
+
                 {% if pastRide %}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPhotosTab', { 'ride': ride } )) %}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderStatisticTab', { 'ride': ride } )) %}
@@ -92,96 +92,102 @@
 {% endif %}
 
 <script>
-    var map = new Map('map', []);
+    function initMap() {
+        var map = new Map('map', []);
 
-    /* City */
-    var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
-    
-    /* Rides */
-    var rideContainer = new Container();
-    var ride = new Ride(city, '{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
-    rideContainer.add(ride);
-    rideContainer.addTo(map);
+        /* City */
+        var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
 
-    /* Subrides */
-    var subrideContainer = new Container();
+        /* Rides */
+        var rideContainer = new Container();
+        var ride = new Ride(city, '{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
+        rideContainer.add(ride);
+        rideContainer.addTo(map);
 
-    {% for subride in ride.getActiveSubrides() %}
-    var subride = new Subride('{% if subride.getTitle() %}{{ subride.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subride.getDescription() %}<p>{{ subride.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subride.getDateTime().format('H:i') }}', {{ subride.getLatitude() }}, {{ subride.getLongitude() }}, '{{ subride.getLocation() }}');
-    subrideContainer.add(subride);
-    {% endfor %}
+        /* Subrides */
+        var subrideContainer = new Container();
 
-    subrideContainer.addTo(map);
+        {% for subride in ride.getActiveSubrides() %}
+        var subride = new Subride('{% if subride.getTitle() %}{{ subride.getTitle() }}{% else %}Mini-Mass{% endif %}', '{% if subride.getDescription() %}<p>{{ subride.getDescription()|nl2br|replace({"<br />":"\\"}) }}{% endif %}', '{{ subride.getDateTime().format('H:i') }}', {{ subride.getLatitude() }}, {{ subride.getLongitude() }}, '{{ subride.getLocation() }}');
+        subrideContainer.add(subride);
+        {% endfor %}
 
-    $('.subride').on('click', function ()
-    {
-        var subRideId = $(this).data('subride');
-        var subRide = subrideContainer.getEntity(subRideId);
-        
-        map.panTo(subRide.getLatLng());
-        subRide.openPopup();
-    });
+        subrideContainer.addTo(map);
 
-    /* Tracks */
-    var trackContainer = new Container();
-
-    {% for track in ride.getActiveTracks() %}
-    var track = new Track();
-    track.setPolyline({{ track.getPreviewJsonArray() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
-    trackContainer.add(track);
-    {% endfor %}
-
-    trackContainer.addTo(map);
-    
-    $('.trackVisibility').on('click', function()
-    {
-        var trackNumber = $(this).data('track');
-
-        if ($(this).prop('checked'))
+        $('.subride').on('click', function ()
         {
-            trackContainer.addLayer(trackNumber);
-        }
-        else
+            var subRideId = $(this).data('subride');
+            var subRide = subrideContainer.getEntity(subRideId);
+
+            map.panTo(subRide.getLatLng());
+            subRide.openPopup();
+        });
+
+        /* Tracks */
+        var trackContainer = new Container();
+
+        {% for track in ride.getActiveTracks() %}
+        var track = new Track();
+        track.setPolyline({{ track.getLatLngList() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
+        trackContainer.add(track);
+        {% endfor %}
+
+        trackContainer.addTo(map);
+
+        $('.trackVisibility').on('click', function()
         {
-            trackContainer.removeLayer(trackNumber);
-        }
+            var trackNumber = $(this).data('track');
+
+            if ($(this).prop('checked'))
+            {
+                trackContainer.addLayer(trackNumber);
+            }
+            else
+            {
+                trackContainer.removeLayer(trackNumber);
+            }
+        });
+
+        /* Photos */
+        var photoContainer = new Container();
+
+        {% for photo in ride.getPhotos() %}
+        {% if photo.hasCoordinates() %}
+        var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
+        photoContainer.add(photo);
+        {% endif %}
+        {% endfor %}
+
+        photoContainer.addTo(map);
+
+        /* LayerControl */
+        var layers = [];
+
+        rideContainer.addControl(layers, 'Tour');
+        subrideContainer.addControl(layers, 'Mini-Masses');
+        trackContainer.addControl(layers, 'Tracks');
+        photoContainer.addControl(layers, 'Fotos');
+
+        var layerControl = L.control.groupedLayers({}, {
+            'Critical Mass': layers
+        }, {
+            collapsed: false
+        });
+
+        layerControl.addTo(map.map);
+
+        {% if pastRide and ride.getActiveTracks()|length > 0 %}
+        map.map.fitBounds(trackContainer.getBounds());
+        {% elseif ride.getActiveSubRides()|length > 0 %}
+        map.map.fitBounds(subrideContainer.getBounds());
+        rideContainer.getEntity(0).openPopup();
+        {% else %}
+        map.map.fitBounds(rideContainer.getBounds());
+        rideContainer.getEntity(0).openPopup();
+        {% endif %}
+    }
+
+    domReadyQueue.push(function($) {
+        initMap();
     });
-
-    /* Photos */
-    var photoContainer = new Container();
-    
-    {% for photo in ride.getPhotos() %}
-    {% if photo.hasCoordinates() %}
-    var photo = new Photo({{ photo.getId() }}, {{ photo.getLatitude() }}, {{ photo.getLongitude() }}, 'Photo {{ photo.getId() }}');
-    photoContainer.add(photo);
-    {% endif %}
-    {% endfor %}
-    
-    photoContainer.addTo(map);
-    
-    /* LayerControl */
-    var layers = [];
-
-    rideContainer.addControl(layers, 'Tour');
-    subrideContainer.addControl(layers, 'Mini-Masses');
-    trackContainer.addControl(layers, 'Tracks');
-    photoContainer.addControl(layers, 'Fotos');
-
-    var layerControl = L.control.groupedLayers({}, {
-        'Critical Mass': layers
-    }, {
-        collapsed: false
-    });
-
-    layerControl.addTo(map.map);
-
-    {% if pastRide and ride.getActiveTracks()|length > 0 %}
-    map.map.fitBounds(trackContainer.getBounds());
-    {% elseif ride.getActiveSubRides()|length > 0 %}
-    map.map.fitBounds(subrideContainer.getBounds());
-    rideContainer.getEntity(0).openPopup();
-    {% else %}
-    map.map.fitBounds(rideContainer.getBounds());
-    rideContainer.getEntity(0).openPopup();
-    {% endif %}
 </script>

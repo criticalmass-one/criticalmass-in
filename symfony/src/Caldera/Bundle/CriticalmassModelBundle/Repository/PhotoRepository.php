@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
 
 class PhotoRepository extends EntityRepository
 {
-    public function getPhotosForRide(Ride $ride)
+    public function findPhotosByRide(Ride $ride)
     {
         $builder = $this->createQueryBuilder('photo');
         

@@ -2,32 +2,64 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Doctrine\ORM\EntityManager;
 
 class RideEstimateService
 {
-    protected $doctrine;
+    /**
+     * @var EntityManager $entityManager
+     */
+    protected $entityManager;
 
-    public function __construct($doctrine)
+    /**
+     * @var RideEstimateCalculator $calculator
+     */
+    protected $calculator;
+
+    /**
+     * @var GpxReader $reader
+     */
+    protected $reader;
+    
+    public function __construct(
+        EntityManager $entityManager,
+        RideEstimateCalculator $calculator,
+        GpxReader $reader
+    )
     {
-        $this->doctrine = $doctrine;
+        $this->entityManager = $entityManager;
+        $this->calculator = $calculator;
+        $this->reader = $reader;
     }
 
+    public function flushEstimates(Ride $ride)
+    {
+        $ride->setEstimatedDistance(0.0);
+        $ride->setEstimatedDuration(0.0);
+        $ride->setEstimatedParticipants(0.0);
+
+        $this->entityManager->persist($ride);
+        $this->entityManager->flush();
+    }
+    
     public function calculateEstimates(Ride $ride)
     {
-        $estimates = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findByRide($ride->getId());
+        $estimates = $this->entityManager->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findByRide($ride->getId());
 
         $rec = new RideEstimateCalculator();
         $rec->setRide($ride);
+        
         $rec->setEstimates($estimates);
         $rec->calculate();
+        
         $ride = $rec->getRide();
 
-        $em = $this->doctrine;
-        $em->persist($ride);
-        $em->flush();
+        $this->entityManager->persist($ride);
+        $this->entityManager->flush();
     }
 
     public function addEstimate(Track $track)
@@ -41,10 +73,21 @@ class RideEstimateService
         $track->setRideEstimate($re);
 
         $re->setEstimatedDistance($track->getDistance());
-        $re->setEstimatedDuration($track->getDuration());
+        
+        $durationInHours = (float) $track->getDurationInSeconds() / 3600.0;
+        
+        $re->setEstimatedDuration($durationInHours);
 
-        $em = $this->doctrine;
-        $em->persist($re);
-        $em->flush();
+        $this->entityManager->persist($re);
+        $this->entityManager->flush();
+    }
+    
+    public function refreshEstimate(RideEstimate $re)
+    {
+        $track = $re->getTrack();
+        $this->reader->loadTrack($track);
+        
+        $re->setEstimatedDistance($this->reader->calculateDistance());
+        $re->setEstimatedDuration($this->reader->calculateDuration());
     }
 }

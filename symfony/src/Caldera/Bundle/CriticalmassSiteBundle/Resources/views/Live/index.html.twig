@@ -14,6 +14,7 @@
     '@CalderaCriticalmassSiteBundle/Resources/public/js/map/MapPositions.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/leaflet.groupedlayercontrol.js'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/L.Control.Locate.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -29,20 +30,24 @@
         }
         
         div.user-position {
-            background-image: url(https://www.gravatar.com/avatar/0cf33267893fa9eb18e8b227dcb05a65);
+            overflow: hidden;
             border-radius: 50%;
-            border: 3px red solid;
             box-shadow: 0 0 15px 0 black;
+        }
+        
+        div.user-position div.user-position-inline {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border-width: 3px;
+            border-style: solid;
         }
     </style>
 {% endblock %}
 
 {% block content %}
     <div id="map">
-
     </div>
-
-
 {% endblock %}
 
 {% block additionalFooterElements %}

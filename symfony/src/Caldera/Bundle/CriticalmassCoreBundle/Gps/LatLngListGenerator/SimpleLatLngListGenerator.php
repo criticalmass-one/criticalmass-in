@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator;
 
 class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
 {
@@ -12,7 +12,7 @@ class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
 
         foreach ($this->xmlRootNode->trk->trkseg->trkpt as $point)
         {
-            if ($counter % 5 == 0)
+            if ($counter % $this->gapWidth == 0)
             {
                 $result[] = '['.$point['lat'].','.$point['lon'].']';
             }
@@ -20,6 +20,6 @@ class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
             ++$counter;
         }
 
-        $this->json = '['.implode(',', $result).']';
+        $this->list = '['.implode(',', $result).']';
     }
 } 

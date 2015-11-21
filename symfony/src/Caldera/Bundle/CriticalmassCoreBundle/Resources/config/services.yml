@@ -1,9 +1,7 @@
 parameters:
 
 services:
-    caldera.criticalmass.statistic.rideestimate:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ @doctrine.orm.entity_manager ]
+
 
     caldera_criticalmass.language.kernel_request_listener:
         class: Caldera\Bundle\CriticalmassCoreBundle\EventListener\LanguageListener
@@ -17,3 +15,55 @@ services:
             - @service_container
         tags:
             - { name: twig.extension }
+
+    caldera_criticalmass.twig.image_extension:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\ImageTwigExtension
+        arguments:
+            - @vich_uploader.templating.helper.uploader_helper
+            - '%kernel.root_dir%'
+        tags:
+            - { name: twig.extension }
+
+    caldera.criticalmass.gps.gpxreader:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader
+        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+
+    caldera.criticalmass.gps.trackreader:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader
+        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+
+    caldera.criticalmass.gps.trackchecker:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker
+        arguments: [@vich_uploader.templating.helper.uploader_helper, @caldera.criticalmass.gps.trackreader, '%kernel.root_dir%']
+
+    caldera.criticalmass.gps.simplelatlnglistgenerator:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
+        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+
+    caldera.criticalmass.gps.rangelatlnglistgenerator:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
+        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+        
+    caldera.criticalmass.statistic.rideestimatecalculator:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateCalculator
+        arguments: []
+        
+    caldera.criticalmass.statistic.rideestimate.track:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.trackreader ]
+
+    caldera.criticalmass.statistic.rideestimate.gpx:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.gpxreader ]
+
+    # IMAGES
+    caldera.criticalmass.image.photoresizer:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoResizer\PhotoResizer
+        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+            
+    caldera.criticalmass.image.bulkphotoresizer:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoResizer\BulkPhotoResizer
+        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        calls:
+            - [setFormatCollections, ['%imagessizes.format_collection%']]
+            - [setFormatSets, ['%imagessizes.sets%']]

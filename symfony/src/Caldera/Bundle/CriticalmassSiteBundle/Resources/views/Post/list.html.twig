@@ -1,3 +1,5 @@
-{% for post in posts %}
-    {% include('CalderaCriticalmassSiteBundle:Common:post.html.twig') with { 'post':  post } %}
-{% endfor %}
+<div class="post-list">
+    {% for post in posts %}
+    {% include('CalderaCriticalmassSiteBundle:Post:post.html.twig') with { 'post':  post } %}
+    {% endfor %}
+</div>

@@ -4,18 +4,27 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class GpxReader {
     protected $path;
     protected $rawFileContent;
     protected $simpleXml;
+    protected $uploaderHelper;
+    protected $rootDirectory;
 
+    public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
+    {
+        $this->uploaderHelper = $uploaderHelper;
+        $this->rootDirectory = $rootDirectory.'/../web';
+    }
+    
     public function loadFile($path)
     {
         $this->path = $path;
-        $this->rawFileContent = file_get_contents($path);
+        $this->rawFileContent = file_get_contents($this->rootDirectory.$path);
         $result = true;
-
+        
         try {
             $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
         } catch (\Exception $e) {
@@ -24,16 +33,12 @@ class GpxReader {
 
         return $result;
     }
+    
     public function loadString($content)
     {
         $this->rawFileContent = $content;
 
         $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
-    }
-
-    public function loadTrack(Track $track)
-    {
-        $this->loadFile($track->getTrackFile());
     }
 
     public function getCreationDateTime()
@@ -189,5 +194,26 @@ class GpxReader {
         $result = $gcl->execute($dateTime);
         
         return array('latitude' => $this->getLatitudeOfPoint($result), 'longitude' => $this->getLongitudeOfPoint($result));
+    }
+
+    public function calculateDuration()
+    {
+        $diff = $this->getEndDateTime()->diff($this->getStartDateTime());
+
+        return $diff->format('%h.%i');
+    }
+
+    public function getAverageVelocity()
+    {
+        $diff = $this->getEndDateTime()->diff($this->getStartDateTime());
+
+        $minutes = $diff->h * 60.0 + $diff->i;
+        $hours = $minutes/60.0;
+
+        if ($hours > 0) {
+            return $this->calculateDistance() / $hours;
+        } else {
+            return 0;
+        }
     }
 }

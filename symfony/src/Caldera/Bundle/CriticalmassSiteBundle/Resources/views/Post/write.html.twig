@@ -1,24 +1,38 @@
 {% if app.getUser() %}
-<div id="postFormContainer">
-    {{ form_start(form, {'attr': {'id': 'postForm', 'role': 'form'}}) }}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-post">Kommentar hinzufügen</button>
 
-    <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
-        <label for="" class="control-label">Dein Kommentar:</label>
-        {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
-    </div>
+<div class="modal fade" id="modal-add-post" tabindex="-1" role="dialog" aria-labelledby="label-add-post">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="label-add-post">Kommentar hinzufügen</h4>
+            </div>
+            {{ form_start(form, {'attr': {'id': 'form-post', 'role': 'form'}}) }}
+                <div class="modal-body">
+                    <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+                        <label for="" class="control-label">Dein Kommentar:</label>
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+                    </div>
 
-    <div class="form-group">
-        <div class="btn-group pull-right" id="formButtonGroup">
-            <button id="submitPostButton" type="submit" class="btn btn-success pull-right"><i class="halflings pencil"></i> Absenden</button>
+                    <div class="form-group">
+                        <input type="checkbox" id="form-post-share-location" checked="checked" /> Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares entfernen.
+                    </div>
+
+                    {{ form_widget(form._token) }}
+                    {{ form_widget(form.latitude) }}
+                    {{ form_widget(form.longitude) }}
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                        <button type="submit" id="button-submit-post" class="btn btn-primary"><i class="halflings pencil"></i> Speichern</button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
         </div>
-        <input type="checkbox" id="shareLocation" checked="checked" /> Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares entfernen.
     </div>
-
-    {{ form_widget(form._token) }}
-    {{ form_widget(form.latitude) }}
-    {{ form_widget(form.longitude) }}
-
-    </form>
+</div>
     <script>
         function getLocation() {
             if (navigator.geolocation)
@@ -50,10 +64,10 @@
         
         window.onload = function()
         {
-            $('#postForm').on('submit', function (element) {
-                $('#submitPostButton').prop('disabled', 'disabled');
+            $('#form-post').on('submit', function (element) {
+                $('#button-submit-post').prop('disabled', 'disabled');
 
-                if ($('#shareLocation').attr('checked')) {
+                if ($('#form-post-share-location').attr('checked')) {
                     //element.preventDefault();
 
                     _paq.push(['trackEvent', 'writeComment', 'withLocation']);
@@ -71,4 +85,3 @@
     {% else %}
     <p>Mit einem criticalmass.in-Benutzerkonto könntest du an dieser Stelle einen Kommentar verfassen. Wenn du Lust und Zeit hast, kannst du dich hier drüben <a href="{{ path('fos_user_security_login') }}">einloggen oder anmelden</a>.</p>
     {% endif %}
-</div>

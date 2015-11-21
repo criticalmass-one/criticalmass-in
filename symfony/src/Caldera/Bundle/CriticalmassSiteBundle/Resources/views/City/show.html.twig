@@ -20,14 +20,13 @@
     {% endjavascripts %}
 {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li class="active">{{ city.getCity() }}</li>
-        </ol>
+{% block breadcrumb %}
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li class="active">{{ city.getCity() }}</li>
+{% endblock %}
 
+{% block content %}
+    <div class="container main-container">
         <ul class="nav nav-tabs" id="cityModalTabs">
             {% if hasCurrentRide %}
             <li><a href="#cityInfoTab" data-toggle="tab"><i class="halflings flag"></i> {{ city.getCity() }}</a></li>

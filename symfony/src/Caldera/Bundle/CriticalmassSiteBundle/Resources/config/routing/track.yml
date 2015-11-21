@@ -25,3 +25,7 @@ caldera_criticalmass_track_upload:
 caldera_criticalmass_track_view:
     pattern:  /track/view/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:view }
+
+caldera_criticalmass_track_range:
+    pattern:  /track/range/{trackId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:range }

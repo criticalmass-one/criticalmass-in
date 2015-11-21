@@ -13,17 +13,19 @@
 {{ form_end(form) }}
 
 <script type="text/javascript">
-    $('#uploadGpxButton').on('click', function()
-    {
-        $('#uploadGpxButton').prop('disabled', 'true');
-        $('#uploadGpxButton').html('Einen Moment bitte…');
-    });
-
-    window.onload = function()
-    {
-        $('#modalTrackUpload').on('hidden.bs.modal', function () {
-            $('#uploadGpxButton').prop('disabled', '');
-            $('#uploadGpxButton').html('Track hochladen');
+    function initUpload() {
+        var $uploadButton = $('#uploadGpxButton');
+        
+        $uploadButton.on('click', function () {
+            $uploadButton.prop('disabled', 'true');
+            $uploadButton.html('Einen Moment bitte…');
         });
+
+        window.onload = function () {
+            $('#modalTrackUpload').on('hidden.bs.modal', function () {
+                $uploadButton.prop('disabled', '');
+                $uploadButton.html('Track hochladen');
+            });
+        }
     }
 </script>

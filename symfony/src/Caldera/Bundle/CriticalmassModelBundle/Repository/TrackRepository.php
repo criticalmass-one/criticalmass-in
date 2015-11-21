@@ -73,7 +73,7 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function getTracksForRide(Ride $ride)
+    public function findTracksByRide(Ride $ride)
     {
         $builder = $this->createQueryBuilder('track');
 

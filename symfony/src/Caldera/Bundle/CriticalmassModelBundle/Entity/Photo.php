@@ -3,10 +3,13 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="photo")
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository")
  */
 class Photo
@@ -45,17 +48,7 @@ class Photo
      * @ORM\Column(type="float", nullable=true)
      */
     protected $longitude;
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    protected $file;
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    protected $small_file;
-
+    
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -65,20 +58,42 @@ class Photo
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $licence = true;
-
+    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDateTime;
+
+    /**
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName")
+     *
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->creationDateTime = new \DateTime();
         $this->description = '';
     }
 
@@ -207,70 +222,6 @@ class Photo
     /**
      * @return mixed
      */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param mixed $path
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLicence()
-    {
-        return $this->licence;
-    }
-
-    /**
-     * @param mixed $licence
-     */
-    public function setLicence($licence)
-    {
-        $this->licence = $licence;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFilePath()
-    {
-        return $this->getUploadRootDir().$this->getId().'.jpg';
-    }
-
-    public function getFilePathByDepth($depth) {
-        $result = "";
-
-        for ($i = 0; $i < $depth; $i++) {
-            $result = $result . "../";
-        }
-
-        $result = $result . $this->filePath;
-
-        return $result;
-    }
-
-    public function getUploadRootDir() {
-        return "photos/";
-    }
-
-    /**
-     * @param mixed $filePath
-     */
-    public function setFilePath($filePath)
-    {
-        $this->filePath = $filePath;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getDateTime()
     {
         return $this->dateTime;
@@ -284,32 +235,67 @@ class Photo
         $this->dateTime = $dateTime;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSmallFile()
-    {
-        return $this->small_file;
-    }
-
-    /**
-     * @param mixed $small_file
-     */
-    public function setSmallFile($small_file)
-    {
-        $this->small_file = $small_file;
-    }
-
-    public function toSmallPath($path) {
-        return str_replace("" . $this->id, $this->id . "_klein", $path);
-    }
-
-    public function toThumbnailPath($path) {
-        return str_replace("" . $this->id, $this->id . "_thumbnail", $path);
-    }
-    
     public function hasCoordinates()
     {
         return ($this->latitude && $this->longitude);
+    }
+
+    /**
+     * Set creationDateTime
+     *
+     * @param \DateTime $creationDateTime
+     * @return Photo
+     */
+    public function setCreationDateTime($creationDateTime)
+    {
+        $this->creationDateTime = $creationDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getCreationDateTime()
+    {
+        return $this->creationDateTime;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

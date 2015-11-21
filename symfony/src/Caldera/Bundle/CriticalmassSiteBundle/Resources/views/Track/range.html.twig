@@ -1,0 +1,118 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    
+<script type='text/javascript' src="http://rawgithub.com/seiyria/bootstrap-slider/master/js/bootstrap-slider.js"></script>
+<link rel="stylesheet" type="text/css" href="http://rawgithub.com/seiyria/bootstrap-slider/master/css/bootstrap-slider.css">
+
+    {% javascripts
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*'
+    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
+    <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
+    <li class="active">Track anzeigen</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Track beschneiden</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input id="slider" type="text" value="" style="width: 100%;" />
+
+                {{ form_start(form) }}
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">Abbrechen</a>
+                    <button class="btn btn-primary" type="submit">Speichern</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var $slider;
+        var polylineLatLngs = {{ latLngList }};
+        var map;
+        var track;
+        
+        function initGapWidth() {
+            var gapWidth = {{ gapWidth }};
+            var $startPointInput = $('#form_startPoint');
+            var $endPointInput = $('#form_endPoint');
+            
+            //$startPointInput.val($startPointInput.val() * gapWidth);
+            //$endPointInput.val($endPointInput.val() * gapWidth);
+        }
+        
+        function initSlider() {
+            var sliderOptions = {
+                id: "rangeSlider",
+                min: 0,
+                max: polylineLatLngs.length,
+                range: true,
+                value: [{{ track.startPoint / gapWidth }}, {{ track.endPoint / gapWidth }}],
+                tooltip: 'hide'
+            };
+            
+            $slider = $('#slider');
+            $slider.slider(sliderOptions);
+
+            $slider.on("slide", function(slideEvt) {
+                var gapWidth = {{ gapWidth }};
+                var endValue = slideEvt.value.pop();
+                var beginValue = slideEvt.value.pop();
+
+                $('#form_startPoint').val(beginValue * gapWidth);
+                $('#form_endPoint').val(endValue * gapWidth);
+
+                var newLatLngs = polylineLatLngs.slice();
+
+                endValue -= beginValue;
+
+                newLatLngs.splice(0, beginValue);
+                newLatLngs.splice(endValue, newLatLngs.length - endValue);
+
+                track.setLatLngs(newLatLngs);
+            });
+        }
+        
+        function initMap() {
+            map = new Map('map', []);
+
+            track = new Track();
+            track.setPolyline({{ track.latLngList }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
+            track.addTo(map.map);
+            map.map.fitBounds(track.getBounds());
+        }
+        
+        $(function() {
+            initGapWidth();
+            initMap();
+            initSlider();
+        });
+
+    </script>
+{% endblock %}

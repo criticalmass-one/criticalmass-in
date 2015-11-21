@@ -1,38 +1,43 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractLatLngListGenerator
 {
-    protected $json;
+    protected $list;
+
+    /**
+     * @var Track $track
+     */
     protected $track;
     protected $xmlRootNode;
+    protected $trackReader;
+    protected $gapWidth;
 
-    public function __construct(UploaderHelper $uploaderHelper)
+    public function __construct(TrackReader $trackReader, $gapWidth)
     {
-        $this->uploaderHelper = $uploaderHelper;
+        $this->trackReader = $trackReader;
+        $this->gapWidth = $gapWidth;
     }
     
     public function loadTrack(Track $track)
     {
         $this->track = $track;
 
-        echo $track->getTrackFilename()."BEWTWWRGERGWERG";
-        $gr = new GpxReader();
-        $gr->loadTrack($this->track);
+        $this->trackReader->loadTrack($this->track);
 
-        $this->xmlRootNode = $gr->getRootNode();
-        
-        echo $this->xmlRootNode;
+        $this->xmlRootNode = $this->trackReader->getRootNode();
     }
 
     public abstract function execute();
 
-    public function getJsonArray()
+    public function getList()
     {
-        return $this->json;
+        return $this->list;
     }
 } 

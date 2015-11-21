@@ -83,57 +83,88 @@ class RideController extends AbstractController
 
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
-            $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()))));
-        }
-        elseif ($form->isSubmitted())
-        {
+            $form = $this->createForm(
+                new RideType(), 
+                $ride, 
+                array(
+                    'action' => $this->generateUrl(
+                        'caldera_criticalmass_desktop_ride_edit', 
+                        array(
+                            'citySlug' => $city->getMainSlugString(), 
+                            'rideDate' => $ride->getFormattedDate()
+                        )
+                    )
+                )
+            );
+        } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('hasErrors' => $hasErrors, 'ride' => null, 'form' => $form->createView(), 'city' => $city, 'dateTime' => new \DateTime()));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig',
+            array(
+                'hasErrors' => $hasErrors,
+                'ride' => $ride,
+                'form' => $form->createView(),
+                'city' => $city,
+                'dateTime' => new \DateTime()
+            )
+        );
     }
-
+    
+    protected function addGetAction(Request $request, Ride $ride, City $city, FormTypeInterface $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
+            array(
+                'hasErrors' => null,
+                'ride' => null, 
+                'form' => $form->createView(), 
+                'city' => $city, 
+                'dateTime' => new \DateTime()
+            )
+        );
+    }
 
     public function editAction(Request $request, $citySlug, $rideDate)
     {
-        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+        $city = $this->getCheckedCity($citySlug);
+        $rideDateTime = $this->getCheckedDateTime($rideDate);
+        $ride = $this->getCheckedRide($city, $rideDateTime);
 
-        if (!$citySlugObj)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
+        $form = $this->createForm(
+            new RideType(), 
+            $ride, 
+            array(
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', 
+                    array(
+                        'citySlug' => $city->getMainSlugString(), 
+                        'rideDate' => $ride->getDateTime()->format('Y-m-d')
+                    )
+                )
+            )
+        );
+
+        if ('POST' == $request->getMethod()) {
+            return $this->editPostAction($request, $ride, $city, $form);
+        } else {
+            return $this->editGetAction($request, $ride, $city, $form);
         }
-
-        $city = $citySlugObj->getCity();
-
-        try {
-            $rideDateTime = new \DateTime($rideDate);
-        }
-        catch (\Exception $e)
-        {
-            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfangen. Bitte gib ein Datum im Format YYYY-MM-DD an.');
-        }
-
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
-
-        if (!$ride)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
-        }
-
+    }
+    
+    protected function editPostAction(Request $request, Ride $ride, City $city, Form $form)
+    {
         $archiveRide = clone $ride;
         $archiveRide->setArchiveUser($this->getUser());
         $archiveRide->setArchiveParent($ride);
-
-        $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getDateTime()->format('Y-m-d')))));
 
         $form->handleRequest($request);
 
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->persist($archiveRide);
@@ -141,19 +172,40 @@ class RideController extends AbstractController
 
             // TODO: remove also this
             $hasErrors = false;
-        }
-        elseif ($form->isSubmitted())
-        {
+        } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Ride:edit.html.twig', array('ride' => $ride, 'city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
+            array(
+                'ride' => $ride, 
+                'city' => $city, 
+                'form' => $form->createView(), 
+                'hasErrors' => $hasErrors, 
+                'dateTime' => new \DateTime()
+            )
+        );
+    }
+    
+    protected function editGetAction(Request $request, Ride $ride, City $city, Form $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
+            array(
+                'ride' => $ride, 
+                'city' => $city, 
+                'form' => $form->createView(), 
+                'hasErrors' => null,
+                'dateTime' => new \DateTime()
+            )
+        );
     }
 
     public function renderPhotosTabAction(Request $request, Ride $ride)
     {
-        $photos = $this->getPhotoRepository()->getPhotosForRide($ride);
+        $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:Tabs/GalleryTab.html.twig',
@@ -167,7 +219,7 @@ class RideController extends AbstractController
 
     public function renderTracksTabAction(Request $request, Ride $ride)
     {
-        $tracks = $this->getTrackRepository()->getTracksForRide($ride);
+        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:Tabs/TracksTab.html.twig',
