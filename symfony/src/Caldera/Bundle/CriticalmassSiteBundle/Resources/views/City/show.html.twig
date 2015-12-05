@@ -2,10 +2,6 @@
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 
-{% set hasSocialMedia = city.getUrl() or city.getFacebook() or city.getTwitter() %}
-{% set hasCurrentRide = city.getCurrentRide() != null %}
-{% set hasRides = rides|length > 0 %}
-
 {% block additionalHeaderElements %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
@@ -26,7 +22,46 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if app.getUser() %}
+                    <div class="btn-group pull-right" style="margin-top: 24px;">
+                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                            <i class="fa fa-cogs"></i>
+                            Stadt editieren
+                        </a>
+                    </div>
+                {% endif %}
+
+                <h1>{{ city.title }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                {{ city.getLongDescription()|nl2br }}
+            </div>
+
+            <div class="col-md-3">
+                {% include 'CalderaCriticalmassSiteBundle:City:_nextTour.html.twig' with { 'currentRide': currentRide } %}
+                {% include 'CalderaCriticalmassSiteBundle:City:_socialMedia.html.twig' with { 'city': city } %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{#
+
+
         <ul class="nav nav-tabs" id="cityModalTabs">
             {% if hasCurrentRide %}
             <li><a href="#cityInfoTab" data-toggle="tab"><i class="halflings flag"></i> {{ city.getCity() }}</a></li>
@@ -46,5 +81,5 @@
             {% include('CalderaCriticalmassSiteBundle:Common/City:RidesTab.html.twig') with { 'city': city } %}
             {% include('CalderaCriticalmassSiteBundle:Common/City:CommentsTab.html.twig') with { 'city': city } %}
         </div>
-    </div>
-{% endblock %}
+
+        #}

@@ -10,6 +10,27 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class RideRepository extends EntityRepository
 {
+    public function findCurrentRideForCity(City $city)
+    {
+        $dateTime = new \DateTime();
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->where($builder->expr()->lte('ride.dateTime', '\''.$dateTime->format('Y-m-d h:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
+
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+        $query->setMaxResults(1);
+
+        $result = $query->getSingleResult();
+
+        return $result;
+    }
+
     public function findRecentRides($year = null, $month = null, $maxResults = null, $minParticipants = 0, $postShuffle = false)
     {
         $builder = $this->createQueryBuilder('ride');

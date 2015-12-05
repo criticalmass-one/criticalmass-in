@@ -11,5 +11,3 @@ imports:
     - { resource: swiftmailer.yml }
     - { resource: twig.yml }
     - { resource: vich.yml }
-    
-    - { resource: imagesizes.yml }

@@ -10,5 +10,7 @@ symfony/web/fonts
 symfony/web/geojson
 symfony/web/gpx
 symfony/web/photos
+symfony/web/bundles
 .idea/*
 .vagrant/*
+symfony/web/tracks

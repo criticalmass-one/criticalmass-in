@@ -128,14 +128,6 @@ class PhotoController extends AbstractController
         $em->persist($photo);
         $em->flush();
 
-        /**
-         * @var PhotoResizer $pr
-         */
-        $pr = $this->get('caldera.criticalmass.image.photoresizer');
-        $pr->loadPhoto($photo);
-        $pr->resizeByFactor(0.25);
-        $pr->savePhoto('thumbnail');
-
 
         /*
         $photo->handleUpload();

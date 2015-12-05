@@ -27,14 +27,13 @@ class CityController extends AbstractController
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
         }
 
-        $rides = $this->getRideRepository()->findBy(array('city' => $city->getId(), 'isArchived' => false), array('dateTime' => 'DESC'));
+        $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);
 
-        if ($city->getCurrentRide()) {
-            array_shift($rides);
-            // shift the first ride from the array as the first one is the current and should not be displayed at the recent rides list
-        }
-
-        return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', array('city' => $city, 'rides' => $rides, 'dateTime' => new \DateTime()));
+        return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', [
+            'city' => $city,
+            'currentRide' => $currentRide,
+            'dateTime' => new \DateTime()
+        ]);
     }
 
     public function addAction(Request $request)
@@ -93,7 +92,7 @@ class CityController extends AbstractController
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassSiteBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
     }
 
     public function liveAction(Request $request, $citySlug)

@@ -28,6 +28,11 @@ class CityRepository extends EntityRepository
         return $query->getResult();
 	}
 
+    public function findEnabledCities()
+    {
+        return $this->findCities();
+    }
+
     public function findCities()
     {
         $expr = Criteria::expr();

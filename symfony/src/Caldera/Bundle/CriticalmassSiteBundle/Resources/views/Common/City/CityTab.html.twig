@@ -8,11 +8,7 @@
     <div class="tab-pane fade in active" id="cityInfoTab">
         {% endif %}
         <div class="jumbotron">
-            {% if app.getUser() %}
-                <div class="btn-group pull-right" style="margin-top: 24px;">
-                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}"><i class="halflings uni-wrench"></i> Stadt editieren</a>
-                </div>
-            {% endif %}
+
 
             <h1>{{ city.getTitle() }}</h1>
             <p>{{ city.getDescription() }}</p>

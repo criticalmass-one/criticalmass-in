@@ -13,9 +13,11 @@
 <div role="tabpanel" class="tab-pane" id="gallery">
     <div class="row">
         <div class="col-md-12">
-            {% if false %}
+            {% if true %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen"><i class="halflings uni-camera"></i> Fotos hochladen</a>
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen">
+                        <i class="fa fa-camera"></i>
+                        Fotos hochladen</a>
                 </div>
             {% endif %}
 

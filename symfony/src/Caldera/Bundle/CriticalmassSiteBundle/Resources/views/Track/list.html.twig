@@ -75,22 +75,22 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="...">
                                 <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
-                                    <i class="halflings save"></i> 1
+                                    <i class="fa fa-file"></i>
                                 </a>
                                 {% if track.getActivated() %}
                                     <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
-                                        <i class="halflings eye-close"></i> 2
+                                        <i class="fa fa-eye-slash"></i>
                                     </a>
                                 {% else %}
                                     <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
-                                        <i class="halflings eye-open"></i> 2
+                                        <i class="fa fa-eye"></i>
                                     </a>
                                 {% endif %}
                                 <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}>
-                                    <i class="halflings trash"></i> 3
+                                    <i class="fa fa-trash-o"></i>
                                 </a>
                                 <a class="btn btn-default btn-xs" title="Beschneiden" href="{{ path('caldera_criticalmass_track_range', { trackId: track.getId() }) }}">
-                                    <i class="halflings trash"></i> 4
+                                    <i class="fa fa-sliders"></i>
                                 </a>
                             </div>
                         </td>
@@ -99,7 +99,7 @@
                     {% endfor %}
                     
                     {% if tracks|length == 0 %}
-                        <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen. Greif dir eine GPX-Datei und <a href="#" data-toggle="modal" data-target="#modalTrackUpload">lege los</a>!</td>
+                        <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen :(</td>
                     {% endif %}
                 </table>
             </div>

@@ -1,0 +1,32 @@
+{% set hasSocialMedia = city.getUrl() or city.getFacebook() or city.getTwitter() %}
+
+{% if hasSocialMedia %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Soziale Netze</h3>
+        </div>
+        <div class="panel-body">
+            <div class="text-center">
+                <div class="btn-group" role="group" aria-label="...">
+                {% if city.getUrl() %}
+                    <a class="btn btn-default" href="{{ city.getUrl() }}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                {% endif %}
+
+                {% if city.getFacebook() %}
+                    <a class="btn btn-default" href="{{ city.getFacebook() }}">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                {% endif %}
+
+                {% if city.getTwitter() %}
+                    <a class="btn btn-default" href="{{ city.getTwitter() }}">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

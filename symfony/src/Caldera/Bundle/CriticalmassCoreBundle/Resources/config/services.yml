@@ -56,14 +56,6 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
         arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.gpxreader ]
 
-    # IMAGES
-    caldera.criticalmass.image.photoresizer:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoResizer\PhotoResizer
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
-            
-    caldera.criticalmass.image.bulkphotoresizer:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoResizer\BulkPhotoResizer
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
-        calls:
-            - [setFormatCollections, ['%imagessizes.format_collection%']]
-            - [setFormatSets, ['%imagessizes.sets%']]
+    caldera.criticalmass.forums.forumtreebuilder:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Forums\ForumTreeBuilder\ForumTreeBuilder
+        arguments: [ @doctrine.orm.entity_manager ]

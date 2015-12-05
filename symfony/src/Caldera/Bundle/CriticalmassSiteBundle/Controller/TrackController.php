@@ -237,7 +237,7 @@ class TrackController extends AbstractController
             $em->merge($track);
             $em->flush();
 
-            $this->get('caldera.criticalmass.statistic.rideestimate')->calculateEstimates($ride);
+            $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($ride);
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
