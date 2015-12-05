@@ -1,7 +1,7 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-        {% include('CalderaCriticalmassSiteBundle:Template:Navigation.html.twig') with { 'fullscreenMap': 'false' } %}
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': 'false' } %}
 
         {% block breadcrumbContainer %}
         <div class="container">
@@ -16,9 +16,11 @@
 
         {% block content %}{% endblock %}
 
-        {% include('CalderaCriticalmassSiteBundle:Template:Footer.html.twig') %}
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_adserver.html.twig') %}
+
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_footer.html.twig') %}
 
         {% block additionalFooterElements %}{% endblock %}
 
-        {% include('CalderaCriticalmassSiteBundle:Template:Piwik.html.twig') %}
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
 {% endblock %}
