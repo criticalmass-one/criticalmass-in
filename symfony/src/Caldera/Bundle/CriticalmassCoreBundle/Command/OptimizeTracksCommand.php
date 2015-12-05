@@ -2,20 +2,23 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator\StandardRideGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StravaImportCommand extends ContainerAwareCommand
+class OptimizeTracksCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('criticalmass:import:strava')
-            ->setDescription('Import rides from Strava')
+            ->setName('criticalmass:tracks:optimize')
+            ->setDescription('Regenerate LatLng Tracks')
             /*->addArgument(
                 'year',
                 InputArgument::REQUIRED,
@@ -36,9 +39,37 @@ class StravaImportCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $api = new \Iamstuartwilson\StravaApi(
-            $clientId,
-            $clientSecret
-        );
+        /**
+         * @var Registry $doctrine
+         */
+        $doctrine = $this->getContainer()->get('doctrine');
+
+        $tracks = $doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findAll();
+
+        /**
+         * @var RangeLatLngListGenerator $rlllg
+         */
+        $rlllg = $this->getContainer()->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+
+        /**
+         * @var Track $track
+         */
+        foreach ($tracks as $track) {
+            $rlllg->loadTrack($track);
+            $rlllg->execute();
+
+            $latLngList = $rlllg->getList();
+            $track->setLatLngList($latLngList);
+
+            /**
+             * @var EntityManager $em
+             */
+            $em = $doctrine->getManager();
+            $em->persist($track);
+            $em->flush();
+
+        }
+
+
     }
 }

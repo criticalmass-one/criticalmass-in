@@ -36,11 +36,11 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker
         arguments: [@vich_uploader.templating.helper.uploader_helper, @caldera.criticalmass.gps.trackreader, '%kernel.root_dir%']
 
-    caldera.criticalmass.gps.simplelatlnglistgenerator:
+    caldera.criticalmass.gps.latlnglistgenerator.simple:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
         arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
 
-    caldera.criticalmass.gps.rangelatlnglistgenerator:
+    caldera.criticalmass.gps.latlnglistgenerator.range:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
         arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
         
