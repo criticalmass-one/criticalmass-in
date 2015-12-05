@@ -32,6 +32,8 @@ abstract class AbstractLatLngListGenerator
         $this->trackReader->loadTrack($this->track);
 
         $this->xmlRootNode = $this->trackReader->getRootNode();
+
+        return $this;
     }
 
     public abstract function execute();

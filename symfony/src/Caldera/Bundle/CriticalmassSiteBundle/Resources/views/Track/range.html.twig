@@ -2,10 +2,11 @@
 
 {% block additionalHeaderElements %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/seiyria/bootstrap-slider/master/css/bootstrap-slider.css">
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    
-<script type='text/javascript' src="http://rawgithub.com/seiyria/bootstrap-slider/master/js/bootstrap-slider.js"></script>
-<link rel="stylesheet" type="text/css" href="http://rawgithub.com/seiyria/bootstrap-slider/master/css/bootstrap-slider.css">
+
 
     {% javascripts
     '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*'
@@ -14,7 +15,6 @@
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-
 {% endblock %}
 
 {% block breadcrumb %}
@@ -25,7 +25,7 @@
 
 
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>Track beschneiden</h1>
@@ -41,7 +41,11 @@
         <div class="row">
             <div class="col-md-12">
                 <input id="slider" type="text" value="" style="width: 100%;" />
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
                 {{ form_start(form) }}
                 <div class="btn-group pull-right" role="group" aria-label="...">
                     <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">Abbrechen</a>
@@ -107,12 +111,18 @@
             track.addTo(map.map);
             map.map.fitBounds(track.getBounds());
         }
-        
-        $(function() {
+
+        domReadyQueue.push(function($) {
             initGapWidth();
             initMap();
             initSlider();
         });
 
     </script>
+
+{% endblock %}
+
+{% block additionalFooterElements %}
+
+<script type='text/javascript' src="https://rawgithub.com/seiyria/bootstrap-slider/master/js/bootstrap-slider.js"></script>
 {% endblock %}

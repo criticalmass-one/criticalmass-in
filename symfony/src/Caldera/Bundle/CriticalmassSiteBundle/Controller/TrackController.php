@@ -283,7 +283,7 @@ class TrackController extends AbstractController
 
     protected function rangeGetAction(Request $request, Track $track, Form $form)
     {
-        $llag = $this->container->get('caldera.criticalmass.gps.simplelatlnglistgenerator');
+        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
         $llag->loadTrack($track);
         $llag->execute();
 
@@ -311,7 +311,7 @@ class TrackController extends AbstractController
             /**
              * @var RangeLatLngListGenerator $llag
              */
-            $llag = $this->container->get('caldera.criticalmass.gps.rangelatlnglistgenerator');
+            $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
             $llag->loadTrack($track);
             $llag->execute();
             $track->setLatLngList($llag->getList());

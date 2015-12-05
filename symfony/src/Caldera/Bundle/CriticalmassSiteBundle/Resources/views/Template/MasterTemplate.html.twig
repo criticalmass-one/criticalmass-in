@@ -18,9 +18,11 @@
 <body class="{% block bodyClass %}{% endblock %}">
     {% block masterContent %}{% endblock %}
 
-    {% block additionalFooterElements %}{% endblock %}
     <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap3/bootstrap.min.js') }}"></script>
+
+    {% block additionalFooterElements %}{% endblock %}
+
     <script type="text/javascript">
         jQuery(function(){
             while (domReadyQueue.length) {

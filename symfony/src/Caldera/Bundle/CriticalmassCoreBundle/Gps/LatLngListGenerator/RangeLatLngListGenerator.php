@@ -24,5 +24,7 @@ class RangeLatLngListGenerator extends AbstractLatLngListGenerator
         }
 
         $this->list = '['.implode(',', $result).']';
+
+        return $this;
     }
 } 

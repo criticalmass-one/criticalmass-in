@@ -14,62 +14,73 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class OptimizeTracksCommand extends ContainerAwareCommand
 {
+    /**
+     * @var Registry $doctrine
+     */
+    protected $doctrine;
+
+    /**
+     * @var RangeLatLngListGenerator $generator
+     */
+    protected $generator;
+
+    /**
+     * @var EntityManager $manager
+     */
+    protected $manager;
+
     protected function configure()
     {
         $this
             ->setName('criticalmass:tracks:optimize')
             ->setDescription('Regenerate LatLng Tracks')
-            /*->addArgument(
-                'year',
-                InputArgument::REQUIRED,
-                'Year of the rides to create'
-            )
             ->addArgument(
-                'month',
-                InputArgument::REQUIRED,
-                'Month of the rides to create'
+                'trackId',
+                InputArgument::OPTIONAL,
+                'Id of the Track to optimize'
             )
-            ->addOption(
-                'force',
-                'f',
-                InputOption::VALUE_OPTIONAL,
-                'Use to create the rides, otherwise you only get a preview')*/
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /**
-         * @var Registry $doctrine
-         */
-        $doctrine = $this->getContainer()->get('doctrine');
+        $this->doctrine = $this->getContainer()->get('doctrine');
+        $this->generator = $this->getContainer()->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+        $this->manager = $this->doctrine->getManager();
 
-        $tracks = $doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findAll();
-
-        /**
-         * @var RangeLatLngListGenerator $rlllg
-         */
-        $rlllg = $this->getContainer()->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+        $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track');
 
         /**
          * @var Track $track
          */
-        foreach ($tracks as $track) {
-            $rlllg->loadTrack($track);
-            $rlllg->execute();
+        if ($input->hasArgument('trackId') && $input->getArgument('trackId')) {
+            $trackId = $input->getArgument('trackId');
+            $track = $repository->find($trackId);
 
-            $latLngList = $rlllg->getList();
-            $track->setLatLngList($latLngList);
+            $this->optimizeTrack($track);
 
-            /**
-             * @var EntityManager $em
-             */
-            $em = $doctrine->getManager();
-            $em->persist($track);
-            $em->flush();
+            $output->writeln('Optimized Track #'.$track->getId());
+        } else {
+            $tracks = $repository->findAll();
 
+            foreach ($tracks as $track) {
+                $this->optimizeTrack($track);
+
+                $output->writeln('Optimized Track #'.$track->getId());
+            }
         }
+    }
 
+    protected function optimizeTrack(Track $track)
+    {
+        $list = $this->generator
+            ->loadTrack($track)
+            ->execute()
+            ->getList();
 
+        $track->setLatLngList($list);
+
+        $this->manager->persist($track);
+        $this->manager->flush();
     }
 }
