@@ -65,12 +65,14 @@ class PhotoController extends AbstractController
     public function showAction(Request $request, $photoId)
     {
         $photo = $this->getPhotoRepository()->find($photoId);
+        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
+        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
 
         return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
             [
                 'photo' => $photo,
-                'nextPhoto' => null,
-                'previousPhoto' => null
+                'nextPhoto' => $nextPhoto,
+                'previousPhoto' => $previousPhoto
             ]
         );
     }

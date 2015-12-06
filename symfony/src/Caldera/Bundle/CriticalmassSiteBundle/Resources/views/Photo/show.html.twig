@@ -12,9 +12,21 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="pager">
-                 <li class="previous disabled"><a href="#">&larr; Vorige Tour</a></li>
+                {% if previousPhoto %}
+                    <li class="previous">
+                        <a href="{{ path('caldera_criticalmass_photo_show', { 'citySlug': previousPhoto.ride.city.getMainSlugString(), 'rideDate': previousPhoto.ride.getFormattedDate(), 'photoId': previousPhoto.id }) }}">&larr; Voriges Foto</a>
+                    </li>
+                {% else %}
+                    <li class="previous disabled"><a href="#">&larr; Voriges Foto</a></li>
+                {% endif %}
 
-                 <li class="next disabled"><a href="#">Nächste Tour &rarr;</a></li>
+                {% if nextPhoto %}
+                    <li class="next">
+                        <a href="{{ path('caldera_criticalmass_photo_show', { 'citySlug': nextPhoto.ride.city.getMainSlugString(), 'rideDate': nextPhoto.ride.getFormattedDate(), 'photoId': nextPhoto.id }) }}">Nächstes Foto &rarr;</a>
+                    </li>
+                {% else %}
+                    <li class="next disabled"><a href="#">Nächstes Foto &rarr;</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -28,10 +40,11 @@
     <script>
         domReadyQueue.push(function($) {
             var $img = $('img.auto-scale');
+            var parentWidth = $img.parent().width();
+
+            $img.css('width', parentWidth);
 
             $img.load(function() {
-                var parentWidth = $img.parent().width();
-                var maxHeight = 100;    // Max height for the image
                 var ratio = 0;  // Used for aspect ratio
                 var width = $img.width();    // Current image width
                 var height = $img.height();  // Current image height
@@ -39,12 +52,26 @@
                 // Check if the current width is larger than the max
                 if(width > parentWidth){
                     ratio = parentWidth / width;   // get ratio for scaling image
-                    $(this).css("width", parentWidth); // Set new width
                     $(this).css("height", height * ratio);  // Scale height based on ratio
                     height = height * ratio;    // Reset height to match scaled image
                     width = width * ratio;    // Reset width to match scaled image
                 }
             });
+
+            $('body').keydown(function(e) {
+                {% if previousPhoto %}
+                if ((e.keyCode || e.which) == 37) {
+                    $(location).attr('href', '{{ path('caldera_criticalmass_photo_show', { 'citySlug': previousPhoto.ride.city.getMainSlugString(), 'rideDate': previousPhoto.ride.getFormattedDate(), 'photoId': previousPhoto.id }) }}');
+                }
+                {% endif %}
+
+                {% if nextPhoto %}
+                if ((e.keyCode || e.which) == 39) {
+                    $(location).attr('href', '{{ path('caldera_criticalmass_photo_show', { 'citySlug': nextPhoto.ride.city.getMainSlugString(), 'rideDate': nextPhoto.ride.getFormattedDate(), 'photoId': nextPhoto.id }) }}');
+                }
+                {% endif %}
+            });
+
         });
     </script>
 {% endblock %}
