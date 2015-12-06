@@ -14,3 +14,4 @@ symfony/web/bundles
 .idea/*
 .vagrant/*
 symfony/web/tracks
+symfony/web/media
