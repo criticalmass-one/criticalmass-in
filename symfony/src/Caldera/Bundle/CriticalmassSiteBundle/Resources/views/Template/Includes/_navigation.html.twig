@@ -1,63 +1,141 @@
 <nav id="navigation" class="navbar navbar-default">
     {% if fullscreen is defined and fullscreen == true %}
-        <div class="container-fluid">
+    <div class="container-fluid">
     {% else %}
-        <div class="container">
+    <div class="container">
     {% endif %}
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">
+                    Toggle navigation
+                </span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             
-            <a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">Critical Mass</a>
+            <a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
+                Critical Mass
+            </a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="{{ path('caldera_criticalmass_desktop_city_list') }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-university"></i> Städte <span class="caret"></span></a>
+                    <a href="{{ path('caldera_criticalmass_desktop_city_list') }}" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-university"></i>
+                        Städte
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_desktop_ride_list') }}">Kalender</a></li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+                                Städteliste
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_desktop_ride_list') }}">
+                                Kalender
+                            </a>
+                        </li>
                     </ul>
                 </li>
+
                 <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle"><i class="fa fa-bicycle"></i> Critical Mass <span class="caret"></span></a>
+                    <a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle">
+                        <i class="fa fa-bicycle"></i>
+                        Critical Mass
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">Über die Critical Mass</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'faq' }) }}">Häufig gestellte Fragen</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'tipps-und-tricks' }) }}">Tipps und Tricks</a></li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
+                                Über die Critical Mass
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'faq' }) }}">
+                                Häufig gestellte Fragen
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'tipps-und-tricks' }) }}">
+                                Tipps und Tricks
+                            </a>
+                        </li>
                         <li class="divider"></li>
-                        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'about-us/caldera' }) }}">Über criticalmass.in</a></li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'about-us/caldera' }) }}">
+                                Über criticalmass.in
+                            </a>
+                        </li>
                     </ul>
                 </li>
+
                 <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle"><i class="fa fa-map-marker"></i> Live <span class="caret"></span></a>
+                    <a href="#" data-toggle="dropdown" data-target=".navbar-collapse.in" class="dropdown-toggle">
+                        <i class="fa fa-map-marker"></i>
+                        Live
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ path('caldera_criticalmass_live') }}">Live-Karte</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">So funktioniert’s</a></li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_live') }}">
+                                Live-Karte
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">
+                                So funktioniert’s
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 {% if app.getUser() %}
-                <li class="dropdown"><a href="{{ path('fos_user_security_login') }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Benutzerkonto <span class="caret"></span></a>
+
+                <li class="dropdown">
+                    <a href="{{ path('fos_user_security_login') }}" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                        Benutzerkonto
+                        <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ path('caldera_criticalmass_profile_photo') }}">Dein Profilfoto</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
-                        <li><a href="{{ path('caldera_criticalmass_photo_user_list') }}">Deine Fotos</a></li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_profile_photo') }}">
+                                Dein Profilfoto
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_track_list') }}">
+                                Deine Tracks
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_api_app_list') }}">
+                                Deine Apps
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_photo_user_list') }}">
+                                Deine Fotos
+                            </a>
+                        </li>
                         <li class="divider"></li>
-                        <li><a href="{{ path('sonata_user_security_logout') }}">Abmelden</a></li>
+                        <li>
+                            <a href="{{ path('sonata_user_security_logout') }}">
+                                Abmelden
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 {% else %}
-                <li><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-user"></i> Login</a></li>
+                <li>
+                    <a href="{{ path('fos_user_security_login') }}">
+                        <i class="fa fa-user"></i>
+                        Login
+                    </a>
+                </li>
                 {% endif %}
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
 </nav>
