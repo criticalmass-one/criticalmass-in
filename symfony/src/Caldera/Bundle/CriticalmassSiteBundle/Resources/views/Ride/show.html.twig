@@ -53,3 +53,14 @@
         </ul>
     </div>
 {% endblock %}
+
+{% block additionalFooterElements %}
+<script src="https://raw.githubusercontent.com/luis-almeida/unveil/master/jquery.unveil.js"></script>
+<script>
+    domReadyQueue.push(function($) {
+
+        $('img').unveil();
+    });
+</script>
+
+{% endblock %}

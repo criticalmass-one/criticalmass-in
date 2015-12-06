@@ -40,7 +40,7 @@
                     {% for photo in photos %}
                         <div class="col-md-4 photo">
                             <a href="{{ path('caldera_criticalmass_photo_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate(), 'photoId': photo.id }) }}">
-                                <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                                <img src="#" data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
                             </a>
                            {#<img src="{{ '/relative/path/to/image.jpg'|imagine_filter('my_thumb') }}" />#}
                         </div>
