@@ -62,8 +62,11 @@ class PhotoController extends AbstractController
         }
     }
 
-    public function showAction(Request $request, $photoId)
+    public function showAction(Request $request, $citySlug, $rideDate, $photoId)
     {
+        $city = $this->getCheckedCity($citySlug);
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
         $photo = $this->getPhotoRepository()->find($photoId);
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
@@ -72,7 +75,9 @@ class PhotoController extends AbstractController
             [
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,
-                'previousPhoto' => $previousPhoto
+                'previousPhoto' => $previousPhoto,
+                'city' => $city,
+                'ride' => $ride
             ]
         );
     }
