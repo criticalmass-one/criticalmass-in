@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassDesktopBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Caldera\CriticalmassCoreBundle\Entity\SubRide;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class SubRideController extends Controller
+class SubrideController extends Controller
 {
     public function addAction(Request $request, $citySlug, $rideDate)
     {
