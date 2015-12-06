@@ -1,55 +1,50 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block content %}
 
-    <div class="container">
-        <img src="{{ photo.getFilePathByDepth(3) }}">
-        <br>
-        {% if app.getUser().getId() == photo.getUser().getId() %}
-            <a class="btn btn-default" href="#" title="Löschen" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-trash"></i></a>
-            <a class="btn btn-default" href="{{ path ('criticalmass_gallery_photos_edit', {'photoId' : photo.getId()}) }}" title="Bearbeiten"><i class="fa fa-trash"></i></a>
-        {% else %}
-            <a class="btn btn-default" href="#" title="Melden" data-toggle="modal" data-target="#modalReport"><i class="fa fa-trash"></i></a>
-        {% endif %}
-            <p>{{ photo.getDescription() }}</p>
-
-        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:write', { 'photoId': photo.getId() })) }}
-
-        {{ render(controller('CalderaCriticalmassTimelineBundle:Post:list', { 'photoId': photo.getId() })) }}
-    </div>
-
-    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Kommentar löschen</h4>
-                </div>
-                <div class="modal-body">
-                    <span id="trackIdLabel"></span>
-                    <p>Willst Du dieses Bild wirklich löschen?</p>
-
-                    <a id="deleteButton" href="{{ path ('criticalmass_gallery_photos_delete', {'photoId' : photo.getId()}) }}" class="btn btn-success">Ja, löschen</a>
-                </div>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <img class="auto-scale" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
         </div>
     </div>
 
-    <div class="modal fade" id="modalReport" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Bild melden</h4>
-                </div>
-                <div class="modal-body">
-                    <span id="trackIdLabel"></span>
-                    <p>Willst Du dieses Bild melden?</p>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pager">
+                 <li class="previous disabled"><a href="#">&larr; Vorige Tour</a></li>
 
-                    <a id="deleteButton" href="{{ path ('criticalmass_gallery_photos_report', {'photoId' : photo.getId()}) }}" class="btn btn-success">Ja, löschen</a>
-                </div>
-            </div>
+                 <li class="next disabled"><a href="#">Nächste Tour &rarr;</a></li>
+            </ul>
         </div>
     </div>
+</div>
 
+{% endblock %}
+
+{% block additionalFooterElements %}
+<script src="https://raw.githubusercontent.com/gestixi/image-scale/master/image-scale.js"></script>
+
+    <script>
+        domReadyQueue.push(function($) {
+            var $img = $('img.auto-scale');
+
+            $img.load(function() {
+                var parentWidth = $img.parent().width();
+                var maxHeight = 100;    // Max height for the image
+                var ratio = 0;  // Used for aspect ratio
+                var width = $img.width();    // Current image width
+                var height = $img.height();  // Current image height
+
+                // Check if the current width is larger than the max
+                if(width > parentWidth){
+                    ratio = parentWidth / width;   // get ratio for scaling image
+                    $(this).css("width", parentWidth); // Set new width
+                    $(this).css("height", height * ratio);  // Scale height based on ratio
+                    height = height * ratio;    // Reset height to match scaled image
+                    width = width * ratio;    // Reset width to match scaled image
+                }
+            });
+        });
+    </script>
 {% endblock %}

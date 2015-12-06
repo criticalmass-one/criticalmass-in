@@ -11,3 +11,4 @@ imports:
     - { resource: swiftmailer.yml }
     - { resource: twig.yml }
     - { resource: vich.yml }
+    - { resource: liip.yml }

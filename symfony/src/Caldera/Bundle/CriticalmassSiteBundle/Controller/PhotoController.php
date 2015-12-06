@@ -64,10 +64,15 @@ class PhotoController extends AbstractController
 
     public function showAction(Request $request, $photoId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
+        $photo = $this->getPhotoRepository()->find($photoId);
 
-        return $this->render('CriticalmassGalleryBundle:Default:show.html.twig', array('photo' => $photo));
+        return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
+            [
+                'photo' => $photo,
+                'nextPhoto' => null,
+                'previousPhoto' => null
+            ]
+        );
     }
 
     public function deleteAction(Request $request, $photoId = 0)
