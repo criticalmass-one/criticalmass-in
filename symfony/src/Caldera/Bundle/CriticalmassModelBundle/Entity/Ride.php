@@ -31,7 +31,7 @@ class Ride
     protected $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride")
      */
     protected $tracks;
 
