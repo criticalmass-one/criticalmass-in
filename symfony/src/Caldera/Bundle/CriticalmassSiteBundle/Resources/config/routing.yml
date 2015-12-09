@@ -13,11 +13,7 @@ caldera_criticalmass_track:
 caldera_criticalmass_trackimport:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/trackimport.yml"
     prefix: /
-    
-caldera_criticalmass_profilephoto:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/profilephoto.yml"
-    prefix: /profile
-    
+
 caldera_criticalmass_blog:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/blog.yml"
     prefix: /
