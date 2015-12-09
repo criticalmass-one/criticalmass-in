@@ -123,7 +123,7 @@ class PhotoRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
         $builder->andWhere($builder->expr()->eq('photo.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.enabled', true));
+        //$builder->andWhere($builder->expr()->eq('photo.enabled', true));
 
         $builder->addOrderBy('photo.dateTime', 'ASC');
 

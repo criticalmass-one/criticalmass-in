@@ -222,4 +222,25 @@ class PhotoController extends AbstractController
             ]
         );
     }
+
+    public function toggleAction(Request $request, $citySlug, $rideDate, $photoId)
+    {
+        /**
+         * @var Photo $photo
+         */
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $photo->setEnabled(!$photo->getEnabled());
+
+        $em->persist($photo);
+        $em->flush();
+
+        return $this->redirectToRoute('caldera_criticalmass_photo_manage',
+        [
+           'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
+            'rideDate' => $photo->getRide()->getFormattedDate()
+        ]);
+    }
 }

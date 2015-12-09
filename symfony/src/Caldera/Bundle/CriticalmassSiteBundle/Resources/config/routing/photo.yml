@@ -9,6 +9,10 @@ caldera_criticalmass_photo_user_list:
 caldera_criticalmass_photo_manage:
     pattern: /{citySlug}/{rideDate}/managephotos
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:manage }
+
+caldera_criticalmass_photo_toggle:
+    pattern: /{citySlug}/{rideDate}/photo/{{photoId}}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:toggle }
     
 caldera_criticalmass_gallery_photos_upload_ride_process:
     pattern: /{citySlug}/{rideDate}/processphoto

@@ -53,11 +53,11 @@
                                             <i class="fa fa-trash-o"></i>
                                         </a>
                                         {% if photo.enabled %}
-                                            <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_photo_toggle', {'trackId': photo.getId()}) }}">
+                                            <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
                                                 <i class="fa fa-eye-slash"></i>
                                             </a>
                                         {% else %}
-                                            <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_photo_toggle', {'trackId': photo.getId()}) }}">
+                                            <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         {% endif %}
