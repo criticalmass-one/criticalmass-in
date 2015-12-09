@@ -264,16 +264,5 @@ class RideRepository extends EntityRepository
 
         return $result;
     }
-
-    public function findRidesWithPhotosByUser(User $user)
-    {
-        $builder = $this->createQueryBuilder('photo');
-
-
-        $query = $builder->getQuery();
-        $result = $query->getResult();
-
-        return $result;
-    }
 }
 
