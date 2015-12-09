@@ -1,28 +1,24 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gallery\ExifReader;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
 
-class DateTimeReader extends AbstractExifReader {
-    protected $dateTime;
+use Symfony\Component\Config\Definition\Exception\Exception;
+
+class DateTimeExifReader extends AbstractExifReader {
+    /**
+     * @var \DateTime $dateTime
+     */
+    protected $dateTime = null;
 
     public function execute()
     {
-        if (isset($this->exifData['IFD0']['DateTime']))
-        {
-            $dateTime = $this->exifData['IFD0']['DateTime'];
+        if (isset($this->exifData['EXIF']['DateTimeOriginal'])) {
+            $this->dateTime = new \DateTime($this->exifData['EXIF']['DateTimeOriginal']);
 
-            $dateTimeParts = explode(' ', $dateTime);
-
-            $dateTimeParts[0] = str_replace(':', '-', $dateTimeParts[0]);
-
-            $dateTime = implode(' ', $dateTimeParts);
-            
-            $this->dateTime = new \DateTime($dateTime);
+            //$this->dateTime->setTimezone(new \DateTimeZone('Europe/Berlin'));
         }
-        else
-        {
-            return null;
-        }
+
+        return $this;
     }
     
     public function getDateTime()

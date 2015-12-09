@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\ORM\EntityRepository;
@@ -85,6 +86,22 @@ class TrackRepository extends EntityRepository
         $query = $builder->getQuery();
 
         $result = $query->getResult();
+
+        return $result;
+    }
+
+    public function findByUserAndRide(Ride $ride, User $user)
+    {
+        $builder = $this->createQueryBuilder('track');
+
+        $builder->select('track');
+        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
+        $builder->andWhere($builder->expr()->eq('track.user', $user->getId()));
+        $builder->andWhere($builder->expr()->eq('track.activated', true));
+
+        $query = $builder->getQuery();
+
+        $result = $query->getOneOrNullResult();
 
         return $result;
     }

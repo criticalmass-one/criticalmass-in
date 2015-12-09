@@ -4,7 +4,7 @@
     {% set pastRide = false %}
 {% endif %}
 
-{% if pastRide and false and ride.enablePhotoUpload and city.enablePhotoUpload and app.getUser() and app.getUser().enablePhotoUpload %}
+{% if pastRide and app.getUser() %}
     {% set photoUploadEnabled = true %}
 {% else %}
     {% set photoUploadEnabled = false %}

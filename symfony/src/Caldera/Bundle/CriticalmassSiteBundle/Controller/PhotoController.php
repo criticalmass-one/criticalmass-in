@@ -2,7 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoResizer\PhotoResizer;
+use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,6 +141,37 @@ class PhotoController extends AbstractController
         $em->persist($photo);
         $em->flush();
 
+        /**
+         * @var DateTimeExifReader $dter
+         */
+        $dter = $this->get('caldera.criticalmass.image.exifreader.datetime');
+
+        $dateTime = $dter
+                        ->setPhoto($photo)
+                        ->execute()
+                        ->getDateTime();
+
+        $photo->setDateTime($dateTime);
+
+        $em->persist($photo);
+        $em->flush();
+
+        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+
+        if ($track) {
+            /**
+             * @var PhotoGps $pgps
+             */
+            $pgps = $this->get('caldera.criticalmass.image.photogps');
+
+            $pgps
+                ->setPhoto($photo)
+                ->setTrack($track)
+                ->execute();
+
+            $em->merge($photo);
+            $em->flush();
+        }
 
         /*
         $photo->handleUpload();
