@@ -193,7 +193,10 @@ class GpxReader {
         $gcl = new GpxCoordLoop($this);
         $result = $gcl->execute($dateTime);
         
-        return array('latitude' => $this->getLatitudeOfPoint($result), 'longitude' => $this->getLongitudeOfPoint($result));
+        return [
+            'latitude' => $this->getLatitudeOfPoint($result),
+            'longitude' => $this->getLongitudeOfPoint($result)
+            ];
     }
 
     public function calculateDuration()

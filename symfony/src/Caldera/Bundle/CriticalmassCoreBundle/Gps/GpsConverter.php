@@ -4,7 +4,6 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps;
 
 class GpsConverter
 {
-
     protected function coordinateToDec($coordinate) {
         list($dividend, $divisor) = explode('/', $coordinate);
 

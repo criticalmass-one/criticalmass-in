@@ -21,25 +21,18 @@ class GpxCoordLoop
     {
         $found = false;
 
-        while (!$found)
-        {
+        while (!$found) {
             $mid = $this->startIndex + (int) floor(($this->endIndex - $this->startIndex) / 2);
 
-            if ($this->gpxReader->getDateTimeOfPoint($mid)->format('U') < $dateTime->format('U'))
-            {
+            if ($this->gpxReader->getDateTimeOfPoint($mid)->format('U') < $dateTime->format('U')) {
                 $this->startIndex = $mid;
-            }
-            elseif ($this->gpxReader->getDateTimeOfPoint($mid)->format('U') > $dateTime->format('U'))
-            {
+            } elseif ($this->gpxReader->getDateTimeOfPoint($mid)->format('U') > $dateTime->format('U')) {
                 $this->endIndex = $mid;
-            }
-            else
-            {
+            } else {
                 return $mid;
             }
             
-            if ($this->endIndex - $this->startIndex < 2)
-            {
+            if ($this->endIndex - $this->startIndex < 2) {
                 return $mid;
             }
         }
