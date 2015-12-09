@@ -6,7 +6,7 @@ caldera_criticalmass_photo_user_list:
     pattern: /photos/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:userlist }
 
-caldera_criticalmass_photo_ride_user_list:
+caldera_criticalmass_photo_manage:
     pattern: /{citySlug}/{rideDate}/managephotos
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:manage }
     

@@ -10,15 +10,67 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Fotos sortieren</h2>
+                <h2>Fotos bearbeiten</h2>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                {% for photo in photos %}
-                    <img src="{{ photoPath(photo, 'thumbnail') }}" />
-                {% endfor %}
+                <div class="row">
+                    {% for photo in photos %}
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <dl>
+                                    <dt>
+                                        Aufnahmedatum
+                                    </dt>
+                                    <dd>
+                                        {{ photo.dateTime.format('d.m.Y H:i:s') }}
+                                    </dd>
+
+                                    <dt>
+                                        Koordinaten
+                                    </dt>
+                                    <dd>
+                                        {% if photo.hasCoordinates() %}ja ({{ photo.latitude }}, {{ photo.longitude }}){% else %}nein{% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                        <a href="#" class="btn btn-default btn-xs">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                        {% if photo.enabled %}
+                                            <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_photo_toggle', {'trackId': photo.getId()}) }}">
+                                                <i class="fa fa-eye-slash"></i>
+                                            </a>
+                                        {% else %}
+                                            <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_photo_toggle', {'trackId': photo.getId()}) }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="#" class="btn btn-default btn-xs">
+                                            <i class="fa fa-location-arrow"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

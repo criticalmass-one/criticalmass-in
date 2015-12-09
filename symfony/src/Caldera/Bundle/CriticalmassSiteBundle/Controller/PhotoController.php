@@ -201,28 +201,25 @@ class PhotoController extends AbstractController
 
     public function userlistAction(Request $request)
     {
-        $rides = $this->getRideRepository()->findRidesWithPhotosByUser($this->getUser());
+        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
 
-        /*return $this->render('CalderaCriticalmassSiteBundle:Photo:upload.html.twig', [
-            'ride' => $ride
-        ]);*/
-
-        foreach ($rides as $ride)
-        {
-            echo "FOOO: ".$ride->getId()."<br />";
-
-        }
-        return new Response('');
+        return $this->render('CalderaCriticalmassSiteBundle:Photo:userlist.html.twig',
+            [
+                'result' => $result
+            ]
+        );
     }
 
     public function manageAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-        
-        $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
-        
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:manage.html.twig', [
-            'photos' => $photos
-        ]);
+
+        $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
+
+        return $this->render('CalderaCriticalmassSiteBundle:Photo:manage.html.twig',
+            [
+                'photos' => $photos
+            ]
+        );
     }
 }
