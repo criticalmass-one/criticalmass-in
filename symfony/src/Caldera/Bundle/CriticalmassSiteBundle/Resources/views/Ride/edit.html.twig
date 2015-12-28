@@ -12,20 +12,16 @@
 
 {% block additionalHeaderElements %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
-    {% javascripts
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/EditRidePage.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
     <script>
-        $(function() {
-            var editRidePage = new EditRidePage();
+
+        function callback(editRidePage) {
+            //ridePage.addCity('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
+
+            //ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
 
             var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-            
+
             editRidePage.setCityLatLng(cityLatLng);
 
             {% for ride in city.getRides() %}
@@ -39,7 +35,10 @@
             {% endif %}
 
             editRidePage.init();
-        });
+        }
+
+        CriticalMass.loadModule('EditRidePage', null, null, callback);
+
     </script>
 {% endblock %}
 
