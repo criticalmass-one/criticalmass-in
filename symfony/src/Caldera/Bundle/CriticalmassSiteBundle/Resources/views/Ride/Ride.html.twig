@@ -92,10 +92,17 @@
 {% endif %}
 
 <script>
-    function initMap() {
-        var map = new Map('map', []);
+    function callback(ridePage) {
+        ridePage.addCity('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
 
-        /* City */
+        ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
+    }
+
+    function initMap() {
+        var ridePage = CriticalMass.loadModule('RidePage', null, null, callback);
+    }
+
+        {#/* City */
         var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
 
         /* Rides */
@@ -185,7 +192,8 @@
         map.map.fitBounds(rideContainer.getBounds());
         rideContainer.getEntity(0).openPopup();
         {% endif %}
-    }
+        #}
+
 
     domReadyQueue.push(function($) {
         initMap();

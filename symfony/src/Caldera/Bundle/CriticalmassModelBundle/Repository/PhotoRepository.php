@@ -115,7 +115,7 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
-    public function findPhotosByUserAndRide(User $user, Ride $ride)
+    public function buildQueryPhotosByUserAndRide(User $user, Ride $ride)
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -127,11 +127,16 @@ class PhotoRepository extends EntityRepository
 
         $builder->addOrderBy('photo.dateTime', 'ASC');
 
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
+        return $builder->getQuery();
     }
+
+    public function findPhotosByUserAndRide(User $user, Ride $ride)
+    {
+        $query =  $this->buildQueryPhotosByUserAndRide($user, $ride);
+
+        return $query->getResult();
+    }
+
+
 }
 

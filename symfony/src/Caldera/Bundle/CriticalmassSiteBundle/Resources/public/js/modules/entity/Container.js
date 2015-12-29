@@ -1,73 +1,66 @@
-Container = function()
-{
-    this.list = [];
-    this.layer = L.featureGroup();
-};
+define(['leaflet'], function() {
 
-Container.prototype.list = null;
-Container.prototype.layer = null;
+    Container = function () {
+        this._list = [];
+        this._layer = L.featureGroup();
+    };
 
-Container.prototype.add = function(entity)
-{
-    this.list.push(entity);
-};
+    Container.prototype._list = null;
+    Container.prototype._layer = null;
 
-Container.prototype.addTo = function(map)
-{
-    for (index = 0; index < this.list.length; ++index) {
-        this.list[index].addTo(this.layer);
-    }
+    Container.prototype.add = function (entity) {
+        this._list.push(entity);
+    };
 
-    this.layer.addTo(map.map);
-};
+    Container.prototype.addTo = function (map) {
+        for (index = 0; index < this._list.length; ++index) {
+            this._list[index].addTo(this._layer);
+        }
 
-Container.prototype.isEmpty = function()
-{
-    return this.list.length == 0;
-};
+        this._layer.addTo(map.map);
+    };
 
-Container.prototype.countEntities = function()
-{
-    return this.list.length;
-};
+    Container.prototype.isEmpty = function () {
+        return this._list.length == 0;
+    };
 
-Container.prototype.addControl = function(layerArray, title)
-{
-    if (!this.isEmpty()) {
-        layerArray[title] = this.layer;
-    }
-};
+    Container.prototype.countEntities = function () {
+        return this._list.length;
+    };
 
-Container.prototype.getBounds = function()
-{
-    return this.layer.getBounds();
-};
+    Container.prototype.addControl = function (_layerArray, title) {
+        if (!this.isEmpty()) {
+            _layerArray[title] = this._layer;
+        }
+    };
 
-Container.prototype.getEntity = function(index)
-{
-    return this.list[index];
-};
+    Container.prototype.getBounds = function () {
+        return this._layer.getBounds();
+    };
 
-Container.prototype.addLayer = function(index)
-{
-    this.list[index].addTo(this.layer);
-};
+    Container.prototype.getEntity = function (index) {
+        return this._list[index];
+    };
 
-Container.prototype.removeLayer = function(index)
-{
-    return this.list[index].removeLayer(this.layer);
-};
+    Container.prototype.add_layer = function (index) {
+        this._list[index].addTo(this._layer);
+    };
 
-Container.prototype.snapTo = function(map, polyline)
-{
-    for (var index in this.list) {
-        this.list[index].snapTo(map.map, polyline);
-    }
-};
+    Container.prototype.remove_layer = function (index) {
+        return this._list[index].remove_layer(this._layer);
+    };
 
-Container.prototype.addEvent = function(type, callback)
-{
-    for (var index in this.list) {
-        this.list[index].addEvent(type, callback);
-    }
-};
+    Container.prototype.snapTo = function (map, polyline) {
+        for (var index in this._list) {
+            this._list[index].snapTo(map.map, polyline);
+        }
+    };
+
+    Container.prototype.addEvent = function (type, callback) {
+        for (var index in this._list) {
+            this._list[index].addEvent(type, callback);
+        }
+    };
+
+    return Container;
+});

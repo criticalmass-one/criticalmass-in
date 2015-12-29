@@ -214,11 +214,19 @@ class PhotoController extends AbstractController
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
+        $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            32
+        );
 
         return $this->render('CalderaCriticalmassSiteBundle:Photo:manage.html.twig',
             [
-                'photos' => $photos
+                'pagination' => $pagination
             ]
         );
     }

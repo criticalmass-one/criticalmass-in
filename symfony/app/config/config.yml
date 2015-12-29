@@ -12,3 +12,4 @@ imports:
     - { resource: twig.yml }
     - { resource: vich.yml }
     - { resource: liip.yml }
+    - { resource: knp.yml }

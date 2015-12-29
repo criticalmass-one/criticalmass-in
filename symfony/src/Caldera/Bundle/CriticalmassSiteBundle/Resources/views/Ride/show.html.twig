@@ -2,9 +2,10 @@
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
+
 {% block additionalHeaderElements %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
     {% javascripts
     '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*.js'
@@ -12,7 +13,7 @@
     '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% endjavascripts %}#}
 {% endblock %}
 
 {% block breadcrumb %}

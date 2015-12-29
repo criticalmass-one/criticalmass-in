@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    {% for photo in photos %}
+                    {% for photo in pagination %}
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col-md-12">
@@ -70,6 +70,14 @@
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                        {{ knp_pagination_render(pagination) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
