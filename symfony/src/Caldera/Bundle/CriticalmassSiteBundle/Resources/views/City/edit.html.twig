@@ -10,18 +10,9 @@
 
 {% block additionalHeaderElements %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
-    {% javascripts
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/EditCityPage.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
     <script>
-        $(function() {
-            var editCityPage = new EditCityPage();
-        });
+        CriticalMass.loadModule('EditCityPage', null, null);
     </script>
 {% endblock %}
 
