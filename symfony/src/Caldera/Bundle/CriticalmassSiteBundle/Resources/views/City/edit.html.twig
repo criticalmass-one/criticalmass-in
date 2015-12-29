@@ -16,24 +16,26 @@
     </script>
 {% endblock %}
 
+{% block breadcrumb %}
+    {% if city != null %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">
+            {{ city.getCity() }}
+        </a>
+    </li>
+    <li class="active">
+        Stadt editieren
+    </li>
+    {% else %}
+    <li class="active">
+        Stadt hinzufügen
+    </li>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     {{ form_errors(form) }}
     <div class="container">
-        {% if city != null %}
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a></li>
-            <li class="active">Stadt editieren</li>
-        </ol>
-        {% else %}
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li class="active">Stadt hinzufügen</li>
-        </ol>
-        {% endif %}
-
         {% if hasErrors is not null %}
             {% if hasErrors == true %}
                 <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
@@ -57,172 +59,178 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <h2>Städte-Informationen</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Titel:</label>
-                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Name:</label>
-                    {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Beschreibung:</label>
-                    {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Punchline:</label>
-                    {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“ oder „Reclaim the streets“ ist ja schon fast Standard.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Lange Beschreibung:</label>
-                    {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Webseite:</label>
-                    {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Verlinke eine Webseite über diese Critical Mass.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Seite auf facebook:</label>
-                    {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Wenn jemand eine Seite auf facebook für diese Critical Mass betreibt, kannst du sie hier verlinken.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">twitter:</label>
-                    {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Link zum twitter-Konto dieser Critical Mass.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.cityPopulation) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Einwohnerzahl:</label>
-                    {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer Stadt benötigt.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Tour-Informationen</h2>
-                <p>criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher festgelegten Treffpunkt starten.</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.isStandardable) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Hat regelmäßige Touren:</label>
-                    {{ form_widget(form.isStandardable, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Aktiviere diese Checkbox, um vordefinierte Touren für diese Stadt einzutragen.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.standardDayOfWeek) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Wochentag der Touren:</label>
-                    {{ form_widget(form.standardDayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Stelle hier den Wochentag ein, an dem die Touren stattfinden.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.standardWeekOfMonth) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Woche der Touren:</label>
-                    {{ form_widget(form.standardWeekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Wähle hier die Woche, in der die Touren stattfinden.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.standardTime) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Uhrzeit der Touren:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            {{ form_widget(form.isStandardableTime) }}
-                        </span>
-                        {% if city != null and city.getIsStandardableTime() %}
-                            {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control' } }) }}
-                        {% else %}
-                            {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
-                        {% endif %}
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Städte-Informationen</h2>
                     </div>
-                    <p class="help-block">Startzeit der Touren.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Titel:</label>
+                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Name:</label>
+                            {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Beschreibung:</label>
+                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Punchline:</label>
+                            {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“ oder „Reclaim the streets“ ist ja schon fast Standard.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Lange Beschreibung:</label>
+                            {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Webseite:</label>
+                            {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Verlinke eine Webseite über diese Critical Mass.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Seite auf facebook:</label>
+                            {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Wenn jemand eine Seite auf facebook für diese Critical Mass betreibt, kannst du sie hier verlinken.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">twitter:</label>
+                            {{ form_widget(form.twitter, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Link zum twitter-Konto dieser Critical Mass.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.cityPopulation) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Einwohnerzahl:</label>
+                            {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer Stadt benötigt.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{% if form_errors(form.standardLocation) %} has-error has-feedback{% endif %}">
-                    <label class="control-label" for="">Treffpunkt der Touren:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            {{ form_widget(form.isStandardableLocation) }}
-                        </span>
-                        {% if city != null and city.getIsStandardableLocation() %}
-                            {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control' } }) }}
-                        {% else %}
-                            {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
-                        {% endif %}
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Tour-Informationen</h2>
+                        <p>criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher festgelegten Treffpunkt starten.</p>
                     </div>
-                    <p class="help-block">Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.isStandardable) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Hat regelmäßige Touren:</label>
+                            {{ form_widget(form.isStandardable, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Aktiviere diese Checkbox, um vordefinierte Touren für diese Stadt einzutragen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.standardDayOfWeek) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Wochentag der Touren:</label>
+                            {{ form_widget(form.standardDayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Stelle hier den Wochentag ein, an dem die Touren stattfinden.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.standardWeekOfMonth) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Woche der Touren:</label>
+                            {{ form_widget(form.standardWeekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Wähle hier die Woche, in der die Touren stattfinden.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.standardTime) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Uhrzeit der Touren:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    {{ form_widget(form.isStandardableTime) }}
+                                </span>
+                                {% if city != null and city.getIsStandardableTime() %}
+                                    {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control' } }) }}
+                                {% else %}
+                                    {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                                {% endif %}
+                            </div>
+                            <p class="help-block">Startzeit der Touren.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.standardLocation) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Treffpunkt der Touren:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    {{ form_widget(form.isStandardableLocation) }}
+                                </span>
+                                {% if city != null and city.getIsStandardableLocation() %}
+                                    {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control' } }) }}
+                                {% else %}
+                                    {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                                {% endif %}
+                            </div>
+                            <p class="help-block">Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
