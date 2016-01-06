@@ -33,6 +33,10 @@ define(['leaflet'], function(L) {
         layerArray[title] = this._layerGroup;
     };
 
+    MapPositions.prototype.getLayer = function() {
+        return this._layerGroup;
+    };
+
     MapPositions.prototype._clearOldPositions = function (resultArray) {
         for (var existingIdentifier in this._positionsArray) {
             var found = false;

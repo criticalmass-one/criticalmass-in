@@ -32,6 +32,10 @@ define(['leaflet'], function() {
         layerArray[title] = this._layer;
     };
 
+    Container.prototype.getLayer = function() {
+        return this._layer;
+    };
+
     Container.prototype.getBounds = function () {
         return this._layer.getBounds();
     };

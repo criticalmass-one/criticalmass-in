@@ -3,7 +3,10 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._initContainer();
         this._initMap();
         this._initLive();
+        this._initLayers();
         this._initControls();
+
+        this._startLive();
     };
 
     LivePage.prototype._map = null;
@@ -36,6 +39,12 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._map = new Map('map', []);
     };
 
+    LivePage.prototype._initLayers = function() {
+        this._map.addLayer(this._rideContainer.getLayer());
+        this._map.addLayer(this._cityContainer.getLayer());
+        this._map.addLayer(this._mapPositions.getLayer());
+    };
+
     LivePage.prototype._initControls = function() {
         this._rideContainer.addControl(this._layers, 'Tour');
         this._cityContainer.addControl(this._layers, 'Städte');
@@ -56,7 +65,9 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._mapPositions = new MapPositions();
 
         this._mapPositions.addControl(this._layers, 'Teilnehmer');
+    };
 
+    LivePage.prototype._startLive = function() {
         this._mapPositions.start();
     };
 

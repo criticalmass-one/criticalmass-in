@@ -60,6 +60,10 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         }).addTo(this.map);
     };
 
+    Map.prototype.addLayer = function(layer) {
+        this.map.addLayer(layer);
+    };
+
     Map.prototype.setView = function (latLng, zoom) {
         this.map.setView(latLng, zoom);
     };
