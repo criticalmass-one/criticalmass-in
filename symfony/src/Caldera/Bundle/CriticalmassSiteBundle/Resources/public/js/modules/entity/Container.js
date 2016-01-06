@@ -28,10 +28,8 @@ define(['leaflet'], function() {
         return this._list.length;
     };
 
-    Container.prototype.addControl = function (_layerArray, title) {
-        if (!this.isEmpty()) {
-            _layerArray[title] = this._layer;
-        }
+    Container.prototype.addControl = function(layerArray, title) {
+        layerArray[title] = this._layer;
     };
 
     Container.prototype.getBounds = function () {

@@ -1,4 +1,4 @@
-define(['leaflet', 'CityMarker', 'LocationMarker'], function() {
+define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function() {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -61,7 +61,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function() {
     };
 
     Map.prototype.setView = function (latLng, zoom) {
-        //this.map.setView(latLng, zoom);
+        this.map.setView(latLng, zoom);
     };
 
     return Map;

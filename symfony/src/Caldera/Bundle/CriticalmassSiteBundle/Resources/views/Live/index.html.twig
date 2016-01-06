@@ -6,19 +6,14 @@
 
 {% block additionalHeaderElements %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-
+{#
     {% javascripts
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/core/Url.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/MapPositions.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/leaflet.groupedlayercontrol.js'
     '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/L.Control.Locate.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
+  #}
     <style>
         #map {
             position: absolute;
@@ -48,87 +43,15 @@
 {% block content %}
     <div id="map">
     </div>
-{% endblock %}
 
-{% block additionalFooterElements %}
     <script>
-        $(function() {
-            $('#map').css('top', $('nav#navigation').css('height'));
+        var callback = function(livePage) {
+            livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});
 
-            var map = new Map('map', []);
-            
-            var rideContainer = new Container();
-            var cityContainer = new Container();
-            
-            var ride;
-            var city;
-            
-            {% for ride in rides %}
-            city = new City('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+            livePage.addRide(null, '{{ ride.getFancyTitle() }}', '{{ ride.getDescription()|e('js') }}', {{ride.getLatitude()}},{{ride.getLongitude()}},'{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}')
+        };
 
-            ride = new Ride(null, '{{ ride.getFancyTitle() }}', '{{ ride.getDescription()|e('js') }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
-            
-            rideContainer.add(ride);
-            
-            {% if not ride.hasLocation() %}
-            cityContainer.add(city);
-            {% endif %}
-            {% endfor %}
-            
-            rideContainer.addTo(map);
-            cityContainer.addTo(map);
-
-            var mapPositions = new MapPositions();
-            mapPositions.addTo(map);
-            mapPositions.start();
-            
-            /* LayerControl */
-            var layers = [];
-
-            rideContainer.addControl(layers, 'Tour');
-            cityContainer.addControl(layers, 'Städte');
-            
-            var layerControl = L.control.groupedLayers({}, {
-                'Critical Mass': layers
-            }, {
-                collapsed: false
-            });
-
-            layerControl.addTo(map.map);
-
-            var locateControl = L.control.locate({
-                position: "bottomright",
-                drawCircle: true,
-                follow: true,
-                setView: true,
-                keepCurrentZoomLevel: true,
-                markerStyle: {
-                    weight: 1,
-                    opacity: 0.8,
-                    fillOpacity: 0.8
-                },
-                circleStyle: {
-                    weight: 1,
-                    clickable: false
-                },
-                icon: "fa fa-location-arrow",
-                metric: false,
-                strings: {
-                    title: "My location",
-                    popup: "You are within {distance} {unit} from this point",
-                    outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
-                },
-                locateOptions: {
-                    maxZoom: 18,
-                    watch: true,
-                    enableHighAccuracy: true,
-                    maximumAge: 10000,
-                    timeout: 10000
-                }
-            }).addTo(map.map);
-            
-            map.map.setView([53.4015275, 9.7984212], 12);
-
-        });
+        var livePage = CriticalMass.loadModule('LivePage', null, null, callback);
     </script>
 {% endblock %}
+

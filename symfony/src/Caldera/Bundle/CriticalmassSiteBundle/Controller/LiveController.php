@@ -3,16 +3,22 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+
 class LiveController extends AbstractController
 {
     public function indexAction()
     {
-        $rides = $this->getRideRepository()->findCurrentRides();
+        /**
+         * @var Ride $ride
+         */
+        $ride = $this->getRideRepository()->find(1);
         
         return $this->render(
             'CalderaCriticalmassSiteBundle:Live:index.html.twig',
             array(
-                'rides' => $rides
+                'ride' => $ride,
+                'city' => $ride->getCity()
             )
         );
     }
