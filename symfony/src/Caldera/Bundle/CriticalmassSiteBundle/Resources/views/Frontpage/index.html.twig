@@ -2,50 +2,68 @@
 
 {% block title %}criticalmass.in{% endblock %}
 
-{% block content %}
-    <a href="https://github.com/calderacc/criticalmass"><img class="pull-right" style="margin-top: -20px;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+{% block breadcrumb %}
+    <li class="active">Startseite</li>
+{% endblock %}
 
+{% block content %}
     <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li class="active">Startseite</li>
-        </ol>
-        
         <div class="row">
             <div class="col-md-4">
-                <h2>Freitagnachtfieber</h2>
+                <h2>
+                    Freitagnachtfieber
+                </h2>
 
-                <p>Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?</p>
+                <p>
+                    Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?
+                </p>
 
-                    <div class="btn-group" role="group" aria-label="...">
-                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_list') }}" role="button"><i class="halflings list"></i> Städte</a>
-                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_list') }}" role="button"><i class="halflings uni-calendar"></i> Kalender</a>
-                    </div>
+                <div class="btn-group" role="group" aria-label="...">
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_list') }}" role="button">
+                        <i class="halflings list"></i>
+                        Städte
+                    </a>
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_list') }}" role="button">
+                        <i class="halflings uni-calendar"></i>
+                        Kalender
+                    </a>
+                </div>
             </div>
             
             <div class="col-md-4">
-                <h2>Was ist die Masse?</h2>
+                <h2>
+                    Was ist die Masse?
+                </h2>
 
-                <p>Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?</p>
+                <p>
+                    Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?
+                </p>
                 
-                <p class="text-center"><a class="btn btn-success" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}"><i class="halflings road"></i> Mehr darüber</a></p>
+                <p class="text-center">
+                    <a class="btn btn-success" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
+                        <i class="halflings road"></i>
+                        Mehr darüber
+                    </a>
+                </p>
             </div>
-            <div class="col-md-4">
-                <h2>So geht’s: Live-Tracking</h2>
-                
-                <p>Teile deine Position mit anderen Radfahrern während der Tour.</p>
 
-                <p class="text-center"><a class="btn btn-success" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}"><i class="halflings map-marker"></i> Live-Tracking mit Glympse</a></p>
-            </div>
             <div class="col-md-4">
-                <h2>criticalmass.in-Blog</h2>
+                <h2>
+                    So geht’s: Live-Tracking
+                </h2>
                 
-                <ul>
-                    {% for article in blogArticles %}
-                    <li><a href="{{ path('caldera_criticalmass_blog_show', { slug: article.getSlug() }) }}">{{ article.getTitle() }}</a></li>
-                    {% endfor %}
-                </ul>
+                <p>
+                    Teile deine Position mit anderen Radfahrern während der Tour.
+                </p>
+
+                <p class="text-center">
+                    <a class="btn btn-success" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">
+                        <i class="halflings map-marker"></i>
+                        Live-Tracking mit Glympse
+                    </a>
+                </p>
             </div>
+
         </div>
     </div>
 {% endblock %}
