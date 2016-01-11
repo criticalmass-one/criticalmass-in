@@ -20,8 +20,19 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype._init = function () {
+        this._loadStyles();
         this._initMap();
         this._addTileLayer();
+    };
+
+    Map.prototype._loadStyles = function() {
+        var link = $('<link>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css'
+        });
+
+        link.appendTo('head');
     };
 
     Map.prototype._initMap = function () {
