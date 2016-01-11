@@ -1,0 +1,30 @@
+<button class="btn btn-default dropdown-toggle" type="button" id="cityListDropdown" data-toggle="dropdown">
+    <i class="fa fa-sort"></i>
+    Sortierung
+    <span class="caret"></span>
+</button>
+
+<ul class="dropdown-menu" role="menu" aria-labelledby="cityListDropdown">
+    <li id="sortByCity" role="presentation">
+        <a role="menuitem" tabindex="-1" href="#">
+            <i class="fa fa-university"></i>
+            Stadt
+        </a>
+    </li>
+    <li id="sortByDistance" role="presentation">
+        <a role="menuitem" tabindex="-1" href="#">
+            <i class="fa fa-map-signs"></i>
+            Entfernung
+        </a>
+    </li>
+    <li id="sortByNextRide" role="presentation">
+        <a role="menuitem" tabindex="-1" href="#">
+            <i class="fa fa-calendar"></i>
+            nächster Tour
+        </a>
+    </li>
+</ul>
+
+<script>
+    CriticalMass.loadModule('CityRideTable');
+</script>
