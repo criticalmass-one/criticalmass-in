@@ -9,6 +9,48 @@
 {% block content %}
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Ab zur nächsten Masse
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Uhrzeit</th>
+                            <th>Stadt</th>
+                            <th>Titel</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for ride in currentRides %}
+                            <tr>
+                                <td>{{ ride.dateTime.format('d.m.Y') }}</td>
+                                <td>{{ ride.dateTime.format('H:i') }} Uhr</td>
+                                <td>
+                                    <a href="{{ path(ride.city) }}">
+                                        {{ ride.city.city }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ path(ride) }}">
+                                        {{ ride.getFancyTitle() }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-4">
                 <h2>
                     Freitagnachtfieber
