@@ -11,6 +11,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         tileLayerUrl: 'https://api.tiles.mapbox.com/v4/maltehuebner.j385n2ak/{z}/{x}/{y}.png',
         mapBoxAccessToken: 'pk.eyJ1IjoibWFsdGVodWVibmVyIiwiYSI6IjB5c2QtNXcifQ.I7OHZr0wtAvqE0wIY_psfg',
         mapAttribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        stylesheetAddress: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css',
         detectRetina: true,
         defaultLatitude: 37.680349,
         defaultLongitude: -1.335927,
@@ -29,7 +30,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         var link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
-            href: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css'
+            href: this.settings.stylesheetAddress
         });
 
         link.appendTo('head');
