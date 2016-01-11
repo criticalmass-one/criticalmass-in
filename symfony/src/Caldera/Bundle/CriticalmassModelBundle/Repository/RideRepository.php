@@ -97,25 +97,25 @@ class RideRepository extends EntityRepository
      *
      * @return array
      */
-    public function findCurrentRides()
+    public function findCurrentRides($order = 'ASC')
     {
         $startDateTime = new \DateTime();
         $startDateTimeInterval = new \DateInterval('P3W'); // three weeks ago
-        $startDateTime->sub($startDateTimeInterval);
+        $startDateTime->add($startDateTimeInterval);
 
         $endDateTime = new \DateTime();
         $endDateTimeInterval = new \DateInterval('P3D'); // three days after
-        $endDateTime->add($endDateTimeInterval);
+        $endDateTime->sub($endDateTimeInterval);
 
         $builder = $this->createQueryBuilder('ride');
 
         $builder->select('ride');
-        $builder->where($builder->expr()->gte('ride.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
-        $builder->andWhere($builder->expr()->lte('ride.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->where($builder->expr()->lte('ride.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->gte('ride.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
 
         $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
 
-        $builder->orderBy('ride.dateTime', 'DESC');
+        $builder->orderBy('ride.dateTime', $order);
 
         $query = $builder->getQuery();
 
