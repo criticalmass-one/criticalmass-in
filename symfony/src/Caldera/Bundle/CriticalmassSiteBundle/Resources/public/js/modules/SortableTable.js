@@ -34,6 +34,7 @@ define([], function() {
         };
 
         this._doSort(sortFunction);
+        this._updateTableHeader(sortAttribute);
     };
 
     SortableTable.prototype._sortByDistance = function () {
@@ -73,6 +74,24 @@ define([], function() {
         });
 
         $table.prepend('<thead>' + tableHeaderContent + '</thead>');
+    };
+
+    SortableTable.prototype._updateTableHeader = function(sortAttribute) {
+        var $table = $('#' + this.settings.tableId);
+        var $tableHeader = $table.find('thead');
+        var $thCell = $tableHeader.find('th[data-sortAttribute="' + sortAttribute + '"]');
+
+        $thCellIcon = $thCell.find('.fa');
+
+        if ($thCellIcon && $thCellIcon.hasClass('fa-sort-asc')) {
+            $thCellIcon.remove();
+            $thCell.prepend('<i class="fa fa-sort-desc"></i>');
+        } else if ($thCellIcon && $thCellIcon.hasClass('fa-sort-desc')) {
+            $thCellIcon.remove();
+            $thCell.prepend('<i class="fa fa-sort-asc"></i>');
+        } else {
+            $thCell.prepend('<i class="fa fa-sort-desc"></i>');
+        }
     };
 
     return SortableTable;
