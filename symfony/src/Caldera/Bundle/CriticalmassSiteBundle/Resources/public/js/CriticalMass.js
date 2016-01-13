@@ -6,7 +6,9 @@ CriticalMass.loadModule = function(name, context, options, callback) {
     require([moduleFile], function(Module) {
         var module = new Module(context, options);
 
-        callback(module);
+        if (callback) {
+            callback(module);
+        }
     });
 };
 
