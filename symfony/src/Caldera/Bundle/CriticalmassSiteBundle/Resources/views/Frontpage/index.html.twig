@@ -10,6 +10,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div class="pull-right">
+                    {% include 'CalderaCriticalmassSiteBundle:Frontpage:Includes/_cityListSort.html.twig' %}
+                </div>
+
                 <h2>
                     Ab zur nächsten Masse
                 </h2>
@@ -18,21 +22,37 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table">
+                <table id="cityList" class="table">
                     <thead>
                         <tr>
-                            <th>Datum</th>
-                            <th>Uhrzeit</th>
-                            <th>Stadt</th>
-                            <th>Titel</th>
+                            <th>
+                                Datum
+                            </th>
+                            <th>
+                                Uhrzeit
+                            </th>
+                            <th>
+                                Stadt
+                            </th>
+                            <th>
+                                Titel
+                            </th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for ride in currentRides %}
-                            <tr>
-                                <td>{{ ride.dateTime.format('d.m.Y') }}</td>
-                                <td>{{ ride.dateTime.format('H:i') }} Uhr</td>
+                            <tr class="city"
+                                data-cityName="{{ ride.city.city }}"
+                                data-latitude="{{ ride.city.latitude }}"
+                                data-longitude="{{ ride.city.longitude }}"
+                                data-currentRide="{{ ride.dateTime.format('Y-m-d H:i') }}">
+                                <td>
+                                    {{ ride.dateTime.format('d.m.Y') }}
+                                </td>
+                                <td>
+                                    {{ ride.dateTime.format('H:i') }} Uhr
+                                </td>
                                 <td>
                                     <a href="{{ path(ride.city) }}">
                                         {{ ride.city.city }}
