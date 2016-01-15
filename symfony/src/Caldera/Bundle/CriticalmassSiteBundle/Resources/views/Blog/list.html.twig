@@ -11,6 +11,19 @@
         
         {% for article in articles %}
             <div class="row">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <img class="img-circle" src="{{ gravatarUrl(article.user, 200) }}" />
+                    </div>
+
+                    <div class="">
+                        <dl>
+                            <dt>veröffentlicht:</dt>
+                            <dd>{{ article.dateTime.format('d.m.Y H:i') }} Uhr</dd>
+                        </dl>
+                    </div>
+                </div>
+
                 <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-12">
@@ -21,18 +34,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             {{ article.getText()|markdown }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Über diesen Artikel</h3>
-                        </div>
-                        <div class="panel-body">
-                            Autor: {{ article.getUser().getUsername() }}<br />
-                            Veröffentlicht: {{ article.getDateTime().format('d.m.Y H:i') }} Uhr
                         </div>
                     </div>
                 </div>

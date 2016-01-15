@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Routing\RequestContext;
@@ -31,10 +32,32 @@ class SiteTwigExtension extends \Twig_Extension
         ];
     }
 
+    public function getFunctions()
+    {
+        return [
+            new \Twig_SimpleFunction('gravatarHash', [$this, 'gravatarHash'], array(
+                'is_safe' => array('html')
+            )),
+            new \Twig_SimpleFunction('gravatarUrl', [$this, 'gravatarUrl'], array(
+                'is_safe' => array('html')
+            ))
+        ];
+    }
+
     public function markdown($text)
     {
         $parser = new MarkdownExtra();
         return $parser->transform($text);
+    }
+
+    public function gravatarHash(User $user)
+    {
+        return md5($user->getEmail());
+    }
+
+    public function gravatarUrl(User $user, $size = 64)
+    {
+        return 'http://www.gravatar.com/avatar/'.$this->gravatarHash($user).'?s='.$size;
     }
 
     public function getName()
