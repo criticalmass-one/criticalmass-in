@@ -1,20 +1,7 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/seiyria/bootstrap-slider/master/css/bootstrap-slider.css">
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-
-
-    {% javascripts
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <link rel="stylesheet" href="/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -57,72 +44,20 @@
     </div>
 
     <script>
-        var $slider;
-        var polylineLatLngs = {{ latLngList }};
-        var map;
-        var track;
-        
-        function initGapWidth() {
-            var gapWidth = {{ gapWidth }};
-            var $startPointInput = $('#form_startPoint');
-            var $endPointInput = $('#form_endPoint');
-            
-            //$startPointInput.val($startPointInput.val() * gapWidth);
-            //$endPointInput.val($endPointInput.val() * gapWidth);
-        }
-        
-        function initSlider() {
-            var sliderOptions = {
-                id: "rangeSlider",
-                min: 0,
-                max: polylineLatLngs.length,
-                range: true,
-                value: [{{ track.startPoint / gapWidth }}, {{ track.endPoint / gapWidth }}],
-                tooltip: 'hide'
-            };
-            
-            $slider = $('#slider');
-            $slider.slider(sliderOptions);
+        CriticalMass.loadModule('TrackRangePage', null, null, function(rangePage) {
+            rangePage.setStartPoint({{ track.startPoint }});
+            rangePage.setEndPoint({{ track.endPoint }});
+            rangePage.setGapWidth({{ gapWidth }});
 
-            $slider.on("slide", function(slideEvt) {
-                var gapWidth = {{ gapWidth }};
-                var endValue = slideEvt.value.pop();
-                var beginValue = slideEvt.value.pop();
+            rangePage.setPolylineLatLngs({{ latLngList }});
+            rangePage.setColor({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
 
-                $('#form_startPoint').val(beginValue * gapWidth);
-                $('#form_endPoint').val(endValue * gapWidth);
-
-                var newLatLngs = polylineLatLngs.slice();
-
-                endValue -= beginValue;
-
-                newLatLngs.splice(0, beginValue);
-                newLatLngs.splice(endValue, newLatLngs.length - endValue);
-
-                track.setLatLngs(newLatLngs);
-            });
-        }
-        
-        function initMap() {
-            map = new Map('map', []);
-
-            track = new Track();
-            track.setPolyline({{ track.latLngList }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
-            track.addTo(map.map);
-            map.map.fitBounds(track.getBounds());
-        }
-
-        domReadyQueue.push(function($) {
-            initGapWidth();
-            initMap();
-            initSlider();
+            rangePage.init();
         });
-
     </script>
 
 {% endblock %}
 
 {% block additionalFooterElements %}
 
-<script type='text/javascript' src="https://rawgithub.com/seiyria/bootstrap-slider/master/js/bootstrap-slider.js"></script>
 {% endblock %}

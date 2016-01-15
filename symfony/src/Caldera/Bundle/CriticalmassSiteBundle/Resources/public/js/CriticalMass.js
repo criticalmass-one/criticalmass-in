@@ -19,6 +19,7 @@ require.config({
         "City": "/bundles/calderacriticalmasssite/js/modules/entity/City",
         "Ride": "/bundles/calderacriticalmasssite/js/modules/entity/Ride",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
+        "Track": "/bundles/calderacriticalmasssite/js/modules/entity/Track",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "MapLayerControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLayerControl",
         "MapLocationControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLocationControl",
@@ -32,7 +33,8 @@ require.config({
         "leaflet-sidebar": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Control.Sidebar",
         "leaflet-geometry": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.geometryutil",
         "leaflet-groupedlayer": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.groupedlayercontrol",
-        "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap"
+        "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
+        "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider"
 
     },
     shim: {
