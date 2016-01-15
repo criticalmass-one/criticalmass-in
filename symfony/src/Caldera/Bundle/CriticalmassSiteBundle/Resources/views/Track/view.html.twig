@@ -2,18 +2,6 @@
 
 {% block title %}Deine Tracks{% endblock %}
 
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-{% javascripts
-'@CalderaCriticalmassSiteBundle/Resources/public/js/external/leaflet/*'
-'@CalderaCriticalmassSiteBundle/Resources/public/js/entity/*'
-'@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-{% endblock %}
-
 {% block breadcrumb %}
     <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
     <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
@@ -59,9 +47,9 @@
                 </span>
                 <br />Kilometer</div>
             <div class="col-md-2">
-                <span style="font-size: 20px;">{{ track.getDuration()|round(2) }}
+                <span style="font-size: 20px;">{{ track.getDurationInterval().format('%i') }}
                 </span>
-                <br />Stunden</div>
+                <br />Minuten</div>
         </div>
 
         <div class="row">
@@ -92,16 +80,12 @@
     </div>
 
     <script>
-        $(function() {
-            var map = new Map('map', []);
+        CriticalMass.loadModule('TrackViewPage', null, null, function(viewPage) {
+            viewPage.setPolylineLatLngs({{ track.getLatLngList() }});
 
-           //map.setView([{{ track.getRide().getLatitude() }}, {{ track.getRide().getLongitude() }}], 10);
+            viewPage.setColor({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
 
-            var track = new Track();
-            track.setPolyline({{ track.getLatLngList() }}, {{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
-            track.addTo(map.map);
-            map.map.fitBounds(track.getBounds());
+            viewPage.init();
         });
-
     </script>
 {% endblock %}
