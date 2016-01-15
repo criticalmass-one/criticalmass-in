@@ -42,8 +42,8 @@
             </div>
 
             <div class="col-md-3">
-                {% include 'CalderaCriticalmassSiteBundle:City:_nextTour.html.twig' with { 'currentRide': currentRide } %}
-                {% include 'CalderaCriticalmassSiteBundle:City:_socialMedia.html.twig' with { 'city': city } %}
+                {% include 'CalderaCriticalmassSiteBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
+                {% include 'CalderaCriticalmassSiteBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
             </div>
         </div>
     </div>

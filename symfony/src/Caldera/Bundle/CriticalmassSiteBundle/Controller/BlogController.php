@@ -10,7 +10,7 @@ class BlogController extends AbstractController
 {
     public function listAction(Request $request)
     {
-        $articles = $this->getDoctrine()->getRepository('CalderaCriticalmassBlogBundle:Article')->findBy(array(), array('dateTime' => 'DESC'));
+        $articles = $this->getBlogArticleRepository()->findBy(array(), array('dateTime' => 'DESC'));
 
         $markdown = new Markdown();
         
@@ -19,6 +19,6 @@ class BlogController extends AbstractController
             $article->setFormattedText($markdown->transform($article->getText()));
         }
 
-        return $this->render('CalderaCriticalmassBlogBundle:Blog:list.html.twig', array('articles' => $articles));
+        return $this->render('CalderaCriticalmassSiteBundle:Blog:list.html.twig', array('articles' => $articles));
     }
 }

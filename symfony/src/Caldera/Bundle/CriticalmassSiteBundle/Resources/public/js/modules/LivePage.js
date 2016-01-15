@@ -6,7 +6,7 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._initLayers();
         this._initControls();
 
-        this._startLive();
+        //this._startLive();
     };
 
     LivePage.prototype._map = null;

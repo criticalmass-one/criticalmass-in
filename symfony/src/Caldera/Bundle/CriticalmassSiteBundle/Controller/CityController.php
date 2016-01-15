@@ -19,6 +19,19 @@ class CityController extends AbstractController
         return $this->render('CalderaCriticalmassSiteBundle:City:list.html.twig', array('cities' => $cities));
     }
 
+    public function listRidesAction(Request $request, $citySlug)
+    {
+        $city = $this->getCityBySlug($citySlug);
+
+        $rides = $this->getRideRepository()->findRidesForCity($city);
+
+        return $this->render('CalderaCriticalmassSiteBundle:City:rideList.html.twig', [
+            'city' => $city,
+            'rides' => $rides
+        ]);
+
+    }
+
     public function showAction(Request $request, $citySlug)
     {
         $city = $this->getCityBySlug($citySlug);

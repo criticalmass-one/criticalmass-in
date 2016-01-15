@@ -8,15 +8,13 @@ class FrontpageController extends AbstractController
 {
     public function indexAction()
     {
-        $dateTime = new \DateTime();
-        
-        $blogArticles = $this->getBlogArticleRepository()->findBy(array());
-        $carouselRides = $this->getRideRepository()->findRecentRides(null, null, 5, 1000);
+        $blogArticles = $this->getBlogArticleRepository()->findBy([]);
+        $currentRides = $this->getRideRepository()->findCurrentRides();
         
         return $this->render('CalderaCriticalmassSiteBundle:Frontpage:index.html.twig',
             [
                 'blogArticles' => $blogArticles,
-                'carouselRides' => $carouselRides
+                'currentRides' => $currentRides
             ]);
     }
 }

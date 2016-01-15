@@ -1,0 +1,88 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Städte-Übersicht{% endblock %}
+
+{% block breadcrumb %}
+        <li class="active">Städteliste</li>
+{% endblock %}
+    
+{% block content %}
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    {% include 'CalderaCriticalmassSiteBundle:City:Includes/_rideListSort.html.twig' %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <table id="cityRideList" class="table">
+                    <thead>
+                        <tr>
+                            <th data-sortAttribute="rideDate">
+                                Datum
+                            </th>
+                            <th>
+                                Uhrzeit
+                            </th>
+                            <th data-sortAttribute="rideTitle">
+                                Titel
+                            </th>
+                            <th data-sortAttribute="rideLocation">
+                                Treffpunkt
+                            </th>
+                            <th data-sortAttribute="rideParticipants">
+                                Teilnehmer
+                            </th>
+                            <th data-sortAttribute="rideDistance">
+                                Distanz
+                            </th>
+                            <th data-sortAttribute="rideDuration">
+                                Dauer
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rides %}
+                        <tr class="city"
+                            data-rideDate="{{ ride.dateTime.format('Y-m-d H-i') }}"
+                            data-rideTitle="{{ ride.getFancyTitle() }}"
+                            data-rideLocation="{{ ride.location }}"
+                            data-rideParticipants="{{ ride.estimatedParticipants }}"
+                            data-rideDistance="{{ ride.estimatedDistance }}"
+                            data-rideDuration="{{ ride.estimatedDuration }}"
+
+                        >
+                            <td>
+                                {{ ride.dateTime.format('d.m.Y') }}
+                            </td>
+                            <td>
+                                {{ ride.dateTime.format('H:i') }} Uhr
+                            </td>
+                            <td>
+                                <a href="{{ path(ride) }}">
+                                    {{ ride.getFancyTitle() }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ ride.location }}
+                            </td>
+                            <td>
+                                {{ ride.estimatedParticipants }}
+                            </td>
+                            <td>
+                                {{ ride.estimatedDistance }} Kilometer
+                            </td>
+                            <td>
+                                {{ ride.estimatedDuration }} Stunden
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

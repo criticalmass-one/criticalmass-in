@@ -2,6 +2,10 @@ caldera_criticalmass_desktop_city_list:
     pattern:  /city/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:list }
 
+caldera_criticalmass_desktop_city_listrides:
+    pattern:  /{citySlug}/list
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:listRides }
+
 caldera_criticalmass_desktop_city_add:
     pattern:  /city/add
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:add }

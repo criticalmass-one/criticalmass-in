@@ -31,6 +31,23 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
+    public function findRidesForCity(City $city, $order = 'DESC')
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
+
+        $builder->addOrderBy('ride.dateTime', $order);
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
+
     public function findRecentRides($year = null, $month = null, $maxResults = null, $minParticipants = 0, $postShuffle = false)
     {
         $builder = $this->createQueryBuilder('ride');
