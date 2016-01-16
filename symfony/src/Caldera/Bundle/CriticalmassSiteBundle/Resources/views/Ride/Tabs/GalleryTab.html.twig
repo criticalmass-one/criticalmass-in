@@ -36,16 +36,19 @@
                     <strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.
                 </div>
             {% else %}
+
                 <div class="row">
                     {% for photo in photos %}
-                        <div class="col-md-4 photo">
-                            <a href="{{ path('caldera_criticalmass_photo_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate(), 'photoId': photo.id }) }}">
-                                <img src="#" data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
-                            </a>
-                           {#<img src="{{ '/relative/path/to/image.jpg'|imagine_filter('my_thumb') }}" />#}
+                        <div class="col-md-3">
+                            <div class="photo">
+                                <a href="{{ path(photo) }}">
+                                    <img src="#" data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                                </a>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
+
             {% endif %}
         </div>
     </div>
