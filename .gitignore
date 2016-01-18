@@ -15,3 +15,4 @@ symfony/web/bundles
 .vagrant/*
 symfony/web/tracks
 symfony/web/media
+symfony/src/Caldera/Bundle/CriticalmassSiteBundle/Resources/public/scss/.sass-cache
