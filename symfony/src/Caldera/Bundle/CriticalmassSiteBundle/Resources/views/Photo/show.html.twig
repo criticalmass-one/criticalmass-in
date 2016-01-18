@@ -1,10 +1,13 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
+{% block title %}Foto {{ photo.id }} aus {{ photo.city.city }}{% endblock %}
+
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
-    <li><a href="#" class="active">Fotoübersicht</a></li>
+    <li><a href="{{ path(city) }}">{{ city.title }}</a></li>
+    <li><a href="{{ path(ride) }}">{{ ride.getFancyTitle() }}</a></li>
+    <li><a href="#">Fotos</a></li>
+    <li><a href="#" class="active">Foto {{ photo.id }} aus {{ photo.city.city }}</a></li>
 {% endblock %}
 
 {% block content %}
@@ -21,18 +24,30 @@
             <ul class="pager">
                 {% if previousPhoto %}
                     <li class="previous">
-                        <a href="{{ path('caldera_criticalmass_photo_show', { 'citySlug': previousPhoto.ride.city.getMainSlugString(), 'rideDate': previousPhoto.ride.getFormattedDate(), 'photoId': previousPhoto.id }) }}">&larr; Voriges Foto</a>
+                        <a href="{{ path(previousPhoto) }}">
+                            &larr; Voriges Foto
+                        </a>
                     </li>
                 {% else %}
-                    <li class="previous disabled"><a href="#">&larr; Voriges Foto</a></li>
+                    <li class="previous disabled">
+                        <a href="#">
+                            &larr; Voriges Foto
+                        </a>
+                    </li>
                 {% endif %}
 
                 {% if nextPhoto %}
                     <li class="next">
-                        <a href="{{ path('caldera_criticalmass_photo_show', { 'citySlug': nextPhoto.ride.city.getMainSlugString(), 'rideDate': nextPhoto.ride.getFormattedDate(), 'photoId': nextPhoto.id }) }}">Nächstes Foto &rarr;</a>
+                        <a href="{{ path(nextPhoto) }}">
+                            Nächstes Foto &rarr;
+                        </a>
                     </li>
                 {% else %}
-                    <li class="next disabled"><a href="#">Nächstes Foto &rarr;</a></li>
+                    <li class="next disabled">
+                        <a href="#">
+                            Nächstes Foto &rarr;
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
