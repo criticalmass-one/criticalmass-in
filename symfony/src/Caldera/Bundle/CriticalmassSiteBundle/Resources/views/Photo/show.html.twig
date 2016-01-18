@@ -45,40 +45,10 @@
 <script src="https://raw.githubusercontent.com/gestixi/image-scale/master/image-scale.js"></script>
 
     <script>
-        domReadyQueue.push(function($) {
-            var $img = $('img.auto-scale');
-            var parentWidth = $img.parent().width();
-
-            $img.css('width', parentWidth);
-
-            $img.load(function() {
-                var ratio = 0;  // Used for aspect ratio
-                var width = $img.width();    // Current image width
-                var height = $img.height();  // Current image height
-
-                // Check if the current width is larger than the max
-                if(width > parentWidth){
-                    ratio = parentWidth / width;   // get ratio for scaling image
-                    $(this).css("height", height * ratio);  // Scale height based on ratio
-                    height = height * ratio;    // Reset height to match scaled image
-                    width = width * ratio;    // Reset width to match scaled image
-                }
-            });
-
-            $('body').keydown(function(e) {
-                {% if previousPhoto %}
-                if ((e.keyCode || e.which) == 37) {
-                    $(location).attr('href', '{{ path('caldera_criticalmass_photo_show', { 'citySlug': previousPhoto.ride.city.getMainSlugString(), 'rideDate': previousPhoto.ride.getFormattedDate(), 'photoId': previousPhoto.id }) }}');
-                }
-                {% endif %}
-
-                {% if nextPhoto %}
-                if ((e.keyCode || e.which) == 39) {
-                    $(location).attr('href', '{{ path('caldera_criticalmass_photo_show', { 'citySlug': nextPhoto.ride.city.getMainSlugString(), 'rideDate': nextPhoto.ride.getFormattedDate(), 'photoId': nextPhoto.id }) }}');
-                }
-                {% endif %}
-            });
-
+        CriticalMass.loadModule('AutoscaleImage', 'img.auto-scale');
+        CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
+            page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
+            page.setPreviousPhotoUrl('{{ path(nextPhoto) }}');
         });
     </script>
 {% endblock %}
