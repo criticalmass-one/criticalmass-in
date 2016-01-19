@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'City', 'Ride', 'Track', 'MapLayerControl'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl'], function() {
 
     RidePage = function(context, options) {
         this._initMap();
@@ -51,19 +51,19 @@ define(['Map', 'Container', 'City', 'Ride', 'Track', 'MapLayerControl'], functio
     };
 
     RidePage.prototype.addCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
-        this._city = new City(cityName, cityTitle, slug, description, latitude, longitude);
+        this._city = new CityEntity(cityName, cityTitle, slug, description, latitude, longitude);
 
         this._city.addToContainer(this._cityContainer);
     };
 
     RidePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new Ride(title, description, latitude, longitude, location, date, time, weatherForecast);
+        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
         this._ride.addToContainer(this._rideContainer);
     };
 
     RidePage.prototype.addTrack = function(polylineLatLngs, colorRed, colorGreen, colorBlue) {
-        var track = new Track();
+        var track = new TrackEntity();
         track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
 
         track.addTo(this._trackContainer);

@@ -16,11 +16,12 @@ require.config({
     baseUrl: '/bundles/calderacriticalmasssite/',
     paths:
     {
-        "City": "/bundles/calderacriticalmasssite/js/modules/entity/City",
-        "Ride": "/bundles/calderacriticalmasssite/js/modules/entity/Ride",
+        "CityEntity": "/bundles/calderacriticalmasssite/js/modules/entity/CityEntity",
+        "RideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/RideEntity",
+        "TrackEntity": "/bundles/calderacriticalmasssite/js/modules/entity/TrackEntity",
         "BaseEntity": "/bundles/calderacriticalmasssite/js/modules/entity/BaseEntity",
+        "MarkerEntity": "/bundles/calderacriticalmasssite/js/modules/entity/MarkerEntity",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
-        "Track": "/bundles/calderacriticalmasssite/js/modules/entity/Track",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "MapLayerControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLayerControl",
         "MapLocationControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLocationControl",
