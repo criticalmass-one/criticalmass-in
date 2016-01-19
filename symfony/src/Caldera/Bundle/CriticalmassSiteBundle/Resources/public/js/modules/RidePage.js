@@ -1,38 +1,80 @@
-define(['Map', 'Container', 'City'], function() {
+define(['Map', 'Container', 'City', 'Ride', 'Track', 'MapLayerControl'], function() {
 
-    var RidePage = function(context, options) {
-        this._init();
+    RidePage = function(context, options) {
+        this._initMap();
+        this._initContainers();
+        this._initLayers();
+        this._initLayerControl();
     };
 
-    RidePage.prototype.map = null;
-    RidePage.prototype._rideContainer = null;
-    RidePage.prototype._subrideContainer = null;
+    RidePage.prototype._map = null;
+    RidePage.prototype._ride = null;
     RidePage.prototype._city = null;
+    RidePage.prototype._subrideContainer = null;
+    RidePage.prototype._layerControl = null;
+    RidePage.prototype._layers = null;
 
-    RidePage.prototype._init = function() {
-        this._initMap();
+    RidePage.prototype.init = function() {
 
-        this._rideContainer = new Container();
-        this._subrideContainer = new Container();
+    };
+
+    RidePage.prototype._initLayerControl = function() {
+        this._layers = [];
+
+        this._rideContainer.addToControl(this._layers, 'Tour');
+        this._cityContainer.addToControl(this._layers, 'Städte');
+        this._subrideContainer.addToControl(this._layers, 'Mini-Masses');
+        this._trackContainer.addToControl(this._layers, 'Tracks');
+
+        this._layerControl = new MapLayerControl();
+        this._layerControl.setLayers(this._layers);
+        this._layerControl.init();
+        this._layerControl.addTo(this._map);
     };
 
     RidePage.prototype._initMap = function() {
-        this.map = new Map('map');
+        this._map = new Map('map');
+    };
 
-        var m = new LocationMarker([0, 0], false);
-        m.addTo(this.map);
+    RidePage.prototype._initContainers = function() {
+        this._subrideContainer = new Container();
+        this._trackContainer = new Container();
+        this._cityContainer = new Container();
+        this._rideContainer = new Container();
+    };
+
+    RidePage.prototype._initLayers = function() {
+        this._subrideContainer.addToMap(this._map);
+        this._trackContainer.addToMap(this._map);
+        this._cityContainer.addToMap(this._map);
+        this._rideContainer.addToMap(this._map);
     };
 
     RidePage.prototype.addCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
         this._city = new City(cityName, cityTitle, slug, description, latitude, longitude);
 
-        this._city.addTo(this.map.map);
+        this._city.addToContainer(this._cityContainer);
     };
 
-    RidePage.prototype.addRide = function(city, title, description, latitude, longitude, location, date, time, weatherForecast) {
-        var ride = new Ride(this._city, title, description, latitude, longitude, location, date, time, weatherForecast);
+    RidePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
+        this._ride = new Ride(title, description, latitude, longitude, location, date, time, weatherForecast);
 
-        this._rideContainer.add(ride);
+        this._ride.addToContainer(this._rideContainer);
+    };
+
+    RidePage.prototype.addTrack = function(polylineLatLngs, colorRed, colorGreen, colorBlue) {
+        var track = new Track();
+        track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
+
+        track.addTo(this._trackContainer);
+    };
+
+    RidePage.prototype.focus = function() {
+        if (this._ride.hasLocation()) {
+            //this.map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 10);
+        } else {
+            //this.map.setView([this._city.getLatitude(), this._city.getLongitude()], 10);
+        }
     };
 
     return RidePage;

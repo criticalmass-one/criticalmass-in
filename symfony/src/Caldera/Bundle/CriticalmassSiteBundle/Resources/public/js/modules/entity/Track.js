@@ -11,6 +11,7 @@ define(['leaflet'], function() {
     };
 
     Track.prototype.addTo = function (trackLayer) {
+        alert(trackLayer);
         trackLayer.addLayer(this._polyline);
     };
 

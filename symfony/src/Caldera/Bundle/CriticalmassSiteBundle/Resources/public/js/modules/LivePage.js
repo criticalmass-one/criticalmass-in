@@ -4,7 +4,8 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._initMap();
         this._initLive();
         this._initLayers();
-        this._initControls();
+        this._initLayerControl();
+        this._initLocationControl();
 
         //this._startLive();
     };
@@ -15,18 +16,6 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
     LivePage.prototype._city = null;
     LivePage.prototype._ride = null;
     LivePage.prototype._layers = [];
-
-    LivePage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
-        this._city = new City(city, title, slug, description, latitude, longitude);
-
-        this._cityContainer.add(this._city);
-    };
-
-    LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new Ride(null, title, description, latitude, longitude, location, date, time, weatherForecast);
-
-        this._rideContainer.add(this._ride);
-    };
 
     LivePage.prototype._initContainer = function() {
         this._rideContainer = new Container();
@@ -39,32 +28,45 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._map = new Map('map', []);
     };
 
+    LivePage.prototype._initLive = function() {
+        this._mapPositions = new MapPositions();
+
+        this._mapPositions.addControl(this._layers, 'Teilnehmer');
+    };
+
     LivePage.prototype._initLayers = function() {
         this._map.addLayer(this._rideContainer.getLayer());
         this._map.addLayer(this._cityContainer.getLayer());
         this._map.addLayer(this._mapPositions.getLayer());
     };
 
-    LivePage.prototype._initControls = function() {
-        this._rideContainer.addControl(this._layers, 'Tour');
+    LivePage.prototype._initLayerControl = function() {
+        /*this._rideContainer.addControl(this._layers, 'Tour');
         this._cityContainer.addControl(this._layers, 'Städte');
 
         this._layerControl = new MapLayerControl();
         this._layerControl.setLayers(this._layers);
         this._layerControl.init();
-        this._layerControl.addTo(this._map);
+        this._layerControl.addTo(this._map);*/
+    };
 
+    LivePage.prototype._initLocationControl = function() {
         this._locationControl = new MapLocationControl();
         this._locationControl.init();
         this._locationControl.addTo(this._map);
-
-        this._map.setView([53.4015275, 9.7984212], 12);
     };
 
-    LivePage.prototype._initLive = function() {
-        this._mapPositions = new MapPositions();
+    LivePage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
+        this._city = new City(city, title, slug, description, latitude, longitude);
 
-        this._mapPositions.addControl(this._layers, 'Teilnehmer');
+        this._city.addToMap(this._map);
+        //this._cityContainer.add(this._city);
+    };
+
+    LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
+        this._ride = new Ride(null, title, description, latitude, longitude, location, date, time, weatherForecast);
+
+        this._rideContainer.add(this._ride);
     };
 
     LivePage.prototype._startLive = function() {

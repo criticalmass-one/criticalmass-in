@@ -18,6 +18,7 @@ require.config({
     {
         "City": "/bundles/calderacriticalmasssite/js/modules/entity/City",
         "Ride": "/bundles/calderacriticalmasssite/js/modules/entity/Ride",
+        "BaseEntity": "/bundles/calderacriticalmasssite/js/modules/entity/BaseEntity",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
         "Track": "/bundles/calderacriticalmasssite/js/modules/entity/Track",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",

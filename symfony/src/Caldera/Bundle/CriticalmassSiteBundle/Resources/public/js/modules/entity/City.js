@@ -1,58 +1,80 @@
 define(['leaflet'], function() {
     City = function(title, name, slug, description, latitude, longitude) {
-        this.title = title;
-        this.name = name;
-        this.slug = slug;
-        this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this._title = title;
+        this._name = name;
+        this._slug = slug;
+        this._description = description;
+        this._latitude = latitude;
+        this._longitude = longitude;
+
+        this._initIcon();
     };
 
-    City.prototype.title = null;
-    City.prototype.name = null;
-    City.prototype.slug = null;
-    City.prototype.description = null;
-    City.prototype.latitude = null;
-    City.prototype.longitude = null;
-    City.prototype.marker = null;
+    City.prototype._title = null;
+    City.prototype._name = null;
+    City.prototype._slug = null;
+    City.prototype._description = null;
+    City.prototype._latitude = null;
+    City.prototype._longitude = null;
+    City.prototype._marker = null;
+    City.prototype._icon = null;
 
-    City.prototype.buildPopup = function(ride) {
-        var html = '<h5>' + this.title + '</h5>';
+    City.prototype._initIcon = function() {
+        this._icon = L.icon({
+            iconUrl: '/bundles/calderacriticalmasssite/images/marker/marker-blue.png',
+            iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-blue-2x.png',
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            popupAnchor: [0, -36],
+            shadowUrl: '/bundles/calderacriticalmasssite/images/marker/defaultshadow.png',
+            shadowRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/defaultshadow.png',
+            shadowSize: [41, 41],
+            shadowAnchor: [13, 41]
+        });
+    };
 
-        if (ride != null) {
-            html += '<dl class="dl-horizontal">';
-            html += '<dt>Uhrzeit:</dt><dd>' + ride.date + ' ' + ride.time + ' Uhr</dd>';
-            html += '<dt>Treffpunkt:</dt><dd><em>noch nicht bekannt</em></dd>';
-            html += '</dl>';
+    City.prototype._createMarker = function() {
+        if (!this._marker) {
+            this._marker = L.marker(
+                [
+                    this._latitude,
+                    this._longitude
+                ], {
+                    icon: this._icon
+                }
+            );
         }
-        else {
-            html += '<p><em>Zu dieser Stadt sind momentan leider keine Tourinformationen bekannt.</em>';
-        }
+    };
 
-        html += '<p>' + this.description + '</p>';
+    City.prototype.buildPopup = function() {
+        var html = '<h5>' + this._title + '</h5>';
+        html += '<p>' + this._description + '</p>';
 
         return html;
     };
 
-    City.prototype.addTo = function(markerLayer, ride) {
-        var cityIcon = L.icon({
-            iconUrl: '/images/marker/marker-gray.png',
-            iconRetinaUrl: '/images/marker/marker-gray-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [13, 41],
-            popupAnchor: [0, -36],
-            shadowUrl: '/images/marker/defaultshadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [13, 41]
-        });
+    City.prototype.addToMap = function(map) {
+        this._createMarker();
 
-        this.marker = L.marker([this.latitude, this.longitude], {icon: cityIcon});
-        this.marker.bindPopup(this.buildPopup(ride));
-        markerLayer.addLayer(this.marker);
+        this._marker.addTo(map.map);
     };
 
-    City.prototype.openPopup = function () {
-        this.marker.openPopup();
+    City.prototype.addToLayer = function(markerLayer) {
+        this._createMarker();
+
+        markerLayer.addLayer(this._marker);
+    };
+
+    City.prototype.addToContainer = function(container) {
+        container.addEntity(this);
+    };
+
+    City.prototype.getLatitude = function() {
+        return this._latitude;
+    };
+
+    City.prototype.getLongitude = function() {
+        return this._longitude;
     };
 
     return City;
