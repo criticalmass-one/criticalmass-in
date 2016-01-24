@@ -31,11 +31,12 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'MapLayerControl', 'MapL
     LivePage.prototype._initLive = function() {
         this._mapPositions = new MapPositions();
 
-        this._mapPositions.addControl(this._layers, 'Teilnehmer');
+        this._mapPositions.addToControl(this._layers, 'Teilnehmer');
     };
 
     LivePage.prototype._initLayers = function() {
         this._rideContainer.addToMap(this._map);
+        this._mapPositions.addToMap(this._map);
         //this._map.addLayer(this._rideContainer.getLayer());
         //this._map.addLayer(this._cityContainer.getLayer());
         //this._map.addLayer(this._mapPositions.getLayer());

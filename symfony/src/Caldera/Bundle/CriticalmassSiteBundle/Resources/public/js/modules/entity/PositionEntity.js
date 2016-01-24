@@ -11,29 +11,22 @@ define(['leaflet', 'MarkerEntity'], function() {
 
 
     PositionEntity.prototype.parseJson = function(position) {
-        this._color = 'rgb(' + position.displayColor.red + ', ' + position.displayColor.green + ', ' + position.displayColor.blue + ')';
+        this._colorRed = position.displayColor.red;
+        this._colorGreen = position.displayColor.green;
+        this._colorBlue = position.displayColor.blue;
 
         this._latitude = position.coord.latitude;
         this._longitude = position.coord.longitude;
 
         this._gravatarHash = position.gravatarHash;
-        alert('parsejson');
     };
 
     PositionEntity.prototype._initIcon = function() {
         this._icon = L.divIcon({
             iconSize: new L.Point(50, 50),
             className: 'user-position',
-            html: '<div class="user-position-inline" style="background-image: url(https://www.gravatar.com/avatar/' + this._gravatarHash + '); border-color: ' + this._color + '"></div>'
+            html: '<div class="user-position-inline" style="background-image: url(https://www.gravatar.com/avatar/' + this._gravatarHash + '); border-color: ' + this.getColorString() + '"></div>'
         });
-    };
-
-    PositionEntity.prototype.getMarker = function() {
-        if (!this._marker) {
-            this._createMarker();
-        }
-
-        return this._marker;
     };
 
     PositionEntity.prototype.buildPopup = function() {
@@ -41,6 +34,23 @@ define(['leaflet', 'MarkerEntity'], function() {
         html += '<p>' + this._description + '</p>';
 
         return html;
+    };
+
+    PositionEntity.prototype.getColorString = function() {
+        return 'rgb(' + Math.round(this._colorRed) + ', ' + Math.round(this._colorGreen) + ', ' + Math.round(this._colorBlue) + ')';
+    };
+
+    PositionEntity.prototype.setColor = function(color) {
+        this._colorRed = position.displayColor.red;
+        this._colorGreen = position.displayColor.green;
+        this._colorBlue = position.displayColor.blue;
+
+        var circleOptions = {
+            color: this.getColorString(),
+            fillColor: this._color
+        };
+
+        this._marker.setStyle(circleOptions);
     };
 
     return PositionEntity;

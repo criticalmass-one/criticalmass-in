@@ -33,6 +33,8 @@ define(['leaflet'], function() {
      */
     Container.prototype._layer = null;
 
+    Container.prototype._counter = 0;
+
     /**
      * Adds an entity to this container.
      *
@@ -41,14 +43,27 @@ define(['leaflet'], function() {
      * @author maltehuebner
      * @since 2015-01-19
      * @param entity
+     * @param index
      * @returns {Container} this
      */
-    Container.prototype.addEntity = function (entity) {
-        this._list.push(entity);
+    Container.prototype.addEntity = function (entity, index) {
+        if (typeof index === 'undefined') {
+            this._list.push(entity);
+        } else {
+            this._list[index] = entity;
+        }
 
         entity.addToLayer(this._layer);
+        ++this._counter;
 
         return this;
+    };
+
+    Container.prototype.removeEntity = function(index) {
+        this._list[index].removeFromLayer(this._layer);
+        delete this._list[index];
+
+        --this._counter;
     };
 
     /**
@@ -75,7 +90,7 @@ define(['leaflet'], function() {
      * @returns {boolean}
      */
     Container.prototype.isEmpty = function () {
-        return this._list.length == 0;
+        return this._counter == 0;
     };
 
     /**
@@ -86,7 +101,7 @@ define(['leaflet'], function() {
      * @returns {*}
      */
     Container.prototype.countEntities = function () {
-        return this._list.length;
+        return this._counter;
     };
 
     /**
@@ -108,7 +123,6 @@ define(['leaflet'], function() {
      * @since 2015-01-19
      * @returns {*}
      */
-
     Container.prototype.getBounds = function () {
         return this._layer.getBounds();
     };
@@ -121,6 +135,18 @@ define(['leaflet'], function() {
      */
     Container.prototype.getEntity = function (index) {
         return this._list[index];
+    };
+
+    Container.prototype.hasEntity = function(index) {
+        return (index in this._list);
+    };
+
+    Container.prototype.getLayer = function() {
+        return this._layer;
+    };
+
+    Container.prototype.getList = function() {
+        return this._list;
     };
 
     Container.prototype.snapTo = function (map, polyline) {

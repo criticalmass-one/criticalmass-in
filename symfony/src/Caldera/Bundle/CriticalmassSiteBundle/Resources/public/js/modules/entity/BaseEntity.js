@@ -23,8 +23,12 @@ define(['leaflet'], function() {
         }
     };
 
-    BaseEntity.prototype.addToContainer = function(container) {
-        container.addEntity(this);
+    BaseEntity.prototype.removeFromLayer = function(markerLayer) {
+        markerLayer.removeLayer(this._marker);
+    };
+
+    BaseEntity.prototype.addToContainer = function(container, index) {
+        container.addEntity(this, index);
     };
 
     return BaseEntity;

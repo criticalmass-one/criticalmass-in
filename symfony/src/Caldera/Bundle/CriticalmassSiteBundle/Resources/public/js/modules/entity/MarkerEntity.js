@@ -44,6 +44,14 @@ define(['BaseEntity', 'leaflet'], function() {
         }
     };
 
+    MarkerEntity.prototype.getMarker = function() {
+        if (!this._marker) {
+            this._createMarker();
+        }
+
+        return this._marker;
+    };
+
     MarkerEntity.prototype.hasLocation = function () {
         return (this._latitude != null && this._longitude != null);
     };
@@ -54,6 +62,37 @@ define(['BaseEntity', 'leaflet'], function() {
 
     MarkerEntity.prototype.getLongitude = function() {
         return this._longitude;
+    };
+
+    MarkerEntity.prototype.setLatitude = function(latitude) {
+        this._latitude = latitude;
+
+        if (this._marker) {
+            this._marker.setLatLng([this._latitude, this._longitude]);
+        }
+
+        return this;
+    };
+
+    MarkerEntity.prototype.setLongitude = function(longitude) {
+        this._longitude = longitude;
+
+        if (this._marker) {
+            this._marker.setLatLng([this._latitude, this._longitude]);
+        }
+
+        return this;
+    };
+
+    MarkerEntity.prototype.setLatLng = function(latLng) {
+        this._latitude = latLng.lat;
+        this._longitude = latLng.lng;
+
+        if (this._marker) {
+            this._marker.setLatLng(latLng);
+        }
+
+        return this;
     };
 
     return MarkerEntity;
