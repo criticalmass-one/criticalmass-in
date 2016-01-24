@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationControl', 'MapPositions'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions'], function() {
     LivePage = function () {
         this._initContainer();
         this._initMap();
@@ -7,7 +7,7 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
         this._initLayerControl();
         this._initLocationControl();
 
-        //this._startLive();
+        this._startLive();
     };
 
     LivePage.prototype._map = null;
@@ -35,19 +35,20 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
     };
 
     LivePage.prototype._initLayers = function() {
-        this._map.addLayer(this._rideContainer.getLayer());
-        this._map.addLayer(this._cityContainer.getLayer());
-        this._map.addLayer(this._mapPositions.getLayer());
+        this._rideContainer.addToMap(this._map);
+        //this._map.addLayer(this._rideContainer.getLayer());
+        //this._map.addLayer(this._cityContainer.getLayer());
+        //this._map.addLayer(this._mapPositions.getLayer());
     };
 
     LivePage.prototype._initLayerControl = function() {
-        /*this._rideContainer.addControl(this._layers, 'Tour');
-        this._cityContainer.addControl(this._layers, 'Städte');
+        this._rideContainer.addToControl(this._layers, 'Tour');
+        this._cityContainer.addToControl(this._layers, 'Städte');
 
         this._layerControl = new MapLayerControl();
         this._layerControl.setLayers(this._layers);
         this._layerControl.init();
-        this._layerControl.addTo(this._map);*/
+        this._layerControl.addTo(this._map);
     };
 
     LivePage.prototype._initLocationControl = function() {
@@ -57,16 +58,15 @@ define(['Map', 'Container', 'City', 'Ride', 'MapLayerControl', 'MapLocationContr
     };
 
     LivePage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
-        this._city = new City(city, title, slug, description, latitude, longitude);
+        this._city = new CityEntity(city, title, slug, description, latitude, longitude);
 
-        this._city.addToMap(this._map);
-        //this._cityContainer.add(this._city);
+        this._cityContainer.addEntity(this._city);
     };
 
     LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new Ride(null, title, description, latitude, longitude, location, date, time, weatherForecast);
+        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
-        this._rideContainer.add(this._ride);
+        this._rideContainer.addEntity(this._ride);
     };
 
     LivePage.prototype._startLive = function() {

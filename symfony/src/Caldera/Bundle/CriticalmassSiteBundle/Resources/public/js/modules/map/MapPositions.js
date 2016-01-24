@@ -1,4 +1,4 @@
-define(['leaflet'], function(L) {
+define(['leaflet', 'PositionEntity'], function(L) {
     MapPositions = function () {
         this._layerGroup = L.layerGroup();
     };
@@ -61,21 +61,13 @@ define(['leaflet'], function(L) {
     };
 
     MapPositions.prototype._createUsernamePosition = function (position) {
-        var userColor = 'rgb(' + position.displayColor.red + ', ' + position.displayColor.green + ', ' + position.displayColor.blue + ')';
+        var positionElement = new PositionEntity();
+        positionElement.parseJson(position);
 
-        var myIcon = L.divIcon({
-            iconSize: new L.Point(50, 50),
-            className: 'user-position',
-            html: '<div class="user-position-inline" style="background-image: url(https://www.gravatar.com/avatar/' + position.gravatarHash + '); border-color: ' + userColor + '"></div>'
-        });
-
-        var markerLatLng = [position.coord.latitude, position.coord.longitude];
-
-        var marker = L.marker(markerLatLng, {icon: myIcon});
-
+        var marker = positionElement.getMarker();
         marker.addTo(this._layerGroup);
         //marker.addTo(this._map.map);
-        marker.bindPopup(position.displayName);
+        //marker.bindPopup(position.displayName);
 
         this._positionsArray[position.identifier] = marker;
         ++this._positionsCounter;
