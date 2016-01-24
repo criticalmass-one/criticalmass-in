@@ -87,7 +87,7 @@ define(['leaflet', 'PositionEntity'], function(L) {
             that._clearOldPositions(resultArray);
         }
 
-        var apiUrl = window.location.origin + '/api/positions/random';
+        var apiUrl = window.location.origin + '/api/positions/all';
         var accessToken = 123;
 
         $.support.cors = true;

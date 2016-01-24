@@ -21,11 +21,15 @@ define(['leaflet', 'MarkerEntity'], function() {
         this._gravatarHash = position.gravatarHash;
     };
 
+    PositionEntity.prototype._getHTML = function() {
+        return '<div class="user-position-inline" style="background-image: url(https://www.gravatar.com/avatar/' + this._gravatarHash + '); border-color: ' + this.getColorString() + '"></div>';
+    };
+
     PositionEntity.prototype._initIcon = function() {
         this._icon = L.divIcon({
             iconSize: new L.Point(50, 50),
             className: 'user-position',
-            html: '<div class="user-position-inline" style="background-image: url(https://www.gravatar.com/avatar/' + this._gravatarHash + '); border-color: ' + this.getColorString() + '"></div>'
+            html: this._getHTML()
         });
     };
 
@@ -41,16 +45,11 @@ define(['leaflet', 'MarkerEntity'], function() {
     };
 
     PositionEntity.prototype.setColor = function(color) {
-        this._colorRed = position.displayColor.red;
-        this._colorGreen = position.displayColor.green;
-        this._colorBlue = position.displayColor.blue;
+        this._colorRed = color.red;
+        this._colorGreen = color.green;
+        this._colorBlue = color.blue;
 
-        var circleOptions = {
-            color: this.getColorString(),
-            fillColor: this._color
-        };
-
-        this._marker.setStyle(circleOptions);
+        this._initIcon();
     };
 
     return PositionEntity;
