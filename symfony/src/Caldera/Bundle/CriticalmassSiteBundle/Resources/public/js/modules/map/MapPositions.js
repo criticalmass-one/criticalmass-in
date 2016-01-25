@@ -6,6 +6,7 @@ define(['leaflet', 'PositionEntity'], function(L) {
     MapPositions.prototype._map = null;
     MapPositions.prototype._timer = null;
     MapPositions.prototype._container = null;
+    MapPositions.prototype._offlineCallback = null;
 
     MapPositions.prototype.addToMap = function (map) {
         this._map = map;
@@ -23,6 +24,9 @@ define(['leaflet', 'PositionEntity'], function(L) {
         }, 5000);
     };
 
+    MapPositions.prototype.setOfflineCallback = function(offlineCallback) {
+        this._offlineCallback = offlineCallback;
+    };
 
     MapPositions.prototype.addToControl = function(layerArray, title) {
         this._container.addToControl(layerArray, title);
@@ -67,7 +71,7 @@ define(['leaflet', 'PositionEntity'], function(L) {
     MapPositions.prototype._drawPositions = function () {
         var that = this;
 
-        function callback(ajaxResultData) {
+        function successCallback(ajaxResultData) {
             var resultArray = ajaxResultData.result;
 
             for (var index in resultArray) {
@@ -87,6 +91,10 @@ define(['leaflet', 'PositionEntity'], function(L) {
             that._clearOldPositions(resultArray);
         }
 
+        function errorCallback() {
+            that._offlineCallback();
+        }
+
         var apiUrl = window.location.origin + '/api/positions/all';
         var accessToken = 123;
 
@@ -99,7 +107,8 @@ define(['leaflet', 'PositionEntity'], function(L) {
             headers: {
                 'X-CriticalMassIn-Access-Token': accessToken
             },
-            success: callback
+            success: successCallback,
+            error: errorCallback
         });
     };
 

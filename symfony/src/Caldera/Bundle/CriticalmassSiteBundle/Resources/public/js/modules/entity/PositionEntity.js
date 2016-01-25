@@ -7,7 +7,7 @@ define(['leaflet', 'MarkerEntity'], function() {
     PositionEntity.prototype.constructor = PositionEntity;
 
     PositionEntity.prototype._color = null;
-    PositionEntity.prototype._gravatarHash = null;
+    PositionEntity.prototype._avatarUrl = null;
 
 
     PositionEntity.prototype.parseJson = function(position) {
@@ -18,11 +18,11 @@ define(['leaflet', 'MarkerEntity'], function() {
         this._latitude = position.coord.latitude;
         this._longitude = position.coord.longitude;
 
-        this._gravatarHash = position.gravatarHash;
+        this._avatarUrl = position.user.avatarUrl;
     };
 
     PositionEntity.prototype._getHTML = function() {
-        return '<div class="user-position-inline" style="background-image: url(https://www.gravatar.com/avatar/' + this._gravatarHash + '); border-color: ' + this.getColorString() + '"></div>';
+        return '<div class="user-position-inline" style="background-image: url(' + this._avatarUrl + '); border-color: ' + this.getColorString() + '"></div>';
     };
 
     PositionEntity.prototype._initIcon = function() {

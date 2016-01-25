@@ -42,6 +42,12 @@ class Position
      */
     protected $ticket;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="CriticalmapsUser", inversedBy="positions")
+     * @ORM\JoinColumn(name="criticalmaps_user", referencedColumnName="id")
+     */
+    protected $criticalmapsUser;
+
 	/**
 	 * Tour, zu der diese Entitaet abgespeichert wurde.
 	 *

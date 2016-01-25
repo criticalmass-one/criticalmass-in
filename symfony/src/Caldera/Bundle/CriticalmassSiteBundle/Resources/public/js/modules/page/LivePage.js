@@ -6,7 +6,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'MapLayerControl', 'MapL
         this._initLayers();
         this._initLayerControl();
         this._initLocationControl();
-
+        this._initOfflineCallback();
         this._startLive();
     };
 
@@ -56,6 +56,14 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'MapLayerControl', 'MapL
         this._locationControl = new MapLocationControl();
         this._locationControl.init();
         this._locationControl.addTo(this._map);
+    };
+
+    LivePage.prototype._initOfflineCallback = function() {
+        this._mapPositions.setOfflineCallback(this.offlineCallback);
+    };
+
+    LivePage.prototype.offlineCallback = function() {
+        $('#offlineModal').modal();
     };
 
     LivePage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
