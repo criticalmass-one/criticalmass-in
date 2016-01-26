@@ -36,7 +36,8 @@
         "abraham/twitteroauth": "dev-master",
         "erusev/parsedown": "dev-master",
         "vich/uploader-bundle": "^0.14.0",
-        "liip/imagine-bundle": "^1.3"
+        "liip/imagine-bundle": "^1.3",
+        "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "^3.1"
     },
     "scripts": {
