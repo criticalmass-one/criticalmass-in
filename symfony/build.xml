@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="criticalmass" default="build" basedir="../">
+<project name="criticalmass" default="build" basedir="..">
 
 	<property name="env" value="dev" />
 
-	<target name="build" depends="git.pull,symfony.cache.clear,apache.graceful">
+	<target name="build" depends="git.pull,composer.build,symfony.cache.clear,symfony.assets.build,apache.graceful">
+	</target>
+
+	<target name="composer.build" depends="composer.self-update,composer.update">
+	</target>
+
+	<target name="composer.self-update">
+		<exec executable="php" failonerror="true">
+			<arg line="composer.phar self-update" />
+		</exec>
+	</target>
+
+	<target name="composer.update">
+		<exec executable="php" failonerror="true">
+			<arg line="composer.phar update -d symfony" />
+		</exec>
 	</target>
 
 	<target name="apache.graceful">
-		<exec executable="sudo">
+		<exec executable="sudo" failonerror="true">
 			<arg line="apache2ctl graceful" />
 		</exec>
 	</target>
 
 	<target name="git.pull">
-		<exec executable="git">
+		<exec executable="git" failonerror="true">
 			<arg line="pull" />
 		</exec>
 	</target>
@@ -21,6 +36,25 @@
 	<target name="symfony.cache.clear">
         	<exec executable="php" failonerror="true">
 			<arg line="${basedir}/symfony/app/console cache:clear --no-warmup --no-optional-warmers --env=${env}" />
+		</exec>
+	</target>
+
+	<target name="symfony.assets.build" depends="symfony.assets.reset,symfony.assets.install">
+	</target>
+
+	<target name="symfony.assets.reset">
+		<exec executable="rm" failonerror="true">
+			<arg line="-rf ${basedir}/symfony/web/bundles" />
+		</exec>
+
+		<exec executable="mkdir" failonerror="true">
+			<arg line="${basedir}/symfony/web/bundles" />
+		</exec>
+	</target>
+
+	<target name="symfony.assets.install">
+		<exec executable="php" failonerror="true">
+			<arg line="${basedir}/symfony/app/console assets:install --symlink symfony/web --env=${env}" />
 		</exec>
 	</target>
 </project>
