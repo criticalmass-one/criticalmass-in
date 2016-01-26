@@ -17,7 +17,7 @@
     <div class="container">
         {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_registrationHint.html.twig') %}
 
-        {% include('CalderaCriticalmassSiteBundle:Ride:Ride.html.twig') with { 'ride': ride } %}
+        {% include('CalderaCriticalmassSiteBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks } %}
 
         {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_pagination.html.twig') with { 'previousRide': previousRide, 'nextRide': nextRide } %}
     </div>

@@ -43,6 +43,7 @@ class RideController extends AbstractController
             array(
                 'city' => $city, 
                 'ride' => $ride,
+                'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
                 'nextRide' => $nextRide,
                 'previousRide' => $previousRide,
                 'dateTime' => new \DateTime()

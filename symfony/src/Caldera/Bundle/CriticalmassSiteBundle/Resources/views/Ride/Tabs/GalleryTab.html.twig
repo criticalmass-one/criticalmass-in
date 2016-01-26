@@ -38,15 +38,17 @@
             {% else %}
 
                 <div class="row">
+                    <div class="photo-list">
                     {% for photo in photos %}
                         <div class="col-md-3">
-                            <div class="photo">
+                            <div class="photo margin-bottom-medium text-center">
                                 <a href="{{ path(photo) }}">
                                     <img src="#" data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
                                 </a>
                             </div>
                         </div>
                     {% endfor %}
+                    </div>
                 </div>
 
             {% endif %}

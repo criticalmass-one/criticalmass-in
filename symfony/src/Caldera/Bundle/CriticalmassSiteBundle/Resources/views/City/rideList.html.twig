@@ -3,7 +3,20 @@
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-        <li class="active">Städteliste</li>
+
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+    <li class="active">
+        Tour-Übersicht
+    </li>
 {% endblock %}
     
 {% block content %}
@@ -13,6 +26,10 @@
                 <div class="pull-right">
                     {% include 'CalderaCriticalmassSiteBundle:City:Includes/_rideListSort.html.twig' %}
                 </div>
+
+                <h1>
+                    Touren in dieser Stadt
+                </h1>
             </div>
         </div>
         

@@ -92,15 +92,21 @@
 {% endif %}
 
 <script>
-    function callback(ridePage) {
-        ridePage.addCity('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
+
+
+    CriticalMass.loadModule('RidePage', null, null, function(ridePage) {
+        ridePage.addCity('{{ city.city }}', '{{ city.title }}', '{{ city.getMainSlugString() }}', '{{ city.description }}', {{ city.latitude }}, {{ city.longitude }});
 
         ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
-    }
 
-    function initMap() {
-        var ridePage = CriticalMass.loadModule('RidePage', null, null, callback);
-    }
+        {% for track in ride.getActiveTracks() %}
+        ridePage.addTrack({{ track.getLatLngList() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
+        {% endfor %}
+
+        ridePage.init();
+
+        ridePage.focus();
+    });
 
         {#/* City */
         var city = new City('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
@@ -196,6 +202,6 @@
 
 
     domReadyQueue.push(function($) {
-        initMap();
+        //initMap();
     });
 </script>

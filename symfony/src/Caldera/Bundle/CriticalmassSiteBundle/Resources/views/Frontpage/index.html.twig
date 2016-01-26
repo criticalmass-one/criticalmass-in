@@ -22,51 +22,53 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table id="cityList" class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Datum
-                            </th>
-                            <th>
-                                Uhrzeit
-                            </th>
-                            <th>
-                                Stadt
-                            </th>
-                            <th>
-                                Titel
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {% for ride in currentRides %}
-                            <tr class="city"
-                                data-cityName="{{ ride.city.city }}"
-                                data-latitude="{{ ride.city.latitude }}"
-                                data-longitude="{{ ride.city.longitude }}"
-                                data-currentRide="{{ ride.dateTime.format('Y-m-d H:i') }}">
-                                <td>
-                                    {{ ride.dateTime.format('d.m.Y') }}
-                                </td>
-                                <td>
-                                    {{ ride.dateTime.format('H:i') }} Uhr
-                                </td>
-                                <td>
-                                    <a href="{{ path(ride.city) }}">
-                                        {{ ride.city.city }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{{ path(ride) }}">
-                                        {{ ride.getFancyTitle() }}
-                                    </a>
-                                </td>
+                <div style="height: 270px; overflow-y: scroll;">
+                    <table id="cityList" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
+                                <th>
+                                    Uhrzeit
+                                </th>
+                                <th>
+                                    Stadt
+                                </th>
+                                <th>
+                                    Titel
+                                </th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+                            {% for ride in currentRides %}
+                                <tr class="city"
+                                    data-cityName="{{ ride.city.city }}"
+                                    data-latitude="{{ ride.city.latitude }}"
+                                    data-longitude="{{ ride.city.longitude }}"
+                                    data-currentRide="{{ ride.dateTime.format('Y-m-d H:i') }}">
+                                    <td>
+                                        {{ ride.dateTime.format('d.m.Y') }}
+                                    </td>
+                                    <td>
+                                        {{ ride.dateTime.format('H:i') }} Uhr
+                                    </td>
+                                    <td>
+                                        <a href="{{ path(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path(ride) }}">
+                                            {{ ride.getFancyTitle() }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
