@@ -13,3 +13,4 @@ imports:
     - { resource: vich.yml }
     - { resource: liip.yml }
     - { resource: knp.yml }
+    - { resource: elastic.yml }

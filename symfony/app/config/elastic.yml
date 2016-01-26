@@ -1,0 +1,18 @@
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        criticalmass:
+            types:
+                article:
+                    mappings:
+                        title: ~
+                        abstract: ~
+                        text: ~
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Article
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~
