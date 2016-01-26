@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -68,9 +69,15 @@ class PhotoController extends AbstractController
         $city = $this->getCheckedCity($citySlug);
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
+        /**
+         * @var Photo $photo
+         */
         $photo = $this->getPhotoRepository()->find($photoId);
+
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
+
+        $this->countView($photo);
 
         return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
             [
@@ -250,5 +257,20 @@ class PhotoController extends AbstractController
            'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
             'rideDate' => $photo->getRide()->getFormattedDate()
         ]);
+    }
+
+    protected function countView(Photo $photo) {
+        $photo->incViews();
+
+        $photoView = new PhotoView();
+        $photoView->setUser($this->getUser());
+        $photoView->setPhoto($photo);
+
+        $photo->setEnabled(!$photo->getEnabled());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($photo);
+        $em->persist($photoView);
+        $em->flush();
     }
 }

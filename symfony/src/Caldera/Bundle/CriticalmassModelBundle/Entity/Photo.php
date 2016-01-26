@@ -55,10 +55,15 @@ class Photo
     protected $description;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
-    
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -297,5 +302,17 @@ class Photo
     public function getImageName()
     {
         return $this->imageName;
+    }
+
+    public function setViews($views) {
+        $this->views = $views;
+    }
+
+    public function getViews() {
+        return $this->views;
+    }
+
+    public function incViews() {
+        ++$this->views;
     }
 }
