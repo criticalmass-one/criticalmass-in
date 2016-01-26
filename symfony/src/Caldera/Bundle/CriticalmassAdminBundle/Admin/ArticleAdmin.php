@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Admin;
+namespace Caldera\Bundle\CriticalmassAdminBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;

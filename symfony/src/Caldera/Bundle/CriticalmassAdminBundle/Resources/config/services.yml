@@ -31,3 +31,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [CriticalmassModelBundle]]
+
+    sonata.admin.article:
+        class: Caldera\Bundle\CriticalmassAdminBundle\Admin\ArticleAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Artikel" }
+        arguments:
+            - ~
+            - Caldera\Bundle\CriticalmassModelBundle\Entity\Article
+            - ~
+        calls:
+            - [ setTranslationDomain, [CriticalmassModelBundle]]
