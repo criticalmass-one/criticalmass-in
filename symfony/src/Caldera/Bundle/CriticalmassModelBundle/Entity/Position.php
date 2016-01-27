@@ -128,7 +128,7 @@ class Position
 	 *
 	 * @return Boolean: True, wenn Laengen- und Breitengrad identisch sind
 	 */
-	public function isEqual(\Caldera\CriticalmassCoreBundle\Entity\Position $position)
+	public function isEqual(Position $position)
 	{
 		if (($position->getLatitude() == $this->getLatitude()) and 
 				($position->getLongitude() == $this->getLongitude()))
@@ -405,10 +405,10 @@ class Position
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return Position
      */
-    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -418,7 +418,7 @@ class Position
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride
+     * @return Ride
      */
     public function getRide()
     {
@@ -428,10 +428,10 @@ class Position
     /**
      * Set ticket
      *
-     * @param \Caldera\CriticalmassGlympseBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      * @return Position
      */
-    public function setTicket(\Caldera\CriticalmassGlympseBundle\Entity\Ticket $ticket = null)
+    public function setTicket(Ticket $ticket = null)
     {
         $this->ticket = $ticket;
 
@@ -441,7 +441,7 @@ class Position
     /**
      * Get ticket
      *
-     * @return \Caldera\CriticalmassGlympseBundle\Entity\Ticket 
+     * @return Ticket 
      */
     public function getTicket()
     {

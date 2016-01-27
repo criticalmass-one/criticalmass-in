@@ -245,10 +245,10 @@ class Tweet
     /**
      * Add city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @param City $city
      * @return Tweet
      */
-    public function addCity(\Caldera\CriticalmassCoreBundle\Entity\City $city)
+    public function addCity(City $city)
     {
         $this->city[] = $city;
 
@@ -258,9 +258,9 @@ class Tweet
     /**
      * Remove city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @param City $city
      */
-    public function removeCity(\Caldera\CriticalmassCoreBundle\Entity\City $city)
+    public function removeCity(City $city)
     {
         $this->city->removeElement($city);
     }
@@ -278,10 +278,10 @@ class Tweet
     /**
      * Add ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return Tweet
      */
-    public function addRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride)
+    public function addRide(Ride $ride)
     {
         $this->ride[] = $ride;
 
@@ -291,9 +291,9 @@ class Tweet
     /**
      * Remove ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      */
-    public function removeRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride)
+    public function removeRide(Ride $ride)
     {
         $this->ride->removeElement($ride);
     }

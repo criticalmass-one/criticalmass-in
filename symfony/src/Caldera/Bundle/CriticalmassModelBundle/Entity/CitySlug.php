@@ -79,10 +79,10 @@ class CitySlug
     /**
      * Set city
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $city
+     * @param City $city
      * @return CitySlug
      */
-    public function setCity(\Caldera\CriticalmassCoreBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -92,7 +92,7 @@ class CitySlug
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {

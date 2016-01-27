@@ -550,10 +550,10 @@ class Weather {
     /**
      * Set ride
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return Weather
      */
-    public function setRide(\Caldera\CriticalmassCoreBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -563,7 +563,7 @@ class Weather {
     /**
      * Get ride
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\Ride
+     * @return Ride
      */
     public function getRide()
     {
