@@ -2,14 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
-use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Michelf\MarkdownExtra;
 
 class SiteTwigExtension extends \Twig_Extension
 {
@@ -46,8 +43,11 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function markdown($text)
     {
-        $parser = new MarkdownExtra();
-        return $parser->transform($text);
+        $parsedown = new \Parsedown();
+
+        $text = $parsedown->parse($text);
+
+        return $text;
     }
 
     public function gravatarHash(User $user)
