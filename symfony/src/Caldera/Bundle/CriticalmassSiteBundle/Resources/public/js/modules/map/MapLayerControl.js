@@ -17,7 +17,7 @@ define(['leaflet', 'leaflet-groupedlayer'], function() {
         this._layerControl = L.control.groupedLayers({}, {
             'Critical Mass': this._layers
         }, {
-            collapsed: false
+            collapsed: true
         });
     };
 
