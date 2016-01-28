@@ -13,8 +13,6 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
     LivePage.prototype._map = null;
     LivePage.prototype._rideContainer = null;
     LivePage.prototype._cityContainer = null;
-    LivePage.prototype._city = null;
-    LivePage.prototype._ride = null;
     LivePage.prototype._layers = [];
     LivePage.prototype._offlineCallbackShown = false;
 
@@ -72,21 +70,21 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
     };
 
     LivePage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
-        this._city = new CityEntity(city, title, slug, description, latitude, longitude);
+        var cityEntity = new CityEntity(city, title, slug, description, latitude, longitude);
 
-        this._cityContainer.addEntity(this._city);
+        this._cityContainer.addEntity(cityEntity);
     };
 
     LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
+        var rideEntity = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
-        this._rideContainer.addEntity(this._ride);
+        this._rideContainer.addEntity(rideEntity);
     };
 
     LivePage.prototype.addNoLocationRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new NoLocationRideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
+        var rideEntity = new NoLocationRideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
-        this._rideContainer.addEntity(this._ride);
+        this._rideContainer.addEntity(rideEntity);
     };
 
     LivePage.prototype._startLive = function() {
