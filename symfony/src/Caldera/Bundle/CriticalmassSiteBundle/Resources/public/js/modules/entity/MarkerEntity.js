@@ -71,7 +71,7 @@ define(['BaseEntity', 'leaflet'], function() {
     };
 
     MarkerEntity.prototype.hasLocation = function () {
-        return (this._latitude != null && this._longitude != null);
+        return (this._latitude != null && this._longitude != null && this._latitude != 0 && this._longitude != 0);
     };
 
     MarkerEntity.prototype.getLatitude = function() {

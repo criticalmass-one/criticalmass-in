@@ -13,8 +13,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         mapAttribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         stylesheetAddress: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css',
         detectRetina: true,
-        defaultLatitude: 37.680349,
-        defaultLongitude: -1.335927,
+        defaultLatitude: 51.0851708,
+        defaultLongitude: 5.9692092,
         defaultZoom: 5,
         showZoomControl: true,
         zoomControlPosition: 'bottomright'
