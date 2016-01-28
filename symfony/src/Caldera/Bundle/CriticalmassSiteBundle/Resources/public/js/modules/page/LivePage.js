@@ -73,18 +73,24 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
         var cityEntity = new CityEntity(city, title, slug, description, latitude, longitude);
 
         this._cityContainer.addEntity(cityEntity);
+
+        return cityEntity;
     };
 
     LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
         var rideEntity = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
         this._rideContainer.addEntity(rideEntity);
+
+        return rideEntity;
     };
 
     LivePage.prototype.addNoLocationRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
         var rideEntity = new NoLocationRideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
         this._rideContainer.addEntity(rideEntity);
+
+        return rideEntity;
     };
 
     LivePage.prototype._startLive = function() {

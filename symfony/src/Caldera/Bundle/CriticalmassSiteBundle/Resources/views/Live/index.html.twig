@@ -72,15 +72,20 @@
 
     <script>
         var callback = function(livePage) {
+            var ride = null;
             {#livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});#}
 
             {% for ride in rides %}
             {% if ride.hasLocation() %}
-            livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.latitude}}, {{ride.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
+            ride = livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.latitude}}, {{ride.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
             {% else %}
-            livePage.addNoLocationRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.city.latitude}}, {{ride.city.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
+            ride = livePage.addNoLocationRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.city.latitude}}, {{ride.city.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
             {% endif %}
             {% endfor %}
+
+            {% if rides|length == 1 %}
+            ride.openPopup();
+            {% endif %}
 
             livePage.setFocus();
         };

@@ -58,6 +58,10 @@ define(['BaseEntity', 'leaflet'], function() {
         }
     };
 
+    MarkerEntity.prototype.openPopup = function() {
+        this._marker.openPopup();
+    };
+
     MarkerEntity.prototype.getMarker = function() {
         if (!this._marker) {
             this._createMarker();
