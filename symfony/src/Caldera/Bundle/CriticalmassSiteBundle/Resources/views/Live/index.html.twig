@@ -73,9 +73,17 @@
 
     <script>
         var callback = function(livePage) {
-            livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});
+            {#livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});#}
 
-            livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription()|e('js') }}', {{ride.getLatitude()}}, {{ride.getLongitude()}},'{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}')
+            {% for ride in rides %}
+            {% if ride.hasLocation() %}
+            livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.latitude}}, {{ride.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
+            {% else %}
+            livePage.addNoLocationRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.city.latitude}}, {{ride.city.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
+            {% endif %}
+            {% endfor %}
+
+            livePage.setFocus();
         };
 
         var livePage = CriticalMass.loadModule('LivePage', null, null, callback);

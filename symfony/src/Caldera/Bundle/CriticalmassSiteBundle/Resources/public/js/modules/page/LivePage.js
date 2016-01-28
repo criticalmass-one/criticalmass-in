@@ -43,7 +43,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
 
     LivePage.prototype._initLayerControl = function() {
         this._rideContainer.addToControl(this._layers, 'Tour');
-        this._cityContainer.addToControl(this._layers, 'Städte');
+        //this._cityContainer.addToControl(this._layers, 'Städte');
 
         this._layerControl = new MapLayerControl();
         this._layerControl.setLayers(this._layers);
@@ -89,6 +89,12 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
 
     LivePage.prototype._startLive = function() {
         this._mapPositions.start();
+    };
+
+    LivePage.prototype.setFocus = function() {
+        var bounds = this._rideContainer.getBounds();
+
+        this._map.fitBounds(bounds);
     };
 
     return LivePage;
