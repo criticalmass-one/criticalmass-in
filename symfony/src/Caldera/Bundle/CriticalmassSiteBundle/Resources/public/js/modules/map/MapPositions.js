@@ -21,7 +21,7 @@ define(['leaflet', 'PositionEntity'], function(L) {
         this._timer = window.setInterval(function () {
             that._drawPositions();
 
-        }, 5000);
+        }, 15000);
     };
 
     MapPositions.prototype.setOfflineCallback = function(offlineCallback) {
