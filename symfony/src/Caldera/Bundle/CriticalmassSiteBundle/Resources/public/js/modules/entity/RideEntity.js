@@ -29,7 +29,7 @@ define(['leaflet', 'MarkerEntity'], function() {
         var content = '<h5>' + this._title + '</h5>';
         content += '<dl class="dl-horizontal">';
         content += '<dt>Datum:</dt><dd>' + this._date + '</dd>';
-        content += '<dt>Uhrzeit:</dt><dd>' + this._time + '</dd>';
+        content += '<dt>Uhrzeit:</dt><dd>' + this._time + ' Uhr</dd>';
         content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
 
         if (this._weather) {
