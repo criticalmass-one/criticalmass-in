@@ -25,22 +25,21 @@ define(['leaflet', 'MarkerEntity'], function() {
         iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-blue-2x.png'
     };
 
-    RideEntity.prototype.buildPopup = function () {
-        var html = '<h5>' + this._title + '</h5>';
-        html += '<dl class="dl-horizontal">';
-        html += '<dt>Datum:</dt><dd>' + this._date + '</dd>';
-        html += '<dt>Uhrzeit:</dt><dd>' + this._time + '</dd>';
-        html += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
-        html += '</dl>';
-        html += '<p>' + this._description + '</p>';
+    RideEntity.prototype._getPopupContent = function () {
+        var content = '<h5>' + this._title + '</h5>';
+        content += '<dl class="dl-horizontal">';
+        content += '<dt>Datum:</dt><dd>' + this._date + '</dd>';
+        content += '<dt>Uhrzeit:</dt><dd>' + this._time + '</dd>';
+        content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
 
-        return html;
-    };
-
-    RideEntity.prototype.openPopup = function() {
-        if (this.hasLocation()) {
-            this._marker.openPopup();
+        if (this._weather) {
+            content += '<dt>Wetter:</dt><dd>' + this._weather + '</dd>';
         }
+
+        content += '</dl>';
+        content += '<p>' + this._description + '</p>';
+
+        return content;
     };
 
     return RideEntity;

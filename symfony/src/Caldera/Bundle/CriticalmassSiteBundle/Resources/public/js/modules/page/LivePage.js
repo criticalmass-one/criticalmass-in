@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions'], function() {
     LivePage = function () {
         this._initContainer();
         this._initMap();
@@ -79,6 +79,12 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'MapLayerControl', 'MapL
 
     LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
         this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
+
+        this._rideContainer.addEntity(this._ride);
+    };
+
+    LivePage.prototype.addNoLocationRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
+        this._ride = new NoLocationRideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
         this._rideContainer.addEntity(this._ride);
     };

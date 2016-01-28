@@ -27,6 +27,10 @@ define(['BaseEntity', 'leaflet'], function() {
         this._icon = L.icon(options);
     };
 
+    MarkerEntity.prototype._getPopupContent = function() {
+        return null;
+    };
+
     MarkerEntity.prototype._createMarker = function() {
         if (!this._icon) {
             this._initIcon();
@@ -41,6 +45,16 @@ define(['BaseEntity', 'leaflet'], function() {
                     icon: this._icon
                 }
             );
+
+            this._initPopup();
+        }
+    };
+
+    MarkerEntity.prototype._initPopup = function() {
+        var content = this._getPopupContent();
+
+        if (content) {
+            this._marker.bindPopup(content);
         }
     };
 
