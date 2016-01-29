@@ -103,7 +103,6 @@ class Track
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
-     * @Assert\NotBlank(message="Bitte GPX-Datei nicht vergessen!")
      * @var File
      */
     protected $trackFile;
