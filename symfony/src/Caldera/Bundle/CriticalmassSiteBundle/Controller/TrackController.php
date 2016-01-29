@@ -92,28 +92,34 @@ class TrackController extends AbstractController
         );
     }
 
-    public function uploadAction(Request $request, $citySlug, $rideDate)
+    public function uploadAction(Request $request, $citySlug, $rideDate, $embed = false)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_upload', array(
-                'citySlug' => $ride->getCity()->getMainSlugString(), 
-                'rideDate' => $ride->getFormattedDate())))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_upload',
+            [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate()
+            ]))
             ->add('trackFile', 'vich_file')
             ->getForm();
         
         if ('POST' == $request->getMethod()) {
-            return $this->uploadPostAction($request, $track, $ride, $form);
+            return $this->uploadPostAction($request, $track, $ride, $form, $embed);
         } else {
-            return $this->uploadGetAction($request, $form);
+            return $this->uploadGetAction($request, $form, $embed);
         }
     }
     
-    protected function uploadGetAction(Request $request, Form $form)
+    protected function uploadGetAction(Request $request, Form $form, $embed)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig',
+            [
+                'form' => $form->createView(),
+                'embed' => $embed
+            ]);
     }
     
     protected function loadTrackProperties(Track $track)
@@ -138,7 +144,7 @@ class TrackController extends AbstractController
 
     }
     
-    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form)
+    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed)
     {
         $form->handleRequest($request);
 
@@ -170,14 +176,14 @@ class TrackController extends AbstractController
             $estimateService->calculateEstimates($ride);
 
             return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
-
         }
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Track:upload.html.twig', 
-            array(
-                'form' => $form->createView()
-            )
+            [
+                'form' => $form->createView(),
+                'embed' => $embed
+            ]
         );
     }
 

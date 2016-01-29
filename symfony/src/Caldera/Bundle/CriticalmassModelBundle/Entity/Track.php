@@ -4,7 +4,6 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -104,7 +103,7 @@ class Track
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
-     *
+     * @Assert\NotBlank(message="Bitte GPX-Datei nicht vergessen!")
      * @var File
      */
     protected $trackFile;

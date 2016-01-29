@@ -1,31 +1,48 @@
-<p>Wenn du eine Critical-Mass-Tour aufgezeichnet ist, kannst du hier deren Track als GPX-Datei hochladen.</p>
-
 {{ form_start(form, {'attr': {'role': 'form'}}) }}
 
-<div class="form-group">
-    <label for="">Datei:</label>
-    {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+{% if embed %}
+<div class="modal-header">
+    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Track zu dieser Tour hochladen</h4>
 </div>
+<div class="modal-body">
+{% endif %}
+    <p>Wenn du eine Critical-Mass-Tour aufgezeichnet ist, kannst du hier deren Track als GPX-Datei hochladen.</p>
 
-<button id="uploadGpxButton" type="submit" class="btn btn-success">Track hochladen</button>
-<button data-dismiss="modal" class="btn btn-default">Abbrechen</button>
+    <div class="form-group">
+        <label for="">Datei:</label>
+        {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+    </div>
 
-{{ form_end(form) }}
+    <script type="text/javascript">
+        function initUpload() {
+            var $uploadButton = $('#uploadGpxButton');
 
-<script type="text/javascript">
-    function initUpload() {
-        var $uploadButton = $('#uploadGpxButton');
-        
-        $uploadButton.on('click', function () {
-            $uploadButton.prop('disabled', 'true');
-            $uploadButton.html('Einen Moment bitte…');
-        });
-
-        window.onload = function () {
-            $('#modalTrackUpload').on('hidden.bs.modal', function () {
-                $uploadButton.prop('disabled', '');
-                $uploadButton.html('Track hochladen');
+            $uploadButton.on('click', function () {
+                $uploadButton.prop('disabled', 'true');
+                $uploadButton.html('Einen Moment bitte…');
             });
+
+            window.onload = function () {
+                $('#modalTrackUpload').on('hidden.bs.modal', function () {
+                    $uploadButton.prop('disabled', '');
+                    $uploadButton.html('Track hochladen');
+                });
+            }
         }
-    }
-</script>
+    </script>
+{% if embed %}
+</div>
+<div class="modal-footer">
+    <div class="btn-group" role="group" aria-label="...">
+        <button id="uploadGpxButton" type="submit" class="btn btn-success">Track hochladen</button>
+        <button data-dismiss="modal" class="btn btn-default">Abbrechen</button>
+    </div>
+</div>
+{% else %}
+    <div class="btn-group" role="group" aria-label="...">
+        <button id="uploadGpxButton" type="submit" class="btn btn-success">Track hochladen</button>
+        <button data-dismiss="modal" class="btn btn-default">Abbrechen</button>
+    </div>
+{% endif %}
+{{ form_end(form) }}
