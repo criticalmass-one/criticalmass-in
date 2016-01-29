@@ -75,20 +75,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="modalTrackUpload" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Track zu dieser Tour hochladen</h4>
-            </div>
-            <div class="modal-body">
-                {{ render(controller('CalderaCriticalmassSiteBundle:Track:upload', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() })) }}
-            </div>
-        </div>
-    </div>
-</div>
 {% endif %}
 
 <script>
