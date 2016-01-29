@@ -1,12 +1,12 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
+{% block title %}Track beschneiden{% endblock %}
 
 {% block breadcrumb %}
     <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
     <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
-    <li class="active">Track anzeigen</li>
+    <li class="active">Track beschneiden</li>
 {% endblock %}
-
 
 {% block content %}
     <div class="container">
@@ -18,17 +18,23 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 350px;"></div>
+                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-12">
                 <input id="slider" type="text" value="" style="width: 100%;" />
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top-medium">
             <div class="col-md-12">
                 {{ form_start(form) }}
                 <div class="btn-group pull-right" role="group" aria-label="...">
