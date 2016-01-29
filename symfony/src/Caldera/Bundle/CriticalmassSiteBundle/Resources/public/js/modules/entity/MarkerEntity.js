@@ -58,6 +58,22 @@ define(['BaseEntity', 'leaflet'], function() {
         }
     };
 
+    MarkerEntity.prototype.addToMap = function(map) {
+        if (this.hasLocation()) {
+            this._createMarker();
+
+            this._marker.addTo(map.map);
+        }
+    };
+
+    MarkerEntity.prototype.addToLayer = function(markerLayer) {
+        if (this.hasLocation()) {
+            this._createMarker();
+
+            markerLayer.addLayer(this._marker);
+        }
+    };
+
     MarkerEntity.prototype.openPopup = function() {
         this._marker.openPopup();
     };
