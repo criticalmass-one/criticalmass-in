@@ -21,11 +21,11 @@ define(['leaflet', 'MarkerEntity'], function() {
     CityEntity.prototype._slug = null;
     CityEntity.prototype._description = null;
 
-    CityEntity.prototype.buildPopup = function() {
-        var html = '<h5>' + this._title + '</h5>';
-        html += '<p>' + this._description + '</p>';
+    CityEntity.prototype._getPopupContent = function () {
+        var content = '<h5>' + this._title + '</h5>';
+        content += '<p>' + this._description + '</p>';
 
-        return html;
+        return content;
     };
 
     return CityEntity;

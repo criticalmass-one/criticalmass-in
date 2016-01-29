@@ -21,7 +21,7 @@ define(['leaflet', 'PositionEntity'], function(L) {
         this._timer = window.setInterval(function () {
             that._drawPositions();
 
-        }, 5000);
+        }, 15000);
     };
 
     MapPositions.prototype.setOfflineCallback = function(offlineCallback) {
@@ -126,6 +126,14 @@ define(['leaflet', 'PositionEntity'], function(L) {
     MapPositions.prototype._setUserPositionColor = function (identifier, displayColor) {
         this._container.getEntity(identifier).setColor(displayColor);
     };
+
+    MapPositions.prototype.countPositions = function() {
+	return this._container.countEntities();
+    }
+
+    MapPositions.prototype.getBounds = function() {
+	return this._container.getBounds();
+    }
 
     return MapPositions;
 });

@@ -71,9 +71,9 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
 
     RidePage.prototype.focus = function() {
         if (this._ride.hasLocation()) {
-            //this.map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 10);
+            this._map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 10);
         } else {
-            //this.map.setView([this._city.getLatitude(), this._city.getLongitude()], 10);
+            this._map.setView([this._city.getLatitude(), this._city.getLongitude()], 10);
         }
     };
 
