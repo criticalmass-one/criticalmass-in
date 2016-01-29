@@ -5,6 +5,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._initContainers();
         this._initLayers();
         this._initLayerControl();
+        this._initTrackToggleEvent();
     };
 
     RidePage.prototype._map = null;
@@ -50,6 +51,16 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._rideContainer.addToMap(this._map);
     };
 
+    RidePage.prototype._initTrackToggleEvent = function() {
+        var that = this;
+
+        $('.track-visibility-toggle').on('click', function() {
+            var trackId = $(this).data('track-id');
+
+            that._toggleTrack(trackId);
+        });
+    };
+
     RidePage.prototype.addCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
         this._city = new CityEntity(cityName, cityTitle, slug, description, latitude, longitude);
 
@@ -62,11 +73,15 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._ride.addToContainer(this._rideContainer);
     };
 
-    RidePage.prototype.addTrack = function(polylineLatLngs, colorRed, colorGreen, colorBlue) {
+    RidePage.prototype.addTrack = function(trackId, polylineLatLngs, colorRed, colorGreen, colorBlue) {
         var track = new TrackEntity();
         track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
 
-        track.addTo(this._trackContainer);
+        track.addToContainer(this._trackContainer, trackId);
+    };
+
+    RidePage.prototype._toggleTrack = function(trackId) {
+        this._trackContainer.toggleIndexEntityInLayer(trackId);
     };
 
     RidePage.prototype.focus = function() {

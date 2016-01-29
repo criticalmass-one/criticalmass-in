@@ -84,7 +84,7 @@
         ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
 
         {% for track in ride.getActiveTracks() %}
-        ridePage.addTrack({{ track.getLatLngList() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
+        ridePage.addTrack({{ track.id }}, {{ track.getLatLngList() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
         {% endfor %}
 
         ridePage.init();

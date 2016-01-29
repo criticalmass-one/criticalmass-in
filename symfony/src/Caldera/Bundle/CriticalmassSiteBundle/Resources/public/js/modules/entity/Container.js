@@ -66,6 +66,35 @@ define(['leaflet'], function() {
         --this._counter;
     };
 
+    Container.prototype.removeIndexedEntityFromLayer = function(index) {
+        var entity = this._list[index];
+
+        entity.removeFromLayer(this._layer);
+    };
+
+    Container.prototype.addIndexedEntityToLayer = function(index) {
+        var entity = this._list[index];
+
+        entity.addToLayer(this._layer);
+    };
+
+    Container.prototype.isIndexedEntityInLayer = function(index) {
+        var entity = this._list[index];
+        var layer = entity.getLayer();
+
+        return this._layer.hasLayer(layer);
+    };
+
+    Container.prototype.toggleIndexEntityInLayer = function(index) {
+        if (this.isIndexedEntityInLayer(index)) {
+            alert('is visible');
+            this.removeIndexedEntityFromLayer(index);
+        } else {
+            alert('is not visible');
+            this.addIndexedEntityToLayer(index);
+        }
+    };
+
     /**
      *
      /**

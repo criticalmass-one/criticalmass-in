@@ -32,7 +32,7 @@
             {% for track in ride.getActiveTracks() %}
                 <tr>
                     <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                        <input type="checkbox" class="trackVisibility" data-track="{{ trackNumber }}" checked="checked" />
+                        <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
                     </td>
                     <td>{{ track.getUsername() }}</td>
                     <td>{{ track.getDurationInterval.format('%i') }} Minuten</td>

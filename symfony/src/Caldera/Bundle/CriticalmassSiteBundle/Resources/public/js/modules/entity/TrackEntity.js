@@ -24,11 +24,15 @@ define(['leaflet', 'BaseEntity'], function() {
         this._polyline = L.polyline(jsonData, {color: 'rgb(' + colorRed + ',' + colorGreen + ', ' + colorBlue + ')'});
     };
 
+    TrackEntity.prototype.getLayer = function() {
+        return this._polyline;
+    };
+
     TrackEntity.prototype.getBounds = function () {
         return this._polyline.getBounds();
     };
 
-    TrackEntity.prototype.removeLayer = function (trackLayer) {
+    TrackEntity.prototype.removeFromLayer = function (trackLayer) {
         trackLayer.removeLayer(this._polyline);
     };
 
