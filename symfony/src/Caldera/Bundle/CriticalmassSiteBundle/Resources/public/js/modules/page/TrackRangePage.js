@@ -13,6 +13,16 @@ define(['Map', 'TrackEntity', 'bootstrap-slider'], function() {
     TrackRangePage.prototype._colorGreen = null;
     TrackRangePage.prototype._colorBlue = null;
 
+    TrackRangePage.prototype._loadStyles = function() {
+        var $link = $('<link>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: '/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css'
+        });
+
+        $link.appendTo('head');
+    };
+
     TrackRangePage.prototype.setStartPoint = function(startPoint) {
         this._startPoint = startPoint;
     };
@@ -36,6 +46,7 @@ define(['Map', 'TrackEntity', 'bootstrap-slider'], function() {
     };
 
     TrackRangePage.prototype.init = function() {
+        this._loadStyles();
         this._initMap();
         this._initControl();
         this._initTrack();
