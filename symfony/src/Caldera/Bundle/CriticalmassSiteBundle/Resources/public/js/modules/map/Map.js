@@ -27,13 +27,13 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype._loadStyles = function() {
-        var link = $('<link>', {
+        var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
             href: this.settings.stylesheetAddress
         });
 
-        link.appendTo('head');
+        $link.appendTo('head');
     };
 
     Map.prototype._initMap = function () {
