@@ -302,7 +302,51 @@ class TrackController extends AbstractController
             ]
         );
     }
-    
+
+    protected function saveLatLngList(Track $track)
+    {
+        /**
+         * @var RangeLatLngListGenerator $llag
+         */
+        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+        $llag->loadTrack($track);
+        $llag->execute();
+        $track->setLatLngList($llag->getList());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+    }
+
+    protected function updateTrackProperties(Track $track)
+    {
+        /**
+         * @var TrackReader $gr
+         */
+        $tr = $this->get('caldera.criticalmass.gps.trackreader');
+        $tr->loadTrack($track);
+
+        $track->setStartDateTime($tr->getStartDateTime());
+        $track->setEndDateTime($tr->getEndDateTime());
+        $track->setDistance($tr->calculateDistance());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+    }
+
+    protected function calculateRideEstimates(Track $track)
+    {
+        /**
+         * @var RideEstimateService $res
+         */
+        $res = $this->get('caldera.criticalmass.statistic.rideestimate.track');
+        $res->flushEstimates($track->getRide());
+
+        $res->refreshEstimate($track->getRideEstimate());
+        $res->calculateEstimates($track->getRide());
+    }
+
     protected function rangePostAction(Request $request, Track $track, Form $form)
     {
         $form->handleRequest($request);
@@ -314,36 +358,9 @@ class TrackController extends AbstractController
              */
             $track = $form->getData();
 
-            /**
-             * @var RangeLatLngListGenerator $llag
-             */
-            $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
-            $llag->loadTrack($track);
-            $llag->execute();
-            $track->setLatLngList($llag->getList());
-
-            /**
-             * @var TrackReader $gr
-             */
-            $tr = $this->get('caldera.criticalmass.gps.trackreader');
-            $tr->loadTrack($track);
-
-            $track->setStartDateTime($tr->getStartDateTime());
-            $track->setEndDateTime($tr->getEndDateTime());
-            $track->setDistance($tr->calculateDistance());
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($track);
-            $em->flush();
-
-            /**
-             * @var RideEstimateService $res
-             */
-            $res = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-            $res->flushEstimates($track->getRide());
-
-            $res->refreshEstimate($track->getRideEstimate());
-            $res->calculateEstimates($track->getRide());
+            $this->saveLatLngList($track);
+            $this->updateTrackProperties($track);
+            $this->calculateRideEstimates($track);
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
