@@ -10,7 +10,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     Map.prototype._defaults = {
         tileLayerUrl: 'https://api.tiles.mapbox.com/v4/maltehuebner.i1c90m12/{z}/{x}/{y}.png',
         mapBoxAccessToken: 'pk.eyJ1IjoibWFsdGVodWVibmVyIiwiYSI6IjB5c2QtNXcifQ.I7OHZr0wtAvqE0wIY_psfg',
-        mapAttribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        mapAttribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         stylesheetAddress: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css',
         detectRetina: true,
         defaultLatitude: 51.0851708,
