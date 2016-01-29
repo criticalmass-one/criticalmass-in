@@ -37,6 +37,9 @@ class SiteTwigExtension extends \Twig_Extension
             )),
             new \Twig_SimpleFunction('gravatarUrl', [$this, 'gravatarUrl'], array(
                 'is_safe' => array('html')
+            )),
+            new \Twig_SimpleFunction('daysSince', [$this, 'daysSince'], array(
+                'is_safe' => array('html')
             ))
         ];
     }
@@ -58,6 +61,18 @@ class SiteTwigExtension extends \Twig_Extension
     public function gravatarUrl(User $user, $size = 64)
     {
         return 'http://www.gravatar.com/avatar/'.$this->gravatarHash($user).'?s='.$size;
+    }
+
+    public function daysSince($dateTimeString)
+    {
+        $dateTime = new \DateTime($dateTimeString);
+        $now = new \DateTime();
+
+        $diffSeconds = $now->getTimestamp() - $dateTime->getTimestamp();
+
+        $diffDays = floor($diffSeconds / (60 * 60 * 24));
+
+        return $diffDays;
     }
 
     public function getName()
