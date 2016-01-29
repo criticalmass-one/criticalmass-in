@@ -8,6 +8,18 @@ define(['leaflet', 'BaseEntity'], function() {
 
     TrackEntity.prototype._polyline = null;
 
+    TrackEntity.prototype.addToMap = function(map) {
+        if (this._polyline) {
+            this._polyline.addTo(map.map);
+        }
+    };
+
+    TrackEntity.prototype.addToLayer = function(trackLayer) {
+        if (this._polyline) {
+            trackLayer.addLayer(this._polyline);
+        }
+    };
+
     TrackEntity.prototype.setPolyline = function (jsonData, colorRed, colorGreen, colorBlue) {
         this._polyline = L.polyline(jsonData, {color: 'rgb(' + colorRed + ',' + colorGreen + ', ' + colorBlue + ')'});
     };

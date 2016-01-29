@@ -1,4 +1,4 @@
-define(['Map', 'Track'], function() {
+define(['Map', 'TrackEntity'], function() {
     TrackViewPage = function(context, options) {
 
     };
@@ -30,9 +30,9 @@ define(['Map', 'Track'], function() {
     };
 
     TrackViewPage.prototype._initTrack = function() {
-        this._track = new Track();
+        this._track = new TrackEntity();
         this._track.setPolyline(this._polylineLatLngs, this._colorRed, this._colorGreen, this._colorBlue);
-        this._track.addTo(this._map.map);
+        this._track.addToMap(this._map);
 
         this._map.fitBounds(this._track.getBounds());
     };

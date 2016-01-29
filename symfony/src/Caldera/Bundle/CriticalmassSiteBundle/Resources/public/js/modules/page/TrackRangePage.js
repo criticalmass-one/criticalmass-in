@@ -1,4 +1,4 @@
-define(['Map', 'Track', 'bootstrap-slider'], function() {
+define(['Map', 'TrackEntity', 'bootstrap-slider'], function() {
     TrackRangePage = function(context, options) {
 
     };
@@ -45,7 +45,7 @@ define(['Map', 'Track', 'bootstrap-slider'], function() {
     };
 
     TrackRangePage.prototype._initTrack = function() {
-        this._track = new Track();
+        this._track = new TrackEntity();
         this._track.setPolyline(
             this._polylineLatLngs,
             this._colorRed,
@@ -53,7 +53,7 @@ define(['Map', 'Track', 'bootstrap-slider'], function() {
             this._colorBlue
         );
 
-        this._track.addTo(this._map.map);
+        this._track.addToMap(this._map);
     };
 
     TrackRangePage.prototype._initMap = function() {
