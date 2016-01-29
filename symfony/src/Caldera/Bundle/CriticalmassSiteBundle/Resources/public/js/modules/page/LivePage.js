@@ -98,9 +98,13 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
     };
 
     LivePage.prototype.setFocus = function() {
-        var bounds = this._rideContainer.getBounds();
-
-        this._map.fitBounds(bounds);
+	if (this._rideContainer.countEntities() == 1) {
+		var ride = this._rideContainer.getEntity(0);
+		this._map.setView([ride.getLatitude(), ride.getLongitude()], 12);
+	} else {
+		var bounds = this._rideContainer.getBounds();
+	        this._map.fitBounds(bounds);
+	}
     };
 
     return LivePage;

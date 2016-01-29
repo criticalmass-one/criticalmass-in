@@ -127,5 +127,13 @@ define(['leaflet', 'PositionEntity'], function(L) {
         this._container.getEntity(identifier).setColor(displayColor);
     };
 
+    MapPositions.prototype.countPositions = function() {
+	return this._container.countEntities();
+    }
+
+    MapPositions.prototype.getBounds = function() {
+	return this._container.getBounds();
+    }
+
     return MapPositions;
 });
