@@ -65,6 +65,11 @@ class Photo
     protected $enabled = true;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted = false;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
@@ -142,6 +147,22 @@ class Photo
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
     }
 
     /**

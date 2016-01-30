@@ -414,6 +414,11 @@ class Ride
         return $ride->getId() == $this->getId();
     }
 
+    public function equals(Ride $ride)
+    {
+        return $this->isEqual($ride);
+    }
+
     public function isSameRide(Ride $ride)
     {
         return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();

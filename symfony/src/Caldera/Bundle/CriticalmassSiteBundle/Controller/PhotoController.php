@@ -90,20 +90,26 @@ class PhotoController extends AbstractController
         );
     }
 
-    public function deleteAction(Request $request, $photoId = 0)
+    public function deleteAction(Request $request, $citySlug, $rideDate, $photoId = 0)
     {
-        if ($photoId > 0) {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        if ($ride and $photo and $photo->getUser()->equals($this->getUser()) and $photo->getRide()->equals($ride)) {
             $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
-            $comments = $this->getDoctrine()->getRepository('CalderaCriticalmassTimelineBundle:Post')->findBy(array('photo' => $photo));
-            foreach ($comments as $comment) {
-                $em->remove($comment);
-            }
-            $em->remove($photo);
+
+            $photo->setDeleted(true);
+
+            $em->persist($photo);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
+            [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate()
+            ]
+        ));
     }
 
     public function reportAction(Request $request, $photoId = 0)
@@ -265,7 +271,7 @@ class PhotoController extends AbstractController
         $photoView = new PhotoView();
         $photoView->setUser($this->getUser());
         $photoView->setPhoto($photo);
-        
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($photo);
         $em->persist($photoView);

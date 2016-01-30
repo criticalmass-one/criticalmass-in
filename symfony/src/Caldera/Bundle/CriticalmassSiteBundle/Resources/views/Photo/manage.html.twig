@@ -67,7 +67,7 @@
                             <div class="col-md-12">
                                 <div class="text-center">
                                     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                        <a href="#" class="btn btn-default btn-xs">
+                                        <a href="{{ path('caldera_criticalmass_photo_delete', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
                                         {% if photo.enabled %}

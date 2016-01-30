@@ -13,7 +13,11 @@ caldera_criticalmass_photo_manage:
 caldera_criticalmass_photo_toggle:
     pattern: /{citySlug}/{rideDate}/photo/{{photoId}}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:toggle }
-    
+
+caldera_criticalmass_photo_delete:
+    pattern: /{citySlug}/{rideDate}/managephotos/{{photoId}}/delete
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:delete }
+
 caldera_criticalmass_gallery_photos_upload_ride_process:
     pattern: /{citySlug}/{rideDate}/processphoto
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:process }
