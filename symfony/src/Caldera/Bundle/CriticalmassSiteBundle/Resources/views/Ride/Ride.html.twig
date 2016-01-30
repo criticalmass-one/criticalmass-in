@@ -81,10 +81,10 @@
     CriticalMass.loadModule('RidePage', null, null, function(ridePage) {
         ridePage.addCity('{{ city.title }}', '{{ city.city }}', '{{ city.getMainSlugString() }}', '{{ city.description }}', {{ city.latitude }}, {{ city.longitude }});
 
-        ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
+        ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast() }}');
 
         {% for track in ride.getActiveTracks() %}
-        ridePage.addTrack({{ track.id }}, {{ track.getLatLngList() }}, {{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});
+        ridePage.addTrack({{ track.id }}, {{ track.getLatLngList() }}, {{ track.colorRed() }}, {{ track.colorGreen() }}, {{ track.colorBlue() }});
         {% endfor %}
 
         ridePage.init();
