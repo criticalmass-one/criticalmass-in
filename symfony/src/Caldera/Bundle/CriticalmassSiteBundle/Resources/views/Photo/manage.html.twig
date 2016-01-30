@@ -22,7 +22,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Fotos bearbeiten</h2>
+                <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="btn btn-success pull-right">
+                    Weitere Fotos hochladen
+                </a>
+
+                <h2>
+                    Fotos bearbeiten
+                </h2>
             </div>
         </div>
 
