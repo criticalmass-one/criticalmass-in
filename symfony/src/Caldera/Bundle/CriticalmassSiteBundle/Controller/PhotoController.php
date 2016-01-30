@@ -265,9 +265,7 @@ class PhotoController extends AbstractController
         $photoView = new PhotoView();
         $photoView->setUser($this->getUser());
         $photoView->setPhoto($photo);
-
-        $photo->setEnabled(!$photo->getEnabled());
-
+        
         $em = $this->getDoctrine()->getManager();
         $em->persist($photo);
         $em->persist($photoView);
