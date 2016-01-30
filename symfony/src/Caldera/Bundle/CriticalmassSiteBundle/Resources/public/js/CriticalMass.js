@@ -50,6 +50,7 @@ require.config({
         "TrackRangePage": "/bundles/calderacriticalmasssite/js/modules/page/TrackRangePage",
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
+        "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "MapLayerControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLayerControl",
         "MapLocationControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLocationControl",
@@ -64,7 +65,8 @@ require.config({
         "leaflet-geometry": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.geometryutil",
         "leaflet-groupedlayer": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.groupedlayercontrol",
         "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
-        "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider"
+        "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
+        "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min"
 
     },
     shim: {
