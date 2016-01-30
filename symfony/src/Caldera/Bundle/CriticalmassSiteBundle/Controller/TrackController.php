@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassCoreBundle\Uploader\TrackUploader\TrackUploader;
@@ -168,14 +169,11 @@ class TrackController extends AbstractController
             $em->persist($track);
             $em->flush();
 
-            /**
-             * @var RideEstimateService $estimateService
-             */
-            $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-            $estimateService->addEstimate($track);
-            $estimateService->calculateEstimates($ride);
+            $this->addRideEstimate($track, $ride);
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
+            $this->generateSimpleLatLngList($track);
+
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', ['trackId' => $track->getId()]));
         }
 
         return $this->render(
@@ -185,6 +183,34 @@ class TrackController extends AbstractController
                 'embed' => $embed
             ]
         );
+    }
+
+    protected function addRideEstimate(Track $track, Ride $ride)
+    {
+        /**
+         * @var RideEstimateService $estimateService
+         */
+        $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate.track');
+        $estimateService->addEstimate($track);
+        $estimateService->calculateEstimates($ride);
+    }
+
+    protected function generateSimpleLatLngList(Track $track)
+    {
+        /**
+         * @var SimpleLatLngListGenerator $generator
+         */
+        $generator = $this->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
+        $list = $generator
+            ->loadTrack($track)
+            ->execute()
+            ->getList();
+
+        $track->setLatLngList($list);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
     }
 
     public function viewAction(Request $request, $trackId)
