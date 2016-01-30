@@ -1,9 +1,21 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Foasasdd{% endblock %}
+{% block title %}Fotos bearbeiten{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">asdasd</li>
+    <li>
+        <a href="{{ path(ride.city) }}">
+            {{ ride.city.title }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li class="active">
+        Fotos bearbeiten
+    </li>
 {% endblock %}
 
 {% block content %}

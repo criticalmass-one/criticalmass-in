@@ -232,6 +232,7 @@ class PhotoController extends AbstractController
 
         return $this->render('CalderaCriticalmassSiteBundle:Photo:manage.html.twig',
             [
+                'ride' => $ride,
                 'pagination' => $pagination
             ]
         );
