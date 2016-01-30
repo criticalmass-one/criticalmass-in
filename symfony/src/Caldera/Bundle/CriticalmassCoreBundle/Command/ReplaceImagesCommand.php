@@ -56,7 +56,15 @@ class ReplaceImagesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
+
+        /**
+         * @var PhotoGps $photoGps
+         */
         $this->photoGps = $this->getContainer()->get('caldera.criticalmass.image.photogps');
+
+        /**
+         * @var Registry $manager
+         */
         $this->manager = $this->doctrine->getManager();
 
         $ride = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));

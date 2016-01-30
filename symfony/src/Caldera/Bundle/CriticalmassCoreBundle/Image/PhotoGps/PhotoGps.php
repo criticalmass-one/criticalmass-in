@@ -122,11 +122,6 @@ class PhotoGps {
             ->execute()
             ->getDateTime();
 
-        /* TODO Remove this! */
-        $dateTime = $dateTime->sub(new \DateInterval('PT2H'));
-
-        echo $dateTime->format('d.m.Y H:i:s')."\n";
-
         $result = $this->trackReader->findCoordNearDateTime($dateTime);
 
         $this->photo->setLatitude($result['latitude']);
