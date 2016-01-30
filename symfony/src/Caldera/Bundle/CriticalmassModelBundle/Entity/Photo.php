@@ -57,7 +57,7 @@ class Photo
     /**
      * @ORM\Column(type="integer")
      */
-    protected $views;
+    protected $views = 0;
 
     /**
      * @ORM\Column(type="boolean")
