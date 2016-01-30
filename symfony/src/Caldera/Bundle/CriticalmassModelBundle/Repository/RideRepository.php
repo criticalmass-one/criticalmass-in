@@ -216,6 +216,37 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
+    /**
+     * @param $citySlug string
+     * @param $rideDate string
+     * @return Ride
+     */
+    public function findByCitySlugAndRideDate($citySlug, $rideDate)
+    {
+        // Maybe this datetime computation stuff is stupid. Will look for a better solution.
+        $fromDateTime = new \DateTime($rideDate);
+        $fromDateTime->setTime(0, 0, 0);
+
+        $untilDateTime = new \DateTime($rideDate);
+        $untilDateTime->setTime(23, 59, 59);
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->join('ride.city', 'city');
+        $builder->join('city.slugs', 'citySlug');
+
+        $builder->where($builder->expr()->eq('citySlug.slug', '\''.$citySlug.'\''));
+        $builder->andWhere($builder->expr()->gt('ride.dateTime', '\''.$fromDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$untilDateTime->format('Y-m-d H:i:s').'\''));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleResult();
+    }
+
     public function findLatestRidesOrderByParticipants(\DateTime $startDateTime, \DateTime $endDateTime)
     {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r WHERE r.dateTime >= \''.$startDateTime->format('Y-m-d H:i:s').'\' AND r.dateTime <= \''.$endDateTime->format('Y-m-d H:i:s').'\' ORDER BY r.estimatedParticipants DESC');
