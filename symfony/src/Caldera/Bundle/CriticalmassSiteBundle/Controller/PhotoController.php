@@ -126,7 +126,6 @@ class PhotoController extends AbstractController
 
         if ($request->getMethod() == 'POST') {
             return $this->uploadPostAction($request, $ride);
-
         } else {
             return $this->render('CalderaCriticalmassSiteBundle:Photo:upload.html.twig', [
                 'ride' => $ride
