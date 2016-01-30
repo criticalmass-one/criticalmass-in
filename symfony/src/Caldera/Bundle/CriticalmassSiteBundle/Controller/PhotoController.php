@@ -251,13 +251,20 @@ class PhotoController extends AbstractController
          */
         $photo = $this->getPhotoRepository()->find($photoId);
 
-        $em = $this->getDoctrine()->getManager();
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $photo = $this->getPhotoRepository()->find($photoId);
 
-        $photo->setEnabled(!$photo->getEnabled());
+        if ($ride and $photo and $photo->getUser()->equals($this->getUser()) and $photo->getRide()->equals($ride)) {
 
-        $em->persist($photo);
-        $em->flush();
 
+            $em = $this->getDoctrine()->getManager();
+
+            $photo->setEnabled(!$photo->getEnabled());
+
+            $em->persist($photo);
+            $em->flush();
+        }
+        
         return $this->redirectToRoute('caldera_criticalmass_photo_manage',
         [
            'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
