@@ -57,7 +57,7 @@
                                         Koordinaten
                                     </dt>
                                     <dd>
-                                        {% if photo.hasCoordinates() %}ja ({{ photo.latitude }}, {{ photo.longitude }}){% else %}nein{% endif %}
+                                        {% if photo.hasCoordinates() %}ja ({{ photo.latitude|round(6) }}, {{ photo.longitude|round(6) }}){% else %}nein{% endif %}
                                     </dd>
                                 </dl>
                             </div>
