@@ -83,7 +83,7 @@
 
         ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast() }}');
 
-        {% for track in ride.getActiveTracks() %}
+        {% for track in tracks %}
         ridePage.addTrack({{ track.id }}, {{ track.getLatLngList() }}, {{ track.colorRed() }}, {{ track.colorGreen() }}, {{ track.colorBlue() }});
         {% endfor %}
 
