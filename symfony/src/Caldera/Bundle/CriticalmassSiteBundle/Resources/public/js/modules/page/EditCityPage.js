@@ -70,7 +70,7 @@ define(['Map', 'LocationMarker', 'CityMarker'], function() {
 
     EditCityPage.prototype._initCityMarker = function () {
         this.cityMarker = new CityMarker(this.mapCenter, true);
-        this.cityMarker.addTo(this.map);
+        this.cityMarker.addToMap(this.map);
         this.cityMarker.addPopupText(this.settings.cityMarkerPopupText, true);
 
         that = this;
@@ -107,7 +107,7 @@ define(['Map', 'LocationMarker', 'CityMarker'], function() {
             this.locationMarker = new LocationMarker(this.mapCenter, true);
         }
 
-        this.locationMarker.addTo(this.map);
+        this.locationMarker.addToMap(this.map);
         this.locationMarker.addPopupText(this.settings.cityStandardLocationPopupText, true);
 
         this.locationMarker.on('dragend', function (event) {

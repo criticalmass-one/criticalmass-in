@@ -9,7 +9,7 @@ define(['leaflet'], function() {
     Marker.prototype._icon = null;
     Marker.prototype._baseIconUrl = '/bundles/calderacriticalmasssite/images/marker/';
 
-    Marker.prototype.addTo = function (map) {
+    Marker.prototype.addToMap = function (map) {
         this._marker = L.marker(this._latLng,
         {
             icon: this._icon,
