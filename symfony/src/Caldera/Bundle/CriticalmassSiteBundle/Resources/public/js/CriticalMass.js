@@ -58,6 +58,8 @@ require.config({
         "Marker": "/bundles/calderacriticalmasssite/js/modules/map/marker/Marker",
         "CityMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/CityMarker",
         "LocationMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/LocationMarker",
+        "PhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/PhotoMarker",
+        "SnapablePhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SnapablePhotoMarker",
         "leaflet": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/calderacriticalmasssite/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Control.Locate",
@@ -77,6 +79,10 @@ require.config({
         'leaflet-groupedlayer': {
             deps: ['leaflet'],
             exports: 'L.Control.GroupedLayers'
+        },
+        'leaflet-snap': {
+            deps: ['leaflet'],
+            exports: 'L.Handler.MarkerSnap'
         }
     }
 });

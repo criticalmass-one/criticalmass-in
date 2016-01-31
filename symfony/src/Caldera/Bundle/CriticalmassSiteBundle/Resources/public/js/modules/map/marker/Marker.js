@@ -6,8 +6,13 @@ define(['leaflet'], function() {
 
     Marker.prototype._latLng = null;
     Marker.prototype._draggable = false;
+    Marker.prototype._map = false;
     Marker.prototype._icon = null;
     Marker.prototype._baseIconUrl = '/bundles/calderacriticalmasssite/images/marker/';
+
+    Marker.prototype.getLatLng = function() {
+        return this._marker.getLatLng();
+    };
 
     Marker.prototype.addToMap = function (map) {
         this._marker = L.marker(this._latLng,
@@ -16,7 +21,8 @@ define(['leaflet'], function() {
             draggable: this._draggable
         });
 
-        this._marker.addTo(map.map);
+        this._map = map;
+        this._marker.addTo(this._map.map);
     };
 
     Marker.prototype.removeFrom = function (map) {

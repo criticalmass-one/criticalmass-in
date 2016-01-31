@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

@@ -283,6 +283,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             return null;
         }
 
+        // ensure the ratio is between 0 and 1;
+        ratio = Math.max(Math.min(ratio, 1), 0);
+
         if (ratio === 0) {
             return {
                 latLng: latLngs[0] instanceof L.LatLng ? latLngs[0] : L.latLng(latLngs[0]),
@@ -295,9 +298,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 predecessor: latLngs.length - 2
             };
         }
-
-        // ensure the ratio is between 0 and 1;
-        ratio = Math.max(Math.min(ratio, 1), 0);
 
         // project the LatLngs as Points,
         // and compute total planar length of the line at max precision
@@ -497,6 +497,58 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             x2 = Math.cos(angleRad)*(pPoint.x-pCenter.x) - Math.sin(angleRad)*(pPoint.y-pCenter.y) + pCenter.x,
             y2 = Math.sin(angleRad)*(pPoint.x-pCenter.x) + Math.cos(angleRad)*(pPoint.y-pCenter.y) + pCenter.y;
         return map.unproject(new L.Point(x2,y2), maxzoom);
+    },
+
+    /**
+       Returns the bearing in degrees clockwise from north (0 degrees)
+       from the first L.LatLng to the second, at the first LatLng 
+       @param {L.LatLng} latlng1: origin point of the bearing
+       @param {L.LatLng} latlng2: destination point of the bearing
+       @returns {float} degrees clockwise from north.
+    */
+    bearing: function(latlng1, latlng2) {
+        var rad = Math.PI / 180,
+            lat1 = latlng1.lat * rad,
+            lat2 = latlng2.lat * rad,
+            lon1 = latlng1.lng * rad,
+            lon2 = latlng2.lng * rad,
+            y = Math.sin(lon2 - lon1) * Math.cos(lat2),
+            x = Math.cos(lat1) * Math.sin(lat2) -
+                Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+
+        var bearing = ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
+        return bearing >= 180 ? bearing-360 : bearing;
+    },
+
+    /**
+       Returns the point that is a distance and heading away from
+       the given origin point.
+       @param {L.LatLng} latlng: origin point
+       @param {float}: heading in degrees, clockwise from 0 degrees north.
+       @param {float}: distance in meters
+       @returns {L.latLng} the destination point.
+       Many thanks to Chris Veness at http://www.movable-type.co.uk/scripts/latlong.html
+       for a great reference and examples.
+    */
+    destination: function(latlng, heading, distance) {
+        heading = (heading + 360) % 360;
+        var rad = Math.PI / 180,
+            radInv = 180 / Math.PI,
+            R = 6378137, // approximation of Earth's radius
+            lon1 = latlng.lng * rad,
+            lat1 = latlng.lat * rad,
+            rheading = heading * rad,
+            sinLat1 = Math.sin(lat1),
+            cosLat1 = Math.cos(lat1),
+            cosDistR = Math.cos(distance / R),
+            sinDistR = Math.sin(distance / R),
+            lat2 = Math.asin(sinLat1 * cosDistR + cosLat1 *
+                sinDistR * Math.cos(rheading)),
+            lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
+                cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
+        lon2 = lon2 * radInv;
+        lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
+        return L.latLng([lat2 * radInv, lon2]);
     }
 });
 

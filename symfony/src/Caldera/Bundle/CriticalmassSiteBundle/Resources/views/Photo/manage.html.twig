@@ -79,7 +79,7 @@
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         {% endif %}
-                                        <a href="#" class="btn btn-default btn-xs">
+                                        <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
                                             <i class="fa fa-location-arrow"></i>
                                         </a>
                                     </div>
