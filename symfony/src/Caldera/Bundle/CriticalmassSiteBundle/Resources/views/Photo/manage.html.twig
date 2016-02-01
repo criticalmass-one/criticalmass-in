@@ -22,9 +22,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="btn btn-success pull-right">
-                    Weitere Fotos hochladen
-                </a>
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="btn btn-success">
+                        <i class="fa fa-camera"></i>
+                        Weitere Fotos hochladen
+                    </a>
+
+                    <a href="{{ path('caldera_criticalmass_photo_relocate', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="btn btn-success">
+                        <i class="fa fa-map-pin"></i>
+                        Fotos verschieben
+                    </a>
+                </div>
+
 
                 <h2>
                     Fotos bearbeiten
