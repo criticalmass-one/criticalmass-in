@@ -11,6 +11,10 @@ body {
     margin-top: 40px;
   }
 
+  .no-margin-top {
+    margin-top: 0;
+  }
+
   .padding-top-small {
     padding-top: 10px;
   }
@@ -21,6 +25,10 @@ body {
 
   .padding-top-large {
     padding-top: 40px;
+  }
+
+  .no-padding-top {
+    padding-top: 0;
   }
 
   .margin-bottom-small {
@@ -35,6 +43,10 @@ body {
     margin-bottom: 40px;
   }
 
+  .no-margin-bottom {
+    margin-bottom: 0;
+  }
+
   .padding-bottom-small {
     padding-bottom: 10px;
   }
@@ -45,5 +57,9 @@ body {
 
   .padding-bottom-large {
     padding-bottom: 40px;
+  }
+
+  .no-padding-bottom {
+    padding-bottom: 0;
   }
 }

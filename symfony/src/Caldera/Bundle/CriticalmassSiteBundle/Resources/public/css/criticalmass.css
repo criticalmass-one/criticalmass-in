@@ -5,25 +5,48 @@ body .photo-list .photo img {
 
 body .margin-top-small {
   margin-top: 10px; }
+
 body .margin-top-medium {
   margin-top: 20px; }
+
 body .margin-top-large {
   margin-top: 40px; }
+
+body .no-margin-top {
+  margin-top: 0; }
+
 body .padding-top-small {
   padding-top: 10px; }
+
 body .padding-top-medium {
   padding-top: 20px; }
+
 body .padding-top-large {
   padding-top: 40px; }
+
+body .no-padding-top {
+  padding-top: 0; }
+
 body .margin-bottom-small {
   margin-bottom: 10px; }
+
 body .margin-bottom-medium {
   margin-bottom: 20px; }
+
 body .margin-bottom-large {
   margin-bottom: 40px; }
+
+body .no-margin-bottom {
+  margin-bottom: 0; }
+
 body .padding-bottom-small {
   padding-bottom: 10px; }
+
 body .padding-bottom-medium {
   padding-bottom: 20px; }
+
 body .padding-bottom-large {
   padding-bottom: 40px; }
+
+body .no-padding-bottom {
+  padding-bottom: 0; }
