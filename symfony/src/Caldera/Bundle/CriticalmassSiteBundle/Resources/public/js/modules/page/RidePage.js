@@ -90,43 +90,47 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
     RidePage.prototype.addPhoto = function(photoId, latitude, longitude, description, dateTime, filename) {
         var photo = new PhotoEntity(photoId, latitude, longitude, description, dateTime, filename);
 
-        photo.addToContainer(this._photoContainer, photoId);
+        var entityId = this._photoContainer.countEntities() + 1;
+
+        photo.addToContainer(this._photoContainer, entityId);
 
         var that = this;
 
         photo.on('click', function() {
-            that._showPhoto(photoId);
+            that._showPhoto(entityId);
         });
     };
 
-    RidePage.prototype._showPhoto = function(photoId) {
-        var photo = this._photoContainer.getEntity(photoId);
+    RidePage.prototype._showPhoto = function(entityId) {
+        var photo = this._photoContainer.getEntity(entityId);
+
+        alert('show photo with entity id ' + entityId);
 
         var $modal = $('#photo-view-modal');
         $modal.find('img').attr('src', photo.getFilename());
-        $modal.find('img').attr('id', 'photo-' + photoId);
+        $modal.find('img').attr('id', 'photo-' + entityId);
 
         if (!$modal.hasClass('in')) {
             $modal.modal();
         }
 
-        this._updatePhotoViewNavigation(photoId);
+        this._updatePhotoViewNavigation(entityId);
     };
 
-    RidePage.prototype._updatePhotoViewNavigation = function(photoId) {
+    RidePage.prototype._updatePhotoViewNavigation = function(entityId) {
         var $modal = $('#photo-view-modal');
         var $nextPhotoButton = $modal.find('li.next');
         var $previousPhotoButton = $modal.find('li.previous');
 
-        var previousPhoto = this._photoContainer.getPreviousEntity(photoId);
-        var nextPhoto = this._photoContainer.getNextEntity(photoId);
+        var previousPhotoEntityId = this._photoContainer.getPreviousIndex(entityId);
+        var nextPhotoEntityId = this._photoContainer.getNextIndex(entityId);
 
         var that = this;
 
-        if (previousPhoto) {
+        if (previousPhotoEntityId) {
             $previousPhotoButton.find('a').off('click').on('click', function (element) {
                 element.preventDefault();
-                that._showPhoto(previousPhoto.getId());
+                that._showPhoto(previousPhotoEntityId);
             });
 
             $previousPhotoButton.removeClass('disabled');
@@ -135,11 +139,11 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
             $previousPhotoButton.find('a').off('click');
         }
 
-        if (nextPhoto) {
+        if (nextPhotoEntityId) {
             $nextPhotoButton.find('a').off('click').on('click', function(element) {
                 element.preventDefault();
 
-                that._showPhoto(nextPhoto.getId());
+                that._showPhoto(nextPhotoEntityId);
             });
 
             $nextPhotoButton.removeClass('disabled');
