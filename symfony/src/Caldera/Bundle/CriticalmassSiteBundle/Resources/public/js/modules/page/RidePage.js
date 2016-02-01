@@ -127,6 +127,16 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
 
         var that = this;
 
+        $('body').off('keydown').on('keydown', function(e) {
+            if (nextPhotoEntityId && (e.keyCode || e.which) == 39) {
+                that._showPhoto(nextPhotoEntityId);
+            }
+
+            if (previousPhotoEntityId && (e.keyCode || e.which) == 37) {
+                that._showPhoto(previousPhotoEntityId);
+            }
+        });
+
         if (previousPhotoEntityId) {
             $previousPhotoButton.find('a').off('click').on('click', function (element) {
                 element.preventDefault();
