@@ -76,7 +76,7 @@
                                 {{ ride.dateTime.format('d.m.Y') }}
                             </td>
                             <td>
-                                {{ ride.dateTime.format('H:i') }} Uhr
+                                {{ ride.dateTime.format('H:i') }}&nbsp;Uhr
                             </td>
                             <td>
                                 <a href="{{ path(ride) }}">
@@ -87,13 +87,19 @@
                                 {{ ride.location }}
                             </td>
                             <td>
+                                {% if ride.estimatedParticipants %}
                                 {{ ride.estimatedParticipants }}
+                                {% endif %}
                             </td>
                             <td>
-                                {{ ride.estimatedDistance }} Kilometer
+                                {% if ride.estimatedDistance %}
+                                {{ ride.estimatedDistance }}&nbsp;Kilometer
+                                {% endif %}
                             </td>
                             <td>
-                                {{ ride.estimatedDuration }} Stunden
+                                {% if ride.estimatedDuration %}
+                                {{ ride.estimatedDuration }}&nbsp;Stunden
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
