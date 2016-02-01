@@ -78,7 +78,11 @@
 {% endif %}
 
 <script>
-    CriticalMass.loadModule('RidePage', null, null, function(ridePage) {
+    var pageOptions = {
+        'photoViewPageUrl': '{{ path('caldera_criticalmass_photo_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate(), 'photoId': 'photoId' }) }}'
+    };
+
+    CriticalMass.loadModule('RidePage', null, pageOptions, function(ridePage) {
         ridePage.addCity('{{ city.title }}', '{{ city.city }}', '{{ city.getMainSlugString() }}', '{{ city.description }}', {{ city.latitude }}, {{ city.longitude }});
 
         ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast() }}');

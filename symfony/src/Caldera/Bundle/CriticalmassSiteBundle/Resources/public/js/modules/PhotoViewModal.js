@@ -1,10 +1,12 @@
 define(['Container', 'PhotoEntity'], function() {
 
     PhotoViewModal = function(context, options) {
+        this._options = options;
     };
 
     PhotoViewModal.prototype._map = null;
     PhotoViewModal.prototype._photoContainer = null;
+    PhotoViewModal.prototype._options = null;
 
 
     PhotoViewModal.prototype.setPhotoContainer = function(photoContainer) {
@@ -40,10 +42,16 @@ define(['Container', 'PhotoEntity'], function() {
         var $nextPhotoButton = $modal.find('li.next');
         var $previousPhotoButton = $modal.find('li.previous');
 
+        var photo = this._photoContainer.getEntity(entityId);
+        var $imageLink = $modal.find('a#photo-view-page-link');
+        var photoViewPageUrl = this._options.photoViewPageUrl.replace('photoId', photo.getId());
+
         var previousPhotoEntityId = this._photoContainer.getPreviousIndex(entityId);
         var nextPhotoEntityId = this._photoContainer.getNextIndex(entityId);
 
         var that = this;
+
+        $imageLink.attr('href', photoViewPageUrl);
 
         $('body').off('keydown').on('keydown', function(e) {
             if (nextPhotoEntityId && (e.keyCode || e.which) == 39) {

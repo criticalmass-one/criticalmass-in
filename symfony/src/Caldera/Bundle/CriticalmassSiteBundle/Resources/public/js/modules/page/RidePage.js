@@ -1,6 +1,8 @@
 define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal'], function() {
 
     RidePage = function(context, options) {
+        this._options = options;
+
         this._initMap();
         this._initContainers();
         this._initLayers();
@@ -66,7 +68,11 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
     };
 
     RidePage.prototype._initPhotoViewModal = function() {
-        this._photoViewModal = new PhotoViewModal();
+        var options = {
+            photoViewPageUrl: this._options.photoViewPageUrl
+        };
+
+        this._photoViewModal = new PhotoViewModal(null, options);
         this._photoViewModal.setPhotoContainer(this._photoContainer);
         this._photoViewModal.setMap(this._map);
     };
