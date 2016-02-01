@@ -31,11 +31,16 @@
             </div>
         {% endfor %}
         </div>
-
         
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.getCity().getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}" class="btn btn-success pull-right"><i class="halflings map-marker"></i> Kopieren</a>
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a href="{{ path(newRide) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.city.getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}" class="btn btn-success">
+                        Kopieren</a>
+                </div>
             </div>
         </div>
     </div>
