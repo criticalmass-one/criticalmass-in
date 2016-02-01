@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Subride;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -128,42 +129,19 @@ class SubrideController extends AbstractController
     public function copyAction(Request $request, $citySlug, $oldDate, $newDate)
     {
         $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $newDate);
-        if (!$newRide)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' gefunden.');
-        }
+        $oldDateTime = $this->getCheckedDateTime($oldDate);
 
-        if (count($newRide->getSubrides()) > 0)
-        {
-            throw new NotFoundHttpException('Für die Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' wurden schon Mini-Masses erstellt. Alte Mini-Masses können darum nicht mehr kopiert werden.');
-        }
-
-        $oldRideDateTime = new \DateTime($oldDate);
-
-        $oldRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $oldRideDateTime);
-
-        if (!$oldRide)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $oldRideDateTime->format('d. m. Y') . ' gefunden.');
-        }
-
-        if (count($newRide->getSubrides()) == 0)
-        {
-            throw new NotFoundHttpException('Die Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' hat keine Mini-Masses, die kopiert werden können.');
-        }
+        $oldRide = $this->getRideRepository()->findCityRideByDate($newRide->getCity(), $oldDateTime);
 
         $em = $this->getDoctrine()->getManager();
 
+        /**
+         * @var Subride $oldSubride
+         */
         foreach ($oldRide->getSubrides() as $oldSubride)
         {
-            $newSubride = new SubRide();
-            $newSubride->setTitle($oldSubride->getTitle());
-            $newSubride->setDescription($oldSubride->getDescription());
-            $newSubride->setLatitude($oldSubride->getLatitude());
-            $newSubride->setLongitude($oldSubride->getLongitude());
-            $newSubride->setLocation($oldSubride->getLocation());
-            $newSubride->setCreationDateTime(new \DateTime());
-            $newSubride->setUser($oldSubride->getUser());
+            $newSubride = clone $oldSubride;
+            $newSubride->setUser($this->getUser());
             $newSubride->setRide($newRide);
 
             $newSubrideDateTime = new \DateTime($newRide->getDateTime()->format('Y-m-d').' '.$oldSubride->getDateTime()->format('H:i:s'));
@@ -174,6 +152,12 @@ class SubrideController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToRoute('caldera_criticalmass_desktop_ride_show', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $newRide->getFormattedDate()));
+        return $this->redirectToRoute(
+            'caldera_criticalmass_desktop_ride_show',
+            [
+                'citySlug' => $newRide->getCity()->getMainSlugString(),
+                'rideDate' => $newRide->getFormattedDate()
+            ]
+        );
     }
 }

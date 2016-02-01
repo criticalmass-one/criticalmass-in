@@ -2,11 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
-use Application\Sonata\UserBundle\Entity\User;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class RideRepository extends EntityRepository
 {
