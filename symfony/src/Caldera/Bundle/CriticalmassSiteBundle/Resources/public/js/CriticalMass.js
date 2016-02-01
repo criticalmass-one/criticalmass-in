@@ -48,6 +48,7 @@ require.config({
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
+        "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "TrackRangePage": "/bundles/calderacriticalmasssite/js/modules/page/TrackRangePage",
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",

@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl', 'PhotoEntity'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal'], function() {
 
     RidePage = function(context, options) {
         this._initMap();
@@ -6,6 +6,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._initLayers();
         this._initLayerControl();
         this._initTrackToggleEvent();
+        this._initPhotoViewModal();
     };
 
     RidePage.prototype._map = null;
@@ -64,6 +65,12 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         });
     };
 
+    RidePage.prototype._initPhotoViewModal = function() {
+        this._photoViewModal = new PhotoViewModal();
+        this._photoViewModal.setPhotoContainer(this._photoContainer);
+        this._photoViewModal.setMap(this._map);
+    };
+
     RidePage.prototype.addCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
         this._city = new CityEntity(cityName, cityTitle, slug, description, latitude, longitude);
 
@@ -97,70 +104,8 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         var that = this;
 
         photo.on('click', function() {
-            that._showPhoto(entityId);
+            that._photoViewModal.showPhoto(entityId);
         });
-    };
-
-    RidePage.prototype._showPhoto = function(entityId) {
-        var photo = this._photoContainer.getEntity(entityId);
-
-        alert('show photo with entity id ' + entityId);
-
-        var $modal = $('#photo-view-modal');
-        $modal.find('img').attr('src', photo.getFilename());
-        $modal.find('img').attr('id', 'photo-' + entityId);
-
-        if (!$modal.hasClass('in')) {
-            $modal.modal();
-        }
-
-        this._updatePhotoViewNavigation(entityId);
-    };
-
-    RidePage.prototype._updatePhotoViewNavigation = function(entityId) {
-        var $modal = $('#photo-view-modal');
-        var $nextPhotoButton = $modal.find('li.next');
-        var $previousPhotoButton = $modal.find('li.previous');
-
-        var previousPhotoEntityId = this._photoContainer.getPreviousIndex(entityId);
-        var nextPhotoEntityId = this._photoContainer.getNextIndex(entityId);
-
-        var that = this;
-
-        $('body').off('keydown').on('keydown', function(e) {
-            if (nextPhotoEntityId && (e.keyCode || e.which) == 39) {
-                that._showPhoto(nextPhotoEntityId);
-            }
-
-            if (previousPhotoEntityId && (e.keyCode || e.which) == 37) {
-                that._showPhoto(previousPhotoEntityId);
-            }
-        });
-
-        if (previousPhotoEntityId) {
-            $previousPhotoButton.find('a').off('click').on('click', function (element) {
-                element.preventDefault();
-                that._showPhoto(previousPhotoEntityId);
-            });
-
-            $previousPhotoButton.removeClass('disabled');
-        } else {
-            $previousPhotoButton.addClass('disabled');
-            $previousPhotoButton.find('a').off('click');
-        }
-
-        if (nextPhotoEntityId) {
-            $nextPhotoButton.find('a').off('click').on('click', function(element) {
-                element.preventDefault();
-
-                that._showPhoto(nextPhotoEntityId);
-            });
-
-            $nextPhotoButton.removeClass('disabled');
-        } else {
-            $nextPhotoButton.addClass('disabled');
-            $nextPhotoButton.find('a').off('click');
-        }
     };
 
     RidePage.prototype.focus = function() {
