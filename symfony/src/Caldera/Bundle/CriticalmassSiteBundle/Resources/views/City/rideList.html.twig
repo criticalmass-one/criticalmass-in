@@ -93,12 +93,12 @@
                             </td>
                             <td>
                                 {% if ride.estimatedDistance %}
-                                {{ ride.estimatedDistance }}&nbsp;Kilometer
+                                {{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer
                                 {% endif %}
                             </td>
                             <td>
                                 {% if ride.estimatedDuration %}
-                                {{ ride.estimatedDuration }}&nbsp;Stunden
+                                {{ ride.estimatedDuration|round(2) }}&nbsp;Stunden
                                 {% endif %}
                             </td>
                         </tr>
