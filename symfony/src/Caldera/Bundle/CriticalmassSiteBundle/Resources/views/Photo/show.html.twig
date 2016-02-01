@@ -58,7 +58,6 @@
 
 {% block additionalFooterElements %}
     <script>
-        CriticalMass.loadModule('AutoscaleImage', 'img.auto-scale');
         CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
             page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
             page.setNextPhotoUrl('{{ path(nextPhoto) }}');
