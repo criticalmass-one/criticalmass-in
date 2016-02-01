@@ -9,6 +9,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
         this._initLayerControl();
         this._initTrackToggleEvent();
         this._initPhotoViewModal();
+        this._initSubrideEvents();
     };
 
     RidePage.prototype._map = null;
@@ -92,7 +93,25 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
     RidePage.prototype.addSubride = function(subrideId, title, description, latitude, longitude, location, date, time) {
         var subride = new SubrideEntity(subrideId, title, description, latitude, longitude, location, date, time);
 
-        subride.addToContainer(this._subrideContainer);
+        subride.addToContainer(this._subrideContainer, subrideId);
+    };
+
+    RidePage.prototype._initSubrideEvents = function() {
+        var that = this;
+
+        $('.subride a.subride-link').on('click', function() {
+            var subrideId = $(this).data('subride-id');
+
+            that._panMapToSubride(subrideId);
+        });
+    };
+
+    RidePage.prototype._panMapToSubride = function(subrideId) {
+        var subride = this._subrideContainer.getEntity(subrideId);
+
+        var latLng = subride.getLatLng();
+
+        this._map.setView(latLng, 14);
     };
 
     RidePage.prototype.addTrack = function(trackId, polylineLatLngs, colorRed, colorGreen, colorBlue) {

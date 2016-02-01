@@ -23,9 +23,10 @@
                             <a href="{{ path('caldera_criticalmass_desktop_subride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d'), subrideId: subride.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>
                         {% endif %}
 
-                        <a class="pull-left subride" href="#" data-subride="{{ subrideNumber }}">
+                        <a class="pull-left subride-link" href="#" data-subride-id="{{ subride.id }}">
                             <img class="media-object" src="/bundles/calderacriticalmasssite/images/marker/marker-green.png" alt="...">
                         </a>
+
                         <div class="media-body">
                             <h5 class="media-heading">{{ subride.getDateTime().format('H.i') }} Uhr: {{ subride.getTitle() }}</h5>
                             <p>{{ subride.getDescription()|nl2br }}</p>
