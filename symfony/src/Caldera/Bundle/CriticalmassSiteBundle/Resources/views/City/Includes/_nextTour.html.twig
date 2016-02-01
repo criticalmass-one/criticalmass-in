@@ -3,10 +3,13 @@
         <h3 class="panel-title">Nächste Tour</h3>
     </div>
     <div class="panel-body">
+        {% if currentRide %}
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
-                    <a href="{{ path('caldera_criticalmass_ride_show', { citySlug: currentRide.city.getMainSlugString(), rideDate: currentRide.getFormattedDate() }) }}"><h3>{{ currentRide.getFancyTitle() }}</h3></a>
+                    <a href="{{ path('caldera_criticalmass_ride_show', { citySlug: currentRide.city.getMainSlugString(), rideDate: currentRide.getFormattedDate() }) }}">
+                        <h3 class="no-margin-top">{{ currentRide.getFancyTitle() }}</h3>
+                    </a>
                 </div>
             </div>
         </div>
@@ -39,8 +42,17 @@
                 </dl>
             </div>
         </div>
-
+        {% else %}
         <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    Über eine Radtour ist momentan nichts bekannt.
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row margin-top-medium">
             <div class="col-md-12">
                 <div class="text-center">
                     <a href="{{ path('caldera_criticalmass_desktop_city_listrides', { citySlug: city.getMainSlugString }) }}" class="btn btn-success">

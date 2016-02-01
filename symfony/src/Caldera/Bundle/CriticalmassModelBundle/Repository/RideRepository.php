@@ -26,7 +26,7 @@ class RideRepository extends EntityRepository
         $query = $builder->getQuery();
         $query->setMaxResults(1);
 
-        $result = $query->getSingleResult();
+        $result = $query->getOneOrNullResult();
 
         return $result;
     }
