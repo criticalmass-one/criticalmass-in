@@ -21,6 +21,10 @@ define(['MarkerEntity'], function() {
     PhotoEntity.prototype._dateTime = null;
     PhotoEntity.prototype._filename = null;
 
+    PhotoEntity.prototype.getId = function() {
+        return this._id;
+    };
+
     PhotoEntity.prototype.getFilename = function() {
         return this._filename;
     };
