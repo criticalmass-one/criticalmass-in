@@ -79,8 +79,8 @@ class TrackRepository extends EntityRepository
         $builder = $this->createQueryBuilder('track');
 
         $builder->select('track');
-        $builder->where($builder->expr()->eq('track.ride', $ride));
-        $builder->where($builder->expr()->eq('track.activated', true));
+        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
+        $builder->andWhere($builder->expr()->eq('track.activated', 1));
         $builder->addOrderBy('track.startDateTime', 'ASC');
 
         $query = $builder->getQuery();
