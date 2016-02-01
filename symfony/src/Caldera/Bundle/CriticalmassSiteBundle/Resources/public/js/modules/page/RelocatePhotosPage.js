@@ -38,8 +38,75 @@ define(['Map', 'TrackEntity', 'SnapablePhotoMarker', 'PhotoEntity', 'Container']
     };
 
     RelocatePhotoPage.prototype.relocateByTime = function(offsetSeconds) {
+        for (var index = 0; index < this._photoContainer.countEntities(); ++index)
+        {
+            var photo = this._photoContainer.getEntity(index);
 
+            //if (photo.timestamp != ignoreTimestamp)
+            //{
+            var oldDateTime = photo.getDateTime();
+            var timestamp = oldDateTime.getTime() + offsetSeconds;
+
+            var newLatLng = findLatLngForTimestamp(newTimestamp);
+
+            photo.setLatLng(newLatLng);
+            //}
+        }
     };
+
+    function findLatLngForTimestamp(timestamp)
+    {
+        var smallerTimestamp = null;
+
+        for (var coordTimestamp in coords)
+        {
+            if (smallerTimestamp == null)
+            {
+                smallerTimestamp = coordTimestamp;
+
+            }
+            else if (coordTimestamp < timestamp)
+            {
+                smallerTimestamp = coordTimestamp;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return coords[smallerTimestamp];
+    }
+
+    function findTimestampForLatLng(latLng)
+    {
+        var smallestDistance = null;
+        var smallestTimestamp = null;
+
+        for (var timestamp in coords)
+        {
+            var coord = coords[timestamp];
+
+            if (smallestDistance == null)
+            {
+                smallestDistance = coord.distanceTo(latLng);
+                smallestTimestamp = timestamp;
+            }
+            else
+            {
+                var distance = coord.distanceTo(latLng);
+
+                if (distance < smallestDistance)
+                {
+                    smallestDistance = distance;
+                    smallestTimestamp = timestamp;
+                }
+            }
+
+        }
+
+        return smallestTimestamp;
+    }
 
     return RelocatePhotoPage;
 });
