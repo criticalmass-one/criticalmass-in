@@ -196,7 +196,7 @@ define(['leaflet'], function() {
         }
     };
 
-    Container.prototype.getPreviousEntity = function(entityIndex) {
+    Container.prototype.getPreviousIndex = function(entityIndex) {
         var keys = Object.keys(this._list);
         var previousIndex = null;
 
@@ -210,10 +210,14 @@ define(['leaflet'], function() {
             }
         }
 
-        return this.getEntity(previousIndex);
+        return previousIndex;
     };
 
-    Container.prototype.getNextEntity = function(entityIndex) {
+    Container.prototype.getPreviousEntity = function(entityIndex) {
+        return this.getEntity(this.getPreviousIndex(entityIndex));
+    };
+
+    Container.prototype.getNextIndex = function(entityIndex) {
         var keys = Object.keys(this._list);
         var nextIndex = null;
 
@@ -227,7 +231,11 @@ define(['leaflet'], function() {
             }
         }
 
-        return this.getEntity(nextIndex);
+        return nextIndex;
+    };
+
+    Container.prototype.getNextEntity = function(entityIndex) {
+        return this.getEntity(this.getNextIndex(entityIndex));
     };
 
     return Container;
