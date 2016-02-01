@@ -1,7 +1,0 @@
-{% set hasCurrentRide = city.getCurrentRide() != null %}
-
-{% if hasCurrentRide %}
-    <div class="tab-pane fade in active" id="nextRideTab">
-        {% include('CalderaCriticalmassSiteBundle:Common:Ride.html.twig') with { 'ride': city.getCurrentRide() } %}
-    </div>
-{% endif %}
