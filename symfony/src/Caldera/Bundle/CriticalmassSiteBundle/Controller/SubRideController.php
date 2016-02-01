@@ -2,19 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\CriticalmassCoreBundle\Entity\Ride;
-use Caldera\CriticalmassCoreBundle\Entity\SubRide;
-use Caldera\CriticalmassCoreBundle\Type\SubRideType;
-use Caldera\CriticalmassStatisticBundle\Type\RideEstimateType;
-use Caldera\CriticalmassCoreBundle\Type\RideType;
-use Caldera\CriticalmassStatisticBundle\Entity\RideEstimate;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class SubrideController extends Controller
+class SubrideController extends AbstractController
 {
     public function addAction(Request $request, $citySlug, $rideDate)
     {
@@ -126,65 +118,21 @@ class SubrideController extends Controller
 
     public function preparecopyAction(Request $request, $citySlug, $rideDate)
     {
-        if (!$this->getUser()) {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
-        }
+        $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+        $oldRide = $this->getRideRepository()->getPreviousRide($newRide);
 
-        if (!$citySlugObj) {
-            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.');
-        }
-
-        $city = $citySlugObj->getCity();
-
-        $rideDateTime = new \DateTime($rideDate);
-
-        $newRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
-
-        if (!$newRide)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.');
-        }
-
-        if (count($newRide->getSubrides()) > 0)
-        {
-            throw new NotFoundHttpException('Für die Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' wurden schon Mini-Masses erstellt. Alte Mini-Masses können darum nicht mehr kopiert werden.');
-        }
-        
-        $oldRide = $newRide->getPreviousRide();
-
-        if (count($newRide->getSubrides()) == 0)
-        {
-            throw new NotFoundHttpException('Die Tour in ' . $city->getCity() . ' am ' . $oldRide->getDateTime()->format('d. m. Y') . ' hat keine Mini-Masses, die kopiert werden können.');
-        }
-        
-        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:copy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
+        return $this->render('CalderaCriticalmassSiteBundle:Subride:preparecopy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
 
     public function copyAction(Request $request, $citySlug, $oldDate, $newDate)
     {
-        if (!$this->getUser()) {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
-        }
-
-        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
-
-        if (!$citySlugObj) {
-            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.');
-        }
-
-        $city = $citySlugObj->getCity();
-
-        $newRideDateTime = new \DateTime($newDate);
-
-        $newRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $newRideDateTime);
-
+        $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $newDate);
         if (!$newRide)
         {
             throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' gefunden.');
         }
-        
+
         if (count($newRide->getSubrides()) > 0)
         {
             throw new NotFoundHttpException('Für die Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' wurden schon Mini-Masses erstellt. Alte Mini-Masses können darum nicht mehr kopiert werden.');
@@ -203,9 +151,9 @@ class SubrideController extends Controller
         {
             throw new NotFoundHttpException('Die Tour in ' . $city->getCity() . ' am ' . $newRideDateTime->format('d. m. Y') . ' hat keine Mini-Masses, die kopiert werden können.');
         }
-        
+
         $em = $this->getDoctrine()->getManager();
-        
+
         foreach ($oldRide->getSubrides() as $oldSubride)
         {
             $newSubride = new SubRide();
@@ -217,15 +165,15 @@ class SubrideController extends Controller
             $newSubride->setCreationDateTime(new \DateTime());
             $newSubride->setUser($oldSubride->getUser());
             $newSubride->setRide($newRide);
-            
+
             $newSubrideDateTime = new \DateTime($newRide->getDateTime()->format('Y-m-d').' '.$oldSubride->getDateTime()->format('H:i:s'));
             $newSubride->setDateTime($newSubrideDateTime);
-            
+
             $em->persist($newSubride);
         }
-        
+
         $em->flush();
-        
+
         return $this->redirectToRoute('caldera_criticalmass_desktop_ride_show', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $newRide->getFormattedDate()));
     }
 }

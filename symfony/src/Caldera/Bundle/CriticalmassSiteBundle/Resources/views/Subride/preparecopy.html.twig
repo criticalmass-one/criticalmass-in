@@ -1,0 +1,42 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Mini-Masses kopieren{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Mini-Masses kopieren
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Von der Tour <a href="{{ path(oldRide) }}">{{ oldRide.getFancyTitle() }}</a> ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:</p>
+            </div>
+        </div>
+
+        <div class="row">
+        {% for subride in oldRide.getSubrides() %}
+            <div class="media subride col-md-4">
+                <a class="pull-left subride" href="#">
+                    <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
+                </a>
+                <div class="media-body">
+                    <h5 class="media-heading">{{ subride.getDateTime().format('H.i') }} Uhr: {{ subride.getTitle() }}</h5>
+                    <p>{{ subride.getDescription()|nl2br }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.getCity().getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}" class="btn btn-success pull-right"><i class="halflings map-marker"></i> Kopieren</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
