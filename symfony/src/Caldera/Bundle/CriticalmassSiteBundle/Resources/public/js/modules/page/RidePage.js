@@ -141,6 +141,8 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
 
                 that._showPhoto(nextPhoto.getId());
             });
+
+            $nextPhotoButton.removeClass('disabled');
         } else {
             $nextPhotoButton.addClass('disabled');
             $nextPhotoButton.find('a').off('click');
