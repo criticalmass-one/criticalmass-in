@@ -4,10 +4,8 @@ define(['leaflet'], function() {
     };
 
     BaseEntity.prototype.hasLocation = function() {
-        return true;
+        return false;
     };
-
-
 
     BaseEntity.prototype.removeFromLayer = function(markerLayer) {
         markerLayer.removeLayer(this._marker);
