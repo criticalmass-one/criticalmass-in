@@ -78,8 +78,7 @@ class PhotoGps {
     {
         $this->gpsExifReader->setPhoto($this->photo);
 
-        if ($this->gpsExifReader->hasGpsExifData())
-        {
+        if ($this->gpsExifReader->hasGpsExifData()) {
             $this->gpsExifReader->execute();
 
             $this->photo = $this->gpsExifReader->getPhoto();
