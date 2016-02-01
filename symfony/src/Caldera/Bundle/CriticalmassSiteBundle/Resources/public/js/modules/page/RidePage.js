@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal'], function() {
 
     RidePage = function(context, options) {
         this._options = options;
@@ -87,6 +87,12 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
         this._ride.addToContainer(this._rideContainer);
+    };
+
+    RidePage.prototype.addSubride = function(subrideId, title, description, latitude, longitude, location, date, time) {
+        var subride = new SubrideEntity(subrideId, title, description, latitude, longitude, location, date, time);
+
+        subride.addToContainer(this._subrideContainer);
     };
 
     RidePage.prototype.addTrack = function(trackId, polylineLatLngs, colorRed, colorGreen, colorBlue) {

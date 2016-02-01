@@ -95,6 +95,10 @@
         ridePage.addPhoto({{ photo.id }}, {{ photo.latitude }}, {{ photo.longitude }}, '{{ photo.description|e('js') }}', '{{ photo.dateTime.format('Y-m-d H:i:s') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
         {% endfor %}
 
+        {% for subride in subrides %}
+        ridePage.addSubride({{ subride.id }}, '{{ subride.title }}', '{{ subride.description|e('js') }}', {{ subride.latitude }}, {{ subride.longitude }}, '{{ subride.location }}', '{{ subride.dateTime.format('d.m.Y') }}', '{{ subride.dateTime.format('H:i') }}');
+        {% endfor %}
+
         ridePage.init();
 
         ridePage.focus();
