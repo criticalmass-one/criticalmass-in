@@ -87,10 +87,8 @@ define(['leaflet'], function() {
 
     Container.prototype.toggleIndexEntityInLayer = function(index) {
         if (this.isIndexedEntityInLayer(index)) {
-            alert('is visible');
             this.removeIndexedEntityFromLayer(index);
         } else {
-            alert('is not visible');
             this.addIndexedEntityToLayer(index);
         }
     };
