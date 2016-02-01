@@ -59,8 +59,13 @@
 {% block additionalFooterElements %}
     <script>
         CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
+            {% if previousPhoto %}
             page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
+            {% endif %}
+
+            {% if nextPhoto %}
             page.setNextPhotoUrl('{{ path(nextPhoto) }}');
+            {% endif %}
         });
     </script>
 {% endblock %}
