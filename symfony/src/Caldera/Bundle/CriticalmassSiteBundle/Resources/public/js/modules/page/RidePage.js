@@ -83,6 +83,10 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         track.addToContainer(this._trackContainer, trackId);
     };
 
+    RidePage.prototype._toggleTrack = function(trackId) {
+        this._trackContainer.toggleIndexEntityInLayer(trackId);
+    };
+
     RidePage.prototype.addPhoto = function(photoId, latitude, longitude, description, dateTime, filename) {
         var photo = new PhotoEntity(photoId, latitude, longitude, description, dateTime, filename);
 
@@ -102,11 +106,45 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         $modal.find('img').attr('src', photo.getFilename());
         $modal.find('img').attr('id', 'photo-' + photoId);
 
-        $modal.modal();
+        if (!$modal.hasClass('in')) {
+            $modal.modal();
+        }
+
+        this._updatePhotoViewNavigation(photoId);
     };
 
-    RidePage.prototype._toggleTrack = function(trackId) {
-        this._trackContainer.toggleIndexEntityInLayer(trackId);
+    RidePage.prototype._updatePhotoViewNavigation = function(photoId) {
+        var $modal = $('#photo-view-modal');
+        var $nextPhotoButton = $modal.find('li.next');
+        var $previousPhotoButton = $modal.find('li.previous');
+
+        var previousPhoto = this._photoContainer.getPreviousEntity(photoId);
+        var nextPhoto = this._photoContainer.getNextEntity(photoId);
+
+        var that = this;
+
+        if (previousPhoto) {
+            $previousPhotoButton.find('a').off('click').on('click', function (element) {
+                element.preventDefault();
+                that._showPhoto(previousPhoto.getId());
+            });
+
+            $previousPhotoButton.removeClass('disabled');
+        } else {
+            $previousPhotoButton.addClass('disabled');
+            $previousPhotoButton.find('a').off('click');
+        }
+
+        if (nextPhoto) {
+            $nextPhotoButton.find('a').off('click').on('click', function(element) {
+                element.preventDefault();
+
+                that._showPhoto(nextPhoto.getId());
+            });
+        } else {
+            $nextPhotoButton.addClass('disabled');
+            $nextPhotoButton.find('a').off('click');
+        }
     };
 
     RidePage.prototype.focus = function() {
