@@ -26,13 +26,13 @@ caldera_criticalmass_content:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/content.yml"
     prefix: /content
 
-caldera_criticalmass_city:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
-    prefix: /
-
 caldera_criticalmass_photo:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photo.yml"
     prefix:   /
+
+caldera_criticalmass_city:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
+    prefix: /
 
 caldera_criticalmass_timelapse:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timelapse.yml"
