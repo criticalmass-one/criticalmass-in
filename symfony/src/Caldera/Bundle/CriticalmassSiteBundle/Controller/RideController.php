@@ -45,6 +45,7 @@ class RideController extends AbstractController
                 'city' => $city, 
                 'ride' => $ride,
                 'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
+                'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
                 'nextRide' => $nextRide,
                 'previousRide' => $previousRide,
                 'dateTime' => new \DateTime()

@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayerControl', 'PhotoEntity'], function() {
 
     RidePage = function(context, options) {
         this._initMap();
@@ -26,6 +26,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._cityContainer.addToControl(this._layers, 'Städte');
         this._subrideContainer.addToControl(this._layers, 'Mini-Masses');
         this._trackContainer.addToControl(this._layers, 'Tracks');
+        this._photoContainer.addToControl(this._layers, 'Fotos');
 
         this._layerControl = new MapLayerControl();
         this._layerControl.setLayers(this._layers);
@@ -42,6 +43,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._trackContainer = new Container();
         this._cityContainer = new Container();
         this._rideContainer = new Container();
+        this._photoContainer = new Container();
     };
 
     RidePage.prototype._initLayers = function() {
@@ -49,6 +51,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         this._trackContainer.addToMap(this._map);
         this._cityContainer.addToMap(this._map);
         this._rideContainer.addToMap(this._map);
+        this._photoContainer.addToMap(this._map);
     };
 
     RidePage.prototype._initTrackToggleEvent = function() {
@@ -78,6 +81,28 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'MapLayer
         track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
 
         track.addToContainer(this._trackContainer, trackId);
+    };
+
+    RidePage.prototype.addPhoto = function(photoId, latitude, longitude, description, dateTime, filename) {
+        var photo = new PhotoEntity(photoId, latitude, longitude, description, dateTime, filename);
+
+        photo.addToContainer(this._photoContainer, photoId);
+
+        var that = this;
+
+        photo.on('click', function() {
+            that._showPhoto(photoId);
+        });
+    };
+
+    RidePage.prototype._showPhoto = function(photoId) {
+        var photo = this._photoContainer.getEntity(photoId);
+
+        var $modal = $('#photo-view-modal');
+        $modal.find('img').attr('src', photo.getFilename());
+        $modal.find('img').attr('id', 'photo-' + photoId);
+
+        $modal.modal();
     };
 
     RidePage.prototype._toggleTrack = function(trackId) {

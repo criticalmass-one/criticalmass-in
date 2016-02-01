@@ -42,6 +42,7 @@ require.config({
         "PositionEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PositionEntity",
         "BaseEntity": "/bundles/calderacriticalmasssite/js/modules/entity/BaseEntity",
         "MarkerEntity": "/bundles/calderacriticalmasssite/js/modules/entity/MarkerEntity",
+        "PhotoEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PhotoEntity",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
         "EditCityPage": "/bundles/calderacriticalmasssite/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",

@@ -84,7 +84,11 @@
         ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast() }}');
 
         {% for track in tracks %}
-        ridePage.addTrack({{ track.id }}, {{ track.getLatLngList() }}, {{ track.colorRed() }}, {{ track.colorGreen() }}, {{ track.colorBlue() }});
+        ridePage.addTrack({{ track.id }}, {{ track.getLatLngList() }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+        {% endfor %}
+
+        {% for photo in photos %}
+        ridePage.addPhoto({{ photo.id }}, {{ photo.latitude }}, {{ photo.longitude }}, '{{ photo.description|e('js') }}', '{{ photo.dateTime.format('Y-m-d H:i:s') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
         {% endfor %}
 
         ridePage.init();

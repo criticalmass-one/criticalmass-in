@@ -133,5 +133,9 @@ define(['BaseEntity', 'leaflet'], function() {
         return this;
     };
 
+    MarkerEntity.prototype.on = function(event, callback) {
+        this._marker.on(event, callback);
+    };
+
     return MarkerEntity;
 });
