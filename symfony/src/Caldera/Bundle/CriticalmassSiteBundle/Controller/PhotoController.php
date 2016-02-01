@@ -111,8 +111,8 @@ class PhotoController extends AbstractController
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
             [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
+                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
+                'rideDate' => $photo->getRide()->getFormattedDate()
             ]
         ));
     }
