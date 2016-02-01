@@ -65,6 +65,8 @@ class PhotoRepository extends EntityRepository
         $builder->select('photo');
         $builder->addSelect('COUNT(photo)');
 
+        $builder->where($builder->expr()->eq('photo.deleted', 0));
+
         $builder->groupBy('photo.ride');
 
         $builder->join('photo.ride', 'ride');
