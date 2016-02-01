@@ -266,6 +266,35 @@ class RideRepository extends EntityRepository
     }
 
     /**
+     * This returns a previous ride entity with at least one subride.
+     *
+     * @param Ride $ride
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @author maltehuebner
+     * @since 2016-02-01
+     */
+    public function getPreviousRideWithSubrides(Ride $ride)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->join('ride.subrides', 'subrides');
+
+        $builder->where($builder->expr()->lt('ride.dateTime', '\''.$ride->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('ride.city', $ride->getCity()->getId()));
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+        $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        $result = $query->getOneOrNullResult();
+
+        return $result;
+    }
+
+    /**
      * @param Ride $ride
      * @return Ride
      * @throws \Doctrine\ORM\NonUniqueResultException

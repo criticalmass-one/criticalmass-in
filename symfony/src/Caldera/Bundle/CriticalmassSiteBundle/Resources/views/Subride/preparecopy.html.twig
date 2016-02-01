@@ -20,13 +20,13 @@
 
         <div class="row">
         {% for subride in oldRide.getSubrides() %}
-            <div class="media subride col-md-4">
+            <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
                 <a class="pull-left subride" href="#">
-                    <img class="media-object" src="/images/marker/marker-blue.png" alt="...">
+                    <img class="media-object" src="/bundles/calderacriticalmasssite/images/marker/marker-blue.png" alt="...">
                 </a>
                 <div class="media-body">
-                    <h5 class="media-heading">{{ subride.getDateTime().format('H.i') }} Uhr: {{ subride.getTitle() }}</h5>
-                    <p>{{ subride.getDescription()|nl2br }}</p>
+                    <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}</h5>
+                    <p>{{ subride.description|nl2br }}</p>
                 </div>
             </div>
         {% endfor %}

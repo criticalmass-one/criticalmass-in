@@ -120,7 +120,7 @@ class SubrideController extends AbstractController
     {
         $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $oldRide = $this->getRideRepository()->getPreviousRide($newRide);
+        $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($newRide);
 
         return $this->render('CalderaCriticalmassSiteBundle:Subride:preparecopy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
