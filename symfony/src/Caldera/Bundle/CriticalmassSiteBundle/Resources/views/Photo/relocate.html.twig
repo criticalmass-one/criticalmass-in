@@ -1,64 +1,36 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}Fotos sortieren{% endblock %}
 
 {% block content %}
     <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
-            <li class="active">Fotos sortieren</li>
-        </ol>
-
         <div class="row">
             <div class="col-md-12">
                 <h1>Fotos neu ausrichten</h1>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <p>Hier kannst du deine Fotos neu ausrichten. Wähle zuerst einen der für diese Tour gespeicherten Track aus. Anschließend kannst du einzelne Fotos neu auf diesem Track ausrichten, deine übrigen Fotos werden anschließend automatisch neu positioniert.</p>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="trackSelect">Track</label>
-                    <select id="trackSelect" class="form-control">
-                        <option>Wähle einen Track</option>
-                        {% for track in ride.getActiveTracks() %}
-                        <option value="{{ track.getId() }}">{{ track.getUser().getUsername() }} ({{ track.getDistance() }} Kilometer)</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-            </div>
-        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div id="map" style="height: 350px;">
             </div>
         </div>
+    </div>
 
-            
-        </div>
+    <script type="text/javascript">
+        CriticalMass.loadModule('RelocatePhotosPage', null, null, function(relocatePage) {
+            relocatePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
 
-        {% javascripts
-        '@CalderaCriticalmassCoreBundle/Resources/public/js/external/*'
-        '@CalderaCriticalmassGalleryBundle/Resources/public/js/external/*'
-        '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/L.Control.Sidebar.js'
-        '@CalderaCriticalmassDesktopBundle/Resources/public/js/external/leaflet.groupedlayercontrol.js'
-        '@CalderaCriticalmassDesktopBundle/Resources/public/js/Subride/*'
-        '@CalderaCriticalmassDesktopBundle/Resources/public/js/City/*'
-        '@CalderaCriticalmassDesktopBundle/Resources/public/js/Ride/*'
-        '@CalderaCriticalmassTrackBundle/Resources/public/js/Track/*'
-        '@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/Photo.js'
-        '@CalderaCriticalmassGalleryBundle/Resources/public/js/Photo/*'
-        '@CalderaCriticalmassCoreBundle/Resources/public/js/Container/Container.js'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+            {% for photo in photos %}
+            relocatePage.addPhoto({{ photo.id }}, {{ photo.latitude }}, {{ photo.longitude }}, '{{ photo.description|e('js') }}', '{{ photo.dateTime.format('Y-m-d H:i:s') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+            {% endfor %}
+
+            relocatePage.init();
+
+            relocatePage.relocateByTime(600);
+        });
+    </script>
+        {#
         <script type="text/javascript">
             /* Map */
             var map = L.map('map');
@@ -238,6 +210,6 @@
                 
                 loadTrack(trackId);
             });
-        </script>
-    </div>
+            </script>#}
+
 {% endblock %}

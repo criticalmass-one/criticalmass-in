@@ -375,4 +375,20 @@ class PhotoController extends AbstractController
             ]
         );
     }
+
+    public function relocateAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
+
+        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+
+        return $this->render('CalderaCriticalmassSiteBundle:Photo:relocate.html.twig',
+            [
+                'photos' => $photos,
+                'track' => $track
+            ]
+        );
+    }
 }
