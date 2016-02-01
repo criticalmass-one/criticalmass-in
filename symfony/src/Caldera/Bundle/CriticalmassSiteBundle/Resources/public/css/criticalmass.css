@@ -3,6 +3,13 @@ body .photo-list .photo img {
   padding: 2px;
   background: white; }
 
+body #city-jumbotron {
+  height: 250px; }
+  body #city-jumbotron h1,
+  body #city-jumbotron p.lead {
+    color: white;
+    text-shadow: 0 0 3px #aaa; }
+
 body .margin-top-small {
   margin-top: 10px; }
 

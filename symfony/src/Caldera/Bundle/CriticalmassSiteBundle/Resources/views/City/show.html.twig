@@ -15,23 +15,35 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {% if app.getUser() %}
-                    <div class="btn-group pull-right" style="margin-top: 24px;">
-                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
-                            <i class="fa fa-cogs"></i>
-                            Stadt editieren
-                        </a>
+                <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="pull-right no-margin-top">
+                                {{ city.title }}
+                            </h1>
+                        </div>
                     </div>
-                {% endif %}
 
-                <h1>{{ city.title }}</h1>
-            </div>
-        </div>
+                    {% if city.punchline %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead pull-right no-margin-top">
+                                {{ city.punchline }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron">
-
+                    {% if app.getUser() %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                                <i class="fa fa-cogs"></i>
+                                Stadt editieren
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
