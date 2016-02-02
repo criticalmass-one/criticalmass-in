@@ -2,10 +2,6 @@
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-{% endblock %}
-
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
     <li class="active">{{ city.getCity() }}</li>
