@@ -11,6 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% if city.imageFile %}
                 <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                     <div class="row">
                         <div class="col-md-12">
@@ -41,6 +42,16 @@
                     </div>
                     {% endif %}
                 </div>
+                {% else %}
+                    <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                        <i class="fa fa-cogs"></i>
+                        Stadt editieren
+                    </a>
+
+                    <h1 class="no-margin-top">
+                        {{ city.title }}
+                    </h1>
+                {% endif %}
             </div>
         </div>
 
