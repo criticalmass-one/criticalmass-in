@@ -17,10 +17,16 @@ class CalendarController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesByDateTimeMonth($dateTime);
 
+        $days = [];
+
+        foreach ($rides as $ride) {
+            $days[$ride->getFormattedDate()][] = $ride;
+        }
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Calendar:index.html.twig',
             [
-                'rides' => $rides
+                'days' => $days
             ]
         );
     }

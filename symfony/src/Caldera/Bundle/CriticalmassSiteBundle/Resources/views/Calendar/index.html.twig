@@ -17,37 +17,51 @@
         </div>
 
         <div class="row">
-            {% for ride in rides %}
-            <div class="col-md-3">
+            <div class="col-md-12">
+            {% for day, rides in days %}
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="text-center">
-                            <h4>
-                                <a href="{{ path(ride) }}">
-                                    {{ ride.city.title }}
-                                </a>
-                            </h4>
-                        </div>
+                        <h2>
+                            {{ day|date('d. l Y') }}
+                        </h2>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <dl>
-                            <dt>Datum:</dt>
-                            <dd>{{ ride.dateTime.format('d.m.Y') }}</dd>
-                        </dl>
-                    </div>
+                    {% for ride in rides %}
+                    <div class="col-xs-6 col-sm-4 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <h4>
+                                        <a href="{{ path(ride) }}">
+                                            {{ ride.city.title }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="col-md-6">
-                        <dl>
-                            <dt>Uhrzeit:</dt>
-                            <dd>{{ ride.dateTime.format('H:i') }}&nbsp;Uhr</dd>
-                        </dl>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl>
+                                    <dt>Datum:</dt>
+                                    <dd>{{ ride.dateTime.format('d.m.Y') }}</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-md-6">
+                                <dl>
+                                    <dt>Uhrzeit:</dt>
+                                    <dd>{{ ride.dateTime.format('H:i') }}&nbsp;Uhr</dd>
+                                </dl>
+                            </div>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-            </div>
             {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
