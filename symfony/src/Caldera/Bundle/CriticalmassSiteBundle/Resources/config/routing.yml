@@ -2,6 +2,10 @@ caldera_criticalmass_live:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/live.yml"
     prefix: /
 
+caldera_criticalmass_calendar:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/calendar.yml"
+    prefix: /
+
 caldera_criticalmass_post:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/post.yml"
     prefix: /post

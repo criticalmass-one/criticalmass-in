@@ -1,0 +1,3 @@
+caldera_criticalmass_calendar:
+    pattern:  /calendar
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Calendar:index }
