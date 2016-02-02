@@ -2,16 +2,28 @@
 <project name="criticalmass" default="build" basedir="..">
 
 	<property name="env" value="dev" />
+	<property name="symfonyPath" value="${basedir}/symfony" />
+	<property name="console" value="${symfonyPath}/app/console" />
+	<property name="webPath" value="${symfonyPath}/web" />
 
-	<target name="build" depends="git.pull,composer.build,symfony.cache.clear,symfony.assets.build,apache.graceful">
-	</target>
+	<target name="reload" depends="symfony.build,apache.graceful" />
+	<target name="install" depends="git.pull,composer.build,symfony.build,apache.graceful" />
+	<target name="update" depends="git.pull,symfony.build,apache.graceful" />
+	<target name="build" depends="reload" />
 
-	<target name="composer.build" depends="composer.self-update,composer.update">
-	</target>
+	<!-- ### Composer ### -->
+
+	<target name="composer.build" depends="composer.self-update,composer.update" />
 
 	<target name="composer.self-update">
 		<exec executable="php" failonerror="true">
 			<arg line="composer.phar self-update" />
+		</exec>
+	</target>
+
+	<target name="composer.install">
+		<exec executable="php" failonerror="true">
+			<arg line="composer.phar install -d symfony" />
 		</exec>
 	</target>
 
@@ -21,11 +33,17 @@
 		</exec>
 	</target>
 
+
+	<!-- ### Apache ### -->
+
 	<target name="apache.graceful">
 		<exec executable="sudo" failonerror="true">
 			<arg line="apache2ctl graceful" />
 		</exec>
 	</target>
+
+
+	<!-- ### Git ### -->
 
 	<target name="git.pull">
 		<exec executable="git" failonerror="true">
@@ -33,9 +51,14 @@
 		</exec>
 	</target>
 
+
+	<!-- ### Symfony ### -->
+
+	<target name="symfony.build" depends="symfony.cache.clear,doctrine.schema.update,symfony.assets.build" />
+
 	<target name="symfony.cache.clear">
-        	<exec executable="php" failonerror="true">
-			<arg line="${basedir}/symfony/app/console cache:clear --no-warmup --no-optional-warmers --env=${env}" />
+		<exec executable="php" failonerror="true">
+			<arg line="${console} cache:clear --no-warmup --no-optional-warmers --env=${env}" />
 		</exec>
 	</target>
 
@@ -44,17 +67,26 @@
 
 	<target name="symfony.assets.reset">
 		<exec executable="rm" failonerror="true">
-			<arg line="-rf ${basedir}/symfony/web/bundles" />
+			<arg line="-rf ${webPath}/bundles" />
 		</exec>
 
 		<exec executable="mkdir" failonerror="true">
-			<arg line="${basedir}/symfony/web/bundles" />
+			<arg line="${webPath}/bundles" />
 		</exec>
 	</target>
 
 	<target name="symfony.assets.install">
 		<exec executable="php" failonerror="true">
-			<arg line="${basedir}/symfony/app/console assets:install --symlink symfony/web --env=${env}" />
+			<arg line="${console} assets:install --symlink symfony/web --env=${env}" />
+		</exec>
+	</target>
+
+
+	<!-- ### Doctrine ### -->
+
+	<target name="doctrine.schema.update">
+		<exec executable="php" failonerror="true">
+			<arg line="${console} doctrine:schema:update --force --env=${env}" />
 		</exec>
 	</target>
 </project>
