@@ -157,29 +157,33 @@ class RideRepository extends EntityRepository
 
     public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
     {
-        if (!$startDateTime) {
+        if (!$startDateTime)
+        {
             $startDateTime = new \DateTime();
         }
 
-        if (!$endDateTime) {
+        if (!$endDateTime)
+        {
             $endDate = new \DateTime();
             $dayInterval = new \DateInterval('P1M');
             $endDateTime = $endDate->add($dayInterval);
         }
 
-        $builder = $this->createQueryBuilder('ride');
+        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND r.isArchived = 0 AND r.dateTime >= '".$startDateTime->format('Y-m-d')."' AND r.dateTime <= '".$endDateTime->format('Y-m-d')."' ORDER BY r.dateTime ASC, c.city ASC");
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\''.$startDateTime->format('Y-m-d').'\''));
-        $builder->where($builder->expr()->lt('ride.dateTime', '\''.$endDateTime->format('Y-m-d').'\''));
+        $result = array();
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+        $tmp1 = $query->getResult();
 
-        $builder->orderBy('ride.dateTime', 'ASC');
+        foreach ($tmp1 as $tmp2)
+        {
+            foreach ($tmp2 as $ride)
+            {
+                $result[] = $ride;
+            }
+        }
 
-        $query = $builder->getQuery();
-
-        return $query->getResult();
+        return $result;
     }
 
     public function findRidesByYearMonth($year, $month)
