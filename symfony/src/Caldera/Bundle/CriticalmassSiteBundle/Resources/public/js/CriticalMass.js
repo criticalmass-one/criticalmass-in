@@ -75,7 +75,8 @@ require.config({
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
-        "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound"
+        "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound",
+        "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min"
     },
     shim: {
         'leaflet-locate': {
@@ -91,7 +92,7 @@ require.config({
             exports: 'L.Handler.MarkerSnap'
         },
         typeahead:{
-            deps: [],
+            deps: ['jquery'],
             init: function ($) {
                 return require.s.contexts._.registry['typeahead.js'].factory( $ );
             }

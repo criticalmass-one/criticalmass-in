@@ -13,11 +13,19 @@ define(['typeahead', 'bloodhound'], function() {
 
         bh.initialize();
 
-        $('#search-input').typeahead(
+        $('#search-input').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            },
             {
-                items: 8,
-                source: bh.ttAdapter()
-            });
+                name: 'results',
+                source: bh.ttAdapter(),
+                templates: {
+
+                }
+            }
+        );
     };
 
     return Search;
