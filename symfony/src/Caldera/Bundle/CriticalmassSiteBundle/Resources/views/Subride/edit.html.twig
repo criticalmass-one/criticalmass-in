@@ -168,19 +168,3 @@
         });
     </script>
 {% endblock %}
-
-{#
-        $(function() {
-            var editSubridePage = new EditSubridePage();
-
-            var cityLatLng = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
-            editSubridePage.setCityLatLng(cityLatLng);
-
-            {% if ride.hasLocation() %}
-            var rideLatLng = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
-            editSubridePage.setRideLatLng(rideLatLng);
-            {% endif %}
-
-            editSubridePage.init();
-        });
-    </script>#}
