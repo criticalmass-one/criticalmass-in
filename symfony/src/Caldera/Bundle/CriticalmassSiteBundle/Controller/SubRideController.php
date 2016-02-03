@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\SubrideType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Subride;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,13 +33,32 @@ class SubrideController extends AbstractController
             ]
         );
 
+        if ('POST' == $request->getMethod()) {
+            return $this->addPostAction($request, $subride, $form);
+        } else {
+            return $this->addGetAction($request, $subride, $form);
+        }
+    }
+
+    protected function addGetAction(Request $request, Subride $subride, Form $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
+            [
+                'hasErrors' => null,
+                'subride' => null,
+                'form' => $form->createView(),
+                'city' => $subride->getRide()->getCity(),
+                'ride' => $subride->getRide()
+            ]
+        );
+    }
+
+    protected function addPostAction(Request $request, Subride $subride, Form $form)
+    {
         $form->handleRequest($request);
 
-        // TODO: remove this shit and test the validation in the template
-        $hasErrors = null;
-
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
@@ -55,8 +75,9 @@ class SubrideController extends AbstractController
                     'action' => $this->generateUrl(
                         'caldera_criticalmass_desktop_subride_edit',
                         [
-                            'citySlug' => $ride->getCity()->getMainSlugString(),
-                            'rideDate' => $rideDate
+                            'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
+                            'rideDate' => $subride->getRide()->getFormattedDate(),
+                            'subrideId' => $subride->getId()
                         ]
                     )
                 ]
@@ -68,25 +89,14 @@ class SubrideController extends AbstractController
                     'hasErrors' => $hasErrors,
                     'subride' => $subride,
                     'form' => $form->createView(),
-                    'city' => $ride->getCity(),
-                    'ride' => $ride
+                    'city' => $subride->getRide()->getCity(),
+                    'ride' => $subride->getRide()
                 ]
             );
         } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
             $hasErrors = true;
         }
-
-        return $this->render(
-            'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
-            [
-                'hasErrors' => $hasErrors,
-                'subride' => null,
-                'form' => $form->createView(),
-                'city' => $ride->getCity(),
-                'ride' => $ride
-            ]
-        );
     }
 
     public function editAction(Request $request, $citySlug, $rideDate, $subrideId)
@@ -98,12 +108,6 @@ class SubrideController extends AbstractController
         if (!$subride->getRide()->equals($ride)) {
             throw new NotFoundHttpException();
         }
-
-        $archiveRide = clone $subride;
-        $archiveRide->setArchiveUser($this->getUser());
-        $archiveRide->setArchiveParent($subride);
-        $archiveRide->setIsArchived(true);
-        $archiveRide->setArchiveDateTime(new \DateTime());
 
         $form = $this->createForm(
             new SubrideType(),
@@ -119,7 +123,36 @@ class SubrideController extends AbstractController
             ]
         );
 
+        if ('POST' == $request->getMethod()) {
+            return $this->editPostAction($request, $subride, $form);
+        } else {
+            return $this->editGetAction($request, $subride, $form);
+        }
+    }
+
+    protected function editGetAction(Request $request, Subride $subride, Form $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
+            [
+                'hasErrors' => null,
+                'subride' => null,
+                'form' => $form->createView(),
+                'city' => $subride->getRide()->getCity(),
+                'ride' => $subride->getRide()
+            ]
+        );
+    }
+
+    protected function editPostAction(Request $request, Subride $subride, Form $form)
+    {
         $form->handleRequest($request);
+
+        $archiveRide = clone $subride;
+        $archiveRide->setArchiveUser($this->getUser());
+        $archiveRide->setArchiveParent($subride);
+        $archiveRide->setIsArchived(true);
+        $archiveRide->setArchiveDateTime(new \DateTime());
 
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
