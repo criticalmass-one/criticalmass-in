@@ -62,6 +62,7 @@ require.config({
         "CityMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/CityMarker",
         "LocationMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/LocationMarker",
         "PhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/PhotoMarker",
+        "SubrideMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SubrideMarker",
         "SnapablePhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SnapablePhotoMarker",
         "leaflet": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/calderacriticalmasssite/js/external/leaflet/L.activearea",
