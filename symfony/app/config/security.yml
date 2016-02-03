@@ -19,6 +19,8 @@ security:
                 use_forward:    false
                 check_path:     /admin/login_check
                 failure_path:   null
+                always_use_default_target_path: false
+                default_target_path:            /
             logout:
                 path:           /admin/logout
             anonymous:          true
