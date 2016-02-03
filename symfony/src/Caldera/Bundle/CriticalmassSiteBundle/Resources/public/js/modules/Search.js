@@ -1,19 +1,22 @@
 define(['typeahead', 'bloodhound'], function() {
 
     Search = function(context, options) {
-        var numbers = new Bloodhound({
+        var bh = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            local:  ["(A)labama","Alaska","Arizona","Arkansas","Arkansas2","Barkansas"]
+            prefetch: {
+                url: '/app_dev.php/search/prefetch',
+                cache: true,
+                ttl: 3600
+            }
         });
 
-// initialize the bloodhound suggestion engine
-        numbers.initialize();
+        bh.initialize();
 
         $('#search-input').typeahead(
             {
-                items: 4,
-                source:numbers.ttAdapter()
+                items: 8,
+                source: bh.ttAdapter()
             });
     };
 
