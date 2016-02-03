@@ -72,10 +72,19 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
         this._$longitudeInput.val(latLng.lng);
     };
 
+    EditSubridePage.prototype._subrideHasLocation = function() {
+        var latitude = this._$latitudeInput.val();
+        var longitude = this._$longitudeInput.val();
+
+        return (latitude != 0 && longitude != null);
+    };
+
     EditSubridePage.prototype._initMarker = function(latitude, longitude) {
         var latLng = null;
 
-        if (this._ride.hasLocation()) {
+        if (this._subrideHasLocation()) {
+            latLng = this._getInputLatLng();
+        } else if (this._ride.hasLocation()) {
             latLng = this._getInputLatLng();
         } else {
             latLng = this._city.getLatLng();
