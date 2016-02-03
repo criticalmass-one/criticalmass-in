@@ -2,7 +2,9 @@ define(['typeahead', 'bloodhound'], function() {
 
     Search = function(context, options) {
         var bh = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            datumTokenizer: function(data) {
+                return Bloodhound.tokenizers.whitespace(data.value);
+            },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: {
                 url: '/app_dev.php/search/prefetch',
@@ -22,7 +24,15 @@ define(['typeahead', 'bloodhound'], function() {
                 name: 'results',
                 source: bh.ttAdapter(),
                 templates: {
-
+                    header: function() {
+                        return '<ul class="typeahead dropdown-menu" role="listbox">';
+                    },
+                    footer: function() {
+                        return '</ul>';
+                    },
+                    suggestion: function(data) {
+                        return '<li><a class="dropdown-item" href="' + data.url + '" role="option">' + data.value + '</a></li>';
+                    }
                 }
             }
         );

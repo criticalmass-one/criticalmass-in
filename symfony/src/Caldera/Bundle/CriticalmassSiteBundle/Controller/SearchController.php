@@ -29,13 +29,21 @@ class SearchController extends AbstractController
         $rides = $this->getRideRepository()->findCurrentRides();
 
         foreach ($rides as $ride) {
-            $result[] = $ride->getFancyTitle();
+            $result[] = [
+                'type' => 'ride',
+                'url' => $this->generateUrl($ride),
+                'value' => $ride->getFancyTitle()
+            ];
         }
 
         $cities = $this->getCityRepository()->findEnabledCities();
 
         foreach ($cities as $city) {
-            $result[] = $city->getCity();
+            $result[] = [
+                'type' => 'city',
+                'url' => $this->generateUrl($city),
+                'value' => $city->getCity()
+            ];
         }
 
         return new Response(
