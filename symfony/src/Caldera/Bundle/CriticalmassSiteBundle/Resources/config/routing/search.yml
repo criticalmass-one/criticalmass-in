@@ -1,0 +1,3 @@
+caldera_criticalmass_search_query:
+    pattern:  /search/query
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Search:query }

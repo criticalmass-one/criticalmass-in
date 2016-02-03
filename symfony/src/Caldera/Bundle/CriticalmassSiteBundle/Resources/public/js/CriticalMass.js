@@ -73,8 +73,9 @@ require.config({
         "leaflet-groupedlayer": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.groupedlayercontrol",
         "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
-        "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min"
-
+        "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
+        "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
+        "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound"
     },
     shim: {
         'leaflet-locate': {
@@ -88,6 +89,16 @@ require.config({
         'leaflet-snap': {
             deps: ['leaflet'],
             exports: 'L.Handler.MarkerSnap'
+        },
+        typeahead:{
+            deps: [],
+            init: function ($) {
+                return require.s.contexts._.registry['typeahead.js'].factory( $ );
+            }
+        },
+        bloodhound: {
+            deps: [],
+            exports: 'Bloodhound'
         }
     }
 });
