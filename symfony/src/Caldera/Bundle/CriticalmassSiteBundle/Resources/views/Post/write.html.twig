@@ -1,6 +1,4 @@
 {% if app.getUser() %}
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-post">Kommentar hinzufügen</button>
-
 <div class="modal fade" id="modal-add-post" tabindex="-1" role="dialog" aria-labelledby="label-add-post">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -25,8 +23,10 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                        <button type="submit" id="button-submit-post" class="btn btn-primary">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" id="button-submit-post" class="btn btn-success">
                             <i class="fa fa-pencil"></i>
                             Speichern</button>
                     </div>
