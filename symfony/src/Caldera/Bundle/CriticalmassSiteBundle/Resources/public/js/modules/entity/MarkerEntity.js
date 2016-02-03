@@ -103,7 +103,7 @@ define(['BaseEntity', 'leaflet'], function() {
     };
 
     MarkerEntity.prototype.getLatLng = function() {
-        return this._marker.getLatLng();
+        return [this._latitude, this._longitude];
     };
 
     MarkerEntity.prototype.setLatitude = function(latitude) {
