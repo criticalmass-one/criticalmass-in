@@ -8,7 +8,7 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
         mapContainerId: 'map',
         subrideLatitudeInputSelector: '#subride_latitude',
         subrideLongitudeInputSelector: '#subride_longitude',
-        popupText: 'Zieh mich auf den Treffpunkt!'
+        popupText: 'Zieh mich auf den Treffpunkt der Mini-Mass!'
     };
 
     EditSubridePage.prototype._map = null;
@@ -50,7 +50,7 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
             latLng = this._city.getLatLng();
         }
 
-        this._map.setView(latLng, 15);
+        this._map.setView(latLng, 13);
     };
 
     EditSubridePage.prototype._initInputFields = function() {
@@ -73,11 +73,17 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
     };
 
     EditSubridePage.prototype._initMarker = function(latitude, longitude) {
-        var latLng = this._getInputLatLng();
+        var latLng = null;
+
+        if (this._ride.hasLocation()) {
+            latLng = this._getInputLatLng();
+        } else {
+            latLng = this._city.getLatLng();
+        }
 
         this._marker = new SubrideMarker(latLng, true);
         this._marker.addToMap(this._map);
-        this._marker.addPopupText(this._settings.popupText);
+        this._marker.addPopupText(this._settings.popupText, true);
     };
 
     EditSubridePage.prototype._initMarkerEvent = function() {

@@ -5,42 +5,32 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\SubrideType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Subride;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SubrideController extends AbstractController
 {
     public function addAction(Request $request, $citySlug, $rideDate)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Minimass erstellen zu können.');
-        }
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $citySlugObj = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug);
+        $subride = new Subride();
+        $subride->setDateTime($ride->getDateTime());
+        $subride->setRide($ride);
+        $subride->setUser($this->getUser());
 
-        if (!$citySlugObj)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.');
-        }
-
-        $city = $citySlugObj->getCity();
-
-        $rideDateTime = new \DateTime($rideDate);
-
-        $ride = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findCityRideByDate($city, $rideDateTime);
-
-        if (!$ride)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.');
-        }
-
-        $subRide = new SubRide();
-        $subRide->setDateTime($ride->getDateTime());
-        $subRide->setRide($ride);
-        $subRide->setUser($this->getUser());
-
-        $form = $this->createForm(new SubRideType(), $subRide, array('action' => $this->generateUrl('caldera_criticalmass_desktop_subride_add', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $rideDate))));
+        $form = $this->createForm(
+            new SubRideType(),
+            $subride,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_desktop_subride_add',
+                    [
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
+                        'rideDate' => $rideDate
+                    ]
+                )
+            ]
+        );
 
         $form->handleRequest($request);
 
@@ -58,18 +48,45 @@ class SubrideController extends AbstractController
 
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
-            $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', array('citySlug' => $city->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()))));
-
+            $form = $this->createForm(
+                new SubRideType(),
+                $subride,
+                [
+                    'action' => $this->generateUrl(
+                        'caldera_criticalmass_desktop_subride_edit',
+                        [
+                            'citySlug' => $ride->getCity()->getMainSlugString(),
+                            'rideDate' => $rideDate
+                        ]
+                    )
+                ]
+            );
             // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
-            return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'subRide' => $subRide, 'form' => $form->createView(), 'city' => $city, 'ride' => $ride));
-        }
-        elseif ($form->isSubmitted())
-        {
+            return $this->render(
+                'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
+                [
+                    'hasErrors' => $hasErrors,
+                    'subride' => $subride,
+                    'form' => $form->createView(),
+                    'city' => $ride->getCity(),
+                    'ride' => $ride
+                ]
+            );
+        } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'subRide' => null, 'form' => $form->createView(), 'city' => $city, 'ride' => $ride));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
+            [
+                'hasErrors' => $hasErrors,
+                'subride' => null,
+                'form' => $form->createView(),
+                'city' => $ride->getCity(),
+                'ride' => $ride
+            ]
+        );
     }
 
     public function editAction(Request $request, $citySlug, $rideDate, $subrideId)
