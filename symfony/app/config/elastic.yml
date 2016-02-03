@@ -16,3 +16,29 @@ fos_elastica:
                         listener:
                             immediate: ~
                         finder: ~
+                ride:
+                    mappings:
+                        title: ~
+                        description: ~
+                        location: ~
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Ride
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~
+                city:
+                    mappings:
+                        title: ~
+                        description: ~
+                        longDescription: ~
+                        punchLine: ~
+                        standardLocation: ~
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\City
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~

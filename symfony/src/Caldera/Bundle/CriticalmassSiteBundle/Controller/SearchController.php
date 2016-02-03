@@ -7,23 +7,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    public function queryAction(Request $request) {
-        $result = [
-            'Hamburg',
-            'Critical Mass Hamburg',
-            'Critical Mass Hamburg (29. Januar 2016)'
-        ];
+    public function queryAction(Request $request)
+    {
+        $query = $request->get('query');
 
-        return new Response(
-            json_encode($result),
-            200,
+        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
+
+        $results = $finder->find($query);
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Search:result.html.twig',
             [
-                'Content-Type' => 'text/json'
+                'query' => $query,
+                'results' => $results
             ]
         );
     }
 
-    public function prefetchAction(Request $request) {
+    public function prefetchAction(Request $request)
+    {
         $result = [];
 
         $rides = $this->getRideRepository()->findCurrentRides();
