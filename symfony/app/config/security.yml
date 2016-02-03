@@ -60,12 +60,16 @@ security:
         - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-
-        - { path: ^/track, role: ROLE_USER }
         - { path: /edit$, role: ROLE_USER }
         - { path: /add$, role: ROLE_USER }
-        - { path: ^/subride/edit, role: ROLE_USER }
+        - { path: /addsubride, role: ROLE_USER }
+        - { path: /editsubride, role: ROLE_USER }
+        - { path: /addphoto, role: ROLE_USER }
+        - { path: /addtrack, role: ROLE_USER }
+
         - { path: ^/app, role: ROLE_USER }
+        - { path: ^/track, role: ROLE_USER }
+        - { path: ^/photos, role: ROLE_USER }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
