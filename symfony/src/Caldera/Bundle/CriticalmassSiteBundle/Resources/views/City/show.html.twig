@@ -43,11 +43,12 @@
                     {% endif %}
                 </div>
                 {% else %}
+                    {% if app.getUser() %}
                     <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
                         <i class="fa fa-cogs"></i>
                         Stadt editieren
                     </a>
-
+                    {% endif %}
                     <h1 class="no-margin-top">
                         {{ city.title }}
                     </h1>
