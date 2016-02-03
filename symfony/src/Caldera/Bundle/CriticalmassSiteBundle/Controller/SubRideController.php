@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\SubrideType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Subride;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -71,27 +72,35 @@ class SubrideController extends AbstractController
         return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('hasErrors' => $hasErrors, 'subRide' => null, 'form' => $form->createView(), 'city' => $city, 'ride' => $ride));
     }
 
-    public function editAction(Request $request, $subRideId)
+    public function editAction(Request $request, $citySlug, $rideDate, $subrideId)
     {
-        if (!$this->getUser())
-        {
-            throw new AccessDeniedHttpException('Du musst angemeldet sein, um eine Tour bearbeiten zu können.');
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $subride = $this->getSubrideRepository()->find($subrideId);
+
+        if (!$subride->getRide()->equals($ride)) {
+            throw new NotFoundHttpException();
         }
 
-        $subRide = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:SubRide')->find($subRideId);
-
-        if (!$subRide)
-        {
-            throw new NotFoundHttpException('Wir haben leider keine Mini-Mass mit der ID '.$subRideId.' gefunden.');
-        }
-
-        $archiveRide = clone $subRide;
+        $archiveRide = clone $subride;
         $archiveRide->setArchiveUser($this->getUser());
-        $archiveRide->setArchiveParent($subRide);
+        $archiveRide->setArchiveParent($subride);
         $archiveRide->setIsArchived(true);
         $archiveRide->setArchiveDateTime(new \DateTime());
 
-        $form = $this->createForm(new SubRideType(), $subRide, array('action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit', array('subRideId' => $subRideId))));
+        $form = $this->createForm(
+            new SubrideType(),
+            $subride,
+            [
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit',
+                    [
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
+                        'rideDate' => $ride->getFormattedDate(),
+                        'subrideId' => $subride->getId()
+                    ]
+                )
+            ]
+        );
 
         $form->handleRequest($request);
 
@@ -114,7 +123,16 @@ class SubrideController extends AbstractController
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassDesktopBundle:SubRide:edit.html.twig', array('ride' => $subRide->getRide(), 'subRide' => $subRide, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'dateTime' => new \DateTime()));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
+            [
+                'ride' => $subride->getRide(),
+                'subride' => $subride,
+                'form' => $form->createView(),
+                'hasErrors' => $hasErrors,
+                'dateTime' => new \DateTime()
+            ]
+        );
     }
 
     public function preparecopyAction(Request $request, $citySlug, $rideDate)

@@ -20,7 +20,9 @@
                 {% for subride in subrides %}
                     <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
                         {% if app.getUser() %}
-                            <a href="{{ path('caldera_criticalmass_desktop_subride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d'), subrideId: subride.getId() } ) }}" class="edit-subride pull-right btn btn-default btn-xs"><i class="halflings uni-wrench"></i></a>
+                            <a href="{{ path('caldera_criticalmass_desktop_subride_edit', { citySlug: ride.city.getMainSlugString(), rideDate: ride.getFormattedDate(), subrideId: subride.id } ) }}" class="edit-subride pull-right btn btn-default btn-xs">
+                                <i class="fa fa-wrench"></i>
+                            </a>
                         {% endif %}
 
                         <a class="pull-left subride-link" href="#" data-subride-id="{{ subride.id }}">

@@ -1,9 +1,9 @@
 caldera_criticalmass_desktop_subride_add:
-    pattern:  /add/{citySlug}/{rideDate}
+    pattern:  /{citySlug}/{rideDate}/addsubride
     defaults: { _controller: CalderaCriticalmassSiteBundle:Subride:add }
 
 caldera_criticalmass_desktop_subride_edit:
-    pattern:  /edit/{subrideId}
+    pattern:  /{citySlug}/{rideDate}/editsubride/{subrideId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Subride:edit }
     
 caldera_criticalmass_subride_preparecopy:

@@ -8,56 +8,50 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-
-    {% javascripts
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/map/Map.js'
-    '@CalderaCriticalmassSiteBundle/Resources/public/js/pages/EditSubridePage.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    <script>
-        $(function() {
-            var editSubridePage = new EditSubridePage();
-
-            var cityLatLng = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
-            editSubridePage.setCityLatLng(cityLatLng);
-
-            {% if ride.hasLocation() %}
-            var rideLatLng = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
-            editSubridePage.setRideLatLng(rideLatLng);
-            {% endif %}
-
-            editSubridePage.init();
-        });
-    </script>
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride.city) }}">
+            {{ ride.city.title }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    {% if subride %}
+    <li class="active">
+        Mini-Mass editieren
+    </li>
+    {% else %}
+    <li class="active">
+        Mini-Mass hinzufügen
+    </li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        {% if subride %}
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
-            <li class="active">Mini-Mass editieren</li>
-        </ol>
-        {% else %}
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
-            <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
-            <li class="active">Mini-Mass hinzufügen</li>
-        </ol>
-        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    {{ title }}
+                </h1>
+            </div>
+        </div>
 
-        <h1>{{ title }}</h1>
-        <p>Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.</p>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.
+                </p>
+            </div>
+        </div>
 
         {% if hasErrors is not null %}
         {% if hasErrors == true %}
@@ -164,3 +158,19 @@
     </form>
 </div>
 {% endblock %}
+
+{#
+        $(function() {
+            var editSubridePage = new EditSubridePage();
+
+            var cityLatLng = L.latLng({{ ride.getCity().getLatitude() }}, {{ ride.getCity().getLongitude() }});
+            editSubridePage.setCityLatLng(cityLatLng);
+
+            {% if ride.hasLocation() %}
+            var rideLatLng = L.latLng({{ ride.getLatitude() }}, {{ ride.getLongitude() }});
+            editSubridePage.setRideLatLng(rideLatLng);
+            {% endif %}
+
+            editSubridePage.init();
+        });
+    </script>#}
