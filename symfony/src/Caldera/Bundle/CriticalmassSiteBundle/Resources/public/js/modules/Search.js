@@ -25,13 +25,18 @@ define(['typeahead', 'bloodhound'], function() {
                 source: bh.ttAdapter(),
                 templates: {
                     header: function() {
-                        return '<ul class="typeahead dropdown-menu" role="listbox">';
+                        return '<ul class="typeahead dropdown-menu" role="menu">';
                     },
                     footer: function() {
                         return '</ul>';
                     },
                     suggestion: function(data) {
-                        return '<li><a class="dropdown-item" href="' + data.url + '" role="option">' + data.value + '</a></li>';
+                        if (data.type == 'city') {
+                            return '<li><a class="dropdown-item" href="' + data.url + '" role="option"><i class="fa fa-university"></i> ' + data.value + '</a></li>';
+                        } else {
+                            return '<li><a class="dropdown-item" href="' + data.url + '" role="option"><i class="fa fa-bicycle"></i> ' + data.value + '</a></li>';
+                        }
+
                     }
                 }
             }
