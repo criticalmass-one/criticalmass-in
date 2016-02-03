@@ -36,6 +36,7 @@ require.config({
     paths:
     {
         "CityEntity": "/bundles/calderacriticalmasssite/js/modules/entity/CityEntity",
+        "WritePost": "/bundles/calderacriticalmasssite/js/modules/WritePost",
         "RideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/RideEntity",
         "NoLocationRideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/NoLocationRideEntity",
         "TrackEntity": "/bundles/calderacriticalmasssite/js/modules/entity/TrackEntity",
