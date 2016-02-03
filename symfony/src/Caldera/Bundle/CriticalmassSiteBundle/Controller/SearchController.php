@@ -24,11 +24,19 @@ class SearchController extends AbstractController
     }
 
     public function prefetchAction(Request $request) {
-        $result = [
-            'Hamburg',
-            'Critical Mass Hamburg',
-            'Critical Mass Hamburg (29. Januar 2016)'
-        ];
+        $result = [];
+
+        $rides = $this->getRideRepository()->findCurrentRides();
+
+        foreach ($rides as $ride) {
+            $result[] = $ride->getFancyTitle();
+        }
+
+        $cities = $this->getCityRepository()->findEnabledCities();
+
+        foreach ($cities as $city) {
+            $result[] = $city->getCity();
+        }
 
         return new Response(
             json_encode($result),

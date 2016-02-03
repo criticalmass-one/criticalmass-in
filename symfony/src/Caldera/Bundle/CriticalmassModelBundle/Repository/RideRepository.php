@@ -115,11 +115,11 @@ class RideRepository extends EntityRepository
     public function findCurrentRides($order = 'ASC')
     {
         $startDateTime = new \DateTime();
-        $startDateTimeInterval = new \DateInterval('P3W'); // three weeks ago
+        $startDateTimeInterval = new \DateInterval('P4W'); // four weeks ago
         $startDateTime->add($startDateTimeInterval);
 
         $endDateTime = new \DateTime();
-        $endDateTimeInterval = new \DateInterval('P3D'); // three days after
+        $endDateTimeInterval = new \DateInterval('P1W'); // one week after
         $endDateTime->sub($endDateTimeInterval);
 
         $builder = $this->createQueryBuilder('ride');
