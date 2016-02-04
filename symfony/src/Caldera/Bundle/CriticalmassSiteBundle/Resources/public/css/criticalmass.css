@@ -8,7 +8,7 @@ body #city-jumbotron {
   body #city-jumbotron h1,
   body #city-jumbotron p.lead {
     color: white;
-    text-shadow: 0 0 3px #aaa; }
+    text-shadow: 0 0 3px #000; }
 
 body .margin-top-small {
   margin-top: 10px; }
@@ -57,3 +57,13 @@ body .padding-bottom-large {
 
 body .no-padding-bottom {
   padding-bottom: 0; }
+
+body .tt-dataset {
+  max-width: 320px;
+  min-width: 160px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); }
+  body .tt-dataset .tt-cursor {
+    color: #333333;
+    background-color: whitesmoke; }
