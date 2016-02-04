@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Router;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -23,6 +24,10 @@ class Router extends sfRouter
 
         if ($object instanceof Photo) {
             return $this->generatePhotoUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Content) {
+            return $this->generateContentUrl($object, $referenceType);
         }
 
         return parent::generate($object, $parameters, $referenceType);
@@ -59,6 +64,17 @@ class Router extends sfRouter
             'citySlug' => $photo->getCity()->getMainSlugString(),
             'rideDate' => $photo->getRide()->getFormattedDate(),
             'photoId' => $photo->getId()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    protected function generateContentUrl(Content $content, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        $route = 'caldera_criticalmass_content_display';
+
+        $parameters = [
+            'slug' => $content->getSlug()
         ];
 
         return parent::generate($route, $parameters, $referenceType);

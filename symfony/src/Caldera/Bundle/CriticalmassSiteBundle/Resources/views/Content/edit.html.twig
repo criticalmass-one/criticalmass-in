@@ -4,8 +4,8 @@
 
 {% block breadcrumb %}
         <li>
-            <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">
-                {{ content.getTitle() }}
+            <a href="{{ path(content) }}">
+                {{ content.title }}
             </a>
         </li>
         <li class="active">
