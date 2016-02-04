@@ -18,14 +18,16 @@ class ContentController extends AbstractController
             throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Content:show.html.twig', array('content' => $content));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Content:show.html.twig',
+            [
+                'content' => $content
+            ]
+        );
     }
     
-    public function editAction(Request $request, $slug) {
-        if (!$this->getUser()) {
-            throw new NotFoundHttpException('Dieser Inhalt darf nur von angemeldeten Teilnehmern editiert werden.');
-        }
-        
+    public function editAction(Request $request, $slug)
+    {
         $content = $this->getContentRepository()->findBySlug($slug);
 
         $content = array_pop($content);
@@ -43,7 +45,18 @@ class ContentController extends AbstractController
         $archiveContent = clone $content;
         $archiveContent->setArchiveParent($content);
 
-        $form = $this->createForm(new ContentType(), $content, array('action' => $this->generateUrl('caldera_criticalmass_content_edit', array('slug' => $content->getSlug()))));
+        $form = $this->createForm(
+            new ContentType(),
+            $content,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_content_edit',
+                    [
+                        'slug' => $content->getSlug()
+                    ]
+                )
+            ]
+        );
 
         $form->handleRequest($request);
 
@@ -68,6 +81,14 @@ class ContentController extends AbstractController
             $hasSaved = true;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Content:edit.html.twig', array('content' => $content, 'form' => $form->createView(), 'hasErrors' => $hasErrors, 'hasSaved' => $hasSaved));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Content:edit.html.twig',
+            [
+                'content' => $content,
+                'form' => $form->createView(),
+                'hasErrors' => $hasErrors,
+                'hasSaved' => $hasSaved
+            ]
+        );
     }
 }
