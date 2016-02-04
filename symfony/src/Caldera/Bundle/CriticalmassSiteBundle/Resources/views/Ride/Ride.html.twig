@@ -103,7 +103,8 @@
 
 <script>
     var pageOptions = {
-        'photoViewPageUrl': '{{ path('caldera_criticalmass_photo_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate(), 'photoId': 'photoId' }) }}'
+        'photoViewPageUrl': '{{ path('caldera_criticalmass_photo_show', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate(), 'photoId': 'photoId' }) }}',
+        'photoCounterUrl': '{{ path('caldera_criticalmass_photo_ajaxview', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}'
     };
 
     CriticalMass.loadModule('RidePage', null, pageOptions, function(ridePage) {

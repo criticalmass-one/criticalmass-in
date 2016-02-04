@@ -70,7 +70,8 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
 
     RidePage.prototype._initPhotoViewModal = function() {
         var options = {
-            photoViewPageUrl: this._options.photoViewPageUrl
+            photoViewPageUrl: this._options.photoViewPageUrl,
+            photoCounterUrl: this._options.photoCounterUrl
         };
 
         this._photoViewModal = new PhotoViewModal(null, options);

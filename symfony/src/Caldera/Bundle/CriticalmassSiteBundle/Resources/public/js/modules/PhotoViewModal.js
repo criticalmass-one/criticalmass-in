@@ -31,6 +31,14 @@ define(['Container', 'PhotoEntity'], function() {
         }
 
         this._updatePhotoViewNavigation(entityId);
+
+        this._countView(photo);
+    };
+
+    PhotoViewModal.prototype._countView = function(photo) {
+        var countUrl = this._options.photoCounterUrl + '?photoId=' + photo.getId();
+
+        $.get(countUrl);
     };
 
     PhotoViewModal.prototype._panMapToPhotoLocation = function(photo) {

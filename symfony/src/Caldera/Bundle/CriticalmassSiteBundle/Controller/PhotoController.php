@@ -273,6 +273,19 @@ class PhotoController extends AbstractController
         $em->flush();
     }
 
+    public function ajaxphotoviewAction(Request $request)
+    {
+        $photoId = $request->get('photoId');
+
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        if ($photo) {
+            $this->countView($photo);
+        }
+
+        return new Response(null);
+    }
+
     public function placeSingleAction(Request $request, $citySlug, $rideDate, $photoId)
     {
         /**
