@@ -117,20 +117,6 @@ class PhotoController extends AbstractController
         ));
     }
 
-    public function reportAction(Request $request, $photoId = 0)
-    {
-        if ($photoId > 0) {
-            $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
-
-            $content = "Es wurde das Bild mit der ID " + $photoId + "gemeldet.";
-
-            mail("malte@criticalmass.in", "Bild gemeldet", $content, "malte@criticalmass.in");
-        }
-
-        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
-    }
-
     public function uploadAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -189,29 +175,6 @@ class PhotoController extends AbstractController
             $em->merge($photo);
             $em->flush();
         }
-
-        /*
-        $photo->handleUpload();
-
-        $em = $this->getDoctrine()->getManager();
-
-        $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-        $utility = new PhotoUtility();
-
-        $utility->approximateCoordinates($photo, $track);
-
-        if (!($photo->getLatitude() && $photo->getLongitude())) {
-                            $track = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Track')->findBy(array('user' => $photo->getUser(), 'ride' => $photo->getRide()));
-
-                            $utility = new PhotoUtility();
-
-                            $utility->approximateCoordinates($photo, $track);
-
-                       }
-
-        $em->merge($photo);
-        $em->flush();*/
 
         return new Response('foo');
     }
