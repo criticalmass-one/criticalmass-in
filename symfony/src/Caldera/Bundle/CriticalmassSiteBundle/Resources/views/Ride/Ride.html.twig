@@ -34,7 +34,7 @@
                 </li>
                 {% if pastRide %}
                 <li role="presentation">
-                    <a href="#gallery" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ photos|length }}</span></a>
+                    <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ photos|length }}</span></a>
                 </li>
                 {#<li role="presentation">
                     <a href="#stats" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings signal"></i> Statistik</a>
@@ -51,7 +51,7 @@
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPostsTab', { 'ride': ride } )) %}
 
                 {% if pastRide %}
-                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPhotosTab', { 'ride': ride } )) %}
+                {#{% render(controller('CalderaCriticalmassSiteBundle:Ride:renderPhotosTab', { 'ride': ride } )) %}#}
                 {#{% render(controller('CalderaCriticalmassSiteBundle:Ride:renderStatisticTab', { 'ride': ride } )) %}#}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderTracksTab', { 'ride': ride } )) %}
                 {% endif %}
