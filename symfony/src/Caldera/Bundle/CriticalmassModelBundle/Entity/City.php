@@ -570,6 +570,11 @@ class City
         return $this->enabled;
     }
 
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
     /**
      * Set isStandardable
      *
