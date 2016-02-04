@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassApiBundle\Controller;
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\CriticalmassApiBundle\Entity\App;
 use Caldera\CriticalmassApiBundle\Type\AppType;
@@ -14,9 +14,9 @@ class AppController extends Controller
 {
     public function listAction()
     {
-        $apps = $this->getDoctrine()->getRepository('CalderaCriticalmassApiBundle:App')->findBy(array('user' => $this->getUser()->getId(), 'deleted' => 0));
+        $apps = $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:App')->findBy(array('user' => $this->getUser()->getId(), 'deleted' => 0));
 
-        return $this->render('CalderaCriticalmassApiBundle:App:list.html.twig', array('apps' => $apps));
+        return $this->render('CalderaCriticalmassSiteBundle:App:list.html.twig', array('apps' => $apps));
     }
 
     public function addAction(Request $request)
@@ -46,12 +46,12 @@ class AppController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null, 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassSiteBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null, 'hasErrors' => $hasErrors));
     }
 
     public function editAction(Request $request, $appId)
     {
-        $app = $this->getDoctrine()->getRepository('CalderaCriticalmassApiBundle:App')->find($appId);
+        $app = $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:App')->find($appId);
 
         $form = $this->createForm(new AppType(), $app, array('action' => $this->generateUrl('caldera_criticalmass_api_app_edit', array('appId' => $app->getId()))));
 
@@ -72,14 +72,14 @@ class AppController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassApiBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app, 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassSiteBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app, 'hasErrors' => $hasErrors));
     }
 
     public function deleteAction(Request $request, $appId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $app = $em->find('CalderaCriticalmassApiBundle:App', $appId);
+        $app = $em->find('CalderaCriticalmassModelBundle:App', $appId);
 
         if ($app && $app->getUser()->equals($this->getUser()))
         {
@@ -93,6 +93,6 @@ class AppController extends Controller
     
     public function apiAction(Request $request)
     {
-        return $this->render('CalderaCriticalmassApiBundle:App:api.html.twig');
+        return $this->render('CalderaCriticalmassSiteBundle:App:api.html.twig');
     }
 }

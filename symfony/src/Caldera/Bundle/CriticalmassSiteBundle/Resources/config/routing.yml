@@ -41,7 +41,7 @@ caldera_criticalmass_photo:
 caldera_criticalmass_api:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/api.yml"
     prefix: /
-    
+
 caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /
