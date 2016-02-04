@@ -19,16 +19,19 @@
                     <li role="presentation" class="active">
                         <a href="#cityResults" aria-controls="cityResults" role="tab" data-toggle="tab">
                             Städte
+                            <span class="badge">{{ cityResults|length }}</span>
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#rideResults" aria-controls="rideResults" role="tab" data-toggle="tab">
                             Touren
+                            <span class="badge">{{ rideResults|length }}</span>
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#contentResults" aria-controls="contentResults" role="tab" data-toggle="tab">
                             Inhalte
+                            <span class="badge">{{ contentResults|length }}</span>
                         </a>
                     </li>
                 </ul>
