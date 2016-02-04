@@ -37,9 +37,10 @@ class ContentController extends AbstractController
         if (!$content->getIsPublicEditable()) {
             throw new NotFoundHttpException('Nein, nein, du darfst diesen Inhalt nicht ändern.');
         }
-        
+
+        $content->setUser($this->getUser());
+
         $archiveContent = clone $content;
-        $archiveContent->setArchiveUser($this->getUser());
         $archiveContent->setArchiveParent($content);
 
         $form = $this->createForm(new ContentType(), $content, array('action' => $this->generateUrl('caldera_criticalmass_content_edit', array('slug' => $content->getSlug()))));
