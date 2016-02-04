@@ -34,9 +34,40 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="cityResults">...</div>
-                    <div role="tabpanel" class="tab-pane" id="rideResults">...</div>
-                    <div role="tabpanel" class="tab-pane" id="contentResults">...</div>
+                    <div role="tabpanel" class="tab-pane active" id="cityResults">
+                        {% for city in cityResults %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{ path(city) }}">
+                                        {{ city.title }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="rideResults">
+                        {% for ride in rideResults %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{ path(ride) }}">
+                                        {{ ride.title }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="contentResults">
+                        {% for content in contentResults %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{ path(content) }}">
+                                        {{ content.title }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
