@@ -8,14 +8,6 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-
-    <script>
-        CriticalMass.loadModule('EditCityPage', null, null);
-    </script>
-{% endblock %}
-
 {% block breadcrumb %}
     {% if city != null %}
     <li>
@@ -244,7 +236,7 @@
                         <div class="form-group">
                             <label class="control-label" for="">Datei:</label>
                             {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind Dateigrößen von 1.140 mal 250 Pixel.</p>
+                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind Bildabmessungen von 2.280 mal 500 Pixel.</p>
                         </div>
                     </div>
                 </div>
@@ -253,9 +245,20 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-success pull-right">Speichern</button>
+                <div class="btn-group pull-right">
+                    <a href="{{ path(city) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
             </div>
         </div>
         {{ form_end(form) }}
     </div>
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('EditCityPage', null, null);
+    </script>
 {% endblock %}
