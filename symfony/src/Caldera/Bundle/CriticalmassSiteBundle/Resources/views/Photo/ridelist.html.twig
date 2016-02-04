@@ -27,6 +27,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% if app.getUser() %}
+                    <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen">
+                            <i class="fa fa-camera"></i>
+                            Fotos hochladen</a>
+                    </div>
+                {% endif %}
+
                 <h1>
                     Fotos von {{ ride.getFancyTitle() }}
                 </h1>
@@ -35,7 +43,7 @@
 
         <div class="row">
             <div class="photo-list">
-                {% for photo in photos %}
+                {% for photo in pagination %}
                     <div class="col-md-3">
                         <div class="photo margin-bottom-medium text-center">
                             <a href="{{ path(photo) }}">
@@ -44,6 +52,14 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
