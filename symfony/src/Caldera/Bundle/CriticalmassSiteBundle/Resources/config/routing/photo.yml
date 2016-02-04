@@ -42,6 +42,10 @@ caldera_criticalmass_gallery_photos_loadphotos:
     pattern: /gallery/loadphotos/{rideId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Gallery:loadPhotos }
 
+caldera_criticalmass_photo_ride_list:
+    pattern: /{citySlug}/{rideDate}/listphotos
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:ridelist }
+
 caldera_criticalmass_photo_show:
     pattern: /{citySlug}/{rideDate}/photo/{photoId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:show }

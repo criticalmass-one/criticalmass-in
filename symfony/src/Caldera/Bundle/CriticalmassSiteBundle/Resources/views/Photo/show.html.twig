@@ -3,11 +3,29 @@
 {% block title %}Foto {{ photo.id }} aus {{ photo.city.city }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path(city) }}">{{ city.title }}</a></li>
-    <li><a href="{{ path(ride) }}">{{ ride.getFancyTitle() }}</a></li>
-    <li><a href="#">Fotos</a></li>
-    <li><a href="#" class="active">Foto {{ photo.id }} aus {{ photo.city.city }}</a></li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+            Fotos
+        </a>
+    </li>
+    <li class="active">
+        Foto {{ photo.id }} aus {{ photo.city.city }}
+    </li>
 {% endblock %}
 
 {% block content %}

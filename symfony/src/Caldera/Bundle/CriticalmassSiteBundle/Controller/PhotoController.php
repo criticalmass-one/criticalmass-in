@@ -24,24 +24,19 @@ class PhotoController extends AbstractController
         return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
-    public function listAction(Request $request, $cityId = null, $rideId = null)
+    public function ridelistAction(Request $request, $citySlug, $rideDate)
     {
-        /* We do not want disabled posts. */
-        $criteria = array('enabled' => true);
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        /* If a $cityId is provided, add the city to t he criteria. */
-        if ($cityId) {
-            $criteria['city'] = $cityId;
-        }
+        $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
 
-        /* If a $rideId is provided, add the ride to the criteria. */
-        if ($rideId) {
-            $criteria['ride'] = $rideId;
-        }
-
-        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
-
-        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Photo:ridelist.html.twig',
+            [
+                'ride' => $ride,
+                'photos' => $photos
+            ]
+        );
     }
 
     public function editAction(Request $request, $photoId = 0)
