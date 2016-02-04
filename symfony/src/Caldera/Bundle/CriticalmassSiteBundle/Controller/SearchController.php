@@ -8,13 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    public function queryAction(Request $request)
+    protected function searchContent($queryPhrase)
     {
-        $queryPhrase = $request->get('query');
+        $finder = $this->container->get('fos_elastica.finder.criticalmass.content');
 
-        $finder = $this->container->get('fos_elastica.finder.criticalmass');
-
-        $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'longDescription', 'punchLine', 'location']);
+        $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'text']);
 
         $term = new \Elastica\Filter\Term(['isArchived' => false]);
 
@@ -25,7 +23,16 @@ class SearchController extends AbstractController
         $query->setSize(50);
         $query->setMinScore(0.5);
 
-        $results = $finder->find($query);
+        return $finder->find($query);
+    }
+
+    public function queryAction(Request $request)
+    {
+        $queryPhrase = $request->get('query');
+
+        $results = [];
+
+        $results = $this->searchContent($queryPhrase);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Search:result.html.twig',
