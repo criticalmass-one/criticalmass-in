@@ -15,13 +15,29 @@
 
         <div class="row">
             <div class="col-md-12">
-                {% for result in results %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ result.title }}
-                        </div>
-                    </div>
-                {% endfor %}
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#cityResults" aria-controls="cityResults" role="tab" data-toggle="tab">
+                            Städte
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#rideResults" aria-controls="rideResults" role="tab" data-toggle="tab">
+                            Touren
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#contentResults" aria-controls="contentResults" role="tab" data-toggle="tab">
+                            Inhalte
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="cityResults">...</div>
+                    <div role="tabpanel" class="tab-pane" id="rideResults">...</div>
+                    <div role="tabpanel" class="tab-pane" id="contentResults">...</div>
+                </div>
             </div>
         </div>
     </div>
