@@ -38,6 +38,10 @@ caldera_criticalmass_photo:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photo.yml"
     prefix:   /
 
+caldera_criticalmass_api:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/api.yml"
+    prefix: /
+    
 caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /
@@ -52,10 +56,6 @@ caldera_criticalmass_ride:
 
 caldera_criticalmass_timeline:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timeline.yml"
-    prefix: /
-
-caldera_criticalmass_api:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/api.yml"
     prefix: /
 
 caldera_criticalmass_sudride:
