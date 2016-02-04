@@ -6,15 +6,15 @@ fos_elastica:
             client: default
             finder:
             types:
-                article:
+                content:
                     mappings:
                         id: ~
                         title: ~
-                        abstract: ~
                         text: ~
+                        isArchived: ~
                     persistence:
                         driver: orm
-                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Article
+                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Content
                         provider: ~
                         listener:
                             immediate: ~
