@@ -1,10 +1,24 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}{{ city.getTitle }}{% endblock %}
+{% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
     <li class="active">{{ city.city }}</li>
+{% endblock %}
+
+{% set currentPath = 'https://criticalmass.in' ~ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+{% block additionalHeaderElements %}
+    <meta property="og:title" content="{{ city.title }}" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:description" content="{{ city.description }}" />
+    <meta property="og:url" content="{{ currentPath }}" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="criticalmass.in" />
+    {% if city.imageName %}
+    <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }}" />
+    {% endif %}
 {% endblock %}
 
 {% block content %}
