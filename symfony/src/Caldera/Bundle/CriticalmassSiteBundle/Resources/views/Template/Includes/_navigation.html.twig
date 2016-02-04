@@ -141,10 +141,11 @@
                 {% endif %}
             </ul>
 
-            <form class="navbar-form navbar-right" role="search">
+            <form class="navbar-form navbar-right" role="search" action="{{ path('caldera_criticalmass_search_query') }}">
                 <div class="form-group">
-                    <input id="search-input" type="text" class="form-control" placeholder="Suche">
+                    <input id="search-input" type="text" class="form-control" placeholder="Suche" name="query" />
                 </div>
+                <button type="submit" class="btn btn-success">Suchen</button>
             </form>
         </div>
     </div>

@@ -35,6 +35,7 @@ fos_elastica:
                         longDescription: ~
                         punchLine: ~
                         standardLocation: ~
+                        isArchived: ~
                     persistence:
                         driver: orm
                         model: Caldera\Bundle\CriticalmassModelBundle\Entity\City

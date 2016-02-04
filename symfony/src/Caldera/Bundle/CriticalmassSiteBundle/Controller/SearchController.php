@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Elastica\Query;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -9,16 +10,26 @@ class SearchController extends AbstractController
 {
     public function queryAction(Request $request)
     {
-        $query = $request->get('query');
+        $queryPhrase = $request->get('query');
 
         $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
+        
+        $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'longDescription', 'punchLine', 'location']);
+
+        $term = new \Elastica\Filter\Term(['isArchived' => false]);
+
+        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $term);
+
+        $query = new \Elastica\Query($filteredQuery);
+
+        $query->setSize(50);
 
         $results = $finder->find($query);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Search:result.html.twig',
             [
-                'query' => $query,
+                'query' => $queryPhrase,
                 'results' => $results
             ]
         );
