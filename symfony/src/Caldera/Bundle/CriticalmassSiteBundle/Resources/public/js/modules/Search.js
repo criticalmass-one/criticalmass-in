@@ -33,8 +33,14 @@ define(['typeahead', 'bloodhound'], function() {
                     suggestion: function(data) {
                         if (data.type == 'city') {
                             return '<li><a class="dropdown-item" href="' + data.url + '" role="option"><i class="fa fa-university"></i> ' + data.value + '</a></li>';
-                        } else {
+                        }
+
+                        if (data.type == 'ride') {
                             return '<li><a class="dropdown-item" href="' + data.url + '" role="option"><i class="fa fa-bicycle"></i> ' + data.value + '</a></li>';
+                        }
+
+                        if (data.type == 'content') {
+                            return '<li><a class="dropdown-item" href="' + data.url + '" role="option"><i class="fa fa-file-text-o"></i> ' + data.value + '</a></li>';
                         }
 
                     }

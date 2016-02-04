@@ -67,6 +67,16 @@ class SearchController extends AbstractController
             ];
         }
 
+        $contents = $this->getContentRepository()->findEnabledContent();
+
+        foreach ($contents as $content) {
+            $result[] = [
+                'type' => 'content',
+                'url' => $this->generateUrl($content),
+                'value' => $content->getTitle()
+            ];
+        }
+
         return new Response(
             json_encode($result),
             200,

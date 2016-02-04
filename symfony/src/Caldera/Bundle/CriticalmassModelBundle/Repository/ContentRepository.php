@@ -19,5 +19,17 @@ class ContentRepository extends EntityRepository
 
         return $content;
     }
+
+    public function findEnabledContent()
+    {
+        $result = $this->findBy(
+            [
+                'enabled' => true,
+                'isArchived' => false
+            ]
+        );
+
+        return $result;
+    }
 }
 
