@@ -12,8 +12,8 @@ class SearchController extends AbstractController
     {
         $queryPhrase = $request->get('query');
 
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
-        
+        $finder = $this->container->get('fos_elastica.finder.criticalmass');
+
         $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'longDescription', 'punchLine', 'location']);
 
         $term = new \Elastica\Filter\Term(['isArchived' => false]);
@@ -23,6 +23,7 @@ class SearchController extends AbstractController
         $query = new \Elastica\Query($filteredQuery);
 
         $query->setSize(50);
+        $query->setMinScore(0.5);
 
         $results = $finder->find($query);
 
