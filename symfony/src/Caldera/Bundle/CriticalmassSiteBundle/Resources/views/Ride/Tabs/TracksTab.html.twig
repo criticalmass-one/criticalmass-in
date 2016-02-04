@@ -35,7 +35,7 @@
                         <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
                     </td>
                     <td>{{ track.username }}</td>
-                    <td>{{ track.getDurationInterval.format('%i') }}&nbsp;Minuten</td>
+                    <td>{{ track.getDurationInterval.format('%h:%i') }}&nbsp;Stunden</td>
                     <td>{{ track.distance|round(2) }}&nbsp;Kilometer</td>
                     <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
                 </tr>
