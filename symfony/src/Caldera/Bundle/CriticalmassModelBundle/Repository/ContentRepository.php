@@ -9,7 +9,13 @@ class ContentRepository extends EntityRepository
 {
     public function findBySlug($slug)
     {
-        $content = $this->findBy(array('slug' => $slug, 'enabled' => true, 'isArchived' => false));
+        $content = $this->findBy(
+            [
+                'slug' => $slug,
+                'enabled' => true,
+                'isArchived' => false
+            ]
+        );
 
         return $content;
     }

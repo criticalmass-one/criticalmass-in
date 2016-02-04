@@ -7,20 +7,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {{ content.text|markdown }}
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top-large">
             <div class="col-md-10 col-md-offset-1">
-                <small>Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr zuletzt geändert.</small>
-
+                <small>
+                    Diese Seite wurde am {{ content.getLastEditionDateTime().format('d.m.Y') }} um {{ content.getLastEditionDateTime().format('H:i') }} Uhr geändert.
                 {% if content.isPublicEditable() and app.getUser() %}
                     <a href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}">Diese Seite jetzt editieren</a>
                 {% endif %}
+                </small>
             </div>
         </div>
         

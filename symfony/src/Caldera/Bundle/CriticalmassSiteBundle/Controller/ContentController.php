@@ -8,7 +8,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContentController extends AbstractController
 {
-    public function showAction(Request $request, $slug) {
+    public function showAction(Request $request, $slug)
+    {
         $content = $this->getContentRepository()->findBySlug($slug);
         
         $content = array_pop($content);
