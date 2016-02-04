@@ -14,7 +14,7 @@ define(['typeahead', 'bloodhound', 'dateformat'], function() {
         });
 
         bh.initialize();
-
+        
         $('#search-input').typeahead(
             {
                 hint: false,
@@ -39,9 +39,11 @@ define(['typeahead', 'bloodhound', 'dateformat'], function() {
                         }
 
                         if (data.type == 'ride') {
+                            html += '<a href="' + data.url + '">';
                             html += '<div class="row">';
                             html += '<div class="col-md-12">';
-                            html += '<a href="' + data.url + '"><i class="fa fa-bicycle"></i> ' + data.value + '</a>';
+                            html += '<i class="fa fa-bicycle"></i> ';
+                            html += data.value;
                             html += '</div>';
                             html += '</div>';
 
@@ -68,6 +70,7 @@ define(['typeahead', 'bloodhound', 'dateformat'], function() {
 
                         html += '</div>';
                         html += '</div>';
+                        html += '</a>';
 
                         return html;
                     }
