@@ -8,6 +8,7 @@ fos_elastica:
             types:
                 article:
                     mappings:
+                        id: ~
                         title: ~
                         abstract: ~
                         text: ~
@@ -20,6 +21,7 @@ fos_elastica:
                         finder: ~
                 ride:
                     mappings:
+                        id: ~
                         title: ~
                         description: ~
                         location: ~
@@ -34,6 +36,7 @@ fos_elastica:
                         finder: ~
                 city:
                     mappings:
+                        id: ~
                         title: ~
                         description: ~
                         longDescription: ~

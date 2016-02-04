@@ -25,6 +25,7 @@ class CityController extends AbstractController
 
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
 	$enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
+	$selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
 
         $geoFilter = new \Elastica\Filter\GeoDistance(
             'pin',
@@ -35,7 +36,7 @@ class CityController extends AbstractController
             '50km'
         );
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $geoFilter, $enabledFilter]);
+        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $geoFilter, $enabledFilter, $selfFilter]);
 
         $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
 
@@ -56,8 +57,6 @@ class CityController extends AbstractController
                 ]
             ]
         );
-
-	print_r($query);
 
         $results = $finder->find($query);
 
