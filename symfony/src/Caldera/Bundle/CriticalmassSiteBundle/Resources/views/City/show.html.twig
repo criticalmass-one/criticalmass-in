@@ -68,28 +68,3 @@
         </div>
     </div>
 {% endblock %}
-
-{#
-
-
-        <ul class="nav nav-tabs" id="cityModalTabs">
-            {% if hasCurrentRide %}
-            <li><a href="#cityInfoTab" data-toggle="tab"><i class="halflings flag"></i> {{ city.getCity() }}</a></li>
-            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="halflings calendar"></i> Nächste Tour</a></li>
-            {% else %}
-            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="halflings info-sign"></i> {{ city.getCity() }}</a></li>
-            {% endif %}
-            {% if hasRides %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Tourübersicht <span class="badge">{{ rides|length }}</span></a></li>
-            {% endif %}
-            <li><a href="#timelineTab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
-        </ul>
-
-        <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
-            {% include('CalderaCriticalmassSiteBundle:Common/City:CityTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassSiteBundle:Common/City:CurrentRideTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassSiteBundle:Common/City:RidesTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassSiteBundle:Common/City:CommentsTab.html.twig') with { 'city': city } %}
-        </div>
-
-        #}
