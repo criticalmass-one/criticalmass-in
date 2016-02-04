@@ -1,4 +1,4 @@
-define(['typeahead', 'bloodhound'], function() {
+define(['typeahead', 'bloodhound', 'dateformat'], function() {
 
     Search = function(context, options) {
         var bh = new Bloodhound({
@@ -39,7 +39,27 @@ define(['typeahead', 'bloodhound'], function() {
                         }
 
                         if (data.type == 'ride') {
+                            html += '<div class="row">';
+                            html += '<div class="col-md-12">';
                             html += '<a href="' + data.url + '"><i class="fa fa-bicycle"></i> ' + data.value + '</a>';
+                            html += '</div>';
+                            html += '</div>';
+
+                            if (data.meta.location.length > 0) {
+                                html += '<div class="row">';
+                                html += '<div class="col-md-12">';
+                                html += data.meta.location;
+                                html += '</div>';
+                                html += '</div>';
+                            }
+
+                            var dateTime = new Date(data.meta.dateTime);
+
+                            html += '<div class="row">';
+                            html += '<div class="col-md-12">';
+                            html += dateTime.format('dd.mm.yyyy HH:MM') + '&nbsp;Uhr';
+                            html += '</div>';
+                            html += '</div>';
                         }
 
                         if (data.type == 'content') {

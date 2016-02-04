@@ -92,7 +92,11 @@ class SearchController extends AbstractController
             $result[] = [
                 'type' => 'ride',
                 'url' => $this->generateUrl($ride),
-                'value' => $ride->getFancyTitle()
+                'value' => $ride->getFancyTitle(),
+                'meta' => [
+                    'dateTime' => $ride->getDateTime()->format('Y-m-d\TH:i:s'),
+                    'location' => ($ride->getHasLocation() ? $ride->getLocation() : '')
+                ]
             ];
         }
 

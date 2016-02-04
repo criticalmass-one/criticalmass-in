@@ -76,7 +76,8 @@ require.config({
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
         "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound",
-        "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min"
+        "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min",
+        "dateformat": "/bundles/calderacriticalmasssite/js/external/dateformat/dateformat"
     },
     shim: {
         'leaflet-locate': {
