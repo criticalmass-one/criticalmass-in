@@ -78,8 +78,7 @@ class PhotoGps {
     {
         $this->gpsExifReader->setPhoto($this->photo);
 
-        if ($this->gpsExifReader->hasGpsExifData())
-        {
+        if ($this->gpsExifReader->hasGpsExifData()) {
             $this->gpsExifReader->execute();
 
             $this->photo = $this->gpsExifReader->getPhoto();
@@ -121,11 +120,6 @@ class PhotoGps {
             ->setPhoto($this->photo)
             ->execute()
             ->getDateTime();
-
-        /* TODO Remove this! */
-        $dateTime = $dateTime->sub(new \DateInterval('PT2H'));
-
-        echo $dateTime->format('d.m.Y H:i:s')."\n";
 
         $result = $this->trackReader->findCoordNearDateTime($dateTime);
 

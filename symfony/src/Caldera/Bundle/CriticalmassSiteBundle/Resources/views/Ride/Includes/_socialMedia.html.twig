@@ -1,0 +1,32 @@
+{% set hasSocialMedia = ride.url or ride.facebook or ride.twitter %}
+
+{% if hasSocialMedia %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Soziale Netze</h3>
+        </div>
+        <div class="panel-body">
+            <div class="text-center">
+                <div class="btn-group" role="group" aria-label="...">
+                {% if ride.url %}
+                    <a class="btn btn-default" href="{{ ride.url }}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                {% endif %}
+
+                {% if ride.facebook %}
+                    <a class="btn btn-default" href="{{ ride.facebook }}">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                {% endif %}
+
+                {% if ride.twitter %}
+                    <a class="btn btn-default" href="{{ ride.twitter }}">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

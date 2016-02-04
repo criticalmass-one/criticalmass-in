@@ -3,6 +3,8 @@ fos_elastica:
         default: { host: localhost, port: 9200 }
     indexes:
         criticalmass:
+            client: default
+            finder:
             types:
                 article:
                     mappings:
@@ -12,6 +14,36 @@ fos_elastica:
                     persistence:
                         driver: orm
                         model: Caldera\Bundle\CriticalmassModelBundle\Entity\Article
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~
+                ride:
+                    mappings:
+                        title: ~
+                        description: ~
+                        location: ~
+                        isArchived: ~
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Ride
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~
+                city:
+                    mappings:
+                        title: ~
+                        description: ~
+                        longDescription: ~
+                        punchLine: ~
+                        standardLocation: ~
+                        isArchived: ~
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\City
                         provider: ~
                         listener:
                             immediate: ~

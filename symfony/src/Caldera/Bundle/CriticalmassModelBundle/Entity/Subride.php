@@ -99,7 +99,7 @@ class Subride
     protected $isArchived = false;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $archiveDateTime;
 
@@ -113,6 +113,15 @@ class Subride
     {
         $this->creationDateTime = new \DateTime();
         $this->archiveDateTime = new \DateTime();
+    }
+
+    public function __clone()
+    {
+        $this->setCreationDateTime(new \DateTime());
+        $this->setArchiveDateTime(null);
+        $this->setArchiveParent(null);
+        $this->setArchiveUser(null);
+        $this->setIsArchived(0);
     }
 
     /**

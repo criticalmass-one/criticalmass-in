@@ -2,37 +2,57 @@
 
 {% block title %}{{ city.getTitle }}{% endblock %}
 
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-{% endblock %}
-
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li class="active">{{ city.getCity() }}</li>
+    <li class="active">{{ city.city }}</li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {% if app.getUser() %}
-                    <div class="btn-group pull-right" style="margin-top: 24px;">
-                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
-                            <i class="fa fa-cogs"></i>
-                            Stadt editieren
-                        </a>
+                {% if city.imageFile %}
+                <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="pull-right no-margin-top">
+                                {{ city.title }}
+                            </h1>
+                        </div>
                     </div>
-                {% endif %}
 
-                <h1>{{ city.title }}</h1>
-            </div>
-        </div>
+                    {% if city.punchline %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead pull-right no-margin-top">
+                                {{ city.punchline }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron">
-
+                    {% if app.getUser() %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                                <i class="fa fa-cogs"></i>
+                                Stadt editieren
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
+                {% else %}
+                    {% if app.getUser() %}
+                    <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                        <i class="fa fa-cogs"></i>
+                        Stadt editieren
+                    </a>
+                    {% endif %}
+                    <h1 class="no-margin-top">
+                        {{ city.title }}
+                    </h1>
+                {% endif %}
             </div>
         </div>
 
@@ -44,32 +64,8 @@
             <div class="col-md-3">
                 {% include 'CalderaCriticalmassSiteBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                 {% include 'CalderaCriticalmassSiteBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
+                {% include 'CalderaCriticalmassSiteBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
             </div>
         </div>
     </div>
 {% endblock %}
-
-{#
-
-
-        <ul class="nav nav-tabs" id="cityModalTabs">
-            {% if hasCurrentRide %}
-            <li><a href="#cityInfoTab" data-toggle="tab"><i class="halflings flag"></i> {{ city.getCity() }}</a></li>
-            <li class="active"><a href="#nextRideTab" data-toggle="tab"><i class="halflings calendar"></i> Nächste Tour</a></li>
-            {% else %}
-            <li class="active"><a href="#cityInfoTab" data-toggle="tab"><i class="halflings info-sign"></i> {{ city.getCity() }}</a></li>
-            {% endif %}
-            {% if hasRides %}
-            <li><a href="#recentRidesTab" data-toggle="tab"><i class="halflings road"></i> Tourübersicht <span class="badge">{{ rides|length }}</span></a></li>
-            {% endif %}
-            <li><a href="#timelineTab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ city.getPosts()|length }}</span></a></li>
-        </ul>
-
-        <div class="tab-content" id="cityModalTabsContent" style="padding-top: 10px;">
-            {% include('CalderaCriticalmassSiteBundle:Common/City:CityTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassSiteBundle:Common/City:CurrentRideTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassSiteBundle:Common/City:RidesTab.html.twig') with { 'city': city } %}
-            {% include('CalderaCriticalmassSiteBundle:Common/City:CommentsTab.html.twig') with { 'city': city } %}
-        </div>
-
-        #}

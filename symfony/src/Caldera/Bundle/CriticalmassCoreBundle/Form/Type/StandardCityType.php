@@ -29,7 +29,8 @@ class StandardCityType extends AbstractType
             ->add('isStandardableLocation', 'checkbox', array('required' => false))
             ->add('standardLocation', 'text', array('required' => false))
             ->add('standardLatitude', 'hidden', array('required' => false))
-            ->add('standardLongitude', 'hidden', array('required' => false));
+            ->add('standardLongitude', 'hidden', array('required' => false))
+            ->add('imageFile', 'vich_file', array('required' => false));
     }
 
     public function getName()

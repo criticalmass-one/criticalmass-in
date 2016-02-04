@@ -16,10 +16,6 @@
     <script>
 
         function callback(editRidePage) {
-            //ridePage.addCity('{{ city.getCity() }}', '{{ city.getTitle() }}', '{{ city.getMainSlugString() }}', '{{ city.getDescription() }}', {{ city.getLatitude() }}, {{ city.getLongitude() }});
-
-            //ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.getDescription() }}', {{ ride.getLatitude() }}, {{ ride.getLongitude() }}, '{{ ride.getLocation() }}', '{{ ride.getDateTime.format('d.m.Y') }}', '{{ ride.getDateTime.format('H:i') }}', '{{ ride.getWeatherForecast() }}');
-
             var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
 
             editRidePage.setCityLatLng(cityLatLng);
@@ -106,7 +102,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top-medium">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
@@ -211,7 +207,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success" id="rideSubmitButton"{% if city.hasRideAtMonthDay(dateTime) %} disabled="disabled"{% endif %}>Speichern</button>
+                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                <a href="{{ path(ride) }}" class="btn btn-default">Abbrechen</a>
+                                <button type="submit" class="btn btn-success" id="rideSubmitButton"{% if city.hasRideAtMonthDay(dateTime) %} disabled="disabled"{% endif %}>Speichern</button>
+                            </div>
                         </div>
                     </div>
                 </div>

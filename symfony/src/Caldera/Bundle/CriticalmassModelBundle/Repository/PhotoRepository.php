@@ -22,7 +22,10 @@ class PhotoRepository extends EntityRepository
 
         $builder->select('photo');
         $builder->where($builder->expr()->eq('photo.ride', $photo->getId()));
-        $builder->where($builder->expr()->lt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
         $builder->addOrderBy('photo.dateTime', 'DESC');
         $builder->setMaxResults(1);
 
@@ -46,7 +49,10 @@ class PhotoRepository extends EntityRepository
 
         $builder->select('photo');
         $builder->where($builder->expr()->eq('photo.ride', $photo->getId()));
-        $builder->where($builder->expr()->gt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->gt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
         $builder->addOrderBy('photo.dateTime', 'ASC');
         $builder->setMaxResults(1);
 
@@ -64,6 +70,8 @@ class PhotoRepository extends EntityRepository
 
         $builder->select('photo');
         $builder->addSelect('COUNT(photo)');
+
+        $builder->where($builder->expr()->eq('photo.deleted', 0));
 
         $builder->groupBy('photo.ride');
 
@@ -104,8 +112,10 @@ class PhotoRepository extends EntityRepository
         $builder->select('photo');
 
         $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.enabled', true));
-        
+        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
+
         $builder->addOrderBy('photo.dateTime', 'ASC');
         
         $query = $builder->getQuery();
@@ -123,7 +133,7 @@ class PhotoRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
         $builder->andWhere($builder->expr()->eq('photo.user', $user->getId()));
-        //$builder->andWhere($builder->expr()->eq('photo.enabled', true));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
         $builder->addOrderBy('photo.dateTime', 'ASC');
 

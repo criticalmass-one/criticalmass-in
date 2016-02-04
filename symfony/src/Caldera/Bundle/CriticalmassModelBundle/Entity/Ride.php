@@ -414,6 +414,11 @@ class Ride
         return $ride->getId() == $this->getId();
     }
 
+    public function equals(Ride $ride)
+    {
+        return $this->isEqual($ride);
+    }
+
     public function isSameRide(Ride $ride)
     {
         return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
@@ -1112,5 +1117,10 @@ class Ride
     public function getFeaturedPhoto()
     {
         return $this->featuredPhoto;
+    }
+
+    public function getPin()
+    {
+        return $this->latitude.','.$this->longitude;
     }
 }

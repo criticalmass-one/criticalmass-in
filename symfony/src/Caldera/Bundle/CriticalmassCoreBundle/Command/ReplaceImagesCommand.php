@@ -35,17 +35,43 @@ class ReplaceImagesCommand extends ContainerAwareCommand
         $this
             ->setName('criticalmass:images:replaces')
             ->setDescription('Regenerate LatLng Tracks')
+            ->addArgument(
+                'citySlug',
+                InputArgument::REQUIRED,
+                'Slug of the city'
+            )
+            ->addArgument(
+                'rideDate',
+                InputArgument::REQUIRED,
+                'date of the ride'
+            )
+            ->addArgument(
+                'username',
+                InputArgument::REQUIRED,
+                'Id of the user'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
+
+        /**
+         * @var PhotoGps $photoGps
+         */
         $this->photoGps = $this->getContainer()->get('caldera.criticalmass.image.photogps');
+
+        /**
+         * @var Registry $manager
+         */
         $this->manager = $this->doctrine->getManager();
 
-        $ride = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->find(1565);
-        $user = $this->doctrine->getRepository('ApplicationSonataUserBundle:User')->find(1);
+        $ride = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $user = $this->doctrine->getRepository('ApplicationSonataUserBundle:User')->findOneByUsername($input->getArgument('username'));
+
+        echo $ride->getId();
+
         $track = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findByUserAndRide($ride, $user);
         $photos = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findPhotosByRide($ride);
 

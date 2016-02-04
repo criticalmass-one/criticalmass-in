@@ -36,20 +36,25 @@ require.config({
     paths:
     {
         "CityEntity": "/bundles/calderacriticalmasssite/js/modules/entity/CityEntity",
+        "WritePost": "/bundles/calderacriticalmasssite/js/modules/WritePost",
         "RideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/RideEntity",
         "NoLocationRideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/NoLocationRideEntity",
         "TrackEntity": "/bundles/calderacriticalmasssite/js/modules/entity/TrackEntity",
+        "SubrideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/SubrideEntity",
         "PositionEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PositionEntity",
         "BaseEntity": "/bundles/calderacriticalmasssite/js/modules/entity/BaseEntity",
         "MarkerEntity": "/bundles/calderacriticalmasssite/js/modules/entity/MarkerEntity",
+        "PhotoEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PhotoEntity",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
         "EditCityPage": "/bundles/calderacriticalmasssite/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
+        "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "TrackRangePage": "/bundles/calderacriticalmasssite/js/modules/page/TrackRangePage",
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
+        "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "MapLayerControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLayerControl",
         "MapLocationControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLocationControl",
@@ -57,6 +62,9 @@ require.config({
         "Marker": "/bundles/calderacriticalmasssite/js/modules/map/marker/Marker",
         "CityMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/CityMarker",
         "LocationMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/LocationMarker",
+        "PhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/PhotoMarker",
+        "SubrideMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SubrideMarker",
+        "SnapablePhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SnapablePhotoMarker",
         "leaflet": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/calderacriticalmasssite/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Control.Locate",
@@ -64,8 +72,11 @@ require.config({
         "leaflet-geometry": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.geometryutil",
         "leaflet-groupedlayer": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.groupedlayercontrol",
         "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
-        "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider"
-
+        "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
+        "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
+        "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
+        "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound",
+        "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min"
     },
     shim: {
         'leaflet-locate': {
@@ -75,6 +86,20 @@ require.config({
         'leaflet-groupedlayer': {
             deps: ['leaflet'],
             exports: 'L.Control.GroupedLayers'
+        },
+        'leaflet-snap': {
+            deps: ['leaflet'],
+            exports: 'L.Handler.MarkerSnap'
+        },
+        typeahead:{
+            deps: ['jquery'],
+            init: function ($) {
+                return require.s.contexts._.registry['typeahead.js'].factory( $ );
+            }
+        },
+        bloodhound: {
+            deps: [],
+            exports: 'Bloodhound'
         }
     }
 });

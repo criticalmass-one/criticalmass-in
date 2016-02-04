@@ -4,25 +4,12 @@
 
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+    <li><a href="{{ path(ride.city) }}">{{ ride.city.title }}</a></li>
+    <li><a href="{{ path(ride) }}">{{ ride.getFancyTitle() }}</a></li>
     <li class="active">Fotos hochladen</li>
 {% endblock %}
 
 {% block content %}
-{% stylesheets
-'@CalderaCriticalmassSiteBundle/Resources/public/css/external/*.css'
-filter="cssrewrite" %}
-<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-{% endstylesheets %}
-
-{% javascripts
-'@CalderaCriticalmassSiteBundle/Resources/public/js/external/dropzone/*.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-<script>
-</script>
-{% endjavascripts %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -39,10 +26,14 @@ filter="cssrewrite" %}
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="my-awesome-dropzone">
+                    <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="photo-dropzone">
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        CriticalMass.loadModule('UploadPhotoPage', '#photo-dropzone');
+    </script>
 {% endblock %}

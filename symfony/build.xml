@@ -11,7 +11,7 @@
 	<target name="update" depends="git.pull,symfony.build,apache.graceful" />
 	<target name="build" depends="reload" />
 
-        <!-- ### Composer ### -->
+	<!-- ### Composer ### -->
 
 	<target name="composer.build" depends="composer.self-update,composer.update" />
 
@@ -22,9 +22,9 @@
 	</target>
 
 	<target name="composer.install">
-                <exec executable="php" failonerror="true">
-                        <arg line="composer.phar install -d symfony" />
-                </exec>
+		<exec executable="php" failonerror="true">
+			<arg line="composer.phar install -d symfony" />
+		</exec>
 	</target>
 
 	<target name="composer.update">
@@ -32,7 +32,6 @@
 			<arg line="composer.phar update -d symfony" />
 		</exec>
 	</target>
-
 
         <!-- ### Apache ### -->
 
@@ -83,7 +82,7 @@
 
 
 	<!-- ### Doctrine ### -->
-	
+
 	<target name="doctrine.schema.update">
 		<exec executable="php" failonerror="true">
 			<arg line="${console} doctrine:schema:update --force --env=${env}" />

@@ -87,10 +87,8 @@ define(['leaflet'], function() {
 
     Container.prototype.toggleIndexEntityInLayer = function(index) {
         if (this.isIndexedEntityInLayer(index)) {
-            alert('is visible');
             this.removeIndexedEntityFromLayer(index);
         } else {
-            alert('is not visible');
             this.addIndexedEntityToLayer(index);
         }
     };
@@ -163,7 +161,13 @@ define(['leaflet'], function() {
      * @returns {*}
      */
     Container.prototype.getEntity = function (index) {
-        return this._list[index];
+        var entity = this._list[index];
+
+        if (entity != undefined) {
+            return entity;
+        }
+
+        return null;
     };
 
     Container.prototype.hasEntity = function(index) {
@@ -188,6 +192,48 @@ define(['leaflet'], function() {
         for (var index in this._list) {
             this._list[index].addEvent(type, callback);
         }
+    };
+
+    Container.prototype.getPreviousIndex = function(entityIndex) {
+        var keys = Object.keys(this._list);
+        var previousIndex = null;
+
+        for (var keyIndex in keys) {
+            var currentIndex = parseInt(keys[keyIndex]);
+
+            if (!previousIndex && currentIndex < parseInt(entityIndex)) {
+                previousIndex = currentIndex;
+            } else if (previousIndex < currentIndex && currentIndex < parseInt(entityIndex)) {
+                previousIndex = currentIndex;
+            }
+        }
+
+        return previousIndex;
+    };
+
+    Container.prototype.getPreviousEntity = function(entityIndex) {
+        return this.getEntity(this.getPreviousIndex(entityIndex));
+    };
+
+    Container.prototype.getNextIndex = function(entityIndex) {
+        var keys = Object.keys(this._list);
+        var nextIndex = null;
+
+        for (var keyIndex in keys) {
+            var currentIndex = parseInt(keys[keyIndex]);
+
+            if (!nextIndex && currentIndex > parseInt(entityIndex)) {
+                nextIndex = currentIndex;
+            } else if (nextIndex > currentIndex && currentIndex > parseInt(entityIndex)) {
+                nextIndex = currentIndex;
+            }
+        }
+
+        return nextIndex;
+    };
+
+    Container.prototype.getNextEntity = function(entityIndex) {
+        return this.getEntity(this.getNextIndex(entityIndex));
     };
 
     return Container;

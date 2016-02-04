@@ -1,7 +1,3 @@
-caldera_criticalmass_desktop_ride_list:
-    pattern:  /ride/list
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:list }
-
 caldera_criticalmass_desktop_ride_add:
     pattern:  /{citySlug}/add
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:add }

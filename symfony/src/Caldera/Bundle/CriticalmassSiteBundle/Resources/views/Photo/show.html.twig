@@ -15,7 +15,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <img class="auto-scale" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+            <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
         </div>
     </div>
 
@@ -54,14 +54,16 @@
     </div>
 </div>
 
-{% endblock %}
+<script>
+    CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
+        {% if previousPhoto %}
+        page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
+        {% endif %}
 
-{% block additionalFooterElements %}
-    <script>
-        CriticalMass.loadModule('AutoscaleImage', 'img.auto-scale');
-        CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
-            page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
-            page.setNextPhotoUrl('{{ path(nextPhoto) }}');
-        });
-    </script>
+        {% if nextPhoto %}
+        page.setNextPhotoUrl('{{ path(nextPhoto) }}');
+        {% endif %}
+    });
+</script>
+
 {% endblock %}

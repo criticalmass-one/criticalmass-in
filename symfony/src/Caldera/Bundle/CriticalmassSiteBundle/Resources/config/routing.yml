@@ -2,6 +2,10 @@ caldera_criticalmass_live:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/live.yml"
     prefix: /
 
+caldera_criticalmass_calendar:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/calendar.yml"
+    prefix: /
+
 caldera_criticalmass_post:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/post.yml"
     prefix: /post
@@ -26,13 +30,17 @@ caldera_criticalmass_content:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/content.yml"
     prefix: /content
 
-caldera_criticalmass_city:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
+caldera_criticalmass_search:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/search.yml"
     prefix: /
 
 caldera_criticalmass_photo:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photo.yml"
     prefix:   /
+
+caldera_criticalmass_city:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
+    prefix: /
 
 caldera_criticalmass_timelapse:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timelapse.yml"

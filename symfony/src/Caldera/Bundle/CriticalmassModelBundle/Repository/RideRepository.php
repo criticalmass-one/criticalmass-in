@@ -2,11 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
-use Application\Sonata\UserBundle\Entity\User;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class RideRepository extends EntityRepository
 {
@@ -26,7 +24,7 @@ class RideRepository extends EntityRepository
         $query = $builder->getQuery();
         $query->setMaxResults(1);
 
-        $result = $query->getSingleResult();
+        $result = $query->getOneOrNullResult();
 
         return $result;
     }
@@ -117,11 +115,11 @@ class RideRepository extends EntityRepository
     public function findCurrentRides($order = 'ASC')
     {
         $startDateTime = new \DateTime();
-        $startDateTimeInterval = new \DateInterval('P3W'); // three weeks ago
+        $startDateTimeInterval = new \DateInterval('P4W'); // four weeks ago
         $startDateTime->add($startDateTimeInterval);
 
         $endDateTime = new \DateTime();
-        $endDateTimeInterval = new \DateInterval('P3D'); // three days after
+        $endDateTimeInterval = new \DateInterval('P1W'); // one week after
         $endDateTime->sub($endDateTimeInterval);
 
         $builder = $this->createQueryBuilder('ride');
@@ -159,33 +157,29 @@ class RideRepository extends EntityRepository
 
     public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
     {
-        if (!$startDateTime)
-        {
+        if (!$startDateTime) {
             $startDateTime = new \DateTime();
         }
 
-        if (!$endDateTime)
-        {
+        if (!$endDateTime) {
             $endDate = new \DateTime();
             $dayInterval = new \DateInterval('P1M');
             $endDateTime = $endDate->add($dayInterval);
         }
 
-        $query = $this->getEntityManager()->createQuery("SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND r.isArchived = 0 AND r.dateTime >= '".$startDateTime->format('Y-m-d')."' AND r.dateTime <= '".$endDateTime->format('Y-m-d')."' ORDER BY r.dateTime ASC, c.city ASC");
+        $builder = $this->createQueryBuilder('ride');
 
-        $result = array();
+        $builder->select('ride');
+        $builder->where($builder->expr()->gt('ride.dateTime', '\''.$startDateTime->format('Y-m-d').'\''));
+        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$endDateTime->format('Y-m-d').'\''));
 
-        $tmp1 = $query->getResult();
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
-        foreach ($tmp1 as $tmp2)
-        {
-            foreach ($tmp2 as $ride)
-            {
-                $result[] = $ride;
-            }
-        }
+        $builder->orderBy('ride.dateTime', 'ASC');
 
-        return $result;
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 
     public function findRidesByYearMonth($year, $month)
@@ -216,6 +210,37 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
+    /**
+     * @param $citySlug string
+     * @param $rideDate string
+     * @return Ride
+     */
+    public function findByCitySlugAndRideDate($citySlug, $rideDate)
+    {
+        // Maybe this datetime computation stuff is stupid. Will look for a better solution.
+        $fromDateTime = new \DateTime($rideDate);
+        $fromDateTime->setTime(0, 0, 0);
+
+        $untilDateTime = new \DateTime($rideDate);
+        $untilDateTime->setTime(23, 59, 59);
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->join('ride.city', 'city');
+        $builder->join('city.slugs', 'citySlug');
+
+        $builder->where($builder->expr()->eq('citySlug.slug', '\''.$citySlug.'\''));
+        $builder->andWhere($builder->expr()->gt('ride.dateTime', '\''.$fromDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$untilDateTime->format('Y-m-d H:i:s').'\''));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleResult();
+    }
+
     public function findLatestRidesOrderByParticipants(\DateTime $startDateTime, \DateTime $endDateTime)
     {
         $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r WHERE r.dateTime >= \''.$startDateTime->format('Y-m-d H:i:s').'\' AND r.dateTime <= \''.$endDateTime->format('Y-m-d H:i:s').'\' ORDER BY r.estimatedParticipants DESC');
@@ -231,6 +256,35 @@ class RideRepository extends EntityRepository
                 $result[$ride->getCity()->getMainSlugString()] = $ride;
             }
         }
+        return $result;
+    }
+
+    /**
+     * This returns a previous ride entity with at least one subride.
+     *
+     * @param Ride $ride
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @author maltehuebner
+     * @since 2016-02-01
+     */
+    public function getPreviousRideWithSubrides(Ride $ride)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->join('ride.subrides', 'subrides');
+
+        $builder->where($builder->expr()->lt('ride.dateTime', '\''.$ride->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->eq('ride.city', $ride->getCity()->getId()));
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+        $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        $result = $query->getOneOrNullResult();
+
         return $result;
     }
 

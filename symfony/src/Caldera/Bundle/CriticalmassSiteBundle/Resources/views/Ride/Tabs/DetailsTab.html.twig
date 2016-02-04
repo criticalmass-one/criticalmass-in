@@ -1,5 +1,3 @@
-{% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
-
 <div role="tabpanel" class="tab-pane active" id="details">
     <div class="row">
         <div class="col-md-12">
@@ -23,20 +21,7 @@
         </div>
 
         <div class="col-md-4">
-            {% if hasSocialMedia %}
-                <h4>Mehr im Netz</h4>
-                {% if ride.getUrl() %}
-                    <a class="btn btn-default" href="{{ ride.getUrl() }}"><i class="social rss"></i> Homepage</a>
-                {% endif %}
-
-                {% if ride.getFacebook() %}
-                    <a class="btn btn-default" href="{{ ride.getFacebook() }}"><i class="social facebook"></i> facebook</a>
-                {% endif %}
-
-                {% if ride.getTwitter() %}
-                    <a class="btn btn-default" href="{{ ride.getTwitter() }}"><i class="social twitter"></i> twitter</a>
-                {% endif %}
-            {% endif %}
+            {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_socialMedia.html.twig' with { 'ride': ride } %}
         </div>
     </div>
 </div>

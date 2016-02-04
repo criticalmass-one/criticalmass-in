@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('caldera_criticalmass_desktop_ride_list') }}">
+                            <a href="{{ path('caldera_criticalmass_calendar') }}">
                                 Kalender
                             </a>
                         </li>
@@ -140,6 +140,17 @@
                 </li>
                 {% endif %}
             </ul>
+
+            <form class="navbar-form navbar-right" role="search" action="{{ path('caldera_criticalmass_search_query') }}">
+                <div class="form-group">
+                    <input id="search-input" type="text" class="form-control" placeholder="Suche" name="query" />
+                </div>
+                <button type="submit" class="btn btn-success">Suchen</button>
+            </form>
         </div>
     </div>
 </nav>
+
+<script type="text/javascript">
+    CriticalMass.loadModule('Search');
+</script>

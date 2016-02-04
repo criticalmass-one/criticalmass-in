@@ -43,13 +43,27 @@
                     </thead>
                     <tbody>
                         {% for city in cities %}
-                        <tr class="city" data-cityName="{{ city.city }}" data-cityslug="{{ city.getMainSlugString() }}" data-latitude="{{ city.latitude }}" data-longitude="{{ city.longitude }}" data-currentRide="{% if city.getCurrentRide() %}{{ city.getCurrentRide().dateTime.format('Y-m-d H:i') }}{% else %}9999-99-99 99:99{% endif %}">
-                            <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
+                        <tr class="city"
+                            data-cityName="{{ city.city }}"
+                            data-cityslug="{{ city.getMainSlugString() }}"
+                            data-latitude="{{ city.latitude }}"
+                            data-longitude="{{ city.longitude }}"
+                            data-currentRide="{% if city.getCurrentRide() %}{{ city.getCurrentRide().dateTime.format('Y-m-d H:i') }}{% else %}9999-99-99 99:99{% endif %}"
+                        >
+                            <td>
+                                <a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">
+                                    {{ city.getCity() }}
+                                </a>
+                            </td>
                             <td>{% if city.getCurrentRide() %}
                                     <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': city.getCurrentRide().getDateTime().format('Y-m-d') } ) }}">{{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr</a>
                             {% endif %}</td>
-                            <td>{{ city.getEventDateTimeString() }}</td>
-                            <td>{{ city.countRides() }}</td>
+                            <td>
+                                {{ city.getEventDateTimeString() }}
+                            </td>
+                            <td>
+                                {{ city.countRides() }}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

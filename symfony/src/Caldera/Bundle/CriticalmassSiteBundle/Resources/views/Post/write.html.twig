@@ -1,6 +1,4 @@
 {% if app.getUser() %}
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-post">Kommentar hinzufügen</button>
-
 <div class="modal fade" id="modal-add-post" tabindex="-1" role="dialog" aria-labelledby="label-add-post">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -25,8 +23,10 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                        <button type="submit" id="button-submit-post" class="btn btn-primary">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" id="button-submit-post" class="btn btn-success">
                             <i class="fa fa-pencil"></i>
                             Speichern</button>
                     </div>
@@ -35,55 +35,7 @@
         </div>
     </div>
 </div>
-    <script>
-        function getLocation() {
-            if (navigator.geolocation)
-            {
-                var options = {
-                    enableHighAccuracy: false,
-                    timeout: 2500,
-                    maximumAge: 0
-                };
-                
-                navigator.geolocation.getCurrentPosition(successPosition, failurePosition, options);
-            }
-        }
-
-        function successPosition(position)
-        {
-            $('#form_latitude').val(position.coords.latitude);
-            $('#form_longitude').val(position.coords.longitude);
-
-            alert('fooo');
-            //$('#postForm').submit();
-        }
-
-        function failurePosition(position)
-        {
-            alert('barrrr');
-            //$('#postForm').submit();
-        }
-        
-        window.onload = function()
-        {
-            $('#form-post').on('submit', function (element) {
-                $('#button-submit-post').prop('disabled', 'disabled');
-
-                if ($('#form-post-share-location').attr('checked')) {
-                    //element.preventDefault();
-
-                    _paq.push(['trackEvent', 'writeComment', 'withLocation']);
-
-                    getLocation();
-                }
-                else {
-                    _paq.push(['trackEvent', 'writeComment', 'withoutLocation']);
-
-                    //$('#postForm').submit();
-                }
-            });
-        }
-    </script>
-    {% else %}
-    <p>Mit einem criticalmass.in-Benutzerkonto könntest du an dieser Stelle einen Kommentar verfassen. Wenn du Lust und Zeit hast, kannst du dich hier drüben <a href="{{ path('fos_user_security_login') }}">einloggen oder anmelden</a>.</p>
-    {% endif %}
+<script type="text/javascript">
+    CriticalMass.loadModule('WritePost', '#form-post');
+</script>
+{% endif %}

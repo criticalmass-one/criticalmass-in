@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -44,6 +45,8 @@ class RideController extends AbstractController
                 'city' => $city, 
                 'ride' => $ride,
                 'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
+                'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
+                'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
                 'nextRide' => $nextRide,
                 'previousRide' => $previousRide,
                 'dateTime' => new \DateTime()

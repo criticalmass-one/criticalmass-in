@@ -3,13 +3,16 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
  * derer einzelne Critical-Mass-Touren stattfinden.
  *
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository")
+ * @Vich\Uploadable
  * @ORM\Table(name="city")
  */
 class City
@@ -219,6 +222,27 @@ class City
      * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
      */
     protected $archiveUser;
+
+    /**
+     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName")
+     *
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
@@ -1187,5 +1211,44 @@ class City
         return $this->photos;
     }
 
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
 
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    public function getPin()
+    {
+        return $this->latitude.','.$this->longitude;
+    }
 }

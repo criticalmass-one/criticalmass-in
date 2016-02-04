@@ -1,0 +1,122 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Foto platzieren{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(photo.ride.city) }}">
+            {{ photo.ride.city.title }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(photo.ride) }}">
+            {{ photo.ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li class="active">
+        Foto platzieren
+    </li>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <img class="auto-scale pull-right" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+            <h1>
+                Foto platzieren
+            </h1>
+
+        </div>
+    </div>
+
+    <div id="map" style="height: 250px;">
+
+    </div>
+
+    <div class="row margin-top-medium">
+        <div class="col-md-12">
+            {{ form_start(form) }}
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <a href="" class="btn btn-default">
+                    Abbrechen
+                </a>
+                <button type="submit" class="btn btn-success">
+                    Speichern
+                </button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pager">
+                {% if previousPhoto %}
+                    <li class="previous">
+                        <a href="{{ path(previousPhoto) }}">
+                            &larr; Voriges Foto
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="previous disabled">
+                        <a href="#">
+                            &larr; Voriges Foto
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if nextPhoto %}
+                    <li class="next">
+                        <a href="{{ path(nextPhoto) }}">
+                            Nächstes Foto &rarr;
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="next disabled">
+                        <a href="#">
+                            Nächstes Foto &rarr;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    var pageOptions = {
+        startCoord: {
+            latitude: {{ photo.ride.latitude }},
+            longitude: {{ photo.ride.longitude }}
+        },
+        photoCoord: {
+            latitude: {{ photo.latitude }},
+            longitude: {{ photo.longitude }}
+        },
+        inputFields: {
+            latitude: '#photos_latitude',
+            longitude: '#photos_longitude'
+        }
+    };
+
+    CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function(placePage) {
+        {% if track %}
+        placePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+        {% endif %}
+
+        placePage.init();
+
+    });
+</script>
+{% endblock %}
