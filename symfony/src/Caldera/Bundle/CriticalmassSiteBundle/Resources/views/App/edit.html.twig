@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% if app2 != null %}
     {% set title = 'App editieren' %}
@@ -8,19 +8,18 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block breadcrumb %}
+    <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
+    <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
+    {% if app2 != null %}
+        <li class="active">App editieren</li>
+    {% else %}
+        <li class="active">App hinzufügen</li>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
-            <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
-            {% if app2 != null %}
-            <li class="active">App editieren</li>
-            {% else %}
-            <li class="active">App hinzufügen</li>
-            {% endif %}
-        </ol>
-
         {% if hasErrors is not null %}
         {% if hasErrors == true %}
         <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
@@ -86,6 +85,6 @@
                 <button type="submit" class="btn btn-success pull-right">Speichern</button>
             </div>
         </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

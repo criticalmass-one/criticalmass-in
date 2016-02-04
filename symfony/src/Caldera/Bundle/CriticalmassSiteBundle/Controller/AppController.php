@@ -2,13 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\CriticalmassApiBundle\Entity\App;
-use Caldera\CriticalmassApiBundle\Type\AppType;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\AppType;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\App;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-use Caldera\CriticalmassCoreBundle\Utility as Utility;
-use Caldera\CriticalmassCoreBundle\Entity as Entity;
 
 class AppController extends Controller
 {
