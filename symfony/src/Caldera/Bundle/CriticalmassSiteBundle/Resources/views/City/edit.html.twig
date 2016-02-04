@@ -9,18 +9,14 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    {% if city != null %}
+    {% if city %}
     <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">
-            {{ city.getCity() }}
+        <a href="{{ path(city) }}">
+            {{ city.city }}
         </a>
     </li>
     <li class="active">
-        Stadt editieren
-    </li>
-    {% else %}
-    <li class="active">
-        Stadt hinzufügen
+        {{ title }}
     </li>
     {% endif %}
 {% endblock %}
