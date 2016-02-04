@@ -15,7 +15,8 @@ define(['typeahead', 'bloodhound'], function() {
 
         bh.initialize();
 
-        $('#search-input').typeahead({
+        $('#search-input').typeahead(
+            {
                 hint: true,
                 highlight: true,
                 minLength: 1
@@ -23,6 +24,7 @@ define(['typeahead', 'bloodhound'], function() {
             {
                 name: 'results',
                 source: bh.ttAdapter(),
+                displayKey: 'value',
                 templates: {
                     header: function() {
                         return '<ul class="typeahead dropdown-menu" role="menu">';
