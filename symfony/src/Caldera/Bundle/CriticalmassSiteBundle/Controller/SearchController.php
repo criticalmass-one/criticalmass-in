@@ -21,7 +21,6 @@ class SearchController extends AbstractController
         $query = new \Elastica\Query($filteredQuery);
 
         $query->setSize(50);
-        $query->setMinScore(0.5);
 
         return $finder->find($query);
     }
@@ -43,7 +42,6 @@ class SearchController extends AbstractController
         $query = new \Elastica\Query($filteredQuery);
 
         $query->setSize(50);
-        $query->setMinScore(0.5);
 
         return $finder->find($query);
     }
@@ -61,7 +59,6 @@ class SearchController extends AbstractController
         $query = new \Elastica\Query($filteredQuery);
 
         $query->setSize(50);
-        $query->setMinScore(0.5);
 
         return $finder->find($query);
     }
