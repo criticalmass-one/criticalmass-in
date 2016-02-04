@@ -19,6 +19,48 @@ class CityController extends AbstractController
         return $this->render('CalderaCriticalmassSiteBundle:City:list.html.twig', array('cities' => $cities));
     }
 
+    protected function findNearCities(City $city)
+    {
+        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
+
+        $termFilter = new \Elastica\Filter\Term(['isArchived' => false]);
+
+        $geoFilter = new \Elastica\Filter\GeoDistance(
+            'pin',
+            [
+                'lat' => $city->getLatitude(),
+                'lon' => $city->getLongitude()
+            ],
+            '50km'
+        );
+
+        $filter = new \Elastica\Filter\BoolAnd([$termFilter, $geoFilter]);
+
+        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
+
+        $query = new \Elastica\Query($filteredQuery);
+
+        $query->setSize(15);
+        $query->setSort(
+            [
+                '_geo_distance' =>
+                [
+                    'pin' =>
+                    [
+                        $city->getLatitude(),
+                        $city->getLongitude()
+                    ],
+                'order' => 'desc',
+                'unit' => 'km'
+                ]
+            ]
+        );
+
+        $results = $finder->find($query);
+
+        return $results;
+    }
+
     public function listRidesAction(Request $request, $citySlug)
     {
         $city = $this->getCityBySlug($citySlug);
@@ -40,12 +82,15 @@ class CityController extends AbstractController
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
         }
 
+        $nearCities = $this->findNearCities($city);
+
         $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);
 
         return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
-            'dateTime' => new \DateTime()
+            'dateTime' => new \DateTime(),
+            'nearCities' => $nearCities
         ]);
     }
 

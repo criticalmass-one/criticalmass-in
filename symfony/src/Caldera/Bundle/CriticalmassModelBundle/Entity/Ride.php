@@ -1118,4 +1118,9 @@ class Ride
     {
         return $this->featuredPhoto;
     }
+
+    public function getPin()
+    {
+        return $this->latitude.','.$this->longitude;
+    }
 }

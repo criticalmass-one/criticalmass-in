@@ -1246,4 +1246,9 @@ class City
     {
         return $this->imageName;
     }
+
+    public function getPin()
+    {
+        return $this->latitude.','.$this->longitude;
+    }
 }
