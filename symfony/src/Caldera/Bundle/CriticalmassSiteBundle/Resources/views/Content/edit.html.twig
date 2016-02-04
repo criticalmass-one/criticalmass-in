@@ -2,14 +2,19 @@
 
 {% block title %}Inhalt editieren{% endblock %}
 
+{% block breadcrumb %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">
+                {{ content.getTitle() }}
+            </a>
+        </li>
+        <li class="active">
+            Inhalt bearbeiten
+        </li>
+{% endblock %}
+
 {% block content %}
 <div class="container">
-    <ol class="breadcrumb">
-        <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-        <li><a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">{{ content.getTitle() }}</a></li>
-        <li class="active">Inhalt bearbeiten</li>
-    </ol>
-
     {% if hasSaved %}
     <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}">Zurück zur vorigen Seite?</a></div>
     {% endif %}
@@ -21,30 +26,36 @@
     </div>
     
     {{ form_start(form) }}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label" for="title">Titel:</label>
-                {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="title">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label" for="description">Beschreibung:</label>
-                {{ form_widget(form.text, { 'attr' : { 'class': 'form-control' } }) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="description">Beschreibung:</label>
+                    {{ form_widget(form.text, { 'attr' : { 'class': 'form-control', 'rows': '20' } }) }}
+                </div>
             </div>
         </div>
-    </div>
 
-    {{ form_widget(form._token) }}
+        {{ form_widget(form._token) }}
 
-    <div class="btn-group pull-right" role="group" aria-label="...">
-        <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}" class="btn btn-default"><i class="halflings remove"></i> Abbrechen</a>
-        <button type="submit" class="btn btn-success"><i class="halflings floppy_disk"></i> Speichern</button>
-    </div>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <a href="{{ path('caldera_criticalmass_content_display', { slug: content.slug } ) }}" class="btn btn-default">
+                <i class="halflings remove"></i>
+                Abbrechen
+            </a>
+            <button type="submit" class="btn btn-success">
+                <i class="halflings floppy_disk"></i>
+                Speichern
+            </button>
+        </div>
     </form>
 </div>
 {% endblock %}
