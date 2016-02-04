@@ -36,7 +36,7 @@ class RideRepository extends EntityRepository
         $builder->select('ride');
 
         $builder->where($builder->expr()->eq('ride.city', $city->getId()));
-
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
         $builder->addOrderBy('ride.dateTime', $order);
 
         $query = $builder->getQuery();
