@@ -2,9 +2,12 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
+use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -270,13 +273,67 @@ class RideController extends AbstractController
         );
     }
 
+    public function addestimateAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $rideEstimate = new RideEstimate();
+        $rideEstimate->setUser($this->getUser());
+        $rideEstimate->setRide($ride);
+
+        $estimateForm = $this->createForm(
+            new RideEstimateType(),
+            $rideEstimate,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_ride_addestimate',
+                    [
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
+                        'rideDate' => $ride->getFormattedDate()
+                    ]
+                )
+            ]
+        );
+
+        $estimateForm->handleRequest($request);
+
+        if ($estimateForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($estimateForm->getData());
+            $em->flush();
+
+            /**
+             * @var RideEstimateService $estimateService
+             */
+            $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate');
+            $estimateService->calculateEstimates($ride);
+        }
+
+        return $this->redirectToRoute($ride);
+    }
+
     public function renderDetailsTabAction(Request $request, Ride $ride)
     {
+        $estimateForm = $this->createForm(
+            new RideEstimateType(),
+            new RideEstimate(),
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_ride_addestimate',
+                    [
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
+                        'rideDate' => $ride->getFormattedDate()
+                    ]
+                )
+            ]
+        );
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:Tabs/DetailsTab.html.twig',
             [
                 'ride' => $ride,
-                'dateTime' => new \DateTime()
+                'dateTime' => new \DateTime(),
+                'estimateForm' => $estimateForm->createView()
             ]
         );
     }

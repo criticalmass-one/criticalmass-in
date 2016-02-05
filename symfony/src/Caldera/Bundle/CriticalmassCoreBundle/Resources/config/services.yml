@@ -48,6 +48,10 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateCalculator
         arguments: []
         
+    caldera.criticalmass.statistic.rideestimate:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.trackreader ]
+
     caldera.criticalmass.statistic.rideestimate.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
         arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.trackreader ]

@@ -6,19 +6,60 @@
             <h3 class="panel-title">Statistik</h3>
         </div>
         <div class="panel-body">
-            <dl>
-                <dt>Teilnehmer</dt>
-                <dd>{{ ride.estimatedParticipants }}</dd>
+            <div class="row">
+                <div class="col-md-12">
+                    <dl>
+                        <dt>Teilnehmer</dt>
+                        <dd>{{ ride.estimatedParticipants }}</dd>
 
-                <dt>Distanz</dt>
-                <dd>{{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer</dd>
+                        <dt>Distanz</dt>
+                        <dd>{{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer</dd>
 
-                <dt>Dauer</dt>
-                <dd>{{ ride.getDurationInterval().format('%h:%i') }}&nbsp;Stunden</dd>
+                        <dt>Dauer</dt>
+                        <dd>{{ ride.getDurationInterval().format('%h:%i') }}&nbsp;Stunden</dd>
 
-                <dt>Durchschnittsgeschwindigkeit</dt>
-                <dd>{{ ride.getAverageVelocity()|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
-            </dl>
+                        <dt>Durchschnittsgeschwindigkeit</dt>
+                        <dd>{{ ride.getAverageVelocity()|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#estimate-modal">
+                            <i class="fa fa-users"></i>
+                            Teilnehmerzahl schätzen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="estimate-modal" tabindex="-1" role="dialog" aria-labelledby="estimate-modal-label">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                {{ form_start(estimateForm) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="estimate-modal-label">Teilnehmerzahl schätzen</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_row(estimateForm.estimatedParticipants) }}
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            Speichern
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(estimateForm) }}
+            </div>
         </div>
     </div>
 {% endif %}

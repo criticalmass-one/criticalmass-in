@@ -18,7 +18,7 @@ caldera_criticalmass_desktop_ride_showcurrent:
     pattern:  /ride/showcurrent/{citySlug}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:showcurrent }
 
-caldera_criticalmass_desktop_ride_propose:
-    pattern:  /ride/propose/{citySlug}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:propose }
+caldera_criticalmass_ride_addestimate:
+    pattern:  /{citySlug}/{rideDate}/addestimate
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:addestimate }
 
