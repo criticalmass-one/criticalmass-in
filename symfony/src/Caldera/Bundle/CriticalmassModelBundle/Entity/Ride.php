@@ -1085,11 +1085,20 @@ class Ride
 
         return $subrides;
     }
+
+    public function getDurationInterval()
+    {
+        $totalMinutes = $this->estimatedDuration * 60.0;
+
+        $hours = floor($totalMinutes / 60.0);
+        $minutes = $totalMinutes % 60.0;
+
+        return new \DateInterval('PT'.$hours.'H'.$minutes.'M');
+    }
     
     public function getAverageVelocity()
     {
-        if (!$this->getEstimatedDuration() || !$this->getEstimatedDistance())
-        {
+        if (!$this->getEstimatedDuration() || !$this->getEstimatedDistance()) {
             return 0;
         }
         

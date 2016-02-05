@@ -14,10 +14,10 @@
                 <dd>{{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer</dd>
 
                 <dt>Dauer</dt>
-                <dd>{{ ride.estimatedDuration|round(2) }}&nbsp;Stunden</dd>
+                <dd>{{ ride.getDurationInterval().format('%h:%i') }}&nbsp;Stunden</dd>
 
                 <dt>Durchschnittsgeschwindigkeit</dt>
-                <dd>{{ ride.getAverageVelocity() }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
+                <dd>{{ ride.getAverageVelocity()|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
             </dl>
         </div>
     </div>
