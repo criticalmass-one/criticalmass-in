@@ -23,7 +23,7 @@
                     </dl>
                 </div>
             </div>
-
+            {% if app.getUser() %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
@@ -34,9 +34,11 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 
+    {% if app.getUser() %}
     <div class="modal fade" id="estimate-modal" tabindex="-1" role="dialog" aria-labelledby="estimate-modal-label">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -46,7 +48,12 @@
                     <h4 class="modal-title" id="estimate-modal-label">Teilnehmerzahl schätzen</h4>
                 </div>
                 <div class="modal-body">
-                    {{ form_row(estimateForm.estimatedParticipants) }}
+                    <div class="form-group">
+                        <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
+                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
+                        <p class="help-block">Optional kann hier eine Wettervorhersage eingegeben werden, die auf der Tour-Seite angezeigt wird.</p>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
@@ -62,4 +69,5 @@
             </div>
         </div>
     </div>
+    {% endif %}
 {% endif %}
