@@ -55,23 +55,6 @@
     </div>
 </div>
 
-
-{% if app.getUser() and pastRide %}
-<div class="modal fade" id="modalEstimate" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Tour schätzen</h4>
-            </div>
-            <div class="modal-body">
-                {{ render(controller('CalderaCriticalmassSiteBundle:Statistic:estimateform', { 'rideId': ride.getId() })) }}
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-
 <div class="modal fade" id="photo-view-modal" tabindex="-1" role="dialog" aria-labelledby="photo-view-modal-label">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
