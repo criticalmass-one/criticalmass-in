@@ -72,6 +72,7 @@ require.config({
         "leaflet-geometry": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.geometryutil",
         "leaflet-groupedlayer": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.groupedlayercontrol",
         "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
+        "leaflet-hash": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-hash",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
@@ -91,6 +92,10 @@ require.config({
         'leaflet-snap': {
             deps: ['leaflet'],
             exports: 'L.Handler.MarkerSnap'
+        },
+        'leaflet-hash': {
+            deps: ['leaflet'],
+            exports: 'L.Hash'
         },
         typeahead:{
             deps: ['jquery'],

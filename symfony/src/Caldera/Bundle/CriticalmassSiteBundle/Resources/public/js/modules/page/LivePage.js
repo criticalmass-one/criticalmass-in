@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash'], function() {
     LivePage = function () {
         this._initContainer();
         this._initMap();
@@ -11,6 +11,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
     };
 
     LivePage.prototype._map = null;
+    LivePage.prototype._hash = null;
     LivePage.prototype._rideContainer = null;
     LivePage.prototype._cityContainer = null;
     LivePage.prototype._layers = [];
@@ -25,6 +26,8 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
         $('#map').css('top', $('nav#navigation').css('height'));
 
         this._map = new Map('map', []);
+
+        this._hash = new L.Hash(this._map.map);
     };
 
     LivePage.prototype._initLive = function() {
@@ -98,13 +101,15 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
     };
 
     LivePage.prototype.setFocus = function() {
-	if (this._rideContainer.countEntities() == 1) {
-		var ride = this._rideContainer.getEntity(0);
-		this._map.setView([ride.getLatitude(), ride.getLongitude()], 12);
-	} else {
-		var bounds = this._rideContainer.getBounds();
-	        this._map.fitBounds(bounds);
-	}
+        if (!location.hash) {
+            if (this._rideContainer.countEntities() == 1) {
+                var ride = this._rideContainer.getEntity(0);
+                this._map.setView([ride.getLatitude(), ride.getLongitude()], 12);
+            } else {
+                var bounds = this._rideContainer.getBounds();
+                this._map.fitBounds(bounds);
+            }
+        }
     };
 
     return LivePage;
