@@ -1,4 +1,4 @@
-define([], function() {
+define(['Map', 'PhotoEntity'], function() {
     ViewPhotoPage = function() {
         this._installNavigation();
     };
@@ -26,6 +26,18 @@ define([], function() {
                 $(location).attr('href', that._nextPhotoUrl);
             }
         });
+    };
+
+    ViewPhotoPage.prototype.addPhoto = function(photoId, latitude, longitude, description, dateTime, filename) {
+        this._photo = new PhotoEntity(photoId, latitude, longitude, description, dateTime, filename);
+    };
+
+    ViewPhotoPage.prototype.initMap = function() {
+        this._map = new Map('map');
+
+        this._map.setView(this._photo.getLatLng(), 14);
+
+        this._photo.addToMap(this._map);
     };
 
     return ViewPhotoPage;
