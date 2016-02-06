@@ -28,9 +28,47 @@
     </li>
 {% endblock %}
 
+{% block navigation %}
+<div class="row">
+    <div class="col-md-12">
+        <ul class="pager">
+            {% if previousPhoto %}
+                <li class="previous">
+                    <a href="{{ path(previousPhoto) }}">
+                        &larr; Voriges Foto
+                    </a>
+                </li>
+            {% else %}
+                <li class="previous disabled">
+                    <a href="#">
+                        &larr; Voriges Foto
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if nextPhoto %}
+                <li class="next">
+                    <a href="{{ path(nextPhoto) }}">
+                        Nächstes Foto &rarr;
+                    </a>
+                </li>
+            {% else %}
+                <li class="next disabled">
+                    <a href="#">
+                        Nächstes Foto &rarr;
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
+    {{ block('navigation') }}
+
     <div class="row">
         <div class="col-md-12">
             <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
@@ -67,39 +105,7 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="pager">
-                {% if previousPhoto %}
-                    <li class="previous">
-                        <a href="{{ path(previousPhoto) }}">
-                            &larr; Voriges Foto
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="previous disabled">
-                        <a href="#">
-                            &larr; Voriges Foto
-                        </a>
-                    </li>
-                {% endif %}
-
-                {% if nextPhoto %}
-                    <li class="next">
-                        <a href="{{ path(nextPhoto) }}">
-                            Nächstes Foto &rarr;
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="next disabled">
-                        <a href="#">
-                            Nächstes Foto &rarr;
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
         {% if photo.hasCoordinates() %}
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -113,6 +119,8 @@
         </div>
         {% endif %}
     </div>
+
+    {{ block('navigation') }}
 </div>
 
 <script>
