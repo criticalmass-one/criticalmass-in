@@ -40,7 +40,7 @@ class PostController extends AbstractController
             $photo = $this->getPhotoRepository()->find($photoId);
             $post->setPhoto($photo);
 
-            $redirectUrl = $this->generateUrl('criticalmass_gallery_photos_show', array('photoId' => $photoId));
+            $redirectUrl = $this->generateUrl($photo);
         } elseif ($contentId) {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
             $content = $this->getContentRepository()->find($contentId);
