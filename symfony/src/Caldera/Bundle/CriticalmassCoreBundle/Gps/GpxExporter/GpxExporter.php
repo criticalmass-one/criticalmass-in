@@ -3,7 +3,7 @@
 namespace Caldera\CriticalmassCoreBundle\Utility\GpxWriter;
 
 
-class GpxWriter {
+class GpxExporter {
     protected $positionArray;
     protected $gpxContent;
 
