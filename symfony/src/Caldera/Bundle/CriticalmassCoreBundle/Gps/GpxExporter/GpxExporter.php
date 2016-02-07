@@ -69,28 +69,23 @@ class GpxExporter
 
         foreach ($this->positionArray as $position)
         {
-            $hour = $position->getCreationDateTime()->format('H');
+            $writer->startElement('trkpt');
+            $writer->writeAttribute('lat', $position->getLatitude());
+            $writer->writeAttribute('lon', $position->getLongitude());
 
-            //if ($hour >= 19 and $hour < 23 and $position->getAccuracy() <= 350)
-            if (true)
-            {
-                $writer->startElement('trkpt');
-                $writer->writeAttribute('lat', $position->getLatitude());
-                $writer->writeAttribute('lon', $position->getLongitude());
+            $writer->startElement('ele');
+            $writer->text($position->getAltitude());
+            $writer->endElement();
 
-                $writer->startElement('ele');
-                $writer->text($position->getAltitude());
-                $writer->endElement();
+            $writer->startElement('time');
 
-                $writer->startElement('time');
+            $dateTime = $position->getCreationDateTime();
+            $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
 
-                $dateTime = $position->getCreationDateTime();
-                $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
-
-                $writer->endElement();
-                $writer->endElement();
-            }
+            $writer->endElement();
+            $writer->endElement();
         }
+
         $writer->endElement();
         $writer->endElement();
         $writer->endElement();
