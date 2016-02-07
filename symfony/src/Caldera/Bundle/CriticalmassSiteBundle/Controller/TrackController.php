@@ -142,7 +142,6 @@ class TrackController extends AbstractController
         $track->setDistance($gr->calculateDistance());
 
         $track->setMd5Hash($gr->getMd5Hash());
-
     }
     
     public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed)

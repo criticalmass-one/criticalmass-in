@@ -59,6 +59,11 @@ class CriticalmapsUser
     protected $endDateTime;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $exported = false;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -250,5 +255,17 @@ class CriticalmapsUser
     public function getCity()
     {
         return $this->city;
+    }
+
+    public function setExported($exported)
+    {
+        $this->exported = $exported;
+
+        return $this;
+    }
+
+    public function getExported()
+    {
+        return $this->exported;
     }
 }

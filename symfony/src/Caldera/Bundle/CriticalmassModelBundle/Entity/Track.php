@@ -115,7 +115,7 @@ class Track
     protected $trackFilename;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
      */

@@ -1,26 +1,48 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Utility\GpxWriter;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter;
 
 
-class GpxExporter {
+use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
+
+class GpxExporter
+{
+    protected $entityManager;
+    protected $doctrine;
+    protected $ticket;
+    protected $criticalmapsUser;
     protected $positionArray;
     protected $gpxContent;
 
-    public function __construct()
+    public function __construct($entityManager, $doctrine)
     {
-
+        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
     }
 
-    public function setPositionArray($positionArray)
+    public function setTicket(Ticket $ticket)
     {
-        $this->positionArray = $positionArray;
+        $this->ticket = $ticket;
     }
 
-    public function execute()
+    public function setCriticalmapsUser(CriticalmapsUser $criticalmapsUser)
+    {
+        $this->criticalmapsUser = $criticalmapsUser;
+    }
+
+    protected function findPositions()
+    {
+        $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findBy(
+            [
+                'ticket' => $this->ticket->getId()
+            ]
+        );
+    }
+
+    protected function generateGpxContent()
     {
         $writer = new \XMLWriter();
-        //$writer->openURI('php://output');
         $writer->openMemory();
         $writer->startDocument('1.0');
 
@@ -74,6 +96,12 @@ class GpxExporter {
         $writer->endElement();
         $writer->endDocument();
         $this->gpxContent = $writer->outputMemory(true);
+    }
+
+    public function execute()
+    {
+        $this->findPositions();
+        $this->generateGpxContent();
     }
 
     public function getGpxContent()

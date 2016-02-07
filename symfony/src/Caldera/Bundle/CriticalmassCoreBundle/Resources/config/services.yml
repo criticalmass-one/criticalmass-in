@@ -24,6 +24,10 @@ services:
         tags:
             - { name: twig.extension }
 
+    caldera.criticalmass.gps.gpxexporter:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter
+        arguments: [ @doctrine.orm.entity_manager, @doctrine ]
+
     caldera.criticalmass.gps.gpxreader:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader
         arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']

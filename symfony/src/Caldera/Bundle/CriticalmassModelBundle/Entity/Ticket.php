@@ -83,6 +83,10 @@ class Ticket
      */
     protected $active;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $exported = false;
 
     /**
      * Get id
@@ -401,5 +405,17 @@ class Ticket
     public function belongsToRide(Ride $ride)
     {
         return $this->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d');
+    }
+
+    public function setExported($exported)
+    {
+        $this->exported = $exported;
+
+        return $this;
+    }
+
+    public function getExported()
+    {
+        return $this->exported;
     }
 }
