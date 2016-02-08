@@ -1,4 +1,4 @@
-define(['Map', 'PositionMarker'], function() {
+define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     TimelapsePage = function(context, options) {
         this.loadTrackLatLngs(73);
 
@@ -10,8 +10,31 @@ define(['Map', 'PositionMarker'], function() {
     TimelapsePage.prototype._currentDateTime = null;
 
     TimelapsePage.prototype.init = function() {
+        this._loadStyles();
+        this._initSlider();
         this._initMap();
         this._initDateTime();
+    };
+
+    TimelapsePage.prototype._loadStyles = function() {
+        var $link = $('<link>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: '/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css'
+        });
+
+        $link.appendTo('head');
+    };
+
+    TimelapsePage.prototype._initSlider = function() {
+        $("#ex6").slider({
+            id: "fooSlider",
+            min: 0,
+            max: 5,
+            range: false,
+            value: 2,
+            tooltip: 'show'
+        });
     };
 
     TimelapsePage.prototype._initDateTime = function() {
@@ -61,7 +84,7 @@ define(['Map', 'PositionMarker'], function() {
         this._timer = window.setInterval(function () {
             that.step();
 
-        }, 50);
+        }, 5);
     };
 
     TimelapsePage.prototype._findNextLatLngForDateTime = function(trackId, dateTime) {
@@ -85,8 +108,11 @@ define(['Map', 'PositionMarker'], function() {
         for (var trackId in this._tracks) {
             var nextLatLng = this._findNextLatLngForDateTime(trackId, this._currentDateTime);
 
-            this._marker[trackId].setLatLng(nextLatLng);
-
+            if (nextLatLng) {
+                this._marker[trackId].setLatLng(nextLatLng);
+            } else {
+                this._marker[trackId].removeFromMap(this._map);
+            }
         }
     };
 
