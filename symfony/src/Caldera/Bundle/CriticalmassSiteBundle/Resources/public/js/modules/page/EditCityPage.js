@@ -120,7 +120,7 @@ define(['Map', 'LocationMarker', 'CityMarker'], function() {
     };
 
     EditCityPage.prototype._removeStandardLocationMarker = function () {
-        this.locationMarker.removeFrom(this.map);
+        this.locationMarker.removeFromMap(this.map);
     };
 
     EditCityPage.prototype.isFloat = function (n) {

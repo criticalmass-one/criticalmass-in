@@ -33,7 +33,7 @@ define(['leaflet'], function() {
         this._marker.addTo(this._map.map);
     };
 
-    Marker.prototype.removeFrom = function (map) {
+    Marker.prototype.removeFromMap = function (map) {
         map.map.removeLayer(this._marker);
     };
 

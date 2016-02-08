@@ -164,7 +164,7 @@ define(['Map', 'LocationMarker'], function() {
     };
 
     EditRidePage.prototype._removeStandardLocationMarker = function() {
-        this.locationMarker.removeFrom(this.map);
+        this.locationMarker.removeFromMap(this.map);
     };
 
     EditRidePage.prototype.isFloat = function(n) {
