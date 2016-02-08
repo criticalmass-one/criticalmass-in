@@ -1,0 +1,61 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Deine Tracks{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li class="active">
+        Timelapse
+    </li>
+{% endblock %}
+
+{% block additionalHeaderElements %}
+    <style>
+        div.user-position {
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 0 0 15px 0 black;
+        }
+
+        div.user-position div.user-position-inline {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border-width: 5px;
+            border-style: solid;
+            background-position: -5px -5px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('TimelapsePage', null, null, function(timelapsePage) {
+
+            timelapsePage.init();
+
+        });
+    </script>
+{% endblock %}

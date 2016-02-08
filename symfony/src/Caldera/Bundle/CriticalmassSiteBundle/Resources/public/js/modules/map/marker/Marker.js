@@ -14,6 +14,14 @@ define(['leaflet'], function() {
         return this._marker.getLatLng();
     };
 
+    Marker.prototype.setLatLng = function(latLng) {
+        this._latLng = latLng;
+
+        if (this._marker) {
+            this._marker.setLatLng(latLng);
+        }
+    };
+
     Marker.prototype.addToMap = function (map) {
         this._marker = L.marker(this._latLng,
         {

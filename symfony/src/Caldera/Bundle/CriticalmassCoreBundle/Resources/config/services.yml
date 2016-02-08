@@ -47,7 +47,11 @@ services:
     caldera.criticalmass.gps.latlnglistgenerator.range:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
         arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
-        
+
+    caldera.criticalmass.gps.latlnglistgenerator.time:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
+        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+
     caldera.criticalmass.statistic.rideestimatecalculator:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateCalculator
         arguments: []
