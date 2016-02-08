@@ -96,7 +96,7 @@ define(['leaflet', 'PositionEntity'], function(L) {
         }
 
         var apiUrl = window.location.origin + '/api/positions/all';
-        var accessToken = 123;
+        var accessToken = '28fb1cc85d4b46c7e1e8f9b37aa7d7d8';
 
         $.support.cors = true;
         $.ajax({
