@@ -13,7 +13,7 @@ class GpxExporter
     protected $ticket = null;
     protected $criticalmapsUser = null;
     protected $positionArray;
-    protected $gpxContent;
+    protected $gpxContent = null;
 
     public function __construct($entityManager, $doctrine)
     {
@@ -105,7 +105,10 @@ class GpxExporter
     public function execute()
     {
         $this->findPositions();
-        $this->generateGpxContent();
+
+        if (count($this->positionArray) > 0) {
+            $this->generateGpxContent();
+        }
     }
 
     public function getGpxContent()

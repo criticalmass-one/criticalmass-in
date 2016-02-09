@@ -58,21 +58,31 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
 
         $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ticket');
 
-        /**
-         * @var Ticket $ticket
-         */
+        if ($input->hasOption('all')) {
+            $tickets = $repository->findBy(['exported' => false]);
 
-        $ticket = $repository->find($input->getArgument('ticketId'));
-
-        if ($ticket->getExported()) {
-            $output->writeln('This ticket has already been exported.');
+            foreach ($tickets as $ticket) {
+                $this->export($ticket);
+            }
         } else {
-            $this->export($ticket);
+            /**
+             * @var Ticket $ticket
+             */
+
+            $ticket = $repository->find($input->getArgument('ticketId'));
+
+            if ($ticket->getExported()) {
+                $output->writeln('This ticket has already been exported.');
+            } else {
+                $this->export($ticket);
+            }
         }
     }
 
     protected function export(Ticket $ticket)
     {
+        $em = $this->doctrine->getManager();
+
         /**
          * @var GpxExporter $exporter
          */
@@ -84,28 +94,30 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
 
         $gpxContent = $exporter->getGpxContent();
 
-        $filename = uniqid() . '.gpx';
+        if ($gpxContent) {
+            $filename = uniqid() . '.gpx';
 
-        $fp = fopen('../web/tracks/' . $filename, 'w');
-        fwrite($fp, $gpxContent);
-        fclose($fp);
+            $fp = fopen('../web/tracks/' . $filename, 'w');
+            fwrite($fp, $gpxContent);
+            fclose($fp);
+
+            $track = new Track();
+            $track->setTicket($ticket);
+            $track->setTrackFilename($filename);
+            $track->setUsername($ticket->getUsername());
+
+            $this->loadTrackProperties($track);
+            $this->generateSimpleLatLngList($track);
+
+            if ($track->getRide()) {
+                $this->addRideEstimate($track, $track->getRide());
+            }
+
+            $em->persist($track);
+        }
 
         $ticket->setExported(true);
 
-        $track = new Track();
-        $track->setTicket($ticket);
-        $track->setTrackFilename($filename);
-        $track->setUsername($ticket->getUsername());
-
-        $this->loadTrackProperties($track);
-        $this->generateSimpleLatLngList($track);
-
-        if ($track->getRide()) {
-            $this->addRideEstimate($track, $track->getRide());
-        }
-
-        $em = $this->doctrine->getManager();
-        $em->persist($track);
         $em->persist($ticket);
         $em->flush();
     }

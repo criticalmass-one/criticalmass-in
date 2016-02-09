@@ -59,15 +59,23 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
 
         $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:CriticalmapsUser');
 
-        /**
-         * @var CriticalmapsUser $criticalmapsUser
-         */
-        $criticalmapsUser = $repository->find($input->getArgument('criticalmapsId'));
+        if ($input->hasOption('all')) {
+            $criticalmapsUsers = $repository->findBy(['exported' => false]);
 
-        if ($criticalmapsUser->getExported()) {
-            $output->write('This ticket has already been exported.');
+            foreach ($criticalmapsUsers as $criticalmapsUser) {
+                $this->export($criticalmapsUser);
+            }
         } else {
-            $this->export($criticalmapsUser);
+            /**
+             * @var CriticalmapsUser $criticalmapsUser
+             */
+            $criticalmapsUser = $repository->find($input->getArgument('criticalmapsId'));
+
+            if ($criticalmapsUser->getExported()) {
+                $output->write('This ticket has already been exported.');
+            } else {
+                $this->export($criticalmapsUser);
+            }
         }
     }
 
