@@ -7,11 +7,12 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     TimelapsePage.prototype._map = null;
     TimelapsePage.prototype._tracks = [];
     TimelapsePage.prototype._marker = [];
+    TimelapsePage.prototype._slider = null;
     TimelapsePage.prototype._currentDateTime = null;
     TimelapsePage.prototype._timer = null;
     TimelapsePage.prototype._options = {
         timeStep: 30000,
-        timeInterval: 1000
+        baseTimeInterval: 100
     };
 
 
@@ -34,13 +35,21 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     };
 
     TimelapsePage.prototype._initSlider = function() {
-        $("#ex6").slider({
-            id: "fooSlider",
-            min: 0,
-            max: 5,
+        var that = this;
+
+        $('#speed-slider-input').slider({
+            id: 'speed-slider',
+            min: 0.5,
+            max: 10,
             range: false,
-            value: 2,
+            value: 1,
+            step: 0.5,
             tooltip: 'show'
+        }).on('change', function(values) {
+            var speedFactor = (10.0 - values.value.newValue);
+
+            that.stop();
+            that.start(speedFactor);
         });
     };
 
@@ -99,14 +108,21 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
         });
     };
 
-    TimelapsePage.prototype.start = function() {
+    TimelapsePage.prototype.start = function(speedFactor) {
         this.stepForward();
 
         var that = this;
+
+        var interval = this._options.baseTimeInterval;
+
+        if (speedFactor) {
+            interval *= speedFactor;
+        }
+        
         this._timer = window.setInterval(function () {
             that.stepForward();
 
-        }, this._options.timeInterval);
+        }, interval);
     };
 
     TimelapsePage.prototype.stop = function() {
