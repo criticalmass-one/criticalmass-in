@@ -45,6 +45,12 @@ class Track
     protected $ticket;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser", inversedBy="tracks")
+     * @ORM\JoinColumn(name="criticalmapsuser_id", referencedColumnName="id")
+     */
+    protected $criticalmapsUser;
+
+    /**
      * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
      */
     protected $rideEstimate;
@@ -227,6 +233,18 @@ class Track
     public function getTicket()
     {
         return $this->ticket;
+    }
+
+    public function setCriticalmapsUser(CriticalmapsUser $criticalmapsUser = null)
+    {
+        $this->criticalmapsUser = $criticalmapsUser;
+
+        return $this;
+    }
+
+    public function getCriticalmapsUser()
+    {
+        return $this->criticalmapsUser;
     }
 
     /**

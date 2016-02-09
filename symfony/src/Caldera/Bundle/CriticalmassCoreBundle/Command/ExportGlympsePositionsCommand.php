@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ExportPositionsCommand extends ContainerAwareCommand
+class ExportGlympsePositionsCommand extends ContainerAwareCommand
 {
     /**
      * @var Registry $doctrine
@@ -38,12 +38,16 @@ class ExportPositionsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:positions:export')
+            ->setName('criticalmass:positions:glympse')
             ->setDescription('Export positions as gpx file')
             ->addArgument(
                 'ticketId',
-                InputArgument::REQUIRED,
-                'Id of the Track to export'
+                InputArgument::OPTIONAL,
+                'Id of the glympse ticket to export'
+            )
+            ->addOption(
+                'all',
+                'a'
             )
         ;
     }
@@ -60,6 +64,15 @@ class ExportPositionsCommand extends ContainerAwareCommand
 
         $ticket = $repository->find($input->getArgument('ticketId'));
 
+        if ($ticket->getExported()) {
+            $output->writeln('This ticket has already been exported.');
+        } else {
+            $this->export($ticket);
+        }
+    }
+
+    protected function export(Ticket $ticket)
+    {
         /**
          * @var GpxExporter $exporter
          */
@@ -71,11 +84,13 @@ class ExportPositionsCommand extends ContainerAwareCommand
 
         $gpxContent = $exporter->getGpxContent();
 
-        $filename = uniqid().'.gpx';
+        $filename = uniqid() . '.gpx';
 
-        $fp = fopen('../web/tracks/'.$filename, 'w');
+        $fp = fopen('../web/tracks/' . $filename, 'w');
         fwrite($fp, $gpxContent);
         fclose($fp);
+
+        $ticket->setExported(true);
 
         $track = new Track();
         $track->setTicket($ticket);
@@ -91,6 +106,7 @@ class ExportPositionsCommand extends ContainerAwareCommand
 
         $em = $this->doctrine->getManager();
         $em->persist($track);
+        $em->persist($ticket);
         $em->flush();
     }
 

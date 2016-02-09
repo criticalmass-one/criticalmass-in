@@ -10,8 +10,8 @@ class GpxExporter
 {
     protected $entityManager;
     protected $doctrine;
-    protected $ticket;
-    protected $criticalmapsUser;
+    protected $ticket = null;
+    protected $criticalmapsUser = null;
     protected $positionArray;
     protected $gpxContent;
 
@@ -33,11 +33,17 @@ class GpxExporter
 
     protected function findPositions()
     {
-        $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findBy(
-            [
-                'ticket' => $this->ticket->getId()
-            ]
-        );
+        $options = [];
+
+        if ($this->ticket) {
+            $options = ['ticket' => $this->ticket->getId()];
+        }
+
+        if ($this->criticalmapsUser) {
+            $options = ['criticalmapsUser' => $this->criticalmapsUser->getId()];
+        }
+
+        $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findBy($options);
     }
 
     protected function generateGpxContent()
