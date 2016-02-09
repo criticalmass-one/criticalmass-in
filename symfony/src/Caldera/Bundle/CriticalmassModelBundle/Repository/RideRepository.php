@@ -238,7 +238,33 @@ class RideRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
+    }
+
+    public function findByCityAndRideDate(City $city, $rideDate)
+    {
+        // Maybe this datetime computation stuff is stupid. Will look for a better solution.
+        $fromDateTime = new \DateTime($rideDate);
+        $fromDateTime->setTime(0, 0, 0);
+
+        $untilDateTime = new \DateTime($rideDate);
+        $untilDateTime->setTime(23, 59, 59);
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
+        $builder->andWhere($builder->expr()->gt('ride.dateTime', '\''.$fromDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$untilDateTime->format('Y-m-d H:i:s').'\''));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        return $query->getOneOrNullResult();
     }
 
     public function findLatestRidesOrderByParticipants(\DateTime $startDateTime, \DateTime $endDateTime)

@@ -50,9 +50,20 @@ class TrackReader extends GpxReader {
             $dx = 71.5 * ((float) $firstCoord['lon'] - (float) $secondCoord['lon']);
             $dy = 111.3 * ((float) $firstCoord['lat'] - (float) $secondCoord['lat']);
 
-            $value = (float) sqrt($dx * $dx + $dy * $dy);
+            $way = (float) sqrt($dx * $dx + $dy * $dy);
 
-            $distance += $value;
+            $secondTime = new \DateTime($secondCoord->time);
+            $firstTime = new \DateTime($firstCoord->time);
+
+            $timeInterval = $secondTime->diff($firstTime);
+            $time = $timeInterval->format('%s');
+            $time += 0.001;
+
+            $velocity = $way * 1000 / $time;
+
+            if ($velocity > 4.5) {
+                $distance += $way;
+            }
 
             $firstCoord = $secondCoord;
 

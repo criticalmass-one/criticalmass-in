@@ -23,6 +23,12 @@ class Ticket
      */
     protected $city;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="tickets")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     */
+    protected $ride;
+
 	/**
 	 * @ORM\Column(type="string", length=9, nullable=false)
 	 */
@@ -165,6 +171,18 @@ class Ticket
     public function getCity()
     {
         return $this->city;
+    }
+
+    public function setRide(Ride $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    public function getRide()
+    {
+        return $this->ride;
     }
 
     /**

@@ -58,7 +58,7 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
 
         $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ticket');
 
-        if ($input->hasOption('all')) {
+        if ($input->hasOption('all') && $input->getOption('all')) {
             $tickets = $repository->findBy(['exported' => false]);
 
             foreach ($tickets as $ticket) {
@@ -109,7 +109,8 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
             $this->loadTrackProperties($track);
             $this->generateSimpleLatLngList($track);
 
-            if ($track->getRide()) {
+            if ($ticket->getRide()) {
+                $track->setRide($ticket->getRide());
                 $this->addRideEstimate($track, $track->getRide());
             }
 

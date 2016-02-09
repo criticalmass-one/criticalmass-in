@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -39,13 +40,13 @@ class OptimizeTracksCommand extends ContainerAwareCommand
                 InputArgument::OPTIONAL,
                 'Id of the Track to optimize'
             )
+            ->addOption('all')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
-        $this->generator = $this->getContainer()->get('caldera.criticalmass.gps.latlnglistgenerator.range');
         $this->manager = $this->doctrine->getManager();
 
         $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track');
@@ -60,7 +61,7 @@ class OptimizeTracksCommand extends ContainerAwareCommand
             $this->optimizeTrack($track);
 
             $output->writeln('Optimized Track #'.$track->getId());
-        } else {
+        } elseif ($input->hasOption('all') && $input->getOption('all')) {
             $tracks = $repository->findAll();
 
             foreach ($tracks as $track) {
@@ -73,13 +74,27 @@ class OptimizeTracksCommand extends ContainerAwareCommand
 
     protected function optimizeTrack(Track $track)
     {
-        $list = $this->generator
+        /**
+         * @var RangeLatLngListGenerator $latLngGenerator
+         */
+        $latLngGenerator = $this->getContainer()->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+
+        $list = $latLngGenerator
             ->loadTrack($track)
             ->execute()
             ->getList();
 
         $track->setLatLngList($list);
 
+        /**
+         * @var TrackReader $gr
+         */
+        $gr = $this->getContainer()->get('caldera.criticalmass.gps.trackreader');
+        $gr->loadTrack($track);
+
+        $track->setDistance($gr->calculateDistance());
+
+        $track->setUpdatedAt(new \DateTime());
         $this->manager->persist($track);
         $this->manager->flush();
     }
