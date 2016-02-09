@@ -1,7 +1,10 @@
 define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() {
     TimelapsePage = function(context, options) {
-
-
+        this._loadStyles();
+        this._initSlider();
+        this._initMap();
+        this._initDateTime();
+        this._initControls();
     };
 
     TimelapsePage.prototype._map = null;
@@ -11,18 +14,41 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
     TimelapsePage.prototype._slider = null;
     TimelapsePage.prototype._currentDateTime = null;
     TimelapsePage.prototype._timer = null;
+    TimelapsePage.prototype._startDateTime = null;
+    TimelapsePage.prototype._endDateTime = null;
+    TimelapsePage.prototype._addedTracks = 0;
+    TimelapsePage.prototype._loadedTracks = 0;
+
     TimelapsePage.prototype._options = {
         timeStep: 30000,
         baseTimeInterval: 100
     };
 
 
-    TimelapsePage.prototype.init = function() {
-        this._loadStyles();
-        this._initSlider();
-        this._initMap();
-        this._initDateTime();
-        this._initControls();
+    TimelapsePage.prototype._init = function() {
+        this._startDateTime = this._findEarliestDateTime();
+        this._endDateTime = this._findLatestDateTime();
+
+        var startTime = this._startDateTime.getTime();
+        var endTime = this._endDateTime.getTime();
+
+        var diff = startTime - endTime;
+
+        var that = this;
+
+        this._timeSlider = $('#time-slider-input').slider({
+            id: 'time-slider',
+            min: startTime,
+            max: endTime,
+            range: false,
+            value: 0,
+            step: 150000,
+            tooltip: 'show'
+        }).on('change', function(values) {
+            that._currentDateTime = new Date(values.value.newValue);
+
+            that.stepForward();
+        });
     };
 
     TimelapsePage.prototype._loadStyles = function() {
@@ -71,6 +97,8 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
         this._tracks[trackId] = track;
 
         this._loadTrackLatLngs(trackId);
+
+        ++this._addedTracks;
     };
 
     TimelapsePage.prototype._loadTrackLatLngs = function(trackId) {
@@ -87,9 +115,12 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
                 that._trackLatLngs[trackId] = data;
 
                 that._initPositionMarker(trackId);
-            },
-            error: function(data, status) {
-                alert('Fooooo' + status);
+
+                ++that._loadedTracks;
+
+                if (that._addedTracks == that._loadedTracks) {
+                    that._init();
+                }
             }
         });
 
@@ -126,7 +157,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
     };
 
     TimelapsePage.prototype.start = function(speedFactor) {
-        alert(this._findLatestDateTime());
         this.stepForward();
 
         var that = this;
@@ -163,6 +193,8 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
 
     TimelapsePage.prototype.stepForward = function() {
         this._currentDateTime = new Date(this._currentDateTime.getTime() + this._options.timeStep);
+
+        this._timeSlider.slider('setValue', this._currentDateTime.getTime(), false, false);
 
         for (var trackId in this._trackLatLngs) {
             var nextLatLng = this._findNextLatLngForDateTime(trackId, this._currentDateTime);
