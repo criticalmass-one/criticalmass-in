@@ -18,8 +18,24 @@ define(['Marker'], function() {
     PositionMarker.prototype = new Marker();
     PositionMarker.prototype.constructor = PositionMarker;
 
+    PositionMarker.prototype._colorRed = 0;
+    PositionMarker.prototype._colorGreen = 0;
+    PositionMarker.prototype._colorBlue = 0;
+
+    PositionMarker.prototype.setColorRed = function(colorRed) {
+        this._colorRed = colorRed;
+    };
+
+    PositionMarker.prototype.setColorGreen = function(colorGreen) {
+        this._colorGreen = colorGreen;
+    };
+
+    PositionMarker.prototype.setColorBlue = function(colorBlue) {
+        this._colorBlue = colorBlue;
+    };
+
     PositionMarker.prototype.getColorString = function() {
-        return 'rgb(255, 0, 0);';
+        return 'rgb(' + this._colorRed + ', ' + this._colorGreen + ', ' + this._colorBlue + ');';
     };
 
     PositionMarker.prototype._getHTML = function() {

@@ -20,7 +20,29 @@ define(['leaflet', 'BaseEntity'], function() {
         }
     };
 
+    TrackEntity.prototype.setColors = function(colorRed, colorGreen, colorBlue) {
+        this._colorRed = colorRed;
+        this._colorGreen = colorGreen;
+        this._colorBlue = colorBlue;
+    };
+
+    TrackEntity.prototype.getColorRed = function() {
+        return this._colorRed;
+    };
+
+    TrackEntity.prototype.getColorGreen = function() {
+        return this._colorGreen;
+    };
+
+    TrackEntity.prototype.getColorBlue = function() {
+        return this._colorBlue;
+    };
+
     TrackEntity.prototype.setPolyline = function (jsonData, colorRed, colorGreen, colorBlue) {
+        this._colorRed = colorRed;
+        this._colorGreen = colorGreen;
+        this._colorBlue = colorBlue;
+
         this._polyline = L.polyline(jsonData, {color: 'rgb(' + colorRed + ',' + colorGreen + ', ' + colorBlue + ')'});
     };
 

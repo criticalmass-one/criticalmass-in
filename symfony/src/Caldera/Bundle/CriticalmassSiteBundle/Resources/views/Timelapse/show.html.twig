@@ -102,6 +102,10 @@
     <script>
         CriticalMass.loadModule('TimelapsePage', null, null, function(timelapsePage) {
 
+            {% for track in tracks %}
+            timelapsePage.addTrack({{ track.id }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+            {% endfor %}
+
             timelapsePage.init();
 
         });

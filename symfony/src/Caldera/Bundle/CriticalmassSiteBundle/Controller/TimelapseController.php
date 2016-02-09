@@ -21,11 +21,14 @@ class TimelapseController extends AbstractController
     public function showAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-        
+
+        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Timelapse:show.html.twig',
             array(
-                'ride' => $ride
+                'ride' => $ride,
+                'tracks' => $tracks
             )
         );
     }

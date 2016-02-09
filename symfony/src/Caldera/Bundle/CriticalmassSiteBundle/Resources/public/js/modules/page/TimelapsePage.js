@@ -1,11 +1,12 @@
-define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
+define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() {
     TimelapsePage = function(context, options) {
-        this.loadTrackLatLngs(73);
+
 
     };
 
     TimelapsePage.prototype._map = null;
     TimelapsePage.prototype._tracks = [];
+    TimelapsePage.prototype._trackLatLngs = [];
     TimelapsePage.prototype._marker = [];
     TimelapsePage.prototype._slider = null;
     TimelapsePage.prototype._currentDateTime = null;
@@ -63,8 +64,17 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
         this._map.setView([53.545697,9.952488], 14);
     };
 
-    TimelapsePage.prototype.loadTrackLatLngs = function(trackId) {
-        var trackUrl = 'http://www.criticalmass.cm/app_dev.php/hamburg/2016-01-29/timelapse/load/73';
+    TimelapsePage.prototype.addTrack = function(trackId, colorRed, colorGreen, colorBlue) {
+        var track = new TrackEntity();
+        track.setColors(colorRed, colorGreen, colorBlue);
+
+        this._tracks[trackId] = track;
+
+        this._loadTrackLatLngs(trackId);
+    };
+
+    TimelapsePage.prototype._loadTrackLatLngs = function(trackId) {
+        var trackUrl = 'http://www.criticalmass.cm/app_dev.php/hamburg/2016-01-29/timelapse/load/' + trackId;
 
         var that = this;
 
@@ -74,7 +84,7 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
             url: trackUrl,
             cache: false,
             success: function(data) {
-                that._tracks[trackId] = data;
+                that._trackLatLngs[trackId] = data;
 
                 that._initPositionMarker(trackId);
             },
@@ -86,10 +96,17 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     };
 
     TimelapsePage.prototype._initPositionMarker = function(trackId) {
-        var firstLatLng = [this._tracks[trackId][0][1], this._tracks[trackId][0][2]];
+        var firstLatLng = [this._trackLatLngs[trackId][0][1], this._trackLatLngs[trackId][0][2]];
+        var track = this._tracks[trackId];
 
-        this._marker[trackId] = new PositionMarker(firstLatLng, false);
-        this._marker[trackId].addToMap(this._map);
+        var marker = new PositionMarker(firstLatLng, false);
+        marker.setColorRed(track.getColorRed());
+        marker.setColorGreen(track.getColorGreen());
+        marker.setColorBlue(track.getColorBlue());
+
+        marker.addToMap(this._map);
+
+        this._marker[trackId] = marker;
     };
 
     TimelapsePage.prototype._initControls = function() {
@@ -109,6 +126,7 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     };
 
     TimelapsePage.prototype.start = function(speedFactor) {
+        alert(this._findLatestDateTime());
         this.stepForward();
 
         var that = this;
@@ -118,7 +136,7 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
         if (speedFactor) {
             interval *= speedFactor;
         }
-        
+
         this._timer = window.setInterval(function () {
             that.stepForward();
 
@@ -131,8 +149,8 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     };
 
     TimelapsePage.prototype._findNextLatLngForDateTime = function(trackId, dateTime) {
-        for (var index in this._tracks[trackId]) {
-            var dateTimeLatLng = this._tracks[trackId][index];
+        for (var index in this._trackLatLngs[trackId]) {
+            var dateTimeLatLng = this._trackLatLngs[trackId][index];
             var trackDateTime = new Date(dateTimeLatLng[0]);
 
             if (trackDateTime.getTime() > dateTime.getTime()) {
@@ -146,7 +164,7 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
     TimelapsePage.prototype.stepForward = function() {
         this._currentDateTime = new Date(this._currentDateTime.getTime() + this._options.timeStep);
 
-        for (var trackId in this._tracks) {
+        for (var trackId in this._trackLatLngs) {
             var nextLatLng = this._findNextLatLngForDateTime(trackId, this._currentDateTime);
 
             if (nextLatLng) {
@@ -155,6 +173,35 @@ define(['Map', 'PositionMarker', 'bootstrap-slider'], function() {
                 this._marker[trackId].removeFromMap(this._map);
             }
         }
+    };
+
+    TimelapsePage.prototype._findEarliestDateTime = function() {
+        var earliestDatetime = null;
+
+        for (var trackId in this._trackLatLngs) {
+            var dateTime = new Date(this._trackLatLngs[trackId][0][0]);
+
+            if (!earliestDatetime || earliestDatetime.getTime() > dateTime.getTime()) {
+                earliestDatetime = dateTime;
+            }
+        }
+
+        return earliestDatetime;
+    };
+
+    TimelapsePage.prototype._findLatestDateTime = function() {
+        var latestDateTime = null;
+
+        for (var trackId in this._trackLatLngs) {
+            var counter = this._trackLatLngs[trackId].length;
+            var dateTime = new Date(this._trackLatLngs[trackId][counter - 1][0]);
+
+            if (!latestDateTime || latestDateTime.getTime() < dateTime.getTime()) {
+                latestDateTime = dateTime;
+            }
+        }
+
+        return latestDateTime;
     };
 
     return TimelapsePage;
