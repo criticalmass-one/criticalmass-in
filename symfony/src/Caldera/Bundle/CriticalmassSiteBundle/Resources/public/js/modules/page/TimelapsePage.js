@@ -1,7 +1,7 @@
 define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() {
     TimelapsePage = function(context, options) {
         this._loadStyles();
-        this._initSlider();
+        this._initSpeedSlider();
         this._initMap();
         this._initDateTime();
         this._initControls();
@@ -11,11 +11,15 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
     TimelapsePage.prototype._tracks = [];
     TimelapsePage.prototype._trackLatLngs = [];
     TimelapsePage.prototype._marker = [];
-    TimelapsePage.prototype._slider = null;
-    TimelapsePage.prototype._currentDateTime = null;
     TimelapsePage.prototype._timer = null;
+
+    TimelapsePage.prototype._timeSlider = null;
+    TimelapsePage.prototype._speedSlider = null;
+
     TimelapsePage.prototype._startDateTime = null;
+    TimelapsePage.prototype._currentDateTime = null;
     TimelapsePage.prototype._endDateTime = null;
+
     TimelapsePage.prototype._addedTracks = 0;
     TimelapsePage.prototype._loadedTracks = 0;
 
@@ -29,6 +33,20 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
         this._startDateTime = this._findEarliestDateTime();
         this._endDateTime = this._findLatestDateTime();
 
+        this._initTimeSlider();
+    };
+
+    TimelapsePage.prototype._loadStyles = function() {
+        var $link = $('<link>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: '/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css'
+        });
+
+        $link.appendTo('head');
+    };
+
+    TimelapsePage.prototype._initTimeSlider = function() {
         var startTime = this._startDateTime.getTime();
         var endTime = this._endDateTime.getTime();
 
@@ -51,20 +69,10 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
         });
     };
 
-    TimelapsePage.prototype._loadStyles = function() {
-        var $link = $('<link>', {
-            rel: 'stylesheet',
-            type: 'text/css',
-            href: '/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css'
-        });
-
-        $link.appendTo('head');
-    };
-
-    TimelapsePage.prototype._initSlider = function() {
+    TimelapsePage.prototype._initSpeedslider = function() {
         var that = this;
 
-        $('#speed-slider-input').slider({
+        this._speedSlider = $('#speed-slider-input').slider({
             id: 'speed-slider',
             min: 0.5,
             max: 10,
