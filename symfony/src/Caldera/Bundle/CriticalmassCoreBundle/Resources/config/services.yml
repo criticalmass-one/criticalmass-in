@@ -68,10 +68,6 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
         arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.gpxreader ]
 
-    caldera.criticalmass.forums.forumtreebuilder:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Forums\ForumTreeBuilder\ForumTreeBuilder
-        arguments: [ @doctrine.orm.entity_manager ]
-
     caldera.criticalmass.image.photogps:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps
         arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%', @caldera.criticalmass.image.exifreader.gps, @caldera.criticalmass.image.exifreader.datetime, @caldera.criticalmass.gps.trackreader]
@@ -83,3 +79,7 @@ services:
     caldera.criticalmass.image.exifreader.datetime:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader
         arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+
+    caldera.criticalmass.board.builder.boardbuilder:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Board\Builder\BoardBuilder
+        arguments: [ @doctrine ]

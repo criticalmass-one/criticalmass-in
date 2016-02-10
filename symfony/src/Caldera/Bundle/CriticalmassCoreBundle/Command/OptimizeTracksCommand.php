@@ -94,6 +94,10 @@ class OptimizeTracksCommand extends ContainerAwareCommand
 
         $track->setDistance($gr->calculateDistance());
 
+        $dateTime = $gr->getStartDateTime();
+        $dateTime->setTimezone(new \DateTimeZone('Europe/Berlin'));
+        echo $dateTime->format('d.m.Y H:i:s');
+
         $track->setUpdatedAt(new \DateTime());
         $this->manager->persist($track);
         $this->manager->flush();

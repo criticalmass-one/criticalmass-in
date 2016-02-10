@@ -87,7 +87,6 @@ class GpxExporter
 
             $dateTime = new \DateTime();
             $dateTime->setTimestamp($position->getTimestamp());
-            $dateTime->sub(new \DateInterval('PT1H'));
 
             $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
 

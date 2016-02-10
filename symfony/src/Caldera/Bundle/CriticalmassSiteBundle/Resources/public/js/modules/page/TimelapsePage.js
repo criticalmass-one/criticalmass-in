@@ -69,7 +69,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
         });
     };
 
-    TimelapsePage.prototype._initSpeedslider = function() {
+    TimelapsePage.prototype._initSpeedSlider = function() {
         var that = this;
 
         this._speedSlider = $('#speed-slider-input').slider({
@@ -151,6 +151,10 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
     TimelapsePage.prototype._initControls = function() {
         var that = this;
 
+        $('#control-buttons').find('#step-backward-button').on('click', function() {
+            that.stepBackward();
+        });
+
         $('#control-buttons').find('#stop-button').on('click', function() {
             that.stop();
         });
@@ -197,6 +201,37 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
         }
 
         return null;
+    };
+
+    TimelapsePage.prototype._findPreviousLatLngForDateTime = function(trackId, dateTime) {
+        for (var index in this._trackLatLngs[trackId]) {
+            var dateTimeLatLng = this._trackLatLngs[trackId][index];
+            var trackDateTime = new Date(dateTimeLatLng[0]);
+
+            if (trackDateTime.getTime() < dateTime.getTime()) {
+                trackDateTime = dateTime;
+            } else {
+                return [dateTimeLatLng[1], dateTimeLatLng[2]];
+            }
+        }
+
+        return null;
+    };
+
+    TimelapsePage.prototype.stepBackward = function() {
+        this._currentDateTime = new Date(this._currentDateTime.getTime() - this._options.timeStep);
+
+        this._timeSlider.slider('setValue', this._currentDateTime.getTime(), false, false);
+
+        for (var trackId in this._trackLatLngs) {
+            var prevLatLng = this._findPreviousLatLngForDateTime(trackId, this._currentDateTime);
+
+            if (prevLatLng) {
+                this._marker[trackId].setLatLng(prevLatLng);
+            } else {
+                this._marker[trackId].removeFromMap(this._map);
+            }
+        }
     };
 
     TimelapsePage.prototype.stepForward = function() {

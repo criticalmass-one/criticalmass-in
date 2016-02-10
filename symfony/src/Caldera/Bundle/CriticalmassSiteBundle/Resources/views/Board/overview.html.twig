@@ -1,0 +1,71 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Diskussionen</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Städte
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Beschreibung
+                            </th>
+                            <th>
+                                Themen
+                            </th>
+                            <th>
+                                Beiträge
+                            </th>
+                            <th>
+                                letzter Beitrag
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for cityCategory in boardTree %}
+                        <tr>
+                            <td colspan="4">
+                                <h4>
+                                    {{ cityCategory.getTitle() }}
+                                </h4>
+                            </td>
+                        </tr>
+
+                        {% for board in cityCategory.getBoards() %}
+                            <tr>
+                                <td>
+                                    {{ board.getTitle() }}
+                                </td>
+                                <td>
+                                    {{ board.getThreadNumber() }}
+                                </td>
+                                <td>
+                                    {{ board.getPostNumber() }}
+                                </td>
+                                <td>
+                                    {{ board.getLastPost() }}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

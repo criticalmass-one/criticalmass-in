@@ -1,0 +1,3 @@
+caldera_criticalmass_board_overview:
+    pattern:  /boards/overview
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:overview }
