@@ -48,10 +48,16 @@
                     {% if app.getUser() %}
                     <div class="row">
                         <div class="col-md-12">
-                            <a class="btn btn-success pull-right" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
-                                <i class="fa fa-cogs"></i>
-                                Stadt editieren
-                            </a>
+                            <div class="btn-group pull-right">
+                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                                    <i class="fa fa-cogs"></i>
+                                    Stadt editieren
+                                </a>
+                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                                    <i class="fa fa-plus"></i>
+                                    Tour hinzufügen
+                                </a>
+                            </div>
                         </div>
                     </div>
                     {% endif %}

@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateSer
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +65,18 @@ class RideController extends AbstractController
         $ride = new Ride();
         $ride->setCity($city);
 
-        $form = $this->createForm(new RideType(), $ride, array('action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', array('citySlug' => $city->getMainSlugString()))));
+        $form = $this->createForm(
+            new RideType(),
+            $ride,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_desktop_ride_add',
+                    [
+                        'citySlug' => $city->getMainSlugString()
+                    ]
+                )
+            ]
+        );
 
         if ('POST' == $request->getMethod()) {
             return $this->editPostAction($request, $ride, $city, $form);
@@ -73,7 +85,7 @@ class RideController extends AbstractController
         }
     }
     
-    protected function addPostAction(Request $request, Ride $ride, City $city, FormTypeInterface $form)
+    protected function addPostAction(Request $request, Ride $ride, City $city, FormType $form)
     {
         $form->handleRequest($request);
 
@@ -93,15 +105,15 @@ class RideController extends AbstractController
             $form = $this->createForm(
                 new RideType(), 
                 $ride, 
-                array(
+                [
                     'action' => $this->generateUrl(
                         'caldera_criticalmass_desktop_ride_edit', 
-                        array(
+                        [
                             'citySlug' => $city->getMainSlugString(), 
                             'rideDate' => $ride->getFormattedDate()
-                        )
+                        ]
                     )
-                )
+                ]
             );
         } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
@@ -124,13 +136,13 @@ class RideController extends AbstractController
     {
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
-            array(
+            [
                 'hasErrors' => null,
                 'ride' => null, 
                 'form' => $form->createView(), 
                 'city' => $city, 
                 'dateTime' => new \DateTime()
-            )
+            ]
         );
     }
 
@@ -201,7 +213,7 @@ class RideController extends AbstractController
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
             array(
-                'ride' => $ride, 
+                'ride' => null,
                 'city' => $city, 
                 'form' => $form->createView(), 
                 'hasErrors' => null,

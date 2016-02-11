@@ -10,34 +10,6 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-
-    <script>
-
-        function callback(editRidePage) {
-            var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
-
-            editRidePage.setCityLatLng(cityLatLng);
-
-            {% for ride in city.getRides() %}
-            editRidePage.addRideDate(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
-            {% endfor %}
-
-            {% if ride %}
-            editRidePage.setRideDateTime(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
-            {% else %}
-            editRidePage.setRideDateTime(null);
-            {% endif %}
-
-            editRidePage.init();
-        }
-
-        CriticalMass.loadModule('EditRidePage', null, null, callback);
-
-    </script>
-{% endblock %}
-
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
     <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
@@ -208,7 +180,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
+                                {% if ride %}
                                 <a href="{{ path(ride) }}" class="btn btn-default">Abbrechen</a>
+                                {% else %}
+                                <a href="{{ path(city) }}" class="btn btn-default">Abbrechen</a>
+                                {% endif %}
                                 <button type="submit" class="btn btn-success" id="rideSubmitButton"{% if city.hasRideAtMonthDay(dateTime) %} disabled="disabled"{% endif %}>Speichern</button>
                             </div>
                         </div>
@@ -222,4 +198,24 @@
 
         </form>
     </div>
+
+    <script>
+        CriticalMass.loadModule('EditRidePage', null, null, function(editRidePage) {
+            var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+
+            editRidePage.setCityLatLng(cityLatLng);
+
+            {% for ride in city.getRides() %}
+            editRidePage.addRideDate(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+            {% endfor %}
+
+            {% if ride %}
+            editRidePage.setRideDateTime(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
+            {% else %}
+            editRidePage.setRideDateTime(null);
+            {% endif %}
+
+            editRidePage.init();
+        });
+    </script>
 {% endblock %}
