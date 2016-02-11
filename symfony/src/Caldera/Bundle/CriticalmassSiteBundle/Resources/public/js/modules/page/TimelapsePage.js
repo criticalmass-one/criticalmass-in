@@ -155,8 +155,8 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
             that.stepBackward();
         });
 
-        $('#control-buttons').find('#stop-button').on('click', function() {
-            that.stop();
+        $('#control-buttons').find('#pause-button').on('click', function() {
+            that.pause();
         });
 
         $('#control-buttons').find('#play-button').on('click', function() {
@@ -185,7 +185,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() 
         }, interval);
     };
 
-    TimelapsePage.prototype.stop = function() {
+    TimelapsePage.prototype.pause = function() {
         clearInterval(this._timer);
         this._timer = null;
     };
