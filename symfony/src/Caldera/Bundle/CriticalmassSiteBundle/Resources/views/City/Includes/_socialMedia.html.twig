@@ -8,20 +8,20 @@
         <div class="panel-body">
             <div class="text-center">
                 <div class="btn-group" role="group" aria-label="...">
-                {% if city.getUrl() %}
-                    <a class="btn btn-default" href="{{ city.getUrl() }}">
+                {% if city.url %}
+                    <a class="btn btn-default" href="{{ city.url }}">
                         <i class="fa fa-home"></i>
                     </a>
                 {% endif %}
 
-                {% if city.getFacebook() %}
-                    <a class="btn btn-default" href="{{ city.getFacebook() }}">
+                {% if city.facebook %}
+                    <a class="btn btn-default" href="{{ city.facebook }}">
                         <i class="fa fa-facebook"></i>
                     </a>
                 {% endif %}
 
-                {% if city.getTwitter() %}
-                    <a class="btn btn-default" href="{{ city.getTwitter() }}">
+                {% if city.twitter %}
+                    <a class="btn btn-default" href="{{ city.twitter }}">
                         <i class="fa fa-twitter"></i>
                     </a>
                 {% endif %}
