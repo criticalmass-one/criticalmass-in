@@ -245,6 +245,10 @@ class City
     private $updatedAt;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enableBoard;
+
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -1263,6 +1267,18 @@ class City
     public function getPin()
     {
         return $this->latitude.','.$this->longitude;
+    }
+
+    public function setEnableBoard($enableBoard)
+    {
+        $this->enableBoard = $enableBoard;
+
+        return $this;
+    }
+
+    public function getEnableBoard()
+    {
+        return $this->enableBoard;
     }
 
     public function setTimezone($timezone)

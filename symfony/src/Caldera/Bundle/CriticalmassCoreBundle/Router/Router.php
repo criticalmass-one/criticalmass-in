@@ -2,6 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Router;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityImageCommentBoard;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityRideBoard;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
@@ -28,6 +31,18 @@ class Router extends sfRouter
 
         if ($object instanceof Content) {
             return $this->generateContentUrl($object, $referenceType);
+        }
+
+        if ($object instanceof CityTalkBoard) {
+            return $this->generateCityTalkBoardUrl($object, $referenceType);
+        }
+
+        if ($object instanceof CityRideBoard) {
+            return $this->generateCityRideBoardUrl($object, $referenceType);
+        }
+
+        if ($object instanceof CityImageCommentBoard) {
+            return $this->generateCityImageCommentBoardUrl($object, $referenceType);
         }
 
         return parent::generate($object, $parameters, $referenceType);
@@ -75,6 +90,39 @@ class Router extends sfRouter
 
         $parameters = [
             'slug' => $content->getSlug()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    private function generateCityTalkBoardUrl(CityTalkBoard $cityTalkBoard, $referenceType)
+    {
+        $route = 'caldera_criticalmass_board_talkboard';
+
+        $parameters = [
+            'citySlug' => $cityTalkBoard->getCity()->getMainSlugString()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    private function generateCityRideBoardUrl(CityRideBoard $cityRideBoard, $referenceType)
+    {
+        $route = 'caldera_criticalmass_board_rideboard';
+
+        $parameters = [
+            'citySlug' => $cityRideBoard->getCity()->getMainSlugString()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    private function generateCityImageCommentBoardUrl(CityImageCommentBoard $cityImageCommentBoard, $referenceType)
+    {
+        $route = 'caldera_criticalmass_board_imagecommentboard';
+
+        $parameters = [
+            'citySlug' => 'hamburg'
         ];
 
         return parent::generate($route, $parameters, $referenceType);

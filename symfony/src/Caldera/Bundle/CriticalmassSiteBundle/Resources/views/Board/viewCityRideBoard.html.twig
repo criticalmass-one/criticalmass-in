@@ -1,0 +1,52 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Diskussionen</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Titel
+                            </th>
+                            <th>
+                                Autor
+                            </th>
+                            <th>
+                                Antworten
+                            </th>
+                            <th>
+                                letzter Beitrag
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for thread in threads %}
+                        <tr>
+                            <td>
+                                {{ thread.getTitle() }}
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

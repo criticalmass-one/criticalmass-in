@@ -51,6 +51,23 @@ class CityRepository extends EntityRepository
         return $this->matching($criteria);
     }
 
+    public function findCitiesWithBoard()
+    {
+        $builder = $this->createQueryBuilder('city');
+
+        $builder->select('city');
+
+        $builder->where($builder->expr()->eq('city.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
+        $builder->andWhere($builder->expr()->eq('city.enableBoard', 1));
+
+        $builder->orderBy('city.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findCitiesByAverageParticipants($limit = 10)
     {
         $query = $this->getEntityManager()->createQuery("SELECT IDENTITY(r.city) AS city, c.city AS cityName, SUM(r.estimatedParticipants) / COUNT(c.id) AS averageParticipants FROM CalderaCriticalmassCoreBundle:Ride r JOIN r.city c GROUP BY r.city ORDER BY averageParticipants DESC")->setMaxResults($limit);

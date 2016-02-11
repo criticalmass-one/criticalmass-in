@@ -48,7 +48,9 @@
                         {% for board in cityCategory.getBoards() %}
                             <tr>
                                 <td>
-                                    {{ board.getTitle() }}
+                                    <a href="{{ path(board) }}">
+                                        {{ board.getTitle() }}
+                                    </a>
                                 </td>
                                 <td>
                                     {{ board.getThreadNumber() }}

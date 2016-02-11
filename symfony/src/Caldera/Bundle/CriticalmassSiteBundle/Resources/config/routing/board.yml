@@ -1,3 +1,15 @@
 caldera_criticalmass_board_overview:
     pattern:  /boards/overview
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:overview }
+
+caldera_criticalmass_board_talkboard:
+    pattern:  /{citySlug}/talkboard
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewtalkboard }
+
+caldera_criticalmass_board_rideboard:
+    pattern:  /{citySlug}/rideboard
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewrideboard }
+
+caldera_criticalmass_board_imagecommentboard:
+    pattern:  /{citySlug}/imagecommentboard
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewimagecommentboard }

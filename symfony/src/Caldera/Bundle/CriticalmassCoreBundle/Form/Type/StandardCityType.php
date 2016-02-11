@@ -21,6 +21,7 @@ class StandardCityType extends AbstractType
             ->add('cityPopulation', 'integer', array('required' => false))
             ->add('punchLine', 'text', array('required' => false))
             ->add('longDescription', 'textarea', array('required' => false))
+            ->add('enableBoard')
             ->add('timezone', 'timezone')
             ->add('isStandardable', 'checkbox', array('required' => false))
             ->add('standardDayOfWeek', 'choice', array('label' => 'Wochentag', 'choices' => array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag'), 'required' => true))

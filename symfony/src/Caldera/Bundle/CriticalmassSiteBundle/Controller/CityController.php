@@ -103,7 +103,13 @@ class CityController extends AbstractController
     {
         $city = new City();
 
-        $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')));
+        $form = $this->createForm(
+            new CityType(),
+            $city,
+            [
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')
+            ]
+        );
 
         $form->handleRequest($request);
 
@@ -122,12 +128,30 @@ class CityController extends AbstractController
 
             $hasErrors = false;
 
-            $form = $this->createForm(new CityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
+            $form = $this->createForm(
+                new CityType(),
+                $city,
+                [
+                    'action' => $this->generateUrl(
+                        'caldera_criticalmass_desktop_city_edit',
+                        [
+                            'citySlug' => $city->getMainSlugString()
+                        ]
+                    )
+                ]
+            );
         } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:City:edit.html.twig', array('city' => null, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:City:edit.html.twig',
+            [
+                'city' => null,
+                'form' => $form->createView(),
+                'hasErrors' => $hasErrors
+            ]
+        );
     }
 
     public function editAction(Request $request, $citySlug)

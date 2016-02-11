@@ -11,6 +11,10 @@ class CityRideBoard implements BoardInterface
      */
     protected $city;
 
+    protected $rides;
+
+    protected $posts;
+
     public function __construct()
     {
 
@@ -19,6 +23,23 @@ class CityRideBoard implements BoardInterface
     public function setCity(City $city)
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setRides($rides)
+    {
+        $this->rides = $rides;
+    }
+
+    public function setPosts($posts)
+    {
+        $this->posts = $posts;
     }
 
     public function getTitle()
@@ -33,12 +54,12 @@ class CityRideBoard implements BoardInterface
 
     public function getThreadNumber()
     {
-        return 0;
+        return count($this->rides);
     }
 
     public function getPostNumber()
     {
-        return 0;
+        return count($this->posts);
     }
 
     public function getLastPost()

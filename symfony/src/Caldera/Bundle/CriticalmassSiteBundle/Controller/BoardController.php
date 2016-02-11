@@ -25,4 +25,44 @@ class BoardController extends AbstractController
             ]
         );
     }
+
+    public function viewtalkboardAction(Request $request, $citySlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        /**
+         * @var BoardBuilder $boardBuilder
+         */
+        $boardBuilder = $this->get('caldera.criticalmass.board.builder.boardbuilder');
+
+        $boardBuilder->buildTalkBoard($city);
+
+        $tree = $boardBuilder->getList();
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Board:overview.html.twig',
+            [
+                'boardTree' => $tree
+            ]
+        );
+    }
+
+    public function viewrideboardAction(Request $request, $citySlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        /**
+         * @var BoardBuilder $boardBuilder
+         */
+        $boardBuilder = $this->get('caldera.criticalmass.board.builder.boardbuilder');
+
+        $boardBuilder->buildRideBoard($city);
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Board:viewCityRideBoard.html.twig',
+            [
+                'threads' => $boardBuilder->getList()
+            ]
+        );
+    }
 }

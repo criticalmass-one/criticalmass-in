@@ -19,6 +19,13 @@ class CityTalkBoard implements BoardInterface
     public function setCity(City $city)
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
     }
 
     public function getTitle()
