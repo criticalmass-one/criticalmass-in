@@ -88,10 +88,13 @@ class CityController extends AbstractController
 
         $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);
 
+        $dateTime = new \DateTime();
+        $dateTime->setTimezone(new \DateTimeZone($city->getTimezone()));
+
         return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
-            'dateTime' => new \DateTime(),
+            'dateTime' => $dateTime,
             'nearCities' => $nearCities
         ]);
     }
