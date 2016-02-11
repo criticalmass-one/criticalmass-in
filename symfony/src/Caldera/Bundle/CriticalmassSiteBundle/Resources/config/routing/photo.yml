@@ -15,15 +15,15 @@ caldera_criticalmass_photo_relocate:
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:relocate }
 
 caldera_criticalmass_photo_toggle:
-    pattern: /{citySlug}/{rideDate}/photo/{{photoId}}
+    pattern: /{citySlug}/{rideDate}/photo/{photoId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:toggle }
 
 caldera_criticalmass_photo_delete:
-    pattern: /{citySlug}/{rideDate}/managephotos/{{photoId}}/delete
+    pattern: /{citySlug}/{rideDate}/managephotos/{photoId}/delete
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:delete }
 
 caldera_criticalmass_photo_place_single:
-    pattern: /{citySlug}/{rideDate}/managephotos/{{photoId}}/place
+    pattern: /{citySlug}/{rideDate}/managephotos/{photoId}/place
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:placeSingle }
 
 caldera_criticalmass_gallery_photos_upload_ride_process:
