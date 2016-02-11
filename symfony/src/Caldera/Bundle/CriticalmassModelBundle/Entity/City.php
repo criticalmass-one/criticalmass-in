@@ -245,6 +245,14 @@ class City
     private $updatedAt;
 
     /**
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    protected $timezone;
+
+    /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
 	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
 	 * mit dem Namen ihrer Stadt dargestellt werden.
@@ -1255,5 +1263,17 @@ class City
     public function getPin()
     {
         return $this->latitude.','.$this->longitude;
+    }
+
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    public function getTimezone()
+    {
+        return $this->timezone;
     }
 }
