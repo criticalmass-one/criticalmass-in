@@ -285,6 +285,16 @@ class RideController extends AbstractController
         );
     }
 
+    public function renderTimelapseTabAction(Request $request, Ride $ride)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:Tabs/TimelapseTab.html.twig',
+            [
+                'ride' => $ride
+            ]
+        );
+    }
+
     public function addestimateAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

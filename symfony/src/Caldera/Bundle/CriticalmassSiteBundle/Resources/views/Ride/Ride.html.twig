@@ -39,6 +39,9 @@
                 <li role="presentation">
                     <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a>
                 </li>
+                <li role="presentation">
+                    <a href="#timelapse" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Timelapse</a>
+                </li>
                 {% endif %}
             </ul>
 
@@ -49,6 +52,7 @@
 
                 {% if pastRide %}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderTracksTab', { 'ride': ride } )) %}
+                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderTimelapseTab', { 'ride': ride } )) %}
                 {% endif %}
             </div>
         </div>
