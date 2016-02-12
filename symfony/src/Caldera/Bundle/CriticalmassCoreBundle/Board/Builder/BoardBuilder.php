@@ -2,9 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Board\Builder;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityRideBoard;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityBoard;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\RideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Category\CityCategory;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
@@ -63,13 +63,13 @@ class BoardBuilder
             $category = new CityCategory();
             $category->setCity($city);
 
-            $board = new CityTalkBoard();
+            $board = new CityBoard();
             $board->setCity($city);
             $category->addBoard($board);
 
             $rides = $this->rideRepository->findRidesForCity($city);
             $posts = $this->postRepository->getPostsForCityRides($city);
-            $board = new CityRideBoard();
+            $board = new RideBoard();
             $board->setCity($city);
             $board->setRides($rides);
             $board->setPosts($posts);

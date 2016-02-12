@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Board\Board;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 
-class CityRideBoard implements BoardInterface
+class RideBoard implements BoardInterface
 {
     /**
      * @var City $city
