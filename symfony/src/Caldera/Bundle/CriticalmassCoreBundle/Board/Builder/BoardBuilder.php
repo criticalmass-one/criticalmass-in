@@ -7,11 +7,13 @@ use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityRideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Category\CityCategory;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\ThreadRepository;
 
 class BoardBuilder
 {
@@ -33,6 +35,11 @@ class BoardBuilder
      */
     protected $postRepository;
 
+    /**
+     * @var ThreadRepository $threadRepository
+     */
+    protected $threadRepository;
+
 
     public function __construct($doctrine)
     {
@@ -46,6 +53,7 @@ class BoardBuilder
         $this->cityRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:City');
         $this->rideRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride');
         $this->postRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Post');
+        $this->threadRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread');
     }
 
     public function buildOverview()
@@ -96,6 +104,22 @@ class BoardBuilder
     public function buildRideThread(Ride $ride)
     {
         $this->list = $this->postRepository->getPostsForRide($ride);
+    }
+
+    public function buildCityThreadBoard(City $city)
+    {
+        $threads = $this->threadRepository->findThreadsForCity($city);
+
+        foreach ($threads as $thread) {
+            $posts = $this->postRepository->getPostsForThread($thread);
+
+            $cityThread = new CityThread();
+
+            $cityThread->setThread($thread);
+            $cityThread->setPosts($posts);
+
+            $this->list[] = $cityThread;
+        }
     }
 
     public function getList()

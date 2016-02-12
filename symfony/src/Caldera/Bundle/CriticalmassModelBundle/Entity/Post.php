@@ -48,6 +48,12 @@ class Post
     protected $city;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Thread", inversedBy="posts")
+     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
+     */
+    protected $thread;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", inversedBy="posts")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
@@ -377,5 +383,28 @@ class Post
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set thread
+     *
+     * @param Thread $thread
+     * @return Post
+     */
+    public function setThread(Thread $thread = null)
+    {
+        $this->thread = $thread;
+
+        return $this;
+    }
+
+    /**
+     * Get thread
+     *
+     * @return Thread
+     */
+    public function getThread()
+    {
+        return $this->thread;
     }
 }

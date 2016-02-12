@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityImageCommentBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityRideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
@@ -48,6 +49,10 @@ class Router extends sfRouter
 
         if ($object instanceof CityRideThread) {
             return $this->generateCityRideThreadUrl($object, $referenceType);
+        }
+
+        if ($object instanceof CityThread) {
+            return $this->generateCityThreadUrl($object, $referenceType);
         }
 
         return parent::generate($object, $parameters, $referenceType);
@@ -140,6 +145,18 @@ class Router extends sfRouter
         $parameters = [
             'citySlug' => $cityRideThread->getRide()->getCity()->getMainSlugString(),
             'rideDate' => $cityRideThread->getRide()->getFormattedDate()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    private function generateCityThreadUrl(CityThread $cityThread, $referenceType)
+    {
+        $route = 'caldera_criticalmass_board_citythread';
+
+        $parameters = [
+            'citySlug' => $cityThread->getCity()->getMainSlugString(),
+            'threadId' => $cityThread->getThread()->getId()
         ];
 
         return parent::generate($route, $parameters, $referenceType);

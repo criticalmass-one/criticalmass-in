@@ -3,8 +3,12 @@ caldera_criticalmass_board_overview:
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:overview }
 
 caldera_criticalmass_board_talkboard:
-    pattern:  /{citySlug}/talkboard
+    pattern:  /{citySlug}/threads
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewtalkboard }
+
+caldera_criticalmass_board_citythread:
+    pattern:  /{citySlug}/thread/{threadId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewcitythread }
 
 caldera_criticalmass_board_rideboard:
     pattern:  /{citySlug}/rideboard

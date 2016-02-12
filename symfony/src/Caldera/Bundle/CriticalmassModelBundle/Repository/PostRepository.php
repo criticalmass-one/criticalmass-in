@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
+use \Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
 
 class PostRepository extends EntityRepository
 {
@@ -59,6 +60,20 @@ class PostRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('ride.city', $city->getId()));
 
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getPostsForThread(Thread $thread)
+    {
+        $builder = $this->createQueryBuilder('post');
+
+        $builder->select('post');
+
+        $builder->where($builder->expr()->eq('post.thread', $thread->getId()));
+        $builder->andWhere($builder->expr()->eq('post.enabled', 1));
 
         $query = $builder->getQuery();
 

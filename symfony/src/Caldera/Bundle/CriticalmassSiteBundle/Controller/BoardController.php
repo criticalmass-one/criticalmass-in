@@ -35,16 +35,19 @@ class BoardController extends AbstractController
          */
         $boardBuilder = $this->get('caldera.criticalmass.board.builder.boardbuilder');
 
-        $boardBuilder->buildTalkBoard($city);
-
-        $tree = $boardBuilder->getList();
+        $boardBuilder->buildCityThreadBoard($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:overview.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:viewCityThreadBoard.html.twig',
             [
-                'boardTree' => $tree
+                'threads' => $boardBuilder->getList()
             ]
         );
+    }
+
+    public function viewcitythreadAction(Request $request, $citySlug, $threadId)
+    {
+
     }
 
     public function viewrideboardAction(Request $request, $citySlug)
