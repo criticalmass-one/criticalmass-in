@@ -52,6 +52,7 @@ require.config({
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
         "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "TimelapsePage": "/bundles/calderacriticalmasssite/js/modules/page/TimelapsePage",
+        "Timelapse": "/bundles/calderacriticalmasssite/js/modules/map/Timelapse",
         "TrackRangePage": "/bundles/calderacriticalmasssite/js/modules/page/TrackRangePage",
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",

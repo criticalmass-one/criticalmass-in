@@ -36,7 +36,8 @@
                                 </a>
                             </td>
                             <td>
-
+                                <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(thread.getUser(), 36) }}" alt="..." />
+                                von <strong>{{ thread.getUser().getUsername() }}</strong>
                             </td>
                             <td>
                                 {{ thread.getPostNumber() }}

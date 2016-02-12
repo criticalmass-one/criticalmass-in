@@ -1,5 +1,5 @@
-define(['Map', 'PositionMarker', 'TrackEntity', 'bootstrap-slider'], function() {
-    TimelapsePage = function(context, options) {
+define(['Map', 'PositionMarker'], function() {
+    Timelapse = function(context, options) {
         this._loadStyles();
         this._initSpeedSlider();
         this._initMap();
