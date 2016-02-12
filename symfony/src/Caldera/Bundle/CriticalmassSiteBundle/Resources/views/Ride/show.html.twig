@@ -2,11 +2,6 @@
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
-
-{% block additionalHeaderElements %}
-    <link rel="stylesheet" href="" />
-{% endblock %}
-
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
     <li><a href="{{ path(city) }}">{{ city.city }}</a></li>
@@ -21,15 +16,4 @@
 
         {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_pagination.html.twig') with { 'previousRide': previousRide, 'nextRide': nextRide } %}
     </div>
-{% endblock %}
-
-{% block additionalFooterElements %}
-<script src="https://raw.githubusercontent.com/luis-almeida/unveil/master/jquery.unveil.js"></script>
-<script>
-    domReadyQueue.push(function($) {
-
-        $('img').unveil();
-    });
-</script>
-
 {% endblock %}
