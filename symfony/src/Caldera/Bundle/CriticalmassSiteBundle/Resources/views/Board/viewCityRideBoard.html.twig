@@ -31,16 +31,20 @@
                     {% for thread in threads %}
                         <tr>
                             <td>
-                                {{ thread.getTitle() }}
+                                <a href="{{ path(thread) }}">
+                                    {{ thread.getTitle() }}
+                                </a>
                             </td>
                             <td>
 
                             </td>
                             <td>
-
+                                {{ thread.getPostNumber() }}
                             </td>
                             <td>
-
+                                {% if thread.getLastPost() %}
+                                {{ thread.getLastPost().dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

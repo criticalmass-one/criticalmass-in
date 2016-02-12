@@ -65,4 +65,23 @@ class BoardController extends AbstractController
             ]
         );
     }
+
+    public function viewridethreadAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        /**
+         * @var BoardBuilder $boardBuilder
+         */
+        $boardBuilder = $this->get('caldera.criticalmass.board.builder.boardbuilder');
+
+        $boardBuilder->buildRideThread($ride);
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Board:viewCityRideThread.html.twig',
+            [
+                'posts' => $boardBuilder->getList()
+            ]
+        );
+    }
 }

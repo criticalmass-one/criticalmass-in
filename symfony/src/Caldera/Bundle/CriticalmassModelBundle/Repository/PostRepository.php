@@ -22,8 +22,8 @@ class PostRepository extends EntityRepository
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
-        $builder->where($builder->expr()->eq('post.ride', $ride));
-        $builder->where($builder->expr()->eq('post.enabled', true));
+        $builder->where($builder->expr()->eq('post.ride', $ride->getId()));
+        $builder->andWhere($builder->expr()->eq('post.enabled', true));
         $builder->addOrderBy('post.dateTime', 'ASC');
 
         $query = $builder->getQuery();

@@ -10,6 +10,10 @@ caldera_criticalmass_board_rideboard:
     pattern:  /{citySlug}/rideboard
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewrideboard }
 
+caldera_criticalmass_board_ridethread:
+    pattern:  /{citySlug}/{rideDate}/thread
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewridethread }
+
 caldera_criticalmass_board_imagecommentboard:
     pattern:  /{citySlug}/imagecommentboard
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewimagecommentboard }

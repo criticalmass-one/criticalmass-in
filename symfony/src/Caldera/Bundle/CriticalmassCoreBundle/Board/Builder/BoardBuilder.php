@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Category\CityCategory;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
@@ -82,15 +83,23 @@ class BoardBuilder
         foreach ($rides as $ride) {
             $thread = new CityRideThread();
 
+            $posts = $this->postRepository->getPostsForRide($ride);
+
             $thread->setRide($ride);
+            $thread->setPosts($posts);
 
             $this->list[] = $thread;
         }
+    }
+
+
+    public function buildRideThread(Ride $ride)
+    {
+        $this->list = $this->postRepository->getPostsForRide($ride);
     }
 
     public function getList()
     {
         return $this->list;
     }
-
 }
