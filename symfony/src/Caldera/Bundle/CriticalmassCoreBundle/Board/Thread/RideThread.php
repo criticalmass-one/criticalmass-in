@@ -2,11 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Board\Thread;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 
-class CityRideThread extends BaseThread
+class RideThread extends BaseThread
 {
     /**
      * @var Ride $ride

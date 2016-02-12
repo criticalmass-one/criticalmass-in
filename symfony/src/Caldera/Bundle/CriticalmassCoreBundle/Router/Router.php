@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\RideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityThread;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
@@ -38,16 +39,16 @@ class Router extends sfRouter
             return $this->generateCityBoardUrl($object, $referenceType);
         }
 
+        if ($object instanceof CityThread) {
+            return $this->generateCityThreadUrl($object, $referenceType);
+        }
+
         if ($object instanceof RideBoard) {
             return $this->generateRideBoardUrl($object, $referenceType);
         }
 
-        if ($object instanceof CityRideThread) {
+        if ($object instanceof RideThread) {
             return $this->generateCityRideThreadUrl($object, $referenceType);
-        }
-
-        if ($object instanceof CityThread) {
-            return $this->generateCityThreadUrl($object, $referenceType);
         }
 
         return parent::generate($object, $parameters, $referenceType);
@@ -122,7 +123,7 @@ class Router extends sfRouter
         return parent::generate($route, $parameters, $referenceType);
     }
 
-    private function generateCityRideThreadUrl(CityRideThread $cityRideThread, $referenceType)
+    private function generateCityRideThreadUrl(RideThread $cityRideThread, $referenceType)
     {
         $route = 'caldera_criticalmass_board_ridethread';
 

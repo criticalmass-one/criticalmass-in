@@ -4,9 +4,9 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Board\Builder;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\RideBoard;
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Category\CityCategory;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityThread;
+use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
@@ -84,7 +84,7 @@ class BoardBuilder
         $rides = $this->rideRepository->findRidesForCity($city);
 
         foreach ($rides as $ride) {
-            $thread = new CityRideThread();
+            $thread = new RideThread();
 
             $posts = $this->postRepository->getPostsForRide($ride);
 
@@ -94,7 +94,6 @@ class BoardBuilder
             $this->list[] = $thread;
         }
     }
-
 
     public function buildRideThread(Ride $ride)
     {
