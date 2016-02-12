@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Board\Thread;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
 
 class CityThread extends BaseThread

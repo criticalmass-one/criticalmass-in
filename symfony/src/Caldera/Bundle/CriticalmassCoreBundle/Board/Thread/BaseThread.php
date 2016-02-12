@@ -19,6 +19,11 @@ abstract class BaseThread implements ThreadInterface
         return count($this->posts);
     }
 
+    public function getUser()
+    {
+        return $this->posts[0]->getUser();
+    }
+
     public function getLastPost()
     {
         /**
