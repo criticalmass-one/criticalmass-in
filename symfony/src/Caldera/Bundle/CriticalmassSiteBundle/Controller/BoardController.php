@@ -40,6 +40,7 @@ class BoardController extends AbstractController
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:viewCityThreadBoard.html.twig',
             [
+                'city' => $city,
                 'threads' => $boardBuilder->getList()
             ]
         );
