@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Router;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityImageCommentBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityRideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
@@ -41,10 +40,6 @@ class Router extends sfRouter
 
         if ($object instanceof CityRideBoard) {
             return $this->generateCityRideBoardUrl($object, $referenceType);
-        }
-
-        if ($object instanceof CityImageCommentBoard) {
-            return $this->generateCityImageCommentBoardUrl($object, $referenceType);
         }
 
         if ($object instanceof CityRideThread) {
@@ -122,17 +117,6 @@ class Router extends sfRouter
 
         $parameters = [
             'citySlug' => $cityRideBoard->getCity()->getMainSlugString()
-        ];
-
-        return parent::generate($route, $parameters, $referenceType);
-    }
-
-    private function generateCityImageCommentBoardUrl(CityImageCommentBoard $cityImageCommentBoard, $referenceType)
-    {
-        $route = 'caldera_criticalmass_board_imagecommentboard';
-
-        $parameters = [
-            'citySlug' => 'hamburg'
         ];
 
         return parent::generate($route, $parameters, $referenceType);

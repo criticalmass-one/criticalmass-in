@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Board\Builder;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityImageCommentBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityRideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\CityRideThread;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityTalkBoard;
@@ -74,10 +73,6 @@ class BoardBuilder
             $board->setCity($city);
             $board->setRides($rides);
             $board->setPosts($posts);
-            $category->addBoard($board);
-
-            $board = new CityImageCommentBoard();
-            $board->setCity($city);
             $category->addBoard($board);
 
             $this->list[] = $category;
