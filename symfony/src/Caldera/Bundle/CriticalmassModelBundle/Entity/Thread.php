@@ -31,6 +31,27 @@ class Thread
     protected $title;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $viewNumber;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $postNumber;
+    /**
+     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post")
+     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
+     */
+    protected $firstPost;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post")
+     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
+     */
+    protected $lastPost;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
@@ -140,5 +161,53 @@ class Thread
     public function getCity()
     {
         return $this->city;
+    }
+
+    public function setFirstPost(Post $firstPost)
+    {
+        $this->firstPost = $firstPost;
+
+        return $this;
+    }
+
+    public function getFirstPost()
+    {
+        return $this->firstPost;
+    }
+
+    public function setLastPost(Post $lastPost)
+    {
+        $this->lastPost = $lastPost;
+
+        return $this;
+    }
+
+    public function getLastPost()
+    {
+        return $this->lastPost;
+    }
+
+    public function setViewNumber($viewNumber)
+    {
+        $this->viewNumber = $viewNumber;
+
+        return $this;
+    }
+
+    public function getViewNumber()
+    {
+        return $this->viewNumber;
+    }
+
+    public function setPostNumber($postNumber)
+    {
+        $this->postNumber = $postNumber;
+
+        return $this;
+    }
+
+    public function getPostNumber()
+    {
+        return $this->postNumber;
     }
 }

@@ -34,25 +34,32 @@ class BoardController extends AbstractController
     {
         $city = $this->getCheckedCity($citySlug);
 
-        /**
-         * @var BoardBuilder $boardBuilder
-         */
-        $boardBuilder = $this->get('caldera.criticalmass.board.builder.boardbuilder');
-
-        $boardBuilder->buildCityThreadBoard($city);
+        $threads = $this->getThreadRepository()->findThreadsForCity($city);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:viewCityBoard.html.twig',
             [
                 'city' => $city,
-                'threads' => $boardBuilder->getList()
+                'threads' => $threads
             ]
         );
     }
 
     public function viewcitythreadAction(Request $request, $citySlug, $threadId)
     {
+        $city = $this->getCheckedCity($citySlug);
 
+        $thread = $this->getThreadRepository()->find($threadId);
+        $posts = $this->getPostRepository()->getPostsForThread($thread);
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Board:viewThread.html.twig',
+            [
+                'city' => $city,
+                'thread' => $thread,
+                'posts' => $posts
+            ]
+        );
     }
 
     public function viewrideboardAction(Request $request, $citySlug)
@@ -134,6 +141,8 @@ class BoardController extends AbstractController
 
             $thread->setCity($city);
             $thread->setTitle($data['title']);
+            $thread->setFirstPost($post);
+            $thread->setLastPost($post);
 
             $post->setUser($this->getUser());
             $post->setMessage($data['message']);

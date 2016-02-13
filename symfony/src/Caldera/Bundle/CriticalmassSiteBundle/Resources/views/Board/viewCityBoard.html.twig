@@ -43,6 +43,9 @@
                                 Antworten
                             </th>
                             <th>
+                                Ansichten
+                            </th>
+                            <th>
                                 letzter Beitrag
                             </th>
                         </tr>
@@ -52,22 +55,24 @@
                         <tr>
                             <td>
                                 <a href="{{ path(thread) }}">
-                                    {{ thread.getTitle() }}
+                                    {{ thread.title }}
                                 </a>
                             </td>
                             <td>
-                                <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(thread.getUser(), 36) }}" alt="..." />
-                                von <strong>{{ thread.getUser().getUsername() }}</strong>
+                                <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(thread.firstPost.user, 36) }}" alt="..." />
+                                von <strong>{{ thread.firstPost.user.username }}</strong>
                             </td>
                             <td>
-                                {{ thread.getPostNumber() }}
+                                {{ thread.postNumber }}
                             </td>
                             <td>
-                                {% if thread.getLastPost() %}
-                                    {% set lastPost = thread.getLastPost() %}
-                                    <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(lastPost.getUser(), 36) }}" alt="..." />
-                                    von <strong>{{ lastPost.getUser().getUsername() }}</strong><br />
-                                    {{ lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                {{ thread.viewNumber }}
+                            </td>
+                            <td>
+                                {% if thread.lastPost %}
+                                <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(thread.lastPost.user, 36) }}" alt="..." />
+                                von <strong>{{ thread.lastPost.user.username }}</strong><br />
+                                {{ thread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
                                 {% endif %}
                             </td>
                         </tr>

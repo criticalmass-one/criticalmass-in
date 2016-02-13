@@ -10,6 +10,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\ThreadRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -97,6 +98,14 @@ abstract class AbstractController extends Controller
     protected function getTrackRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Track');
+    }
+
+    /**
+     * @return ThreadRepository
+     */
+    protected function getThreadRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Thread');
     }
 
     /**
