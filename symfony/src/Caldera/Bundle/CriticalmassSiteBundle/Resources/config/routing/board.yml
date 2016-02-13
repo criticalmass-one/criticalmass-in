@@ -2,13 +2,17 @@ caldera_criticalmass_board_overview:
     pattern:  /boards/overview
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:overview }
 
-caldera_criticalmass_board_talkboard:
+caldera_criticalmass_board_cityboard:
     pattern:  /{citySlug}/threads
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewtalkboard }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewcityboard }
 
 caldera_criticalmass_board_citythread:
     pattern:  /{citySlug}/thread/{threadId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewcitythread }
+
+caldera_criticalmass_board_addcitythread:
+    pattern:  /{citySlug}/addthread
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:addcitythread }
 
 caldera_criticalmass_board_rideboard:
     pattern:  /{citySlug}/rideboard
@@ -17,7 +21,3 @@ caldera_criticalmass_board_rideboard:
 caldera_criticalmass_board_ridethread:
     pattern:  /{citySlug}/{rideDate}/thread
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewridethread }
-
-caldera_criticalmass_board_imagecommentboard:
-    pattern:  /{citySlug}/imagecommentboard
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewimagecommentboard }

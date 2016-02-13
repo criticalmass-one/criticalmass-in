@@ -26,7 +26,7 @@ class BoardController extends AbstractController
         );
     }
 
-    public function viewtalkboardAction(Request $request, $citySlug)
+    public function viewcityboardAction(Request $request, $citySlug)
     {
         $city = $this->getCheckedCity($citySlug);
 

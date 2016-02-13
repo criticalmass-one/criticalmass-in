@@ -103,7 +103,7 @@ class Router extends sfRouter
 
     private function generateCityBoardUrl(CityBoard $cityTalkBoard, $referenceType)
     {
-        $route = 'caldera_criticalmass_board_talkboard';
+        $route = 'caldera_criticalmass_board_cityboard';
 
         $parameters = [
             'citySlug' => $cityTalkBoard->getCity()->getMainSlugString()
