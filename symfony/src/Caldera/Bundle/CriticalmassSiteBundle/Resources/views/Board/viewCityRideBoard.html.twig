@@ -3,7 +3,14 @@
 {% block title %}{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Diskussionen</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_board_overview') }}">
+            Diskussionen
+        </a>
+    </li>
+    <li class="active">
+        Touren der {{ city.title }}
+    </li>
 {% endblock %}
 
 {% block content %}
