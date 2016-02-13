@@ -8,7 +8,6 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class BoardController extends AbstractController
 {
@@ -43,7 +42,7 @@ class BoardController extends AbstractController
         $boardBuilder->buildCityThreadBoard($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:viewCityThreadBoard.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:viewCityBoard.html.twig',
             [
                 'city' => $city,
                 'threads' => $boardBuilder->getList()
