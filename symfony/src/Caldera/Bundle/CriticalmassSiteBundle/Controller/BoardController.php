@@ -63,7 +63,7 @@ class BoardController extends AbstractController
         $boardBuilder->buildRideBoard($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:viewCityRideBoard.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:viewRideBoard.html.twig',
             [
                 'city' => $city,
                 'threads' => $boardBuilder->getList()
@@ -83,7 +83,7 @@ class BoardController extends AbstractController
         $boardBuilder->buildRideThread($ride);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:viewCityRideThread.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:viewRideThread.html.twig',
             [
                 'posts' => $boardBuilder->getList()
             ]
