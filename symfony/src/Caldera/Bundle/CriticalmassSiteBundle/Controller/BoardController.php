@@ -3,7 +3,12 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Builder\BoardBuilder;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class BoardController extends AbstractController
 {
@@ -86,6 +91,77 @@ class BoardController extends AbstractController
             'CalderaCriticalmassSiteBundle:Board:viewRideThread.html.twig',
             [
                 'posts' => $boardBuilder->getList()
+            ]
+        );
+    }
+
+    public function addcitythreadAction(Request $request, $citySlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $data = [];
+        $form = $this->createFormBuilder($data)
+            ->add('title', 'text')
+            ->add('message', 'textarea')
+            ->getForm();
+
+        if ('POST' == $request->getMethod()) {
+            return $this->addCityThreadPostAction($request, $city, $form);
+        } else {
+            return $this->addCityThreadGetAction($request, $city, $form);
+        }
+    }
+
+    protected function addCityThreadGetAction(Request $request, City $city, Form $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Board:addCityThread.html.twig',
+            [
+                'city' => $city,
+                'form' => $form->createView()
+            ]
+        );
+    }
+
+    protected function addCityThreadPostAction(Request $request, City $city, Form $form)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $thread = new Thread();
+            $post = new Post();
+
+            $thread->setCity($city);
+            $thread->setTitle($data['title']);
+
+            $post->setUser($this->getUser());
+            $post->setMessage($data['message']);
+            $post->setThread($thread);
+            $post->setDateTime(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($thread);
+            $em->persist($post);
+
+            $em->flush();
+
+            return $this->redirectToRoute(
+                'caldera_criticalmass_board_citythread',
+                [
+                    'citySlug' => $city->getMainSlugString(),
+                    'threadId' => $thread->getId()
+                ]
+            );
+        }
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Board:addCityThread.html.twig',
+            [
+                'city' => $city,
+                'form' => $form->createView()
             ]
         );
     }

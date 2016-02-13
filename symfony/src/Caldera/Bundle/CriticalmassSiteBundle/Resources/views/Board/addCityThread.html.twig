@@ -1,0 +1,44 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block content %}
+    {{ form_errors(form) }}
+    <div class="container">
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Name:</label>
+                    {{ form_widget(form.message, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right">
+                    <a href="{{ path('caldera_criticalmass_board_cityboard', { 'citySlug': city.getMainSlugString() }) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
