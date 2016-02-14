@@ -46,7 +46,7 @@ class TrackReader extends GpxReader {
 
         while ($index < $endPoint) {
             $secondCoord = $this->simpleXml->trk->trkseg->trkpt[$index];
-            
+
             $dx = 71.5 * ((float) $firstCoord['lon'] - (float) $secondCoord['lon']);
             $dy = 111.3 * ((float) $firstCoord['lat'] - (float) $secondCoord['lat']);
 

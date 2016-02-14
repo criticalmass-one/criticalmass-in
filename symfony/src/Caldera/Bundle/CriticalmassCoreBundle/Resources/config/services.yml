@@ -83,3 +83,7 @@ services:
     caldera.criticalmass.board.builder.boardbuilder:
         class: Caldera\Bundle\CriticalmassCoreBundle\Board\Builder\BoardBuilder
         arguments: [ @doctrine ]
+
+    caldera.criticalmass.gps.distancecalculator.track:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator
+        arguments: [@doctrine, @caldera.criticalmass.gps.trackreader]

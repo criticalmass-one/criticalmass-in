@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
@@ -68,6 +69,7 @@ class OptimizeTracksCommand extends ContainerAwareCommand
                 $this->optimizeTrack($track);
 
                 $output->writeln('Optimized Track #'.$track->getId());
+                $output->writeln('Distance: '.$track->getDistance());
             }
         }
     }
@@ -87,18 +89,15 @@ class OptimizeTracksCommand extends ContainerAwareCommand
         $track->setLatLngList($list);
 
         /**
-         * @var TrackReader $gr
+         * @var TrackDistanceCalculator $tdc
          */
-        $gr = $this->getContainer()->get('caldera.criticalmass.gps.trackreader');
-        $gr->loadTrack($track);
+        $tdc = $this->getContainer()->get('caldera.criticalmass.gps.distancecalculator.track');
+        $tdc->loadTrack($track);
 
-        $track->setDistance($gr->calculateDistance());
-
-        $dateTime = $gr->getStartDateTime();
-        $dateTime->setTimezone(new \DateTimeZone('Europe/Berlin'));
-        echo $dateTime->format('d.m.Y H:i:s');
+        $track->setDistance($tdc->calculate());
 
         $track->setUpdatedAt(new \DateTime());
+
         $this->manager->persist($track);
         $this->manager->flush();
     }
