@@ -29,7 +29,20 @@
                 <th>Durchschnittsgeschwindigkeit</th>
             </tr>
             {% set trackNumber = 0 %}
+            {% set userHeadline = false %}
+            {% set glympseHeadline = false %}
+            {% set criticalmapsHeadline = false %}
+
             {% for track in tracks %}
+                {% if track.getUser() %}
+                {% if userHeadline == false %}
+                <tr>
+                    <td colspan="4">
+                        von criticalmass.in-Nutzern hochgeladene Tracks
+                    </td>
+                </tr>
+                {% set userHeadline = true %}
+                {% endif %}
                 <tr>
                     <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
                         <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
@@ -40,6 +53,53 @@
                     <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
                 </tr>
                 {% set trackNumber = trackNumber + 1 %}
+                {% endif %}
+            {% endfor %}
+
+            {% for track in tracks %}
+                {% if track.getTicket() %}
+                {% if glympseHeadline == false %}
+                <tr>
+                    <td colspan="4">
+                        über Glympse geteilte Tracks
+                    </td>
+                </tr>
+                {% set glympseHeadline = true %}
+                {% endif %}
+                <tr>
+                    <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
+                        <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
+                    </td>
+                    <td>{{ track.username }}</td>
+                    <td>{{ track.getDurationInterval.format('%h:%i') }}&nbsp;Stunden</td>
+                    <td>{{ track.distance|round(2) }}&nbsp;Kilometer</td>
+                    <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
+                </tr>
+                {% set trackNumber = trackNumber + 1 %}
+                {% endif %}
+            {% endfor %}
+
+            {% for track in tracks %}
+                {% if track.getCriticalmapsUser() %}
+                {% if criticalmapsHeadline == false %}
+                <tr>
+                    <td colspan="4">
+                        über Criticalmaps geteilte Tracks
+                    </td>
+                </tr>
+                {% set criticalmapsHeadline = true %}
+                {% endif %}
+                <tr>
+                    <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
+                        <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
+                    </td>
+                    <td>{{ track.username }}</td>
+                    <td>{{ track.getDurationInterval.format('%h:%i') }}&nbsp;Stunden</td>
+                    <td>{{ track.distance|round(2) }}&nbsp;Kilometer</td>
+                    <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
+                </tr>
+                {% set trackNumber = trackNumber + 1 %}
+                {% endif %}
             {% endfor %}
         </table>
     {% else %}
