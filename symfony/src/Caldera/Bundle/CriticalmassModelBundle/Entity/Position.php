@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  * @ORM\Table(name="position")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PositionRepository")
  */
 class Position
 {

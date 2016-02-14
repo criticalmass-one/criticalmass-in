@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
@@ -76,23 +77,19 @@ class RideRepository extends EntityRepository
         return $result;
     }
     
-    public function findRidesByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
+    public function findRideByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND SQRT((r.latitude - '.$latitude.') * (r.latitude - '.$latitude.') + (r.longitude - '.$longitude.') * (r.longitude - '.$longitude.')) < 0.1 AND DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' ORDER BY r.city DESC');
+        $queryString = 'SELECT r AS ride, SQRT((r.latitude - '.$latitude.') * (r.latitude - '.$latitude.') + (r.longitude - '.$longitude.') * (r.longitude - '.$longitude.')) AS distance FROM CalderaCriticalmassModelBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' ORDER BY distance ASC';
 
-        $result = array();
+        $query = $this->getEntityManager()->createQuery($queryString);
+        $query->setMaxResults(1);
+        $result = $query->getOneOrNullResult();
 
-        $tmp1 = $query->getResult();
-
-        foreach ($tmp1 as $tmp2)
-        {
-            foreach ($tmp2 as $ride)
-            {
-                $result[] = $ride;
-            }
+        if ($result) {
+            return $result['ride'];
         }
 
-        return $result;
+        return null;
     }
 
     public function findCityRideByDate(City $city, \DateTime $dateTime)

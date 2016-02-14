@@ -23,7 +23,13 @@ class CriticalmapsUser
      */
     protected $city;
 
-	/**
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="criticalmaps_users")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     */
+    protected $ride;
+
+    /**
 	 * @ORM\Column(type="string", length=255, nullable=false)
 	 */
 	protected $identifier;
@@ -250,11 +256,23 @@ class CriticalmapsUser
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\City 
+     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\City
      */
     public function getCity()
     {
         return $this->city;
+    }
+
+    public function setRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    public function getRide()
+    {
+        return $this->ride;
     }
 
     public function setExported($exported)
