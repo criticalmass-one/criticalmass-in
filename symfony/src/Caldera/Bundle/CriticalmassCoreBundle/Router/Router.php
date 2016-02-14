@@ -167,17 +167,17 @@ class Router extends sfRouter
             return parent::generate(
                 'caldera_criticalmass_region_world_region_2',
                 [
-                    'slug1' => $region->getSlug(),
-                    'slug2' => $region->getParent()->getSlug()
+                    'slug1' => $region->getParent()->getSlug(),
+                    'slug2' => $region->getSlug()
                 ],
                 $referenceType);
-        } elseif ($region->getParent()->getParent()->getParent() == null) {
+        } elseif ($region->getParent()->getParent()->getParent()->getParent() == null) {
             return parent::generate(
                 'caldera_criticalmass_region_world_region_3',
                 [
-                    'slug1' => $region->getSlug(),
+                    'slug1' => $region->getParent()->getParent()->getSlug(),
                     'slug2' => $region->getParent()->getSlug(),
-                    'slug3' => $region->getParent()->getParent()->getSlug()
+                    'slug3' => $region->getSlug()
                 ],
                 $referenceType);
         }
