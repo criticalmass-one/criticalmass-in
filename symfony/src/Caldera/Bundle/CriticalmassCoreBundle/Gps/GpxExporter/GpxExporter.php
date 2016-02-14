@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter;
 
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
 
 class GpxExporter
@@ -33,17 +34,13 @@ class GpxExporter
 
     protected function findPositions()
     {
-        $options = [];
-
         if ($this->ticket) {
-            $options = ['ticket' => $this->ticket->getId()];
+            $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findPositionsForTicket($this->ticket);
         }
 
         if ($this->criticalmapsUser) {
-            $options = ['criticalmapsUser' => $this->criticalmapsUser->getId()];
+            $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findPositionsForCriticalmapsUser($this->criticalmapsUser);
         }
-
-        $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findBy($options);
     }
 
     protected function generateGpxContent()
@@ -73,6 +70,9 @@ class GpxExporter
         $writer->startElement('trk');
         $writer->startElement('trkseg');
 
+        /**
+         * @var Position $position
+         */
         foreach ($this->positionArray as $position)
         {
             $writer->startElement('trkpt');
@@ -85,8 +85,16 @@ class GpxExporter
 
             $writer->startElement('time');
 
-            $dateTime = new \DateTime();
-            $dateTime->setTimestamp($position->getTimestamp());
+            /* Well, only positions provided by Glympse or external tools provide the timestamp of a position.
+             * Critical Maps only provides latitude and longitude, so we need to generate the timestamp ourself.
+             */
+            if ($position->getCriticalmapsUser()) {
+                $dateTime = $position->getCreationDateTime();
+            } else {
+                $dateTime = new \DateTime();
+                $dateTime->setTimestamp($position->getTimestamp());
+            }
+
 
             $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
 

@@ -37,7 +37,7 @@
                     <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ photos|length }}</span></a>
                 </li>
                 <li role="presentation">
-                    <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ ride.getActiveTracks|length }}</span></a>
+                    <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ tracks|length }}</span></a>
                 </li>
                 <li role="presentation">
                     <a href="#timelapse" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Timelapse</a>

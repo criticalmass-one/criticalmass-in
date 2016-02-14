@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    {% if ride.getActiveTracks()|length > 0 %}
+    {% if tracks|length > 0 %}
         <table class="table">
             <tr>
                 <th></th>
@@ -29,7 +29,7 @@
                 <th>Durchschnittsgeschwindigkeit</th>
             </tr>
             {% set trackNumber = 0 %}
-            {% for track in ride.getActiveTracks() %}
+            {% for track in tracks %}
                 <tr>
                     <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
                         <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />

@@ -48,7 +48,7 @@ class RideController extends AbstractController
             array(
                 'city' => $city, 
                 'ride' => $ride,
-                'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
+                'tracks' => $this->getTrackRepository()->findSuitableTracksByRide($ride),
                 'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
                 'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
                 'nextRide' => $nextRide,
@@ -238,7 +238,7 @@ class RideController extends AbstractController
 
     public function renderTracksTabAction(Request $request, Ride $ride)
     {
-        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
+        $tracks = $this->getTrackRepository()->findSuitableTracksByRide($ride);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:Tabs/TracksTab.html.twig',

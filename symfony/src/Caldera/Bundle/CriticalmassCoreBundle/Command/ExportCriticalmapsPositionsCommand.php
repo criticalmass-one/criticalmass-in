@@ -11,6 +11,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\CriticalmapsUserRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -57,13 +58,24 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
 
+        /**
+         * @var CriticalmapsUserRepository $repository
+         */
         $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:CriticalmapsUser');
 
         if ($input->hasOption('all')) {
-            $criticalmapsUsers = $repository->findBy(['exported' => false]);
+            $criticalmapsUsers = $repository->findNotExportedAssignedUsers();
+
+            $counter = 0;
 
             foreach ($criticalmapsUsers as $criticalmapsUser) {
                 $this->export($criticalmapsUser);
+
+                ++$counter;
+
+                if ($counter > 10) {
+                    break;
+                }
             }
         } else {
             /**
@@ -72,9 +84,20 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
             $criticalmapsUser = $repository->find($input->getArgument('criticalmapsId'));
 
             if ($criticalmapsUser->getExported()) {
-                $output->write('This ticket has already been exported.');
+                $output->write('This user has already been exported.');
             } else {
                 $this->export($criticalmapsUser);
+
+                $message = 'Exported user '.$criticalmapsUser->getId();
+
+                if ($criticalmapsUser->getRide()) {
+                    $message .= ' ('.$criticalmapsUser->getRide()->getCity()->getCity().')';
+                }
+
+                $message.= ' from '.$criticalmapsUser->getStartDateTime()->format('d.m.Y H:i:s');
+                $message.= ' to '.$criticalmapsUser->getEndDateTime()->format('d.m.Y H:i:s');
+
+                $output->writeln($message);
             }
         }
     }
@@ -104,6 +127,10 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
         $track->setCriticalmapsUser($criticalmapsUser);
         $track->setTrackFilename($filename);
         $track->setUsername($criticalmapsUser->getIdentifier());
+        $track->setRide($criticalmapsUser->getRide());
+
+        $track->setStartDateTime($criticalmapsUser->getStartDateTime());
+        $track->setEndDateTime($criticalmapsUser->getEndDateTime());
 
         $this->loadTrackProperties($track);
         $this->generateSimpleLatLngList($track);

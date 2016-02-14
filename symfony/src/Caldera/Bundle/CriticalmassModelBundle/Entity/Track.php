@@ -449,17 +449,41 @@ class Track
 
     public function getColorRed()
     {
-        return ($this->getUser() != null ? $this->getUser()->getColorRed() : $this->getTicket()->getColorRed());
+        if ($this->getUser()) {
+            return $this->getUser()->getColorRed();
+        } elseif ($this->getTicket()) {
+            return $this->getTicket()->getColorRed();
+        } elseif ($this->getCriticalmapsUser()) {
+            return $this->getCriticalmapsUser()->getColorRed();
+        }
+
+        return null;
     }
 
     public function getColorGreen()
     {
-        return ($this->getUser() != null ? $this->getUser()->getColorGreen() : $this->getTicket()->getColorGreen());
+        if ($this->getUser()) {
+            return $this->getUser()->getColorGreen();
+        } elseif ($this->getTicket()) {
+            return $this->getTicket()->getColorGreen();
+        } elseif ($this->getCriticalmapsUser()) {
+            return $this->getCriticalmapsUser()->getColorGreen();
+        }
+
+        return null;
     }
 
     public function getColorBlue()
     {
-        return ($this->getUser() != null ? $this->getUser()->getColorBlue() : $this->getTicket()->getColorBlue());
+        if ($this->getUser()) {
+            return $this->getUser()->getColorBlue();
+        } elseif ($this->getTicket()) {
+            return $this->getTicket()->getColorBlue();
+        } elseif ($this->getCriticalmapsUser()) {
+            return $this->getCriticalmapsUser()->getColorBlue();
+        }
+
+        return null;
     }
 
     public function __toString()
@@ -616,7 +640,8 @@ class Track
         $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
         
         $hours = (float) $seconds / 3600;
-        $velocity = $kilometres / $hours;
+
+        $velocity = $kilometres / ($hours + 0.0001);
         
         return $velocity;
     }

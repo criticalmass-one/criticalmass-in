@@ -448,4 +448,18 @@ class Position
     {
         return $this->ticket;
     }
+
+    public function setCriticalmapsUser(CriticalmapsUser $criticalmapsUser)
+    {
+        $this->criticalmapsUser = $criticalmapsUser;
+
+        return $this;
+    }
+
+    public function getCriticalmapsUser()
+    {
+        return $this->criticalmapsUser;
+    }
+
+
 }
