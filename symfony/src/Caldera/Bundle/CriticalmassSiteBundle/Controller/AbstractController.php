@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\RegionRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ThreadRepository;
@@ -77,7 +78,7 @@ abstract class AbstractController extends Controller
     }
 
     /**
-     * @return ObjectRepository
+     * @return RegionRepository
      */
     protected function getRegionRepository()
     {

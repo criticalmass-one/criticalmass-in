@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="region")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RegionRepository")
  */
 class Region
 {

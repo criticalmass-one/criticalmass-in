@@ -26,7 +26,7 @@ class RegionController extends AbstractController
         }
 
         $cities = $this->getCityRepository()->findCitiesOfRegion($region);
-        $regions = $this->getRegionRepository()->findByParent($region);
+        $regions = $this->getRegionRepository()->findByParentRegion($region);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Region:index.html.twig',
