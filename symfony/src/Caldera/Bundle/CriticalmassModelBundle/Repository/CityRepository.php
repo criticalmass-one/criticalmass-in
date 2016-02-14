@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
@@ -27,6 +28,23 @@ class CityRepository extends EntityRepository
 
         return $query->getResult();
 	}
+
+    public function findCitiesOfRegion(Region $region)
+    {
+        $builder = $this->createQueryBuilder('city');
+
+        $builder->select('city');
+
+        $builder->where($builder->expr()->eq('city.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
+        $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
+
+        $builder->orderBy('city.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 
     public function findEnabledCities()
     {

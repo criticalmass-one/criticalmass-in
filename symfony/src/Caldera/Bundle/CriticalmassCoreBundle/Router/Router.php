@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -48,6 +49,10 @@ class Router extends sfRouter
 
         if ($object instanceof RideThread) {
             return $this->generateCityRideThreadUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Region) {
+            return $this->generateRegionUrl($object, $referenceType);
         }
 
         return parent::generate($object, $parameters, $referenceType);
@@ -144,5 +149,37 @@ class Router extends sfRouter
         ];
 
         return parent::generate($route, $parameters, $referenceType);
+    }
+
+    private function generateRegionUrl(Region $region, $referenceType)
+    {
+        if ($region->getParent() == null) {
+            return parent::generate(
+                'caldera_criticalmass_region_world', [], $referenceType);
+        } elseif ($region->getParent()->getParent() == null) {
+            return parent::generate(
+                'caldera_criticalmass_region_world_region_1',
+                [
+                    'slug1' => $region->getSlug()
+                ],
+                $referenceType);
+        } elseif ($region->getParent()->getParent()->getParent() == null) {
+            return parent::generate(
+                'caldera_criticalmass_region_world_region_2',
+                [
+                    'slug1' => $region->getSlug(),
+                    'slug2' => $region->getParent()->getSlug()
+                ],
+                $referenceType);
+        } elseif ($region->getParent()->getParent()->getParent() == null) {
+            return parent::generate(
+                'caldera_criticalmass_region_world_region_3',
+                [
+                    'slug1' => $region->getSlug(),
+                    'slug2' => $region->getParent()->getSlug(),
+                    'slug3' => $region->getParent()->getParent()->getSlug()
+                ],
+                $referenceType);
+        }
     }
 }

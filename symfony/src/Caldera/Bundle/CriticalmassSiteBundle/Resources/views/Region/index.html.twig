@@ -1,0 +1,72 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Critical Mass in {{ region.name }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_region_world') }}">
+            Verzeichnis
+        </a>
+    </li>
+
+    {% if (region.parent and region.parent.parent and region.parent.parent.parent) %}
+        <li>
+            <a href="{{ path(region.parent.parent.parent) }}">
+                1 {{ region.parent.parent.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+    {% if (region.parent and region.parent.parent) %}
+        <li>
+            <a href="{{ path(region.parent.parent) }}">
+                2 {{ region.parent.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+
+    {% if (region.parent) %}
+        <li>
+            <a href="{{ path(region.parent) }}">
+                3 {{ region.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+    <li>
+        <a href="{{ path(region) }}">
+            4 {{ region.name }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Critical Mass in {{ region.name }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for city in cities %}
+                <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <h4>
+                                    <a href="{{ path(city) }}">
+                                        {{ city.title }}
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -26,6 +26,12 @@ class City
 	 */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     */
+    protected $region;
+
 	/**
 	 * Name der Stadt.
 	 *
@@ -47,7 +53,6 @@ class City
      * Kurze Beschreibung der Critical Mass dieser Stadt.
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
      */
     protected $description;
 
@@ -255,6 +260,18 @@ class City
      * @var string
      */
     protected $timezone;
+
+    public function setRegion(Region $region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
 
     /**
 	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in

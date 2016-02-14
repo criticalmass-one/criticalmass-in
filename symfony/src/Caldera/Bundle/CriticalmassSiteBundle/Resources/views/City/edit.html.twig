@@ -143,6 +143,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Region:</label>
+                            {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Link zum twitter-Konto dieser Critical Mass.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-6">
