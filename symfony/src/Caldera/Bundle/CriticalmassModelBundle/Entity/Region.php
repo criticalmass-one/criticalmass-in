@@ -145,4 +145,9 @@ class Region
         return $this->parent;
     }
 
+    public function isWorld()
+    {
+        return $this->id == 1;
+    }
+
 }
