@@ -17,3 +17,7 @@ caldera_criticalmass_timeline_post_write_photo:
 caldera_criticalmass_timeline_post_write_content:
     path:     /write/content/{contentId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }
+
+caldera_criticalmass_timeline_post_write_thread:
+    path:     /write/thread/{threadId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Post:write }

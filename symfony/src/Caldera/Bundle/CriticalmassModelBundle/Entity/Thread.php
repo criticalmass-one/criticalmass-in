@@ -33,12 +33,12 @@ class Thread
     /**
      * @ORM\Column(type="integer")
      */
-    protected $viewNumber;
+    protected $viewNumber = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $postNumber;
+    protected $postNumber = 0;
     /**
      * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post")
      * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
@@ -209,5 +209,10 @@ class Thread
     public function getPostNumber()
     {
         return $this->postNumber;
+    }
+
+    public function incPostNumber()
+    {
+        ++$this->postNumber;
     }
 }

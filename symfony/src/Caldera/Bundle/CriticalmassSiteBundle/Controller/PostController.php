@@ -14,12 +14,15 @@ class PostController extends AbstractController
         $cityId = null, 
         $rideId = null, 
         $photoId = null, 
-        $contentId = null
+        $contentId = null,
+        $threadId = null
+
     ) {
         $post = new Post();
 
         $ride = null;
         $city = null;
+        $thread = null;
 
         if ($cityId) {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
@@ -47,6 +50,13 @@ class PostController extends AbstractController
             $post->setContent($content);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_content_display', array('slug' => $content->getSlug()));
+        } elseif ($threadId) {
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread', array('threadId' => $threadId))));
+
+            $thread = $this->getThreadRepository()->find($threadId);
+            $post->setThread($thread);
+
+            $redirectUrl = $this->generateUrl($thread);
         } else {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
 
@@ -58,8 +68,18 @@ class PostController extends AbstractController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+
+
             $post->setUser($this->getUser());
             $em->persist($post);
+
+            /* if we have a thread we need some additional behaviour here after the post is persisted */
+            if ($thread) {
+                $thread->setLastPost($post);
+                $thread->incPostNumber();
+                $em->persist($thread);
+            }
+
             $em->flush();
 
             /* Using the user’s referer will not work as the user might come from the writefailed page and would be
@@ -120,29 +140,5 @@ class PostController extends AbstractController
 
         /* And render our shit. */
         return $this->render('CalderaCriticalmassSiteBundle:Post:list.html.twig', array('posts' => $posts));
-    }
-
-    public function deleteconfirmAction(Request $request, $postId = 0) {
-        if ($postId > 0) {
-            $em = $this->getDoctrine()->getManager();
-            $post = $em->find('CalderaCriticalmassTimelineBundle:Post',$postId);
-            $em->remove($post);
-            $em->flush();
-        }
-
-        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
-    }
-
-    public function reportconfirmAction(Request $request, $postId = 0) {
-        if ($postId > 0) {
-            $em = $this->getDoctrine()->getManager();
-            $post = $em->find('CalderaCriticalmassTimelineBundle:Post',$postId);
-
-            $content = "Es wurde der Kommentar mit der ID " + $postId + "gemeldet.\n" + "Der Inhalt:\n" + $post->getMessage();
-
-            mail("malte@criticalmass.in", "Kommentar gemeldet", $content, "malte@criticalmass.in");
-        }
-
-        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
 }
