@@ -2,19 +2,21 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Request;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $blogArticles = $this->getBlogArticleRepository()->findBy([]);
         $currentRides = $this->getRideRepository()->findCurrentRides();
-        
-        return $this->render('CalderaCriticalmassSiteBundle:Frontpage:index.html.twig',
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Frontpage:index.html.twig',
             [
                 'blogArticles' => $blogArticles,
                 'currentRides' => $currentRides
-            ]);
+            ]
+        );
     }
 }
