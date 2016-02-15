@@ -45,6 +45,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% if app.getUser() %}
+                <a href="{{ path('caldera_criticalmass_desktop_city_add') }}" class="btn btn-success margin-top-medium pull-right">
+                    <i class="fa fa-plus"></i>
+                    Stadt hinzufügen
+                </a>
+               {% endif %}
                 <h1>
                     {% if region.isWorld() %}
                     Critical Mass weltweit

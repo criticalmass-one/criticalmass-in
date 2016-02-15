@@ -278,9 +278,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
+                    {% if city %}
                     <a href="{{ path(city) }}" class="btn btn-default">
                         Abbrechen
                     </a>
+                    {% else %}
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    {% endif %}
                     <button type="submit" class="btn btn-success">
                         Speichern
                     </button>

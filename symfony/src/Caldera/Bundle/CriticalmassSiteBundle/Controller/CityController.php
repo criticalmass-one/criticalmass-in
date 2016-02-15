@@ -2,11 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\CitySlugGenerator\CitySlugGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\StandardCityType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CityType;
-use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -104,7 +103,7 @@ class CityController extends AbstractController
         $city = new City();
 
         $form = $this->createForm(
-            new CityType(),
+            new StandardCityType(),
             $city,
             [
                 'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')
@@ -129,7 +128,7 @@ class CityController extends AbstractController
             $hasErrors = false;
 
             $form = $this->createForm(
-                new CityType(),
+                new StandardCityType(),
                 $city,
                 [
                     'action' => $this->generateUrl(
