@@ -9,7 +9,7 @@ class FrontpageController extends AbstractController
     public function indexAction()
     {
         $blogArticles = $this->getBlogArticleRepository()->findBy([]);
-        $currentRides = $this->getRideRepository()->findCurrentRides();
+        $currentRides = $this->getRideRepository()->findFrontpageRides();
         
         return $this->render('CalderaCriticalmassSiteBundle:Frontpage:index.html.twig',
             [
