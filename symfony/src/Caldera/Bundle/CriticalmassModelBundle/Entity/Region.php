@@ -39,6 +39,16 @@ class Region
      */
     protected $parent;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Region", mappedBy="parent")
+     */
+    protected $children;
+
+    /**
+     * @ORM\OneToMany(targetEntity="City", mappedBy="region")
+     */
+    protected $cities;
+
     public function __toString()
     {
         return $this->name;

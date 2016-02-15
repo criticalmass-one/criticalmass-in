@@ -19,15 +19,13 @@ class RegionController extends AbstractController
             $region = $this->getRegionRepository()->findOneBySlug($slug2);
         } elseif ($slug1) {
             $region = $this->getRegionRepository()->findOneBySlug($slug1);
-        }
-
-        if (!$region) {
-            throw new NotFoundHttpException();
+        } else {
+            $region = $this->getRegionRepository()->find(1);
         }
 
         $cities = $this->getCityRepository()->findCitiesOfRegion($region);
         $regions = $this->getRegionRepository()->findByParentRegion($region);
-
+        
         return $this->render(
             'CalderaCriticalmassSiteBundle:Region:index.html.twig',
             [

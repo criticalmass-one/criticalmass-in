@@ -46,6 +46,21 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function countCitiesOfRegion(Region $region)
+    {
+        $builder = $this->createQueryBuilder('city');
+
+        $builder->select('COUNT(city)');
+
+        $builder->where($builder->expr()->eq('city.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
+        $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
     public function findEnabledCities()
     {
         return $this->findCities();
