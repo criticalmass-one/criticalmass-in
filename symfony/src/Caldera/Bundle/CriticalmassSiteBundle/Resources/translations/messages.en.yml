@@ -1,0 +1,30 @@
+criticalmass:
+    logoname: Critical Mass
+    brandname: criticalmass.in
+
+    navigation:
+        cities:
+            cities: Cities
+            list: List
+            directory: Directory
+            calendar: Calendar
+        criticalmass:
+            criticalmass: Critical Mass
+            about: About Critical Mass
+            faq: FAQ
+            tips: Tips
+            about-us: About Caldera Critical Mass
+        live:
+            live: Live
+            map: Live Map
+            glympse: Location sharing with Glympse
+            criticalmaps: Location sharing with Critical Maps
+        account:
+            account: Your account
+            tracks: Tracks
+            apps: Apps
+            photos: Photos
+            logout: Logout
+            login: Login
+        search:
+            search: Search

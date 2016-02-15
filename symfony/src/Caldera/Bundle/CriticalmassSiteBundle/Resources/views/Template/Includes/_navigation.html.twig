@@ -15,7 +15,7 @@
             </button>
             
             <a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
-                Critical Mass
+                {% trans %}criticalmass.logoname{% endtrans %}
             </a>
         </div>
 
@@ -24,23 +24,23 @@
                 <li class="dropdown">
                     <a href="{{ path('caldera_criticalmass_desktop_city_list') }}" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-university"></i>
-                        Städte
+                        {% trans %}criticalmass.navigation.cities.cities{% endtrans %}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
-                                Städteliste
+                                {% trans %}criticalmass.navigation.cities.list{% endtrans %}
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_region_world') }}">
-                                Verzeichnis
+                                {% trans %}criticalmass.navigation.cities.directory{% endtrans %}
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_calendar') }}">
-                                Kalender
+                                {% trans %}criticalmass.navigation.cities.calendar{% endtrans %}
                             </a>
                         </li>
                     </ul>
@@ -49,29 +49,29 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                         <i class="fa fa-bicycle"></i>
-                        Critical Mass
+                        {% trans %}criticalmass.navigation.criticalmass.criticalmass{% endtrans %}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
-                                Über die Critical Mass
+                                {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'faq' }) }}">
-                                Häufig gestellte Fragen
+                                {% trans %}criticalmass.navigation.criticalmass.faq{% endtrans %}
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'tipps-und-tricks' }) }}">
-                                Tipps und Tricks
+                                {% trans %}criticalmass.navigation.criticalmass.tips{% endtrans %}
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'about-us/caldera' }) }}">
-                                Über Caldera criticalmass.in
+                                {% trans %}criticalmass.navigation.criticalmass.about-us{% endtrans %}
                             </a>
                         </li>
                     </ul>
@@ -80,25 +80,25 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                         <i class="fa fa-map-marker"></i>
-                        Live
+                        {% trans %}criticalmass.navigation.live.live{% endtrans %}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="{{ path('caldera_criticalmass_live') }}">
-                                Live-Karte
+                                {% trans %}criticalmass.navigation.live.map{% endtrans %}
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">
-                                Standort teilen mit Glympse
+                                {% trans %}criticalmass.navigation.live.glympse{% endtrans %}
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'critical-maps' }) }}">
-                                Standort teilen mit Critical Maps
+                                {% trans %}criticalmass.navigation.live.criticalmaps{% endtrans %}
                             </a>
                         </li>
                     </ul>
@@ -116,30 +116,30 @@
                 <li class="dropdown">
                     <a href="{{ path('fos_user_security_login') }}" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
-                        Benutzerkonto
+                        {% trans %}criticalmass.navigation.account.account{% endtrans %}
                         <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="{{ path('caldera_criticalmass_track_list') }}">
-                                Deine Tracks
+                                {% trans %}criticalmass.navigation.account.tracks{% endtrans %}
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_api_app_list') }}">
-                                Deine Apps
+                                {% trans %}criticalmass.navigation.account.apps{% endtrans %}
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                Deine Fotos
+                                {% trans %}criticalmass.navigation.account.photos{% endtrans %}
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a href="{{ path('sonata_user_security_logout') }}">
-                                Abmelden
+                                {% trans %}criticalmass.navigation.account.logout{% endtrans %}
                             </a>
                         </li>
                     </ul>
@@ -148,7 +148,7 @@
                 <li>
                     <a href="{{ path('fos_user_security_login') }}">
                         <i class="fa fa-user"></i>
-                        Login
+                        {% trans %}criticalmass.navigation.account.login{% endtrans %}
                     </a>
                 </li>
                 {% endif %}
@@ -156,9 +156,11 @@
 
             <form class="navbar-form navbar-right" role="search" action="{{ path('caldera_criticalmass_search_query') }}">
                 <div class="form-group">
-                    <input id="search-input" type="text" class="form-control" placeholder="Suche" name="query" />
+                    <input id="search-input" type="text" class="form-control" placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}" name="query" />
                 </div>
-                <button type="submit" class="btn btn-success">Suchen</button>
+                <button type="submit" class="btn btn-success">
+                    {% trans %}criticalmass.navigation.search.search{% endtrans %}
+                </button>
             </form>
         </div>
     </div>

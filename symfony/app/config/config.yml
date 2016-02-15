@@ -14,3 +14,4 @@ imports:
     - { resource: liip.yml }
     - { resource: knp.yml }
     - { resource: elastic.yml }
+    - { resource: translation.yml }
