@@ -46,7 +46,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
+                    {% if region.isWorld() %}
+                    Critical Mass weltweit
+                    {% else %}
                     Critical Mass in {{ region.name }}
+                    {% endif %}
                 </h1>
             </div>
         </div>
@@ -55,7 +59,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
+                    {% if region.isWorld() %}
+                    Kontinente
+                    {% else %}
                     Unterregionen in {{ region.name }}
+                    {% endif %}
                 </h2>
             </div>
         </div>
@@ -74,6 +82,26 @@
                             </div>
                         </div>
                     </div>
+
+                    {% if region2.cities|length > 0 %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <small>{{ region2.cities|length }} Städte</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if region2.children|length > 0 %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <small>{{ region2.children|length }} Unterregionen</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
