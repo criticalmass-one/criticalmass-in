@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator;
+namespace Caldera\Bundle\CriticalmassCoreBundle\CitySlugGenerator;
 
-use Caldera\CriticalmassCoreBundle\Entity\City;
-use Caldera\CriticalmassCoreBundle\Entity\CitySlug;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\CitySlug;
 
 class CitySlugGenerator {
     protected $city = null;
@@ -17,7 +17,22 @@ class CitySlugGenerator {
     {
         $slug = strtolower($this->city->getCity());
 
-        $slug = str_replace(array('ä', 'ö', 'ü', 'ß'), array('ae', 'oe', 'ue', 'ss'), $slug);
+        $slug = str_replace
+        (
+            [
+                'ä',
+                'ö',
+                'ü',
+                'ß'
+            ],
+            [
+                'ae',
+                'oe',
+                'ue',
+                'ss'
+            ],
+            $slug
+        );
 
         $citySlug = new CitySlug();
         $citySlug->setCity($this->city);
