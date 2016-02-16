@@ -71,7 +71,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             this._initCityMarker();
             this._initLocationMarker();
         } else {
-            this._geocoding.searchCountry(this._country, function(data) {
+            this._geocoding.searchState(this.settings.state, function(data) {
                 that.mapCenter = L.latLng(data.lat, data.lon);
 
                 that.mapZoom = 5;

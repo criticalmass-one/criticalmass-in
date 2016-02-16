@@ -31,6 +31,28 @@ define([], function() {
         });
     };
 
+    Geocoding.prototype.searchState = function(stateName, returnCallback) {
+        var query = {
+            state: stateName
+        };
+
+        var successCallback = function(data) {
+            var importanceScore = 0.0;
+            var bestData = null;
+
+            for (var index in data) {
+                if (importanceScore < data[index].importance || !bestData) {
+                    importanceScore = data[index].importance;
+                    bestData = data[index];
+                }
+            }
+
+            returnCallback(bestData);
+        };
+
+        this._query(query, successCallback);
+    };
+
     Geocoding.prototype.searchCity = function(cityName, returnCallback) {
         var query = {
             city: cityName
