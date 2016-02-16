@@ -182,7 +182,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             if (cityName.length == 0) {
                 alert('Bitte gib zuerst den Namen einer Stadt ein.');
             } else {
-                that._geocoding.searchPlace(locationName, function (data) {
+                that._geocoding.searchPlace(locationName, cityName, function (data) {
                     that._handleGeocodingLocation(data);
                 });
             }
@@ -192,8 +192,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             var stateName = that._$countrySelect.find('option:selected').text();
 
             that._geocoding.setState(stateName);
-
-            
         });
     };
 
