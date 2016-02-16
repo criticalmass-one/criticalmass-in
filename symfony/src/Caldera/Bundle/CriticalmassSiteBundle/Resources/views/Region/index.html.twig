@@ -89,15 +89,15 @@
                         </div>
                     </div>
 
-                    {#{% if region2.cities|length > 0 %}
+                    {% if cityCounter[region2.id] > 0 %}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <small>{{ region2.cities|length }} Städte</small>
+                                    <small>{{ cityCounter[region2.id] }} Städte in dieser Region</small>
                                 </div>
                             </div>
                         </div>
-                    {% endif %}#}
+                    {% endif %}
 
                     {#{% if region2.children|length > 0 %}
                         <div class="row">

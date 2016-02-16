@@ -25,13 +25,21 @@ class RegionController extends AbstractController
 
         $cities = $this->getCityRepository()->findCitiesOfRegion($region);
         $regions = $this->getRegionRepository()->findByParentRegion($region);
-        
+
+        $cityCounter = [];
+
+        // do not name it $region as $region is already in use
+        foreach ($regions as $region2) {
+            $cityCounter[$region2->getId()] = $this->getCityRepository()->countCitiesOfRegion($region2);
+        }
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Region:index.html.twig',
             [
                 'region' => $region,
                 'regions' => $regions,
-                'cities' => $cities
+                'cities' => $cities,
+                'cityCounter' => $cityCounter
             ]
         );
     }
