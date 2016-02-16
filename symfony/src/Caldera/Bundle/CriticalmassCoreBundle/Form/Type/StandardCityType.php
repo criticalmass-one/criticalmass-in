@@ -27,10 +27,14 @@ class StandardCityType extends AbstractType
                     'query_builder' => function(\Caldera\Bundle\CriticalmassModelBundle\Repository\RegionRepository $er)
                     {
                         $builder = $er->createQueryBuilder('region');
-                        
-                        $builder->where($builder->expr()->isNotNull('region.parent'));
 
-                        $builder->orderBy('region.name', 'ASC');
+                        $builder->join('region.parent', 'region2');
+                        $builder->join('region2.parent', 'region3');
+
+                        $builder->where($builder->expr()->isNotNull('region3.parent'));
+
+                        $builder->orderBy('region2.name', 'ASC');
+                        $builder->addOrderBy('region.name', 'ASC');
 
                         return $builder;
                     },
