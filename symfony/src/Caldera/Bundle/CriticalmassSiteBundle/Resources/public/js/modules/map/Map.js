@@ -37,11 +37,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype._initMap = function () {
-        var defaultLatLng = L.latLng(
-            this.settings.defaultLatitude,
-            this.settings.defaultLongitude
-        );
-
         this.map = L.map(this._mapId,
             {
                 zoomControl: false
@@ -51,8 +46,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         if (this.settings.showZoomControl) {
             this.addZoomControl(this.settings.zoomControlPosition);
         }
-
-        this.map.setView(defaultLatLng, this.settings.defaultZoom);
     };
 
     Map.prototype.addZoomControl = function (zoomControlPosition) {
