@@ -22,7 +22,6 @@ class RideType extends AbstractType
             ->add('url', 'text', array('required' => false))
             ->add('hasLocation', 'checkbox')
             ->add('hasTime', 'checkbox')
-            ->add('weatherForecast', 'text', array('required' => false))
             ->add('save', 'submit');
     }
 

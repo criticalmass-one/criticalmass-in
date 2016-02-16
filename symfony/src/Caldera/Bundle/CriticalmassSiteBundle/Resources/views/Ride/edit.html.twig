@@ -169,16 +169,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="weatherForecast">Wettervorhersage:</label>
-                            {{ form_widget(form.weatherForecast, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Optional kann hier eine Wettervorhersage eingegeben werden, die auf der Tour-Seite angezeigt wird.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
                                 <a href="{{ path(ride) }}" class="btn btn-default">Abbrechen</a>
