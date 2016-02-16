@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="weather")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\WeatherRepository")
  */
 class Weather {
     /**

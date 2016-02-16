@@ -40,7 +40,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 
                 $em->persist($entity);
                 $em->flush();
-                
+
                 $output->writeln($ride->getFancyTitle());
             }
         }

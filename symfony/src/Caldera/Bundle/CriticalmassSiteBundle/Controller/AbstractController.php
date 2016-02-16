@@ -13,6 +13,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ThreadRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\WeatherRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -139,6 +140,14 @@ abstract class AbstractController extends Controller
     protected function getGlympseTicketRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Ticket');
+    }
+
+    /**
+     * @return WeatherRepository
+     */
+    protected function getWeatherRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Weather');
     }
 
     protected function getCheckedCity($citySlug)

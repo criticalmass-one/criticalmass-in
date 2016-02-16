@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateSer
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
@@ -43,7 +44,14 @@ class RideController extends AbstractController
         
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
-        
+
+        /**
+         * @var Weather $weather
+         */
+        $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
+
+        $weatherForecast = $weather->getTemperatureEvening().' °C, '.$weather->getWeatherDescription();
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:show.html.twig', 
             array(
@@ -54,7 +62,8 @@ class RideController extends AbstractController
                 'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
                 'nextRide' => $nextRide,
                 'previousRide' => $previousRide,
-                'dateTime' => new \DateTime()
+                'dateTime' => new \DateTime(),
+                'weatherForecast' => $weatherForecast
             )
         );
     }
