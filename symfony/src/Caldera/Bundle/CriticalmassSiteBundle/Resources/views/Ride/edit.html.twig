@@ -200,7 +200,11 @@
     </div>
 
     <script>
-        CriticalMass.loadModule('EditRidePage', null, null, function(editRidePage) {
+        var options = {
+            citySlug: '{{ city.getMainSlugString() }}'
+        };
+
+        CriticalMass.loadModule('EditRidePage', options, null, function(editRidePage) {
             var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
 
             editRidePage.setCityLatLng(cityLatLng);
