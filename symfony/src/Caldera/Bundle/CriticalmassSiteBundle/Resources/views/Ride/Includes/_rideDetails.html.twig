@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Details</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl>
+                    <dt>Datum</dt>
+                    <dd>{{ ride.dateTime.format('d.m.Y') }}</dd>
+                    <dt>Uhrzeit</dt>
+                    <dd>{{ ride.dateTime.format('H:i') }} Uhr</dd>
+                    <dt>Treffpunkt</dt>
+                    {% if ride.hasLocation() %}
+                    <dd>{{ ride.location }}</dd>
+                    {% else %}
+                    <dd>noch nicht bekannt</dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

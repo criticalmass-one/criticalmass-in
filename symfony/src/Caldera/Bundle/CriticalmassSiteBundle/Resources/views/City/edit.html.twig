@@ -305,7 +305,8 @@
     <script type="text/javascript">
         var options = {
             country: '{{ country }}',
-            state: '{{ state }}'
+            state: '{{ state }}',
+            citySlug: '{{ city.getMainSlugString() }}'
         };
 
         CriticalMass.loadModule('EditCityPage', options, null);
