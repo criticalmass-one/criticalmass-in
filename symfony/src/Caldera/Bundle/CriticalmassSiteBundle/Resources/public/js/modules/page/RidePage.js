@@ -145,7 +145,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
             var bounds = this._trackContainer.getBounds();
 
             this._map.fitBounds(bounds);
-        } else if (this._ride.hasLocation()) {
+        } else if (this._ride && this._ride.hasLocation()) {
             this._map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 10);
         } else {
             this._map.setView([this._city.getLatitude(), this._city.getLongitude()], 10);
