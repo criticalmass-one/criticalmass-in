@@ -4,17 +4,21 @@ define([], function() {
     };
 
     Geocoding.prototype._country = null;
+    Geocoding.prototype._state = null;
 
     Geocoding.prototype.setCountry = function(country) {
         this._country = country;
+    };
+
+    Geocoding.prototype.setState = function(state) {
+        this._state = state;
     };
 
     Geocoding.prototype._query = function(query, successCallback) {
         var baseUrl = 'https://nominatim.openstreetmap.org/search?';
 
         var defaultOptions = {
-            format: 'json',
-            country: this._country
+            format: 'json'
         };
 
         var jsonQuery = $.extend(query, defaultOptions);
@@ -33,7 +37,8 @@ define([], function() {
 
     Geocoding.prototype.searchState = function(stateName, returnCallback) {
         var query = {
-            state: stateName
+            state: stateName,
+            country: this._country
         };
 
         var successCallback = function(data) {
@@ -55,7 +60,8 @@ define([], function() {
 
     Geocoding.prototype.searchCity = function(cityName, returnCallback) {
         var query = {
-            city: cityName
+            city: cityName,
+            state: this._state
         };
 
         var successCallback = function(data) {

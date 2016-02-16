@@ -4,6 +4,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
 
         this._geocoding = new Geocoding();
         this._geocoding.setCountry(this._defaults.country);
+        this._geocoding.setState(this._defaults.state);
 
         this._init();
     };
@@ -117,12 +118,9 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     EditCityPage.prototype._addStandardLocationMarker = function () {
         var that = this;
 
-        if (this.standardLocationLatLng) {
-            this.locationMarker = new LocationMarker(this.standardLocationLatLng, true);
-        } else {
-            this.locationMarker = new LocationMarker(this.mapCenter, true);
-        }
+        var latLng = this.cityMarker.getLatLng();
 
+        this.locationMarker = new LocationMarker(latLng, true);
         this.locationMarker.addToMap(this.map);
         this.locationMarker.addPopupText(this.settings.cityStandardLocationPopupText, true);
 
@@ -184,16 +182,16 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             if (cityName.length == 0) {
                 alert('Bitte gib zuerst den Namen einer Stadt ein.');
             } else {
-                that._geocoding.searchPlace(locationName, cityName, function (data) {
+                that._geocoding.searchPlace(locationName, function (data) {
                     that._handleGeocodingLocation(data);
                 });
             }
         });
 
         this._$countrySelect.on('change', function(value) {
-            var countryName = that._$countrySelect.find('option:selected').text();
+            var stateName = that._$countrySelect.find('option:selected').text();
 
-            that._geocoding.setCountry(countryName);
+            that._geocoding.setState(stateName);
 
             
         });
