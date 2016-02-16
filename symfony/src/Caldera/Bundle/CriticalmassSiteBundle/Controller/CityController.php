@@ -196,7 +196,17 @@ class CityController extends AbstractController
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:City:edit.html.twig', array('city' => $city, 'form' => $form->createView(), 'hasErrors' => $hasErrors));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:City:edit.html.twig',
+            [
+                'city' => $city,
+                'form' => $form->createView(),
+                'hasErrors' => $hasErrors,
+                'country' => $city->getRegion()->getParent()->getName(),
+                'state' => $city->getRegion()->getName(),
+                'region' => $city->getRegion()
+            ]
+        );
     }
 
     public function liveAction(Request $request, $citySlug)
