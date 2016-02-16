@@ -50,7 +50,11 @@ class RideController extends AbstractController
          */
         $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
 
-        $weatherForecast = $weather->getTemperatureEvening().' °C, '.$weather->getWeatherDescription();
+        if ($weather) {
+            $weatherForecast = $weather->getTemperatureEvening() . ' °C, ' . $weather->getWeatherDescription();
+        } else {
+            $weatherForecast = null;
+        }
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:show.html.twig', 
