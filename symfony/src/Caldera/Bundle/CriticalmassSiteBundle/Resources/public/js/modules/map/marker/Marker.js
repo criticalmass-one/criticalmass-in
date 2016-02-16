@@ -18,6 +18,8 @@ define(['leaflet'], function() {
         this._latLng = latLng;
 
         if (this._marker) {
+            // before moving the marker, popups have to be closed
+            this._marker.closePopup();
             this._marker.setLatLng(latLng);
         }
     };
