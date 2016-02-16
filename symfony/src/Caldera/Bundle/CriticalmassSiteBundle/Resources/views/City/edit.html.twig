@@ -56,6 +56,16 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Region:</label>
+                            {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Titel:</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
@@ -143,16 +153,6 @@
                             <label class="control-label" for="">Einwohnerzahl:</label>
                             {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
                             <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer Stadt benötigt.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.twitter) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Region:</label>
-                            {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
                         </div>
                     </div>
                 </div>
