@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\CitySlugGenerator\CitySlugGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\StandardCityType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CityType;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -98,15 +99,28 @@ class CityController extends AbstractController
         ]);
     }
 
-    public function addAction(Request $request)
+    public function addAction(Request $request, $slug1, $slug2, $slug3)
     {
+        /**
+         * @var Region $region
+         */
+        $region = $this->getRegionRepository()->findOneBySlug($slug3);
+
         $city = new City();
+        $city->setRegion($region);
 
         $form = $this->createForm(
             new StandardCityType(),
             $city,
             [
-                'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add')
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_desktop_city_add',
+                    [
+                        'slug1' => $slug1,
+                        'slug2' => $slug2,
+                        'slug3' => $slug3
+                    ]
+                )
             ]
         );
 
@@ -148,7 +162,8 @@ class CityController extends AbstractController
             [
                 'city' => null,
                 'form' => $form->createView(),
-                'hasErrors' => $hasErrors
+                'hasErrors' => $hasErrors,
+                'country' => $region->getParent()->getName()
             ]
         );
     }

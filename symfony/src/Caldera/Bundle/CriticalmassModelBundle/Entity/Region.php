@@ -161,4 +161,19 @@ class Region
         return $this->id == 1;
     }
 
+    public function isLevel($levelNumber)
+    {
+        if ($levelNumber == 0 && $this->parent == null) {
+            return $this->id == 1;
+        } elseif ($levelNumber == 1 && $this->parent != null) {
+            return $this->parent->id == 1;
+        } elseif ($levelNumber == 2 && $this->parent != null && $this->parent->parent != null) {
+            return $this->parent->parent->id == 1;
+        } elseif ($levelNumber == 3 && $this->parent != null && $this->parent->parent != null && $this->parent->parent->parent != null) {
+            return $this->parent->parent->parent->id == 1;
+        }
+
+        return false;
+    }
+
 }

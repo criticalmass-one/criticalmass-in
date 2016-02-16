@@ -5,7 +5,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
         this._init();
 
         this._geocoding = new Geocoding();
-        this._geocoding.setCountry('Germany');
+        this._geocoding.setCountry(this._defaults.country);
 
     };
 

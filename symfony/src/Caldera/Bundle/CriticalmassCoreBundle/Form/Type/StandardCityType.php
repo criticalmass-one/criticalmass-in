@@ -19,7 +19,24 @@ class StandardCityType extends AbstractType
             ->add('longitude', 'hidden')
             ->add('latitude', 'hidden')
             ->add('cityPopulation', 'integer', array('required' => false))
-            ->add('region', 'entity', [ 'class' => 'CalderaCriticalmassModelBundle:Region' ])
+            ->add(
+                'region',
+                'entity',
+                [
+                    'class' => 'CalderaCriticalmassModelBundle:Region',
+                    'query_builder' => function(\Caldera\Bundle\CriticalmassModelBundle\Repository\RegionRepository $er)
+                    {
+                        $builder = $er->createQueryBuilder('region');
+                        
+                        $builder->where($builder->expr()->isNotNull('region.parent'));
+
+                        $builder->orderBy('region.name', 'ASC');
+
+                        return $builder;
+                    },
+                    'group_by' => 'parent'
+                ]
+            )
             ->add('punchLine', 'text', array('required' => false))
             ->add('longDescription', 'textarea', array('required' => false))
             ->add('enableBoard')

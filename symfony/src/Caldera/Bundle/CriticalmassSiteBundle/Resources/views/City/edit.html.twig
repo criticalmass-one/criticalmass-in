@@ -303,6 +303,10 @@
     </div>
 
     <script type="text/javascript">
-        CriticalMass.loadModule('EditCityPage', null, null);
+        var options = {
+            country: '{{ country }}'
+        };
+
+        CriticalMass.loadModule('EditCityPage', options, null);
     </script>
 {% endblock %}

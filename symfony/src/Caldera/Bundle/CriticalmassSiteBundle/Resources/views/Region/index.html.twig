@@ -45,8 +45,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {% if app.getUser() %}
-                <a href="{{ path('caldera_criticalmass_desktop_city_add') }}" class="btn btn-success margin-top-medium pull-right">
+                {% if app.getUser() and region.isLevel(3) %}
+                <a href="{{ path('caldera_criticalmass_desktop_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}" class="btn btn-success margin-top-medium pull-right">
                     <i class="fa fa-plus"></i>
                     Stadt hinzufügen
                 </a>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    {% if region2.cities|length > 0 %}
+                    {#{% if region2.cities|length > 0 %}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
@@ -97,9 +97,9 @@
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                    {% endif %}#}
 
-                    {% if region2.children|length > 0 %}
+                    {#{% if region2.children|length > 0 %}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                    {% endif %}#}
                 </div>
             {% endfor %}
         </div>
