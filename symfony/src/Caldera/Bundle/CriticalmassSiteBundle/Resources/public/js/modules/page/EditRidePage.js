@@ -6,6 +6,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
 
     EditRidePage.prototype._defaults = {
         mapContainerId: 'map',
+        citySlug: 'hamburg',
         rideLatitudeInputSelector: '#ride_latitude',
         rideLongitudeInputSelector: '#ride_longitude',
         rideHasLocationInputSelector: '#ride_hasLocation',
@@ -250,7 +251,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
             },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: {
-                url: '/app_dev.php/hamburg/locations',
+                url: '/' + this.settings.citySlug + '/locations',
                 cache: true,
                 ttl: 3600
             }
