@@ -45,6 +45,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 {% if app.getUser() and region.isLevel(3) %}
                 <a href="{{ path('caldera_criticalmass_desktop_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}" class="btn btn-success margin-top-medium pull-right">
                     <i class="fa fa-plus"></i>
@@ -139,4 +145,14 @@
         </div>
         {% endif %}
     </div>
+
+    <script>
+        CriticalMass.loadModule('RegionPage', null, null, function(regionPage) {
+            {% for city in allCities %}
+            regionPage.addCity('{{ city.title }}', '{{ city.city }}', '{{ city.getMainSlugString() }}', '{{ city.description|e('js') }}', {{ city.latitude }}, {{ city.longitude }});
+            {% endfor %}
+
+            regionPage.setFocus();
+        });
+    </script>
 {% endblock %}

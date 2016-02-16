@@ -24,13 +24,14 @@ class RegionController extends AbstractController
         }
 
         $cities = $this->getCityRepository()->findCitiesOfRegion($region);
+        $allCities = $this->getCityRepository()->findChildrenCitiesOfRegion($region);
         $regions = $this->getRegionRepository()->findByParentRegion($region);
 
         $cityCounter = [];
 
         // do not name it $region as $region is already in use
         foreach ($regions as $region2) {
-            $cityCounter[$region2->getId()] = $this->getCityRepository()->countCitiesOfRegion($region2);
+            $cityCounter[$region2->getId()] = $this->getCityRepository()->countChildrenCitiesOfRegion($region2);
         }
 
         return $this->render(
@@ -39,7 +40,8 @@ class RegionController extends AbstractController
                 'region' => $region,
                 'regions' => $regions,
                 'cities' => $cities,
-                'cityCounter' => $cityCounter
+                'cityCounter' => $cityCounter,
+                'allCities' => $allCities
             ]
         );
     }

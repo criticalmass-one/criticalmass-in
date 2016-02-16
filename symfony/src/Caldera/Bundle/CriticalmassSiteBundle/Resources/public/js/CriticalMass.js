@@ -49,6 +49,7 @@ require.config({
         "EditCityPage": "/bundles/calderacriticalmasssite/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
+        "RegionPage": "/bundles/calderacriticalmasssite/js/modules/page/RegionPage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
         "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "TimelapsePage": "/bundles/calderacriticalmasssite/js/modules/page/TimelapsePage",

@@ -46,7 +46,7 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countCitiesOfRegion(Region $region)
+    public function countChildrenCitiesOfRegion(Region $region)
     {
         $builder = $this->createQueryBuilder('city');
 
@@ -70,6 +70,32 @@ class CityRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getSingleScalarResult();
+    }
+
+    public function findChildrenCitiesOfRegion(Region $region)
+    {
+        $builder = $this->createQueryBuilder('city');
+
+        $builder->select('city');
+
+        $builder->leftJoin('city.region', 'region1');
+        $builder->leftJoin('region1.parent', 'region2');
+        $builder->leftJoin('region2.parent', 'region3');
+
+        $builder->where($builder->expr()->eq('city.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
+
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->eq('region1.id', $region->getId()),
+                $builder->expr()->eq('region2.id', $region->getId()),
+                $builder->expr()->eq('region3.id', $region->getId())
+            )
+        );
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 
     public function findEnabledCities()
