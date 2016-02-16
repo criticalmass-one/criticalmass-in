@@ -143,26 +143,44 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
         this.cityMarker.setLatLng(latLng);
     };
 
+    EditCityPage.prototype._moveLocationMarker = function(latLng) {
+        this.locationMarker.setLatLng(latLng);
+    };
+
     EditCityPage.prototype._updateLocationPosition = function (position) {
         $(this.settings.cityStandardLatitudeInputSelector).val(position.lat);
         $(this.settings.cityStandardLongitudeInputSelector).val(position.lng);
     };
 
     EditCityPage.prototype._initGeolocationEvents = function() {
-        this._$searchCityButton = $('#search-city-button');
-
         var that = this;
 
-        this._$searchCityButton.on('click', function() {
-            var queryName = $('#city_city').val();
+        this._$searchCityButton = $('#search-city-button');
+        this._$searchLocationButton = $('#search-location-button');
 
-            that._geocoding.searchCity(queryName, function(data) {
-                that._handleGeolocationCity(data);
+        this._$searchCityButton.on('click', function() {
+            var cityName = $('#city_city').val();
+
+            that._geocoding.searchCity(cityName, function(data) {
+                that._handleGeocodingCity(data);
             });
+        });
+
+        this._$searchLocationButton.on('click', function() {
+            var cityName = $('#city_city').val();
+            var locationName = $('#city_standardLocation').val();
+
+            if (cityName.length == 0) {
+                alert('Bitte gib zuerst den Namen einer Stadt ein.');
+            } else {
+                that._geocoding.searchPlace(locationName, cityName, function (data) {
+                    that._handleGeocodingLocation(data);
+                });
+            }
         });
     };
 
-    EditCityPage.prototype._handleGeolocationCity = function(data) {
+    EditCityPage.prototype._handleGeocodingCity = function(data) {
         var latLng = {
             lat: data.lat,
             lng: data.lon
@@ -170,6 +188,18 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
 
         this._updateCityPosition(latLng);
         this._moveCityMarker(latLng);
+        this.map.setView(latLng, 15);
+    };
+
+    EditCityPage.prototype._handleGeocodingLocation = function(data) {
+        var latLng = {
+            lat: data.lat,
+            lng: data.lon
+        };
+
+        this._updateLocationPosition(latLng);
+        this._moveLocationMarker(latLng);
+        this.map.setView(latLng, 15);
     };
 
     return EditCityPage;
