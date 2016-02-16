@@ -157,6 +157,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
 
         this._$searchCityButton = $('#search-city-button');
         this._$searchLocationButton = $('#search-location-button');
+        this._$countrySelect = $('#city_region');
 
         this._$searchCityButton.on('click', function() {
             var cityName = $('#city_city').val();
@@ -177,6 +178,12 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
                     that._handleGeocodingLocation(data);
                 });
             }
+        });
+
+        this._$countrySelect.on('change', function(value) {
+            var countryName = that._$countrySelect.find('option:selected').text();
+
+            that._geocoding.setCountry(countryName);
         });
     };
 
