@@ -67,6 +67,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
+                            <button id="search-city-button" class="btn btn-default btn-xs pull-right" type="button">
+                                <i class="fa fa-map-marker"></i>
+                            </button>
                             <label class="control-label" for="">Name:</label>
                             {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
                             <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>

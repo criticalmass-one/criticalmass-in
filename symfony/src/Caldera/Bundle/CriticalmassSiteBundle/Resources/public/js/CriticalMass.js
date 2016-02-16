@@ -58,6 +58,7 @@ require.config({
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
+        "Geocoding": "/bundles/calderacriticalmasssite/js/modules/Geocoding",
         "MapLayerControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLayerControl",
         "MapLocationControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLocationControl",
         "MapPositions": "/bundles/calderacriticalmasssite/js/modules/map/MapPositions",

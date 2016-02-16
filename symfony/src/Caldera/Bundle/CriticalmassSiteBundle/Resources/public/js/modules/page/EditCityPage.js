@@ -1,8 +1,12 @@
-define(['Map', 'LocationMarker', 'CityMarker'], function() {
+define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     var EditCityPage = function (settings) {
         this.settings = $.extend(this._defaults, settings);
 
         this._init();
+
+        this._geocoding = new Geocoding();
+        this._geocoding.setCountry('Germany');
+
     };
 
 
@@ -28,12 +32,14 @@ define(['Map', 'LocationMarker', 'CityMarker'], function() {
     EditCityPage.prototype.mapZoom = null;
     EditCityPage.prototype.cityMarker = null;
     EditCityPage.prototype.locationMarker = null;
+    EditCityPage.prototype._geocoding = null;
 
     EditCityPage.prototype._init = function () {
         this._initLatLngs();
         this._initMap();
         this._initCityMarker();
         this._initLocationMarker();
+        this._initGeolocationEvents();
     };
 
     EditCityPage.prototype._initLatLngs = function () {
@@ -133,9 +139,37 @@ define(['Map', 'LocationMarker', 'CityMarker'], function() {
         $(this.settings.cityLongitudeInputSelector).val(position.lng);
     };
 
+    EditCityPage.prototype._moveCityMarker = function(latLng) {
+        this.cityMarker.setLatLng(latLng);
+    };
+
     EditCityPage.prototype._updateLocationPosition = function (position) {
         $(this.settings.cityStandardLatitudeInputSelector).val(position.lat);
         $(this.settings.cityStandardLongitudeInputSelector).val(position.lng);
+    };
+
+    EditCityPage.prototype._initGeolocationEvents = function() {
+        this._$searchCityButton = $('#search-city-button');
+
+        var that = this;
+
+        this._$searchCityButton.on('click', function() {
+            var queryName = $('#city_city').val();
+
+            that._geocoding.searchCity(queryName, function(data) {
+                that._handleGeolocationCity(data);
+            });
+        });
+    };
+
+    EditCityPage.prototype._handleGeolocationCity = function(data) {
+        var latLng = {
+            lat: data.lat,
+            lng: data.lon
+        };
+
+        this._updateCityPosition(latLng);
+        this._moveCityMarker(latLng);
     };
 
     return EditCityPage;
