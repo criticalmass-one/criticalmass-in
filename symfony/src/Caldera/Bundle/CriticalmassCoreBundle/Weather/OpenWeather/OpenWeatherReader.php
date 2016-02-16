@@ -1,10 +1,11 @@
 <?php
 
-namespace Caldera\CriticalmassOpenweatherBundle\Utility\Weather;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather;
 
-use Caldera\CriticalmassOpenweatherBundle\Entity\Weather;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
 
-class OpenWeatherReader {
+class OpenWeatherReader
+{
     
     protected $json;
     protected $date;
@@ -23,15 +24,14 @@ class OpenWeatherReader {
     public function createEntity()
     {
         $this->entity = new Weather();
-        
+
         $weather = json_decode($this->json);
         
         $dateTime = new \DateTime();
         
         $dayFound = false;
         
-        foreach ($weather->list as $id => $weatherDay)
-        {
+        foreach ($weather->list as $id => $weatherDay) {
             $dateTime->setTimestamp($weatherDay->dt);
         
             if ($this->date->format('Y-m-d') == $dateTime->format('Y-m-d'))
