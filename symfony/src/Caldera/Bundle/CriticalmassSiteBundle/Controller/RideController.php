@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateSer
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
@@ -359,5 +360,4 @@ class RideController extends AbstractController
             ]
         );
     }
-    
 }

@@ -194,6 +194,8 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             var countryName = that._$countrySelect.find('option:selected').text();
 
             that._geocoding.setCountry(countryName);
+
+            
         });
     };
 

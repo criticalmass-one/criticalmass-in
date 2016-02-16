@@ -383,5 +383,31 @@ class RideRepository extends EntityRepository
 
         return $result;
     }
+
+
+    public function getLocationsForCity(City $city)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select(
+            [
+                'ride.location',
+                'ride.latitude',
+                'ride.longitude'
+            ]
+        );
+        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
+        $builder->andWhere($builder->expr()->isNotNull('ride.location'));
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $builder->orderBy('ride.location', 'ASC');
+        $builder->groupBy('ride.location');
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
 }
 

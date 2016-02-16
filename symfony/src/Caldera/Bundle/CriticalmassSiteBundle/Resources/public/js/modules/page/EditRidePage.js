@@ -1,4 +1,4 @@
-define(['Map', 'LocationMarker'], function() {
+define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
 
     var EditRidePage = function(context, options) {
         this.settings = $.extend(this._defaults, options);
@@ -66,6 +66,7 @@ define(['Map', 'LocationMarker'], function() {
         this._initCityMarker();
         this._initLocationMarker();
         this._initEventListeners();
+        this._initLocationSearch();
     };
 
     EditRidePage.prototype._initEventListeners = function() {
@@ -172,6 +173,10 @@ define(['Map', 'LocationMarker'], function() {
         return n === Number(n) && n % 1 !== 0;
     };
 
+    EditRidePage.prototype._moveLocationMarker = function(latLng) {
+        this.locationMarker.setLatLng(latLng);
+    };
+
     EditRidePage.prototype._updateLocationPosition = function(position) {
         $(this.settings.rideLatitudeInputSelector).val(position.lat);
         $(this.settings.rideLongitudeInputSelector).val(position.lng);
@@ -234,6 +239,63 @@ define(['Map', 'LocationMarker'], function() {
             $messageDoubleDayRide.hide();
             $submitButton.prop('disabled', '');
         }
+    };
+
+    EditRidePage.prototype._initLocationSearch = function() {
+        var that = this;
+
+        this._bloodhound = new Bloodhound({
+            datumTokenizer: function(data) {
+                return Bloodhound.tokenizers.whitespace(data.location);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: '/app_dev.php/hamburg/locations',
+                cache: true,
+                ttl: 3600
+            }
+        });
+
+        this._bloodhound.initialize();
+
+        $($('#ride_location')).typeahead(
+            {
+                hint: false,
+                highlight: true,
+                minLength: 1,
+                classNames: {
+                    dataset: 'tt-dataset tt-dataset-results container'
+                }
+            },
+            {
+                name: 'results',
+                source: this._bloodhound.ttAdapter(),
+                displayKey: 'location',
+                templates: {
+                    suggestion: function(data) {
+                        var html = '';
+                        html += '<div class="row padding-top-small padding-bottom-small">';
+                        html += '<div class="col-md-12">';
+                        html += '<i class="fa fa-map-marker"></i>&nbsp;' + data.location;
+                        html += '</div>';
+                        html += '</div>';
+
+                        return html;
+                    }
+                }
+            }
+        );
+
+        $($('#ride_location')).bind('typeahead:select', function(ev, suggestion) {
+            var latLng = {
+                lat: suggestion.latitude,
+                lng: suggestion.longitude
+            };
+
+            that._moveLocationMarker(latLng);
+            that._updateLocationPosition(latLng);
+            that.map.setView(latLng, 15);
+        });
     };
 
     return EditRidePage;

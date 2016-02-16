@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CityType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CityController extends AbstractController
@@ -204,4 +205,19 @@ class CityController extends AbstractController
         return $this->render('CalderaCriticalmassDesktopBundle:City:live.html.twig', array('city' => $city));
     }
 
+    public function getlocationsAction(Request $request, $citySlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $locations = $this->getRideRepository()->getLocationsForCity($city);
+
+        return new Response
+        (
+            json_encode($locations),
+            200,
+            [
+                'Content-Type' => 'text/json'
+            ]
+        );
+    }
 }

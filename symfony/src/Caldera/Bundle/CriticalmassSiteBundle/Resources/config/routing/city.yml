@@ -17,3 +17,7 @@ caldera_criticalmass_desktop_city_live:
 caldera_criticalmass_desktop_city_edit:
     pattern:  /{citySlug}/edit
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:edit }
+
+caldera_criticalmass_city_locations:
+    pattern:  /{citySlug}/locations
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:getlocations }
