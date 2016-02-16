@@ -103,12 +103,15 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     EditCityPage.prototype._initLocationMarker = function () {
         var that = this;
 
+        if (this.standardLocationLatLng) {
+            this._addStandardLocationMarker();
+        }
+        
         $(this.settings.cityIsStandardableLocationInputSelector).on('click', function () {
             if ($(this).prop('checked')) {
                 that._addStandardLocationMarker();
                 $(that.settings.cityIsLocationInputSelector).prop('disabled', '');
-            }
-            else {
+            } else {
                 that._removeStandardLocationMarker();
                 $(that.settings.cityIsLocationInputSelector).prop('disabled', 'disabled');
             }
@@ -118,9 +121,14 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     EditCityPage.prototype._addStandardLocationMarker = function () {
         var that = this;
 
-        var latLng = this.cityMarker.getLatLng();
+        var cityMarkerLatLng = this.cityMarker.getLatLng();
 
-        this.locationMarker = new LocationMarker(latLng, true);
+        if (this.standardLocationLatLng) {
+            this.locationMarker = new LocationMarker(this.standardLocationLatLng, true);
+        } else {
+            this.locationMarker = new LocationMarker(cityMarkerLatLng, true);
+        }
+
         this.locationMarker.addToMap(this.map);
         this.locationMarker.addPopupText(this.settings.cityStandardLocationPopupText, true);
 
@@ -153,6 +161,13 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
 
     EditCityPage.prototype._moveLocationMarker = function(latLng) {
         this.locationMarker.setLatLng(latLng);
+    };
+
+    EditCityPage.prototype._getStandardLocationLatLng = function() {
+        return {
+            lat: $(this.settings.cityStandardLatitudeInputSelector).val(),
+            lng: $(this.settings.cityStandardLongitudeInputSelector).val()
+        };
     };
 
     EditCityPage.prototype._updateLocationPosition = function (position) {
