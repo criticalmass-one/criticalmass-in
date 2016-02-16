@@ -4,6 +4,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery;
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,6 +14,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateWeatherCommand extends ContainerAwareCommand
 {
+    /**
+     * @var EntityManager $em
+     */
+    protected $em;
+
+    /**
+     * @var OpenWeatherReader $reader
+     */
+    protected $reader;
+
+    /**
+     * @var OpenWeatherQuery $query
+     */
+    protected $query;
+
     protected function configure()
     {
         $this
@@ -22,29 +39,39 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Ride')->findCurrentRides();
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        $query = new OpenWeatherQuery();
-        $reader = new OpenWeatherReader();
+        $startDateTime = new \DateTime();
+        $interval = new \DateInterval('P4D');
+        $endDateTime = new \DateTime();
+        $endDateTime->add($interval);
+
+        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
+        $this->em = $this->getContainer()->get('doctrine')->getManager();
+        $this->query = new OpenWeatherQuery();
+        $this->reader = new OpenWeatherReader();
+
+        $output->writeln('Looking for rides from '.$startDateTime->format('Y-m-d').' to '.$endDateTime->format('Y-m-d'));
 
         foreach ($rides as $ride) {
-            $result = $query->setRide($ride)->execute();
+            $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').')');
 
-            $reader->setJson($result);
-            $reader->setDate($ride->getDateTime());
-
-            $entity = $reader->createEntity();
-
-            if ($entity) {
-                $entity->setRide($ride);
-
-                $em->persist($entity);
-                $em->flush();
-
-                $output->writeln($ride->getFancyTitle());
-            }
+            $this->retrieveWeather($ride);
         }
+    }
 
+    protected function retrieveWeather(Ride $ride)
+    {
+        $result = $this->query->setRide($ride)->execute();
 
+        $this->reader->setJson($result);
+        $this->reader->setDate($ride->getDateTime());
+
+        $entity = $this->reader->createEntity();
+
+        if ($entity) {
+            $entity->setRide($ride);
+
+            $this->em->persist($entity);
+            $this->em->flush();
+        }
     }
 }
