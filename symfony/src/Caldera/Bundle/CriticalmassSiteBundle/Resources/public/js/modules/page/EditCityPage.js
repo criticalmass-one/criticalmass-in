@@ -2,11 +2,10 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     var EditCityPage = function (settings) {
         this.settings = $.extend(this._defaults, settings);
 
-        this._init();
-
         this._geocoding = new Geocoding();
         this._geocoding.setCountry(this._defaults.country);
 
+        this._init();
     };
 
 
@@ -37,8 +36,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     EditCityPage.prototype._init = function () {
         this._initLatLngs();
         this._initMap();
-        this._initCityMarker();
-        this._initLocationMarker();
         this._initGeolocationEvents();
     };
 
@@ -61,17 +58,30 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     };
 
     EditCityPage.prototype._initMap = function () {
+        var that = this;
+
         this.map = new Map(this.settings.mapContainerId, []);
 
         if (this.cityLatLng) {
             this.mapCenter = this.cityLatLng;
             this.mapZoom = 12;
-        } else {
-            this.mapCenter = this.defaultCenterLatLng;
-            this.mapZoom = 6;
-        }
 
-        this.map.setView(this.mapCenter, this.mapZoom);
+            this.map.setView(this.mapCenter, this.mapZoom);
+
+            this._initCityMarker();
+            this._initLocationMarker();
+        } else {
+            this._geocoding.searchCountry(this._country, function(data) {
+                that.mapCenter = L.latLng(data.lat, data.lon);
+
+                that.mapZoom = 5;
+
+                that.map.setView(that.mapCenter, that.mapZoom);
+
+                that._initCityMarker();
+                that._initLocationMarker();
+            });
+        }
     };
 
     EditCityPage.prototype._initCityMarker = function () {

@@ -53,6 +53,28 @@ define([], function() {
         this._query(query, successCallback);
     };
 
+    Geocoding.prototype.searchCountry = function(countryName, returnCallback) {
+        var query = {
+            country: countryName
+        };
+
+        var successCallback = function(data) {
+            var importanceScore = 0.0;
+            var bestData = null;
+
+            for (var index in data) {
+                if (importanceScore < data[index].importance || !bestData) {
+                    importanceScore = data[index].importance;
+                    bestData = data[index];
+                }
+            }
+
+            returnCallback(bestData);
+        };
+
+        this._query(query, successCallback);
+    };
+
     Geocoding.prototype.searchPlace = function(placeName, cityName, returnCallback) {
         var query = {
             q: placeName,
