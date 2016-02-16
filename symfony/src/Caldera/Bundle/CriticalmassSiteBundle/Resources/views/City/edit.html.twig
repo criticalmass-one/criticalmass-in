@@ -18,6 +18,47 @@
     <li class="active">
         {{ title }}
     </li>
+    {% else %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_region_world') }}">
+            Verzeichnis
+        </a>
+    </li>
+
+    {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
+        <li>
+            <a href="{{ path(region.parent.parent.parent) }}">
+                {{ region.parent.parent.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+    {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
+        <li>
+            <a href="{{ path(region.parent.parent) }}">
+                {{ region.parent.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+
+    {% if (region.parent and not region.parent.isWorld()) %}
+        <li>
+            <a href="{{ path(region.parent) }}">
+                {{ region.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+    <li>
+        <a href="{{ path(region) }}">
+            {{ region.name }}
+        </a>
+    </li>
+
+    <li class="active">
+        Stadt hinzufügen
+    </li>
     {% endif %}
 {% endblock %}
 
@@ -289,7 +330,7 @@
                         Abbrechen
                     </a>
                     {% else %}
-                    <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-default">
+                    <a href="{{ path(region) }}" class="btn btn-default">
                         Abbrechen
                     </a>
                     {% endif %}

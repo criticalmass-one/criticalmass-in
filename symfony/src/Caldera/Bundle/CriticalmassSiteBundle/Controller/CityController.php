@@ -165,7 +165,8 @@ class CityController extends AbstractController
                 'form' => $form->createView(),
                 'hasErrors' => $hasErrors,
                 'country' => $region->getParent()->getName(),
-                'state' => $region->getName()
+                'state' => $region->getName(),
+                'region' => $region
             ]
         );
     }
