@@ -15,5 +15,5 @@ caldera_criticalmass_region_world_region_3:
     defaults: { _controller: CalderaCriticalmassSiteBundle:Region:index }
 
 caldera_criticalmass_desktop_city_add:
-    pattern:  /world/{slug1}/{slug2}/{slug3}/addCity
+    pattern:  /world/{slug1}/{slug2}/{slug3}/addcity
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:add }
