@@ -64,10 +64,12 @@ class PhotoViewCommand extends ContainerAwareCommand
                         $user = $this->doctrine->getRepository('ApplicationSonataUserBundle:User')->find($photoViewArray['userId']);
                     }
 
+                    $viewDateTime = new \DateTime($photoViewArray['dateTime']);
+
                     $photoView = new PhotoView();
                     $photoView->setPhoto($photo);
                     $photoView->setUser($user);
-                    $photo->setDateTime(new \DateTime($photoViewArray['dateTime']));
+                    $photoView->setDateTime($viewDateTime);
 
                     $this->manager->persist($photoView);
 
