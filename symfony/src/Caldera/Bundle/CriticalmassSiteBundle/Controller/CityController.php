@@ -149,9 +149,21 @@ class CityController extends AbstractController
                     'action' => $this->generateUrl(
                         'caldera_criticalmass_desktop_city_edit',
                         [
-                            'citySlug' => $city->getMainSlugString()
+                            'citySlug' => $citySlug->getSlug()
                         ]
                     )
+                ]
+            );
+
+            return $this->render(
+                'CalderaCriticalmassSiteBundle:City:edit.html.twig',
+                [
+                    'city' => $city,
+                    'form' => $form->createView(),
+                    'hasErrors' => $hasErrors,
+                    'country' => $region->getParent()->getName(),
+                    'state' => $region->getName(),
+                    'region' => $region
                 ]
             );
         } elseif ($form->isSubmitted()) {
