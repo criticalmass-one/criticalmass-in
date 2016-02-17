@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,6 +26,12 @@ class City
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
     protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="cities")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
@@ -250,6 +257,13 @@ class City
     private $updatedAt;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $createdAt;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $enableBoard;
@@ -271,6 +285,24 @@ class City
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -309,6 +341,7 @@ class City
         $this->slugs = new \Doctrine\Common\Collections\ArrayCollection();
 
         $this->archiveDateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
     
     /**
@@ -1308,5 +1341,17 @@ class City
     public function getTimezone()
     {
         return $this->timezone;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }

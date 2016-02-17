@@ -110,6 +110,7 @@ class CityController extends AbstractController
 
         $city = new City();
         $city->setRegion($region);
+        $city->setUser($this->getUser());
 
         $form = $this->createForm(
             new StandardCityType(),

@@ -74,6 +74,7 @@ class RideController extends AbstractController
 
         $ride = new Ride();
         $ride->setCity($city);
+        $ride->setUser($this->getUser());
 
         $form = $this->createForm(
             new RideType(),
