@@ -15,7 +15,7 @@ caldera_criticalmass_photo_relocate:
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:relocate }
 
 caldera_criticalmass_photo_toggle:
-    pattern: /{citySlug}/{rideDate}/photo/{photoId}
+    pattern: /{citySlug}/{rideDate}/photo/{photoId}/toggle
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:toggle }
 
 caldera_criticalmass_photo_delete:
