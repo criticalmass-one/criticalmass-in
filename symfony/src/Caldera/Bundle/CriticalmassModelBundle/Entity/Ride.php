@@ -212,6 +212,13 @@ class Ride
     protected $photos;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $createdAt;
+
+    /**
      * Get id
      *
      * @return integer
@@ -466,6 +473,7 @@ class Ride
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
         $this->visibleSince = new \DateTime();
         $this->visibleUntil = new \DateTime();
         $this->expectedStartDateTime = new \DateTime();
@@ -1156,5 +1164,17 @@ class Ride
     public function getPin()
     {
         return $this->latitude.','.$this->longitude;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }
