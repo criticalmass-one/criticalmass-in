@@ -261,6 +261,30 @@ class PhotoController extends AbstractController
 
     protected function countView(Photo $photo)
     {
+        $memcache = $this->get('memcache.criticalmass');
+
+        $additionalPhotoViews = $memcache->get('gallery_photo'.$photo->getId().'_additionalviews');
+
+        if (!$additionalPhotoViews) {
+            $additionalPhotoViews = 1;
+        } else {
+            ++$additionalPhotoViews;
+        }
+
+        $viewDateTime = new \DateTime();
+
+        $photoViewArray =
+            [
+                'photoId' => $photo->getId(),
+                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
+                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
+            ]
+        ;
+
+        $memcache->set('gallery_photo'.$photo->getId().'_additionalviews', $additionalPhotoViews);
+        $memcache->set('gallery_photo'.$photo->getId().'_view'.$additionalPhotoViews, $photoViewArray);
+
+/*
         $photo->incViews();
 
         $photoView = new PhotoView();
@@ -270,7 +294,7 @@ class PhotoController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($photo);
         $em->persist($photoView);
-        $em->flush();
+        $em->flush();*/
     }
 
     public function ajaxphotoviewAction(Request $request)
