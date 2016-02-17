@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,6 +22,12 @@ class Ride
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="rides")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
 
     /**
      * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
@@ -205,6 +212,13 @@ class Ride
     protected $photos;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $createdAt;
+
+    /**
      * Get id
      *
      * @return integer
@@ -212,6 +226,24 @@ class Ride
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -441,6 +473,7 @@ class Ride
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
         $this->visibleSince = new \DateTime();
         $this->visibleUntil = new \DateTime();
         $this->expectedStartDateTime = new \DateTime();
@@ -1131,5 +1164,17 @@ class Ride
     public function getPin()
     {
         return $this->latitude.','.$this->longitude;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }

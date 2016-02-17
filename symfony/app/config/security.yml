@@ -65,6 +65,7 @@ security:
         - { path: /edit$, role: ROLE_USER }
         - { path: /add$, role: ROLE_USER }
         - { path: /addsubride, role: ROLE_USER }
+        - { path: /addcity, role: ROLE_USER }
         - { path: /editsubride, role: ROLE_USER }
         - { path: /addphoto, role: ROLE_USER }
         - { path: /addtrack, role: ROLE_USER }
