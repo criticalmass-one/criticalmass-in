@@ -46,8 +46,8 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 
         $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
         $this->em = $this->getContainer()->get('doctrine')->getManager();
-        $this->query = new OpenWeatherQuery();
-        $this->reader = new OpenWeatherReader();
+        $this->query = $this->getContainer()->get('caldera.criticalmass.weather.openweather.query');
+        $this->reader = $this->getContainer()->get('caldera.criticalmass.weather.openweather.reader');
 
         $output->writeln('Looking for rides from '.$startDateTime->format('Y-m-d').' to '.$endDateTime->format('Y-m-d'));
 

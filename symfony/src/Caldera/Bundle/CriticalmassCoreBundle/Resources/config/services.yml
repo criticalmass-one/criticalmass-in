@@ -87,3 +87,11 @@ services:
     caldera.criticalmass.gps.distancecalculator.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator
         arguments: [@doctrine, @caldera.criticalmass.gps.trackreader]
+
+    caldera.criticalmass.weather.openweather.query:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery
+        arguments: ['%openweather.appid%']
+
+    caldera.criticalmass.weather.openweather.reader:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader
+        arguments: []

@@ -10,7 +10,14 @@ class OpenWeatherQuery
      * @var Ride $ride
      */
     protected $ride;
-    
+
+    protected $appId;
+
+    public function __construct($appId)
+    {
+        $this->appId = $appId;
+    }
+
     public function setRide(Ride $ride)
     {
         $this->ride = $ride;
@@ -41,7 +48,7 @@ class OpenWeatherQuery
     {
         $coords = $this->getCoords();
 
-        $jsonurl = 'http://api.openweathermap.org/data/2.5/forecast/daily?lat='.$coords['latitude'].'&lon='.$coords['longitude'].'&cnt=10&mode=json&units=metric&lang=de&appid=06d6a4917a689715462502cb56e3282b';
+        $jsonurl = 'http://api.openweathermap.org/data/2.5/forecast/daily?lat='.$coords['latitude'].'&lon='.$coords['longitude'].'&cnt=10&mode=json&units=metric&lang=de&appid='.$this->appId;
         $json = file_get_contents($jsonurl);
         
         return $json;
