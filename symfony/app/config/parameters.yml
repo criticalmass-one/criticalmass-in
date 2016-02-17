@@ -18,3 +18,5 @@ parameters:
     domain.criticalmass: www.criticalmass.cm
     
     track.gap_width: 10
+
+    openweather.appid: 06d6a4917a689715462502cb56e3282b
