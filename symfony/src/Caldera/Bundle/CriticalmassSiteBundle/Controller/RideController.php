@@ -9,12 +9,8 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RideController extends AbstractController
 {
@@ -93,13 +89,13 @@ class RideController extends AbstractController
         );
 
         if ('POST' == $request->getMethod()) {
-            return $this->editPostAction($request, $ride, $city, $form);
+            return $this->addPostAction($request, $ride, $city, $form);
         } else {
-            return $this->editGetAction($request, $ride, $city, $form);
+            return $this->addGetAction($request, $ride, $city, $form);
         }
     }
     
-    protected function addPostAction(Request $request, Ride $ride, City $city, FormType $form)
+    protected function addPostAction(Request $request, Ride $ride, City $city, Form $form)
     {
         $form->handleRequest($request);
 
@@ -146,7 +142,7 @@ class RideController extends AbstractController
         );
     }
     
-    protected function addGetAction(Request $request, Ride $ride, City $city, FormTypeInterface $form)
+    protected function addGetAction(Request $request, Ride $ride, City $city, Form $form)
     {
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
