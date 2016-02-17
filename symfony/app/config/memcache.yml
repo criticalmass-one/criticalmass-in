@@ -1,0 +1,7 @@
+lsw_memcache:
+    session:
+        pool: criticalmass
+    pools:
+        criticalmass:
+            servers:
+              - { host: localhost, tcp_port: 11211 }

@@ -15,3 +15,4 @@ imports:
     - { resource: knp.yml }
     - { resource: elastic.yml }
     - { resource: translation.yml }
+    - { resource: memcache.yml }

@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            new Lsw\MemcacheBundle\LswMemcacheBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
