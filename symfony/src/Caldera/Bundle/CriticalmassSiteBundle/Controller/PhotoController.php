@@ -283,18 +283,6 @@ class PhotoController extends AbstractController
 
         $memcache->set('gallery_photo'.$photo->getId().'_additionalviews', $additionalPhotoViews);
         $memcache->set('gallery_photo'.$photo->getId().'_view'.$additionalPhotoViews, $photoViewArray);
-
-/*
-        $photo->incViews();
-
-        $photoView = new PhotoView();
-        $photoView->setUser($this->getUser());
-        $photoView->setPhoto($photo);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($photo);
-        $em->persist($photoView);
-        $em->flush();*/
     }
 
     public function ajaxphotoviewAction(Request $request)
