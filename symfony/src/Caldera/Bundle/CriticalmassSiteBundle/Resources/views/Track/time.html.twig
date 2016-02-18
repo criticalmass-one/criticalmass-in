@@ -28,8 +28,42 @@
 
         <div class="row">
             <div class="col-md-12">
-                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
+                <p>Falls dein Aufzeichnungsgerät aus irgendeinem Grunde eine falsche Uhrzeit bei deinem GPX-Track angegeben haben sollte, kannst du hier den Start-Zeitpunkt deines Tracks verschieben:</p>
+                <p>Der ursprüngliche Start-Zeitpunkt ist der {{ track.startDate.format('d.m.Y') }} um {{ track.startDate.format('H:i') }} Uhr.</p>
             </div>
         </div>
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.startDate) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Datum:</label>
+                    {{ form_widget(form.startDate, { 'attr' : { 'class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.startTime) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Uhrzeit:</label>
+                    {{ form_widget(form.startTime, { 'attr' : { 'class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right">
+                    <a href="{{ path('caldera_criticalmass_track_list') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

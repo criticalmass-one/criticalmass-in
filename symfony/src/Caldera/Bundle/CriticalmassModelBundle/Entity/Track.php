@@ -645,4 +645,26 @@ class Track
         
         return $velocity;
     }
+
+    public function getStartTime()
+    {
+        return $this->startDateTime;
+    }
+
+    public function setStartTime(\DateTime $time)
+    {
+        $this->startDateTime = new \DateTime($this->startDateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+    }
+
+    public function getStartDate()
+    {
+        return $this->startDateTime;
+    }
+
+    public function setStartDate(\DateTime $date)
+    {
+        $newDate = new \DateTime($this->startDateTime->format('Y-m-d') . ' 00:00:00');
+
+        $this->startDateTime = $newDate->add($newDate->diff($date));
+    }
 }

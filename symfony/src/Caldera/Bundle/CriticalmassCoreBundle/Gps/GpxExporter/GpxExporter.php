@@ -32,6 +32,11 @@ class GpxExporter
         $this->criticalmapsUser = $criticalmapsUser;
     }
 
+    public function setPositionArray($positionArray)
+    {
+        $this->positionArray = $positionArray;
+    }
+
     protected function findPositions()
     {
         if ($this->ticket) {

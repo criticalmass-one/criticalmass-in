@@ -88,6 +88,10 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator
         arguments: [@doctrine, @caldera.criticalmass.gps.trackreader]
 
+    caldera.criticalmass.gps.timeshift.track:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift
+        arguments: [@doctrine, @caldera.criticalmass.gps.trackreader, @caldera.criticalmass.gps.gpxexporter ]
+
     caldera.criticalmass.weather.openweather.query:
         class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery
         arguments: ['%openweather.appid%']

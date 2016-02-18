@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
@@ -234,5 +235,25 @@ class GpxReader {
         } else {
             return 0;
         }
+    }
+
+    public function getAsPositionArray()
+    {
+        $positionArray = [];
+
+        foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
+        {
+            $position = new Position();
+            $dateTime = new \DateTime($point->time);
+
+            $position->setLatitude((float) $point['lat']);
+            $position->setLongitude((float) $point['lon']);
+            $position->setTimestamp($dateTime->getTimestamp());
+            $position->setCreationDateTime($dateTime);
+
+            $positionArray[] = $position;
+        }
+
+        return $positionArray;
     }
 }

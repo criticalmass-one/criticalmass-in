@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator\SimpleLatLngA
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassCoreBundle\Uploader\TrackUploader\TrackUploader;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -396,13 +397,14 @@ class TrackController extends AbstractController
         $track = $this->getTrackRepository()->findOneById($trackId);
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_range',
+            ->setAction($this->generateUrl(
+                'caldera_criticalmass_track_time',
                 [
                     'trackId' => $track->getId()
                 ]
             ))
-            ->add('startPoint', 'hidden')
-            ->add('endPoint', 'hidden')
+            ->add('startDate', 'date')
+            ->add('startTime', 'time')
             ->getForm();
 
         if ('POST' == $request->getMethod()) {
@@ -414,34 +416,38 @@ class TrackController extends AbstractController
 
     protected function timeGetAction(Request $request, Track $track, Form $form)
     {
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
-        $llag->loadTrack($track);
-        $llag->execute();
-
         return $this->render('CalderaCriticalmassSiteBundle:Track:time.html.twig',
             [
                 'form' => $form->createView(),
                 'track' => $track,
-                'latLngList' => $llag->getList(),
-                'gapWidth' => $this->getParameter('track.gap_width')
             ]
         );
     }
 
     protected function timePostAction(Request $request, Track $track, Form $form)
     {
+        // catch the old dateTime before it is overridden by the form submit
+        $oldDateTime = $track->getStartDateTime();
+
+        // now get the new values
         $form->handleRequest($request);
 
-        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser()))
-        {
+        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser())) {
             /**
-             * @var Track $track
+             * @var Track $newTrack
              */
-            $track = $form->getData();
+            $newTrack = $form->getData();
 
-            $this->saveLatLngList($track);
+            $interval = $newTrack->getStartDateTime()->diff($oldDateTime);
+
+            /**
+             * @var TrackTimeShift $tts
+             */
+            $tts = $this->get('caldera.criticalmass.gps.timeshift.track');
+
+            $tts->loadTrack($newTrack)->shift($interval)->saveTrack();
+
             $this->updateTrackProperties($track);
-            $this->calculateRideEstimates($track);
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
