@@ -5,7 +5,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
 
     Timelapse.prototype._initialized = false;
     Timelapse.prototype._map = null;
-    Timelapse.prototype._tracks = [];
     Timelapse.prototype._trackLatLngs = [];
     Timelapse.prototype._marker = [];
     Timelapse.prototype._timer = null;
@@ -17,7 +16,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
     Timelapse.prototype._currentDateTime = null;
     Timelapse.prototype._endDateTime = null;
 
-    Timelapse.prototype._addedTracks = 0;
     Timelapse.prototype._loadedTracks = 0;
 
     Timelapse.prototype._options = {
@@ -137,31 +135,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         this._currentDateTime = this._findEarliestDateTime();
     };
 
-    Timelapse.prototype.setCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
-        this._city = new CityEntity(cityName, cityTitle, slug, description, latitude, longitude);
-    };
-
-    Timelapse.prototype.setRide = function(title, description, latitude, longitude, location, date, time) {
-        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, '');
-
-        this._ride.addToMap(this._map);
-
-        this._map.setView(this._ride.getLatLng(), 14);
-    };
-
-    Timelapse.prototype.addTrack = function(trackId, colorRed, colorGreen, colorBlue) {
-        var track = new TrackEntity();
-        track.setColors(colorRed, colorGreen, colorBlue);
-
-        this._tracks[trackId] = track;
-
-        this._loadTrackLatLngs(trackId);
-
-        ++this._addedTracks;
-    };
-
-
-
     Timelapse.prototype._initPositionMarker = function(trackId) {
         var firstLatLng = [this._trackLatLngs[trackId][0][1], this._trackLatLngs[trackId][0][2]];
         var track = this._trackContainer.getEntity(trackId);
@@ -221,67 +194,13 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         }
     };
 
+    Timelapse.prototype.stop = function() {
+        this.pause();
+    };
+
     Timelapse.prototype.pause = function() {
         clearInterval(this._timer);
         this._timer = null;
-    };
-
-    Timelapse.prototype._findNextLatLngForDateTime = function(trackId, dateTime) {
-        for (var index in this._trackLatLngs[trackId]) {
-            var dateTimeLatLng = this._trackLatLngs[trackId][index];
-            var trackDateTime = new Date(dateTimeLatLng[0]);
-
-            if (trackDateTime.getTime() > dateTime.getTime()) {
-
-                return [dateTimeLatLng[1], dateTimeLatLng[2]];
-            }
-        }
-
-        return null;
-    };
-
-    Timelapse.prototype._findPreviousLatLngForDateTime = function(trackId, dateTime) {
-        for (var index in this._trackLatLngs[trackId]) {
-            var dateTimeLatLng = this._trackLatLngs[trackId][index];
-            var trackDateTime = new Date(dateTimeLatLng[0]);
-
-            if (trackDateTime.getTime() < dateTime.getTime()) {
-                trackDateTime = dateTime;
-            } else {
-                return [dateTimeLatLng[1], dateTimeLatLng[2]];
-            }
-        }
-
-        return null;
-    };
-
-    Timelapse.prototype._findEarliestDateTime = function() {
-        var earliestDateTime = null;
-
-        for (var trackIndex in this._trackLatLngs) {
-            var dateTime = new Date(this._trackLatLngs[trackIndex][0][0]);
-
-            if (!earliestDateTime || earliestDateTime.getTime() > dateTime.getTime()) {
-                earliestDateTime = dateTime;
-            }
-        }
-
-        return earliestDateTime;
-    };
-
-    Timelapse.prototype._findPreviousLatLngForDateTime = function(trackId, dateTime) {
-        for (var index in this._trackLatLngs[trackId]) {
-            var dateTimeLatLng = this._trackLatLngs[trackId][index];
-            var trackDateTime = new Date(dateTimeLatLng[0]);
-
-            if (trackDateTime.getTime() < dateTime.getTime()) {
-                trackDateTime = dateTime;
-            } else {
-                return [dateTimeLatLng[1], dateTimeLatLng[2]];
-            }
-        }
-
-        return null;
     };
 
     Timelapse.prototype.stepBackward = function() {
@@ -343,6 +262,36 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         }
 
         return latestDateTime;
+    };
+
+
+    Timelapse.prototype._findNextLatLngForDateTime = function(trackId, dateTime) {
+        for (var index in this._trackLatLngs[trackId]) {
+            var dateTimeLatLng = this._trackLatLngs[trackId][index];
+            var trackDateTime = new Date(dateTimeLatLng[0]);
+
+            if (trackDateTime.getTime() > dateTime.getTime()) {
+
+                return [dateTimeLatLng[1], dateTimeLatLng[2]];
+            }
+        }
+
+        return null;
+    };
+
+    Timelapse.prototype._findPreviousLatLngForDateTime = function(trackId, dateTime) {
+        for (var index in this._trackLatLngs[trackId]) {
+            var dateTimeLatLng = this._trackLatLngs[trackId][index];
+            var trackDateTime = new Date(dateTimeLatLng[0]);
+
+            if (trackDateTime.getTime() < dateTime.getTime()) {
+                trackDateTime = dateTime;
+            } else {
+                return [dateTimeLatLng[1], dateTimeLatLng[2]];
+            }
+        }
+
+        return null;
     };
 
     return Timelapse;
