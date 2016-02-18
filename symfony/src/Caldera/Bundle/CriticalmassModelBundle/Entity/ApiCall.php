@@ -78,7 +78,7 @@ class ApiCall
      * @param string $request
      * @return ApiCall
      */
-    public function setCall($request)
+    public function setRequest($request)
     {
         $this->request = $request;
 
