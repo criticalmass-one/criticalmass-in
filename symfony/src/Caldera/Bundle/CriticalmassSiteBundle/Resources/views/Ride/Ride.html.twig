@@ -66,12 +66,6 @@
                         </span>
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#timelapse" aria-controls="profile" role="tab" data-toggle="tab">
-                        <i class="fa fa-clock-o"></i>
-                        Timelapse
-                    </a>
-                </li>
                 {% endif %}
             </ul>
 
@@ -82,7 +76,6 @@
 
                 {% if pastRide %}
                 {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderTracksTab', { 'ride': ride } )) %}
-                {% render(controller('CalderaCriticalmassSiteBundle:Ride:renderTimelapseTab', { 'ride': ride } )) %}
                 {% endif %}
             </div>
         </div>
