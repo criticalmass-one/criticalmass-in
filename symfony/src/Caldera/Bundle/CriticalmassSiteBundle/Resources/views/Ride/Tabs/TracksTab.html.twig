@@ -24,7 +24,9 @@
             {% if tracks|length > 0 %}
                 <table class="table">
                     <tr>
-                        <th></th>
+                        <th>
+                            <input type="checkbox" class="allgroups-visibility-toggle" checked="checked" />
+                       </th>
                         <th>Teilnehmer</th>
                         <th>Dauer</th>
                         <th>Länge</th>
@@ -39,7 +41,10 @@
                         {% if track.getUser() %}
                             {% if userHeadline == false %}
                                 <tr>
-                                    <td colspan="5">
+                                    <td>
+                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked" />
+                                    </td>
+                                    <td colspan="4">
                                         von criticalmass.in-Nutzern hochgeladene Tracks
                                     </td>
                                 </tr>
@@ -62,7 +67,10 @@
                         {% if track.getTicket() %}
                             {% if glympseHeadline == false %}
                                 <tr>
-                                    <td colspan="5">
+                                    <td>
+                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked" />
+                                    </td>
+                                    <td colspan="4">
                                         über Glympse geteilte Tracks
                                     </td>
                                 </tr>
@@ -85,7 +93,10 @@
                         {% if track.getCriticalmapsUser() %}
                             {% if criticalmapsHeadline == false %}
                                 <tr>
-                                    <td colspan="5">
+                                    <td>
+                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked" />
+                                    </td>
+                                    <td colspan="4">
                                         über Criticalmaps geteilte Tracks
                                     </td>
                                 </tr>
@@ -119,6 +130,22 @@
                     <h3 class="panel-title">Timelapse</h3>
                 </div>
                 <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl>
+                                <dt>Uhrzeit:</dt>
+                                <dd><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr</dd>
+                            </dl>
+                        </div>
+
+                        <div class="col-md-6">
+                            <dl>
+                                <dt>Verstrichene Zeit:</dt>
+                                <dd><span id="timelapse-time-elapsed">0</span> Minuten</dd>
+                            </dl>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="text-center">

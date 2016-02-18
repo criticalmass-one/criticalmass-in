@@ -1,4 +1,4 @@
-define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'bootstrap-slider'], function() {
+define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'bootstrap-slider', 'dateformat'], function() {
     Timelapse = function(parentPage) {
         this._parentPage = parentPage;
     };
@@ -133,6 +133,8 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
 
     Timelapse.prototype._initDateTime = function() {
         this._currentDateTime = this._findEarliestDateTime();
+
+        this._updateClocks();
     };
 
     Timelapse.prototype._initPositionMarker = function(trackId) {
@@ -203,10 +205,21 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         this._timer = null;
     };
 
+    Timelapse.prototype._updateClocks = function() {
+        $('#timelapse-time-clock').html(this._currentDateTime.format('HH:MM'));
+
+        var microsecondsDiff = this._currentDateTime.getTime() - this._startDateTime.getTime();
+        var minutesDiff = microsecondsDiff / 1000 / 60;
+
+        $('#timelapse-time-elapsed').html(minutesDiff);
+    };
+
     Timelapse.prototype.stepBackward = function() {
         this._currentDateTime = new Date(this._currentDateTime.getTime() - this._options.timeStep);
 
         this._timeSlider.slider('setValue', this._currentDateTime.getTime(), false, false);
+
+        this._updateClocks();
 
         for (var trackId in this._trackLatLngs) {
             var prevLatLng = this._findPreviousLatLngForDateTime(trackId, this._currentDateTime);
@@ -224,6 +237,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
 
         this._timeSlider.slider('setValue', this._currentDateTime.getTime(), false, false);
 
+        this._updateClocks();
         for (var trackId in this._trackLatLngs) {
             var nextLatLng = this._findNextLatLngForDateTime(trackId, this._currentDateTime);
 
