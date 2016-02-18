@@ -24,23 +24,53 @@
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#details" aria-controls="home" role="tab" data-toggle="tab"><i class="halflings flag"></i> Details</a>
+                    <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
+                        <i class="fa fa-flag"></i>
+                        Details
+                    </a>
                 </li>
                 <li role="presentation">
-                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab"><i class="halflings map-marker"></i> Mini-Masses <span class="badge">{{ ride.getSubrides|length }}</span></a>
+                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
+                        <i class="fa fa-map-marker"></i>
+                        Mini-Masses
+                        <span class="badge">
+                            {{ ride.getSubrides|length }}
+                        </span>
+                    </a>
                 </li>
                 <li role="presentation">
-                    <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab"><i class="halflings pencil"></i> Kommentare <span class="badge">{{ ride.getPosts|length }}</span></a>
+                    <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
+                        <i class="fa fa-pencil"></i>
+                        Kommentare
+                        <span class="badge">
+                            {{ ride.getPosts|length }}
+                        </span>
+                    </a>
                 </li>
                 {% if pastRide %}
                 <li role="presentation">
-                    <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"><i class="halflings uni-camera"></i> Galerie <span class="badge">{{ photos|length }}</span></a>
+                    <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+                        <i class="fa fa-camera"></i>
+                        Galerie
+                        <span class="badge">
+                            {{ photos|length }}
+                        </span>
+                    </a>
                 </li>
                 <li role="presentation">
-                    <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Tracks <span class="badge">{{ tracks|length }}</span></a>
+                    <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
+                        <i class="fa fa-bicycle"></i>
+                        Tracks
+                        <span class="badge">
+                            {{ tracks|length }}
+                        </span>
+                    </a>
                 </li>
                 <li role="presentation">
-                    <a href="#timelapse" aria-controls="profile" role="tab" data-toggle="tab"><i class="halflings uni-pushpin"></i> Timelapse</a>
+                    <a href="#timelapse" aria-controls="profile" role="tab" data-toggle="tab">
+                        <i class="fa fa-clock-o"></i>
+                        Timelapse
+                    </a>
                 </li>
                 {% endif %}
             </ul>
