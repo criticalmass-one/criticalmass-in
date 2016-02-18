@@ -1,0 +1,35 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Zeit anpassen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('sonata_user_profile_show') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_track_list') }}">
+            Deine Tracks
+        </a>
+    </li>
+    <li class="active">
+        Zeit anpassen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Zeit anpassen</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

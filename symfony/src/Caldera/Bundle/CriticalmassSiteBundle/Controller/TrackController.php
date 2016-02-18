@@ -297,9 +297,9 @@ class TrackController extends AbstractController
 
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_track_range',
-            [
-                'trackId' => $track->getId()
-            ]
+                [
+                    'trackId' => $track->getId()
+                ]
             ))
             ->add('startPoint', 'hidden')
             ->add('endPoint', 'hidden')
@@ -326,6 +326,25 @@ class TrackController extends AbstractController
                 'gapWidth' => $this->getParameter('track.gap_width')
             ]
         );
+    }
+
+    protected function rangePostAction(Request $request, Track $track, Form $form)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser()))
+        {
+            /**
+             * @var Track $track
+             */
+            $track = $form->getData();
+
+            $this->saveLatLngList($track);
+            $this->updateTrackProperties($track);
+            $this->calculateRideEstimates($track);
+        }
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
     protected function saveLatLngList(Track $track)
@@ -372,10 +391,47 @@ class TrackController extends AbstractController
         $res->calculateEstimates($track->getRide());
     }
 
-    protected function rangePostAction(Request $request, Track $track, Form $form)
+    public function timeAction(Request $request, $trackId)
+    {
+        $track = $this->getTrackRepository()->findOneById($trackId);
+
+        $form = $this->createFormBuilder($track)
+            ->setAction($this->generateUrl('caldera_criticalmass_track_range',
+                [
+                    'trackId' => $track->getId()
+                ]
+            ))
+            ->add('startPoint', 'hidden')
+            ->add('endPoint', 'hidden')
+            ->getForm();
+
+        if ('POST' == $request->getMethod()) {
+            return $this->timePostAction($request, $track, $form);
+        } else {
+            return $this->timeGetAction($request, $track, $form);
+        }
+    }
+
+    protected function timeGetAction(Request $request, Track $track, Form $form)
+    {
+        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
+        $llag->loadTrack($track);
+        $llag->execute();
+
+        return $this->render('CalderaCriticalmassSiteBundle:Track:time.html.twig',
+            [
+                'form' => $form->createView(),
+                'track' => $track,
+                'latLngList' => $llag->getList(),
+                'gapWidth' => $this->getParameter('track.gap_width')
+            ]
+        );
+    }
+
+    protected function timePostAction(Request $request, Track $track, Form $form)
     {
         $form->handleRequest($request);
-        
+
         if ($form->isValid() && $track && $track->getUser()->equals($this->getUser()))
         {
             /**

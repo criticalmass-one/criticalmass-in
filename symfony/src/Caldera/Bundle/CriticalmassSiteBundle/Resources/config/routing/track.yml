@@ -29,3 +29,7 @@ caldera_criticalmass_track_view:
 caldera_criticalmass_track_range:
     pattern:  /track/range/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:range }
+
+caldera_criticalmass_track_time:
+    pattern:  /track/time/{trackId}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:time }
