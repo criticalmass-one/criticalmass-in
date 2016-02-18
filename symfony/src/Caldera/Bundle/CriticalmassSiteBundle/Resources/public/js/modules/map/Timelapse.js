@@ -1,5 +1,5 @@
 define(['Map', 'PositionMarker'], function() {
-    Timelapse = function(context, options) {
+    TimelapsePage = function(context, options) {
         this._loadStyles();
         this._initSpeedSlider();
         this._initMap();
@@ -94,8 +94,14 @@ define(['Map', 'PositionMarker'], function() {
 
     TimelapsePage.prototype._initMap = function() {
         this._map = new Map('map');
+    };
 
-        this._map.setView([53.545697,9.952488], 14);
+    TimelapsePage.prototype.setRide = function(title, description, latitude, longitude, location, date, time) {
+        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, '');
+
+        this._ride.addToMap(this._map);
+
+        this._map.setView(this._ride.getLatLng(), 14);
     };
 
     TimelapsePage.prototype.addTrack = function(trackId, colorRed, colorGreen, colorBlue) {

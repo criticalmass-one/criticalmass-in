@@ -116,11 +116,12 @@
 
     <script>
         CriticalMass.loadModule('TimelapsePage', null, null, function(timelapsePage) {
+            timelapsePage.setCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});
+            timelapsePage.setRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.latitude}}, {{ride.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast }}');
 
             {% for track in tracks %}
             timelapsePage.addTrack({{ track.id }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
             {% endfor %}
-
         });
     </script>
 {% endblock %}

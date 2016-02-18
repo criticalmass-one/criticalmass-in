@@ -42,5 +42,9 @@ define(['leaflet', 'MarkerEntity'], function() {
         return content;
     };
 
+    RideEntity.prototype.getDate = function() {
+        return this._date;
+    };
+
     return RideEntity;
 });

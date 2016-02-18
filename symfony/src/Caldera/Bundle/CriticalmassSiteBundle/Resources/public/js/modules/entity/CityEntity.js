@@ -28,5 +28,9 @@ define(['leaflet', 'MarkerEntity'], function() {
         return content;
     };
 
+    CityEntity.prototype.getSlug= function() {
+        return this._slug;
+    };
+
     return CityEntity;
 });
