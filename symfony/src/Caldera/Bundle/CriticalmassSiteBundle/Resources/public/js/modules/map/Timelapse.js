@@ -28,7 +28,6 @@ define(['Map', 'PositionMarker'], function() {
         baseTimeInterval: 100
     };
 
-
     TimelapsePage.prototype._init = function() {
         this._startDateTime = this._findEarliestDateTime();
         this._endDateTime = this._findLatestDateTime();
