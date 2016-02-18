@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal'], function() {
+define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
 
     RidePage = function(context, options) {
         this._options = options;
@@ -10,6 +10,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
         this._initTrackToggleEvent();
         this._initPhotoViewModal();
         this._initSubrideEvents();
+        this._initTimelapse();
     };
 
     RidePage.prototype._map = null;
@@ -18,9 +19,17 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
     RidePage.prototype._subrideContainer = null;
     RidePage.prototype._layerControl = null;
     RidePage.prototype._layers = null;
+    RidePage.prototype._timelapse = null;
 
     RidePage.prototype.init = function() {
 
+    };
+
+    RidePage.prototype._initTimelapse = function() {
+        var that = this;
+
+        that._timelapse = new Timelapse(this);
+        that._timelapse.init();
     };
 
     RidePage.prototype._initLayerControl = function() {
