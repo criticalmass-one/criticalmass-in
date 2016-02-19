@@ -219,6 +219,22 @@ class Ride
     protected $createdAt;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participationsNumberYes = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participationsNumberMaybe = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participationsNumberNo = 0;
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -1176,5 +1192,74 @@ class Ride
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * Set participationsNumberYes
+     *
+     * @param integer $participationsNumberYes
+     * @return Ride
+     */
+    public function setParticipationsNumberYes($participationsNumberYes)
+    {
+        $this->participationsNumberYes = $participationsNumberYes;
+
+        return $this;
+    }
+
+    /**
+     * Get participationsNumberYes
+     *
+     * @return integer 
+     */
+    public function getParticipationsNumberYes()
+    {
+        return $this->participationsNumberYes;
+    }
+
+    /**
+     * Set participationsNumberMaybe
+     *
+     * @param integer $participationsNumberMaybe
+     * @return Ride
+     */
+    public function setParticipationsNumberMaybe($participationsNumberMaybe)
+    {
+        $this->participationsNumberMaybe = $participationsNumberMaybe;
+
+        return $this;
+    }
+
+    /**
+     * Get participationsNumberMaybe
+     *
+     * @return integer 
+     */
+    public function getParticipationsNumberMaybe()
+    {
+        return $this->participationsNumberMaybe;
+    }
+
+    /**
+     * Set participationsNumberNo
+     *
+     * @param integer $participationsNumberNo
+     * @return Ride
+     */
+    public function setParticipationsNumberNo($participationsNumberNo)
+    {
+        $this->participationsNumberNo = $participationsNumberNo;
+
+        return $this;
+    }
+
+    /**
+     * Get participationsNumberNo
+     *
+     * @return integer 
+     */
+    public function getParticipationsNumberNo()
+    {
+        return $this->participationsNumberNo;
     }
 }

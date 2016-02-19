@@ -21,5 +21,23 @@ class ParticipationRepository extends EntityRepository
 
         return $query->getOneOrNullResult();
     }
+
+    public function countParticipationsForRide(Ride $ride, $status)
+    {
+        $builder = $this->createQueryBuilder('participation');
+
+        $builder->select('COUNT(participation)');
+        $builder->where($builder->expr()->eq('participation.ride', $ride->getId()));
+
+        $builder->andWhere($builder->expr()->eq('participation.goingYes', ($status == 'yes' ? 1 : 0)));
+        $builder->andWhere($builder->expr()->eq('participation.goingMaybe', ($status == 'maybe' ? 1 : 0)));
+        $builder->andWhere($builder->expr()->eq('participation.goingNo', ($status == 'no' ? 1 : 0)));
+
+        $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
 }
 

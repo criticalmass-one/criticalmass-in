@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Participation;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -31,4 +33,16 @@ class ParticipationController extends AbstractController
 
         return $this->redirectToRoute($ride);
     }
+
+    protected function recalculateRideParticipations(Ride $ride)
+    {
+        $ride->setParticipationsNumberYes($this->getParticipationRepository()->countParticipationsForRide($ride, 'yes'));
+        $ride->setParticipationsNumberMaybe($this->getParticipationRepository()->countParticipationsForRide($ride, 'maybe'));
+        $ride->setParticipationsNumberNo($this->getParticipationRepository()->countParticipationsForRide($ride, 'no'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->merge($ride);
+        $em->flush();
+    }
+
 }
