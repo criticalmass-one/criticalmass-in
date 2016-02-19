@@ -6,6 +6,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\ParticipationRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\RegionRepository;
@@ -116,6 +117,14 @@ abstract class AbstractController extends Controller
     protected function getThreadRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Thread');
+    }
+
+    /**
+     * @return ParticipationRepository
+     */
+    protected function getParticipationRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Participation');
     }
 
     /**

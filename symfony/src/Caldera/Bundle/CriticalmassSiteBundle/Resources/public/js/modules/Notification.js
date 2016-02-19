@@ -1,7 +1,7 @@
 define(['socketio'], function() {
 
     Notification = function(context, options) {
-        alert('foooo');
+        //alert('foooo');
     };
 
     return Notification;

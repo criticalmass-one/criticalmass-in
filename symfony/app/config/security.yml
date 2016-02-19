@@ -69,6 +69,7 @@ security:
         - { path: /editsubride, role: ROLE_USER }
         - { path: /addphoto, role: ROLE_USER }
         - { path: /addtrack, role: ROLE_USER }
+        - { path: /participation, role: ROLE_USER }
 
         - { path: ^/app, role: ROLE_USER }
         - { path: ^/track, role: ROLE_USER }

@@ -1,0 +1,3 @@
+caldera_criticalmass_participation_ride:
+    pattern:  /{citySlug}/{rideDate}/participation/{status}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Participation:rideparticipation }

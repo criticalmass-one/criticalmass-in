@@ -57,6 +57,10 @@ caldera_criticalmass_city:
 caldera_criticalmass_timelapse:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timelapse.yml"
     prefix:   /
+
+caldera_criticalmass_participation:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/participation.yml"
+    prefix:   /
     
 caldera_criticalmass_ride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/ride.yml"
