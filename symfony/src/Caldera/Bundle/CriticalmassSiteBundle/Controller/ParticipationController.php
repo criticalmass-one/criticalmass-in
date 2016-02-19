@@ -13,6 +13,22 @@ class ParticipationController extends AbstractController
 
         $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(), $ride);
 
+        if (!$participation) {
+            $participation = new Participation();
+            $participation->setRide($ride);
+            $participation->setUser($this->getUser());
+        }
+
+        $participation->setGoingYes($status == 'yes');
+        $participation->setGoingMaybe($status == 'maybe');
+        $participation->setGoingNo($status == 'no');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->merge($participation);
+        $em->flush();
+
+        $this->recalculateRideParticipations($ride);
+
         return $this->redirectToRoute($ride);
     }
 }

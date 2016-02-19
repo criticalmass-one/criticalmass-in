@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'no' }) }}">
+                    <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'no' }) }}">
                         <i class="fa fa-times"></i>
                         Nein
                     </a>
