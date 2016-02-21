@@ -1,0 +1,7 @@
+caldera_criticalmass_strava_auth:
+    pattern:  /profile/strava/auth
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:auth }
+
+caldera_criticalmass_strava_list:
+    pattern:  /{citySlug}/{rideDate}/strava
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:listrides }

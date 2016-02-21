@@ -1,0 +1,32 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Verbinde dich mit Strava{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Verbinde dich mit Strava
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Blablabla Strava ist blablabla Strava macht foo bar baz.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <a href="{{ authorizationUrl }}" class="btn btn-success">
+                        Mit Strava verbinden
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

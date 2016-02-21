@@ -61,6 +61,10 @@ caldera_criticalmass_timelapse:
 caldera_criticalmass_participation:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/participation.yml"
     prefix:   /
+
+caldera_criticalmass_strava:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/strava.yml"
+    prefix: /
     
 caldera_criticalmass_ride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/ride.yml"
