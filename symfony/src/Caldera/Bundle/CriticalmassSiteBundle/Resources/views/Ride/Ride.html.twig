@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_participation.html.twig') with { 'participation': participation } %}
+        {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1>
             {{ ride.getFancyTitle() }}
         </h1>
