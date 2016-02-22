@@ -26,10 +26,12 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
     };
 
     RidePage.prototype._initTimelapse = function() {
-        var that = this;
+        var $trackPanel = $('#tracks');
 
-        that._timelapse = new Timelapse(this);
-        that._timelapse.init();
+        if ($trackPanel.length > 0) {
+            this._timelapse = new Timelapse(this);
+            this._timelapse.init();
+        }
     };
 
     RidePage.prototype._initLayerControl = function() {
