@@ -100,7 +100,6 @@ class GpxExporter
                 $dateTime->setTimestamp($position->getTimestamp());
             }
 
-
             $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
 
             $writer->endElement();

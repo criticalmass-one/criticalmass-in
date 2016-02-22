@@ -5,3 +5,7 @@ caldera_criticalmass_strava_auth:
 caldera_criticalmass_strava_list:
     pattern:  /{citySlug}/{rideDate}/strava
     defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:listrides }
+
+caldera_criticalmass_strava_import:
+    pattern:  /{citySlug}/{rideDate}/importstrava
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:import }
