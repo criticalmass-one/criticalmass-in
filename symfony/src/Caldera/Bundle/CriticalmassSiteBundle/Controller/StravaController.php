@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
@@ -10,22 +11,37 @@ use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateSer
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Exception;
 use Polyline;
 use Pest;
 use Strava\API\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Strava\API\OAuth;
 use Strava\API\Service\REST;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StravaController extends AbstractController
 {
-    public function authAction(Request $request)
+    public function authAction(Request $request, $citySlug, $rideDate)
     {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $redirectUri = 'http://www.criticalmass.cm'.$this->generateUrl(
+            'caldera_criticalmass_strava_list',
+            [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate(),
+                true
+            ]
+        );
+
         try {
             $options = array(
                 'clientId'     => $this->getParameter('strava.client_id'),
                 'clientSecret' => $this->getParameter('strava.token'),
-                'redirectUri'  => 'http://criticalmass.cm/app_dev.php/'
+                'redirectUri'  => $redirectUri,
+                'scope' => 'view_private',
+                'approval_prompt' => 'force'
             );
 
             $oauth = new OAuth($options);
@@ -56,11 +72,11 @@ class StravaController extends AbstractController
 
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
 
-        print_r($activities);
         return $this->render(
             'CalderaCriticalmassSiteBundle:Strava:list.html.twig',
             [
-                'activities' => $activities
+                'activities' => $activities,
+                'ride' => $ride
             ]
         );
     }
@@ -190,10 +206,15 @@ class StravaController extends AbstractController
 
         $track->setStartDateTime($gr->getStartDateTime());
         $track->setEndDateTime($gr->getEndDateTime());
-
-        $track->setDistance($gr->calculateDistance());
-
         $track->setMd5Hash($gr->getMd5Hash());
+
+        /**
+         * @var TrackDistanceCalculator $tdc
+         */
+        $tdc = $this->get('caldera.criticalmass.gps.distancecalculator.track');
+        $tdc->loadTrack($track);
+
+        $track->setDistance($tdc->calculate());
     }
 
     protected function generateSimpleLatLngList(Track $track)
