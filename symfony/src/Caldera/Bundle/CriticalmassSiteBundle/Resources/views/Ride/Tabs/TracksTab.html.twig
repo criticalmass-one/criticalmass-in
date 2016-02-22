@@ -3,7 +3,14 @@
         <div class="col-md-12">
             {% if app.getUser() %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen"><i class="halflings cloud_upload"></i> GPX-Datei hochladen</a>
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_strava_auth', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+                        <i class="fa fa-map-o"></i>
+                        Track von Strava importieren
+                    </a>
+                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen">
+                        <i class="fa fa-upload"></i>
+                        GPX-Datei hochladen
+                    </a>
                 </div>
 
                 <div class="modal fade" id="modalTrackUpload" tabindex="-1" role="dialog">
