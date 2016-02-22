@@ -18,15 +18,73 @@
                 Vielleicht
             </a>
         </li>
-        <li>
-            <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'no' }) }}">
-                <i class="fa fa-times"></i>
-                Nein
-            </a>
-        </li>
     </ul>
-
 {% else %}
+    {% if participation.goingYes %}
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-check"></i>
+            Du nimmst teil
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="z-index: 99999;">
+            <li>
+                <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'maybe' }) }}">
+                    <i class="fa fa-circle-o"></i>
+                    Vielleicht
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'no' }) }}">
+                    <i class="fa fa-times"></i>
+                    Absagen
+                </a>
+            </li>
+        </ul>
+    {% endif %}
 
+    {% if participation.goingMaybe %}
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-circle"></i>
+            Du nimmst vielleicht teil
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="z-index: 99999;">
+            <li>
+                <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'yes' }) }}">
+                    <i class="fa fa-check"></i>
+                    Zusagen
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'no' }) }}">
+                    <i class="fa fa-times"></i>
+                    Absagen
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+
+    {% if participation.goingNo %}
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-times"></i>
+            Du nimmst nicht teil
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="z-index: 99999;">
+            <li>
+                <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'yes' }) }}">
+                    <i class="fa fa-check"></i>
+                    Zusagen
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'maybe' }) }}">
+                    <i class="fa fa-circle-o"></i>
+                    Vielleicht
+                </a>
+            </li>
+        </ul>
+    {% endif %}
 {% endif %}
 </div>
