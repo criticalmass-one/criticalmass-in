@@ -3,7 +3,13 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Polyline;
 use Pest;
 use Strava\API\Client;
@@ -77,19 +83,24 @@ class StravaController extends AbstractController
         $startDateTime->setTimezone(new \DateTimeZone($activity['timezone']));
         $startTimestamp = $startDateTime->getTimestamp();
 
-        $activityStream = $client->getStreamsActivity(481324484, 'time,latlng', 'high');
+        $activityStream = $client->getStreamsActivity(481324484, 'time,latlng,altitude', 'high');
 
         $length = count($activityStream[0]['data']);
 
         $latLngList = $activityStream[0]['data'];
         $timeList = $activityStream[1]['data'];
+        $altitudeList = $activityStream[2]['data'];
 
         $positionArray = [];
 
         for ($i = 0; $i < $length; ++$i) {
+            $altitude = round($i > 0 ? $altitudeList[$i] - $altitudeList[$i - 1] : $altitudeList[$i], 2);
+
             $position = new Position();
+
             $position->setLatitude($latLngList[$i][0]);
             $position->setLongitude($latLngList[$i][1]);
+            $position->setAltitude($altitude);
             $position->setTimestamp($startTimestamp + $timeList[$i]);
             $position->setCreationDateTime(new \DateTime());
 
@@ -105,14 +116,97 @@ class StravaController extends AbstractController
 
         $exporter->execute();
 
-        echo $exporter->getGpxContent();
+        $track = new Track();
+        $track->setUser($this->getUser());
+        $track->setRide($ride);
+        $track->setTrackFilename(uniqid().'.gpx');
 
-        return null;
-        /*$this->render(
-            'CalderaCriticalmassSiteBundle:Strava:import.html.twig',
+        $filename = uniqid() . '.gpx';
+
+        $fp = fopen('../web/tracks/' . $filename, 'w');
+        fwrite($fp, $exporter->getGpxContent());
+        fclose($fp);
+
+        $track = new Track();
+        $track->setUser($this->getUser());
+        $track->setTrackFilename($filename);
+        $track->setUsername($this->getUser()->getUsername());
+        $track->setRide($ride);
+
+        $this->loadTrackProperties($track);
+        $this->generateSimpleLatLngList($track);
+
+        $this->addRideEstimate($track, $ride);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+
+        return $this->redirectToRoute(
+            'caldera_criticalmass_track_view',
             [
-                'activity' => $activity
+                'trackId' => $track->getId()
             ]
-        );*/
+        );
+    }
+
+    protected function saveLatLngList(Track $track)
+    {
+        /**
+         * @var RangeLatLngListGenerator $llag
+         */
+        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+        $llag->loadTrack($track);
+        $llag->execute();
+        $track->setLatLngList($llag->getList());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+    }
+
+    protected function addRideEstimate(Track $track, Ride $ride)
+    {
+        /**
+         * @var RideEstimateService $estimateService
+         */
+        $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate.track');
+        $estimateService->addEstimate($track);
+        $estimateService->calculateEstimates($ride);
+    }
+
+    protected function loadTrackProperties(Track $track)
+    {
+        /**
+         * @var TrackReader $gr
+         */
+        $gr = $this->get('caldera.criticalmass.gps.trackreader');
+        $gr->loadTrack($track);
+
+        $track->setPoints($gr->countPoints());
+
+        $track->setStartPoint(0);
+        $track->setEndPoint($gr->countPoints() - 1);
+
+        $track->setStartDateTime($gr->getStartDateTime());
+        $track->setEndDateTime($gr->getEndDateTime());
+
+        $track->setDistance($gr->calculateDistance());
+
+        $track->setMd5Hash($gr->getMd5Hash());
+    }
+
+    protected function generateSimpleLatLngList(Track $track)
+    {
+        /**
+         * @var SimpleLatLngListGenerator $generator
+         */
+        $generator = $this->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
+        $list = $generator
+            ->loadTrack($track)
+            ->execute()
+            ->getList();
+
+        $track->setLatLngList($list);
     }
 }
