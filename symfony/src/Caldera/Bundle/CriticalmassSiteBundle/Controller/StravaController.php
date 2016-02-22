@@ -84,22 +84,22 @@ class StravaController extends AbstractController
     public function importAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
-        $afterDateTime = new \DateTime($ride->getFormattedDate().' 00:00:00');
-        $beforeDateTime = new \DateTime($ride->getFormattedDate().' 23:59:59');
+        $activityId = $request->get('activityId');
 
         $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($this->getParameter('strava.token'), $adapter);
 
         $client = new Client($service);
 
-        $activity = $client->getActivity(481324484, true);
+        /* Catch the activity to retrieve the start dateTime */
+        $activity = $client->getActivity($activityId, true);
 
         $startDateTime = new \DateTime($activity['start_date']);
         $startDateTime->setTimezone(new \DateTimeZone($activity['timezone']));
         $startTimestamp = $startDateTime->getTimestamp();
 
-        $activityStream = $client->getStreamsActivity(481324484, 'time,latlng,altitude', 'high');
+        /* Now fetch all the gpx data we need */
+        $activityStream = $client->getStreamsActivity($activityId, 'time,latlng,altitude', 'high');
 
         $length = count($activityStream[0]['data']);
 
