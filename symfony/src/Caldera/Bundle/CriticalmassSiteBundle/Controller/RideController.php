@@ -52,6 +52,12 @@ class RideController extends AbstractController
             $weatherForecast = null;
         }
 
+        if ($this->getUser()) {
+            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(), $ride);
+        } else {
+            $participation = null;
+        }
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:show.html.twig', 
             array(
@@ -63,7 +69,8 @@ class RideController extends AbstractController
                 'nextRide' => $nextRide,
                 'previousRide' => $previousRide,
                 'dateTime' => new \DateTime(),
-                'weatherForecast' => $weatherForecast
+                'weatherForecast' => $weatherForecast,
+                'participation' => $participation
             )
         );
     }

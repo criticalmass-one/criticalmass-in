@@ -1,0 +1,32 @@
+<div class="btn-group pull-right margin-top-medium">
+    {% if participation == null %}
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-bicycle"></i>
+        Bist du dabei?
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" style="z-index: 99999;">
+        <li>
+            <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'yes' }) }}">
+                <i class="fa fa-check"></i>
+                Ja
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'maybe' }) }}">
+                <i class="fa fa-circle-o"></i>
+                Vielleicht
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('caldera_criticalmass_participation_ride', { citySlug: ride.city.getMainSlugString, rideDate: ride.getFormattedDate(), status: 'no' }) }}">
+                <i class="fa fa-times"></i>
+                Nein
+            </a>
+        </li>
+    </ul>
+
+{% else %}
+
+{% endif %}
+</div>
