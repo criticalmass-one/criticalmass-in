@@ -10,7 +10,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
         this._initTrackToggleEvent();
         this._initPhotoViewModal();
         this._initSubrideEvents();
-        this._initTimelapse();
+        //this._initTimelapse();
     };
 
     RidePage.prototype._map = null;
