@@ -3,8 +3,8 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use FOS\UserBundle\Entity\User;
 
 class ParticipationRepository extends EntityRepository
 {

@@ -7,7 +7,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
+        {% if error %}
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="alert alert-danger alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h1>Einloggen und losfahren!</h1>
@@ -16,17 +24,6 @@
             </div>
         </div>
 
-    {% block sonata_user_login_error %}
-        {% if error %}
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
-                </div>
-            </div>
-        {% endif %}
-    {% endblock %}
-
-    {% block sonata_user_login_form %}
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <form action="{{ path("fos_user_security_check") }}" method="post" role="form" class="form-horizontal">
@@ -58,12 +55,11 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
-                            <input type="submit" id="_submit" name="_submit" class="btn btn-success" value="Ride on" />
+                            <input type="submit" id="_submit" name="_submit" class="btn btn-success pull-right" value="Ride on" />
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-    {% endblock %}
     </div>
 {% endblock %}

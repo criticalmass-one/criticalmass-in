@@ -99,3 +99,6 @@ services:
     caldera.criticalmass.weather.openweather.reader:
         class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader
         arguments: []
+
+    fos_user.doctrine_registry:
+        alias: doctrine

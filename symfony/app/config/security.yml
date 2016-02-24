@@ -10,26 +10,13 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        admin:
-            pattern:            /admin(.*)
-            context:            user
-            form_login:
-                provider:       fos_userbundle
-                login_path:     /admin/login
-                use_forward:    false
-                check_path:     /admin/login_check
-                failure_path:   null
-                always_use_default_target_path: false
-                default_target_path:            /
-            logout:
-                path:           /admin/logout
-            anonymous:          true
 
         main:
             pattern:             .*
             context:             user
             form_login:
-                provider:       fos_userbundle
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
                 login_path:     /login
                 use_forward:    false
                 check_path:     /login_check
