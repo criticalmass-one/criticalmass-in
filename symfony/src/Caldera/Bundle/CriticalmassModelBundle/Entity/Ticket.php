@@ -18,13 +18,13 @@ class Ticket
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="tickets")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tickets")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;

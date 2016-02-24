@@ -82,7 +82,7 @@ class Subride
     protected $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="subrides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -104,7 +104,7 @@ class Subride
     protected $archiveDateTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_subrides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_subrides")
      * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
      */
     protected $archiveUser;
@@ -367,10 +367,10 @@ class Subride
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return SubRide
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -380,7 +380,7 @@ class Subride
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -492,10 +492,10 @@ class Subride
     /**
      * Set archiveUser
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @param User $archiveUser
      * @return Subride
      */
-    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser = null)
     {
         $this->archiveUser = $archiveUser;
 
@@ -505,7 +505,7 @@ class Subride
     /**
      * Get archiveUser
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getArchiveUser()
     {

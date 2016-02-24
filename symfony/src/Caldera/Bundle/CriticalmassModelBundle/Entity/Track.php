@@ -27,31 +27,31 @@ class Track
     protected $username;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="tracks")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
     protected $ticket;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="CriticalmapsUser", inversedBy="tracks")
      * @ORM\JoinColumn(name="criticalmapsuser_id", referencedColumnName="id")
      */
     protected $criticalmapsUser;
 
     /**
-     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
      */
     protected $rideEstimate;
 
@@ -192,10 +192,10 @@ class Track
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return Track
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -205,7 +205,7 @@ class Track
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {

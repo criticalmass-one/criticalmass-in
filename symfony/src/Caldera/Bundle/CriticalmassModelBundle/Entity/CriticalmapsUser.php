@@ -19,13 +19,13 @@ class CriticalmapsUser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="criticalmaps_users")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="criticalmaps_users")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="criticalmaps_users")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="criticalmaps_users")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
@@ -244,10 +244,10 @@ class CriticalmapsUser
     /**
      * Set city
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\City $city
+     * @param City $city
      * @return CriticalmapsUser
      */
-    public function setCity(\Caldera\Bundle\CriticalmassModelBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -257,14 +257,14 @@ class CriticalmapsUser
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {
         return $this->city;
     }
 
-    public function setRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 

@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * In dieser Entitaet wird ein Positions-Datum abgelegt, das mit den Eigen-
  * schaften aus der Geolocation-Spezifikation ausgestattet ist.
  *
- * @ORM\Entity()
  * @ORM\Table(name="position")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PositionRepository")
  */
@@ -26,7 +25,7 @@ class Position
     /**
      * Sender dieses Datums.
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="positions")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="positions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -337,10 +336,10 @@ class Position
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return Position
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -350,7 +349,7 @@ class Position
     /**
      * Get user
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -360,10 +359,10 @@ class Position
     /**
      * Set api user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return Position
      */
-    public function setApiUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setApiUser(User $user = null)
     {
         $this->user = $user;
 
@@ -373,7 +372,7 @@ class Position
     /**
      * Get user
      *
-     * @return \Caldera\CriticalmassApiBundle\Entity\ApiUser
+     * @return ApiUser
      */
     public function getApiUser()
     {

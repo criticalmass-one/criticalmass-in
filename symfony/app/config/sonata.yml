@@ -1,26 +1,26 @@
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
+#sonata_block:
+#    default_contexts: [cms]
+#    blocks:
+        #sonata.admin.block.admin_list:
+        #    contexts:   [admin]
 
         #sonata.admin_doctrine_orm.block.audit:
         #    contexts:   [admin]
 
-        sonata.block.service.text:
-        sonata.block.service.rss:
-        sonata.user.block.menu:    # used to display the menu in profile pages
-        sonata.user.block.account: # used to display menu option (login option)
+        #sonata.block.service.text:
+        #sonata.block.service.rss:
+        #sonata.user.block.menu:    # used to display the menu in profile pages
+        #sonata.user.block.account: # used to display menu option (login option)
         # Some specific block from the SonataMediaBundle
         #sonata.media.block.media:
         #sonata.media.block.gallery:
         #sonata.media.block.feature_media:
 
-sonata_user:
-    security_acl: true
-    manager_type: orm # can be orm or mongodb
+#sonata_user:
+#    security_acl: true
+#    manager_type: orm # can be orm or mongodb
 
-sonata_admin:
-    security:
-        handler: sonata.admin.security.handler.noop
+#sonata_admin:
+#    security:
+#        handler: sonata.admin.security.handler.noop
 

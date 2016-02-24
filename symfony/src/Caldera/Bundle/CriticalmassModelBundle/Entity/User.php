@@ -1,11 +1,9 @@
 <?php
 
-namespace Application\Sonata\UserBundle\Entity;
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\ORM\Mapping as ORM;
-use Sonata\UserBundle\Entity\BaseUser as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
  * @ORM\Entity
@@ -38,7 +36,7 @@ class User extends BaseUser
     protected $currentCity;
 
     /**
-     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $tracks;
 
@@ -112,7 +110,7 @@ class User extends BaseUser
     /**
      * Set currentCity
      *
-     * @param \Caldera\CriticalmassCoreBundle\Entity\City $currentCity
+     * @param City $currentCity
      * @return User
      */
     public function setCurrentCity(City $currentCity = null)
@@ -125,7 +123,7 @@ class User extends BaseUser
     /**
      * Get currentCity
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return City
      */
     public function getCurrentCity()
     {

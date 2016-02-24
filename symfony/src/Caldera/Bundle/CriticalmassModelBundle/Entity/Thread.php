@@ -19,7 +19,7 @@ class Thread
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="threads")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
@@ -40,13 +40,13 @@ class Thread
      */
     protected $postNumber = 0;
     /**
-     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post")
+     * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
      */
     protected $firstPost;
 
     /**
-     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post")
+     * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
      */
     protected $lastPost;

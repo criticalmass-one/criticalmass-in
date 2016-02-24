@@ -19,7 +19,7 @@ class Content
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="contents")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="contents")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -78,7 +78,7 @@ class Content
     protected $archiveDateTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_rides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_contents")
      * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
      */
     protected $archiveUser;
@@ -301,10 +301,10 @@ class Content
     /**
      * Set archiveUser
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @param User $archiveUser
      * @return Content
      */
-    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser = null)
     {
         $this->archiveUser = $archiveUser;
 
@@ -314,7 +314,7 @@ class Content
     /**
      * Get archiveUser
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getArchiveUser()
     {

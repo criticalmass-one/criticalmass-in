@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
-use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,7 +23,7 @@ class Ride
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="rides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="rides")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -160,7 +159,7 @@ class Ride
     /**
      * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
      *
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", inversedBy="rides")
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="rides")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $featuredPhoto;
@@ -192,7 +191,7 @@ class Ride
     protected $archiveDateTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="archive_rides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_rides")
      * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
      */
     protected $archiveUser;
@@ -200,14 +199,14 @@ class Ride
     /**
      * Array mit den Kommentaren zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Post", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="ride")
      */
     protected $posts;
 
     /**
      * Array mit den Bildern zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Photo", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride")
      */
     protected $photos;
 
@@ -982,10 +981,10 @@ class Ride
     /**
      * Set archiveUser
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $archiveUser
+     * @param User $archiveUser
      * @return Ride
      */
-    public function setArchiveUser(\Application\Sonata\UserBundle\Entity\User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser = null)
     {
         $this->archiveUser = $archiveUser;
 
@@ -995,7 +994,7 @@ class Ride
     /**
      * Get archiveUser
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getArchiveUser()
     {

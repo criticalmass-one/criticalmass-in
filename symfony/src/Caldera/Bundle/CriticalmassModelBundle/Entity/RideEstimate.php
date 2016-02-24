@@ -21,7 +21,7 @@ class RideEstimate
 	protected $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="estimates")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
@@ -29,13 +29,13 @@ class RideEstimate
 	/**
 	 * Tour, zu der diese Entitaet abgespeichert wurde.
 	 *
-	 * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="estimates")
+	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
 	 */
 	protected $ride;
 
     /**
-     * @ORM\OneToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track", mappedBy="rideEstimate", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"})
      * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
      */
     protected $track;
@@ -173,10 +173,10 @@ class RideEstimate
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return RideEstimate
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -186,7 +186,7 @@ class RideEstimate
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {

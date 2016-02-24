@@ -19,13 +19,13 @@ class Participation
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="participations")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="participations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -160,10 +160,10 @@ class Participation
     /**
      * Set ride
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $ride
+     * @param Ride $ride
      * @return Participation
      */
-    public function setRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -173,7 +173,7 @@ class Participation
     /**
      * Get ride
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride 
+     * @return Ride
      */
     public function getRide()
     {
@@ -183,10 +183,10 @@ class Participation
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return Participation
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -196,7 +196,7 @@ class Participation
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
