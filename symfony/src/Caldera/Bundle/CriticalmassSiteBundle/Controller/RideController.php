@@ -231,7 +231,7 @@ class RideController extends AbstractController
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
             array(
-                'ride' => null,
+                'ride' => $ride,
                 'city' => $city, 
                 'form' => $form->createView(), 
                 'hasErrors' => null,
