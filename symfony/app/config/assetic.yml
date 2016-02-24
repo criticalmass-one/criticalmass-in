@@ -2,7 +2,7 @@
 assetic:
     debug:          %kernel.debug%
     use_controller: true
-    bundles:        [ CalderaCriticalmassSiteBundle, CalderaCyclewaysBundle ]
+    bundles:        [ CalderaCriticalmassSiteBundle ]
 
     filters:
         cssrewrite: ~

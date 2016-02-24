@@ -36,9 +36,4 @@ _sonata_admin:
 caldera_criticalmass:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing.yml"
     prefix:   /
-#    host:     "%domain.criticalmass%"
 
-#caldera_cycleways:
-#    resource: "@CalderaCyclewaysBundle/Resources/config/routing.yml"
-#    prefix:   /
-#    host:     "%domain.cycleways%"

@@ -1,4 +1,0 @@
-caldera_cycleways_map:
-    path:     /
-    defaults:
-        _controller: CalderaCyclewaysBundle:Cycleways:map
