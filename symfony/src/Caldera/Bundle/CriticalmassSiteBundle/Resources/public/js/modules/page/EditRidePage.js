@@ -67,7 +67,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         this._initCityMarker();
         this._initLocationMarker();
         this._initEventListeners();
-        this._initLocationSearch();
+        //this._initLocationSearch();
     };
 
     EditRidePage.prototype._initEventListeners = function() {
