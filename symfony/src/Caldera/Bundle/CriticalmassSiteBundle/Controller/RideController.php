@@ -344,6 +344,17 @@ class RideController extends AbstractController
 
     public function renderDetailsTabAction(Request $request, Ride $ride)
     {
+        /**
+         * @var Weather $weather
+         */
+        $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
+
+        if ($weather) {
+            $weatherForecast = $weather->getTemperatureEvening() . ' °C, ' . $weather->getWeatherDescription();
+        } else {
+            $weatherForecast = null;
+        }
+
         $estimateForm = $this->createForm(
             new RideEstimateType(),
             new RideEstimate(),
@@ -363,7 +374,8 @@ class RideController extends AbstractController
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime(),
-                'estimateForm' => $estimateForm->createView()
+                'estimateForm' => $estimateForm->createView(),
+                'weatherForecast' => $weatherForecast
             ]
         );
     }

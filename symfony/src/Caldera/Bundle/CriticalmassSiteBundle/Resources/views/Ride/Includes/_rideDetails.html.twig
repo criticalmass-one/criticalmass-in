@@ -16,6 +16,10 @@
                     {% else %}
                     <dd>noch nicht bekannt</dd>
                     {% endif %}
+                    {% if weatherForecast %}
+                    <dt>Wetter</dt>
+                    <dd>{{ weatherForecast }}</dd>
+                    {% endif %}
                 </dl>
             </div>
         </div>
