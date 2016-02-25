@@ -14,16 +14,16 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
-            {% if ride.description %}
-                {{ ride.description|markdown }}
-            {% endif %}
-        </div>
-
-        <div class="col-md-4">
+        <div class="col-xs-12 col-sm-4 col-sm-push-8">
             {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast } %}
             {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_socialMedia.html.twig' with { 'ride': ride } %}
             {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_rideEstimate.html.twig' with { 'ride': ride } %}
+        </div>
+
+        <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+            {% if ride.description %}
+                {{ ride.description|markdown }}
+            {% endif %}
         </div>
     </div>
 </div>
