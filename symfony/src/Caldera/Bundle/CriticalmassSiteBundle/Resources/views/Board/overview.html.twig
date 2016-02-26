@@ -28,11 +28,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td colspan="4">
+                            <h4>
+                                Allgemeines
+                            </h4>
+                        </td>
+                    </tr>
                     {% for board in boards %}
                         <tr>
                             <td>
                                 <a href="{{ path(board) }}">
-                                    {{ board.title }}
+                                    <h5 class="no-margin-top">
+                                        {{ board.title }}
+                                    </h5>
                                 </a>
                             </td>
                             <td>
@@ -51,6 +60,34 @@
                                     von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br />
                                     {{ board.lastThread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
                                 {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="4">
+                            <h4>
+                                Städte
+                            </h4>
+                        </td>
+                    </tr>
+                    {% for city in cities %}
+                        <tr>
+                            <td>
+                                <a href="">
+                                    <h5 class="no-margin-top">
+                                        {{ city.title }}
+                                    </h5>
+                                </a>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
                     {% endfor %}

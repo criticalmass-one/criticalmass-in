@@ -16,10 +16,13 @@ class BoardController extends AbstractController
     {
         $boards = $this->getBoardRepository()->findEnabledBoards();
 
+        $cities = $this->getCityRepository()->findCitiesWithBoard();
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:overview.html.twig',
             [
-                'boards' => $boards
+                'boards' => $boards,
+                'cities' => $cities
             ]
         );
     }
