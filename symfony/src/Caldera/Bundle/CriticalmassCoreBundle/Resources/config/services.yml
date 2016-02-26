@@ -100,5 +100,9 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader
         arguments: []
 
+    caldera.criticalmass.sluggenerator:
+        class: Caldera\Bundle\CriticalmassCoreBundle\SlugGenerator\SlugGenerator
+        arguments: []
+
     fos_user.doctrine_registry:
         alias: doctrine
