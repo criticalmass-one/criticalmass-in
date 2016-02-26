@@ -17,6 +17,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <a href="{{ path('caldera_criticalmass_board_addthread', { 'slug': board.slug }) }}" class="btn btn-success pull-right margin-top-medium">
+                    neues Thema eröffnen
+                </a>
+
                 <h1>
                     {{ board.title }}
                 </h1>

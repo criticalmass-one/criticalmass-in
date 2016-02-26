@@ -37,6 +37,11 @@ class Thread
     protected $title;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $viewNumber = 0;
@@ -232,5 +237,17 @@ class Thread
     public function incPostNumber()
     {
         ++$this->postNumber;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

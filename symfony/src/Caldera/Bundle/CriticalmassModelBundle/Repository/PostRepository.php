@@ -66,7 +66,7 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getPostsForThread(Thread $thread)
+    public function findPostsForThread(Thread $thread)
     {
         $builder = $this->createQueryBuilder('post');
 

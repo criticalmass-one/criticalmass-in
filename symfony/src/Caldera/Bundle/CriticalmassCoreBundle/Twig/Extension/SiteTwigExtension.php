@@ -2,10 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
-use FOS\UserBundle\Entity\User;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class SiteTwigExtension extends \Twig_Extension

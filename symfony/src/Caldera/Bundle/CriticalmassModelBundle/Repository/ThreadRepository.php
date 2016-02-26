@@ -40,5 +40,18 @@ class ThreadRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findThreadBySlug($slug)
+    {
+        $builder = $this->createQueryBuilder('thread');
+
+        $builder->select('thread');
+        $builder->where($builder->expr()->eq('thread.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('thread.slug', '\''.$slug.'\''));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleResult();
+    }
 }
 

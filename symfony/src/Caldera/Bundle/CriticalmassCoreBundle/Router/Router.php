@@ -142,11 +142,11 @@ class Router extends sfRouter
 
     private function generateThreadUrl(Thread $thread, $referenceType)
     {
-        $route = 'caldera_criticalmass_board_citythread';
+        $route = 'caldera_criticalmass_board_viewthread';
 
         $parameters = [
-            'citySlug' => $thread->getCity()->getMainSlugString(),
-            'threadId' => $thread->getId()
+            'boardSlug' => $thread->getBoard()->getSlug(),
+            'threadSlug' => $thread->getSlug()
         ];
 
         return parent::generate($route, $parameters, $referenceType);

@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Builder\BoardBuilder;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
@@ -38,17 +39,16 @@ class BoardController extends AbstractController
         );
     }
 
-    public function viewcitythreadAction(Request $request, $citySlug, $threadId)
+    public function viewthreadAction(Request $request, $boardSlug, $threadSlug)
     {
-        $city = $this->getCheckedCity($citySlug);
-
-        $thread = $this->getThreadRepository()->find($threadId);
-        $posts = $this->getPostRepository()->getPostsForThread($thread);
+        $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
+        $thread = $this->getThreadRepository()->findThreadBySlug($threadSlug);
+        $posts = $this->getPostRepository()->findPostsForThread($thread);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:viewThread.html.twig',
             [
-                'city' => $city,
+                'board' => $board,
                 'thread' => $thread,
                 'posts' => $posts
             ]
@@ -94,9 +94,9 @@ class BoardController extends AbstractController
         );
     }
 
-    public function addcitythreadAction(Request $request, $citySlug)
+    public function addthreadAction(Request $request, $slug)
     {
-        $city = $this->getCheckedCity($citySlug);
+        $board = $this->getBoardRepository()->findBoardBySlug($slug);
 
         $data = [];
         $form = $this->createFormBuilder($data)
@@ -105,24 +105,24 @@ class BoardController extends AbstractController
             ->getForm();
 
         if ('POST' == $request->getMethod()) {
-            return $this->addCityThreadPostAction($request, $city, $form);
+            return $this->addThreadPostAction($request, $board, $form);
         } else {
-            return $this->addCityThreadGetAction($request, $city, $form);
+            return $this->addThreadGetAction($request, $board, $form);
         }
     }
 
-    protected function addCityThreadGetAction(Request $request, City $city, Form $form)
+    protected function addThreadGetAction(Request $request, Board $board, Form $form)
     {
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:addCityThread.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:addThread.html.twig',
             [
-                'city' => $city,
+                'board' => $board,
                 'form' => $form->createView()
             ]
         );
     }
 
-    protected function addCityThreadPostAction(Request $request, City $city, Form $form)
+    protected function addThreadPostAction(Request $request, Board $board, Form $form)
     {
         $form->handleRequest($request);
 
@@ -132,10 +132,18 @@ class BoardController extends AbstractController
             $thread = new Thread();
             $post = new Post();
 
-            $thread->setCity($city);
+            $slugGenerator = $this->get('caldera.criticalmass.sluggenerator');
+            $slug = $slugGenerator->generate($data['title']);
+
+            $thread->setBoard($board);
             $thread->setTitle($data['title']);
             $thread->setFirstPost($post);
             $thread->setLastPost($post);
+            $thread->setSlug($slug);
+
+            $board->setLastThread($thread);
+            $board->incPostNumber();
+            $board->incThreadNumber();
 
             $post->setUser($this->getUser());
             $post->setMessage($data['message']);
@@ -144,24 +152,19 @@ class BoardController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            $em->persist($thread);
             $em->persist($post);
+            $em->persist($thread);
+            $em->persist($board);
 
             $em->flush();
 
-            return $this->redirectToRoute(
-                'caldera_criticalmass_board_citythread',
-                [
-                    'citySlug' => $city->getMainSlugString(),
-                    'threadId' => $thread->getId()
-                ]
-            );
+            return $this->redirectToRoute($thread);
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:addCityThread.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:addThread.html.twig',
             [
-                'city' => $city,
+                'board' => $board,
                 'form' => $form->createView()
             ]
         );
