@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery;
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,9 +41,12 @@ class UpdateWeatherCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $startDateTime = new \DateTime();
-        $interval = new \DateInterval('P4D');
+        $endDateInterval = new \DateInterval('P4D');
         $endDateTime = new \DateTime();
-        $endDateTime->add($interval);
+        $endDateTime->add($endDateInterval);
+        $halfDayInterval = new \DateInterval('PT12H');
+        $halfDateTime = new \DateTime();
+        $halfDateTime->sub($halfDayInterval);
 
         $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
         $this->em = $this->getContainer()->get('doctrine')->getManager();
@@ -52,9 +56,18 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $output->writeln('Looking for rides from '.$startDateTime->format('Y-m-d').' to '.$endDateTime->format('Y-m-d'));
 
         foreach ($rides as $ride) {
-            $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').')');
+            /**
+             * @var Weather $currentWeather
+             */
+            $currentWeather = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Weather')->findCurrentWeatherForRide($ride);
 
-            $this->retrieveWeather($ride);
+            if (!$currentWeather or $currentWeather->getCreationDateTime() < $halfDateTime) {
+                $this->retrieveWeather($ride);
+
+                $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').'): gespeichert');
+            } else {
+                $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').'): existiert bereits');
+            }
         }
     }
 
