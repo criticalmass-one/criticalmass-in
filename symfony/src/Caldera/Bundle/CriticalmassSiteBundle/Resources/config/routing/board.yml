@@ -2,16 +2,20 @@ caldera_criticalmass_board_overview:
     pattern:  /boards/overview
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:overview }
 
-caldera_criticalmass_board_cityboard:
-    pattern:  /{citySlug}/threads
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewcityboard }
+caldera_criticalmass_board_listthreads:
+    pattern:  /boards/{slug}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:listthreads }
+
+caldera_criticalmass_board_addthread:
+    pattern:  /boards/{slug}/addthread
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Board:addcitythread }
 
 caldera_criticalmass_board_citythread:
     pattern:  /{citySlug}/thread/{threadId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:viewcitythread }
 
-caldera_criticalmass_board_addcitythread:
-    pattern:  /{citySlug}/addthread
+caldera_criticalmass_board_addthread:
+    pattern:  /boards/{slug}/addthread
     defaults: { _controller: CalderaCriticalmassSiteBundle:Board:addcitythread }
 
 caldera_criticalmass_board_rideboard:

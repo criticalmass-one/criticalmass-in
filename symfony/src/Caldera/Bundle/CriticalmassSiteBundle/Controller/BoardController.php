@@ -13,34 +13,27 @@ class BoardController extends AbstractController
 {
     public function overviewAction(Request $request)
     {
-        /**
-         * @var BoardBuilder $boardBuilder
-         */
-        $boardBuilder = $this->get('caldera.criticalmass.board.builder.boardbuilder');
-
-        $boardBuilder->buildOverview();
-
-        $tree = $boardBuilder->getList();
+        $boards = $this->getBoardRepository()->findEnabledBoards();
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:overview.html.twig',
             [
-                'boardTree' => $tree
+                'boards' => $boards
             ]
         );
     }
 
-    public function viewcityboardAction(Request $request, $citySlug)
+    public function listthreadsAction(Request $request, $slug)
     {
-        $city = $this->getCheckedCity($citySlug);
+        $board = $this->getBoardRepository()->findBoardBySlug($slug);
 
-        $threads = $this->getThreadRepository()->findThreadsForCity($city);
+        $threads = $this->getThreadRepository()->findThreadsForBoard($board);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:viewCityBoard.html.twig',
+            'CalderaCriticalmassSiteBundle:Board:listThreads.html.twig',
             [
-                'city' => $city,
-                'threads' => $threads
+                'threads' => $threads,
+                'board' => $board
             ]
         );
     }

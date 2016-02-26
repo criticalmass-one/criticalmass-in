@@ -10,14 +10,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>
-                    Städte
-                </h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,34 +28,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for cityCategory in boardTree %}
+                    {% for board in boards %}
                         <tr>
-                            <td colspan="4">
-                                <h4>
-                                    {{ cityCategory.getTitle() }}
-                                </h4>
+                            <td>
+                                <a href="{{ path(board) }}">
+                                    {{ board.title }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ board.threadNumber }}
+                            </td>
+                            <td>
+                                {{ board.postNumber }}
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
-
-                        {% for board in cityCategory.getBoards() %}
-                            <tr>
-                                <td>
-                                    <a href="{{ path(board) }}">
-                                        {{ board.getTitle() }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ board.getThreadNumber() }}
-                                </td>
-                                <td>
-                                    {{ board.getPostNumber() }}
-                                </td>
-                                <td>
-                                    {{ board.getLastPost() }}
-                                </td>
-
-                            </tr>
-                        {% endfor %}
                     {% endfor %}
                     </tbody>
                 </table>

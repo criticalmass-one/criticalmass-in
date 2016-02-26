@@ -1,6 +1,6 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ board.title }}{% endblock %}
 
 {% block breadcrumb %}
     <li>
@@ -9,7 +9,7 @@
         </a>
     </li>
     <li class="active">
-        Allgemeines über die {{ city.title }}
+        {{ board.title }}
     </li>
 {% endblock %}
 
@@ -17,14 +17,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ path('caldera_criticalmass_board_addcitythread', { 'citySlug': city.getMainSlugString() }) }}" class="btn btn-success margin-top-medium pull-right">
-                    <i class="fa fa-commenting"></i>
-                    neues Thema beginnen
-                </a>
-
-                <h2>
-                    Allgemeines über die {{ city.title }}
-                </h2>
+                <h1>
+                    {{ board.title }}
+                </h1>
             </div>
         </div>
 
