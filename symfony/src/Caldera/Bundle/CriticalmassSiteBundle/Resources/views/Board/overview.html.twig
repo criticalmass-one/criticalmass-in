@@ -74,20 +74,28 @@
                     {% for city in cities %}
                         <tr>
                             <td>
-                                <a href="">
+                                <a href="{{ path('caldera_criticalmass_board_listcitythreads', { citySlug: city.getMainSlugString() }) }}">
                                     <h5 class="no-margin-top">
                                         {{ city.title }}
                                     </h5>
                                 </a>
                             </td>
                             <td>
-
+                                {{ city.threadNumber }}
                             </td>
                             <td>
-
+                                {{ city.postNumber }}
                             </td>
                             <td>
-
+                                {% if city.lastThread %}
+                                    <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(city.lastThread.lastPost.user, 36) }}" alt="..." />
+                                    <a href="{{ path(city.lastThread) }}">
+                                        <strong>{{ city.lastThread.title }}</strong>
+                                    </a>
+                                    <br />
+                                    von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br />
+                                    {{ city.lastThread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

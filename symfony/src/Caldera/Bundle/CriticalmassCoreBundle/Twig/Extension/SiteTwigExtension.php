@@ -42,6 +42,13 @@ class SiteTwigExtension extends \Twig_Extension
         ];
     }
 
+    public function getTests()
+    {
+        return [
+            'instanceof' =>  new \Twig_Function_Method($this, 'isInstanceof')
+        ];
+    }
+
     public function markdown($text)
     {
         $parsedown = new \Parsedown();
@@ -71,6 +78,10 @@ class SiteTwigExtension extends \Twig_Extension
         $diffDays = floor($diffSeconds / (60 * 60 * 24));
 
         return $diffDays;
+    }
+
+    public function isInstanceof($var, $instance) {
+        return  $var instanceof $instance;
     }
 
     public function getName()

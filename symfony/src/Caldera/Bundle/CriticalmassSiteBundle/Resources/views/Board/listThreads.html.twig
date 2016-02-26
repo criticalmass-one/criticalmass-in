@@ -17,9 +17,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% if board is instanceof('Board') %}
                 <a href="{{ path('caldera_criticalmass_board_addthread', { 'slug': board.slug }) }}" class="btn btn-success pull-right margin-top-medium">
                     neues Thema eröffnen
                 </a>
+                {% else %}
+                <a href="{{ path('caldera_criticalmass_board_addcitythread', { 'citySlug': board.slug }) }}" class="btn btn-success pull-right margin-top-medium">
+                    neues Thema eröffnen
+                </a>
+                {% endif %}
 
                 <h1>
                     {{ board.title }}

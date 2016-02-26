@@ -7,6 +7,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\BoardInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,24 +28,48 @@ class BoardController extends AbstractController
         );
     }
 
-    public function listthreadsAction(Request $request, $slug)
+    public function listthreadsAction(Request $request, $boardSlug = null, $citySlug = null)
     {
-        $board = $this->getBoardRepository()->findBoardBySlug($slug);
+        $board = null;
+        $city = null;
+        $threads = [];
 
-        $threads = $this->getThreadRepository()->findThreadsForBoard($board);
+        if ($boardSlug) {
+            $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
 
+            $threads = $this->getThreadRepository()->findThreadsForBoard($board);
+        }
+
+        if ($citySlug) {
+            $city = $this->getCheckedCity($citySlug);
+
+            $threads = $this->getThreadRepository()->findThreadsForCity($city);
+
+        }
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:listThreads.html.twig',
             [
                 'threads' => $threads,
-                'board' => $board
+                'board' => ($board ? $board : $city)
             ]
         );
     }
 
-    public function viewthreadAction(Request $request, $boardSlug, $threadSlug)
+    public function viewthreadAction(Request $request, $boardSlug = null, $citySlug = null, $threadSlug)
     {
-        $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
+        /**
+         * @var BoardInterface $board
+         */
+        $board = null;
+
+        if ($boardSlug) {
+            $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
+        }
+
+        if ($boardSlug) {
+            $board = $this->getCheckedCity($citySlug);
+        }
+
         $thread = $this->getThreadRepository()->findThreadBySlug($threadSlug);
         $posts = $this->getPostRepository()->findPostsForThread($thread);
 
@@ -97,9 +122,20 @@ class BoardController extends AbstractController
         );
     }
 
-    public function addthreadAction(Request $request, $slug)
+    public function addthreadAction(Request $request, $boardSlug = null, $citySlug = null)
     {
-        $board = $this->getBoardRepository()->findBoardBySlug($slug);
+        /**
+         * @var BoardInterface $board
+         */
+        $board = null;
+
+        if ($boardSlug) {
+            $board = $this->getBoardRepository()->findBoardBySlug($slug);
+        }
+
+        if ($citySlug) {
+            $board = $this->getCheckedCity($citySlug);
+        }
 
         $data = [];
         $form = $this->createFormBuilder($data)
@@ -114,7 +150,7 @@ class BoardController extends AbstractController
         }
     }
 
-    protected function addThreadGetAction(Request $request, Board $board, Form $form)
+    protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form)
     {
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:addThread.html.twig',
@@ -125,7 +161,7 @@ class BoardController extends AbstractController
         );
     }
 
-    protected function addThreadPostAction(Request $request, Board $board, Form $form)
+    protected function addThreadPostAction(Request $request, BoardInterface $board, Form $form)
     {
         $form->handleRequest($request);
 
@@ -138,7 +174,13 @@ class BoardController extends AbstractController
             $slugGenerator = $this->get('caldera.criticalmass.sluggenerator');
             $slug = $slugGenerator->generate($data['title']);
 
-            $thread->setBoard($board);
+            /* Okay, this is _really_ ugly */
+            if ($board instanceof City) {
+                $thread->setCity($board);
+            } else {
+                $thread->setBoard($board);
+            }
+
             $thread->setTitle($data['title']);
             $thread->setFirstPost($post);
             $thread->setLastPost($post);

@@ -122,7 +122,7 @@ class Router extends sfRouter
         $route = 'caldera_criticalmass_board_listthreads';
 
         $parameters = [
-            'slug' => $board->getSlug()
+            'boardSlug' => $board->getSlug()
         ];
 
         return parent::generate($route, $parameters, $referenceType);
@@ -142,12 +142,22 @@ class Router extends sfRouter
 
     private function generateThreadUrl(Thread $thread, $referenceType)
     {
-        $route = 'caldera_criticalmass_board_viewthread';
+        /* Let’s see if this is a city thread */
+        if ($thread->getCity()) {
+            $route = 'caldera_criticalmass_board_viewcitythread';
 
-        $parameters = [
-            'boardSlug' => $thread->getBoard()->getSlug(),
-            'threadSlug' => $thread->getSlug()
-        ];
+            $parameters = [
+                'threadSlug' => $thread->getSlug(),
+                'citySlug' => $thread->getCity()->getSlug()
+            ];
+        } else {
+            $route = 'caldera_criticalmass_board_viewthread';
+
+            $parameters = [
+                'threadSlug' => $thread->getSlug(),
+                'boardSlug' => $thread->getBoard()->getSlug()
+            ];
+        }
 
         return parent::generate($route, $parameters, $referenceType);
     }
