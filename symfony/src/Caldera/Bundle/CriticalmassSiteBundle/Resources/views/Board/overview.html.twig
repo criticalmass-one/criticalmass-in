@@ -42,7 +42,15 @@
                                 {{ board.postNumber }}
                             </td>
                             <td>
-
+                                {% if board.lastThread %}
+                                    <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(board.lastThread.lastPost.user, 36) }}" alt="..." />
+                                    <a href="{{ path(board.lastThread) }}">
+                                        <strong>{{ board.lastThread.title }}</strong>
+                                    </a>
+                                    <br />
+                                    von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br />
+                                    {{ board.lastThread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
