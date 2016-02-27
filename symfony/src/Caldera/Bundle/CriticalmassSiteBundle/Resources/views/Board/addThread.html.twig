@@ -1,8 +1,32 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_board_overview') }}">
+            Diskussionen
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(board) }}">
+            {{ board.title }}
+        </a>
+    </li>
+    <li>
+        neues Thema beginnen
+    </li>
+{% endblock %}
+
 {% block content %}
     {{ form_errors(form) }}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Neues Thema beginnen
+                </h1>
+            </div>
+        </div>
+
         {{ form_start(form) }}
 
         <div class="row">
@@ -29,7 +53,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    <a href="{{ path('caldera_criticalmass_board_cityboard', { 'citySlug': city.getMainSlugString() }) }}" class="btn btn-default">
+                    <a href="{{ path(board) }}" class="btn btn-default">
                         Abbrechen
                     </a>
 

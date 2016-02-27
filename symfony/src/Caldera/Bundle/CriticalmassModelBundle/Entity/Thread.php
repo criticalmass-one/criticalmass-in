@@ -25,10 +25,21 @@ class Thread
     protected $city;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
+     * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
+     */
+    protected $board;
+
+    /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     protected $title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
 
     /**
      * @ORM\Column(type="integer")
@@ -163,6 +174,18 @@ class Thread
         return $this->city;
     }
 
+    public function setBoard(Board $board = null)
+    {
+        $this->board = $board;
+
+        return $this;
+    }
+
+    public function getBoard()
+    {
+        return $this->board;
+    }
+
     public function setFirstPost(Post $firstPost)
     {
         $this->firstPost = $firstPost;
@@ -214,5 +237,17 @@ class Thread
     public function incPostNumber()
     {
         ++$this->postNumber;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

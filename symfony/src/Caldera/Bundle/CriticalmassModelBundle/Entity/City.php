@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\BoardInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  */
-class City
+class City implements BoardInterface
 {
 	/**
 	 * Numerische ID der Stadt.
@@ -274,6 +275,22 @@ class City
      */
     protected $timezone;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $threadNumber = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $postNumber = 0;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Thread")
+     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
+     */
+    protected $lastThread;
+
     public function setRegion(Region $region)
     {
         $this->region = $region;
@@ -331,6 +348,11 @@ class City
     {
         return $this->getMainSlug()->getSlug();
     }
+
+    public function getSlug() {
+        return $this->getMainSlugString();
+    }
+
     /**
      * Constructor
      */
@@ -1352,5 +1374,52 @@ class City
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+
+    public function setLastThread(Thread $lastThread)
+    {
+        $this->lastThread = $lastThread;
+
+        return $this;
+    }
+
+    public function getLastThread()
+    {
+        return $this->lastThread;
+    }
+
+    public function setPostNumber($postNumber)
+    {
+        $this->postNumber = $postNumber;
+
+        return $this;
+    }
+
+    public function getPostNumber()
+    {
+        return $this->postNumber;
+    }
+
+    public function incPostNumber()
+    {
+        ++$this->postNumber;
+    }
+
+    public function setThreadNumber($threadNumber)
+    {
+        $this->threadNumber = $threadNumber;
+
+        return $this;
+    }
+
+    public function getThreadNumber()
+    {
+        return $this->threadNumber;
+    }
+
+    public function incThreadNumber()
+    {
+        ++$this->threadNumber;
     }
 }

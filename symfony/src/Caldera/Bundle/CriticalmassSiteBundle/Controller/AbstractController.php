@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\BoardRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ParticipationRepository;
@@ -45,6 +46,14 @@ abstract class AbstractController extends Controller
     protected function getBlogArticleRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Article');
+    }
+
+    /**
+     * @return BoardRepository
+     */
+    protected function getBoardRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Board');
     }
 
     /**

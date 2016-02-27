@@ -1,9 +1,21 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ thread.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Diskussionen</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_board_overview') }}">
+            Diskussionen
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(board) }}">
+            {{ board.title }}
+        </a>
+    </li>
+    <li class="active">
+        {{ thread.title }}
+    </li>
 {% endblock %}
 
 {% block content %}

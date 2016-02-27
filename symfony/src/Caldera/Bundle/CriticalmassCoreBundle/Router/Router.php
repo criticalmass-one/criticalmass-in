@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Router;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\RideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
@@ -35,8 +36,8 @@ class Router extends sfRouter
             return $this->generateContentUrl($object, $referenceType);
         }
 
-        if ($object instanceof CityBoard) {
-            return $this->generateCityBoardUrl($object, $referenceType);
+        if ($object instanceof Board) {
+            return $this->generateBoardUrl($object, $referenceType);
         }
 
         if ($object instanceof Thread) {
@@ -116,12 +117,12 @@ class Router extends sfRouter
         return parent::generate($route, $parameters, $referenceType);
     }
 
-    private function generateRideBoardUrl(RideBoard $cityRideBoard, $referenceType)
+    private function generateBoardUrl(Board $board, $referenceType)
     {
-        $route = 'caldera_criticalmass_board_rideboard';
+        $route = 'caldera_criticalmass_board_listthreads';
 
         $parameters = [
-            'citySlug' => $cityRideBoard->getCity()->getMainSlugString()
+            'boardSlug' => $board->getSlug()
         ];
 
         return parent::generate($route, $parameters, $referenceType);
@@ -141,12 +142,22 @@ class Router extends sfRouter
 
     private function generateThreadUrl(Thread $thread, $referenceType)
     {
-        $route = 'caldera_criticalmass_board_citythread';
+        /* Let’s see if this is a city thread */
+        if ($thread->getCity()) {
+            $route = 'caldera_criticalmass_board_viewcitythread';
 
-        $parameters = [
-            'citySlug' => $thread->getCity()->getMainSlugString(),
-            'threadId' => $thread->getId()
-        ];
+            $parameters = [
+                'threadSlug' => $thread->getSlug(),
+                'citySlug' => $thread->getCity()->getSlug()
+            ];
+        } else {
+            $route = 'caldera_criticalmass_board_viewthread';
+
+            $parameters = [
+                'threadSlug' => $thread->getSlug(),
+                'boardSlug' => $thread->getBoard()->getSlug()
+            ];
+        }
 
         return parent::generate($route, $parameters, $referenceType);
     }
