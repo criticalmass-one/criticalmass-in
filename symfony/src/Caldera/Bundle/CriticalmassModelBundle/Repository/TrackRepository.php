@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
-use Application\Sonata\UserBundle\Entity\User;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\ORM\EntityRepository;

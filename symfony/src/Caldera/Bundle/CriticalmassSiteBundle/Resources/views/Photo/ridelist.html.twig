@@ -41,6 +41,31 @@
             </div>
         </div>
 
+        {% if pagination|length == 0 %}
+        {% if not app.getUser() %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    <strong>
+                        Schade!
+                    </strong>
+                    Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a> könntest du deine Fotos hochladen.
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    <strong>
+                        Hej!
+                    </strong>
+                    Du kannst der Erste sein, der hier seine Fotos hochlädt!
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
         <div class="row">
             <div class="photo-list">
                 {% for photo in pagination %}
@@ -62,5 +87,6 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
