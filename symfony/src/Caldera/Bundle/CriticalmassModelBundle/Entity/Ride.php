@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ParticipateableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Ride
+class Ride implements ParticipateableInterface
 {
     /**
      * Numerische ID der Tour.
