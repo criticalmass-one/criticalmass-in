@@ -61,7 +61,7 @@ class PhotoViewCommand extends ContainerAwareCommand
                     $user = null;
 
                     if ($photoViewArray['userId']) {
-                        $user = $this->doctrine->getRepository('ApplicationSonataUserBundle:User')->find($photoViewArray['userId']);
+                        $user = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:User')->find($photoViewArray['userId']);
                     }
 
                     $viewDateTime = new \DateTime($photoViewArray['dateTime']);
