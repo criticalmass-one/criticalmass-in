@@ -1,0 +1,715 @@
+<?php
+
+namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ParticipateableInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Table(name="event")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\EventRepository")
+ */
+class Event implements ParticipateableInterface
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="events")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="events")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $dateTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $hasTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $hasLocation;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $location;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $latitude;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $longitude;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
+     */
+    protected $facebook;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
+     */
+    protected $twitter;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
+     */
+    protected $url;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="archive_events")
+     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
+     */
+    protected $archiveParent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isArchived = false;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $archiveDateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_events")
+     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
+     */
+    protected $archiveUser;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="event")
+     */
+    protected $posts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="event")
+     */
+    protected $photos;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participationsNumberYes = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participationsNumberMaybe = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participationsNumberNo = 0;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Event
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Event
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set dateTime
+     *
+     * @param \DateTime $dateTime
+     * @return Event
+     */
+    public function setDateTime($dateTime)
+    {
+        $this->dateTime = $dateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get dateTime
+     *
+     * @return \DateTime 
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * Set hasTime
+     *
+     * @param boolean $hasTime
+     * @return Event
+     */
+    public function setHasTime($hasTime)
+    {
+        $this->hasTime = $hasTime;
+
+        return $this;
+    }
+
+    /**
+     * Get hasTime
+     *
+     * @return boolean 
+     */
+    public function getHasTime()
+    {
+        return $this->hasTime;
+    }
+
+    /**
+     * Set hasLocation
+     *
+     * @param boolean $hasLocation
+     * @return Event
+     */
+    public function setHasLocation($hasLocation)
+    {
+        $this->hasLocation = $hasLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get hasLocation
+     *
+     * @return boolean 
+     */
+    public function getHasLocation()
+    {
+        return $this->hasLocation;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return Event
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     * @return Event
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     * @return Event
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set facebook
+     *
+     * @param string $facebook
+     * @return Event
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook
+     *
+     * @return string 
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * Set twitter
+     *
+     * @param string $twitter
+     * @return Event
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Event
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param boolean $isArchived
+     * @return Event
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set archiveDateTime
+     *
+     * @param \DateTime $archiveDateTime
+     * @return Event
+     */
+    public function setArchiveDateTime($archiveDateTime)
+    {
+        $this->archiveDateTime = $archiveDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getArchiveDateTime()
+    {
+        return $this->archiveDateTime;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Event
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set participationsNumberYes
+     *
+     * @param integer $participationsNumberYes
+     * @return Event
+     */
+    public function setParticipationsNumberYes($participationsNumberYes)
+    {
+        $this->participationsNumberYes = $participationsNumberYes;
+
+        return $this;
+    }
+
+    /**
+     * Get participationsNumberYes
+     *
+     * @return integer 
+     */
+    public function getParticipationsNumberYes()
+    {
+        return $this->participationsNumberYes;
+    }
+
+    /**
+     * Set participationsNumberMaybe
+     *
+     * @param integer $participationsNumberMaybe
+     * @return Event
+     */
+    public function setParticipationsNumberMaybe($participationsNumberMaybe)
+    {
+        $this->participationsNumberMaybe = $participationsNumberMaybe;
+
+        return $this;
+    }
+
+    /**
+     * Get participationsNumberMaybe
+     *
+     * @return integer 
+     */
+    public function getParticipationsNumberMaybe()
+    {
+        return $this->participationsNumberMaybe;
+    }
+
+    /**
+     * Set participationsNumberNo
+     *
+     * @param integer $participationsNumberNo
+     * @return Event
+     */
+    public function setParticipationsNumberNo($participationsNumberNo)
+    {
+        $this->participationsNumberNo = $participationsNumberNo;
+
+        return $this;
+    }
+
+    /**
+     * Get participationsNumberNo
+     *
+     * @return integer 
+     */
+    public function getParticipationsNumberNo()
+    {
+        return $this->participationsNumberNo;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\User $user
+     * @return Event
+     */
+    public function setUser(\Caldera\Bundle\CriticalmassModelBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\City $city
+     * @return Event
+     */
+    public function setCity(\Caldera\Bundle\CriticalmassModelBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set archiveParent
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Event $archiveParent
+     * @return Event
+     */
+    public function setArchiveParent(\Caldera\Bundle\CriticalmassModelBundle\Entity\Event $archiveParent = null)
+    {
+        $this->archiveParent = $archiveParent;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveParent
+     *
+     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\Event 
+     */
+    public function getArchiveParent()
+    {
+        return $this->archiveParent;
+    }
+
+    /**
+     * Set archiveUser
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\User $archiveUser
+     * @return Event
+     */
+    public function setArchiveUser(\Caldera\Bundle\CriticalmassModelBundle\Entity\User $archiveUser = null)
+    {
+        $this->archiveUser = $archiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get archiveUser
+     *
+     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\User 
+     */
+    public function getArchiveUser()
+    {
+        return $this->archiveUser;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts
+     * @return Event
+     */
+    public function addPost(\Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts
+     */
+    public function removePost(\Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     * @return Event
+     */
+    public function addPhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+}

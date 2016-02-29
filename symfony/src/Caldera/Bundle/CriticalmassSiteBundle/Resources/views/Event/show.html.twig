@@ -1,0 +1,14 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path(city) }}">{{ city.city }}</a></li>
+    <li class="active">{{ event.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    </div>
+{% endblock %}

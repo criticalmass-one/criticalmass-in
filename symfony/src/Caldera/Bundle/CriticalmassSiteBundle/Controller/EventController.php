@@ -1,0 +1,197 @@
+<?php
+
+namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class EventController extends AbstractController
+{
+    public function showAction(Request $request, $citySlug, $eventSlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $event = $this->getEventRepository()->findEventByCityAndSlug($city, $eventSlug);
+
+        if (!$event) {
+            throw new NotFoundHttpException('Dieses Event gibt es leider nicht :(');
+        }
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Event:show.html.twig',
+            array(
+                'city' => $city,
+                'event' => $event
+            )
+        );
+    }
+
+    public function addAction(Request $request, $citySlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $ride = new Ride();
+        $ride->setCity($city);
+        $ride->setUser($this->getUser());
+
+        $form = $this->createForm(
+            new RideType(),
+            $ride,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_desktop_ride_add',
+                    [
+                        'citySlug' => $city->getMainSlugString()
+                    ]
+                )
+            ]
+        );
+
+        if ('POST' == $request->getMethod()) {
+            return $this->addPostAction($request, $ride, $city, $form);
+        } else {
+            return $this->addGetAction($request, $ride, $city, $form);
+        }
+    }
+    
+    protected function addPostAction(Request $request, Ride $ride, City $city, Form $form)
+    {
+        $form->handleRequest($request);
+
+        // TODO: remove this shit and test the validation in the template
+        $hasErrors = null;
+
+        if ($form->isValid() && !$city->hasRideAtMonthDay($ride->getDateTime())) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+
+            // TODO: remove also this
+            $hasErrors = false;
+
+            /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
+            just to change the action url of the form, but we are far to stupid for this hack. */
+            $form = $this->createForm(
+                new RideType(), 
+                $ride, 
+                [
+                    'action' => $this->generateUrl(
+                        'caldera_criticalmass_desktop_ride_edit', 
+                        [
+                            'citySlug' => $city->getMainSlugString(), 
+                            'rideDate' => $ride->getFormattedDate()
+                        ]
+                    )
+                ]
+            );
+        } elseif ($form->isSubmitted()) {
+            // TODO: remove even more shit
+            $hasErrors = true;
+        }
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig',
+            array(
+                'hasErrors' => $hasErrors,
+                'ride' => $ride,
+                'form' => $form->createView(),
+                'city' => $city,
+                'dateTime' => new \DateTime()
+            )
+        );
+    }
+    
+    protected function addGetAction(Request $request, Ride $ride, City $city, Form $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
+            [
+                'hasErrors' => null,
+                'ride' => null, 
+                'form' => $form->createView(), 
+                'city' => $city, 
+                'dateTime' => new \DateTime()
+            ]
+        );
+    }
+
+    public function editAction(Request $request, $citySlug, $rideDate)
+    {
+        $city = $this->getCheckedCity($citySlug);
+        $rideDateTime = $this->getCheckedDateTime($rideDate);
+        $ride = $this->getCheckedRide($city, $rideDateTime);
+
+        $form = $this->createForm(
+            new RideType(), 
+            $ride, 
+            array(
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', 
+                    array(
+                        'citySlug' => $city->getMainSlugString(), 
+                        'rideDate' => $ride->getDateTime()->format('Y-m-d')
+                    )
+                )
+            )
+        );
+
+        if ('POST' == $request->getMethod()) {
+            return $this->editPostAction($request, $ride, $city, $form);
+        } else {
+            return $this->editGetAction($request, $ride, $city, $form);
+        }
+    }
+    
+    protected function editPostAction(Request $request, Ride $ride, City $city, Form $form)
+    {
+        $archiveRide = clone $ride;
+        $archiveRide->setArchiveUser($this->getUser());
+        $archiveRide->setArchiveParent($ride);
+
+        $form->handleRequest($request);
+
+        // TODO: remove this shit and test the validation in the template
+        $hasErrors = null;
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->persist($archiveRide);
+            $em->flush();
+
+            // TODO: remove also this
+            $hasErrors = false;
+        } elseif ($form->isSubmitted()) {
+            // TODO: remove even more shit
+            $hasErrors = true;
+        }
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
+            array(
+                'ride' => $ride, 
+                'city' => $city, 
+                'form' => $form->createView(), 
+                'hasErrors' => $hasErrors, 
+                'dateTime' => new \DateTime()
+            )
+        );
+    }
+    
+    protected function editGetAction(Request $request, Ride $ride, City $city, Form $form)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:edit.html.twig', 
+            array(
+                'ride' => $ride,
+                'city' => $city, 
+                'form' => $form->createView(), 
+                'hasErrors' => null,
+                'dateTime' => new \DateTime()
+            )
+        );
+    }
+}

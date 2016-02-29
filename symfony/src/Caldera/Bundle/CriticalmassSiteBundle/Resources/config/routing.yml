@@ -81,3 +81,8 @@ caldera_criticalmass_sudride:
 caldera_criticalmass_statistic:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"
     prefix:   /
+
+# last route to match is always event!
+caldera_criticalmass_event:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/event.yml"
+    prefix: /
