@@ -157,7 +157,7 @@ class StatisticController extends AbstractController
             return $this->render('CalderaCriticalmassStatisticBundle:Ride:estimatefailure.html.twig', array('form' => $form->createView(), 'ride' => $ride));
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $citySlug, 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
+        return $this->redirect($this->generateUrl('caldera_criticalmass_ride_show', array('citySlug' => $citySlug, 'rideDate' => $ride->getDateTime()->format('Y-m-d'))));
     }
 
     public function generateAction($heatmapId)

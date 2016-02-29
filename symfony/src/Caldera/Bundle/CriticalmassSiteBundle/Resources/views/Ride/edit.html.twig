@@ -15,7 +15,7 @@
     <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
 
     {% if ride %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+    <li><a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
     <li class="active">Tour editieren</li>
     {% else %}
     <li class="active">Tour hinzufügen</li>
@@ -58,7 +58,7 @@
                 </div>
         {% elseif hasErrors == false %}
                 <div class="alert alert-success" role="alert">
-                    Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: city.getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">
+                    Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_ride_show', { citySlug: city.getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">
                         Zurück zur Tour?
                     </a>
                 </div>

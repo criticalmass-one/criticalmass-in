@@ -2,10 +2,6 @@ caldera_criticalmass_desktop_ride_add:
     pattern:  /{citySlug}/add
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:add }
 
-caldera_criticalmass_desktop_ride_show:
-    pattern:  /{citySlug}/{rideDate}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:show }
-
 caldera_criticalmass_ride_show:
     pattern:  /{citySlug}/{rideDate}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:show }

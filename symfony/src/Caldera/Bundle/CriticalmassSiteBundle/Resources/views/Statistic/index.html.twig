@@ -25,7 +25,7 @@
                     {% for ride in topParticipantRides %}
                     <tr>
                         <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() })}}">{{ ride.getCity().getCity() }}</a></td>
-                        <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
+                        <td><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
                         <td>{{ ride.getEstimatedParticipants() }}</td>
                     </tr>
                     {% endfor %}
@@ -45,7 +45,7 @@
                     {% for ride in topDistanceRides %}
                         <tr>
                             <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() })}}">{{ ride.getCity().getCity() }}</a></td>
-                            <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
+                            <td><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getDateTime().format('F Y') }}</a></td>
                             <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
                         </tr>
                     {% endfor %}

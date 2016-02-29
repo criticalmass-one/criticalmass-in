@@ -30,7 +30,7 @@
             <div class="col-md-3">
                 Tour:
                 <br />
-                <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: track.getRide().getCity().getMainSlugString(), rideDate: track.getRide().getFormattedDate() }) }}">
+                <a href="{{ path('caldera_criticalmass_ride_show', { citySlug: track.getRide().getCity().getMainSlugString(), rideDate: track.getRide().getFormattedDate() }) }}">
                     {{ track.getRide().getFancyTitle() }}
                 </a>
             </div>

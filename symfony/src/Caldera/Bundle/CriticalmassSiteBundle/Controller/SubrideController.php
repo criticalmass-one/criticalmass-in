@@ -221,7 +221,7 @@ class SubrideController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute(
-            'caldera_criticalmass_desktop_ride_show',
+            'caldera_criticalmass_ride_show',
             [
                 'citySlug' => $newRide->getCity()->getMainSlugString(),
                 'rideDate' => $newRide->getFormattedDate()
