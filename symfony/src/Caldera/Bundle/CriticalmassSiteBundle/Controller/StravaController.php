@@ -18,7 +18,6 @@ use Strava\API\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Strava\API\OAuth;
 use Strava\API\Service\REST;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StravaController extends AbstractController
 {
@@ -36,24 +35,28 @@ class StravaController extends AbstractController
         );
 
         try {
-            $options = array(
+            $oauthOptions = [
                 'clientId'     => $this->getParameter('strava.client_id'),
-                'clientSecret' => $this->getParameter('strava.token'),
+                'clientSecret' => $this->getParameter('strava.secret'),
                 'redirectUri'  => $redirectUri,
-                'scope' => 'view_private',
-                'approval_prompt' => 'force'
-            );
+                'scopes' => ['view_private']
+            ];
 
-            $oauth = new OAuth($options);
+            $oauth = new OAuth($oauthOptions);
 
         } catch(Exception $e) {
             print $e->getMessage();
         }
 
+        $authorizationOptions = [
+            'state' => '',
+            'approval_prompt' => 'force'
+        ];
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Strava:auth.html.twig',
             [
-                'authorizationUrl' => $oauth->getAuthorizationUrl()
+                'authorizationUrl' => $oauth->getAuthorizationUrl($authorizationOptions)
             ]
         );
     }
@@ -65,8 +68,32 @@ class StravaController extends AbstractController
         $afterDateTime = new \DateTime($ride->getFormattedDate().' 00:00:00');
         $beforeDateTime = new \DateTime($ride->getFormattedDate().' 23:59:59');
 
+        $redirectUri = 'http://www.criticalmass.cm'.$this->generateUrl(
+                'caldera_criticalmass_strava_list',
+                [
+                    'citySlug' => $ride->getCity()->getMainSlugString(),
+                    'rideDate' => $ride->getFormattedDate(),
+                    true
+                ]
+            );
+
+        $oauthOptions = [
+            'clientId'     => $this->getParameter('strava.client_id'),
+            'clientSecret' => $this->getParameter('strava.secret'),
+            'redirectUri'  => $redirectUri
+        ];
+
+        $oauth = new OAuth($oauthOptions);
+
+        $token = $oauth->getAccessToken(
+            'authorization_code',
+            [
+                'code' => $request->get('code')
+            ]
+        );
+
         $adapter = new Pest('https://www.strava.com/api/v3');
-        $service = new REST($this->getParameter('strava.token'), $adapter);
+        $service = new REST($token, $adapter);
 
         $client = new Client($service);
 
