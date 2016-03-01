@@ -66,7 +66,7 @@ class BoardController extends AbstractController
             $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
         }
 
-        if ($boardSlug) {
+        if ($citySlug) {
             $board = $this->getCheckedCity($citySlug);
         }
 

@@ -2,8 +2,13 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\BoardInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,8 +23,13 @@ class PostController extends AbstractController
         $threadId = null
 
     ) {
+        /**
+         * @var Post $post
+         * @var Ride $ride
+         * @var City $city
+         * @var Thread $thread
+         */
         $post = new Post();
-
         $ride = null;
         $city = null;
         $thread = null;
@@ -68,8 +78,6 @@ class PostController extends AbstractController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-
-
             $post->setUser($this->getUser());
             $em->persist($post);
 
@@ -77,7 +85,21 @@ class PostController extends AbstractController
             if ($thread) {
                 $thread->setLastPost($post);
                 $thread->incPostNumber();
+
+                /**
+                 * @var BoardInterface $board
+                 */
+                if ($thread->getBoard()) {
+                    $board = $thread->getBoard();
+                } else {
+                    $board = $thread->getCity();
+                }
+
+                $board->incPostNumber();
+                $board->setLastThread($thread);
+
                 $em->persist($thread);
+                $em->persist($board);
             }
 
             $em->flush();
