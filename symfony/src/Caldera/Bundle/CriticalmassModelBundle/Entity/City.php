@@ -266,7 +266,7 @@ class City implements BoardInterface
     protected $postNumber = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="Thread")
+     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="cities")
      * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
      */
     protected $lastThread;

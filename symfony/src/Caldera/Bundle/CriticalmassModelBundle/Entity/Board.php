@@ -26,6 +26,11 @@ class Board implements BoardInterface
     protected $title;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $threadNumber = 0;
@@ -92,6 +97,29 @@ class Board implements BoardInterface
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Board
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
