@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="ride")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Ride implements ParticipateableInterface
 {
@@ -100,31 +99,6 @@ class Ride implements ParticipateableInterface
     protected $longitude;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $optimizedGpxContent;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $visibleSince;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $visibleUntil;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $expectedStartDateTime;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enableTracking = true;
-
-    /**
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $estimatedParticipants;
@@ -156,24 +130,6 @@ class Ride implements ParticipateableInterface
      * @Assert\Url()
      */
     protected $url;
-
-    /**
-     * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
-     *
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="rides")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
-     */
-    protected $featuredPhoto;
-    
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $weatherForecast;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $hashtag;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archive_rides")
@@ -370,7 +326,7 @@ class Ride implements ParticipateableInterface
     /**
      * Get city
      *
-     * @return \Caldera\CriticalmassCoreBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {
@@ -447,16 +403,6 @@ class Ride implements ParticipateableInterface
         return $this->description;
     }
 
-    public function setOptimizedGpxContent($optimizedGpxContent)
-    {
-        $this->optimizedGpxContent = $optimizedGpxContent;
-    }
-
-    public function getOptimizedGpxContent()
-    {
-        return $this->optimizedGpxContent;
-    }
-
     public function isEqual(Ride $ride)
     {
         return $ride->getId() == $this->getId();
@@ -470,11 +416,6 @@ class Ride implements ParticipateableInterface
     public function isSameRide(Ride $ride)
     {
         return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
-    }
-
-    public function getCityTitle()
-    {
-        return $this->getCity()->getTitle();
     }
 
     public function __toString()
@@ -496,98 +437,6 @@ class Ride implements ParticipateableInterface
         $this->archiveDateTime = new \DateTime();
         $this->latitude = 0.0;
         $this->longitude = 0.0;
-    }
-
-    /**
-     * Set visibleSince
-     *
-     * @param \DateTime $visibleSince
-     * @return Ride
-     */
-    public function setVisibleSince($visibleSince)
-    {
-        $this->visibleSince = $visibleSince;
-
-        return $this;
-    }
-
-    /**
-     * Get visibleSince
-     *
-     * @return \DateTime
-     */
-    public function getVisibleSince()
-    {
-        return $this->visibleSince;
-    }
-
-    /**
-     * Set visibleUntil
-     *
-     * @param \DateTime $visibleUntil
-     * @return Ride
-     */
-    public function setVisibleUntil($visibleUntil)
-    {
-        $this->visibleUntil = $visibleUntil;
-
-        return $this;
-    }
-
-    /**
-     * Get visibleUntil
-     *
-     * @return \DateTime
-     */
-    public function getVisibleUntil()
-    {
-        return $this->visibleUntil;
-    }
-
-    /**
-     * Set expectedStartDateTime
-     *
-     * @param \DateTime $expectedStartDateTime
-     * @return Ride
-     */
-    public function setExpectedStartDateTime($expectedStartDateTime)
-    {
-        $this->expectedStartDateTime = $expectedStartDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get expectedStartDateTime
-     *
-     * @return \DateTime
-     */
-    public function getExpectedStartDateTime()
-    {
-        return $this->expectedStartDateTime;
-    }
-
-    /**
-     * Set enableTracking
-     *
-     * @param boolean $enableTracking
-     * @return Ride
-     */
-    public function setEnableTracking($enableTracking)
-    {
-        $this->enableTracking = $enableTracking;
-
-        return $this;
-    }
-
-    /**
-     * Get enableTracking
-     *
-     * @return boolean
-     */
-    public function getEnableTracking()
-    {
-        return $this->enableTracking;
     }
 
     /**
@@ -682,25 +531,6 @@ class Ride implements ParticipateableInterface
         return $this->url;
     }
 
-    /**
-     * @param string $hashtag
-     * @return Ride
-     */
-    public function setHashtag($hashtag)
-    {
-        $this->hashtag = $hashtag;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHashtag()
-    {
-        return $this->hashtag;
-    }
-
     public function getDate()
     {
         return $this->dateTime;
@@ -775,67 +605,6 @@ class Ride implements ParticipateableInterface
     }
 
     /**
-     * Unmapped property to handle file uploads
-     */
-    private $file;
-
-    /**
-     * Sets file.
-     *
-     * @param UploadedFile $file
-     */
-    public function setFile(UploadedFile $file = null)
-    {
-        $this->file = $file;
-    }
-
-    /**
-     * Get file.
-     *
-     * @return UploadedFile
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * Manages the copying of the file to the relevant place on the server
-     */
-    public function upload()
-    {
-        // the file property can be empty if the field is not required
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        // we use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-
-        $basePath = '/Applications/XAMPP/htdocs/criticalmass/symfony/web/images/ride/';
-        $path = $basePath . $this->getCity()->getMainSlugString() . '/';
-
-        //@mkdir($path, 0777, true);
-        // move takes the target directory and target filename as params
-        $this->getFile()->move($path, $path . $this->getId() . '.jpg');
-
-        // set the path property to the filename where you've saved the file
-        $this->filename = $this->getFile()->getClientOriginalName();
-
-        // clean up the file property as you won't need it anymore
-        $this->setFile(null);
-    }
-
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function lifecycleFileUpload()
-    {
-        $this->upload();
-    }
-
-    /**
      * Updates the hash value to force the preUpdate and postUpdate events to fire
      */
     public function refreshUpdated()
@@ -876,51 +645,11 @@ class Ride implements ParticipateableInterface
         return $this->tracks;
     }
 
-    public function getActiveTracks()
-    {
-        $tracks = $this->getTracks();
-
-        $result = array();
-
-        foreach ($tracks as $track)
-        {
-            if ($track->getActivated())
-            {
-                $result[] = $track;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Set weatherForecast
-     *
-     * @param string $weatherForecast
-     * @return Ride
-     */
-    public function setWeatherForecast($weatherForecast)
-    {
-        $this->weatherForecast = $weatherForecast;
-
-        return $this;
-    }
-
-    /**
-     * Get weatherForecast
-     *
-     * @return string 
-     */
-    public function getWeatherForecast()
-    {
-        return $this->weatherForecast;
-    }
-
     public function getFancyTitle()
     {
         if (!$this->title)
         {
-            return $this->getCityTitle().' '.$this->dateTime->format('d.m.Y');
+            return $this->city->getTitle().' '.$this->dateTime->format('d.m.Y');
         }
 
         return $this->getTitle();
@@ -1120,21 +849,6 @@ class Ride implements ParticipateableInterface
         return $this->subrides;
     }
 
-    public function getActiveSubrides()
-    {
-        $subrides = array();
-
-        foreach ($this->subrides as $subride)
-        {
-            if (!$subride->getIsArchived())
-            {
-                $subrides[] = $subride;
-            }
-        }
-
-        return $subrides;
-    }
-
     public function getDurationInterval()
     {
         $totalMinutes = $this->estimatedDuration * 60.0;
@@ -1152,29 +866,6 @@ class Ride implements ParticipateableInterface
         }
         
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
-    }
-
-    /**
-     * Set featuredPhoto
-     *
-     * @param Photo $featuredPhoto
-     * @return Ride
-     */
-    public function setFeaturedPhoto(Photo $featuredPhoto = null)
-    {
-        $this->featuredPhoto = $featuredPhoto;
-
-        return $this;
-    }
-
-    /**
-     * Get featuredPhoto
-     *
-     * @return Photo
-     */
-    public function getFeaturedPhoto()
-    {
-        return $this->featuredPhoto;
     }
 
     public function getPin()
