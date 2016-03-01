@@ -19,6 +19,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\WeatherRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractController extends Controller
@@ -225,5 +226,12 @@ abstract class AbstractController extends Controller
         $ride = $this->getCheckedRide($city, $rideDateTime);
         
         return $ride;
+    }
+
+    protected function getSession()
+    {
+        $session = new Session();
+
+        return $session;
     }
 }
