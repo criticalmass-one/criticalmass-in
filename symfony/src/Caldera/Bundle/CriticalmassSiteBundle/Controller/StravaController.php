@@ -16,23 +16,23 @@ use Polyline;
 use Pest;
 use Strava\API\Client;
 use Symfony\Component\HttpFoundation\Request;
-use Strava\API\OAuth;
+use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
 
 class StravaController extends AbstractController
 {
-    public function authAction(Request $request, $citySlug, $rideDate)
+    protected function initOauthForRide(Request $request, Ride $ride)
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $redirectUri = $request->getUriForPath($this->generateUrl(
             'caldera_criticalmass_strava_list',
             [
                 'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-                true
+                'rideDate' => $ride->getFormattedDate()
             ]
         ));
+
+        /* avoid double app_dev.php in uri */
+        $redirectUri = str_replace('app_dev.php/app_dev.php/', 'app_dev.php/', $redirectUri);
 
         try {
             $oauthOptions = [
@@ -42,11 +42,19 @@ class StravaController extends AbstractController
                 'scopes' => ['view_private']
             ];
 
-            $oauth = new OAuth($oauthOptions);
+            return new OAuth($oauthOptions);
 
         } catch(Exception $e) {
             print $e->getMessage();
         }
+    }
+
+
+    public function authAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $oauth = $this->initOauthForRide($request, $ride);
 
         $authorizationOptions = [
             'state' => '',
@@ -71,22 +79,7 @@ class StravaController extends AbstractController
         $afterDateTime = new \DateTime($ride->getFormattedDate().' 00:00:00');
         $beforeDateTime = new \DateTime($ride->getFormattedDate().' 23:59:59');
 
-        $redirectUri = $request->getUriForPath($this->generateUrl(
-            'caldera_criticalmass_strava_list',
-            [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-                true
-            ]
-        ));
-
-        $oauthOptions = [
-            'clientId'     => $this->getParameter('strava.client_id'),
-            'clientSecret' => $this->getParameter('strava.secret'),
-            'redirectUri'  => $redirectUri
-        ];
-
-        $oauth = new OAuth($oauthOptions);
+        $oauth = $this->initOauthForRide($request, $ride);
 
         $token = $oauth->getAccessToken(
             'authorization_code',
