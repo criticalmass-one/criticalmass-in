@@ -53,10 +53,13 @@ class StravaController extends AbstractController
             'approval_prompt' => 'force'
         ];
 
+        $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Strava:auth.html.twig',
             [
-                'authorizationUrl' => $oauth->getAuthorizationUrl($authorizationOptions)
+                'authorizationUrl' => $authorizationUrl,
+                'ride' => $ride
             ]
         );
     }
