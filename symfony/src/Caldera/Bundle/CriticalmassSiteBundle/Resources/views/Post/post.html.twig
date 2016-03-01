@@ -16,8 +16,8 @@
                 {% endif %}
                 </h4>
 
-                <time>{{ post.getDateTime().format('d.m.Y H:i') }}&nbsp;Uhr</time>
-                {{ post.getMessage()|markdown }}
+                <time>{{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr</time>
+                {{ post.message|markdown }}
             </div>
         </div>
     </div>

@@ -71,7 +71,7 @@
                                 {% if thread.lastPost %}
                                 <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(thread.lastPost.user, 36) }}" alt="..." />
                                 von <strong>{{ thread.lastPost.user.username }}</strong><br />
-                                {{ thread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                 {% endif %}
                             </td>
                         </tr>

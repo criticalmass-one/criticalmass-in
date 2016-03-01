@@ -62,7 +62,7 @@
                                     </a>
                                     <br />
                                     von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br />
-                                    {{ board.lastThread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                    {{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                 {% endif %}
                             </td>
                         </tr>
@@ -102,7 +102,7 @@
                                     </a>
                                     <br />
                                     von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br />
-                                    {{ city.lastThread.lastPost.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                                    {{ city.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                 {% endif %}
                             </td>
                         </tr>
