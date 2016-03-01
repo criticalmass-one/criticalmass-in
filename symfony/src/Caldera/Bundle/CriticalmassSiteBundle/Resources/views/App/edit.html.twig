@@ -9,7 +9,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('sonata_user_profile_show') }}">Dein Benutzerkonto</a></li>
+    <li><a href="{{ path('fos_user_profile_show') }}">Dein Benutzerkonto</a></li>
     <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
     {% if app2 != null %}
         <li class="active">App editieren</li>
