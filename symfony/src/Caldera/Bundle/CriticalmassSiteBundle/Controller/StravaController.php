@@ -25,14 +25,14 @@ class StravaController extends AbstractController
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $redirectUri = 'http://www.criticalmass.cm'.$this->generateUrl(
+        $redirectUri = $request->getUriForPath($this->generateUrl(
             'caldera_criticalmass_strava_list',
             [
                 'citySlug' => $ride->getCity()->getMainSlugString(),
                 'rideDate' => $ride->getFormattedDate(),
                 true
             ]
-        );
+        ));
 
         try {
             $oauthOptions = [
@@ -71,14 +71,14 @@ class StravaController extends AbstractController
         $afterDateTime = new \DateTime($ride->getFormattedDate().' 00:00:00');
         $beforeDateTime = new \DateTime($ride->getFormattedDate().' 23:59:59');
 
-        $redirectUri = 'http://www.criticalmass.cm'.$this->generateUrl(
-                'caldera_criticalmass_strava_list',
-                [
-                    'citySlug' => $ride->getCity()->getMainSlugString(),
-                    'rideDate' => $ride->getFormattedDate(),
-                    true
-                ]
-            );
+        $redirectUri = $request->getUriForPath($this->generateUrl(
+            'caldera_criticalmass_strava_list',
+            [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate(),
+                true
+            ]
+        ));
 
         $oauthOptions = [
             'clientId'     => $this->getParameter('strava.client_id'),
