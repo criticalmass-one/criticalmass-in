@@ -10,7 +10,11 @@
 
 {% block content %}
     <div class="container">
+        {% if ride.date is today %}
+        {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
+        {% else %}
         {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_registrationHint.html.twig') %}
+        {% endif %}
 
         {% include('CalderaCriticalmassSiteBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 

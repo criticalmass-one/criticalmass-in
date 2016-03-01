@@ -1,0 +1,53 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path(city) }}">{{ city.city }}</a></li>
+    <li class="active">{{ event.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    {{ event.title }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                {{ event.description|markdown }}
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <dl>
+                                    <dt>Datum</dt>
+                                    <dd>{{ event.dateTime.format('d.m.Y') }}</dd>
+                                    <dt>Uhrzeit</dt>
+                                    <dd>{{ event.dateTime.format('H:i') }} Uhr</dd>
+                                    <dt>Treffpunkt</dt>
+                                    {% if event.hasLocation() %}
+                                        <dd>{{ event.location }}</dd>
+                                    {% else %}
+                                        <dd>noch nicht bekannt</dd>
+                                    {% endif %}
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -7,6 +7,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\BoardRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\EventRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ParticipationRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
@@ -18,6 +19,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\WeatherRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractController extends Controller
@@ -62,6 +64,14 @@ abstract class AbstractController extends Controller
     protected function getContentRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Content');
+    }
+
+    /**
+     * @return EventRepository
+     */
+    protected function getEventRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Event');
     }
 
     /**
@@ -216,5 +226,12 @@ abstract class AbstractController extends Controller
         $ride = $this->getCheckedRide($city, $rideDateTime);
         
         return $ride;
+    }
+
+    protected function getSession()
+    {
+        $session = new Session();
+
+        return $session;
     }
 }

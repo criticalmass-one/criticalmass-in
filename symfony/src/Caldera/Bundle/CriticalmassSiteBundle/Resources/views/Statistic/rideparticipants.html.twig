@@ -45,7 +45,7 @@
                     {% for ride in rides2 %}
                     <tr>
                         <td><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getCity() }}</a></td>
-                        <td><a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getEstimatedParticipants() }}</a></td>
+                        <td><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getEstimatedParticipants() }}</a></td>
                     </tr>
                     {% endfor %}
                     {% endfor %}

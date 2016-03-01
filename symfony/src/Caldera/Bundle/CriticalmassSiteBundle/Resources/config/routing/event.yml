@@ -1,0 +1,3 @@
+caldera_criticalmass_event_show:
+    pattern:  /{citySlug}/{eventSlug}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Event:show }

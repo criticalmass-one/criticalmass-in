@@ -37,7 +37,7 @@ class PostController extends AbstractController
             $post->setCity($city);
             $post->setRide($ride);
 
-            $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()));
+            $redirectUrl = $this->generateUrl('caldera_criticalmass_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()));
         } elseif ($photoId) {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', array('photoId' => $photoId))));
             $photo = $this->getPhotoRepository()->find($photoId);

@@ -56,7 +56,7 @@
                                 </a>
                             </td>
                             <td>{% if city.getCurrentRide() %}
-                                    <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': city.getCurrentRide().getDateTime().format('Y-m-d') } ) }}">{{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr</a>
+                                    <a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': city.getMainSlugString(), 'rideDate': city.getCurrentRide().getDateTime().format('Y-m-d') } ) }}">{{ city.getCurrentRide().getDateTime().format('l, d. M, H:i') }} Uhr</a>
                             {% endif %}</td>
                             <td>
                                 {{ city.getEventDateTimeString() }}

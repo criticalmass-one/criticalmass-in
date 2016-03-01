@@ -11,51 +11,112 @@ use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateSer
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
-use Exception;
 use Polyline;
 use Pest;
 use Strava\API\Client;
 use Symfony\Component\HttpFoundation\Request;
-use Strava\API\OAuth;
+use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class StravaController extends AbstractController
 {
+    protected function initOauthForRide(Request $request, Ride $ride)
+    {
+        $redirectUri = $request->getUriForPath($this->generateUrl(
+            'caldera_criticalmass_strava_token',
+            [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate()
+            ]
+        ));
+
+        /* avoid double app_dev.php in uri */
+        $redirectUri = str_replace('app_dev.php/app_dev.php/', 'app_dev.php/', $redirectUri);
+
+        try {
+            $oauthOptions = [
+                'clientId'     => $this->getParameter('strava.client_id'),
+                'clientSecret' => $this->getParameter('strava.secret'),
+                'redirectUri'  => $redirectUri,
+                'scopes' => ['view_private']
+            ];
+
+            return new OAuth($oauthOptions);
+
+        } catch(\Exception $e) {
+            print $e->getMessage();
+        }
+    }
+
     public function authAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $redirectUri = 'http://www.criticalmass.cm'.$this->generateUrl(
-            'caldera_criticalmass_strava_list',
-            [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-                true
-            ]
-        );
+        $oauth = $this->initOauthForRide($request, $ride);
 
-        try {
-            $options = array(
-                'clientId'     => $this->getParameter('strava.client_id'),
-                'clientSecret' => $this->getParameter('strava.token'),
-                'redirectUri'  => $redirectUri,
-                'scope' => 'view_private',
-                'approval_prompt' => 'force'
-            );
+        $authorizationOptions = [
+            'state' => '',
+            'approval_prompt' => 'force'
+        ];
 
-            $oauth = new OAuth($options);
-
-        } catch(Exception $e) {
-            print $e->getMessage();
-        }
+        $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Strava:auth.html.twig',
             [
-                'authorizationUrl' => $oauth->getAuthorizationUrl()
+                'authorizationUrl' => $authorizationUrl,
+                'ride' => $ride
             ]
         );
+    }
+
+    public function tokenAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $error = $request->get('error');
+
+        if ($error) {
+            return $this->redirectToRoute(
+                'caldera_criticalmass_strava_auth',
+                [
+                    'citySlug' => $citySlug,
+                    'rideDate' => $rideDate
+                ]
+            );
+        }
+
+        $oauth = $this->initOauthForRide($request, $ride);
+
+        try {
+            $token = $oauth->getAccessToken(
+                'authorization_code',
+                [
+                    'code' => $request->get('code')
+                ]
+            );
+
+            $session = $this->getSession();
+            $session->set('strava_token', $token);
+
+            return $this->redirectToRoute(
+                'caldera_criticalmass_strava_list',
+                [
+                    'citySlug' => $citySlug,
+                    'rideDate' => $rideDate
+                ]
+            );
+        } catch (\Exception $e) {
+            return $this->redirectToRoute(
+                'caldera_criticalmass_strava_auth',
+                [
+                    'citySlug' => $citySlug,
+                    'rideDate' => $rideDate
+                ]
+            );
+        }
     }
 
     public function listridesAction(Request $request, $citySlug, $rideDate)
@@ -65,8 +126,10 @@ class StravaController extends AbstractController
         $afterDateTime = new \DateTime($ride->getFormattedDate().' 00:00:00');
         $beforeDateTime = new \DateTime($ride->getFormattedDate().' 23:59:59');
 
+        $token = $this->getSession()->get('strava_token');
+
         $adapter = new Pest('https://www.strava.com/api/v3');
-        $service = new REST($this->getParameter('strava.token'), $adapter);
+        $service = new REST($token, $adapter);
 
         $client = new Client($service);
 
@@ -86,8 +149,10 @@ class StravaController extends AbstractController
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $activityId = $request->get('activityId');
 
+        $token = $this->getSession()->get('strava_token');
+
         $adapter = new Pest('https://www.strava.com/api/v3');
-        $service = new REST($this->getParameter('strava.token'), $adapter);
+        $service = new REST($token, $adapter);
 
         $client = new Client($service);
 

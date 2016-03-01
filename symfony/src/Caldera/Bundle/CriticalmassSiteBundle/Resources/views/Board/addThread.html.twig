@@ -1,5 +1,7 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
+{% block title %}Neues Thema beginnen{% endblock %}
+
 {% block breadcrumb %}
     <li>
         <a href="{{ path('caldera_criticalmass_board_overview') }}">
@@ -7,7 +9,11 @@
         </a>
     </li>
     <li>
+        {% if board is instanceof('Board') %}
         <a href="{{ path(board) }}">
+        {% else %}
+        <a href="{{ path('caldera_criticalmass_board_listcitythreads', { citySlug: board.slug }) }}">
+        {% endif %}
             {{ board.title }}
         </a>
     </li>
@@ -32,9 +38,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label" for="">Titel:</label>
+                    <label class="control-label" for="">Titel deines Themas:</label>
                     {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
                 </div>
             </div>
         </div>
@@ -42,13 +47,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label" for="">Name:</label>
-                    {{ form_widget(form.message, { 'attr' : { 'class': 'form-control'} }) }}
-                    <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                    <label class="control-label" for="">Dein Beitrag:</label>
+                    {{ form_widget(form.message, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
                 </div>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-md-12">

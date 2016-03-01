@@ -37,8 +37,6 @@ class Article
      */
     protected $text;
 
-    protected $formattedText;
-    
     /**
      * @ORM\Column(type="datetime")
      */
@@ -127,18 +125,6 @@ class Article
     public function getText()
     {
         return $this->text;
-    }
-
-    public function setFormattedText($formattedText)
-    {
-        $this->formattedText = $formattedText;
-
-        return $this;
-    }
-
-    public function getFormattedText()
-    {
-        return $this->formattedText;
     }
 
     /**

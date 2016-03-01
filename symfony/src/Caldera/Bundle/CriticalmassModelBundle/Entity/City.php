@@ -178,11 +178,6 @@ class City implements BoardInterface
     protected $standardLongitude;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $autoDetect = true;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
      */
@@ -198,21 +193,6 @@ class City implements BoardInterface
      */
     protected $longDescription;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $colorRed = 0;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $colorGreen = 0;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $colorBlue = 0;
-    
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="archive_cities")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
@@ -852,29 +832,6 @@ class City implements BoardInterface
     }
 
     /**
-     * Set autoDetect
-     *
-     * @param boolean $autoDetect
-     * @return City
-     */
-    public function setAutoDetect($autoDetect)
-    {
-        $this->autoDetect = $autoDetect;
-
-        return $this;
-    }
-
-    /**
-     * Get autoDetect
-     *
-     * @return boolean 
-     */
-    public function getAutoDetect()
-    {
-        return $this->autoDetect;
-    }
-
-    /**
      * Set cityPopulation
      *
      * @param integer $cityPopulation
@@ -968,15 +925,10 @@ class City implements BoardInterface
         $currentRide = null;
         $dateTime = new \DateTime();
 
-        foreach ($this->getRides() as $ride)
-        {
-            if ($ride && !$currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() > $dateTime)
-            {
+        foreach ($this->getRides() as $ride) {
+            if ($ride && !$currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() > $dateTime) {
                 $currentRide = $ride;
-            }
-            else
-            if ($ride && $currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime)
-            {
+            } elseif ($ride && $currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime) {
                 $currentRide = $ride;
             }
         }
@@ -1114,135 +1066,6 @@ class City implements BoardInterface
         $this->id = null;
         $this->setIsArchived(true);
         $this->setArchiveDateTime(new \DateTime());
-    }
-
-    public function calculateAverageRideParticipants()
-    {
-        if (!count($this->rides))
-        {
-            return 0;
-        }
-
-        $participants = 0;
-        $rideCounter = 0;
-
-        foreach ($this->getRides() as $ride)
-        {
-            if ($ride->getEstimatedParticipants() > 0)
-            {
-                ++$rideCounter;
-                $participants += $ride->getEstimatedParticipants();
-            }
-        }
-
-        return $participants / $rideCounter;
-    }
-
-    /**
-     * Set colorRed
-     *
-     * @param integer $colorRed
-     * @return City
-     */
-    public function setColorRed($colorRed)
-    {
-        $this->colorRed = $colorRed;
-
-        return $this;
-    }
-
-    /**
-     * Get colorRed
-     *
-     * @return integer 
-     */
-    public function getColorRed()
-    {
-        return $this->colorRed;
-    }
-
-    /**
-     * Set colorGreen
-     *
-     * @param integer $colorGreen
-     * @return City
-     */
-    public function setColorGreen($colorGreen)
-    {
-        $this->colorGreen = $colorGreen;
-
-        return $this;
-    }
-
-    /**
-     * Get colorGreen
-     *
-     * @return integer 
-     */
-    public function getColorGreen()
-    {
-        return $this->colorGreen;
-    }
-
-    /**
-     * Set colorBlue
-     *
-     * @param integer $colorBlue
-     * @return City
-     */
-    public function setColorBlue($colorBlue)
-    {
-        $this->colorBlue = $colorBlue;
-
-        return $this;
-    }
-
-    /**
-     * Get colorBlue
-     *
-     * @return integer 
-     */
-    public function getColorBlue()
-    {
-        return $this->colorBlue;
-    }
-
-    /**
-     * Checks if this city has already a saved ride for the given month.
-     *
-     * @param \DateTime $dateTime
-     * @return bool
-     */
-    public function hasRideInMonth(\DateTime $dateTime)
-    {
-        foreach ($this->rides as $ride)
-        {
-            if ($ride->getDateTime()->format('Y-m') == $dateTime->format('Y-m'))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks if this city has already a saved ride for the given day.
-     *
-     * @param \DateTime $dateTime
-     * @return bool
-     */
-    public function hasRideAtMonthDay(\DateTime $dateTime)
-    {
-        foreach ($this->rides as $ride)
-        {
-            if ($ride->getDateTime()->format('Y-m-d') == $dateTime->format('Y-m-d'))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

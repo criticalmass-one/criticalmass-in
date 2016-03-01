@@ -50,6 +50,7 @@ require.config({
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
         "RegionPage": "/bundles/calderacriticalmasssite/js/modules/page/RegionPage",
+        "StravaImportPage": "/bundles/calderacriticalmasssite/js/modules/page/StravaImportPage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
         "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "Notification": "/bundles/calderacriticalmasssite/js/modules/Notification",
@@ -78,6 +79,7 @@ require.config({
         "leaflet-groupedlayer": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.groupedlayercontrol",
         "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
         "leaflet-hash": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-hash",
+        "leaflet-polyline": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-polyline",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
@@ -102,6 +104,10 @@ require.config({
         'leaflet-hash': {
             deps: ['leaflet'],
             exports: 'L.Hash'
+        },
+        'leaflet-polyline': {
+            deps: ['leaflet'],
+            exports: 'L.PolylineUtil'
         },
         typeahead:{
             deps: ['jquery'],

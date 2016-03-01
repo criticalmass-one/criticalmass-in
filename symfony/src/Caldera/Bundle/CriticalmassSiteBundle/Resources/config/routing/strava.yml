@@ -2,6 +2,10 @@ caldera_criticalmass_strava_auth:
     pattern:  /{citySlug}/{rideDate}/stravaauth
     defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:auth }
 
+caldera_criticalmass_strava_token:
+    pattern:  /{citySlug}/{rideDate}/stravatoken
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:token }
+
 caldera_criticalmass_strava_list:
     pattern:  /{citySlug}/{rideDate}/stravalist
     defaults: { _controller: CalderaCriticalmassSiteBundle:Strava:listrides }

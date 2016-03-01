@@ -28,28 +28,65 @@
 
         <div class="row margin-top-medium">
             <div class="col-md-3">
-                Tour:
-                <br />
-                <a href="{{ path('caldera_criticalmass_desktop_ride_show', { citySlug: track.getRide().getCity().getMainSlugString(), rideDate: track.getRide().getFormattedDate() }) }}">
-                    {{ track.getRide().getFancyTitle() }}
-                </a>
+                <dl>
+                    <dt>
+                        Tour:
+                    </dt>
+                    <dd>
+                        <a href="{{ path(track.ride) }}">
+                            {{ track.ride.getFancyTitle() }}
+                        </a>
+                    </dd>
+                </dl>
             </div>
+
             <div class="col-md-2">
-                {{ track.getRide().getDateTime.format('d.m.Y') }}
-                <br />{{ track.getRide().getDateTime.format('H:i') }} Uhr
+                <dl>
+                    <dt>
+                        Datum:
+                    </dt>
+                    <dd>
+                        {{ track.ride.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                    </dd>
+                </dl>
             </div>
+
             <div class="col-md-3">
-                Treffpunkt:
-                <br />{{ track.getRide().getLocation() }}
+                <dl>
+                    <dt>
+                        Treffpunkt:
+                    </dt>
+                    <dd>
+                        {% if track.ride.getHasLocation and track.ride.location %}
+                        {{ track.ride.location }}
+                        {% else %}
+                        nicht bekannt
+                        {% endif %}
+                    </dd>
+                </dl>
             </div>
+
             <div class="col-md-2">
-                <span style="font-size: 20px;">{{ track.getDistance()|round(2) }}
-                </span>
-                <br />Kilometer</div>
+                <dl>
+                    <dt>
+                        Distanz:
+                    </dt>
+                    <dd>
+                        {{ track.distance|round(2) }}&nbsp;Kilometer
+                    </dd>
+                </dl>
+            </div>
+
             <div class="col-md-2">
-                <span style="font-size: 20px;">{{ track.getDurationInterval().format('%h:%i') }}
-                </span>
-                <br />Stunden</div>
+                <dl>
+                    <dt>
+                        Dauer:
+                    </dt>
+                    <dd>
+                        {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
+                    </dd>
+                </dl>
+            </div>
         </div>
 
         <div class="row">

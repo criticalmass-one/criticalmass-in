@@ -62,7 +62,7 @@
                             <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('caldera_criticalmass_desktop_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
+                            <a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
                                 {% if track.getRide().getTitle() %}
                                     {{ track.getRide().getTitle() }}
                                 {% else %}

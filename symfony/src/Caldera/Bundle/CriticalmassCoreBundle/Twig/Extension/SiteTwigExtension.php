@@ -45,7 +45,8 @@ class SiteTwigExtension extends \Twig_Extension
     public function getTests()
     {
         return [
-            'instanceof' =>  new \Twig_Function_Method($this, 'isInstanceof')
+            'instanceof' =>  new \Twig_Function_Method($this, 'isInstanceof'),
+            'today' => new \Twig_Function_Method($this, 'today')
         ];
     }
 
@@ -81,7 +82,13 @@ class SiteTwigExtension extends \Twig_Extension
     }
 
     public function isInstanceof($var, $instance) {
-        return  $var instanceof $instance;
+        return $var instanceof $instance;
+    }
+
+    public function today(\DateTime $dateTime) {
+        $today = new \DateTime();
+
+        return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
     }
 
     public function getName()

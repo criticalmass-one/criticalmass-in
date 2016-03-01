@@ -39,8 +39,6 @@ class Content
      */
     protected $text;
 
-    protected $formattedText;
-    
     /**
      * @ORM\Column(type="boolean")
      */
@@ -113,7 +111,7 @@ class Content
      * Set title
      *
      * @param string $title
-     * @return ContentItem
+     * @return Content
      */
     public function setTitle($title)
     {
@@ -136,7 +134,7 @@ class Content
      * Set text
      *
      * @param string $text
-     * @return ContentItem
+     * @return Content
      */
     public function setText($text)
     {
@@ -155,23 +153,11 @@ class Content
         return $this->text;
     }
 
-    public function setFormattedText($formattedText)
-    {
-        $this->formattedText = $formattedText;
-
-        return $this;
-    }
-
-    public function getFormattedText()
-    {
-        return $this->formattedText;
-    }
-
     /**
      * Set enabled
      *
      * @param boolean $enabled
-     * @return ContentItem
+     * @return Content
      */
     public function setEnabled($enabled)
     {
@@ -194,7 +180,7 @@ class Content
      * Set slug
      *
      * @param string $slug
-     * @return ContentItem
+     * @return Content
      */
     public function setSlug($slug)
     {
@@ -211,15 +197,6 @@ class Content
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    public function getParsedText()
-    {
-        $text = $this->getText();
-
-        $text = str_replace(array("&lt;", "&gt;", "&quot;"), array("<", ">", "\""), $text);
-
-        return $text;
     }
 
     public function __clone()

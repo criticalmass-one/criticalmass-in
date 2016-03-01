@@ -2,6 +2,26 @@
 
 {% block title %}Verbinde dich mit Strava{% endblock %}
 
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li class="active">
+        Track importieren
+    </li>
+{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -18,6 +38,10 @@
                 <p>
                     Mit <a href="http://www.strava.com/">Strava</a> kannst du nicht nur Critical-Mass-Touren, sondern sämtliche deiner sportlichen Aktivitäten aufzeichnen und verwalten. Wenn du deine Tour mit Strava aufgezeichnet hast, kannst du deine Strecke mit zwei Mausklicks importieren. Klicke auf „Connect with Strava“, um eine Liste deiner Aktivitäten anzuzeigen und eine Strecke zu importieren.
                 </p>
+
+                <p>
+                    Nach einem Klick auf den Button „Connect with Strava“ wirst du zu der Strava-Webseite weitergeleitet, auf der du gebeten wirst, criticalmass.in gewisse Zugriffsrechte auf dein Profil einzuräumen. criticalmass.in erhält Zugriff auf dein Profil sowie deine Aktivitätsdaten; criticalmass.in kann auch auf deine als privat markierten Aktivitäten zugreifen. Anschließend wirst du zurück zu criticalmass.in geleitet, wo dir eine Liste deiner abgespeicherten Radtouren vom {{ ride.dateTime.format('d.m.Y') }} angezeigt wird. Von diesen Touren kannst du anschließend eine zum Importieren auswählen. Ein weiterer Zugriff, etwa auf andere Aktivitäten oder dein Profil, findet nicht statt.
+                </p>
             </div>
         </div>
 
@@ -28,6 +52,14 @@
                         <img src="{{ asset('/bundles/calderacriticalmasssite/images/strava/connect.png') }}" alt="Connect with Strava" />
                     </a>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ path(ride) }}" class="btn btn-default pull-right">
+                    Abbrechen
+                </a>
             </div>
         </div>
     </div>

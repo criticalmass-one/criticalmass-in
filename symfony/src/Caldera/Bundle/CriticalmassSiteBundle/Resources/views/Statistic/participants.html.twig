@@ -83,7 +83,7 @@
                 <td><a href="{{ path('caldera_criticalmass_desktop_city_show', {'citySlug': city.getMainSlugString() }) }}">{{ city.getCity() }}</a></td>
                 <td>
                     {% if city.getMainSlugString() in rides|keys %}
-                        <a href="{{ path('caldera_criticalmass_desktop_ride_show', {'citySlug': city.getMainSlugString(), 'rideId': rides[city.getMainSlugString()].getId() }) }}">{{ rides[city.getMainSlugString()].getDateTime().format('d.m.Y') }}</a>
+                        <a href="{{ path('caldera_criticalmass_ride_show', {'citySlug': city.getMainSlugString(), 'rideId': rides[city.getMainSlugString()].getId() }) }}">{{ rides[city.getMainSlugString()].getDateTime().format('d.m.Y') }}</a>
                     </td>
                     <td>
                         {{ rides[city.getMainSlugString()].getEstimatedParticipants() }}
