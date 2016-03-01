@@ -35,6 +35,14 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        <div id="map-{{ activity.id }}" class="preview-map" style="height: 150px;" data-polyline="{{ activity.map.summary_polyline }}">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
                         <dl>
                             <dt>Distanz:</dt>
                             <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
@@ -68,4 +76,9 @@
         {% endif %}
         </div>
     </div>
+
+
+    <script>
+        CriticalMass.loadModule('StravaImportPage');
+    </script>
 {% endblock %}
