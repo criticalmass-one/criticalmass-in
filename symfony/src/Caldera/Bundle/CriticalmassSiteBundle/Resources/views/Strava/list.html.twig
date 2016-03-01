@@ -42,12 +42,20 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <dl>
                             <dt>Distanz:</dt>
                             <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4">
+                        <dl>
                             <dt>Start:</dt>
                             <dd>{{ activity.start_date|date('H:i') }}&nbsp;Uhr</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4">
+                        <dl>
                             <dt>Dauer:</dt>
                             <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;Minuten</dd>
                         </dl>
