@@ -33,11 +33,19 @@ class BoardController extends AbstractController
         $board = null;
         $city = null;
         $threads = [];
+        $newThreadUrl = '';
 
         if ($boardSlug) {
             $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
 
             $threads = $this->getThreadRepository()->findThreadsForBoard($board);
+
+            $newThreadUrl = $this->generateUrl(
+                'caldera_criticalmass_board_addthread',
+                [
+                    'boardSlug' => $board->getSlug()
+                ]
+            );
         }
 
         if ($citySlug) {
@@ -45,12 +53,20 @@ class BoardController extends AbstractController
 
             $threads = $this->getThreadRepository()->findThreadsForCity($city);
 
+            $newThreadUrl = $this->generateUrl(
+                'caldera_criticalmass_board_addcitythread',
+                [
+                    'citySlug' => $city->getSlug()
+                ]
+            );
         }
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:listThreads.html.twig',
             [
                 'threads' => $threads,
-                'board' => ($board ? $board : $city)
+                'board' => ($board ? $board : $city),
+                'newThreadUrl' => $newThreadUrl
             ]
         );
     }
@@ -130,7 +146,7 @@ class BoardController extends AbstractController
         $board = null;
 
         if ($boardSlug) {
-            $board = $this->getBoardRepository()->findBoardBySlug($slug);
+            $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
         }
 
         if ($citySlug) {

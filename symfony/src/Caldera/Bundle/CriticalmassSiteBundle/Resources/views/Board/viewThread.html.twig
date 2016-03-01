@@ -9,12 +9,8 @@
         </a>
     </li>
     <li>
-        {% if board is instanceof('Board') %}
         <a href="{{ path(board) }}">
-        {% else %}
-        <a href="{{ path('caldera_criticalmass_board_listcitythreads', { citySlug: board.slug }) }}">
-        {% endif %}
-        {{ board.title }}
+            {{ board.title }}
         </a>
     </li>
     <li class="active">
