@@ -113,38 +113,18 @@ class TrackController extends AbstractController
         if ('POST' == $request->getMethod()) {
             return $this->uploadPostAction($request, $track, $ride, $form, $embed);
         } else {
-            return $this->uploadGetAction($request, $form, $embed);
+            return $this->uploadGetAction($request, $ride, $form, $embed);
         }
     }
     
-    protected function uploadGetAction(Request $request, Form $form, $embed)
+    protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed)
     {
         return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig',
             [
                 'form' => $form->createView(),
-                'embed' => $embed
+                'ride' => $ride,
+                'errorMessage' => null
             ]);
-    }
-    
-    protected function loadTrackProperties(Track $track)
-    {
-        /**
-         * @var TrackReader $gr
-         */
-        $gr = $this->get('caldera.criticalmass.gps.trackreader');
-        $gr->loadTrack($track);
-
-        $track->setPoints($gr->countPoints());
-        
-        $track->setStartPoint(0);
-        $track->setEndPoint($gr->countPoints() - 1);
-
-        $track->setStartDateTime($gr->getStartDateTime());
-        $track->setEndDateTime($gr->getEndDateTime());
-        
-        $track->setDistance($gr->calculateDistance());
-
-        $track->setMd5Hash($gr->getMd5Hash());
     }
     
     public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed)
@@ -168,11 +148,18 @@ class TrackController extends AbstractController
             $trackValidator = $this->get('caldera.criticalmass.uploadvalidator.track');
             $trackValidator->loadTrack($track);
 
-            //try {
+            try {
                 $trackValidator->validate();
-            //} catch (TrackValidatorException $e) {
-            //    echo $e->getMessage();
-            //}
+            } catch (TrackValidatorException $e) {
+                return $this->render(
+                    'CalderaCriticalmassSiteBundle:Track:upload.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'ride' => $ride,
+                        'errorMessage' => $e->getMessage()
+                    ]
+                );
+            }
             
             $this->loadTrackProperties($track);
             
@@ -194,9 +181,31 @@ class TrackController extends AbstractController
             'CalderaCriticalmassSiteBundle:Track:upload.html.twig', 
             [
                 'form' => $form->createView(),
-                'embed' => $embed
+                'ride' => $ride,
+                'errorMessage' => null
             ]
         );
+    }
+
+    protected function loadTrackProperties(Track $track)
+    {
+        /**
+         * @var TrackReader $gr
+         */
+        $gr = $this->get('caldera.criticalmass.gps.trackreader');
+        $gr->loadTrack($track);
+
+        $track->setPoints($gr->countPoints());
+
+        $track->setStartPoint(0);
+        $track->setEndPoint($gr->countPoints() - 1);
+
+        $track->setStartDateTime($gr->getStartDateTime());
+        $track->setEndDateTime($gr->getEndDateTime());
+
+        $track->setDistance($gr->calculateDistance());
+
+        $track->setMd5Hash($gr->getMd5Hash());
     }
 
     protected function addRideEstimate(Track $track, Ride $ride)
