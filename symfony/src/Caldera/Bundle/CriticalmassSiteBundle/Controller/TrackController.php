@@ -23,51 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrackController extends AbstractController
 {
-    public function gpxgenerateAction($rideId)
-    {
-        $ride = $this->getRideRepository()->find($rideId);
-
-        $tickets = $this->getDoctrine()->getRepository('CalderaCriticalmassGlympseBundle:Ticket')->findBy(array('city' => $ride->getCity()));
-
-        foreach ($tickets as $ticket) {
-            if ($ticket->belongsToRide($ride)) {
-                $positionArray = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Position')->findBy(array('ride' => $rideId, 'ticket' => $ticket->getId()), array('timestamp' => 'ASC'));
-
-                $gpx = new GpxWriter();
-                $gpx->setPositionArray($positionArray);
-                $gpx->execute();
-
-                $gpxContent = $gpx->getGpxContent();
-
-                $track = new Track();
-                $track->setRide($ride);
-                $track->setTicket($ticket);
-                $track->setUsername($ticket->getDisplayname());
-                $track->setCreationDateTime(new \DateTime());
-                $track->setGpx($gpxContent);
-                $track->setActivated(1);
-                $track->generateMD5Hash();
-
-                $startDateTime = new \DateTime();
-                $startDateTime->setTimestamp($positionArray[0]->getTimestamp());
-                $track->setStartDateTime($startDateTime);
-
-                $endDateTime = new \DateTime();
-                $endDateTime->setTimestamp($positionArray[count($positionArray) - 1]->getTimestamp());
-                $track->setEndDateTime($endDateTime);
-
-                $track->setPoints(count($positionArray));
-                $track->setDistance(0);
-
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($track);
-                $manager->flush();
-            }
-        }
-
-        return new Response();
-    }
-
     public function listAction()
     {
         /**
