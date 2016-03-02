@@ -37,14 +37,6 @@ class TrackController extends AbstractController
             ]
         );
 
-        /**
-         * TODO Fix this timeshift shit
-         */
-        foreach ($tracks as $track) {
-            $track->setStartDateTime($track->getStartDateTime()->add(new \DateInterval('PT2H')));
-            $track->setEndDateTime($track->getEndDateTime()->add(new \DateInterval('PT2H')));
-        }
-
         return $this->render('CalderaCriticalmassSiteBundle:Track:list.html.twig', 
             array(
                 'tracks' => $tracks

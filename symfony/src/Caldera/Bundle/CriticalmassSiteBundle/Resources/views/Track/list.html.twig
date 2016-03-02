@@ -32,8 +32,17 @@
     <div class="container main-container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Hier warst du schon mal.</h1>
-                <p>Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast. Du kannst entweder neue Tracks über den grünen Button oben rechts ergänzen oder künftig deine aufgezeichneten Tracks direkt mit deinem Benutzerkonto verknüpfen.</p>
+                <h1>
+                    Deine Gpx-Tracks
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast. Du kannst entweder neue Tracks über den grünen Button oben rechts ergänzen oder künftig deine aufgezeichneten Tracks direkt mit deinem Benutzerkonto verknüpfen.
+                </p>
             </div>
         </div>
 
@@ -41,13 +50,27 @@
             <div class="col-md-12">
                 <table class="table">
                     <tr>
-                        <th>Datum</th>
-                        <th>Stadt</th>
-                        <th>Tour</th>
-                        <th>Beginn</th>
-                        <th>Ende</th>
-                        <th>Distanz</th>
-                        <th>Optionen</th>
+                        <th>
+                            Datum
+                        </th>
+                        <th>
+                            Stadt
+                        </th>
+                        <th>
+                            Tour
+                        </th>
+                        <th>
+                            Beginn
+                        </th>
+                        <th>
+                            Ende
+                        </th>
+                        <th>
+                            Distanz
+                        </th>
+                        <th>
+                            Optionen
+                        </th>
                     </tr>
                     {% for track in tracks %}{% if track.getRide() %}
                         {% if not track.getActivated() %}
@@ -56,22 +79,29 @@
                             <tr>
                         {% endif %}
                         <td>
-                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getId() }) }}">{{ track.getRide().getDateTime().format('d. m. Y') }}</a>
+                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getId() }) }}">
+                                {{ track.ride.dateTime|date('d.m.Y') }}
+                            </a>
                         </td>
                         <td>
-                            <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': track.getRide().getCity().getMainSlugString() }) }}">{{ track.getRide().getCity().getCity() }}</a>
+                            <a href="{{ path(track.ride.city) }}">
+                                {{ track.ride.city.city }}
+                            </a>
                         </td>
                         <td>
-                            <a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': track.getRide().getcity().getMainSlugString(), 'rideDate': track.getRide().getDateTime().format('Y-m-d') }) }}">
-                                {% if track.getRide().getTitle() %}
-                                    {{ track.getRide().getTitle() }}
-                                {% else %}
-                                    {{ track.getRide().getCity().getTitle() }}
-                                {% endif %}</a>
+                            <a href="{{ path(track.ride) }}">
+                                {{ track.ride.getFancyTitle() }}
+                            </a>
                         </td>
-                        <td>{{ track.getStartDateTime().format('H:i') }} Uhr</td>
-                        <td>{{ track.getEndDateTime().format('H:i') }} Uhr</td>
-                        <td>{{ track.getDistance()|round(2) }} Kilometer</td>
+                        <td>
+                            {{ track.startDateTime|date('H:i', 'Europe/Berlin') }} Uhr
+                        </td>
+                        <td>
+                            {{ track.endDateTime|date('H:i', 'Europe/Berlin') }} Uhr
+                        </td>
+                        <td>
+                            {{ track.distance()|round(2) }} Kilometer
+                        </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="...">
                                 <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
@@ -97,7 +127,7 @@
                                 </a>
                             </div>
                         </td>
-                        </tr>
+                    </tr>
                     {% endif %}
                     {% endfor %}
                     
@@ -129,7 +159,4 @@
             </div>
         </div>
     </div>
-
-
-
 {% endblock %}
