@@ -2,6 +2,27 @@
 
 {% block title %}Gpx-Datei hochladen{% endblock %}
 
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li class="active">
+        Track hochladen
+    </li>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
