@@ -289,6 +289,9 @@ class PhotoController extends AbstractController
     {
         $photoId = $request->get('photoId');
 
+        /**
+         * @var Photo $photo
+         */
         $photo = $this->getPhotoRepository()->find($photoId);
 
         if ($photo) {
