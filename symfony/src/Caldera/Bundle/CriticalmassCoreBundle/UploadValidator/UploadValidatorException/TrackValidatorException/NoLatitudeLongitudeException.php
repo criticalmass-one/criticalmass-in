@@ -5,5 +5,5 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorE
 
 class NoLatitudeLongitudeException extends TrackValidatorException
 {
-    protected $message = 'Deine Gpx-Datei enthält leider keine Koordinaten.';
+    protected $message = 'Deine Gpx-Datei enthält leider keine oder defekte Koordinaten.';
 }

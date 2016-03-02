@@ -4,5 +4,5 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorE
 
 class NoDateTimeException extends TrackValidatorException
 {
-    protected $message = 'Deine hochgeladene Datei enthält leider keine Zeitstempel.';
+    protected $message = 'Deine hochgeladene Datei enthält leider keine oder defekte Zeitstempel.';
 }
