@@ -18,6 +18,9 @@ class TrackValidator implements UploadValidatorInterface
      */
     protected $track;
 
+    /**
+     * @var UploaderHelper $uploaderHelper
+     */
     protected $uploaderHelper;
 
     protected $rootDirectory;
@@ -43,7 +46,7 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForXmlContent()
     {
-        echo "checkForXmlContent";
+        //echo "checkForXmlContent";
         try {
             $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
         } catch (Exception $e) {
@@ -53,7 +56,7 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForBasicGpxStructure()
     {
-        echo "checkForBasicGpxStructure"; 
+        //echo "checkForBasicGpxStructure";
         try {
             $this->simpleXml->trk->trkseg->trkpt[0];
         } catch (Exception $e) {
@@ -63,7 +66,7 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkNumberOfPoints()
     {
-        echo "checkNumberOfPoints";
+        //echo "checkNumberOfPoints";
         if (count($this->simpleXml->trk->trkseg->trkpt) <= 50) {
             throw new NotEnoughCoordsException();
         }
@@ -71,7 +74,7 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForLatitudeLongitude()
     {
-        echo "checkForLatitudeLongitude";
+        //echo "checkForLatitudeLongitude";
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
             /* @TODO This is really bullshit, but php refuses to get is_float or stuff like this working. Replace preg_match with a faster solution! */
             if (
@@ -87,7 +90,7 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForDateTime()
     {
-        echo "checkForDateTime";
+        //echo "checkForDateTime";
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
             if (!$point->time) {
                 throw new NoDateTimeException();
