@@ -73,16 +73,12 @@ class TrackValidator implements UploadValidatorInterface
     {
         echo "checkForLatitudeLongitude";
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
-            echo "<br />Lat: ".$point['lat']." ".((float) $point['lat']);
-            echo "<br />Lon: ".$point['lon']." ".((float) $point['lon']);
-
-            echo "<br />f".($point['lat'] == ((float) $point['lat']));
-
+            /* @TODO This is really bullshit, but php refuses to get is_float or stuff like this working. Replace preg_match with a faster solution! */
             if (
                 !$point['lat'] or
                 !$point['lon'] or
-                $point['lat'] != ((float) $point['lat']) or
-                $point['lon'] != ((float) $point['lon'])
+                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', $point['lat']) or
+                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', $point['lon'])
             ) {
                 throw new NoLatitudeLongitudeException();
             }
