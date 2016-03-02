@@ -29,6 +29,7 @@
 
         <div class="row">
             <div class="col-md-12">
+                {% if threads|length %}
                 <table class="table">
                     <thead>
                         <tr>
@@ -78,6 +79,14 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                {% else %}
+                <div class="alert alert-info" role="alert">
+                    <strong>
+                        Hier gibt es nichts zu sehen!
+                    </strong>
+                    Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
