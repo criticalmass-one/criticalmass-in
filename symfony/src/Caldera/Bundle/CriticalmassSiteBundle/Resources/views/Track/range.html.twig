@@ -38,8 +38,12 @@
             <div class="col-md-12">
                 {{ form_start(form) }}
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">Abbrechen</a>
-                    <button class="btn btn-primary" type="submit">Speichern</button>
+                    <button class="btn btn-success" type="submit">
+                        Speichern
+                    </button>
+                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                        Abbrechen
+                    </a>
                 </div>
                 {{ form_end(form) }}
             </div>
@@ -58,9 +62,5 @@
             rangePage.init();
         });
     </script>
-
-{% endblock %}
-
-{% block additionalFooterElements %}
 
 {% endblock %}
