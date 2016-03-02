@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
@@ -203,7 +204,13 @@ class TrackController extends AbstractController
         $track->setStartDateTime($gr->getStartDateTime());
         $track->setEndDateTime($gr->getEndDateTime());
 
-        $track->setDistance($gr->calculateDistance());
+        /**
+         * @var TrackDistanceCalculator $tdc
+         */
+        $tdc = $this->get('caldera.criticalmass.gps.distancecalculator.track');
+        $tdc->loadTrack($track);
+
+        $track->setDistance($tdc->calculate());
 
         $track->setMd5Hash($gr->getMd5Hash());
     }
