@@ -66,6 +66,8 @@ class PhotoView
     public function setUser($user)
     {
         $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -87,9 +89,12 @@ class PhotoView
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+
+        return $this;
     }
 
-    public function getPhoto($photo) {
-        return $photo;
+    public function getPhoto()
+    {
+        return $this->photo;
     }
 }
