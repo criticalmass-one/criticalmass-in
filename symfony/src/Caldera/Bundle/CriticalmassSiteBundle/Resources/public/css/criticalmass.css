@@ -237,3 +237,7 @@ div.user-position div.user-position-inline {
   border-style: solid;
   background-position: -5px -5px;
 }
+
+body nav#navigation {
+  z-index: 1000;
+}
