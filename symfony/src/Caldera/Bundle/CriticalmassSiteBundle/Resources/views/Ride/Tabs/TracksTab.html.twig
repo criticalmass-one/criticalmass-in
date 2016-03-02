@@ -7,18 +7,10 @@
                         <i class="fa fa-map-o"></i>
                         Track von Strava importieren
                     </a>
-                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen">
+                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_track_upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Track hochladen">
                         <i class="fa fa-upload"></i>
                         GPX-Datei hochladen
                     </a>
-                </div>
-
-                <div class="modal fade" id="modalTrackUpload" tabindex="-1" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            {{ render(controller('CalderaCriticalmassSiteBundle:Track:upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() })) }}
-                        </div>
-                    </div>
                 </div>
             {% endif %}
 
