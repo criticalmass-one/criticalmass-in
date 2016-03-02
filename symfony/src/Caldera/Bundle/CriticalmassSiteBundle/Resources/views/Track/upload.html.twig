@@ -31,7 +31,7 @@
     </div>
     {% endif %}
 
-    {{ form_start(form, {'attr': {'role': 'form'}}) }}
+    {{ form_start(form, {'attr': {'role': 'form', 'id': 'track-upload-form'}}) }}
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -41,28 +41,10 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function initUpload() {
-            var $uploadButton = $('#uploadGpxButton');
-
-            $uploadButton.on('click', function () {
-                $uploadButton.prop('disabled', 'true');
-                $uploadButton.html('Einen Moment bitte…');
-            });
-
-            window.onload = function () {
-                $('#modalTrackUpload').on('hidden.bs.modal', function () {
-                    $uploadButton.prop('disabled', '');
-                    $uploadButton.html('Track hochladen');
-                });
-            }
-        }
-    </script>
-
     <div class="row">
         <div class="col-md-12">
             <div class="btn-group pull-right" role="group" aria-label="...">
-                <button type="submit" class="btn btn-success">
+                <button id="track-upload-button" type="submit" class="btn btn-success">
                     Track hochladen
                 </button>
                 <a href="{{ path(ride) }}" class="btn btn-default">
@@ -72,4 +54,9 @@
         </div>
     </div>
     {{ form_end(form) }}
+
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('TrackUploadPage');
+    </script>
 {% endblock %}

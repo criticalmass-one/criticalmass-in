@@ -56,6 +56,7 @@ require.config({
         "Notification": "/bundles/calderacriticalmasssite/js/modules/Notification",
         "Timelapse": "/bundles/calderacriticalmasssite/js/modules/map/Timelapse",
         "TrackRangePage": "/bundles/calderacriticalmasssite/js/modules/page/TrackRangePage",
+        "TrackUploadPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackUploadPage",
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
