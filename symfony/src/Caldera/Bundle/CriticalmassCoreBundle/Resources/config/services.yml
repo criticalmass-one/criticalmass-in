@@ -36,10 +36,6 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader
         arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
 
-    caldera.criticalmass.gps.trackchecker:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker
-        arguments: [@vich_uploader.templating.helper.uploader_helper, @caldera.criticalmass.gps.trackreader, '%kernel.root_dir%']
-
     caldera.criticalmass.gps.latlnglistgenerator.simple:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
         arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
@@ -51,6 +47,10 @@ services:
     caldera.criticalmass.gps.latlnglistgenerator.time:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
         arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+
+    caldera.criticalmass.uploadvalidator.track:
+        class: Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator
+        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
 
     caldera.criticalmass.statistic.rideestimatecalculator:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateCalculator

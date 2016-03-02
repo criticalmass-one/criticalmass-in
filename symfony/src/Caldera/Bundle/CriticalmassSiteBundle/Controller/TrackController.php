@@ -11,6 +11,8 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassCoreBundle\Uploader\TrackUploader\TrackUploader;
+use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator;
+use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Symfony\Component\Form\Form;
@@ -159,6 +161,18 @@ class TrackController extends AbstractController
 
             /* Save the track so the Uploader will place the file at the file system */
             $em->persist($track);
+
+            /**
+             * @var TrackValidator $trackValidator
+             */
+            $trackValidator = $this->get('caldera.criticalmass.uploadvalidator.track');
+            $trackValidator->loadTrack($track);
+
+            //try {
+                $trackValidator->validate();
+            //} catch (TrackValidatorException $e) {
+            //    echo $e->getMessage();
+            //}
             
             $this->loadTrackProperties($track);
             
