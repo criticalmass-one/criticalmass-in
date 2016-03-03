@@ -20,3 +20,5 @@ doctrine:
                 date: Caldera\Bundle\CriticalmassCoreBundle\DQL\DateFunction
                 month: Caldera\Bundle\CriticalmassCoreBundle\DQL\MonthFunction
                 year: Caldera\Bundle\CriticalmassCoreBundle\DQL\YearFunction
+            numeric_functions:
+                rand: Caldera\Bundle\CriticalmassCoreBundle\DQL\RandFunction
