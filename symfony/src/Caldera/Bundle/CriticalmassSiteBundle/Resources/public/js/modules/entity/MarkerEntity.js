@@ -1,4 +1,4 @@
-define(['BaseEntity', 'leaflet'], function() {
+define(['BaseEntity', 'leaflet', 'Modal'], function() {
     MarkerEntity = function () {
 
     };
@@ -54,7 +54,12 @@ define(['BaseEntity', 'leaflet'], function() {
         var content = this._getPopupContent();
 
         if (content) {
-            this._marker.bindPopup(content);
+            var modal = new Modal();
+            modal.setBody(content);
+
+            this._marker.on('click', function() {
+                modal.show();
+            });
         }
     };
 
