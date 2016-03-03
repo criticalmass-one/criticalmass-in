@@ -66,8 +66,6 @@ class StandardRideCommand extends ContainerAwareCommand
                         $output->writeln('Treffpunkt ist bislang unbekannt');
                     }
 
-                    $output->writeln('sichtbar von ' . $ride->getVisibleSince()->format('Y-m-d H:i') . ' bis ' . $ride->getVisibleUntil()->format('Y-m-d H:i'));
-
                     $output->writeln('');
                     $output->writeln('');
                     

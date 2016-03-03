@@ -32,8 +32,6 @@ class StandardRideGenerator {
         $this->calculateDate();
         $this->calculateTime();
         $this->calculateLocation();
-        $this->calculateVisibility();
-        $this->calculateExpectedStartDateTime();
 
         return $this->ride;
     }
@@ -97,38 +95,6 @@ class StandardRideGenerator {
         {
             $this->ride->setHasLocation(false);
         }
-    }
-
-    protected function calculateVisibility()
-    {
-        $intervalOneWeek = new \DateInterval('P1W');
-        $intervalThreeWeeks = new \DateInterval('P3W');
-
-        $timestamp = $this->ride->getDateTime()->format('U');
-
-        $visibleSince = new \DateTime();
-        $visibleSince->setTimestamp($timestamp);
-
-        $visibleUntil = new \DateTime();
-        $visibleUntil->setTimestamp($timestamp);
-
-        $visibleSince->sub($intervalThreeWeeks);
-        $visibleUntil->add($intervalOneWeek);
-
-        $this->ride->setVisibleSince($visibleSince);
-        $this->ride->setVisibleUntil($visibleUntil);
-    }
-
-    protected  function calculateExpectedStartDateTime()
-    {
-        $interval = new \DateInterval('PT15M');
-        $timestamp = $this->ride->getDateTime()->format('U');
-
-        $expectedStartDateTime = new \DateTime();
-        $expectedStartDateTime->setTimestamp($timestamp);
-        $expectedStartDateTime->add($interval);
-
-        $this->ride->setExpectedStartDateTime($expectedStartDateTime);
     }
 
     public function isRideDuplicate()
