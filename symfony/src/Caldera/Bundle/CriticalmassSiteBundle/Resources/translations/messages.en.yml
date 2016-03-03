@@ -8,6 +8,7 @@ criticalmass:
             list: List
             directory: Directory
             calendar: Calendar
+            gallery: Gallery
         criticalmass:
             criticalmass: Critical Mass
             about: About Critical Mass

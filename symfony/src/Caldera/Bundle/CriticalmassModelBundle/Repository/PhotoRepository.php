@@ -148,6 +148,26 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findSomePhotos($limit = 16)
+    {
+        $builder = $this->createQueryBuilder('photo');
+
+        $builder->select('photo');
+        $builder->addSelect('RAND() as HIDDEN rand');
+
+        $builder->where($builder->expr()->eq('photo.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
+        $builder->orderBy('photo.views', 'ASC');
+        $builder->addOrderBy('rand');
+
+        $builder->setMaxResults($limit);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
 
 }
 

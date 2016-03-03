@@ -385,4 +385,16 @@ class PhotoController extends AbstractController
             ]
         );
     }
+
+    public function citygalleryAction(Request $request)
+    {
+        $photos = $this->getPhotoRepository()->findSomePhotos();
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Photo:citygallery.html.twig',
+            [
+                'photos' => $photos
+            ]
+        );
+    }
 }
