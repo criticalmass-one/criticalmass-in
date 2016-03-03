@@ -21,11 +21,9 @@ define(['leaflet', 'MarkerEntity'], function() {
     CityEntity.prototype._slug = null;
     CityEntity.prototype._description = null;
 
-    CityEntity.prototype._getPopupContent = function () {
-        var content = '<h5>' + this._title + '</h5>';
-        content += '<p>' + this._description + '</p>';
-
-        return content;
+    CityEntity.prototype._setupModalContent = function () {
+        this._modal.setTitle(this._title);
+        this._modal.setBody(this._description);
     };
 
     CityEntity.prototype.getSlug= function() {

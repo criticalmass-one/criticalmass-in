@@ -10,6 +10,7 @@ define(['BaseEntity', 'leaflet', 'Modal'], function() {
     MarkerEntity.prototype._longitude = null;
     MarkerEntity.prototype._marker = null;
     MarkerEntity.prototype._icon = null;
+    MarkerEntity.prototype._modal = null;
 
     MarkerEntity.prototype._defaultIconOptions = {
         iconSize: [25, 41],
@@ -27,8 +28,20 @@ define(['BaseEntity', 'leaflet', 'Modal'], function() {
         this._icon = L.icon(options);
     };
 
-    MarkerEntity.prototype._getPopupContent = function() {
-        return null;
+    MarkerEntity.prototype._setupModalContent = function() {
+
+    };
+
+    MarkerEntity.prototype._initPopup = function() {
+        this._modal = new Modal();
+
+        this._setupModalContent();
+
+        var that = this;
+
+        this._marker.on('click', function() {
+            that._modal.show();
+        });
     };
 
     MarkerEntity.prototype._createMarker = function() {
@@ -50,19 +63,6 @@ define(['BaseEntity', 'leaflet', 'Modal'], function() {
         }
     };
 
-    MarkerEntity.prototype._initPopup = function() {
-        var content = this._getPopupContent();
-
-        if (content) {
-            var modal = new Modal();
-            modal.setBody(content);
-
-            this._marker.on('click', function() {
-                modal.show();
-            });
-        }
-    };
-
     MarkerEntity.prototype.addToMap = function(map) {
         if (this.hasLocation()) {
             this._createMarker();
@@ -80,7 +80,7 @@ define(['BaseEntity', 'leaflet', 'Modal'], function() {
     };
 
     MarkerEntity.prototype.openPopup = function() {
-        this._marker.openPopup();
+        this._modal.show();
     };
 
     MarkerEntity.prototype.getMarker = function() {

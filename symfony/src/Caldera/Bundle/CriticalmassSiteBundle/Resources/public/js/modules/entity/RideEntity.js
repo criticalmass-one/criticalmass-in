@@ -25,9 +25,10 @@ define(['leaflet', 'MarkerEntity'], function() {
         iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-blue-2x.png'
     };
 
-    RideEntity.prototype._getPopupContent = function () {
-        var content = '<h5>' + this._title + '</h5>';
-        content += '<dl class="dl-horizontal">';
+    RideEntity.prototype._setupModalContent = function () {
+        this._modal.setTitle(this._title);
+
+        var content = '<dl class="dl-horizontal">';
         content += '<dt>Datum:</dt><dd>' + this._date + '</dd>';
         content += '<dt>Uhrzeit:</dt><dd>' + this._time + ' Uhr</dd>';
         content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
@@ -39,7 +40,7 @@ define(['leaflet', 'MarkerEntity'], function() {
         content += '</dl>';
         content += '<p>' + this._description + '</p>';
 
-        return content;
+        this._modal.setBody(content);
     };
 
     RideEntity.prototype.getDate = function() {
