@@ -1,5 +1,7 @@
 define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash'], function() {
-    LivePage = function () {
+    LivePage = function (context, options) {
+        this._options = options;
+
         this._initContainer();
         this._initMap();
         this._initLive();
@@ -10,6 +12,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
         this._startLive();
     };
 
+    LivePage.prototype._options = null;
     LivePage.prototype._map = null;
     LivePage.prototype._hash = null;
     LivePage.prototype._rideContainer = null;
@@ -31,7 +34,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
     };
 
     LivePage.prototype._initLive = function() {
-        this._mapPositions = new MapPositions();
+        this._mapPositions = new MapPositions(null, this._options);
 
         this._mapPositions.addToControl(this._layers, 'Teilnehmer');
     };
