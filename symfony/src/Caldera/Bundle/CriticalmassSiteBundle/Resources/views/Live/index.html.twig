@@ -87,9 +87,9 @@
 
             {% for ride in rides %}
             {% if ride.hasLocation() %}
-            ride = livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.latitude}}, {{ride.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
+            ride = livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
             {% else %}
-            ride = livePage.addNoLocationRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ride.city.latitude}}, {{ride.city.longitude}},'{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
+            ride = livePage.addNoLocationRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.city.latitude }}, {{ ride.city.longitude }}, '{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
             {% endif %}
             {% endfor %}
 
@@ -97,7 +97,7 @@
             {#ride.openPopup();#}
             {% endif %}
 
-            //livePage.setFocus();
+            livePage.setFocus();
         });
     </script>
 {% endblock %}
