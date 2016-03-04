@@ -1,0 +1,17 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}{{ location.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">{{ location.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+            {{ location.description|markdown }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

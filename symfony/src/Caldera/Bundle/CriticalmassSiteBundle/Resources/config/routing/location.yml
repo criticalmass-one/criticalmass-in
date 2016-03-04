@@ -1,0 +1,3 @@
+caldera_criticalmass_location_show:
+    pattern:  /{citySlug}/location/{locationSlug}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Location:show }
