@@ -1,8 +1,11 @@
 define(['leaflet', 'PositionEntity'], function(L) {
-    MapPositions = function () {
+    MapPositions = function (context, options) {
+        this._options = options;
+
         this._container = new Container();
     };
 
+    MapPositions.prototype._options = null;
     MapPositions.prototype._map = null;
     MapPositions.prototype._timer = null;
     MapPositions.prototype._container = null;
@@ -95,8 +98,8 @@ define(['leaflet', 'PositionEntity'], function(L) {
             that._offlineCallback();
         }
 
-        var apiUrl = window.location.origin + '/api/positions/all';
-        var accessToken = '28fb1cc85d4b46c7e1e8f9b37aa7d7d8';
+        var apiUrl = this._options.apiUrl;
+        var accessToken = this._options.apiAccessToken;
 
         $.support.cors = true;
         $.ajax({

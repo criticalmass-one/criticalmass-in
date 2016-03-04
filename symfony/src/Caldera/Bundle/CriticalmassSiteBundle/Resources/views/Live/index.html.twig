@@ -71,7 +71,17 @@
     </div>
 
     <script>
-        var callback = function(livePage) {
+
+        var options = {
+        {% if rides|length == 1 %}
+            apiUrl: window.location.origin + '/api/positions/{{ rides[0].city.slug }}',
+        {% else %}
+            apiUrl: window.location.origin + '/api/positions/all',
+        {% endif %}
+            apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
+        };
+
+        CriticalMass.loadModule('LivePage', null, options, function(livePage) {
             var ride = null;
             {#livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});#}
 
@@ -88,9 +98,7 @@
             {% endif %}
 
             livePage.setFocus();
-        };
-
-        var livePage = CriticalMass.loadModule('LivePage', null, null, callback);
+        });
     </script>
 {% endblock %}
 
