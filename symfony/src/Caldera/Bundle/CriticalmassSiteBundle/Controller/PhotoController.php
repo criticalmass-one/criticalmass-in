@@ -390,10 +390,25 @@ class PhotoController extends AbstractController
     {
         $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
+        $cityList = [];
+
+        /**
+         * @var Photo $photo
+         */
+        foreach ($photos as $photo) {
+            $city = $photo->getRide()->getCity();
+            $citySlug = $city->getSlug();
+
+            $cityList[$citySlug] = $city;
+        }
+        
+        shuffle($cityList);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Photo:citygallery.html.twig',
             [
-                'photos' => $photos
+                'photos' => $photos,
+                'cities' => $cityList
             ]
         );
     }
