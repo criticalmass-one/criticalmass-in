@@ -388,7 +388,7 @@ class PhotoController extends AbstractController
 
     public function citygalleryAction(Request $request)
     {
-        $photos = $this->getPhotoRepository()->findSomePhotos();
+        $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Photo:citygallery.html.twig',
