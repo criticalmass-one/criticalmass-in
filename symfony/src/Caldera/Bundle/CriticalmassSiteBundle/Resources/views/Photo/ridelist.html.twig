@@ -70,7 +70,7 @@
             <div class="photo-list">
                 {% for photo in pagination %}
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                        <div class="photo margin-bottom-medium text-center">
+                        <div class="photo-thumb margin-bottom-medium text-center">
                             <a href="{{ path(photo) }}">
                                 <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
                             </a>
