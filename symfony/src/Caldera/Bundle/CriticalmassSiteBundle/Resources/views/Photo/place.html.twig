@@ -47,7 +47,7 @@
             {{ form_widget(form.longitude) }}
 
             <div class="btn-group pull-right" role="group" aria-label="...">
-                <a href="" class="btn btn-default">
+                <a href="{{ path('caldera_criticalmass_photo_manage', { citySlug: photo.ride.city.slug, rideDate: photo.ride.getFormattedDate() }) }}" class="btn btn-default">
                     Abbrechen
                 </a>
                 <button type="submit" class="btn btn-success">
