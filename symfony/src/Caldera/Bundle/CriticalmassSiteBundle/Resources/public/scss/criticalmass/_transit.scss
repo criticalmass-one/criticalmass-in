@@ -12,7 +12,10 @@ body {
   .transit-hvv-s2,
   .transit-hvv-s21,
   .transit-hvv-s3,
-  .transit-hvv-s31 {
+  .transit-hvv-s31,
+  .transit-hvv-a1,
+  .transit-hvv-a2,
+  .transit-hvv-a3 {
     border-radius: 15px;
   }
 
@@ -56,5 +59,12 @@ body {
 
   .transit-hvv-u4 {
     background-color: rgb(19, 139, 142);
+  }
+
+  .transit-hvv-a1,
+  .transit-hvv-a2,
+  .transit-hvv-a3
+  {
+    background-color: rgb(231, 135, 58);
   }
 }
