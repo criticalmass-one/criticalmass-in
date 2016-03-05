@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\BoardRepository;
@@ -184,6 +185,14 @@ abstract class AbstractController extends Controller
     protected function getWeatherRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Weather');
+    }
+
+    /**
+     * @return Metadata
+     */
+    protected function getMetadata()
+    {
+        return $this->get('caldera.criticalmass.metadata');
     }
 
     protected function getCheckedCity($citySlug)

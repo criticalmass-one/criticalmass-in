@@ -106,3 +106,6 @@ services:
 
     fos_user.doctrine_registry:
         alias: doctrine
+
+    caldera.criticalmass.metadata:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata

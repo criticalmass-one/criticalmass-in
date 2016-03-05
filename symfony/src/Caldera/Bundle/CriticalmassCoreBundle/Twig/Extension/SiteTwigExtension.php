@@ -30,6 +30,9 @@ class SiteTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
+            new \Twig_SimpleFunction('metadata', [$this, 'getMetadataService',], array(
+                'is_safe' => array('raw')
+            )),
             new \Twig_SimpleFunction('gravatarHash', [$this, 'gravatarHash'], array(
                 'is_safe' => array('html')
             )),
@@ -89,6 +92,11 @@ class SiteTwigExtension extends \Twig_Extension
         $today = new \DateTime();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
+    }
+
+    public function getMetadataService()
+    {
+        return $this->container->get('caldera.criticalmass.metadata');
     }
 
     public function getName()
