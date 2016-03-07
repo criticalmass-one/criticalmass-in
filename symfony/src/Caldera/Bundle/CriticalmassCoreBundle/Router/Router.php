@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Content;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -22,6 +23,10 @@ class Router extends sfRouter
     {
         if ($object instanceof Ride) {
             return $this->generateRideUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Event) {
+            return $this->generateEventUrl($object, $referenceType);
         }
 
         if ($object instanceof City) {
@@ -66,6 +71,18 @@ class Router extends sfRouter
         $parameters = [
             'citySlug' => $ride->getCity()->getMainSlugString(),
             'rideDate' => $ride->getFormattedDate()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    protected function generateEventUrl(Event $event, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        $route = 'caldera_criticalmass_event_show';
+
+        $parameters = [
+            'citySlug' => $event->getCity()->getMainSlugString(),
+            'eventSlug' => $event->getSlug()
         ];
 
         return parent::generate($route, $parameters, $referenceType);

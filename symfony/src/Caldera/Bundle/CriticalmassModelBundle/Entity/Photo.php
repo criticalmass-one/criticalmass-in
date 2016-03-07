@@ -40,6 +40,12 @@ class Photo
     protected $city;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="photos")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    protected $event;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -335,5 +341,51 @@ class Photo
 
     public function incViews() {
         ++$this->views;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Photo
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Event $event
+     * @return Photo
+     */
+    public function setEvent(\Caldera\Bundle\CriticalmassModelBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

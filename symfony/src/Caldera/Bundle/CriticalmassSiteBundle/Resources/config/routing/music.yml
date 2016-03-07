@@ -1,0 +1,3 @@
+caldera_criticalmass_music_listride:
+    pattern:  /{citySlug}/{rideDate}/listmusic
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Music:listride }

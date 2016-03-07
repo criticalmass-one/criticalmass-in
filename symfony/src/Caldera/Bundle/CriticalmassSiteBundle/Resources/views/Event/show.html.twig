@@ -18,6 +18,44 @@
             </div>
         </div>
 
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12">
+                <div role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
+                                <i class="fa fa-flag"></i>
+                                Details
+                            </a>
+                        </li>
+
+                        <li role="presentation">
+                            <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
+                                <i class="fa fa-pencil"></i>
+                                Kommentare
+                        <span class="badge">
+                            {#{{ event.getPosts|length }}#}
+                        </span>
+                            </a>
+                        </li>
+
+                        <li role="presentation">
+                            <a href="{{ path('caldera_criticalmass_photo_event_list', { 'citySlug': event.city.slug, 'eventSlug': event.slug }) }}">
+                                <i class="fa fa-camera"></i>
+                                Galerie
+                                <span class="badge">
+                                    {#{{ photos|length }}#}
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-8">
                 {{ event.description|markdown }}

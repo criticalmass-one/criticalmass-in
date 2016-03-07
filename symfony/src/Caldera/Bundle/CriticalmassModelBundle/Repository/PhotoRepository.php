@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
@@ -112,6 +113,20 @@ class PhotoRepository extends EntityRepository
         $builder->select('photo');
 
         $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
+        $builder->addOrderBy('photo.dateTime', 'ASC');
+
+        return $builder->getQuery();
+    }
+
+    public function buildQueryPhotosByEvent(Event $event)
+    {
+        $builder = $this->createQueryBuilder('photo');
+
+        $builder->select('photo');
+
+        $builder->where($builder->expr()->eq('photo.event', $event->getId()));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
         $builder->addOrderBy('photo.dateTime', 'ASC');
