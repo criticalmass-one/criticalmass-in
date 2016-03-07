@@ -18,6 +18,9 @@ class CityController extends AbstractController
     {
         $cities = $this->getCityRepository()->findCities();
 
+        $this->getMetadata()
+            ->setDescription('Liste mit allen weltweiten Critical-Mass-Radtouren.');
+
         return $this->render('CalderaCriticalmassSiteBundle:City:list.html.twig', array('cities' => $cities));
     }
 
@@ -96,6 +99,9 @@ class CityController extends AbstractController
             $dateTime = new \DateTime();
             $dateTime->setTimezone(new \DateTimeZone($city->getTimezone()));
         }
+
+        $this->getMetadata()
+            ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in '.$city->getCity());
 
         return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', [
             'city' => $city,

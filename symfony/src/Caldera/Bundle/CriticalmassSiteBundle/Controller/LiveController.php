@@ -16,6 +16,9 @@ class LiveController extends AbstractController
          */
         $rides = $this->getRideRepository()->findCurrentRides();
 
+        $this->getMetadata()
+            ->setDescription('Live dabei: Verfolge verschiedene Critical-Mass-Touren weltweit!');
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Live:index.html.twig',
             array(
@@ -35,6 +38,10 @@ class LiveController extends AbstractController
          * @var Ride $ride
          */
         $ride = $this->getRideRepository()->findCurrentRideForCity($city);
+
+
+        $this->getMetadata()
+            ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in '.$city->getCity().' gerade befindet!');
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Live:index.html.twig',

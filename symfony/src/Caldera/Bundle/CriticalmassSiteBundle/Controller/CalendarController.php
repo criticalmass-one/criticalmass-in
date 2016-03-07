@@ -23,6 +23,10 @@ class CalendarController extends AbstractController
             $days[$ride->getFormattedDate()][] = $ride;
         }
 
+        $this->getMetadata()
+            ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
+            ->setDate(new \DateTime());
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Calendar:index.html.twig',
             [
