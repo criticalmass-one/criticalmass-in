@@ -22,7 +22,13 @@ class PhotoRepository extends EntityRepository
         $builder = $this->createQueryBuilder('photo');
 
         $builder->select('photo');
-        $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
+
+        if ($photo->getRide()) {
+            $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
+        } else {
+            $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
+        }
+
         $builder->andWhere($builder->expr()->lt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
         $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
@@ -49,7 +55,13 @@ class PhotoRepository extends EntityRepository
         $builder = $this->createQueryBuilder('photo');
 
         $builder->select('photo');
-        $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
+
+        if ($photo->getRide()) {
+            $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
+        } else {
+            $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
+        }
+
         $builder->andWhere($builder->expr()->gt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
         $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));

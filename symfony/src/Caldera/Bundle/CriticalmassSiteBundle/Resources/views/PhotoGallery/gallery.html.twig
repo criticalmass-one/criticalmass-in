@@ -1,6 +1,12 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Deine Fotos{% endblock %}
+{% if ride %}
+{% set city = ride.city %}
+{% else %}
+{% set city = event.city %}
+{% endif %}
+
+{% block title %}Fotos{% endblock %}
 
 {% block breadcrumb %}
     <li>
@@ -9,14 +15,20 @@
         </a>
     </li>
     <li>
-        <a href="{{ path(ride.city) }}">
-            {{ ride.city.city }}
+        <a href="{{ path(city) }}">
+            {{ city.city }}
         </a>
     </li>
     <li>
+        {% if ride %}
         <a href="{{ path(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
+        {% else %}
+        <a href="{{ path(event) }}">
+            {{ event.title }}
+        </a>
+        {% endif %}
     </li>
     <li class="active">
         Fotos
@@ -28,16 +40,29 @@
         <div class="row">
             <div class="col-md-12">
                 {% if app.getUser() %}
+                    {% if ride %}
+                        {% set uploadPath = path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) %}
+                    {% else %}
+                        {% set uploadPath = path('caldera_criticalmass_photo_upload_event', { 'citySlug': city.slug, 'eventSlug': event.slug }) %}
+                    {% endif %}
+
                     <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                        <a class="btn btn-success" href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Fotos hochladen">
+                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
                             <i class="fa fa-camera"></i>
-                            Fotos hochladen</a>
+                            Fotos hochladen
+                        </a>
                     </div>
                 {% endif %}
 
+                {% if ride %}
                 <h1>
                     Fotos von {{ ride.getFancyTitle() }}
                 </h1>
+                {% else %}
+                <h1>
+                    Fotos von {{ event.title }}
+                </h1>
+                {% endif %}
             </div>
         </div>
 

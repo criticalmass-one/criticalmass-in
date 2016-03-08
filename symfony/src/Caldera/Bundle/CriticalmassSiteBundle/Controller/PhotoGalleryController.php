@@ -17,18 +17,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotoGalleryController extends AbstractController
 {
-    public function indexAction()
+    public function galleryAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null)
     {
-        $criteria = array('enabled' => true);
-        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
-        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
-    }
+        $ride = null;
+        $event = null;
 
-    public function ridelistAction(Request $request, $citySlug, $rideDate)
-    {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        if ($rideDate) {
+            $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
+            $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
+        } else {
+            $event = $this->getEventRepository()->findOneBySlug($eventSlug);
+
+            $query = $this->getPhotoRepository()->buildQueryPhotosByEvent($event);
+        }
 
         $paginator = $this->get('knp_paginator');
 
@@ -39,31 +41,9 @@ class PhotoGalleryController extends AbstractController
         );
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:PhotoGallery:ridelist.html.twig',
+            'CalderaCriticalmassSiteBundle:PhotoGallery:gallery.html.twig',
             [
                 'ride' => $ride,
-                'pagination' => $pagination
-            ]
-        );
-    }
-
-    public function eventlistAction(Request $request, $citySlug, $eventSlug)
-    {
-        $event = $this->getEventRepository()->findOneBySlug($eventSlug);
-
-        $query = $this->getPhotoRepository()->buildQueryPhotosByEvent($event);
-
-        $paginator = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            32
-        );
-
-        return $this->render(
-            'CalderaCriticalmassSiteBundle:PhotoGallery:eventlist.html.twig',
-            [
                 'event' => $event,
                 'pagination' => $pagination
             ]

@@ -2,7 +2,7 @@ caldera_criticalmass_gallery_photos_upload_ride:
     pattern: /{citySlug}/{rideDate}/addphoto
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoUpload:upload }
     requirements:
-        rideDate: "([0-9]{4,4})\-([0-9]{2,2})\-([0-9]{1,2})"
+        rideDate: "([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})"
 
 caldera_criticalmass_photo_upload_event:
     pattern: /{citySlug}/{eventSlug}/addphoto

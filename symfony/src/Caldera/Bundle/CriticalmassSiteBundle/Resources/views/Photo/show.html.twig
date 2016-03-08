@@ -14,17 +14,27 @@
         </a>
     </li>
     <li>
+        {% if ride %}
         <a href="{{ path(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
+        {% else %}
+        <a href="{{ path(event) }}">
+            {{ event.title }}
+        </a>
+        {% endif %}
     </li>
     <li>
+        {% if ride %}
         <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
             Fotos
         </a>
+        {% else %}
+            Fotos
+        {% endif %}
     </li>
     <li class="active">
-        Foto {{ photo.id }} aus {{ photo.city.city }}
+        Foto {{ photo.id }} aus {{ city.city }}
     </li>
 {% endblock %}
 
@@ -65,7 +75,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="container">
     {{ block('navigation') }}
 

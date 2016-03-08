@@ -101,13 +101,22 @@ class Router extends sfRouter
 
     protected function generatePhotoUrl(Photo $photo, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        $route = 'caldera_criticalmass_photo_show';
+        $route = '';
 
         $parameters = [
             'citySlug' => $photo->getCity()->getMainSlugString(),
-            'rideDate' => $photo->getRide()->getFormattedDate(),
             'photoId' => $photo->getId()
         ];
+
+        if ($photo->getRide()) {
+            $route = 'caldera_criticalmass_photo_show_ride';
+
+            $parameters['rideDate'] = $photo->getRide()->getFormattedDate();
+        } else {
+            $route = 'caldera_criticalmass_photo_show_event';
+
+            $parameters['eventSlug'] = $photo->getEvent()->getSlug();
+        }
 
         return parent::generate($route, $parameters, $referenceType);
     }
