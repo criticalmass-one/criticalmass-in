@@ -120,6 +120,68 @@ class PhotoController extends AbstractController
         ));
     }
 
+    public function uploadAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        if ($request->getMethod() == 'POST') {
+            return $this->uploadPostAction($request, $ride);
+        } else {
+            return $this->render('CalderaCriticalmassSiteBundle:Photo:upload.html.twig', [
+                'ride' => $ride
+            ]);
+        }
+    }
+
+    protected function uploadPostAction(Request $request, Ride $ride)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $photo = new Photo();
+
+        $photo->setImageFile($request->files->get('file'));
+        $photo->setUser($this->getUser());
+        $photo->setRide($ride);
+        $photo->setCity($ride->getCity());
+
+        $em->persist($photo);
+        $em->flush();
+
+        /**
+         * @var DateTimeExifReader $dter
+         */
+        $dter = $this->get('caldera.criticalmass.image.exifreader.datetime');
+
+        $dateTime = $dter
+            ->setPhoto($photo)
+            ->execute()
+            ->getDateTime();
+
+        $photo->setDateTime($dateTime);
+
+        $em->persist($photo);
+        $em->flush();
+
+        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+
+        if ($track) {
+            /**
+             * @var PhotoGps $pgps
+             */
+            $pgps = $this->get('caldera.criticalmass.image.photogps');
+
+            $pgps
+                ->setPhoto($photo)
+                ->setTrack($track)
+                ->execute();
+
+            $em->merge($photo);
+            $em->flush();
+        }
+
+        return new Response('foo');
+    }
+
     public function userlistAction(Request $request)
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());

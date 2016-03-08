@@ -1,12 +1,41 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
+{% if event %}
+    {% set city = event.city %}
+{% else %}
+    {% set city = ride.city %}
+{% endif %}
+
 {% block title %}Fotos hochladen{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path(ride.city) }}">{{ ride.city.title }}</a></li>
-    <li><a href="{{ path(ride) }}">{{ ride.getFancyTitle() }}</a></li>
-    <li class="active">Fotos hochladen</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.title }}
+        </a>
+    </li>
+
+    <li>
+        {% if ride %}
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+        {% else %}
+        <a href="{{ path(event) }}">
+            {{ event.title }}
+        </a>
+        {% endif %}
+    </li>
+
+    <li class="active">
+        Fotos hochladen
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -38,7 +67,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <form action="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.getCity().getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="dropzone" id="photo-dropzone">
+                    {% if ride %}
+                        {% set uploadAction = path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) %}
+                    {% else %}
+                        {% set uploadAction = path('caldera_criticalmass_photo_upload_event', { 'citySlug': city.slug, 'eventSlug': event.slug }) %}
+                    {% endif %}
+                    <form action="{{ uploadAction }}" class="dropzone" id="photo-dropzone">
                     </form>
                 </div>
             </div>
