@@ -46,6 +46,14 @@ caldera_criticalmass_photogallery:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photogallery.yml"
     prefix:   /
 
+caldera_criticalmass_photoupload:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photoupload.yml"
+    prefix:   /
+
+caldera_criticalmass_photomanagement:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photomanagement.yml"
+    prefix:   /
+
 caldera_criticalmass_region:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/region.yml"
     prefix:   /

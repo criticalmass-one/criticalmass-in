@@ -2,16 +2,13 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PhotoCoordType;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -30,7 +27,15 @@ class PhotoController extends AbstractController
         }
     }
 
-    protected function uploadPostAction(Request $request, Ride $ride)
+    protected function uploadGetAction(Request $request, Ride $ride = null, Event $event = null)
+    {
+        return $this->render('CalderaCriticalmassSiteBundle:PhotoUpload:upload.html.twig', [
+            'ride' => $ride,
+            'event' => $event
+        ]);
+    }
+
+    protected function uploadPostAction(Request $request, Ride $ride = null, Event $event = null)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -40,6 +45,16 @@ class PhotoController extends AbstractController
         $photo->setUser($this->getUser());
         $photo->setRide($ride);
         $photo->setCity($ride->getCity());
+
+        if ($ride) {
+            $photo->setRide($ride);
+            $photo->setCity($ride->getCity());
+        }
+
+        if ($event) {
+            $photo->setEvent($event);
+            $photo->setCity($event->getCity());
+        }
 
         $em->persist($photo);
         $em->flush();
@@ -61,7 +76,11 @@ class PhotoController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
 
-        if ($track) {
+        if ($ride) {
+            $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+        }
+
+        if ($ride and $track) {
             /**
              * @var PhotoGps $pgps
              */
