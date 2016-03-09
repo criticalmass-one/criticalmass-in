@@ -12,27 +12,35 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PhotoController extends AbstractController
+class PhotoUploadController extends AbstractController
 {
-    public function uploadAction(Request $request, $citySlug, $rideDate)
+    public function uploadAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null)
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $ride = null;
+        $event = null;
+
+        if ($rideDate) {
+            $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        } else {
+            $event = $this->getEventRepository()->findOneBySlug($eventSlug);
+        }
 
         if ($request->getMethod() == 'POST') {
-            return $this->uploadPostAction($request, $ride);
+            return $this->uploadPostAction($request, $ride, $event);
         } else {
-            return $this->render('CalderaCriticalmassSiteBundle:Photo:upload.html.twig', [
-                'ride' => $ride
-            ]);
+            return $this->uploadGetAction($request, $ride, $event);
         }
     }
 
     protected function uploadGetAction(Request $request, Ride $ride = null, Event $event = null)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:PhotoUpload:upload.html.twig', [
-            'ride' => $ride,
-            'event' => $event
-        ]);
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:PhotoUpload:upload.html.twig',
+            [
+                'ride' => $ride,
+                'event' => $event
+            ]
+        );
     }
 
     protected function uploadPostAction(Request $request, Ride $ride = null, Event $event = null)
@@ -43,8 +51,6 @@ class PhotoController extends AbstractController
 
         $photo->setImageFile($request->files->get('file'));
         $photo->setUser($this->getUser());
-        $photo->setRide($ride);
-        $photo->setCity($ride->getCity());
 
         if ($ride) {
             $photo->setRide($ride);
@@ -74,7 +80,7 @@ class PhotoController extends AbstractController
         $em->persist($photo);
         $em->flush();
 
-        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+        $track = null;
 
         if ($ride) {
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
