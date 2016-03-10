@@ -15,8 +15,19 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PhotoController extends AbstractController
+class PhotoManagementController extends AbstractController
 {
+    public function listAction(Request $request)
+    {
+        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
+
+        return $this->render('CalderaCriticalmassSiteBundle:Photo:userlist.html.twig',
+            [
+                'result' => $result
+            ]
+        );
+    }
+
     public function indexAction()
     {
         $criteria = array('enabled' => true);
@@ -182,16 +193,7 @@ class PhotoController extends AbstractController
         return new Response('foo');
     }
 
-    public function userlistAction(Request $request)
-    {
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:userlist.html.twig',
-            [
-                'result' => $result
-            ]
-        );
-    }
 
     public function manageAction(Request $request, $citySlug, $rideDate)
     {
