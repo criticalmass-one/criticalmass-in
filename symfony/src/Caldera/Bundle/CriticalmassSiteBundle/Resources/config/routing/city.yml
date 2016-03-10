@@ -1,3 +1,11 @@
+caldera_criticalmass_desktop_city_show_seo:
+    pattern:  /critical-mass-in-{citySlug}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
+
+caldera_criticalmass_desktop_city_show_seo2:
+    pattern:  /critical-mass-{citySlug}
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
+
 caldera_criticalmass_desktop_city_show:
     pattern:  /{citySlug}
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }

@@ -1,9 +1,11 @@
-caldera_criticalmass_photo_user_list:
-    pattern: /photos/list
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:userlist }
-
 caldera_criticalmass_photo_ride_list:
     pattern: /{citySlug}/{rideDate}/listphotos
+    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:gallery }
+    requirements:
+        rideDate: "([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})"
+
+caldera_criticalmass_photo_ride_list_seo:
+    pattern: /fotos-der-critical-mass-in-{citySlug}-am-{rideDate}
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:gallery }
     requirements:
         rideDate: "([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})"
@@ -15,5 +17,5 @@ caldera_criticalmass_photo_event_list:
         eventSlug: "^([a-zA-Z0-9\-]*)$"
 
 caldera_criticalmass_photo_gallery:
-    pattern: /cities/gallery
+    pattern: /city/gallery
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:citygallery }
