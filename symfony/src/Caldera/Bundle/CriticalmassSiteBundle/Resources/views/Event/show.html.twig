@@ -33,9 +33,6 @@
                             <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
                                 <i class="fa fa-pencil"></i>
                                 Kommentare
-                        <span class="badge">
-                            {#{{ event.getPosts|length }}#}
-                        </span>
                             </a>
                         </li>
 
@@ -44,7 +41,7 @@
                                 <i class="fa fa-camera"></i>
                                 Galerie
                                 <span class="badge">
-                                    {#{{ photos|length }}#}
+                                    {{ photoCounter }}
                                 </span>
                             </a>
                         </li>

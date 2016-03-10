@@ -21,11 +21,14 @@ class EventController extends AbstractController
             throw new NotFoundHttpException('Dieses Event gibt es leider nicht :(');
         }
 
+        $photoCounter = $this->getPhotoRepository()->countPhotosByEvent($event);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Event:show.html.twig',
             array(
                 'city' => $city,
-                'event' => $event
+                'event' => $event,
+                'photoCounter' => $photoCounter
             )
         );
     }

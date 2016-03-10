@@ -132,6 +132,13 @@ class PhotoRepository extends EntityRepository
         return $builder->getQuery();
     }
 
+    public function findPhotosByRide(Ride $ride)
+    {
+        $query = $this->buildQueryPhotosByRide($ride);
+
+        return $query->getResult();
+    }
+
     public function buildQueryPhotosByEvent(Event $event)
     {
         $builder = $this->createQueryBuilder('photo');
@@ -146,11 +153,19 @@ class PhotoRepository extends EntityRepository
         return $builder->getQuery();
     }
 
-    public function findPhotosByRide(Ride $ride)
+    public function countPhotosByEvent(Event $event)
     {
-        $query = $this->buildQueryPhotosByRide($ride);
+        $builder = $this->createQueryBuilder('photo');
 
-        return $query->getResult();
+        $builder->select('COUNT(photo)');
+
+        $builder->where($builder->expr()->eq('photo.event', $event->getId()));
+        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
     }
 
     public function buildQueryPhotosByUserAndRide(User $user, Ride $ride)
