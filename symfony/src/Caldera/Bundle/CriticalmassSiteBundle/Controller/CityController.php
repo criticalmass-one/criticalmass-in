@@ -100,6 +100,8 @@ class CityController extends AbstractController
             $dateTime->setTimezone(new \DateTimeZone($city->getTimezone()));
         }
 
+        $events = $this->getEventRepository()->findEventsByCity($city);
+
         $this->getMetadata()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in '.$city->getCity());
 
@@ -107,7 +109,8 @@ class CityController extends AbstractController
             'city' => $city,
             'currentRide' => $currentRide,
             'dateTime' => $dateTime,
-            'nearCities' => $nearCities
+            'nearCities' => $nearCities,
+            'events' => $events
         ]);
     }
 

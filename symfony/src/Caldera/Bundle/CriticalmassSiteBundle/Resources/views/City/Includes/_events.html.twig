@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Andere Veranstaltungen
+        </h3>
+    </div>
+    <div class="panel-body">
+        <ul>
+            {% for event in events %}
+            <li>
+                {{ event.title }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

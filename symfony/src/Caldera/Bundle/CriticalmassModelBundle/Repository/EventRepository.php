@@ -24,5 +24,21 @@ class EventRepository extends EntityRepository
 
         return $result;
     }
+
+    public function findEventsByCity($city)
+    {
+        $builder = $this->createQueryBuilder('event');
+
+        $builder->select('event');
+
+        $builder->where($builder->expr()->eq('event.city', $city->getId()));
+        $builder->andWhere($builder->expr()->eq('event.isArchived', 0));
+
+        $builder->addOrderBy('event.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
 

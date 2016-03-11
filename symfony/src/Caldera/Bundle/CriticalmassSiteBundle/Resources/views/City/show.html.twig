@@ -85,6 +85,7 @@
                 {% include 'CalderaCriticalmassSiteBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                 {% include 'CalderaCriticalmassSiteBundle:City:Includes/_currentTime.html.twig' with { 'city': city, 'dateTime': dateTime } %}
                 {% include 'CalderaCriticalmassSiteBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
+                {% include 'CalderaCriticalmassSiteBundle:City:Includes/_events.html.twig' with { 'city': city, 'events': events } %}
                 {% include 'CalderaCriticalmassSiteBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
             </div>
         </div>
