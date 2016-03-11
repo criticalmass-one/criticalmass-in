@@ -8,7 +8,10 @@
         <ul>
             {% for event in events %}
             <li>
-                {{ event.title }}
+                <a href="{{ path(event) }}">
+                    {{ event.title }}
+                </a>
+                ({{ event.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr)
             </li>
             {% endfor %}
         </ul>
