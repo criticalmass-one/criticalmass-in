@@ -26,12 +26,12 @@ class EventController extends AbstractController
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Event:show.html.twig',
-            array(
+            [
                 'city' => $city,
                 'event' => $event,
                 'photoCounter' => $photoCounter,
                 'postCounter' => $postCounter
-            )
+            ]
         );
     }
 }
