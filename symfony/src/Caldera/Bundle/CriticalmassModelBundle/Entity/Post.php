@@ -66,6 +66,12 @@ class Post
     protected $content;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="posts")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    protected $event;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -406,5 +412,28 @@ class Post
     public function getThread()
     {
         return $this->thread;
+    }
+
+    /**
+     * Set event
+     *
+     * @param Event $event
+     * @return Post
+     */
+    public function setEvent(Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

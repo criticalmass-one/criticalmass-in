@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 use \Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
@@ -79,6 +80,20 @@ class PostRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    public function countPostsForEvent(Event $event)
+    {
+        $builder = $this->createQueryBuilder('post');
+
+        $builder->select('COUNT(post.id)');
+
+        $builder->where($builder->expr()->eq('post.event', $event->getId()));
+        $builder->andWhere($builder->expr()->eq('post.enabled', 1));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
     }
 }
 

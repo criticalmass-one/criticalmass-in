@@ -22,13 +22,15 @@ class EventController extends AbstractController
         }
 
         $photoCounter = $this->getPhotoRepository()->countPhotosByEvent($event);
+        $postCounter = $this->getPostRepository()->countPostsForEvent($event);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Event:show.html.twig',
             array(
                 'city' => $city,
                 'event' => $event,
-                'photoCounter' => $photoCounter
+                'photoCounter' => $photoCounter,
+                'postCounter' => $postCounter
             )
         );
     }

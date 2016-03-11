@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -20,19 +21,21 @@ class PostController extends AbstractController
         $rideId = null, 
         $photoId = null, 
         $contentId = null,
-        $threadId = null
-
+        $threadId = null,
+        $eventId = null
     ) {
         /**
          * @var Post $post
          * @var Ride $ride
          * @var City $city
          * @var Thread $thread
+         * @var Event $event
          */
         $post = new Post();
         $ride = null;
         $city = null;
         $thread = null;
+        $event = null;
 
         if ($cityId) {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
@@ -67,6 +70,13 @@ class PostController extends AbstractController
             $post->setThread($thread);
 
             $redirectUrl = $this->generateUrl($thread);
+        } elseif ($eventId) {
+            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_event', array('eventId' => $eventId))));
+
+            $event = $this->getEventRepository()->find($eventId);
+            $post->setEvent($event);
+
+            $redirectUrl = $this->generateUrl($event);
         } else {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
 
@@ -125,8 +135,6 @@ class PostController extends AbstractController
      * If you call this method without any parameters, it will list everything in a timeline style.
      *
      * @param Request $request
-     * @param null $cityId
-     * @param null $rideId
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
@@ -134,7 +142,8 @@ class PostController extends AbstractController
         $cityId = null, 
         $rideId = null, 
         $photoId = null, 
-        $contentId = null
+        $contentId = null,
+        $eventId
     ) {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
@@ -155,6 +164,10 @@ class PostController extends AbstractController
 
         if ($contentId) {
             $criteria['content'] = $contentId;
+        }
+
+        if ($eventId) {
+            $criteria['event'] = $eventId;
         }
 
         /* Now fetch all posts with matching criteria. */
