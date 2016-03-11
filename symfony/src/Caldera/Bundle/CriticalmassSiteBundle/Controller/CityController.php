@@ -102,6 +102,8 @@ class CityController extends AbstractController
 
         $events = $this->getEventRepository()->findEventsByCity($city);
 
+        $locations = $this->getLocationRepository()->findLocationsByCity($city);
+
         $this->getMetadata()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in '.$city->getCity());
 
@@ -110,7 +112,8 @@ class CityController extends AbstractController
             'currentRide' => $currentRide,
             'dateTime' => $dateTime,
             'nearCities' => $nearCities,
-            'events' => $events
+            'events' => $events,
+            'locations' => $locations
         ]);
     }
 

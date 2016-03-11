@@ -9,6 +9,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Repository\BoardRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\EventRepository;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\LocationRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ParticipationRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
@@ -100,7 +101,7 @@ abstract class AbstractController extends Controller
     }
 
     /**
-     * @return ObjectRepository
+     * @return LocationRepository
      */
     protected function getLocationRepository()
     {
