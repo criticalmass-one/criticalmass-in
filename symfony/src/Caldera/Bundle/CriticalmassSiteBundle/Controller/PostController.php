@@ -143,7 +143,7 @@ class PostController extends AbstractController
         $rideId = null, 
         $photoId = null, 
         $contentId = null,
-        $eventId
+        $eventId = null
     ) {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
