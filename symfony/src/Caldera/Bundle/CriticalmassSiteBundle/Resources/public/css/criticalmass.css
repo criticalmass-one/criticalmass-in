@@ -83,3 +83,59 @@ body div#map div.user-position {
 
 body nav#navigation {
   z-index: 1000; }
+
+body .transit-hvv {
+  color: white;
+  font-weight: bold;
+  width: 35px;
+  display: inline-block;
+  text-align: center; }
+
+body .transit-hvv-s1,
+body .transit-hvv-s11,
+body .transit-hvv-s2,
+body .transit-hvv-s21,
+body .transit-hvv-s3,
+body .transit-hvv-s31,
+body .transit-hvv-a1,
+body .transit-hvv-a2,
+body .transit-hvv-a3 {
+  border-radius: 15px; }
+
+body .transit-hvv-s1 {
+  background-color: #149533; }
+
+body .transit-hvv-s11 {
+  border: 3px #149533 solid;
+  color: #149533; }
+
+body .transit-hvv-s2 {
+  border: 3px #b3193c solid;
+  color: #b3193c; }
+
+body .transit-hvv-s21 {
+  background-color: #b3193c; }
+
+body .transit-hvv-s3 {
+  background-color: #53246c; }
+
+body .transit-hvv-s31 {
+  background-color: #53246c; }
+
+body .transit-hvv-u1 {
+  background-color: #0b5ca2; }
+
+body .transit-hvv-u2 {
+  background-color: #ea0c2a; }
+
+body .transit-hvv-u3 {
+  background-color: #fed430; }
+
+body .transit-hvv-u4 {
+  background-color: #138b8e; }
+
+body .transit-hvv-a1,
+body .transit-hvv-a2,
+body
+.transit-hvv-a3 {
+  background-color: #e7873a; }
