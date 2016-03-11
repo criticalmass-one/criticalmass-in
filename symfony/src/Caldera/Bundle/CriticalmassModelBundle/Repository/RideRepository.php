@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Location;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
@@ -384,7 +385,6 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
-
     public function getLocationsForCity(City $city)
     {
         $builder = $this->createQueryBuilder('ride');
@@ -408,6 +408,37 @@ class RideRepository extends EntityRepository
         $result = $query->getResult();
 
         return $result;
+    }
+
+    public function countRidesByLocation(Location $location)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('COUNT(ride)');
+
+        $builder->where($builder->expr()->like('ride.location', '\''.$location->getTitle().'\''));
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+
+    public function findRidesByLocation(Location $location)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->where($builder->expr()->like('ride.location', '\''.$location->getTitle().'\''));
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 }
 

@@ -9,8 +9,29 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-8">
             {{ location.description|markdown }}
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Touren von diesem Treffpunkt
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                        {% for ride in rides %}
+                            <li>
+                                <a href="{{ path(ride) }}">
+                                    {{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

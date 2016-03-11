@@ -33,10 +33,13 @@ class LocationController extends AbstractController
             throw new NotFoundHttpException();
         }
 
+        $rides = $this->getRideRepository()->findRidesByLocation($location);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Location:show.html.twig',
             [
-                'location' => $location
+                'location' => $location,
+                'rides' => $rides
             ]
         );
     }
