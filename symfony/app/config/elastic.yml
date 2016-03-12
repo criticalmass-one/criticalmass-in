@@ -26,6 +26,7 @@ fos_elastica:
                         description: ~
                         location: ~
                         isArchived: ~
+                        dateTime: ~
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
