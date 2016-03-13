@@ -36,10 +36,13 @@ class LocationController extends AbstractController
 
         $rides = $this->findRidesForLocation($location);
 
+        $locations = $this->getLocationRepository()->findLocationsByCity($city);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Location:show.html.twig',
             [
                 'location' => $location,
+                'locations' => $locations,
                 'rides' => $rides
             ]
         );
