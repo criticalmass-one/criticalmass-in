@@ -50,6 +50,10 @@ class LocationController extends AbstractController
 
     protected function findRidesForLocation(Location $location)
     {
+        if (!$location->getLatitude() or !$location->getLongitude()) {
+            return false;
+        }
+
         $finder = $this->container->get('fos_elastica.finder.criticalmass.ride');
 
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
