@@ -101,6 +101,14 @@ abstract class AbstractController extends Controller
     }
 
     /**
+     * @return ObjectRepository
+     */
+    protected function getIncidentRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Incident');
+    }
+
+    /**
      * @return LocationRepository
      */
     protected function getLocationRepository()
