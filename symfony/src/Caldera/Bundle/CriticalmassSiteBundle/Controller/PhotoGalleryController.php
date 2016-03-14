@@ -50,6 +50,11 @@ class PhotoGalleryController extends AbstractController
         );
     }
 
+    public function ridegallerylistAction(Request $request)
+    {
+
+    }
+
     public function userlistAction(Request $request)
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
