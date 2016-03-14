@@ -1,0 +1,7 @@
+parameters:
+#    caldera.example.class: Caldera\Bundle\CalderaBundle\Example
+
+services:
+#    caldera.example:
+#        class: %caldera.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

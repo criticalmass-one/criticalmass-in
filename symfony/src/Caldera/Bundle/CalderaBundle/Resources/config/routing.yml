@@ -1,0 +1,3 @@
+caldera_homepage:
+    path:     /
+    defaults: { _controller: CalderaBundle:Default:index }
