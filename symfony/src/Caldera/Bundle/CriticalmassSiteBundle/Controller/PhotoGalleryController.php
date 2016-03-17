@@ -66,7 +66,7 @@ class PhotoGalleryController extends AbstractController
         );
     }
 
-    public function citygalleryAction(Request $request)
+    public function examplegalleryAction(Request $request)
     {
         $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
@@ -85,7 +85,7 @@ class PhotoGalleryController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Photo:citygallery.html.twig',
+            'CalderaCriticalmassSiteBundle:PhotoGallery:examplegallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList

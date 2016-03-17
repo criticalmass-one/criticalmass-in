@@ -16,6 +16,6 @@ caldera_criticalmass_photo_event_list:
     requirements:
         eventSlug: "^([a-zA-Z0-9\-]*)$"
 
-caldera_criticalmass_photo_gallery:
+caldera_criticalmass_photo_examplegallery:
     pattern: /city/gallery
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:citygallery }
+    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:examplegallery }
