@@ -8,11 +8,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-    <script type="text/javascript">
-        var domReadyQueue = [];
-    </script>
-
+    
     <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
     <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
 
@@ -26,13 +22,5 @@
     <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap3/bootstrap.min.js') }}"></script>
 
     {% block additionalFooterElements %}{% endblock %}
-
-    <script type="text/javascript">
-        jQuery(function(){
-            while (domReadyQueue.length) {
-                domReadyQueue.shift()(jQuery);
-            }
-        });
-    </script>
 </body>
 </html>
