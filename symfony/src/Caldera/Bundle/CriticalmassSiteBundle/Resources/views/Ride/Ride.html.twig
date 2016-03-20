@@ -85,30 +85,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="photo-view-modal" tabindex="-1" role="dialog" aria-labelledby="photo-view-modal-label">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="photo-view-modal-label">Foto anzeigen</h4>
-            </div>
-            <div class="modal-body">
-                <a id="photo-view-page-link" href="">
-                    <img src="" id="photo-view-modal-image" class="img-responsive" />
-                </a>
-            </div>
-            <div class="modal-footer">
-                <nav>
-                    <ul class="pager no-margin-top no-margin-bottom">
-                        <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Voriges Foto</a></li>
-                        <li class="next"><a href="#">Nächstes Foto <span aria-hidden="true">&rarr;</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     var pageOptions = {
         'photoViewPageUrl': '{{ path('caldera_criticalmass_photo_show_ride', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate(), 'photoId': 'photoId' }) }}',

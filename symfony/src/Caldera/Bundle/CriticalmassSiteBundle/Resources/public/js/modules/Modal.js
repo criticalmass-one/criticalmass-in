@@ -7,6 +7,11 @@ define([], function() {
     Modal.prototype._modalTitle = '';
     Modal.prototype._modalBody = '';
     Modal.prototype._modalFooter = '';
+    Modal.prototype._size = 'lg';
+
+    Modal.prototype.setSize = function(size) {
+        this._size = size;
+    };
 
     Modal.prototype.setTitle = function(title) {
         this._modalTitle = title;
@@ -26,10 +31,18 @@ define([], function() {
         this._$modal.modal();
     };
 
+    Modal.prototype.isVisible = function() {
+        if (!this._$modal) {
+            return false;
+        }
+
+        return this._$modal.hasClass('in');
+    };
+
     Modal.prototype._buildHtml = function() {
         this._$modal = $([
             '<div class="modal fade" tabindex="-1" role="dialog">',
-            '  <div class="modal-dialog">',
+            '  <div class="modal-dialog modal-' + this._size + '">',
             '    <div class="modal-content">',
             '      <div class="modal-header">',
             '        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>',

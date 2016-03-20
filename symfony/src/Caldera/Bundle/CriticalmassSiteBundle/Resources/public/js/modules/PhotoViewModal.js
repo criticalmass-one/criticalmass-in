@@ -1,4 +1,4 @@
-define(['Container', 'PhotoEntity'], function() {
+define(['Container', 'PhotoEntity', 'Modal'], function() {
 
     PhotoViewModal = function(context, options) {
         this._options = options;
@@ -7,7 +7,7 @@ define(['Container', 'PhotoEntity'], function() {
     PhotoViewModal.prototype._map = null;
     PhotoViewModal.prototype._photoContainer = null;
     PhotoViewModal.prototype._options = null;
-
+    PhotoViewModal.prototype._modal = null;
 
     PhotoViewModal.prototype.setPhotoContainer = function(photoContainer) {
         this._photoContainer = photoContainer;
@@ -20,12 +20,14 @@ define(['Container', 'PhotoEntity'], function() {
     PhotoViewModal.prototype.showPhoto = function(entityId) {
         var photo = this._photoContainer.getEntity(entityId);
 
-        var $modal = $('#photo-view-modal');
-        $modal.find('img').attr('src', photo.getFilename());
-        $modal.find('img').attr('id', 'photo-' + entityId);
+        this._modal = new Modal();
+        this._modal.setTitle('Foto anzeigen');
+        this._modal.setBody('<img id="photo-' + entityId + '" src="' + photo.getFilename() + '" class="img-responsive" />');
+        this._modal.setFooter('<nav><ul class="pager no-margin-top no-margin-bottom"><li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Voriges Foto</a></li><li class="next"><a href="#">Nächstes Foto <span aria-hidden="true">&rarr;</span></a></li></ul></nav>');
+        this._modal.setSize('lg');
 
-        if (!$modal.hasClass('in')) {
-            $modal.modal();
+        if (!this._modal.isVisible()) {
+            this._modal.show();
         } else {
             this._panMapToPhotoLocation(photo);
         }
