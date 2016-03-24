@@ -3,7 +3,7 @@ define([], function() {
     Modal = function(context, options) {
     };
 
-    Modal.prototype._$modal = null;
+    Modal.prototype.$modal = null;
     Modal.prototype._modalTitle = '';
     Modal.prototype._modalBody = '';
     Modal.prototype._modalFooter = '';
@@ -34,19 +34,19 @@ define([], function() {
     Modal.prototype.show = function() {
         this._buildHtml();
         this._inject();
-        this._$modal.modal();
+        this.$modal.modal();
     };
 
     Modal.prototype.isVisible = function() {
-        if (!this._$modal) {
+        if (!this.$modal) {
             return false;
         }
 
-        return this._$modal.hasClass('in');
+        return this.$modal.hasClass('in');
     };
 
     Modal.prototype._buildHtml = function() {
-        this._$modal = $([
+        this.$modal = $([
             '<div id="criticalmass-modal" class="modal fade" tabindex="-1" role="dialog">',
             '  <div class="modal-dialog modal-' + this._size + '">',
             '    <div class="modal-content">',
@@ -69,7 +69,7 @@ define([], function() {
     };
 
     Modal.prototype._inject = function() {
-        $('body').append(this._$modal);
+        $('body').append(this.$modal);
     };
 
     return Modal;
