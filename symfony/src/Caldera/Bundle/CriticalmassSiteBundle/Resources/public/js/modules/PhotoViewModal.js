@@ -20,21 +20,40 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
     PhotoViewModal.prototype.showPhoto = function(entityId) {
         var photo = this._photoContainer.getEntity(entityId);
 
-        this._modal = new Modal();
-        this._modal.setTitle('Foto anzeigen');
-        this._modal.setBody('<img id="photo-' + entityId + '" src="' + photo.getFilename() + '" class="img-responsive" />');
-        this._modal.setFooter('<nav><ul class="pager no-margin-top no-margin-bottom"><li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Voriges Foto</a></li><li class="next"><a href="#">Nächstes Foto <span aria-hidden="true">&rarr;</span></a></li></ul></nav>');
-        this._modal.setSize('lg');
+        // was the modal already created?
+        if (this._modal) {
+            // if yes, just update the modal content and change the currently shown image
+            this._updateModal(entityId, photo);
+        } else {
+            // if not, create the modal now
+            this._createModal(entityId, photo);
+        }
 
+        // next question: is the modal visible?
         if (!this._modal.isVisible()) {
+            // if not, show it now
             this._modal.show();
         } else {
+            // if yes, then just pan the background map to the current position
             this._panMapToPhotoLocation(photo);
         }
 
         this._updatePhotoViewNavigation(entityId);
 
         this._countView(photo);
+    };
+
+    PhotoViewModal.prototype._updateModal = function(entityId, photo) {
+        this._modal.setTitle('Foto ' + entityId + ' anzeigen');
+        this._modal.setBody('<img id="photo-' + entityId + '" src="' + photo.getFilename() + '" class="img-responsive" />');
+    };
+
+    PhotoViewModal.prototype._createModal = function(entityId, photo) {
+        this._modal = new Modal();
+        this._modal.setTitle('Foto ' + entityId + ' anzeigen');
+        this._modal.setBody('<img id="photo-' + entityId + '" src="' + photo.getFilename() + '" class="img-responsive" />');
+        this._modal.setFooter('<nav><ul class="pager no-margin-top no-margin-bottom"><li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Voriges Foto</a></li><li class="next"><a href="#">Nächstes Foto <span aria-hidden="true">&rarr;</span></a></li></ul></nav>');
+        this._modal.setSize('lg');
     };
 
     PhotoViewModal.prototype._countView = function(photo) {
