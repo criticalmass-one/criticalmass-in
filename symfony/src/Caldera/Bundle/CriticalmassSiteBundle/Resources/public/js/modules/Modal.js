@@ -15,14 +15,20 @@ define([], function() {
 
     Modal.prototype.setTitle = function(title) {
         this._modalTitle = title;
+
+        $('#criticalmass-modal .modal-header h4.modal-title').html(title);
     };
 
     Modal.prototype.setBody = function(body) {
         this._modalBody = body;
+
+        $('#criticalmass-modal .modal-body').html(body);
     };
 
     Modal.prototype.setFooter = function(footer) {
         this._modalFooter = footer;
+
+        $('#criticalmass-modal .modal-footer').html(footer);
     };
 
     Modal.prototype.show = function() {
@@ -41,7 +47,7 @@ define([], function() {
 
     Modal.prototype._buildHtml = function() {
         this._$modal = $([
-            '<div class="modal fade" tabindex="-1" role="dialog">',
+            '<div id="criticalmass-modal" class="modal fade" tabindex="-1" role="dialog">',
             '  <div class="modal-dialog modal-' + this._size + '">',
             '    <div class="modal-content">',
             '      <div class="modal-header">',
