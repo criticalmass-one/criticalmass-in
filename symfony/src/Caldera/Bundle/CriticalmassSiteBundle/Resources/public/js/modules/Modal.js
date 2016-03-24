@@ -16,19 +16,25 @@ define([], function() {
     Modal.prototype.setTitle = function(title) {
         this._modalTitle = title;
 
-        $('#criticalmass-modal .modal-header h4.modal-title').html(title);
+        if (this.$modal) {
+            this.$modal.find('.modal-header h4.modal-title').html(title);
+        }
     };
 
     Modal.prototype.setBody = function(body) {
         this._modalBody = body;
 
-        $('#criticalmass-modal .modal-body').html(body);
+        if (this.$modal) {
+            this.$modal.find('.modal-body').html(body);
+        }
     };
 
     Modal.prototype.setFooter = function(footer) {
         this._modalFooter = footer;
 
-        $('#criticalmass-modal .modal-footer').html(footer);
+        if (this.$modal) {
+            this.$modal.find('.modal-footer').html(footer);
+        }
     };
 
     Modal.prototype.show = function() {
