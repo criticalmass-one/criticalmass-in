@@ -67,7 +67,8 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
     };
 
     PhotoViewModal.prototype._updatePhotoViewNavigation = function(entityId) {
-        var $modal = $('#photo-view-modal');
+        var $modal = this._modal.$modal;
+
         var $nextPhotoButton = $modal.find('li.next');
         var $previousPhotoButton = $modal.find('li.previous');
 
