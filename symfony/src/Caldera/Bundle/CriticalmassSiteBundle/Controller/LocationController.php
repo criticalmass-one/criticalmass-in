@@ -43,7 +43,33 @@ class LocationController extends AbstractController
             [
                 'location' => $location,
                 'locations' => $locations,
-                'rides' => $rides
+                'rides' => $rides,
+                'ride' => null
+            ]
+        );
+    }
+
+    public function rideAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $location = $this->getLocationRepository()->findLocationForRide($ride);
+
+        if (!$location) {
+            throw new NotFoundHttpException();
+        }
+
+        $rides = $this->findRidesForLocation($location);
+
+        $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Location:show.html.twig',
+            [
+                'location' => $location,
+                'locations' => $locations,
+                'rides' => $rides,
+                'ride' => $ride
             ]
         );
     }

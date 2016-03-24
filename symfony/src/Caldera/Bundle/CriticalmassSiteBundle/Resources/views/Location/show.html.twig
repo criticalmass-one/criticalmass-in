@@ -14,7 +14,17 @@
             {{ location.city.city }}
         </a>
     </li>
+    {% if ride %}
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
 
+    <li class="active">
+        Informationen zum Treffpunkt
+    </li>
+    {% else %}
     <li>
         Treffpunkte
     </li>
@@ -22,6 +32,7 @@
     <li class="active">
         {{ location.title }}
     </li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
