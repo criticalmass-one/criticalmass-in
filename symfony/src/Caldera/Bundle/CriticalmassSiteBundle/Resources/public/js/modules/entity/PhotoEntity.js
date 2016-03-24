@@ -29,7 +29,7 @@ define(['MarkerEntity'], function() {
         return this._filename;
     };
 
-    MarkerEntity.prototype._initPopup = function() {
+    PhotoEntity.prototype._initPopup = function() {
         return null;
     };
 
