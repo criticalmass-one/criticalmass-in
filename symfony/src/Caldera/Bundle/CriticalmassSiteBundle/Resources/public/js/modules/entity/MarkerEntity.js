@@ -34,6 +34,7 @@ define(['BaseEntity', 'leaflet', 'Modal'], function() {
 
     MarkerEntity.prototype._initPopup = function() {
         this._modal = new Modal();
+        this._modal.setSize('md');
 
         this._setupModalContent();
 
