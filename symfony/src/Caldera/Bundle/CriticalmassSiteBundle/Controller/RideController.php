@@ -369,13 +369,16 @@ class RideController extends AbstractController
             ]
         );
 
+        $location = $this->getLocationRepository()->findLocationForRide($ride);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Ride:Tabs/DetailsTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime(),
                 'estimateForm' => $estimateForm->createView(),
-                'weatherForecast' => $weatherForecast
+                'weatherForecast' => $weatherForecast,
+                'location' => $location
             ]
         );
     }

@@ -15,7 +15,7 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-sm-push-8">
-            {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast } %}
+            {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
             {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_participationNumbers.html.twig' with { 'ride': ride } %}
             {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_socialMedia.html.twig' with { 'ride': ride } %}
             {% include 'CalderaCriticalmassSiteBundle:Ride:Includes/_statistic.html.twig' with { 'ride': ride } %}
