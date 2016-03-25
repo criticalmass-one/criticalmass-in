@@ -20,11 +20,14 @@ define(['leaflet', 'MarkerEntity'], function() {
     NoLocationRideEntity.prototype._time = null;
     NoLocationRideEntity.prototype._weather = null;
 
-    NoLocationRideEntity.prototype._markerIconOptions = {
-        iconUrl: '/bundles/calderacriticalmasssite/images/marker/marker-gray.png',
-        iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-gray-2x.png'
+    NoLocationRideEntity.prototype._initIcon = function() {
+        this._icon = L.ExtraMarkers.icon({
+            icon: 'fa-university',
+            markerColor: 'blue-dark',
+            shape: 'round',
+            prefix: 'fa'
+        });
     };
-
     NoLocationRideEntity.prototype._setupModalContent = function () {
         this._modal.setTitle(this._title);
 
