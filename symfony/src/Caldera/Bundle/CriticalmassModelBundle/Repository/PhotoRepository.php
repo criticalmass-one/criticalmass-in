@@ -240,7 +240,7 @@ class PhotoRepository extends EntityRepository
         $builder->addSelect('RAND() as HIDDEN rand');
 
         $builder->where($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('photo.city'));
+        $builder->andWhere($builder->expr()->isNotNull('photo.ride'));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
         if ($maxViews) {
