@@ -1,4 +1,4 @@
-define(['MarkerEntity'], function() {
+define(['MarkerEntity', 'leaflet-extramarkers'], function() {
     PhotoEntity = function(id, latitude, longitude, description, dateTime, filename) {
         this._id = id;
         this._latitude = latitude;
@@ -11,23 +11,16 @@ define(['MarkerEntity'], function() {
     PhotoEntity.prototype = new MarkerEntity();
     PhotoEntity.prototype.constructor = PhotoEntity;
 
-    PhotoEntity.prototype._markerIconOptions = {
-        iconUrl: '/bundles/calderacriticalmasssite/images/marker/marker-yellow.png',
-        iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-yellow-2x.png'
-    };
-
     PhotoEntity.prototype._id = null;
     PhotoEntity.prototype._description = null;
     PhotoEntity.prototype._dateTime = null;
     PhotoEntity.prototype._filename = null;
 
-    MarkerEntity.prototype._initIcon = function() {
-        var options = $.extend(this._defaultIconOptions, this._markerIconOptions);
-
+    PhotoEntity.prototype._initIcon = function() {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-camera',
             markerColor: 'yellow',
-            shape: 'circle',
+            shape: 'square',
             prefix: 'fa'
         });
     };

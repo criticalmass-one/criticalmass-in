@@ -1,4 +1,4 @@
-define(['leaflet', 'MarkerEntity'], function() {
+define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
     SubrideEntity = function (subrideId, title, description, latitude, longitude, location, date, time, weather) {
         this._subrideId = subrideId;
         this._title = title;
@@ -26,7 +26,7 @@ define(['leaflet', 'MarkerEntity'], function() {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-circle',
             markerColor: 'green',
-            shape: 'round',
+            shape: 'circle',
             prefix: 'fa'
         });
     };

@@ -1,4 +1,4 @@
-define(['leaflet', 'MarkerEntity'], function() {
+define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
     CityEntity = function(title, name, slug, description, latitude, longitude) {
         this._title = title;
         this._name = name;
@@ -10,11 +10,6 @@ define(['leaflet', 'MarkerEntity'], function() {
 
     CityEntity.prototype = new MarkerEntity();
     CityEntity.prototype.constructor = CityEntity;
-
-    CityEntity.prototype._markerIconOptions = {
-        iconUrl: '/bundles/calderacriticalmasssite/images/marker/marker-red.png',
-        iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-red-2x.png'
-    };
 
     CityEntity.prototype._title = null;
     CityEntity.prototype._name = null;

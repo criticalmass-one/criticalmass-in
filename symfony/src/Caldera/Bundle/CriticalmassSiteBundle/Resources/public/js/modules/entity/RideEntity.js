@@ -1,4 +1,4 @@
-define(['leaflet', 'MarkerEntity'], function() {
+define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
     RideEntity = function (title, description, latitude, longitude, location, date, time, weather) {
         this._title = title;
         this._description = description;
