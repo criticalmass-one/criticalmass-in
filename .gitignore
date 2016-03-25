@@ -23,3 +23,4 @@ symfony/web/photos
 symfony/web/tracks
 composer.phar
 criticalmass.iml
+*.scssc
