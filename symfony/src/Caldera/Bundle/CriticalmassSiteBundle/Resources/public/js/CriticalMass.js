@@ -83,6 +83,7 @@ require.config({
         "leaflet-hash": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-hash",
         "leaflet-polyline": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-polyline",
         "leaflet-playback": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-playback",
+        "leaflet-extramarkers": "/bundles/calderacriticalmasssite/js/external/leaflet/ExtraMarkers",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
@@ -115,6 +116,10 @@ require.config({
         'leaflet-playback': {
             deps: ['leaflet'],
             exports: 'L.Playback'
+        },
+        'leaflet-extramarkers': {
+            deps: ['leaflet'],
+            exports: 'L.ExtraMarkers'
         },
         typeahead:{
             deps: ['jquery'],
