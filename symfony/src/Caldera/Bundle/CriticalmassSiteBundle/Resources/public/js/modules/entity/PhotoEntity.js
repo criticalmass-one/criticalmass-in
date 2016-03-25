@@ -21,6 +21,17 @@ define(['MarkerEntity'], function() {
     PhotoEntity.prototype._dateTime = null;
     PhotoEntity.prototype._filename = null;
 
+    MarkerEntity.prototype._initIcon = function() {
+        var options = $.extend(this._defaultIconOptions, this._markerIconOptions);
+
+        this._icon = L.ExtraMarkers.icon({
+            icon: 'fa-camera',
+            markerColor: 'yellow',
+            shape: 'circle',
+            prefix: 'fa'
+        });
+    };
+
     PhotoEntity.prototype.getId = function() {
         return this._id;
     };

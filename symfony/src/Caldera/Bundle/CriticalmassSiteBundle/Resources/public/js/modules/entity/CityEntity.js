@@ -21,6 +21,15 @@ define(['leaflet', 'MarkerEntity'], function() {
     CityEntity.prototype._slug = null;
     CityEntity.prototype._description = null;
 
+    CityEntity.prototype._initIcon = function() {
+        this._icon = L.ExtraMarkers.icon({
+            icon: 'fa-university',
+            markerColor: 'blue',
+            shape: 'round',
+            prefix: 'fa'
+        });
+    };
+
     CityEntity.prototype._setupModalContent = function () {
         this._modal.setTitle(this._title);
         this._modal.setBody(this._description);

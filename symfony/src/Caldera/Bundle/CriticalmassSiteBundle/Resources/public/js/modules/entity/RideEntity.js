@@ -20,9 +20,13 @@ define(['leaflet', 'MarkerEntity'], function() {
     RideEntity.prototype._time = null;
     RideEntity.prototype._weather = null;
 
-    RideEntity.prototype._markerIconOptions = {
-        iconUrl: '/bundles/calderacriticalmasssite/images/marker/marker-blue.png',
-        iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-blue-2x.png'
+    RideEntity.prototype._initIcon = function() {
+        this._icon = L.ExtraMarkers.icon({
+            icon: 'fa-bicycle',
+            markerColor: 'red',
+            shape: 'round',
+            prefix: 'fa'
+        });
     };
 
     RideEntity.prototype._setupModalContent = function () {

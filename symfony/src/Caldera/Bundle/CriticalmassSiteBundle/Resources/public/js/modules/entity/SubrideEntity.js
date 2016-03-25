@@ -22,9 +22,13 @@ define(['leaflet', 'MarkerEntity'], function() {
     SubrideEntity.prototype._time = null;
     SubrideEntity.prototype._weather = null;
 
-    SubrideEntity.prototype._markerIconOptions = {
-        iconUrl: '/bundles/calderacriticalmasssite/images/marker/marker-green.png',
-        iconRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/marker-green-2x.png'
+    SubrideEntity.prototype._initIcon = function() {
+        this._icon = L.ExtraMarkers.icon({
+            icon: 'fa-circle',
+            markerColor: 'green',
+            shape: 'round',
+            prefix: 'fa'
+        });
     };
 
     SubrideEntity.prototype._setupModalContent = function () {

@@ -1,4 +1,4 @@
-define(['BaseEntity', 'leaflet', 'Modal'], function() {
+define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
     MarkerEntity = function () {
 
     };
@@ -12,22 +12,11 @@ define(['BaseEntity', 'leaflet', 'Modal'], function() {
     MarkerEntity.prototype._icon = null;
     MarkerEntity.prototype._modal = null;
 
-    MarkerEntity.prototype._defaultIconOptions = {
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        popupAnchor: [0, -36],
-        shadowSize: [41, 41],
-        shadowAnchor: [13, 41],
-        shadowUrl: '/bundles/calderacriticalmasssite/images/marker/defaultshadow.png',
-        shadowRetinaUrl: '/bundles/calderacriticalmasssite/images/marker/defaultshadow.png'
-    };
-
+    // this should be extended
     MarkerEntity.prototype._initIcon = function() {
-        var options = $.extend(this._defaultIconOptions, this._markerIconOptions);
-
-        this._icon = L.icon(options);
     };
 
+    // this should be extended, too
     MarkerEntity.prototype._setupModalContent = function() {
 
     };
