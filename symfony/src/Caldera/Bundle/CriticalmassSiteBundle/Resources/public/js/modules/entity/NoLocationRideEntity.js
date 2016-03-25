@@ -28,6 +28,7 @@ define(['leaflet', 'MarkerEntity'], function() {
             prefix: 'fa'
         });
     };
+    
     NoLocationRideEntity.prototype._setupModalContent = function () {
         this._modal.setTitle(this._title);
 
