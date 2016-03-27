@@ -13,9 +13,55 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    hic sunt birotarii
+                    Gefahrenstellen in {{ city.city }}
                 </h1>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 400px;">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Bezeichnung
+                            </th>
+                            <th>
+                                gültig bis
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for incident in incidents %}
+                        <tr>
+                            <td>
+                                {{ incident.title }}
+                            </td>
+                            <td>
+                                {% if incident.expires %}
+                                {{ incident.visibleTo|date('d.m.Y', 'Europe/Berlin') }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+    <script>
+        CriticalMass.loadModule('IncidentPage', null, null, function(incidentPage) {
+            {% for incident in incidents %}
+
+            {% endfor %}
+        });
+    </script>
 {% endblock %}
