@@ -27,7 +27,8 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "^3.1",
         "leaseweb/memcache-bundle": "*",
-        "basvandorst/StravaPHP": "1.0.1"
+        "basvandorst/StravaPHP": "1.0.1",
+        "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1"
     },
     "scripts": {
         "post-install-cmd": [
