@@ -169,7 +169,7 @@
         CriticalMass.loadModule('EditSubridePage', null, null, function(page) {
             page.addCity('{{ ride.city.title }}', '{{ ride.city.city }}', '{{ ride.city.getMainSlugString() }}', '{{ ride.city.description|e('js') }}', {{ ride.city.latitude }}, {{ ride.city.longitude }});
 
-            page.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ ride.weatherForecast() }}');
+            page.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
 
             page.init();
         });
