@@ -1,4 +1,4 @@
-define(['Map', 'TrackEntity', 'bootstrap-slider'], function() {
+define(['Map', 'bootstrap-slider'], function() {
     TrackRangePage = function(context, options) {
 
     };
@@ -52,19 +52,13 @@ define(['Map', 'TrackEntity', 'bootstrap-slider'], function() {
         this._initTrack();
         this._initSlider();
 
-        this._map.fitBounds(this._track.getBounds());
+        this._map.fitBounds(this._polyline.getBounds());
     };
 
     TrackRangePage.prototype._initTrack = function() {
-        this._track = new TrackEntity();
-        this._track.setPolyline(
-            this._polylineLatLngs,
-            this._colorRed,
-            this._colorGreen,
-            this._colorBlue
-        );
+        this._polyline = L.polyline(this._polylineLatLngs, { color: 'rgb(' + this._colorRed + ', ' + this._colorGreen + ', ' + this._colorBlue + ')' });
 
-        this._track.addToMap(this._map);
+        this._polyline.addTo(this._map.map);
     };
 
     TrackRangePage.prototype._initMap = function() {
@@ -105,7 +99,7 @@ define(['Map', 'TrackEntity', 'bootstrap-slider'], function() {
             newLatLngs.splice(0, beginValue);
             newLatLngs.splice(endValue, newLatLngs.length - endValue);
 
-            that._track.setLatLngs(newLatLngs);
+            that._polyline.setLatLngs(newLatLngs);
         });
     };
 
