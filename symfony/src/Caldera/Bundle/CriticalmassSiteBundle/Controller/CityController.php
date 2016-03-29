@@ -29,8 +29,8 @@ class CityController extends AbstractController
         $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
 
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
-	$enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
-	$selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
+	    $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
+	    $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
 
         $geoFilter = new \Elastica\Filter\GeoDistance(
             'pin',
