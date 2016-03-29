@@ -106,6 +106,11 @@ class Track
     protected $latLngList;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $polyline;
+
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
@@ -445,6 +450,18 @@ class Track
     public function getLatLngList()
     {
         return $this->latLngList;
+    }
+
+    public function setPolyline($polyline)
+    {
+        $this->polyline = $polyline;
+
+        return $this;
+    }
+
+    public function getPolyline()
+    {
+        return $this->polyline;
     }
 
     public function getColorRed()

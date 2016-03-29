@@ -126,9 +126,8 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
         this._map.setView(latLng, 14);
     };
 
-    RidePage.prototype.addTrack = function(trackId, polylineLatLngs, colorRed, colorGreen, colorBlue) {
-        var track = new TrackEntity();
-        track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
+    RidePage.prototype.addTrack = function(trackId, polyline, colorRed, colorGreen, colorBlue) {
+        var track = new TrackEntity(trackId, polyline, colorRed, colorGreen, colorBlue);
 
         track.addToContainer(this._trackContainer, trackId);
     };
@@ -152,15 +151,15 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
     };
 
     RidePage.prototype.focus = function() {
-        if (!this._trackContainer.isEmpty()) {
-            var bounds = this._trackContainer.getBounds();
+        //if (!this._trackContainer.isEmpty()) {
+        //    var bounds = this._trackContainer.getBounds();
 
-            this._map.fitBounds(bounds);
-        } else if (this._ride && this._ride.hasLocation()) {
+        //    this._map.fitBounds(bounds);
+        //} else if (this._ride && this._ride.hasLocation()) {
             this._map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 10);
-        } else {
-            this._map.setView([this._city.getLatitude(), this._city.getLongitude()], 10);
-        }
+        //} else {
+        //    this._map.setView([this._city.getLatitude(), this._city.getLongitude()], 10);
+        //}
     };
 
     return RidePage;
