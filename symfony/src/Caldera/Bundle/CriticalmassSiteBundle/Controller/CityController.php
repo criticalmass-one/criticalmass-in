@@ -86,6 +86,8 @@ class CityController extends AbstractController
     {
         $city = $this->getCityBySlug($citySlug);
 
+        $this->getMetadata()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus '.$city->getCity());
+
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
         return $this->render('CalderaCriticalmassSiteBundle:City:galleryList.html.twig',
