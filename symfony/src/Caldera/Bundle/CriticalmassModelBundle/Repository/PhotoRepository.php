@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -232,7 +233,7 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findSomePhotos($limit = 16, $maxViews = 15)
+    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -245,6 +246,10 @@ class PhotoRepository extends EntityRepository
 
         if ($maxViews) {
             $builder->andWhere($builder->expr()->lte('photo.views', $maxViews));
+        }
+
+        if ($city) {
+            $builder->andWhere($builder->expr()->lte('photo.city', $city->getId()));
         }
 
         $builder->addOrderBy('rand');

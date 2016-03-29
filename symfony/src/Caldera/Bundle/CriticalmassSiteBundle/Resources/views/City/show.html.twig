@@ -78,7 +78,39 @@
 
         <div class="row">
             <div class="col-md-9">
-                {{ city.longDescription|markdown }}
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ city.longDescription|markdown }}
+                    </div>
+                </div>
+
+                {% if photos|length > 0 %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>
+                            Fotos aus {{ city.city }}
+                        </h2>
+
+                        <p>
+                            Hier siehst du ein paar Fotos aus {{ city.city }}.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="photo-list">
+                        {% for photo in photos %}
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                <div class="photo-thumb margin-bottom-medium text-center">
+                                    <a href="{{ path(photo) }}">
+                                        <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
             </div>
 
             <div class="col-md-3">
