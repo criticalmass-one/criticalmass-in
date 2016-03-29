@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
+define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
 
     RidePage = function(context, options) {
         this._options = options;
@@ -58,7 +58,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideE
         this._trackContainer = new Container();
         this._cityContainer = new Container();
         this._rideContainer = new Container();
-        this._photoContainer = new Container();
+        this._photoContainer = new ClusterContainer();
     };
 
     RidePage.prototype._initLayers = function() {

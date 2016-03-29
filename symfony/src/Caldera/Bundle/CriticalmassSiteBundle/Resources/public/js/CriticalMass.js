@@ -46,6 +46,7 @@ require.config({
         "MarkerEntity": "/bundles/calderacriticalmasssite/js/modules/entity/MarkerEntity",
         "PhotoEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PhotoEntity",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
+        "ClusterContainer": "/bundles/calderacriticalmasssite/js/modules/entity/ClusterContainer",
         "EditCityPage": "/bundles/calderacriticalmasssite/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
@@ -84,6 +85,7 @@ require.config({
         "leaflet-polyline": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-polyline",
         "leaflet-playback": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-playback",
         "leaflet-extramarkers": "/bundles/calderacriticalmasssite/js/external/leaflet/ExtraMarkers",
+        "leaflet-markercluster": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-markercluster",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
@@ -120,6 +122,10 @@ require.config({
         'leaflet-extramarkers': {
             deps: ['leaflet'],
             exports: 'L.ExtraMarkers'
+        },
+        'leaflet-markercluster': {
+            deps: ['leaflet'],
+            exports: 'L.MarkerClusterGroup'
         },
         typeahead:{
             deps: ['jquery'],
