@@ -119,7 +119,7 @@ class PhotoRepository extends EntityRepository
         ];
     }
 
-    public function findRidesWithPhotoCounter()
+    public function findRidesWithPhotoCounter(City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -127,6 +127,10 @@ class PhotoRepository extends EntityRepository
         $builder->addSelect('COUNT(photo)');
 
         $builder->where($builder->expr()->eq('photo.deleted', 0));
+
+        if ($city) {
+            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+        }
 
         $builder->groupBy('photo.ride');
 
