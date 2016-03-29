@@ -118,11 +118,9 @@
 
     <script>
         CriticalMass.loadModule('TrackViewPage', null, null, function(viewPage) {
-            viewPage.setPolylineLatLngs({{ track.getLatLngList() }});
+            viewPage.addTrack({{ track.id }}, '{{ track.polyline|replace({'\\': '\\\\'}) }}', {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
 
-            viewPage.setColor({{ track.getUser().getColorRed() }}, {{ track.getUser().getColorGreen() }}, {{ track.getUser().getColorBlue() }});
-
-            viewPage.init();
+            viewPage.focus();
         });
     </script>
 {% endblock %}

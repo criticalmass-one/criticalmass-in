@@ -1,39 +1,26 @@
 define(['Map', 'TrackEntity'], function() {
     TrackViewPage = function(context, options) {
-
+        this._initMap();
     };
 
     TrackViewPage.prototype._map = null;
     TrackViewPage.prototype._track = null;
-    TrackViewPage.prototype._polylineLatLngs = null;
-    TrackViewPage.prototype._colorRed = null;
-    TrackViewPage.prototype._colorGreen = null;
-    TrackViewPage.prototype._colorBlue = null;
 
-    TrackViewPage.prototype.setPolylineLatLngs = function(polylineLatLngs) {
-        this._polylineLatLngs = polylineLatLngs;
+    TrackViewPage.prototype.addTrack = function(trackId, polyline, colorRed, colorGreen, colorBlue) {
+        this._track = new TrackEntity(trackId, polyline, colorRed, colorGreen, colorBlue);
+
+        this._track.addToMap(this._map);
     };
 
     TrackViewPage.prototype.setColor = function(colorRed, colorGreen, colorBlue) {
-        this._colorRed = colorRed;
-        this._colorGreen = colorGreen;
-        this._colorBlue = colorBlue;
-    };
-
-    TrackViewPage.prototype.init = function() {
-        this._initMap();
-        this._initTrack();
+        this._track.setColor(colorRed, colorGreen, colorBlue);
     };
 
     TrackViewPage.prototype._initMap = function() {
         this._map = new Map('map');
     };
 
-    TrackViewPage.prototype._initTrack = function() {
-        this._track = new TrackEntity();
-        this._track.setPolyline(this._polylineLatLngs, this._colorRed, this._colorGreen, this._colorBlue);
-        this._track.addToMap(this._map);
-
+    TrackViewPage.prototype.focus = function() {
         this._map.fitBounds(this._track.getBounds());
     };
 

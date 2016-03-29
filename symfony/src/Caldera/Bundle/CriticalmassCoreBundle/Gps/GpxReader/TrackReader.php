@@ -34,6 +34,25 @@ class TrackReader extends GpxReader {
         return new \DateTime($this->simpleXml->trk->trkseg->trkpt[$endPoint]->time);
     }
 
+    public function slicePublicCoords()
+    {
+        // array_slice will not work on xml tree, so we do this manually
+
+        $startPoint = intval($this->track->getStartPoint());
+        $endPoint = intval($this->track->getEndPoint());
+
+        $coordArray = [];
+
+        for ($index = $startPoint; $index < $endPoint; ++$index) {
+            $coordArray[$index] = [
+                $this->getLatitudeOfPoint($index),
+                $this->getLongitudeOfPoint($index)
+            ];
+        }
+
+        return $coordArray;
+    }
+
     public function calculateDistance()
     {
         $startPoint = intval($this->track->getStartPoint());

@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TrackPolyline;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
@@ -120,7 +121,7 @@ class TrackController extends AbstractController
 
             $this->addRideEstimate($track, $ride);
 
-            $this->generateSimpleLatLngList($track);
+            $this->generatePolyline($track);
 
             return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', ['trackId' => $track->getId()]));
         }
@@ -317,7 +318,8 @@ class TrackController extends AbstractController
              */
             $track = $form->getData();
 
-            $this->saveLatLngList($track);
+            $this->generatePolyline($track);
+
             $this->updateTrackProperties($track);
             $this->calculateRideEstimates($track);
         }
@@ -428,5 +430,24 @@ class TrackController extends AbstractController
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
+    }
+
+    protected function generatePolyline(Track $track)
+    {
+        /**
+         * @var TrackPolyline $trackPolyline
+         */
+        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+
+        $trackPolyline->loadTrack($track);
+
+        $trackPolyline->execute();
+
+        $track->setPolyline($trackPolyline->getPolyline());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+
     }
 }

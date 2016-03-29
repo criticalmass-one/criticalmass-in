@@ -48,6 +48,10 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
         arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
 
+    caldera.criticalmass.gps.polyline.track:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline\TrackPolyline
+        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+
     caldera.criticalmass.uploadvalidator.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator
         arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']

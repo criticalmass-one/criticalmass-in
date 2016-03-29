@@ -2,7 +2,7 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline'], function() {
     TrackEntity = function (trackId, polylineString, colorRed, colorGreen, colorBlue) {
         this._trackId = trackId;
 
-        this.setColors(colorRed, colorGreen, colorBlue);
+        this.setColor(colorRed, colorGreen, colorBlue);
 
         this._polyline = L.Polyline.fromEncoded(polylineString, { color: this._color });
     };
@@ -26,7 +26,7 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline'], function() {
         }
     };
 
-    TrackEntity.prototype.setColors = function(colorRed, colorGreen, colorBlue) {
+    TrackEntity.prototype.setColor = function(colorRed, colorGreen, colorBlue) {
         this._colorRed = colorRed;
         this._colorGreen = colorGreen;
         this._colorBlue = colorBlue;
