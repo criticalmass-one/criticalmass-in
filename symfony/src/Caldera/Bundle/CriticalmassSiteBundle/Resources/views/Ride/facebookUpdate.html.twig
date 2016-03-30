@@ -1,0 +1,223 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Tourdaten importieren{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Tourdaten importieren
+                </h1>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            Titel:
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.title }}" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="title">
+                            Titel:
+                        </label>
+                        {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            Titel:
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.title }}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Beschreibung:
+                        </label>
+                        <textarea disabled="disabled" class="form-control" rows="10">
+                            {{ ride.description }}
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="description">
+                            Beschreibung:
+                        </label>
+                        {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Beschreibung:
+                        </label>
+                        <textarea disabled="disabled" class="form-control" rows="10">
+                            {{ facebookRide.description }}
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Datum:
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="date">
+                            Datum:
+                        </label>
+                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Datum:
+                        </label>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">
+                        Uhrzeit:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {% if ride.hasTime %}
+                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                            {% else %}
+                            <input type="checkbox" disabled="disabled" class="form-control" />
+                            {% endif %}
+                        </span>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.dateTime|date('H:i', 'Europe/Berlin') }}" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label" for="time">
+                        Uhrzeit:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {{ form_widget(form.hasTime) }}
+                        </span>
+                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label">
+                        Uhrzeit:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {% if facebookRide.hasTime %}
+                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                            {% else %}
+                            <input type="checkbox" disabled="disabled" class="form-control" />
+                            {% endif %}
+                        </span>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.dateTime|date('H:i', 'Europe/Berlin') }}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label" for="location">
+                        Treffpunkt:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {% if ride.hasLocation %}
+                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                            {% else %}
+                            <input type="checkbox" disabled="disabled" class="form-control" />
+                            {% endif %}
+                        </span>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.location }}" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label" for="location">
+                        Treffpunkt:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {{ form_widget(form.hasLocation) }}
+                        </span>
+                        {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label" for="location">
+                        Treffpunkt:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {% if facebookRide.hasLocation %}
+                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                            {% else %}
+                            <input type="checkbox" disabled="disabled" class="form-control" />
+                            {% endif %}
+                        </span>
+                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.location }}" />
+                    </div>
+                </div>
+            </div>
+
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+            {{ form_widget(form._token) }}
+
+            <div class="row margin-top-medium">
+                <div class="btn-group pull-right">
+                    <a class="btn btn-default" href="{{ path(ride) }}">
+                        Abbrechen
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -396,8 +396,27 @@ class RideController extends AbstractController
 
         $facebookRide = $fera->createRideForRide($ride);
 
-        print_r($facebookRide);
+        $form = $this->createForm(
+            new RideType(),
+            $ride,
+            array(
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit',
+                    array(
+                        'citySlug' => $ride->getCity()->getSlug(),
+                        'rideDate' => $ride->getFormattedDate()
+                    )
+                )
+            )
+        );
 
-        return new Response('foo');
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Ride:facebookUpdate.html.twig',
+            [
+                'city' => $ride->getCity(),
+                'ride' => $ride,
+                'facebookRide' => $facebookRide,
+                'form' => $form->createView()
+            ]
+        );
     }
 }
