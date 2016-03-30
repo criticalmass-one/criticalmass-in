@@ -4,6 +4,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Facebook;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Facebook\GraphNodes\GraphEvent;
+use Facebook\GraphNodes\GraphLocation;
+use Facebook\GraphNodes\GraphPage;
 
 class FacebookEventRideApi extends FacebookEventApi
 {
@@ -11,17 +13,33 @@ class FacebookEventRideApi extends FacebookEventApi
     {
         $ride = new Ride();
 
-        $ride->setTitle($event->getName());
-        $ride->setDescription($event->getDescription());
+        $ride
+            ->setTitle($event->getName())
+            ->setDescription($event->getDescription())
+            ->setDateTime($event->getStartTime());
 
+        /**
+         * @var GraphPage $place
+         * @var GraphLocation $location
+         */
         $place = $event->getPlace();
 
         if ($place) {
-            $ride->setHasLocation(true);
-            $ride->setLocation($place);
+            $location = $place->getLocation();
+
+            $address = ($location->getStreet() ? $location->getStreet().', ' : null).$location->getZip().' '.$location->getCity();
+
+            $ride
+                ->setHasLocation(true)
+                ->setLocation($address)
+                ->setLatitude($location->getLatitude())
+                ->setLongitude($location->getLongitude())
+            ;
         } else {
-            $ride->setHasLocation(false);
-            $ride->setLocation(null);
+            $ride
+                ->setHasLocation(false)
+                ->setLocation(null)
+            ;
         }
 
         if (!$event->getIsDateOnly()) {
@@ -29,8 +47,6 @@ class FacebookEventRideApi extends FacebookEventApi
         } else {
             $ride->setHasTime(false);
         }
-
-        $ride->setDateTime($event->getStartTime());
 
         return $ride;
     }
