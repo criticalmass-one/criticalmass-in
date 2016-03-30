@@ -28,7 +28,8 @@
         "friendsofsymfony/elastica-bundle": "^3.1",
         "leaseweb/memcache-bundle": "*",
         "basvandorst/StravaPHP": "1.0.1",
-        "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1"
+        "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
+        "facebook/php-sdk-v4" : "~5.0"
     },
     "scripts": {
         "post-install-cmd": [
