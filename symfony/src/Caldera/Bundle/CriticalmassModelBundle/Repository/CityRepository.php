@@ -29,6 +29,22 @@ class CityRepository extends EntityRepository
         return $query->getResult();
 	}
 
+    public function findCitiesWithFacebook()
+    {
+        $builder = $this->createQueryBuilder('city');
+
+        $builder->select('city');
+
+        $builder->where($builder->expr()->isNotNull('city.facebook'));
+        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
+
+        $builder->orderBy('city.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findCitiesOfRegion(Region $region)
     {
         $builder = $this->createQueryBuilder('city');

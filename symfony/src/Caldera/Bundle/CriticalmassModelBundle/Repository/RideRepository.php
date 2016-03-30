@@ -135,6 +135,26 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findByCityAndMonth(City $city, \DateTime $dateTime)
+    {
+        $startDateTime = new \DateTime($dateTime->format('Y').'-'.$dateTime->format('m').'-01 00:00:00');
+        $endDateTime = new \DateTime($dateTime->format('Y').'-'.$dateTime->format('m').'-'.$dateTime->format('t').' 23:59:59');
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->gte('ride.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lte('ride.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+
+        $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
+
+        $query = $builder->getQuery();
+        
+        return $query->getResult();
+    }
+
     public function findFrontpageRides($order = 'ASC')
     {
         $startDateTime = new \DateTime();
