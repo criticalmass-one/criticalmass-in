@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
@@ -9,6 +10,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -381,5 +383,21 @@ class RideController extends AbstractController
                 'location' => $location
             ]
         );
+    }
+
+    public function facebookUpdateAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        /**
+         * @var FacebookEventRideApi $fera
+         */
+        $fera = $this->get('caldera.criticalmass.facebookapi.eventride');
+
+        $facebookRide = $fera->createRideForRide($ride);
+
+        print_r($facebookRide);
+
+        return new Response('foo');
     }
 }

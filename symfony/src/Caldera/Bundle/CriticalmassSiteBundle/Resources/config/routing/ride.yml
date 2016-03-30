@@ -18,6 +18,10 @@ caldera_criticalmass_desktop_ride_edit:
     pattern:  /{citySlug}/{rideDate}/edit
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:edit }
 
+caldera_criticalmass_ride_facebookupdate:
+    pattern:  /{citySlug}/{rideDate}/facebookupdate
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:facebookUpdate }
+
 caldera_criticalmass_ride_addestimate:
     pattern:  /{citySlug}/{rideDate}/addestimate
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:addestimate }
