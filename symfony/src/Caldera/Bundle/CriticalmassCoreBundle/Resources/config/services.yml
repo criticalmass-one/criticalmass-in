@@ -113,3 +113,7 @@ services:
 
     caldera.criticalmass.metadata:
         class: Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata
+
+    caldera.criticalmass.facebookapi.eventride:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi
+        arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
