@@ -179,15 +179,5 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
         return null;
     }
 
-    protected function getMonthStartDateTime(\DateTime $month)
-    {
-        return new \DateTime($month->format('Y').'-'.$month->format('m').'-01 00:00:00');
-    }
 
-    protected function getMonthEndDateTime(\DateTime $month)
-    {
-        $monthDays = $month->format('t');
-
-        return new \DateTime($month->format('Y').'-'.$month->format('m').'-'.$monthDays.' 23:59:59');
-    }
 }
