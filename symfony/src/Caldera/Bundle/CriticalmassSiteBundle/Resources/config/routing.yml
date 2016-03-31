@@ -70,6 +70,10 @@ caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /
 
+caldera_criticalmass_citymanagement:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/citymanagement.yml"
+    prefix: /
+
 caldera_criticalmass_location:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/location.yml"
     prefix: /

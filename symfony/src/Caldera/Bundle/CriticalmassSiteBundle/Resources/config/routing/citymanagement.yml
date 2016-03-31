@@ -1,0 +1,3 @@
+caldera_criticalmass_desktop_city_edit:
+    pattern:  /{citySlug}/edit
+    defaults: { _controller: CalderaCriticalmassSiteBundle:CityManagement:edit }
