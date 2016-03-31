@@ -53,10 +53,10 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
         foreach ($rides as $ride) {
             $output->writeln('Looking up '.$ride->getFancyTitle());
 
-            $pageId = $this->getEventId($ride);
+            $eventId = $this->getEventId($ride);
 
-            if ($pageId) {
-                $output->writeln('Page ID is: '.$pageId);
+            if ($eventId) {
+                $output->writeln('Event ID is: '.$eventId);
 
                 $properties = $fera->getEventPropertiesForRide($ride);
 
