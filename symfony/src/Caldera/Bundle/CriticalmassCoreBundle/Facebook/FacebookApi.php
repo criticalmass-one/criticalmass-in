@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Facebook;
 
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Facebook\Facebook;
 
 abstract class FacebookApi
@@ -31,6 +32,24 @@ abstract class FacebookApi
                 'default_access_token' => $facebookDefaultToken
             ]
         );
+
+    }
+
+    protected function getRideEventId(Ride $ride)
+    {
+        $facebook = $ride->getFacebook();
+
+        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
+            $facebook = rtrim($facebook, "/");
+
+            $parts = explode('/', $facebook);
+
+            $eventId = array_pop($parts);
+
+            return $eventId;
+        }
+
+        return null;
     }
 
     protected function getCityPageId(City $city)

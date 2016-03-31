@@ -55,4 +55,26 @@ class FacebookEventApi extends FacebookApi
 
         return $event;
     }
+
+    protected function queryEvent($eventId, array $fields = [])
+    {
+        $fieldString = implode(',', $fields);
+
+        try {
+            $response = $this->facebook->get('/'.$eventId.'?fields='.$fieldString);
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        try {
+            /**
+             * @var GraphEvent $event
+             */
+            $event = $response->getGraphEvent();
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        return $event;
+    }
 }

@@ -444,7 +444,6 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-
     public function findRidesByLocation(Location $location)
     {
         $builder = $this->createQueryBuilder('ride');
@@ -474,5 +473,48 @@ class RideRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
-}
 
+    public function findRidesWithFacebook()
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->where($builder->expr()->isNotNull('ride.facebook'));
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $builder->orderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findRidesWithFacebookInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
+    {
+        if (!$startDateTime) {
+            $startDateTime = new \DateTime();
+        }
+
+        if (!$endDateTime) {
+            $endDate = new \DateTime();
+            $dayInterval = new \DateInterval('P1M');
+            $endDateTime = $endDate->add($dayInterval);
+        }
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->gt('ride.dateTime', '\''.$startDateTime->format('Y-m-d').'\''));
+        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$endDateTime->format('Y-m-d').'\''));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+        $builder->andWhere($builder->expr()->isNotNull('ride.facebook'));
+
+        $builder->orderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+}
