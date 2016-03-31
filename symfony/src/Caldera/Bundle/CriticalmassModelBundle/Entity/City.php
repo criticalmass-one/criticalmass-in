@@ -1245,4 +1245,42 @@ class City implements BoardInterface
     {
         ++$this->threadNumber;
     }
+
+    /**
+     * Checks if this city has already a saved ride for the given month.
+     *
+     * @param \DateTime $dateTime
+     * @return bool
+     */
+    public function hasRideInMonth(\DateTime $dateTime)
+    {
+        foreach ($this->rides as $ride)
+        {
+            if ($ride->getDateTime()->format('Y-m') == $dateTime->format('Y-m'))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if this city has already a saved ride for the given day.
+     *
+     * @param \DateTime $dateTime
+     * @return bool
+     */
+    public function hasRideAtMonthDay(\DateTime $dateTime)
+    {
+        foreach ($this->rides as $ride)
+        {
+            if ($ride->getDateTime()->format('Y-m-d') == $dateTime->format('Y-m-d'))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
