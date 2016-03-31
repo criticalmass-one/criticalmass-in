@@ -14,6 +14,8 @@ class LocationRepository extends EntityRepository
 
         $builder->select('location');
 
+        $builder->where($builder->expr()->eq('location.city', $city->getId()));
+
         $builder->orderBy('location.title', 'ASC');
 
         $query = $builder->getQuery();
