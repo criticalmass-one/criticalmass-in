@@ -92,11 +92,9 @@ class FacebookEventRideApi extends FacebookEventApi
         if ($place) {
             $location = $place->getLocation();
 
-            $address = ($location->getStreet() ? $location->getStreet().', ' : null).$location->getZip().' '.$location->getCity();
-
             $ride
                 ->setHasLocation(true)
-                ->setLocation($address)
+                ->setLocation($place->getName())
                 ->setLatitude($location->getLatitude())
                 ->setLongitude($location->getLongitude())
             ;
