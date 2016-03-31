@@ -24,7 +24,8 @@ class FacebookEventRideApi extends FacebookEventApi
             'noreply_count',
             'start_time',
             'end_time',
-            'updated_time'
+            'updated_time',
+            'place'
         ];
 
         /**
@@ -46,8 +47,26 @@ class FacebookEventRideApi extends FacebookEventApi
                 ->setNumberDeclined($event->getField('declined_count'))
                 ->setNumberInterested($event->getField('interested_count'))
                 ->setNumberMaybe($event->getField('maybe_count'))
-                ->setNumberNoreply($event->getField('noreply_count'))
-            ;
+                ->setNumberNoreply($event->getField('noreply_count'));
+
+            /**
+             * @var GraphPage $place
+             */
+            if ($place = $event->getPlace()) {
+                $properties
+                    ->setLocation($place->getName());
+            }
+
+            /**
+             * @var GraphLocation $location
+             */
+            if ($place and $location = $place->getLocation()) {
+                $properties
+                    ->setLocationAddress($location->getStreet() . ', ' . $location->getZip() . ' ' . $location->getCity() . ', ' . $location->getCountry())
+                    ->setLatitude($location->getLongitude())
+                    ->setLongitude($location->getLongitude())
+                ;
+            }
 
             return $properties;
         }
