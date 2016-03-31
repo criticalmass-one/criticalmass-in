@@ -55,6 +55,10 @@ class FacebookEventRideApi extends FacebookEventApi
     {
         $event = $this->getEventForRide($ride);
 
-        return $this->createRideFromEvent($event);
+        if ($event) {
+            return $this->createRideFromEvent($event);
+        }
+
+        return null;
     }
 }

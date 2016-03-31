@@ -48,6 +48,8 @@ class FacebookEventApi extends FacebookApi
         /**
          * @var GraphEvent $event
          */
+        $event = null;
+
         foreach ($eventEdge as $event) {
         }
 
