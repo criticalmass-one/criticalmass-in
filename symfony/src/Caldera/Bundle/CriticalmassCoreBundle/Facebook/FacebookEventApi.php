@@ -10,6 +10,20 @@ use Facebook\GraphNodes\GraphEvent;
 
 class FacebookEventApi extends FacebookApi
 {
+    protected $standardFields = [
+        'name',
+        'description',
+        'attending_count',
+        'maybe_count',
+        'declined_count',
+        'interested_count',
+        'noreply_count',
+        'start_time',
+        'end_time',
+        'updated_time',
+        'place'
+    ];
+
     public function getEventForCityMonth(City $city, \DateTime $month)
     {
         $pageId = $this->getCityPageId($city);
@@ -21,6 +35,14 @@ class FacebookEventApi extends FacebookApi
 
     public function getEventForRide(Ride $ride)
     {
+        if ($ride->getFacebook()) {
+            $eventId = $this->getRideEventId($ride);
+
+            $event = $this->queryEvent($eventId, $this->standardFields);
+
+            return $event;
+        }
+
         $pageId = $this->getCityPageId($ride->getCity());
         $since = DateTimeUtils::getMonthStartDateTime($ride->getDateTime())->format('U');
         $until = DateTimeUtils::getMonthEndDateTime($ride->getDateTime())->format('U');

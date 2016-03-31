@@ -14,24 +14,10 @@ class FacebookEventRideApi extends FacebookEventApi
     {
         $eventId = $this->getRideEventId($ride);
 
-        $fields = [
-            'name',
-            'description',
-            'attending_count',
-            'maybe_count',
-            'declined_count',
-            'interested_count',
-            'noreply_count',
-            'start_time',
-            'end_time',
-            'updated_time',
-            'place'
-        ];
-
         /**
          * @var GraphEvent $event
          */
-        $event = $this->queryEvent($eventId, $fields);
+        $event = $this->queryEvent($eventId, $this->standardFields);
 
         if ($event) {
             $properties = new FacebookRideProperties();
@@ -94,10 +80,13 @@ class FacebookEventRideApi extends FacebookEventApi
 
             $ride
                 ->setHasLocation(true)
-                ->setLocation($place->getName())
-                ->setLatitude($location->getLatitude())
-                ->setLongitude($location->getLongitude())
-            ;
+                ->setLocation($place->getName());
+
+            if ($location) {
+                $ride
+                    ->setLatitude($location->getLatitude())
+                    ->setLongitude($location->getLongitude());
+            }
         } else {
             $ride
                 ->setHasLocation(false)
