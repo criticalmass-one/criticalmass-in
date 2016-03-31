@@ -151,7 +151,7 @@ class RideRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
 
         $query = $builder->getQuery();
-        
+
         return $query->getResult();
     }
 
@@ -459,6 +459,20 @@ class RideRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    public function countRidesByCity(City $city)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('COUNT(ride)');
+
+        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
     }
 }
 

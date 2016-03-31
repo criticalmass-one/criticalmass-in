@@ -121,20 +121,18 @@ class CityRepository extends EntityRepository
 
     public function findCities()
     {
-        $expr = Criteria::expr();
-        $criteria = Criteria::create();
+        $builder = $this->createQueryBuilder('city');
 
-        $criteria->where(
-            $expr->andX(
-                $expr->eq('enabled', true),
-                $expr->eq('isArchived', false)
+        $builder->select('city');
 
-            )
-        );
+        $builder->where($builder->expr()->eq('city.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
-        $criteria->orderBy(array('city' => 'ASC'));
+        $builder->orderBy('city.city', 'ASC');
 
-        return $this->matching($criteria);
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 
     public function findCitiesWithBoard()

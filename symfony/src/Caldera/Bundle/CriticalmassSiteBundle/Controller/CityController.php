@@ -16,12 +16,29 @@ class CityController extends AbstractController
 {
     public function listAction()
     {
+        $this
+            ->getMetadata()
+            ->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
+
         $cities = $this->getCityRepository()->findCities();
 
-        $this->getMetadata()
-            ->setDescription('Liste mit allen weltweiten Critical-Mass-Radtouren.');
+        $result = [];
 
-        return $this->render('CalderaCriticalmassSiteBundle:City:list.html.twig', array('cities' => $cities));
+        /**
+         * @var City $city
+         */
+        foreach ($cities as $city) {
+            $result[$city->getSlug()]['city'] = $city;
+            $result[$city->getSlug()]['currentRide'] = $this->getRideRepository()->findCurrentRideForCity($city);
+            $result[$city->getSlug()]['countRides'] = $this->getRideRepository()->countRidesByCity($city);
+        }
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:City:cityList.html.twig',
+            [
+                'result' => $result
+            ]
+        );
     }
 
     protected function findNearCities(City $city)
