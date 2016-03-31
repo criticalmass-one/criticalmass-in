@@ -253,7 +253,7 @@ class PhotoRepository extends EntityRepository
         }
 
         if ($city) {
-            $builder->andWhere($builder->expr()->lte('photo.city', $city->getId()));
+            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
         }
 
         $builder->addOrderBy('rand');
