@@ -16,7 +16,7 @@ class FacebookEventApi extends FacebookApi
         $since = DateTimeUtils::getMonthStartDateTime($month)->format('U');
         $until = DateTimeUtils::getMonthEndDateTime($month)->format('U');
 
-        return $this->queryEvent($pageId, $since, $until);
+        return $this->queryEvents($pageId, $since, $until);
     }
 
     public function getEventForRide(Ride $ride)
@@ -25,10 +25,10 @@ class FacebookEventApi extends FacebookApi
         $since = DateTimeUtils::getMonthStartDateTime($ride->getDateTime())->format('U');
         $until = DateTimeUtils::getMonthEndDateTime($ride->getDateTime())->format('U');
 
-        return $this->queryEvent($pageId, $since, $until);
+        return $this->queryEvents($pageId, $since, $until);
     }
 
-    protected function queryEvent($pageId, $since, $until)
+    protected function queryEvents($pageId, $since, $until)
     {
         try {
             $response = $this->facebook->get('/' . $pageId . '/events?since=' . $since . '&until=' . $until);
