@@ -49,14 +49,26 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="btn-group pull-right">
-                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-cogs"></i>
-                                    Stadt editieren
-                                </a>
-                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
-                                    <i class="fa fa-plus"></i>
-                                    Tour hinzufügen
-                                </a>
+                                    Optionen
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                                            <i class="fa fa-cogs"></i>
+                                            Stadt editieren
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                                            <i class="fa fa-plus"></i>
+                                            Tour hinzufügen
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
