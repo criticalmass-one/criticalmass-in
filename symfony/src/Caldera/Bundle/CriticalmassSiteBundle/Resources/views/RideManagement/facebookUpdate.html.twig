@@ -22,6 +22,7 @@
             </div>
         </div>
 
+        {% if facebookRide %}
         <div class="row">
             <div class="col-md-4">
                 <h2>
@@ -243,5 +244,23 @@
                 </div>
             </div>
         </form>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <strong>Hoppla!</strong>
+                    Leider konnte zu dieser Tour keine entsprechende Veranstaltung auf facebook ermittelt werden. Bitte überprüfe die <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.slug }) }}">Einstellungen von {{ city.city }}</a>, ob dort die Adresse einer Seite auf facebook angegeben wurde und ob auf der Seite für {{ ride.dateTime|date('F Y') }} überhaupt schon eine Tour erstellt worden ist.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-default pull-right" href="{{ path(ride) }}">
+                    Zurück
+                </a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
