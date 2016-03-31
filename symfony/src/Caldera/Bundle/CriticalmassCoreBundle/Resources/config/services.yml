@@ -117,3 +117,7 @@ services:
     caldera.criticalmass.facebookapi.eventride:
         class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi
         arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
+
+    caldera.criticalmass.facebookapi.citypageproperties:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi
+        arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
