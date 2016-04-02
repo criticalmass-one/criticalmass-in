@@ -208,10 +208,14 @@
 
                     <div id="timelapse-start">
                         <div class="text-center">
+                            {% if tracks|length %}
                             <button id="timelapse-start-button" class="btn btn-success">
                                 <i class="fa fa-bicycle"></i>
                                 Timelapse starten
                             </button>
+                            {% else %}
+                            Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
+                            {% endif %}
                         </div>
                     </div>
 
