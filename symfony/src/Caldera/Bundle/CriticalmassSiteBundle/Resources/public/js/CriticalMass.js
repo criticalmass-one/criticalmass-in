@@ -85,7 +85,6 @@ require.config({
         "leaflet-snap": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.snap",
         "leaflet-hash": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-hash",
         "leaflet-polyline": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-polyline",
-        "leaflet-playback": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-playback",
         "leaflet-extramarkers": "/bundles/calderacriticalmasssite/js/external/leaflet/ExtraMarkers",
         "leaflet-markercluster": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-markercluster",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
