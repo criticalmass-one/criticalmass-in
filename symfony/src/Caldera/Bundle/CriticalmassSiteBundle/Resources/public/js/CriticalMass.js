@@ -63,6 +63,7 @@ require.config({
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
+        "CityStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/CityStatisticPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "AutoMap": "/bundles/calderacriticalmasssite/js/modules/map/AutoMap",
         "Geocoding": "/bundles/calderacriticalmasssite/js/modules/Geocoding",
@@ -94,7 +95,9 @@ require.config({
         "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound",
         "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min",
         "dateformat": "/bundles/calderacriticalmasssite/js/external/dateformat/dateformat",
-        "socketio": "https://cdn.socket.io/socket.io-1.4.5"
+        "socketio": "https://cdn.socket.io/socket.io-1.4.5",
+        "chartjs": "/bundles/calderacriticalmasssite/js/external/chartjs/chartjs"
+
     },
     shim: {
         'leaflet-locate': {

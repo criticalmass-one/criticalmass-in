@@ -1,107 +1,227 @@
-define(['Map', 'bootstrap-slider'], function() {
-    TrackRangePage = function(context, options) {
-
+define(['chartjs'], function() {
+    CityStatisticPage = function(context, options) {
     };
 
-    TrackRangePage.prototype._map = null;
-    TrackRangePage.prototype._startPoint = null;
-    TrackRangePage.prototype._endPoint = null;
-    TrackRangePage.prototype._gapWidth = null;
-    TrackRangePage.prototype._track = null;
-    TrackRangePage.prototype._polylineLatLngs = null;
-    TrackRangePage.prototype._colorRed = null;
-    TrackRangePage.prototype._colorGreen = null;
-    TrackRangePage.prototype._colorBlue = null;
+    CityStatisticPage.prototype._rideDates = [];
+    CityStatisticPage.prototype._participantsData = [];
+    CityStatisticPage.prototype._durationData = [];
+    CityStatisticPage.prototype._distanceData = [];
 
-    TrackRangePage.prototype._loadStyles = function() {
-        var $link = $('<link>', {
-            rel: 'stylesheet',
-            type: 'text/css',
-            href: '/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css'
-        });
+    CityStatisticPage.prototype._participantsChart = null;
 
-        $link.appendTo('head');
+    CityStatisticPage.prototype.addRideData = function(rideDate, participants, duration, distance) {
+        this._rideDates.push(rideDate);
+        this._participantsData.push(participants);
+        this._durationData.push(duration);
+        this._distanceData.push(distance);
     };
 
-    TrackRangePage.prototype.setStartPoint = function(startPoint) {
-        this._startPoint = startPoint;
-    };
+    CityStatisticPage.prototype.createParticipantsChart = function($element) {
+        var data = {
+            labels: this._rideDates,
+            datasets: [
+                {
+                    label: "Teilnehmer",
 
-    TrackRangePage.prototype.setEndPoint = function(endPoint) {
-        this._endPoint = endPoint;
-    };
+                    // Boolean - if true fill the area under the line
+                    fill: false,
 
-    TrackRangePage.prototype.setGapWidth = function(gapWidth) {
-        this._gapWidth = gapWidth;
-    };
+                    // String - the color to fill the area under the line with if fill is true
+                    backgroundColor: "rgba(220,220,220,0.2)",
 
-    TrackRangePage.prototype.setPolylineLatLngs = function(polylineLatLngs) {
-        this._polylineLatLngs = polylineLatLngs;
-    };
+                    // The properties below allow an array to be specified to change the value of the item at the given index
 
-    TrackRangePage.prototype.setColor = function(colorRed, colorGreen, colorBlue) {
-        this._colorRed = colorRed;
-        this._colorGreen = colorGreen;
-        this._colorBlue = colorBlue;
-    };
+                    // String or array - Line color
+                    borderColor: "rgba(0,0,255,1)",
 
-    TrackRangePage.prototype.init = function() {
-        this._loadStyles();
-        this._initMap();
-        this._initControl();
-        this._initTrack();
-        this._initSlider();
+                    // String - cap style of the line. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap
+                    borderCapStyle: 'butt',
 
-        this._map.fitBounds(this._polyline.getBounds());
-    };
+                    // Array - Length and spacing of dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
+                    borderDash: [],
 
-    TrackRangePage.prototype._initTrack = function() {
-        this._polyline = L.polyline(this._polylineLatLngs, { color: 'rgb(' + this._colorRed + ', ' + this._colorGreen + ', ' + this._colorBlue + ')' });
+                    // Number - Offset for line dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset
+                    borderDashOffset: 0.0,
 
-        this._polyline.addTo(this._map.map);
-    };
+                    // String - line join style. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineJoin
+                    borderJoinStyle: 'miter',
 
-    TrackRangePage.prototype._initMap = function() {
-        this._map = new Map('map');
-    };
+                    // String or array - Point stroke color
+                    pointBorderColor: "rgba(220,220,220,1)",
 
-    TrackRangePage.prototype._initControl = function() {
+                    // String or array - Point fill color
+                    pointBackgroundColor: "#fff",
 
-    };
+                    // Number or array - Stroke width of point border
+                    pointBorderWidth: 1,
 
-    TrackRangePage.prototype._initSlider = function() {
-        var sliderOptions = {
-            id: "rangeSlider",
-            min: 0,
-            max: this._polylineLatLngs.length,
-            range: true,
-            value: [this._startPoint / this._gapWidth, this._endPoint / this._gapWidth ],
-            tooltip: 'hide'
+                    // Number or array - Radius of point when hovered
+                    pointHoverRadius: 5,
+
+                    // String or array - point background color when hovered
+                    pointHoverBackgroundColor: "rgba(220,220,220,1)",
+
+                    // Point border color when hovered
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+
+                    // Number or array - border width of point when hovered
+                    pointHoverBorderWidth: 2,
+
+                    // Tension - bezier curve tension of the line. Set to 0 to draw straight Wlines connecting points
+                    tension: 0.1,
+
+                    // The actual data
+                    data: this._participantsData,
+
+                    // String - If specified, binds the dataset to a certain y-axis. If not specified, the first y-axis is used. First id is y-axis-0
+                    yAxisID: "y-axis-0",
+                }
+            ]
         };
 
-        $slider = $('#slider');
-        $slider.slider(sliderOptions);
-
-        var that = this;
-
-        $slider.on("slide", function(slideEvt) {
-            var gapWidth = that._gapWidth;
-            var endValue = slideEvt.value.pop();
-            var beginValue = slideEvt.value.pop();
-
-            $('#form_startPoint').val(beginValue * gapWidth);
-            $('#form_endPoint').val(endValue * gapWidth);
-
-            var newLatLngs = that._polylineLatLngs.slice();
-
-            endValue -= beginValue;
-
-            newLatLngs.splice(0, beginValue);
-            newLatLngs.splice(endValue, newLatLngs.length - endValue);
-
-            that._polyline.setLatLngs(newLatLngs);
+        this._participantsChart = new Chart($element, {
+            type: 'line',
+            data: data
         });
     };
 
-    return TrackRangePage;
+    CityStatisticPage.prototype.createDistanceChart = function($element) {
+        var data = {
+            labels: this._rideDates,
+            datasets: [
+                {
+                    label: "Tourlänge",
+
+                    // Boolean - if true fill the area under the line
+                    fill: false,
+
+                    // String - the color to fill the area under the line with if fill is true
+                    backgroundColor: "rgba(220,220,220,0.2)",
+
+                    // The properties below allow an array to be specified to change the value of the item at the given index
+
+                    // String or array - Line color
+                    borderColor: "rgba(0,0,255,1)",
+
+                    // String - cap style of the line. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap
+                    borderCapStyle: 'butt',
+
+                    // Array - Length and spacing of dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
+                    borderDash: [],
+
+                    // Number - Offset for line dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset
+                    borderDashOffset: 0.0,
+
+                    // String - line join style. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineJoin
+                    borderJoinStyle: 'miter',
+
+                    // String or array - Point stroke color
+                    pointBorderColor: "rgba(220,220,220,1)",
+
+                    // String or array - Point fill color
+                    pointBackgroundColor: "#fff",
+
+                    // Number or array - Stroke width of point border
+                    pointBorderWidth: 1,
+
+                    // Number or array - Radius of point when hovered
+                    pointHoverRadius: 5,
+
+                    // String or array - point background color when hovered
+                    pointHoverBackgroundColor: "rgba(220,220,220,1)",
+
+                    // Point border color when hovered
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+
+                    // Number or array - border width of point when hovered
+                    pointHoverBorderWidth: 2,
+
+                    // Tension - bezier curve tension of the line. Set to 0 to draw straight Wlines connecting points
+                    tension: 0.1,
+
+                    // The actual data
+                    data: this._distanceData,
+
+                    // String - If specified, binds the dataset to a certain y-axis. If not specified, the first y-axis is used. First id is y-axis-0
+                    yAxisID: "y-axis-0",
+                }
+            ]
+        };
+
+        this._participantsChart = new Chart($element, {
+            type: 'line',
+            data: data
+        });
+    };
+
+    CityStatisticPage.prototype.createDurationChart = function($element) {
+        var data = {
+            labels: this._rideDates,
+            datasets: [
+                {
+                    label: "Fahrtdauer",
+
+                    // Boolean - if true fill the area under the line
+                    fill: false,
+
+                    // String - the color to fill the area under the line with if fill is true
+                    backgroundColor: "rgba(220,220,220,0.2)",
+
+                    // The properties below allow an array to be specified to change the value of the item at the given index
+
+                    // String or array - Line color
+                    borderColor: "rgba(0,0,255,1)",
+
+                    // String - cap style of the line. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap
+                    borderCapStyle: 'butt',
+
+                    // Array - Length and spacing of dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
+                    borderDash: [],
+
+                    // Number - Offset for line dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset
+                    borderDashOffset: 0.0,
+
+                    // String - line join style. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineJoin
+                    borderJoinStyle: 'miter',
+
+                    // String or array - Point stroke color
+                    pointBorderColor: "rgba(220,220,220,1)",
+
+                    // String or array - Point fill color
+                    pointBackgroundColor: "#fff",
+
+                    // Number or array - Stroke width of point border
+                    pointBorderWidth: 1,
+
+                    // Number or array - Radius of point when hovered
+                    pointHoverRadius: 5,
+
+                    // String or array - point background color when hovered
+                    pointHoverBackgroundColor: "rgba(220,220,220,1)",
+
+                    // Point border color when hovered
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+
+                    // Number or array - border width of point when hovered
+                    pointHoverBorderWidth: 2,
+
+                    // Tension - bezier curve tension of the line. Set to 0 to draw straight Wlines connecting points
+                    tension: 0.1,
+
+                    // The actual data
+                    data: this._durationData,
+
+                    // String - If specified, binds the dataset to a certain y-axis. If not specified, the first y-axis is used. First id is y-axis-0
+                    yAxisID: "y-axis-0",
+                }
+            ]
+        };
+
+        this._participantsChart = new Chart($element, {
+            type: 'line',
+            data: data
+        });
+    };
+
+    return CityStatisticPage;
 });
