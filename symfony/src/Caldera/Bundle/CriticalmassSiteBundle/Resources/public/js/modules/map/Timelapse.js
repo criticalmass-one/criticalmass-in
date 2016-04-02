@@ -251,6 +251,12 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
     };
 
     Timelapse.prototype.stepForward = function() {
+        if (this._currentDateTime > this._endDateTime) {
+            this.stop();
+
+            return;
+        }
+
         this._currentDateTime = new Date(this._currentDateTime.getTime() + this._options.timeStep);
 
         this._timeSlider.slider('setValue', this._currentDateTime.getTime(), false, false);
