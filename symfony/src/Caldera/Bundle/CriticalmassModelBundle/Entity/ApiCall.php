@@ -25,7 +25,7 @@ class ApiCall
     protected $app;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=255)
      */
     protected $referer;
 
