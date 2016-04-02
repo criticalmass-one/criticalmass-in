@@ -30,7 +30,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
     };
 
     Timelapse.prototype._loadTrackLatLngs = function(trackId) {
-        var trackUrl = 'http://www.criticalmass.cm/app_dev.php/berlin/2015-12-25/timelapse/load/' + trackId;
+        var trackUrl = 'http://criticalmass.cm/app_dev.php/berlin/2015-12-25/timelapse/load/' + trackId;
 
         var that = this;
 
@@ -147,7 +147,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         marker.setColorBlue(track.getColorBlue());
 
         marker.addToMap(this._map);
-
         this._marker[trackId] = marker;
     };
 
@@ -225,7 +224,13 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
             var prevLatLng = this._findPreviousLatLngForDateTime(trackId, this._currentDateTime);
 
             if (prevLatLng) {
-                this._marker[trackId].setLatLng(prevLatLng);
+                var marker = this._marker[trackId];
+
+                if (!marker.isMapped()) {
+                    marker.addToMap(this._map);
+                }
+
+                marker.setLatLng(prevLatLng);
             } else {
                 this._marker[trackId].removeFromMap(this._map);
             }
@@ -238,11 +243,18 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         this._timeSlider.slider('setValue', this._currentDateTime.getTime(), false, false);
 
         this._updateClocks();
+
         for (var trackId in this._trackLatLngs) {
             var nextLatLng = this._findNextLatLngForDateTime(trackId, this._currentDateTime);
 
             if (nextLatLng) {
-                this._marker[trackId].setLatLng(nextLatLng);
+                var marker = this._marker[trackId];
+
+                if (!marker.isMapped()) {
+                    marker.addToMap(this._map);
+                }
+
+                marker.setLatLng(nextLatLng);
             } else {
                 this._marker[trackId].removeFromMap(this._map);
             }

@@ -61,6 +61,8 @@ define(['Marker'], function() {
 
         this._map = map;
         this._marker.addTo(this._map.map);
+
+        this._isMapped = true;
     };
 
     return PositionMarker;
