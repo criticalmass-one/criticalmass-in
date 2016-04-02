@@ -41,6 +41,21 @@ class CityController extends AbstractController
         );
     }
 
+    public function missingStatsAction($citySlug)
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $rides = $this->getRideRepository()->findRidesWithoutStatisticsForCity($city);
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:City:missingStats.html.twig',
+            [
+                'city' => $city,
+                'rides' => $rides
+            ]
+        );
+    }
+
     protected function findNearCities(City $city)
     {
         $finder = $this->container->get('fos_elastica.finder.criticalmass.city');

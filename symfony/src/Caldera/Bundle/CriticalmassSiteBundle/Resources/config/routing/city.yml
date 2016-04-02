@@ -18,6 +18,10 @@ caldera_criticalmass_desktop_city_listrides:
     pattern:  /{citySlug}/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:listRides }
 
+caldera_criticalmass_desktop_city_missingstats:
+    pattern:  /{citySlug}/missingstats
+    defaults: { _controller: CalderaCriticalmassSiteBundle:City:missingStats }
+
 caldera_criticalmass_desktop_city_listgalleries:
     pattern:  /{citySlug}/galleries
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:listGalleries }

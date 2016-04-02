@@ -1,0 +1,78 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Städte-Übersicht{% endblock %}
+
+{% block breadcrumb %}
+        <li class="active">Städteliste</li>
+{% endblock %}
+    
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Touren aus {{ city.city }} mit fehlenden Statistiken
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Datum
+                            </th>
+
+                            <th>
+                                Titel
+                            </th>
+
+                            <th>
+                                Teilnehmer
+                            </th>
+
+                            <th>
+                                Dauer
+                            </th>
+
+                            <th>
+                                Distanz
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rides %}
+                        <tr>
+                            <td>
+                                <a href="{{ path(ride) }}">
+                                    {{ ride.getFormattedDate() }}
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="{{ path(ride) }}">
+                                    {{ ride.getFancyTitle() }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ ride.estimatedParticipants }}
+                            </td>
+
+                            <td>
+                                {{ ride.estimatedDuration }}
+                            </td>
+
+                            <td>
+                                {{ ride.estimatedDistance }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

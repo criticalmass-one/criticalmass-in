@@ -517,4 +517,30 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findRidesWithoutStatisticsForCity($city, $pastOnly = true)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->orX(
+            $builder->expr()->isNull('ride.estimatedParticipants'),
+            $builder->expr()->isNull('ride.estimatedDuration'),
+            $builder->expr()->isNull('ride.estimatedDistance')
+        ));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+        $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
+
+        if ($pastOnly) {
+            $dateTime = new \DateTime();
+
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$dateTime->format('Y-m-d H:i:s').'\''));
+        }
+        $builder->orderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
