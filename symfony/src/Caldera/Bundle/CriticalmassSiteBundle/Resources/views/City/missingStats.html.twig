@@ -1,9 +1,23 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Städte-Übersicht{% endblock %}
+{% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
-        <li class="active">Städteliste</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Touren mit fehlenden Statistiken
+    </li>
 {% endblock %}
     
 {% block content %}
@@ -13,6 +27,10 @@
                 <h1>
                     Touren aus {{ city.city }} mit fehlenden Statistiken
                 </h1>
+
+                <p class="lead">
+                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+                </p>
             </div>
         </div>
 
@@ -58,15 +76,15 @@
                             </td>
 
                             <td>
-                                {{ ride.estimatedParticipants }}
+                                {{ ride.estimatedParticipants|default('fehlt') }}
                             </td>
 
                             <td>
-                                {{ ride.estimatedDuration }}
+                                {{ ride.estimatedDuration|default('fehlt') }}
                             </td>
 
                             <td>
-                                {{ ride.estimatedDistance }}
+                                {{ ride.estimatedDistance|default('fehlt') }}
                             </td>
                         </tr>
                         {% endfor %}
