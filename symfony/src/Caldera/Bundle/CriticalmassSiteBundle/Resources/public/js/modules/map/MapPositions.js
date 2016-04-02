@@ -131,12 +131,12 @@ define(['leaflet', 'PositionEntity'], function(L) {
     };
 
     MapPositions.prototype.countPositions = function() {
-	return this._container.countEntities();
-    }
+	    return this._container.countEntities();
+    };
 
     MapPositions.prototype.getBounds = function() {
-	return this._container.getBounds();
-    }
+	    return this._container.getBounds();
+    };
 
     return MapPositions;
 });

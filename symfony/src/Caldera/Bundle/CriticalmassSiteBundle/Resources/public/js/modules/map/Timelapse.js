@@ -64,7 +64,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
                 }
             }
         });
-
     };
 
     Timelapse.prototype.init = function() {
