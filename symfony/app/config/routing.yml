@@ -20,10 +20,8 @@ sonata_user_change_password:
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
-caldera:
-    resource: "@CalderaBundle/Resources/config/routing.yml"
-    host: "%domain.caldera%"
-    prefix:   /
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 caldera_criticalmass:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing.yml"
