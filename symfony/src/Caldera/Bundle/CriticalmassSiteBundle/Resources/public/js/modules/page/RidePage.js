@@ -1,7 +1,7 @@
 define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
 
     RidePage = function(context, options) {
-        this._options = options;
+        this.options = options;
 
         this._initMap();
         this._initContainers();
@@ -107,8 +107,8 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tim
 
     RidePage.prototype._initPhotoViewModal = function() {
         var options = {
-            photoViewPageUrl: this._options.photoViewPageUrl,
-            photoCounterUrl: this._options.photoCounterUrl
+            photoViewPageUrl: this.options.photoViewPageUrl,
+            photoCounterUrl: this.options.photoCounterUrl
         };
 
         this._photoViewModal = new PhotoViewModal(null, options);

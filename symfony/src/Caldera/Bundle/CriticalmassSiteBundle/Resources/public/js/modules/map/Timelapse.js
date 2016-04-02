@@ -41,7 +41,10 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
     };
 
     Timelapse.prototype._loadTrackLatLngs = function(trackId) {
-        var trackUrl = 'http://criticalmass.cm/app_dev.php/berlin/2015-12-25/timelapse/load/' + trackId;
+        var citySlug = this._parentPage.options.citySlug;
+        var rideDate = this._parentPage.options.rideDate;
+
+        var trackUrl = Routing.generate('caldera_criticalmass_timelapse_load', { citySlug: citySlug, rideDate: rideDate, trackId: trackId });
 
         var that = this;
 
@@ -154,7 +157,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         var track = this._trackContainer.getEntity(trackId);
 
         track.setCurrentLatLng(firstLatLng);
-        
+
         var marker = track.getMarker();
         marker.addToMap(this._map);
 

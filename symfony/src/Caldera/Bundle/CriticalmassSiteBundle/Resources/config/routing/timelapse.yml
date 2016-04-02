@@ -5,3 +5,5 @@ caldera_criticalmass_timelapse_homepage:
 caldera_criticalmass_timelapse_load:
     path:     /{citySlug}/{rideDate}/timelapse/load/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Timelapse:loadtrack }
+    options:
+        expose: true
