@@ -2,7 +2,12 @@ define(['Marker'], function() {
     PhotoMarker = function (latLng, draggable) {
         this._latLng = latLng;
         this._draggable = draggable;
+    };
 
+    PhotoMarker.prototype = new Marker();
+    PhotoMarker.prototype.constructor = PhotoMarker;
+
+    PhotoMarker.prototype._initIcon = function() {
         this._icon = L.icon({
             iconUrl: this._baseIconUrl + 'marker-yellow.png',
             iconRetinaUrl: this._baseIconUrl + 'marker-yellow-2x.png',
@@ -14,9 +19,6 @@ define(['Marker'], function() {
             shadowAnchor: [13, 41]
         });
     };
-
-    PhotoMarker.prototype = new Marker();
-    PhotoMarker.prototype.constructor = PhotoMarker;
-
+    
     return PhotoMarker;
 });

@@ -11,6 +11,10 @@ define(['leaflet'], function() {
     Marker.prototype._baseIconUrl = '/bundles/calderacriticalmasssite/images/marker/';
     Marker.prototype._isMapped = false;
 
+    Marker.prototype._initIcon = function() {
+
+    };
+
     Marker.prototype.getLatLng = function() {
         return this._marker.getLatLng();
     };
@@ -26,6 +30,8 @@ define(['leaflet'], function() {
     };
 
     Marker.prototype.addToMap = function (map) {
+        this._initIcon();
+
         this._marker = L.marker(this._latLng,
         {
             icon: this._icon,
