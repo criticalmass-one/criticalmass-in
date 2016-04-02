@@ -32,6 +32,32 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tra
             this._timelapse = new Timelapse(this);
             this._timelapse.init();
         }
+
+        this._timelapse.setInitCallbackFunction(this._finishTimelapseInit);
+        this._timelapse.setLoadCallbackFunction(this._timelapseTrackLoadCallback);
+
+        var that = this;
+
+        $('button#timelapse-start-button').on('click', function() {
+            that._startTimelapseInit();
+        });
+    };
+
+    RidePage.prototype._startTimelapseInit = function() {
+        $('#timelapse-start').hide();
+        $('#timelapse-loader').show();
+        $('#timelapse-track-total').html(this._trackContainer.countEntities());
+
+        this._timelapse.startInit();
+    };
+
+    RidePage.prototype._finishTimelapseInit = function() {
+        $('#timelapse-loader').hide();
+        $('#timelapse-control').show();
+    };
+
+    RidePage.prototype._timelapseTrackLoadCallback = function(counter) {
+        $('#timelapse-track-number').html(counter);
     };
 
     RidePage.prototype._initLayerControl = function() {

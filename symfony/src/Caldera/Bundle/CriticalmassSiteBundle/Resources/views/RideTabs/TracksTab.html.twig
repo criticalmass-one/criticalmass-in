@@ -128,70 +128,86 @@
                     <h3 class="panel-title">Timelapse</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <dl>
-                                <dt>Uhrzeit:</dt>
-                                <dd><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr</dd>
-                            </dl>
+                    <div id="timelapse-control" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl>
+                                    <dt>Uhrzeit:</dt>
+                                    <dd><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-md-6">
+                                <dl>
+                                    <dt>Verstrichene Zeit:</dt>
+                                    <dd><span id="timelapse-time-elapsed">0</span> Minuten</dd>
+                                </dl>
+                            </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <dl>
-                                <dt>Verstrichene Zeit:</dt>
-                                <dd><span id="timelapse-time-elapsed">0</span> Minuten</dd>
-                            </dl>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="text-center">
-                                <div class="btn-group" id="control-buttons" role="group" aria-label="...">
-                                    <button type="button" id="step-backward-button" class="btn btn-default">
-                                        <i class="fa fa-backward"></i>
-                                    </button>
-                                    <button type="button" id="pause-button"  class="btn btn-default">
-                                        <i class="fa fa-pause"></i>
-                                    </button>
-                                    <button type="button" id="stop-button"  class="btn btn-default">
-                                        <i class="fa fa-stop"></i>
-                                    </button>
-                                    <button type="button" id="play-button" class="btn btn-default">
-                                        <i class="fa fa-play"></i>
-                                    </button>
-                                    <button type="button" id="step-forward-button"  class="btn btn-default">
-                                        <i class="fa fa-forward"></i>
-                                    </button>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <div class="btn-group" id="control-buttons" role="group" aria-label="...">
+                                        <button type="button" id="step-backward-button" class="btn btn-default">
+                                            <i class="fa fa-backward"></i>
+                                        </button>
+                                        <button type="button" id="pause-button"  class="btn btn-default">
+                                            <i class="fa fa-pause"></i>
+                                        </button>
+                                        <button type="button" id="stop-button"  class="btn btn-default">
+                                            <i class="fa fa-stop"></i>
+                                        </button>
+                                        <button type="button" id="play-button" class="btn btn-default">
+                                            <i class="fa fa-play"></i>
+                                        </button>
+                                        <button type="button" id="step-forward-button"  class="btn btn-default">
+                                            <i class="fa fa-forward"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                Geschwindigkeit:
+                            </div>
+                        </div>
+
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                <input id="speed-slider-input" type="text" style="width: 100%;" />
+                            </div>
+                        </div>
+
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                Zeitpunkt:
+                            </div>
+                        </div>
+
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                <input id="time-slider-input" type="text" style="width: 100%;" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="row margin-top-medium">
-                        <div class="col-md-12">
-                            Geschwindigkeit:
+                    <div id="timelapse-start">
+                        <div class="text-center">
+                            <button id="timelapse-start-button" class="btn btn-success">
+                                <i class="fa fa-bicycle"></i>
+                                Timelapse starten
+                            </button>
                         </div>
                     </div>
 
-                    <div class="row margin-top-medium">
-                        <div class="col-md-12">
-                            <input id="speed-slider-input" type="text" style="width: 100%;" />
+                    <div id="timelapse-loader" style="display: none;">
+                        <div class="text-center">
+                            Lade Track <span id="timelapse-track-number">0</span> von <span id="timelapse-track-total">0</span>
                         </div>
                     </div>
-
-                    <div class="row margin-top-medium">
-                        <div class="col-md-12">
-                            Zeitpunkt:
-                        </div>
-                    </div>
-
-                    <div class="row margin-top-medium">
-                        <div class="col-md-12">
-                            <input id="time-slider-input" type="text" style="width: 100%;" />
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>

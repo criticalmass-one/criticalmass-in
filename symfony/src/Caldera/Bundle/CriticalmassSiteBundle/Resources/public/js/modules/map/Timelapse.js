@@ -9,6 +9,9 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
     Timelapse.prototype._marker = [];
     Timelapse.prototype._timer = null;
 
+    Timelapse.prototype._initCallbackFunction = null;
+    Timelapse.prototype._loadCallbackFunction = null;
+
     Timelapse.prototype._timeSlider = null;
     Timelapse.prototype._speedSlider = null;
 
@@ -21,6 +24,14 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
     Timelapse.prototype._options = {
         timeStep: 30000,
         baseTimeInterval: 100
+    };
+
+    Timelapse.prototype.setLoadCallbackFunction = function(callback) {
+        this._loadCallbackFunction = callback;
+    };
+
+    Timelapse.prototype.setInitCallbackFunction = function(callback) {
+        this._initCallbackFunction = callback;
     };
 
     Timelapse.prototype._loadAllTrackLatLngs = function() {
@@ -46,6 +57,8 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
 
                 ++that._loadedTracks;
 
+                that._loadCallbackFunction(that._loadedTracks);
+
                 if (that._trackContainer.countEntities() == that._loadedTracks) {
                     that._initAfterLatLngLoad();
                 }
@@ -63,7 +76,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         this._initControls();
     };
 
-    Timelapse.prototype._startInit = function() {
+    Timelapse.prototype.startInit = function() {
         this._loadAllTrackLatLngs();
     };
 
@@ -76,7 +89,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
 
         this._initialized = true;
 
-        alert('los gehts!');
+        this._initCallbackFunction();
     };
 
     Timelapse.prototype._loadStyles = function() {
@@ -104,7 +117,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
             range: false,
             value: 0,
             step: 150000,
-            tooltip: 'show'
+            tooltip: 'hide'
         }).on('change', function(values) {
             that._currentDateTime = new Date(values.value.newValue);
 
@@ -122,7 +135,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
             range: false,
             value: 1,
             step: 0.5,
-            tooltip: 'show'
+            tooltip: 'hide'
         }).on('change', function(values) {
             var speedFactor = (10.0 - values.value.newValue);
 
@@ -176,7 +189,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
 
     Timelapse.prototype.start = function(speedFactor) {
         if (!this._initialized) {
-            this._startInit();
+            this.startInit();
         } else {
             this.stepForward();
 
