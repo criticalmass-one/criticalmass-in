@@ -99,7 +99,7 @@
         {% endif %}
 
         {% for track in tracks %}
-        ridePage.addTrack({{ track.id }}, '{{ track.polyline|replace({'\\': '\\\\'}) }}', {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+        ridePage.addTrack({{ track.id }}, '{{ track.polyline|replace({'\\': '\\\\'}) }}', {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }}, '{{ track.username }}', '{{ gravatarUrl(track.user) }}');
         {% endfor %}
 
         {% for photo in photos %}

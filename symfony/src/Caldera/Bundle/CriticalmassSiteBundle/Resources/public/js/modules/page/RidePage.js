@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
+define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
 
     RidePage = function(context, options) {
         this._options = options;
@@ -152,8 +152,8 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tra
         this._map.setView(latLng, 14);
     };
 
-    RidePage.prototype.addTrack = function(trackId, polyline, colorRed, colorGreen, colorBlue) {
-        var track = new TrackEntity(trackId, polyline, colorRed, colorGreen, colorBlue);
+    RidePage.prototype.addTrack = function(trackId, polyline, colorRed, colorGreen, colorBlue, username, backgroundImage) {
+        var track = new TimelapseTrackEntity(trackId, polyline, colorRed, colorGreen, colorBlue, username, backgroundImage);
 
         track.addToContainer(this._trackContainer, trackId);
     };

@@ -1,4 +1,4 @@
-define(['leaflet', 'BaseEntity', 'leaflet-polyline'], function() {
+define(['leaflet', 'MarkerEntity', 'leaflet-polyline'], function() {
     TrackEntity = function (trackId, polylineString, colorRed, colorGreen, colorBlue) {
         this._trackId = trackId;
 
@@ -7,7 +7,7 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline'], function() {
         this._polyline = L.Polyline.fromEncoded(polylineString, { color: this._color });
     };
 
-    TrackEntity.prototype = new BaseEntity();
+    TrackEntity.prototype = new MarkerEntity();
     TrackEntity.prototype.constructor = TrackEntity;
 
     TrackEntity.prototype._trackId = null;

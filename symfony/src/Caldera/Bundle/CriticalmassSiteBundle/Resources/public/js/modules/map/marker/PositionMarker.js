@@ -1,7 +1,10 @@
 define(['Marker'], function() {
-    PositionMarker = function (latLng, draggable) {
+    PositionMarker = function (latLng, draggable, username, backgroundImage) {
         this._latLng = latLng;
         this._draggable = draggable;
+
+        this._username = username;
+        this._backgroundImage = backgroundImage;
     };
 
     PositionMarker.prototype = new Marker();
@@ -28,7 +31,7 @@ define(['Marker'], function() {
     };
 
     PositionMarker.prototype._getHTML = function() {
-        return '<div class="user-position-inline" style="border-color: ' + this.getColorString() + '"></div>';
+        return '<div class="user-position-inline" style="border-color: ' + this.getColorString() + '; background-image: url(' + this._backgroundImage + ');"></div>';
     };
 
     PositionMarker.prototype._initIcon = function() {

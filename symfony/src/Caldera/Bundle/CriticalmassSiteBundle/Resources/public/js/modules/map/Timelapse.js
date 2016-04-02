@@ -153,12 +153,11 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         var firstLatLng = [this._trackLatLngs[trackId][0][1], this._trackLatLngs[trackId][0][2]];
         var track = this._trackContainer.getEntity(trackId);
 
-        var marker = new PositionMarker(firstLatLng, false);
-        marker.setColorRed(track.getColorRed());
-        marker.setColorGreen(track.getColorGreen());
-        marker.setColorBlue(track.getColorBlue());
-
+        track.setCurrentLatLng(firstLatLng);
+        
+        var marker = track.getMarker();
         marker.addToMap(this._map);
+
         this._marker[trackId] = marker;
     };
 
