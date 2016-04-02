@@ -445,7 +445,7 @@ class Track
     /**
      * Get latLngList
      *
-     * @return boolean 
+     * @return array
      */
     public function getLatLngList()
     {
