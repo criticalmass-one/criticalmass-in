@@ -8,32 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StatisticController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function citystatisticAction(Request $request, $citySlug)
     {
-        $cities = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:City')->findCities();
+        $city = $this->getCheckedCity($citySlug);
 
-        $topParticipantsRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array(), array('estimatedParticipants' => 'DESC'), 10);
-        $topDistanceRides = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:Ride')->findBy(array(), array('estimatedDistance' => 'DESC'), 10);
+        $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        $topAverageParticipantsCities = array();
-
-        foreach ($cities as $city)
-        {
-            $topAverageParticipantsCities[$city->calculateAverageRideParticipants()] = $city;
-        }
-
-        krsort($topAverageParticipantsCities);
-
-        $topAverageParticipantsCities = array_slice($topAverageParticipantsCities, 0, 10, true);
-
-        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:index.html.twig', array('cities' => $cities, 'topParticipantRides' => $topParticipantsRides, 'topDistanceRides' => $topDistanceRides, 'topAverageParticipantsCities' => $topAverageParticipantsCities));
-    }
-
-    public function cityparticipantsAction(Request $request, $citySlug)
-    {
-        $city = $this->getDoctrine()->getRepository('CalderaCriticalmassCoreBundle:CitySlug')->findOneBySlug($citySlug)->getCity();
-
-        return $this->render('CalderaCriticalmassStatisticBundle:Statistic:cityparticipants.html.twig', array('city' => $city));
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Statistic:citystatistic.html.twig',
+            [
+                'city' => $city,
+                'rides' => $rides
+            ]
+        );
     }
 
     /**

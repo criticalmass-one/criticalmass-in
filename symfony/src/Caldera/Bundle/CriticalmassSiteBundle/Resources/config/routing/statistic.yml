@@ -1,3 +1,3 @@
-caldera_criticalmass_statistic_ride_estimate:
-    pattern: /{citySlug}/{rideDate}/estimate
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:estimateride }
+caldera_criticalmass_statistic_city_participants:
+    pattern: /{citySlug}/statistic
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:citystatistic }

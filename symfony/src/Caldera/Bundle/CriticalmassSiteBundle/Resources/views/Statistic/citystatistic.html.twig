@@ -1,0 +1,102 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Teilnehmerstatistiken aus {{ city.city }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Teilnehmerstatistiken
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Stadt-Statistiken von {{ city.city }}
+                </h1>
+
+                <p class="lead">
+                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Teilnehmerzahl
+                </h2>
+
+                <p>
+                    Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den Teilnehmern geschätzt wurden.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Fahrtdauer
+                </h2>
+
+                <p>
+                    Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden angegeben.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Fahrtlänge
+                </h2>
+
+                <p>
+                    Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern angegeben.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        CriticalMass.loadModule('CityStatisticPage', null, null, function(page) {
+            {% for ride in rides %}
+            page.addRideData('{{ ride.getFormattedDate }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
+            {% endfor %}
+
+            page.createParticipantsChart($('#participants'));
+            page.createDurationChart($('#duration'));
+            page.createDistanceChart($('#distance'));
+        });
+    </script>
+{% endblock %}
