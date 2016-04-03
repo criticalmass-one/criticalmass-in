@@ -90,6 +90,8 @@
     </div>
     <script type="text/javascript">
         CriticalMass.loadModule('CityStatisticPage', null, null, function(page) {
+            page.setColor({{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
+
             {% for ride in rides %}
             page.addRideData('{{ ride.getFormattedDate }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
             {% endfor %}
