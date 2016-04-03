@@ -1,4 +1,4 @@
-caldera_criticalmass_statistic_city_participants:
+caldera_criticalmass_statistic_city:
     pattern: /{citySlug}/statistic
     defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:citystatistic }
 
