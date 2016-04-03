@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\FacebookCityProperties;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,37 @@ class StatisticController extends AbstractController
             [
                 'city' => $city,
                 'rides' => $rides
+            ]
+        );
+    }
+
+    public function facebookstatisticAction(Request $request)
+    {
+        $cityPropertiesList = $this->getFacebookCityPropertiesRepository()->findAll();
+
+        $filteredProperties = [];
+
+        $cityList = [];
+        $dayList = [];
+
+        /**
+         * @var FacebookCityProperties $facebookCityProperties
+         */
+        foreach ($cityPropertiesList as $facebookCityProperties) {
+            $citySlug = $facebookCityProperties->getCity()->getSlug();
+            $day = $facebookCityProperties->getCreatedAt()->format('Y-m-d');
+
+            $filteredProperties[$citySlug][$day] = $facebookCityProperties;
+            $dayList[$day] = $day;
+            $cityList[$citySlug] = $facebookCityProperties->getCity();
+        }
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Statistic:facebookstatistic.html.twig',
+            [
+                'cities' => $cityList,
+                'filteredProperties' => $filteredProperties,
+                'days' => $dayList
             ]
         );
     }

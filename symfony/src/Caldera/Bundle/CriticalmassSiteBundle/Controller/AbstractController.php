@@ -103,6 +103,22 @@ abstract class AbstractController extends Controller
     /**
      * @return ObjectRepository
      */
+    protected function getFacebookCityPropertiesRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:FacebookCityProperties');
+    }
+
+    /**
+     * @return ObjectRepository
+     */
+    protected function getFacebookRidePropertiesRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:FacebookRideProperties');
+    }
+
+    /**
+     * @return ObjectRepository
+     */
     protected function getIncidentRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Incident');

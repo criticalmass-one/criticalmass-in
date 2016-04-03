@@ -1,0 +1,38 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Statistiken{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Statistiken
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="facebook-likes" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('FacebookStatisticPage', null, null, function(page) {
+            {% for day in days %}
+            page.addDay('{{ day }}');
+            {% endfor %}
+
+            {% for city in cities %}
+            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
+
+            {% for property in filteredProperties[city.slug] %}
+            page.addData('{{ property.city.slug }}', '{{ property.createdAt|date('Y-m-d') }}', {{ property.likeNumber|default(0) }});
+            {% endfor %}
+
+            {% endfor %}
+
+            page.createFacebookLikesChart($('#facebook-likes'));
+        });
+    </script>
+{% endblock %}
