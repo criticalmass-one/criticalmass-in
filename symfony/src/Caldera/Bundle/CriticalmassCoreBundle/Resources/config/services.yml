@@ -121,3 +121,15 @@ services:
     caldera.criticalmass.facebookapi.citypageproperties:
         class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi
         arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
+
+
+
+    caldera.criticalmass.timeline:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline
+        arguments: [@doctrine]
+        calls:
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.photo']]
+
+    caldera.criticalmass.timeline.collector.photo:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\PhotoCollector
+        arguments: [@doctrine]
