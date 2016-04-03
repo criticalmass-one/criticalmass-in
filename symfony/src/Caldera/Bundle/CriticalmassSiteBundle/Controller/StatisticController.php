@@ -13,6 +13,8 @@ class StatisticController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
+        $this->getMetadata()->setDescription('Critical-Mass-Statistiken aus '.$city->getCity().': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Statistic:citystatistic.html.twig',
             [
@@ -42,6 +44,8 @@ class StatisticController extends AbstractController
         }
 
         rsort($rideMonths);
+
+        $this->getMetadata()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Statistic:overview.html.twig',
