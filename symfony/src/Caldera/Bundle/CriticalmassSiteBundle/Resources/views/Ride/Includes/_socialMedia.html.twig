@@ -7,22 +7,25 @@
         </div>
         <div class="panel-body">
             <div class="text-center">
-                <div class="btn-group" role="group" aria-label="...">
+                <div class="btn-group-vertical" role="group" aria-label="...">
                 {% if ride.url %}
                     <a class="btn btn-default" href="{{ ride.url }}">
                         <i class="fa fa-home"></i>
+                        {{ hostname(ride.url) }}
                     </a>
                 {% endif %}
 
                 {% if ride.facebook %}
                     <a class="btn btn-default" href="{{ ride.facebook }}">
                         <i class="fa fa-facebook"></i>
+                        {{ facebookIdentifier(ride.facebook) }}
                     </a>
                 {% endif %}
 
                 {% if ride.twitter %}
                     <a class="btn btn-default" href="{{ ride.twitter }}">
                         <i class="fa fa-twitter"></i>
+                        {{ twitterUsername(ride.twitter) }}
                     </a>
                 {% endif %}
                 </div>
