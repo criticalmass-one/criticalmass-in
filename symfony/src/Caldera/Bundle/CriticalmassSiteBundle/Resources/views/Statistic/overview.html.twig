@@ -35,6 +35,37 @@
                 <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Fahrtdauer
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Fahrtlänge
+                </h2>
+
+                <p>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
         CriticalMass.loadModule('StatisticPage', null, null, function(page) {
@@ -51,6 +82,8 @@
             {% endfor %}
 
             page.createParticipantsChart($('#participants'));
+            page.createDurationChart($('#duration'));
+            page.createDistanceChart($('#distance'));
         });
     </script>
 {% endblock %}
