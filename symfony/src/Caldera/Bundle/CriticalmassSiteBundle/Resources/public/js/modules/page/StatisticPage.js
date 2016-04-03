@@ -1,23 +1,23 @@
 define(['chartjs'], function() {
-    CityStatisticPage = function(context, options) {
+    StatisticPage = function(context, options) {
     };
 
-    CityStatisticPage.prototype._rideMonths = [];
-    CityStatisticPage.prototype._participantsData = [];
-    CityStatisticPage.prototype._durationData = [];
-    CityStatisticPage.prototype._distanceData = [];
+    StatisticPage.prototype._rideMonths = [];
+    StatisticPage.prototype._participantsData = [];
+    StatisticPage.prototype._durationData = [];
+    StatisticPage.prototype._distanceData = [];
 
-    CityStatisticPage.prototype._participantsChart = null;
+    StatisticPage.prototype._participantsChart = null;
 
-    CityStatisticPage.prototype._cities = [];
+    StatisticPage.prototype._cities = [];
 
-    CityStatisticPage.prototype.addRideData = function(citySlug, rideMonth, participants, duration, distance) {
+    StatisticPage.prototype.addRideData = function(citySlug, rideMonth, participants, duration, distance) {
         this._participantsData[citySlug][rideMonth] = participants;
         this._durationData[citySlug][rideMonth] = duration;
         this._distanceData[citySlug][rideMonth] = distance;
     };
 
-    CityStatisticPage.prototype.addCity = function(cityName, citySlug, colorRed, colorGreen, colorBlue) {
+    StatisticPage.prototype.addCity = function(cityName, citySlug, colorRed, colorGreen, colorBlue) {
         this._participantsData[citySlug] = [];
         this._durationData[citySlug] = [];
         this._distanceData[citySlug] = [];
@@ -30,11 +30,11 @@ define(['chartjs'], function() {
         ];
     };
 
-    CityStatisticPage.prototype.addRideMonth = function (rideMonth) {
+    StatisticPage.prototype.addRideMonth = function (rideMonth) {
         this._rideMonths.push(rideMonth);
     };
 
-    CityStatisticPage.prototype.createParticipantsChart = function($element) {
+    StatisticPage.prototype.createParticipantsChart = function($element) {
         var datasets = this._createDataset(this._participantsData);
 
         var data = {
@@ -48,7 +48,7 @@ define(['chartjs'], function() {
         });
     };
 
-    CityStatisticPage.prototype.createDurationChart = function($element) {
+    StatisticPage.prototype.createDurationChart = function($element) {
         var datasets = this._createDataset(this._durationData);
 
         var data = {
@@ -62,7 +62,7 @@ define(['chartjs'], function() {
         });
     };
 
-    CityStatisticPage.prototype.createDistanceChart = function($element) {
+    StatisticPage.prototype.createDistanceChart = function($element) {
         var datasets = this._createDataset(this._distanceData);
 
         var data = {
@@ -76,7 +76,7 @@ define(['chartjs'], function() {
         });
     };
 
-    CityStatisticPage.prototype._createDataset = function(list) {
+    StatisticPage.prototype._createDataset = function(list) {
         var datasets = [];
 
         for (var citySlug in this._cities) {
@@ -117,5 +117,5 @@ define(['chartjs'], function() {
         return datasets;
     };
 
-    return CityStatisticPage;
+    return StatisticPage;
 });
