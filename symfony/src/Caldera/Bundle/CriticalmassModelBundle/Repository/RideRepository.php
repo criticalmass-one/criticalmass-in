@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Location;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
@@ -559,6 +560,33 @@ class RideRepository extends EntityRepository
 
             $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$dateTime->format('Y-m-d H:i:s').'\''));
         }
+
+        $builder->addOrderBy('city.city', 'ASC');
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findRidesInRegion(Region $region, $pastOnly = true)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->join('ride.city', 'city');
+        $builder->join('city.region', 'region1');
+
+        $builder->where($builder->expr()->eq('ride.isArchived', 0));
+
+        if ($pastOnly) {
+            $dateTime = new \DateTime();
+
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$dateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        $builder->andWhere($builder->expr()->eq('region1.parent', $region->getId()));
 
         $builder->addOrderBy('city.city', 'ASC');
         $builder->addOrderBy('ride.dateTime', 'DESC');

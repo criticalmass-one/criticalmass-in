@@ -24,7 +24,9 @@ class StatisticController extends AbstractController
 
     public function overviewAction(Request $request)
     {
-        $rides = $this->getRideRepository()->findRides();
+        $region = $this->getRegionRepository()->find(3);
+        
+        $rides = $this->getRideRepository()->findRidesInRegion($region);
 
         $cities = [];
 
