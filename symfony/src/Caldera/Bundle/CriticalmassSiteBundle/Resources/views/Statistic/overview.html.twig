@@ -43,7 +43,7 @@
             {% endfor %}
 
             {% for city in cities %}
-            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ random(255) }}, {{ random(255) }}, {{ random(255) }});
+            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
             {% endfor %}
 
             {% for ride in rides %}

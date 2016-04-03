@@ -266,6 +266,21 @@ class City implements BoardInterface
     protected $postNumber = 0;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $colorRed = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $colorGreen = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $colorBlue = 0;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Thread", inversedBy="cities")
      * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
      */
@@ -1244,5 +1259,120 @@ class City implements BoardInterface
     public function incThreadNumber()
     {
         ++$this->threadNumber;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return City
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set colorRed
+     *
+     * @param integer $colorRed
+     * @return City
+     */
+    public function setColorRed($colorRed)
+    {
+        $this->colorRed = $colorRed;
+
+        return $this;
+    }
+
+    /**
+     * Get colorRed
+     *
+     * @return integer 
+     */
+    public function getColorRed()
+    {
+        return $this->colorRed;
+    }
+
+    /**
+     * Set colorGreen
+     *
+     * @param integer $colorGreen
+     * @return City
+     */
+    public function setColorGreen($colorGreen)
+    {
+        $this->colorGreen = $colorGreen;
+
+        return $this;
+    }
+
+    /**
+     * Get colorGreen
+     *
+     * @return integer 
+     */
+    public function getColorGreen()
+    {
+        return $this->colorGreen;
+    }
+
+    /**
+     * Set colorBlue
+     *
+     * @param integer $colorBlue
+     * @return City
+     */
+    public function setColorBlue($colorBlue)
+    {
+        $this->colorBlue = $colorBlue;
+
+        return $this;
+    }
+
+    /**
+     * Get colorBlue
+     *
+     * @return integer 
+     */
+    public function getColorBlue()
+    {
+        return $this->colorBlue;
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     * @return City
+     */
+    public function addPhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
     }
 }
