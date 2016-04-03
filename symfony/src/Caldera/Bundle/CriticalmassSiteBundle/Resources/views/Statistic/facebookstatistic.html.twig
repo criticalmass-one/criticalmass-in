@@ -1,15 +1,27 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Statistiken{% endblock %}
+{% block title %}facebook-Statistiken der Critical-Mass-Städte{% endblock %}
 
 {% block breadcrumb %}
     <li class="active">
-        Statistiken
+        facebook-Statistiken der Critical-Mass-Städte
     </li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    facebook-Statistiken
+                </h1>
+
+                <p class="lead">
+                    Der folgende Graph zeigt die Entwicklung der Like-Angaben auf den Seiten der jeweiligen Critical-Mass-Städte auf facebook.
+                </p>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <canvas id="facebook-likes" style="width: 100%; height: 250px;"></canvas>
