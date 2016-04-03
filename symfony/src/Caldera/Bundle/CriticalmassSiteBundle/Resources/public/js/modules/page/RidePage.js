@@ -31,16 +31,16 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tim
         if ($trackPanel.length > 0) {
             this._timelapse = new Timelapse(this);
             this._timelapse.init();
+
+            this._timelapse.setInitCallbackFunction(this._finishTimelapseInit);
+            this._timelapse.setLoadCallbackFunction(this._timelapseTrackLoadCallback);
+
+            var that = this;
+
+            $('button#timelapse-start-button').on('click', function() {
+                that._startTimelapseInit();
+            });
         }
-
-        this._timelapse.setInitCallbackFunction(this._finishTimelapseInit);
-        this._timelapse.setLoadCallbackFunction(this._timelapseTrackLoadCallback);
-
-        var that = this;
-
-        $('button#timelapse-start-button').on('click', function() {
-            that._startTimelapseInit();
-        });
     };
 
     RidePage.prototype._startTimelapseInit = function() {
