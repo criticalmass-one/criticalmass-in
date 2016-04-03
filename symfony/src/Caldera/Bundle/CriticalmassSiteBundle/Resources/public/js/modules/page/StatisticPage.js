@@ -35,42 +35,7 @@ define(['chartjs'], function() {
     };
 
     CityStatisticPage.prototype.createParticipantsChart = function($element) {
-        var datasets = [];
-
-        for (var citySlug in this._cities) {
-            var city = this._cities[citySlug];
-
-            var data = [];
-
-            for (var index in this._rideMonths) {
-                var rideMonth = this._rideMonths[index];
-
-                data.push(this._participantsData[citySlug][rideMonth]);
-            }
-
-            var colorString = 'rgba(' + city[1] + ', ' + city[2] + ', ' + city[3] + ',1)';
-
-            datasets.push({
-                label: city[0],
-                fill: false,
-                backgroundColor: colorString,
-                borderColor: colorString,
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: colorString,
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: colorString,
-                pointHoverBorderColor: colorString,
-                pointHoverBorderWidth: 2,
-                tension: 0.1,
-                data: data,
-                yAxisID: "y-axis-0",
-            });
-        }
+        var datasets = this._createDataset(this._participantsData);
 
         var data = {
             labels: this._rideMonths,
@@ -84,42 +49,7 @@ define(['chartjs'], function() {
     };
 
     CityStatisticPage.prototype.createDurationChart = function($element) {
-        var datasets = [];
-
-        for (var citySlug in this._cities) {
-            var city = this._cities[citySlug];
-
-            var data = [];
-
-            for (var index in this._rideMonths) {
-                var rideMonth = this._rideMonths[index];
-
-                data.push(this._durationData[citySlug][rideMonth]);
-            }
-
-            var colorString = 'rgba(' + city[1] + ', ' + city[2] + ', ' + city[3] + ',1)';
-
-            datasets.push({
-                label: city[0],
-                fill: false,
-                backgroundColor: colorString,
-                borderColor: colorString,
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: colorString,
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: colorString,
-                pointHoverBorderColor: colorString,
-                pointHoverBorderWidth: 2,
-                tension: 0.1,
-                data: data,
-                yAxisID: "y-axis-0",
-            });
-        }
+        var datasets = this._createDataset(this._durationData);
 
         var data = {
             labels: this._rideMonths,
@@ -133,6 +63,20 @@ define(['chartjs'], function() {
     };
 
     CityStatisticPage.prototype.createDistanceChart = function($element) {
+        var datasets = this._createDataset(this._distanceData);
+
+        var data = {
+            labels: this._rideMonths,
+            datasets: datasets
+        };
+
+        this._durationChart = new Chart($element, {
+            type: 'line',
+            data: data
+        });
+    };
+
+    CityStatisticPage.prototype._createDataset = function(list) {
         var datasets = [];
 
         for (var citySlug in this._cities) {
@@ -143,7 +87,7 @@ define(['chartjs'], function() {
             for (var index in this._rideMonths) {
                 var rideMonth = this._rideMonths[index];
 
-                data.push(this._durationData[citySlug][rideMonth]);
+                data.push(list[citySlug][rideMonth]);
             }
 
             var colorString = 'rgba(' + city[1] + ', ' + city[2] + ', ' + city[3] + ',1)';
@@ -170,15 +114,7 @@ define(['chartjs'], function() {
             });
         }
 
-        var data = {
-            labels: this._rideMonths,
-            datasets: datasets
-        };
-
-        this._durationChart = new Chart($element, {
-            type: 'line',
-            data: data
-        });
+        return datasets;
     };
 
     return CityStatisticPage;
