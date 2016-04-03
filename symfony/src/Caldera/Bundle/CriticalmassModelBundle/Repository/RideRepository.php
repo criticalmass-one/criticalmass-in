@@ -569,7 +569,7 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRidesInRegion(Region $region, $pastOnly = true)
+    public function findRidesInRegionInInterval(Region $region, \DateTime $startDateTime = null, \DateTime $endDateTime = null)
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -580,10 +580,12 @@ class RideRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('ride.isArchived', 0));
 
-        if ($pastOnly) {
-            $dateTime = new \DateTime();
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
+        }
 
-            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$dateTime->format('Y-m-d H:i:s').'\''));
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
         }
 
         $builder->andWhere($builder->expr()->eq('region1.parent', $region->getId()));

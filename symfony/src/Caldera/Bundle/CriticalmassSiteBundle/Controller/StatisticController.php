@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,9 +27,21 @@ class StatisticController extends AbstractController
 
     public function overviewAction(Request $request)
     {
+        /**
+         * @var Region $region
+         */
         $region = $this->getRegionRepository()->find(3);
-        
-        $rides = $this->getRideRepository()->findRidesInRegion($region);
+
+        $endDateTime = new \DateTime();
+        $twoYearInterval = new \DateInterval('P2Y');
+
+        $startDateTime = new \DateTime();
+        $startDateTime->sub($twoYearInterval);
+
+        $rides = $this->getRideRepository()->findRidesInRegionInInterval($region, $startDateTime, $endDateTime);
+
+        $citiesWithoutEstimates = $this->findCitiesWithoutParticipationEstimates($rides);
+        $rides = $this->filterRideList($rides, $citiesWithoutEstimates);
 
         $cities = [];
 
@@ -55,5 +68,45 @@ class StatisticController extends AbstractController
                 'rideMonths' => $rideMonths
             ]
         );
+    }
+
+    protected function findCitiesWithoutParticipationEstimates(array $rides)
+    {
+        $cityList = [];
+
+        /**
+         * @var Ride $ride
+         */
+        foreach ($rides as $ride) {
+            if (!$ride->getEstimatedParticipants()) {
+                $citySlug = $ride->getCity()->getSlug();
+
+                if (array_key_exists($citySlug, $cityList)) {
+                    ++$cityList[$citySlug];
+                } else {
+                    $cityList[$citySlug] = 1;
+                }
+            }
+        }
+
+        return $cityList;
+    }
+
+    protected function filterRideList(array $rides, array $cities)
+    {
+        $resultList = [];
+
+        /**
+         * @var Ride $ride
+         */
+        foreach ($rides as $ride) {
+            $citySlug = $ride->getCity()->getSlug();
+
+            if (!array_key_exists($citySlug, $cities) or $cities[$citySlug] < 18) {
+                $resultList[] = $ride;
+            }
+        }
+
+        return $resultList;
     }
 }
