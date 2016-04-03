@@ -1,0 +1,56 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Statistiken{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Teilnehmerstatistiken
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Statistiken
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Teilnehmerzahl
+                </h2>
+
+                <p>
+                    Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den Teilnehmern geschätzt wurden.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        CriticalMass.loadModule('StatisticPage', null, null, function(page) {
+            {% for rideMonth in rideMonths %}
+            page.addRideMonth('{{ rideMonth }}');
+            {% endfor %}
+
+            {% for city in cities %}
+            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ random(255) }}, {{ random(255) }}, {{ random(255) }});
+            {% endfor %}
+
+            {% for ride in rides %}
+            page.addRideData('{{ ride.city.slug }}', '{{ ride.dateTime|date('Y-m') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
+            {% endfor %}
+
+            page.createParticipantsChart($('#participants'));
+        });
+    </script>
+{% endblock %}

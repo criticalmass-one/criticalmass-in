@@ -64,6 +64,7 @@ require.config({
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
         "CityStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/CityStatisticPage",
+        "StatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/StatisticPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "AutoMap": "/bundles/calderacriticalmasssite/js/modules/map/AutoMap",
         "Geocoding": "/bundles/calderacriticalmasssite/js/modules/Geocoding",

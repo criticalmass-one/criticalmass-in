@@ -543,4 +543,28 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findRides($pastOnly = true)
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->join('ride.city', 'city');
+
+        $builder->where($builder->expr()->eq('ride.isArchived', 0));
+
+        if ($pastOnly) {
+            $dateTime = new \DateTime();
+
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\''.$dateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        $builder->addOrderBy('city.city', 'ASC');
+        $builder->addOrderBy('ride.dateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }

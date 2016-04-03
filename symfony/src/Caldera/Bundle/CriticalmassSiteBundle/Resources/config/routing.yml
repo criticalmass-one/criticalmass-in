@@ -66,6 +66,10 @@ caldera_criticalmass_incident:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/incident.yml"
     prefix: /
 
+caldera_criticalmass_statistic:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"
+    prefix: /
+
 caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /
@@ -89,7 +93,11 @@ caldera_criticalmass_participation:
 caldera_criticalmass_strava:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/strava.yml"
     prefix: /
-    
+
+caldera_criticalmass_statistic:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"
+    prefix:   /
+
 caldera_criticalmass_ride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/ride.yml"
     prefix: /
@@ -105,10 +113,6 @@ caldera_criticalmass_timeline:
 caldera_criticalmass_sudride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/subride.yml"
     prefix: /
-
-caldera_criticalmass_statistic:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"
-    prefix:   /
 
 # last route to match is always event!
 caldera_criticalmass_event:
