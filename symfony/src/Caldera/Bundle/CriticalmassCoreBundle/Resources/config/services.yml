@@ -122,14 +122,12 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi
         arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
 
-
-
     caldera.criticalmass.timeline:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline
-        arguments: [@doctrine]
+        arguments: [@doctrine, @templating]
         calls:
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.photo']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
 
-    caldera.criticalmass.timeline.collector.photo:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\PhotoCollector
+    caldera.criticalmass.timeline.collector.ridephoto:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RidePhotoCollector
         arguments: [@doctrine]

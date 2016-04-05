@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-12">
+        <img src="{{ vich_uploader_asset(item.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+
+        <strong>
+            {{ item.user.username }}
+        </strong>
+        hat {{ item.counter }} Fotos zur Tour
+        <strong>
+            <a href="{{ path(item.ride) }}">
+                {{ item.ride.getFancyTitle }}
+            </a>
+        </strong> 
+        hochgeladen
+    </div>
+</div>

@@ -18,14 +18,16 @@ class FrontpageController extends AbstractController
         /**
          * @var Timeline $timeline
          */
-        $timeline = $this
+        $timelineContent = $this
             ->get('caldera.criticalmass.timeline')
-            ->execute();
+            ->execute()
+            ->getTimelineContent();
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Frontpage:index.html.twig',
             [
-                'currentRides' => $currentRides
+                'currentRides' => $currentRides,
+                'timelineContent' => $timelineContent
             ]
         );
     }

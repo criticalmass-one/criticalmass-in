@@ -265,6 +265,22 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findForTimelinePhotoCollector()
+    {
+        $builder = $this->createQueryBuilder('photo');
+
+        $builder->select('photo');
+
+        $builder->where($builder->expr()->eq('photo.enabled', 1));
+        $builder->andWhere($builder->expr()->isNotNull('photo.ride'));
+        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+
+        $builder->setMaxResults(250);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 
 }
 
