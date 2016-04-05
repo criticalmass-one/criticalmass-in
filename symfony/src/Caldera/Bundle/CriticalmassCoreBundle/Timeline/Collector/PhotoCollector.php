@@ -6,6 +6,6 @@ class PhotoCollector extends AbstractTimelineCollector
 {
     public function execute()
     {
-        $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->find
+        $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findAll();
     }
 }
