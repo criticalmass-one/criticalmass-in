@@ -125,5 +125,23 @@ class TrackRepository extends EntityRepository
 
         return $result;
     }
+
+    public function findForTimelineRideTrackCollector()
+    {
+        $builder = $this->createQueryBuilder('track');
+
+        $builder->select('track');
+        $builder->where($builder->expr()->isNotNull('track.ride'));
+        $builder->andWhere($builder->expr()->isNotNull('track.user'));
+        $builder->andWhere($builder->expr()->eq('track.activated', true));
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
+
+
 }
 
