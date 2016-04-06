@@ -6,7 +6,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 
-class RidePhotoItem implements ItemInterface
+class RidePhotoItem extends AbstractItem
 {
     /**
      * @var User $user
@@ -17,11 +17,6 @@ class RidePhotoItem implements ItemInterface
      * @var Ride $ride
      */
     protected $ride;
-
-    /**
-     * @var \DateTime $dateTime
-     */
-    protected $dateTime;
 
     /**
      * @var integer $counter
@@ -63,22 +58,6 @@ class RidePhotoItem implements ItemInterface
     public function setRide($ride)
     {
         $this->ride = $ride;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDateTime()
-    {
-        return $this->dateTime;
-    }
-
-    /**
-     * @param \DateTime $dateTime
-     */
-    public function setDateTime(\DateTime $dateTime)
-    {
-        $this->dateTime = $dateTime;
     }
 
     /**

@@ -2,12 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 
-class RideTrackItem implements ItemInterface
+class RideTrackItem extends AbstractItem
 {
     /**
      * @var User $user
@@ -25,9 +24,9 @@ class RideTrackItem implements ItemInterface
     protected $track;
 
     /**
-     * @var \DateTime $dateTime
+     * @var string $polyline
      */
-    protected $dateTime;
+    protected $polyline;
 
     /**
      * @return User
@@ -62,22 +61,6 @@ class RideTrackItem implements ItemInterface
     }
 
     /**
-     * @return \DateTime
-     */
-    public function getDateTime()
-    {
-        return $this->dateTime;
-    }
-
-    /**
-     * @param \DateTime $dateTime
-     */
-    public function setDateTime(\DateTime $dateTime)
-    {
-        $this->dateTime = $dateTime;
-    }
-
-    /**
      * @return Track
      */
     public function getTrack()
@@ -91,5 +74,21 @@ class RideTrackItem implements ItemInterface
     public function setTrack(Track $track)
     {
         $this->track = $track;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPolyline()
+    {
+        return $this->polyline;
+    }
+
+    /**
+     * @param string $polyline
+     */
+    public function setPolyline($polyline)
+    {
+        $this->polyline = $polyline;
     }
 }
