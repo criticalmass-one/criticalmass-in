@@ -50,9 +50,10 @@ define(['Map', 'leaflet-polyline'], function() {
 
     AutoMap.prototype._autoSetPolyline = function() {
         var polylineString = this._$mapContainer.data('polyline');
+        var polylineColorString = this._$mapContainer.data('polyline-color');
 
-        if (polylineString) {
-            var polyline = L.Polyline.fromEncoded(polylineString);
+        if (polylineString && polylineColorString) {
+            var polyline = L.Polyline.fromEncoded(polylineString, { color: polylineColorString });
 
             polyline.addTo(this.map);
 

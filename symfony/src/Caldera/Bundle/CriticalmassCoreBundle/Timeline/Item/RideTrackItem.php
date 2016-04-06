@@ -29,6 +29,11 @@ class RideTrackItem extends AbstractItem
     protected $polyline;
 
     /**
+     * @var string $polylineColor
+     */
+    protected $polylineColor;
+
+    /**
      * @return User
      */
     public function getUser()
@@ -90,5 +95,21 @@ class RideTrackItem extends AbstractItem
     public function setPolyline($polyline)
     {
         $this->polyline = $polyline;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPolylineColor()
+    {
+        return $this->polylineColor;
+    }
+
+    /**
+     * @param string $polylineColor
+     */
+    public function setPolylineColor($polylineColor)
+    {
+        $this->polylineColor = $polylineColor;
     }
 }
