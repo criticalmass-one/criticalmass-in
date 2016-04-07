@@ -8,156 +8,24 @@
 
 {% block content %}
     <div class="container">
-        {{ timelineContent|raw }}
         <div class="row">
-            <div class="col-md-12">
-                <div class="pull-right">
-                    {% include 'CalderaCriticalmassSiteBundle:Frontpage:Includes/_cityListSort.html.twig' %}
-                </div>
-
-                <h2>
-                    Ab zur nächsten Masse
-                </h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div style="height: 270px; overflow-y: scroll;">
-                    <table id="cityList" class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Datum
-                                </th>
-                                <th>
-                                    Uhrzeit
-                                </th>
-                                <th>
-                                    Stadt
-                                </th>
-                                <th>
-                                    Titel
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {% for ride in currentRides %}
-                                <tr class="city"
-                                    data-cityName="{{ ride.city.city }}"
-                                    data-latitude="{{ ride.city.latitude }}"
-                                    data-longitude="{{ ride.city.longitude }}"
-                                    data-currentRide="{{ ride.dateTime.format('Y-m-d H:i') }}">
-                                    <td>
-                                        {{ ride.dateTime.format('d.m.Y') }}
-                                    </td>
-                                    <td>
-                                        {{ ride.dateTime.format('H:i') }} Uhr
-                                    </td>
-                                    <td>
-                                        <a href="{{ path(ride.city) }}">
-                                            {{ ride.city.city }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ path(ride) }}">
-                                            {{ ride.getFancyTitle() }}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>
-                            Freitagnachtfieber
-                        </h2>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-center">
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_list') }}" role="button">
-                                    <i class="fa fa-university"></i>
-                                    Städte
-                                </a>
-                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_calendar') }}" role="button">
-                                    <i class="fa fa-calendar"></i>
-                                    Kalender
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>
-                            Was ist die Masse?
-                        </h2>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-center">
-                            <a class="btn btn-success" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
-                                <i class="fa fa-bicycle"></i>
-                                Mehr darüber
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-8">
+                {{ timelineContent|raw }}
             </div>
 
             <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>
-                            Live-Tracking
-                        </h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Live dabei
+                        </h3>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            Teile deine Position mit anderen Radfahrern während der Tour.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="panel-body">
                         <div class="text-center">
+                            <p>
+                                Schau dir an, wo sich die Critical Mass in deiner Stadt gerade aufhält und deine Position mit anderen Radfahrern.
+                            </p>
+
                             <div class="btn-group" role="group" aria-label="...">
                                 <a class="btn btn-danger" href="{{ path('caldera_criticalmass_live') }}" role="button">
                                     <i class="fa fa-map-o"></i>
@@ -177,8 +45,39 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Was ist die Masse?
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <p>
+                                Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?
+                            </p>
+
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a class="btn btn-success" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
+                                    <i class="fa fa-bicycle"></i>
+                                    Mehr darüber
+                                </a>
+
+                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_city_list') }}" role="button">
+                                    <i class="fa fa-university"></i>
+                                    Städte
+                                </a>
+                                
+                                <a class="btn btn-success" href="{{ path('caldera_criticalmass_calendar') }}" role="button">
+                                    <i class="fa fa-calendar"></i>
+                                    Kalender
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
