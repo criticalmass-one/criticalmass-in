@@ -1,0 +1,23 @@
+<div class="row margin-bottom-medium">
+    <div class="col-md-2">
+        <time>{{ item.dateTime|date('d.m.Y') }}</time>
+        <br />
+        <time>{{ item.dateTime|date('H:i') }}&nbsp;Uhr</time>
+    </div>
+
+    <div class="col-md-3">
+    </div>
+
+    <div class="col-md-7">
+        <strong>
+            {{ item.user.username }}
+        </strong>
+        schätzt, dass {{ item.estimatedParticipants }} Radfahrer an
+        <strong>
+            <a href="{{ path(item.ride) }}">
+                {{ item.ride.getFancyTitle }}
+            </a>
+        </strong>
+        teilgenommen haben.
+    </div>
+</div>
