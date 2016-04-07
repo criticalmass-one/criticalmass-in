@@ -36,6 +36,7 @@ define(['Map', 'leaflet-polyline'], function() {
 
         this._autoSetView();
         this._autoSetPolyline();
+        this._setLockMap();
     };
 
     AutoMap.prototype._autoSetView = function() {
@@ -68,8 +69,15 @@ define(['Map', 'leaflet-polyline'], function() {
         var markerShape = this._$mapContainer.data('map-marker-shape');
         var markerIconContent = this._$mapContainer.data('map-marker-icon-content');
 
-
         this.map.setView([latitude, longitude], zoomLevel);
+    };
+
+    AutoMap.prototype._setLockMap = function() {
+        var lockMap = this._$mapContainer.data('lock-map');
+
+        if (lockMap == true) {
+            this.disableInteraction();
+        }
     };
 
     return AutoMap;

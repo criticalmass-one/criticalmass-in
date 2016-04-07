@@ -77,5 +77,31 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         this.map.fitBounds(bounds, options);
     };
 
+    Map.prototype.disableInteraction = function() {
+        this.map.dragging.disable();
+        this.map.touchZoom.disable();
+        this.map.doubleClickZoom.disable();
+        this.map.scrollWheelZoom.disable();
+        this.map.boxZoom.disable();
+        this.map.keyboard.disable();
+
+        if (this.map.tap) {
+            this.map.tap.disable();
+        }
+    };
+
+    Map.prototype.enableInteraction = function() {
+        this.map.dragging.enable();
+        this.map.touchZoom.enable();
+        this.map.doubleClickZoom.enable();
+        this.map.scrollWheelZoom.enable();
+        this.map.boxZoom.enable();
+        this.map.keyboard.enable();
+
+        if (this.map.tap) {
+            this.map.tap.enable();
+        }
+    };
+
     return Map;
 });
