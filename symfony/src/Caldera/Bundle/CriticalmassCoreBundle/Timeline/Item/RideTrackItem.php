@@ -24,6 +24,16 @@ class RideTrackItem extends AbstractItem
     protected $track;
 
     /**
+     * @var float $distance
+     */
+    protected $distance;
+
+    /**
+     * @var float $duration
+     */
+    protected $duration;
+
+    /**
      * @var string $polyline
      */
     protected $polyline;
@@ -79,6 +89,38 @@ class RideTrackItem extends AbstractItem
     public function setTrack(Track $track)
     {
         $this->track = $track;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param float $distance
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param float $duration
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
     }
 
     /**
