@@ -1,7 +1,13 @@
 <div class="row">
-    <div class="col-md-12">
-        <img src="{{ vich_uploader_asset(item.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+    <div class="col-md-2">
+        <time>{{ item.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr</time>
+    </div>
 
+    <div class="col-md-2">
+        <img src="{{ vich_uploader_asset(item.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+    </div>
+
+    <div class="col-md-8">
         <strong>
             {{ item.user.username }}
         </strong>

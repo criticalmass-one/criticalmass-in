@@ -1,5 +1,9 @@
 <div class="row">
     <div class="col-md-2">
+        <time>{{ item.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr</time>
+    </div>
+
+    <div class="col-md-2">
         <div id="map-{{ item.uniqId }}"
              data-polyline="{{ item.polyline }}"
              data-polyline-color="{{ item.polylineColor }}"
@@ -7,7 +11,8 @@
 
         </div>
     </div>
-    <div class="col-md-10">
+
+    <div class="col-md-8">
         <strong>
             {{ item.user.username }}
         </strong>

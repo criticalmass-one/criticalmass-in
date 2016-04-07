@@ -34,9 +34,11 @@ class Timeline
             $collector->execute();
 
             $this->items = array_merge($this->items, $collector->getItems());
-
-            $this->createContent();
         }
+
+        krsort($this->items);
+
+        $this->createContent();
 
         return $this;
     }
