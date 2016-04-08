@@ -1,0 +1,40 @@
+<div class="row margin-bottom-medium">
+    <div class="col-md-2">
+        <time>{{ item.dateTime|date('d.m.Y') }}</time>
+        <br />
+        <time>{{ item.dateTime|date('H:i') }}&nbsp;Uhr</time>
+    </div>
+
+    <div class="col-md-3">
+
+    </div>
+
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{ item.username }}
+                </strong>
+                hat auf ein Diskussionsthema geantwortet hnbgn :
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ path(item.thread) }}">
+                    <h4>
+                        {{ item.threadTitle }}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{ item.text }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

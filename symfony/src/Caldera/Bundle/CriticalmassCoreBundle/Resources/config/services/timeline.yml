@@ -7,6 +7,7 @@ services:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.ridetrack']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.rideparticipationestimate']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.thread']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.threadpost']]
 
     caldera.criticalmass.timeline.collector.ridephoto:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RidePhotoCollector
@@ -22,4 +23,8 @@ services:
 
     caldera.criticalmass.timeline.collector.thread:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ThreadCollector
+        arguments: [@doctrine]
+
+    caldera.criticalmass.timeline.collector.threadpost:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ThreadPostCollector
         arguments: [@doctrine]

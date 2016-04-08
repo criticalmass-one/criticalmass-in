@@ -95,5 +95,21 @@ class PostRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
+
+    public function findForTimelineThreadPostCollector()
+    {
+        $builder = $this->createQueryBuilder('post');
+
+        $builder->select('post');
+
+        $builder->where($builder->expr()->eq('post.enabled', 1));
+        $builder->andWhere($builder->expr()->isNotNull('post.thread'));
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
 }
 
