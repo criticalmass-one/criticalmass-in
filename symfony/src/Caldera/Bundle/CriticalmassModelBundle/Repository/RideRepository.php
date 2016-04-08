@@ -605,9 +605,13 @@ class RideRepository extends EntityRepository
         $builder->select('ride');
 
         $builder->where($builder->expr()->eq('ride.isArchived', 1));
+        $builder->andWhere($builder->expr()->isNotNull('ride.archiveUser'));
 
         $builder->addOrderBy('ride.archiveDateTime', 'DESC');
-        
+
+        $builder->addGroupBy('ride.user');
+        $builder->addGroupBy('ride.archiveParent');
+
         $query = $builder->getQuery();
 
         return $query->getResult();
