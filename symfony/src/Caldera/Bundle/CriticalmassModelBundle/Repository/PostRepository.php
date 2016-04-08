@@ -114,5 +114,21 @@ class PostRepository extends EntityRepository
 
         return $result;
     }
+
+    public function findForTimelineContentCommentCollector()
+    {
+        $builder = $this->createQueryBuilder('post');
+
+        $builder->select('post');
+        
+        $builder->where($builder->expr()->eq('post.enabled', 1));
+        $builder->andWhere($builder->expr()->isNotNull('post.content'));
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
 }
 
