@@ -102,9 +102,12 @@ class PostRepository extends EntityRepository
 
         $builder->select('post');
 
+        $builder->join('post.thread', 'thread');
+
         $builder->where($builder->expr()->eq('post.enabled', 1));
         $builder->andWhere($builder->expr()->isNotNull('post.thread'));
-
+        $builder->andWhere($builder->expr()->neq('post', 'thread.firstPost'));
+        
         $query = $builder->getQuery();
 
         $result = $query->getResult();
