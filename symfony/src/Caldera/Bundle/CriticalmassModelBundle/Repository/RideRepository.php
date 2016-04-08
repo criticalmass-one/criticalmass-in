@@ -597,4 +597,19 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findForTimelineRideEditCollector()
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+
+        $builder->where($builder->expr()->eq('ride.isArchived', 1));
+
+        $builder->addOrderBy('ride.archiveDateTime', 'DESC');
+        
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
