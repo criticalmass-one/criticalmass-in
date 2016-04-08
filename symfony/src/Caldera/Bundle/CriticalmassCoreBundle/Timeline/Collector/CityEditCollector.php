@@ -22,7 +22,6 @@ class CityEditCollector extends AbstractTimelineCollector
          * @var City $city
          */
         foreach ($groupedEntities as $city) {
-            print_r($city);
             if ($city->getSlugs()) {
                 $item = new CityEditItem();
 
