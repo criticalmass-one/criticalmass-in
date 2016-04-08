@@ -15,7 +15,12 @@ abstract class AbstractTimelineCollector
         $this->doctrine = $doctrine;
     }
 
-    abstract public function execute();
+    public function execute()
+    {
+        $entities = $this->fetchEntities();
+        $sortedEntities = $this->groupEntities($entities);
+        $this->convertGroupedEntities($sortedEntities);
+    }
 
     public function getItems()
     {
@@ -26,7 +31,7 @@ abstract class AbstractTimelineCollector
     {
         $dateTimeString = $item->getDateTime()->format('Y-m-d-H-i-s');
 
-        $itemKey = $dateTimeString.'-'.$item->getUniqId();
+        $itemKey = $dateTimeString . '-' . $item->getUniqId();
 
         $this->items[$itemKey] = $item;
     }

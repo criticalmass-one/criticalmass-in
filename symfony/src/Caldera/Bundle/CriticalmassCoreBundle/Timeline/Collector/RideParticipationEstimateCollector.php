@@ -11,13 +11,6 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
-    public function execute()
-    {
-        $entities = $this->fetchEntities();
-        $sortedEntities = $this->groupEntities($entities);
-        $this->convertGroupedEntities($sortedEntities);
-    }
-
     protected function fetchEntities()
     {
         return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findForTimelineRideParticipantsEstimateCollector();

@@ -9,21 +9,14 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {
-    public function execute()
-    {
-        $trackEntities = $this->fetchEntities();
-        $sortedEntities = $this->groupEntities($trackEntities);
-        $this->convertGroupedEntities($sortedEntities);
-    }
-
     protected function fetchEntities()
     {
         return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findForTimelineRideTrackCollector();
     }
 
-    protected function groupEntities(array $trackEntities)
+    protected function groupEntities(array $entities)
     {
-        return $trackEntities;
+        return $entities;
     }
 
     protected function convertGroupedEntities(array $groupedEntities)

@@ -7,21 +7,14 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 
 class ThreadCollector extends AbstractTimelineCollector
 {
-    public function execute()
-    {
-        $threadEntities = $this->fetchEntities();
-        $sortedEntities = $this->groupEntities($threadEntities);
-        $this->convertGroupedEntities($sortedEntities);
-    }
-
     protected function fetchEntities()
     {
         return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findForTimelineRideThreadCollector();
     }
 
-    protected function groupEntities(array $threadEntities)
+    protected function groupEntities(array $entities)
     {
-        return $threadEntities;
+        return $entities;
     }
 
     protected function convertGroupedEntities(array $groupedEntities)

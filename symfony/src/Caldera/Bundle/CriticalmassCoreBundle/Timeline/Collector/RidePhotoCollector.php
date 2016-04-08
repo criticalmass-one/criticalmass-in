@@ -7,13 +7,6 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {
-    public function execute()
-    {
-        $photoEntities = $this->fetchEntities();
-        $sortedEntities = $this->groupEntities($photoEntities);
-        $this->convertGroupedEntities($sortedEntities);
-    }
-
     protected function fetchEntities()
     {
         return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findForTimelinePhotoCollector();
