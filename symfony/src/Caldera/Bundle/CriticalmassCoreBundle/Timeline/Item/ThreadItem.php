@@ -9,39 +9,39 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 class ThreadItem extends AbstractItem
 {
     /**
-     * @var User $user
+     * @var string $username
      */
-    protected $user;
+    public $username;
 
     /**
      * @var Thread $thread
      */
-    protected $thread;
+    public $thread;
 
     /**
      * @var string $title
      */
-    protected $title;
+    public $title;
 
     /**
      * @var string $text
      */
-    protected $text;
+    public $text;
 
     /**
-     * @return User
+     * @return string
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->user;
+        return $this->username;
     }
 
     /**
-     * @param User $user
+     * @param string $username
      */
-    public function setUser($user)
+    public function setUsername($username)
     {
-        $this->user = $user;
+        $this->username = $username;
     }
 
     /**

@@ -9,9 +9,9 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 class RideParticipationEstimateItem extends AbstractItem
 {
     /**
-     * @var User $user
+     * @var string $username
      */
-    protected $user;
+    protected $username;
 
     /**
      * @var Ride $ride
@@ -19,24 +19,29 @@ class RideParticipationEstimateItem extends AbstractItem
     protected $ride;
 
     /**
+     * @var string $rideTitle
+     */
+    protected $rideTitle;
+
+    /**
      * @var integer $estimatedParticipants
      */
     protected $estimatedParticipants;
 
     /**
-     * @return User
+     * @return string
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->user;
+        return $this->username;
     }
 
     /**
-     * @param User $user
+     * @param string $username
      */
-    public function setUser($user)
+    public function setUsername($username)
     {
-        $this->user = $user;
+        $this->username = $username;
     }
 
     /**
@@ -53,6 +58,22 @@ class RideParticipationEstimateItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRideTitle()
+    {
+        return $this->rideTitle;
+    }
+
+    /**
+     * @param string $rideTitle
+     */
+    public function setRideTitle($rideTitle)
+    {
+        $this->rideTitle = $rideTitle;
     }
 
     /**

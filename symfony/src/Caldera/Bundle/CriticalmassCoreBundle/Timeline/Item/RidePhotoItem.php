@@ -9,14 +9,19 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
 class RidePhotoItem extends AbstractItem
 {
     /**
-     * @var User $user
+     * @var title $username
      */
-    protected $user;
+    protected $username;
 
     /**
      * @var Ride $ride
      */
     protected $ride;
+
+    /**
+     * @var string $rideTitle
+     */
+    protected $rideTitle;
 
     /**
      * @var integer $counter
@@ -29,19 +34,19 @@ class RidePhotoItem extends AbstractItem
     protected $previewPhoto;
 
     /**
-     * @return User
+     * @return string
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->user;
+        return $this->username;
     }
 
     /**
-     * @param User $user
+     * @param string $username
      */
-    public function setUser($user)
+    public function setUsername($username)
     {
-        $this->user = $user;
+        $this->username = $username;
     }
 
     /**
@@ -58,6 +63,23 @@ class RidePhotoItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getRideTitle()
+    {
+        return $this->rideTitle;
+    }
+
+    /**
+     * @param string $rideTitle
+     */
+    public function setRideTitle($rideTitle)
+    {
+        $this->rideTitle = $rideTitle;
     }
 
     /**

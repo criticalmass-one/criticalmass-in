@@ -32,7 +32,7 @@ class ThreadCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $threadEntity) {
             $item = new ThreadItem();
 
-            $item->setUser($threadEntity->getFirstPost()->getUser());
+            $item->setUsername($threadEntity->getFirstPost()->getUser()->getUsername());
             $item->setThread($threadEntity);
             $item->setTitle($threadEntity->getTitle());
             $item->setText($threadEntity->getFirstPost()->getMessage());

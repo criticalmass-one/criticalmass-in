@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <strong>
-                    {{ item.user.username }}
+                    {{ item.username }}
                 </strong>
                 hat einen Track hochgeladen:
             </div>
@@ -29,7 +29,7 @@
             <div class="col-md-12">
                 <a href="{{ path(item.ride) }}">
                     <h4>
-                        {{ item.ride.getFancyTitle() }}
+                        {{ item.rideTitle }}
                     </h4>
                 </a>
             </div>
@@ -76,5 +76,5 @@
 </div>
 
 <script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
+    //CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
 </script>
