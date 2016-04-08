@@ -9,7 +9,7 @@ class ThreadCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findForTimelineRideThreadCollector();
+        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findForTimelineThreadCollector();
     }
 
     protected function groupEntities(array $entities)

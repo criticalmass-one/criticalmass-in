@@ -58,14 +58,14 @@ class ThreadRepository extends EntityRepository
         return $query->getSingleResult();
     }
 
-    public function findForTimelineRideThreadCollector()
+    public function findForTimelineThreadCollector()
     {
         $builder = $this->createQueryBuilder('thread');
 
         $builder->select('thread');
 
         $builder->where($builder->expr()->eq('thread.enabled', 1));
-        
+
         $query = $builder->getQuery();
 
         $result = $query->getResult();
