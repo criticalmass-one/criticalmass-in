@@ -158,5 +158,26 @@ class CityRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findForTimelineCityEditCollector()
+    {
+        $builder = $this->createQueryBuilder('city');
+
+        $builder->select('city', 'slug.slug');
+        $builder->join('city.archiveParent', 'parent');
+        $builder->leftJoin('parent.slugs', 'slug');
+
+        $builder->where($builder->expr()->eq('city.isArchived', 1));
+        $builder->andWhere($builder->expr()->isNotNull('city.archiveUser'));
+
+        $builder->addOrderBy('city.archiveDateTime', 'DESC');
+
+        $builder->addGroupBy('city.user');
+        $builder->addGroupBy('city.archiveParent');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
 
