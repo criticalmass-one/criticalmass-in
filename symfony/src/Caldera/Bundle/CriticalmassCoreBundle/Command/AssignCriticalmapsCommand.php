@@ -81,7 +81,9 @@ class AssignCriticalmapsCommand extends ContainerAwareCommand
             /**
              * @var Ride $ride
              */
-            $ride = $rideRepository->findRideByLatitudeLongitudeDateTime($position->getLatitude(), $position->getLongitude(), $position->getCreationDateTime());
+            if ($position) {
+                $ride = $rideRepository->findRideByLatitudeLongitudeDateTime($position->getLatitude(), $position->getLongitude(), $position->getCreationDateTime());
+            }
 
             if ($ride) {
                 $output->writeln($cmu->getId().' gefunden: '.$ride->getCity()->getCity());
@@ -90,6 +92,8 @@ class AssignCriticalmapsCommand extends ContainerAwareCommand
             } else {
                 $output->writeln($cmu->getId().': kein Treffer');
             }
+
+            $em->persist($cmu);
         }
 
         $em->flush();
