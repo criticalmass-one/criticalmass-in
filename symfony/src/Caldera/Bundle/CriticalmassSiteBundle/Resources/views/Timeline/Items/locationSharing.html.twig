@@ -13,14 +13,6 @@
             {{ item.sharingCounter }}
         </strong>
         Radfahrer teilen gerade ihren Aufenthaltsort in
-        {% for city in item.cityList %}
-            {% if loop.last and not loop.first %}
-                und
-            {% elseif not loop.first %}
-                ,
-            {% endif %}
-            <a href="{{ path('caldera_criticalmass_live_city', { citySlug: city.slug }) }}">{{ city.city }}</a>
-        {% endfor %}
-        .
+        {% for city in item.cityList %}{% if loop.last and not loop.first %} und {% elseif not loop.first %}, {% endif %}<a href="{{ path('caldera_criticalmass_live_city', { citySlug: city.slug }) }}">{{ city.city }}</a>{% if loop.last %}.{% endif %}{% endfor %}
     </div>
 </div>
