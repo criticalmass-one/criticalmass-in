@@ -38,9 +38,29 @@ class Timeline
 
         krsort($this->items);
 
+        $this->paginate();
+
         $this->createContent();
 
         return $this;
+    }
+
+    protected function paginate()
+    {
+        $lastDateTime = new \DateTime();
+        $threeMonthDateInterval = new \DateInterval('P3M');
+        $lastDateTime->sub($threeMonthDateInterval);
+
+        $maxItems = 50;
+        $counter = 0;
+
+        foreach ($this->items as $key => $item) {
+            ++$counter;
+
+            if ($item->getDateTime() < $lastDateTime or $counter > $maxItems) {
+                unset($this->items[$key]);
+            }
+        }
     }
 
     protected function createContent()
