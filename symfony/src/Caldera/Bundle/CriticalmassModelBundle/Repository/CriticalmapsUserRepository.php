@@ -20,5 +20,25 @@ class CriticalmapsUserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findForTimelineLocationSharingCollector()
+    {
+        $builder = $this->createQueryBuilder('criticalmapsuser');
+
+        $builder->select('criticalmapsuser');
+
+        $builder->where($builder->expr()->orX(
+            $builder->expr()->isNotNull('criticalmapsuser.ride'),
+            $builder->expr()->isNotNull('criticalmapsuser.city')
+        ));
+
+        $builder->addOrderBy('criticalmapsuser.creationDateTime', 'DESC');
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
 }
 

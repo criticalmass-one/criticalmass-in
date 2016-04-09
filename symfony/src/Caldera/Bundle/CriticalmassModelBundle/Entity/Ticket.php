@@ -5,7 +5,7 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\TicketRepository")
  * @ORM\Table(name="glympse_ticket")
  */
 class Ticket
