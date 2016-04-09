@@ -44,11 +44,12 @@ class RidePhotoCollector extends AbstractTimelineCollector
                 // grab a random photo as preview
                 $previewPhotoId = array_rand($rideGroup);
                 $item->setPreviewPhoto($rideGroup[$previewPhotoId]);
-                
+
                 // take last photo to fetch $user and $ride and $dateTime
                 $lastPhoto = array_pop($rideGroup);
                 $item->setUsername($lastPhoto->getUser()->getUsername());
                 $item->setRide($lastPhoto->getRide());
+                $item->setCity($lastPhoto->getCity());
                 $item->setRideTitle($lastPhoto->getRide()->getFancyTitle());
                 $item->setDateTime($lastPhoto->getCreationDateTime());
 

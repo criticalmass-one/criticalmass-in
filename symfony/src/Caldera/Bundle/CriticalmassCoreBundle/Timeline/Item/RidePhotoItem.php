@@ -19,6 +19,11 @@ class RidePhotoItem extends AbstractItem
     protected $ride;
 
     /**
+     * @var City $city
+     */
+    protected $city;
+
+    /**
      * @var string $rideTitle
      */
     protected $rideTitle;
@@ -65,6 +70,21 @@ class RidePhotoItem extends AbstractItem
         $this->ride = $ride;
     }
 
+    /**
+     * @return City
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param City $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
 
     /**
      * @return string
