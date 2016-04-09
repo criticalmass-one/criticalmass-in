@@ -163,9 +163,7 @@ class CityRepository extends EntityRepository
     {
         $builder = $this->createQueryBuilder('city');
 
-        $builder->select('city', 'slug.slug');
-        $builder->join('city.archiveParent', 'parent');
-        $builder->leftJoin('parent.slugs', 'slug');
+        $builder->select('city');
 
         $builder->where($builder->expr()->eq('city.isArchived', 1));
         $builder->andWhere($builder->expr()->isNotNull('city.archiveUser'));

@@ -39,6 +39,12 @@ class City implements BoardInterface
      */
     protected $region;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
+     * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
+     */
+    protected $mainSlug;
+
 	/**
 	 * Name der Stadt.
 	 *
@@ -307,11 +313,29 @@ class City implements BoardInterface
     }
 
     /**
-     * @param mixed $user
+     * @param User $user
      */
     public function setUser(User $user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return CitySlug
+     */
+    public function getMainSlug()
+    {
+        return $this->mainSlug;
+    }
+
+    /**
+     * @param CitySlug $citySlug
+     */
+    public function setMainSlug(CitySlug $citySlug)
+    {
+        $this->mainSlug = $citySlug;
 
         return $this;
     }
@@ -326,17 +350,6 @@ class City implements BoardInterface
 	public function __toString()
 	{
 		return $this->getCity();
-	}
-
-	/**
-	 * Diese Methode gibt den ersten Slug dieser Stadt zurueck, mit dem unter an-
-	 * derem Verlinkungen innerhalb der Web-App-Routen konstruiert werden.
-	 *
-	 * @return CitySlug: Beliebiger Slug dieser Stadt
-	 */
-	public function getMainSlug()
-	{
-		return $this->slugs[0];
 	}
 
     public function getMainSlugString()

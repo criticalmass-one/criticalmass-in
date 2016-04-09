@@ -9,7 +9,7 @@ services:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.thread']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.threadpost']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.rideedit']]
-            #- [addCollector, ['@caldera.criticalmass.timeline.collector.cityedit']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.cityedit']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.contentcomment']]
 
     caldera.criticalmass.timeline.collector.ridephoto:
