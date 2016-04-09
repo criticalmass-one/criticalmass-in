@@ -23,10 +23,8 @@ class CachedTimeline extends Timeline
         $cachedContent = $this->memcache->get('timeline-content');
 
         if ($cachedContent) {
-            echo "GET FROM CACHE";
             $this->content = $cachedContent;
         } else {
-            echo "GENERATE";
             $this->process();
 
             $this->memcache->set('timeline-content', $this->content, 0, $this->ttl);
