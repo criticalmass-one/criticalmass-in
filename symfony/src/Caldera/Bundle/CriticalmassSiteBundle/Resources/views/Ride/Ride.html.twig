@@ -94,7 +94,7 @@
     };
 
     CriticalMass.loadModule('RidePage', null, pageOptions, function(ridePage) {
-        {% if ride.getHasLocation() %}
+        {% if ride.getHasLocation() and ride.latitude != 0 and ride.getLongitude != 0 %}
         ridePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location() }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '{{ weatherForecast }}');
         {% else %}
         ridePage.addCity('{{ city.title }}', '{{ city.city }}', '{{ city.getMainSlugString() }}', '{{ city.description|e('js') }}', {{ city.latitude }}, {{ city.longitude }});
