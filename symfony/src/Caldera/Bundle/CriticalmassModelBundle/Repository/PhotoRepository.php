@@ -277,6 +277,8 @@ class PhotoRepository extends EntityRepository
 
         $builder->setMaxResults(250);
 
+        $builder->addOrderBy('photo.creationDateTime', 'DESC');
+        
         $query = $builder->getQuery();
 
         return $query->getResult();

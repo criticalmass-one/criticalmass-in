@@ -64,8 +64,12 @@ class ThreadRepository extends EntityRepository
 
         $builder->select('thread');
 
+        $builder->join('thread.firstPost', 'firstPost');
+
         $builder->where($builder->expr()->eq('thread.enabled', 1));
 
+        $builder->addOrderBy('firstPost.dateTime', 'DESC');
+        
         $query = $builder->getQuery();
 
         $result = $query->getResult();

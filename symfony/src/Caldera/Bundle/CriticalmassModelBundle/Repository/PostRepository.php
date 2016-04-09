@@ -124,6 +124,8 @@ class PostRepository extends EntityRepository
         $builder->where($builder->expr()->eq('post.enabled', 1));
         $builder->andWhere($builder->expr()->isNotNull('post.content'));
 
+        $builder->addOrderBy('post.dateTime', 'DESC');
+
         $query = $builder->getQuery();
 
         $result = $query->getResult();

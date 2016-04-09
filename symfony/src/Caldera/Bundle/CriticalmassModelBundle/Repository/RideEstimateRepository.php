@@ -15,6 +15,8 @@ class RideEstimateRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNull('estimate.estimatedDistance'));
         $builder->andWhere($builder->expr()->isNull('estimate.estimatedDuration'));
 
+        $builder->addOrderBy('estimate.creationDateTime', 'DESC');
+
         $query = $builder->getQuery();
 
         $result = $query->getResult();
