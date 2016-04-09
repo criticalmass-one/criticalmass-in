@@ -6,7 +6,9 @@
     </div>
 
     <div class="col-md-3">
-        <img src="{{ vich_uploader_asset(item.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+        <a href="{{ path(item.previewPhoto) }}">
+            <img src="{{ vich_uploader_asset(item.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive" />
+        </a>
     </div>
 
     <div class="col-md-7">
