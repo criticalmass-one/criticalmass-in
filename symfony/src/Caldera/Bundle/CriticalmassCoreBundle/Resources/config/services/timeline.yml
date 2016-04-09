@@ -1,4 +1,18 @@
 services:
+    caldera.criticalmass.timeline.cached:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\CachedTimeline
+        arguments: [@doctrine, @templating, @memcache.criticalmass, '%timeline.ttl%']
+        calls:
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridetrack']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.rideparticipationestimate']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.thread']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.threadpost']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.rideedit']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.cityedit']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.contentcomment']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.locationsharing']]
+
     caldera.criticalmass.timeline:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline
         arguments: [@doctrine, @templating]

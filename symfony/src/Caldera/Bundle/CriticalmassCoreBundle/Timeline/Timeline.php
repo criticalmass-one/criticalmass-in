@@ -23,9 +23,18 @@ class Timeline
     public function addCollector(AbstractTimelineCollector $collector)
     {
         array_push($this->collectorList, $collector);
+
+        return $this;
     }
 
     public function execute()
+    {
+        $this->process();
+
+        return $this;
+    }
+
+    protected function process()
     {
         /**
          * @var AbstractTimelineCollector $collector
@@ -61,6 +70,8 @@ class Timeline
                 unset($this->items[$key]);
             }
         }
+
+        return $this;
     }
 
     protected function createContent()
@@ -75,6 +86,8 @@ class Timeline
                 ]
             );
         }
+
+        return $this;
     }
 
     protected function templateNameForItem(ItemInterface $item)
