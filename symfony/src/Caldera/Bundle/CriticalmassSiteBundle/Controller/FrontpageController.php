@@ -19,7 +19,7 @@ class FrontpageController extends AbstractController
          * @var Timeline $timeline
          */
         $timelineContent = $this
-            ->get('caldera.criticalmass.timeline.cached')
+            ->get('caldera.criticalmass.timeline')
             ->execute()
             ->getTimelineContent();
 

@@ -1,4 +1,4 @@
-define(['Map', 'leaflet-polyline'], function() {
+define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], function() {
     AutoMap = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -36,6 +36,8 @@ define(['Map', 'leaflet-polyline'], function() {
 
         this._autoSetView();
         this._autoSetPolyline();
+        this._autoSetMarker();
+        this._autoSetPolylineMarker();
         this._setLockMap();
     };
 
@@ -65,11 +67,48 @@ define(['Map', 'leaflet-polyline'], function() {
     AutoMap.prototype._autoSetMarker = function() {
         var latitude = this._$mapContainer.data('map-marker-latitude');
         var longitude = this._$mapContainer.data('map-marker-longitude');
+
+    };
+
+    AutoMap.prototype._autoSetPolylineMarker = function() {
+        var polyline = this._$mapContainer.data('map-markers-polyline-list');
+
         var markerColor = this._$mapContainer.data('map-marker-color');
         var markerShape = this._$mapContainer.data('map-marker-shape');
-        var markerIconContent = this._$mapContainer.data('map-marker-icon-content');
+        var markerIcon = this._$mapContainer.data('map-marker-icon');
 
-        this.map.setView([latitude, longitude], zoomLevel);
+        if (polyline && markerColor && markerShape && markerIcon) {
+            var markerLatLngs = L.PolylineUtil.decode(polyline);
+
+            var markerList = [];
+
+            for (var index in markerLatLngs) {
+                var latLng = markerLatLngs[index];
+
+                var extraMarkerIcon = L.ExtraMarkers.icon({
+                    icon: 'fa-bicycle',
+                    markerColor: 'yellow',
+                    shape: 'square',
+                    prefix: 'fa'
+                });
+
+                var marker = L.marker(latLng, {icon: extraMarkerIcon});
+
+                markerList.push(marker);
+            }
+
+            var markerGroup = new L.featureGroup(markerList);
+
+            markerGroup.addTo(this.map);
+
+            if (markerLatLngs.length > 1) {
+                this.map.fitBounds(markerGroup.getBounds());
+            } else {
+                var latLng = markerLatLngs.pop();
+
+                this.setView(latLng, 13);
+            }
+        }
     };
 
     AutoMap.prototype._setLockMap = function() {

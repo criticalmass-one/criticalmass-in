@@ -36,18 +36,27 @@ class LocationSharingCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $dayGroup) {
             $sharingCounter = 0;
             $cityList = [];
+            $latLngList = [];
 
             foreach ($dayGroup as $entity) {
-                $cityId = $entity->getCity()->getId();
+                $city = $entity->getCity();
+                $cityId = $city->getId();
 
-                $cityList[$cityId] = $entity->getCity();
+                if (!array_key_exists($cityId, $cityList)) {
+                    $cityList[$cityId] = $city;
+
+                    array_push($latLngList, [$city->getLatitude(), $city->getLongitude()]);
+                }
 
                 ++$sharingCounter;
             }
 
+            $polyline = \Polyline::Encode($latLngList);
+
             $item = new LocationSharingItem();
             $item->setSharingCounter($sharingCounter);
             $item->setCityList($cityList);
+            $item->setPolyline($polyline);
 
             $lastEntity = array_pop($dayGroup);
 
