@@ -11,7 +11,7 @@ class RideTrackCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findForTimelineRideTrackCollector();
+        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findForTimelineRideTrackCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

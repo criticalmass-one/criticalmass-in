@@ -8,7 +8,7 @@ class ThreadPostCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Post')->findForTimelineThreadPostCollector();
+        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Post')->findForTimelineThreadPostCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

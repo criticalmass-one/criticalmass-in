@@ -10,8 +10,8 @@ class LocationSharingCollector extends AbstractTimelineCollector
     {
         $entities = [];
 
-        $glympseTickets = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ticket')->findForTimelineLocationSharingCollector();
-        $criticalmapsUsers = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:CriticalmapsUser')->findForTimelineLocationSharingCollector();
+        $glympseTickets = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ticket')->findForTimelineLocationSharingCollector($this->startDateTime, $this->endDateTime);
+        $criticalmapsUsers = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:CriticalmapsUser')->findForTimelineLocationSharingCollector($this->startDateTime, $this->endDateTime);
 
         $entities = array_merge($glympseTickets, $criticalmapsUsers);
 

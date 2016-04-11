@@ -58,7 +58,7 @@ class ThreadRepository extends EntityRepository
         return $query->getSingleResult();
     }
 
-    public function findForTimelineThreadCollector()
+    public function findForTimelineThreadCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('thread');
 
@@ -67,6 +67,18 @@ class ThreadRepository extends EntityRepository
         $builder->join('thread.firstPost', 'firstPost');
 
         $builder->where($builder->expr()->eq('thread.enabled', 1));
+
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gte('firstPost.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lte('firstPost.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
 
         $builder->addOrderBy('firstPost.dateTime', 'DESC');
         

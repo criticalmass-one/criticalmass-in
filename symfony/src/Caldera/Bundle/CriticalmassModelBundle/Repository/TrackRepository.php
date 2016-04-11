@@ -126,14 +126,27 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector()
+    public function findForTimelineRideTrackCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('track');
 
         $builder->select('track');
+
         $builder->where($builder->expr()->isNotNull('track.ride'));
         $builder->andWhere($builder->expr()->isNotNull('track.user'));
         $builder->andWhere($builder->expr()->eq('track.activated', true));
+
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gte('track.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lte('track.creationDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
 
         $query = $builder->getQuery();
 

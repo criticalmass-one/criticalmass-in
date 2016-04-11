@@ -13,7 +13,7 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findForTimelineRideParticipantsEstimateCollector();
+        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findForTimelineRideParticipantsEstimateCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

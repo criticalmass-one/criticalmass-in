@@ -9,7 +9,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findForTimelinePhotoCollector();
+        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findForTimelinePhotoCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $photoEntities)

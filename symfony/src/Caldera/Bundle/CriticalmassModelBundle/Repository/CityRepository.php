@@ -159,7 +159,7 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelineCityEditCollector()
+    public function findForTimelineCityEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('city');
 
@@ -167,6 +167,18 @@ class CityRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('city.isArchived', 1));
         $builder->andWhere($builder->expr()->isNotNull('city.archiveUser'));
+
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gte('city.archiveDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lte('city.archiveDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
 
         $builder->addOrderBy('city.archiveDateTime', 'DESC');
 

@@ -598,7 +598,7 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelineRideEditCollector()
+    public function findForTimelineRideEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -606,6 +606,18 @@ class RideRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('ride.isArchived', 1));
         $builder->andWhere($builder->expr()->isNotNull('ride.archiveUser'));
+
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gte('ride.archiveDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lte('ride.archiveDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
 
         $builder->addOrderBy('ride.archiveDateTime', 'DESC');
 

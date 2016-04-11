@@ -14,6 +14,9 @@ class Timeline
     protected $items = [];
     protected $content = '';
 
+    protected $startDateTime = null;
+    protected $endDateTime = null;
+
     public function __construct($doctrine, $templating)
     {
         $this->doctrine = $doctrine;
@@ -23,6 +26,14 @@ class Timeline
     public function addCollector(AbstractTimelineCollector $collector)
     {
         array_push($this->collectorList, $collector);
+
+        return $this;
+    }
+
+    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime)
+    {
+        $this->startDateTime = $startDateTime;
+        $this->endDateTime = $endDateTime;
 
         return $this;
     }
@@ -40,6 +51,8 @@ class Timeline
          * @var AbstractTimelineCollector $collector
          */
         foreach ($this->collectorList as $collector) {
+            $collector->setDateRange($this->startDateTime, $this->endDateTime);
+
             $collector->execute();
 
             $this->items = array_merge($this->items, $collector->getItems());

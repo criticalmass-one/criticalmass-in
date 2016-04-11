@@ -96,7 +96,7 @@ class PostRepository extends EntityRepository
         return $query->getSingleScalarResult();
     }
 
-    public function findForTimelineThreadPostCollector()
+    public function findForTimelineThreadPostCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('post');
 
@@ -107,7 +107,21 @@ class PostRepository extends EntityRepository
         $builder->where($builder->expr()->eq('post.enabled', 1));
         $builder->andWhere($builder->expr()->isNotNull('post.thread'));
         $builder->andWhere($builder->expr()->neq('post', 'thread.firstPost'));
-        
+
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lte('post.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        $builder->addOrderBy('post.dateTime', 'DESC');
+
         $query = $builder->getQuery();
 
         $result = $query->getResult();
@@ -115,7 +129,7 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineContentCommentCollector()
+    public function findForTimelineContentCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('post');
 
@@ -123,6 +137,18 @@ class PostRepository extends EntityRepository
         
         $builder->where($builder->expr()->eq('post.enabled', 1));
         $builder->andWhere($builder->expr()->isNotNull('post.content'));
+
+        if ($startDateTime) {
+            $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($endDateTime) {
+            $builder->andWhere($builder->expr()->lte('post.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
 
         $builder->addOrderBy('post.dateTime', 'DESC');
 
