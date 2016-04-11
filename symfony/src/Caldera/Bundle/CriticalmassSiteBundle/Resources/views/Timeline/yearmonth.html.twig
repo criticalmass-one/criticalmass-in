@@ -10,6 +10,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <h1>
+                    Die Critical Mass im {{ startDateTime|date('F Y') }}
+                </h1>
+
+                <p class="lead">
+                    Schau dir an, was im {{ startDateTime|date('F Y') }} bei der Critical Mass passiert ist.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 {{ timelineContent|raw }}
             </div>
         </div>
