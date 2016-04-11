@@ -22,9 +22,36 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="{{ path('caldera_criticalmass_desktop_city_list') }}" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-university"></i>
-                        {% trans %}criticalmass.navigation.cities.cities{% endtrans %}
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <i class="fa fa-map-marker"></i>
+                        {% trans %}criticalmass.navigation.live.live{% endtrans %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_live') }}">
+                                {% trans %}criticalmass.navigation.live.map{% endtrans %}
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">
+                                {% trans %}criticalmass.navigation.live.glympse{% endtrans %}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'critical-maps' }) }}">
+                                {% trans %}criticalmass.navigation.live.criticalmaps{% endtrans %}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <i class="fa fa-bicycle"></i>
+                        {% trans %}criticalmass.navigation.criticalmass.criticalmass{% endtrans %}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
@@ -44,21 +71,6 @@
                             </a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_photo_examplegallery') }}">
-                                {% trans %}criticalmass.navigation.cities.photos{% endtrans %}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                        <i class="fa fa-bicycle"></i>
-                        {% trans %}criticalmass.navigation.criticalmass.criticalmass{% endtrans %}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
                                 {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
@@ -89,33 +101,6 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                        <i class="fa fa-map-marker"></i>
-                        {% trans %}criticalmass.navigation.live.live{% endtrans %}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_live') }}">
-                                {% trans %}criticalmass.navigation.live.map{% endtrans %}
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">
-                                {% trans %}criticalmass.navigation.live.glympse{% endtrans %}
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'critical-maps' }) }}">
-                                {% trans %}criticalmass.navigation.live.criticalmaps{% endtrans %}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown">
                     <a href="{{ path('caldera_criticalmass_statistic_overview') }}" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bar-chart"></i>
                         Statistik
@@ -136,11 +121,20 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="{{ path('caldera_criticalmass_board_overview') }}">
+                <li class="dropdown">
+                    <a href="{{ path('caldera_criticalmass_board_overview') }}" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-comments"></i>
-                        Diskussionen
+                        Community
+                        <span class="caret"></span>
                     </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_board_overview') }}">
+                                Diskussionen
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 {% if app.getUser() %}
