@@ -156,7 +156,7 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findFrontpageRides($order = 'ASC')
+    public function findFrontpageRides()
     {
         $startDateTime = new \DateTime();
         $startDateTimeInterval = new \DateInterval('P8W');
@@ -168,13 +168,17 @@ class RideRepository extends EntityRepository
 
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder->select('ride, city');
+
+        $builder->join('ride.city', 'city');
+
         $builder->where($builder->expr()->lte('ride.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
         $builder->andWhere($builder->expr()->gte('ride.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
 
         $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
 
-        $builder->orderBy('ride.dateTime', $order);
+        $builder->addOrderBy('ride.dateTime', 'ASC');
+        $builder->addOrderBy('city.city', 'ASC');
 
         $query = $builder->getQuery();
 
