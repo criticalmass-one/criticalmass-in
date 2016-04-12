@@ -93,6 +93,35 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Bald unterwegs
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                        {% for rideDate, rides in rideList %}
+                            <li>
+                                <h4>
+                                    {{ rideDate|date('d. F Y') }}
+                                </h4>
+
+                                <ul>
+                                {% for ride in rides %}
+                                    <li>
+                                        <a href="{{ path(ride) }}">
+                                            {{ ride.getFancyTitle() }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
