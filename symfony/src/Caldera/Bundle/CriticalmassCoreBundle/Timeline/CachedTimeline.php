@@ -23,11 +23,11 @@ class CachedTimeline extends Timeline
         $cacheKey = 'timeline-content';
 
         if ($this->startDateTime) {
-            $cacheKey .= '-start-'.$this->startDateTime->format('Y-m-d-H-i-s');
+            $cacheKey .= '-start-'.$this->startDateTime->format('Y-m-d');
         }
 
         if ($this->endDateTime) {
-            $cacheKey .= '-end-'.$this->endDateTime->format('Y-m-d-H-i-s');
+            $cacheKey .= '-end-'.$this->endDateTime->format('Y-m-d');
         }
 
         $cachedContent = $this->memcache->get($cacheKey);
@@ -37,7 +37,7 @@ class CachedTimeline extends Timeline
         } else {
             $this->process();
 
-            $this->memcache->set('timeline-content', $this->content, 0, $this->ttl);
+            $this->memcache->set($cacheKey, $this->content, 0, $this->ttl);
         }
 
         return $this;
