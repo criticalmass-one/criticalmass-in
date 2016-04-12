@@ -28,7 +28,7 @@ class TimelineController extends AbstractController
          * @var Timeline $timeline
          */
         $timelineContent = $this
-            ->get('caldera.criticalmass.timeline')
+            ->get('caldera.criticalmass.timeline.cached')
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();
