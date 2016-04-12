@@ -70,14 +70,6 @@ caldera_criticalmass_statistic:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"
     prefix: /
 
-caldera_criticalmass_city:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
-    prefix: /
-
-caldera_criticalmass_citymanagement:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/citymanagement.yml"
-    prefix: /
-
 caldera_criticalmass_location:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/location.yml"
     prefix: /
@@ -94,9 +86,17 @@ caldera_criticalmass_strava:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/strava.yml"
     prefix: /
 
-caldera_criticalmass_statistic:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/statistic.yml"
-    prefix:   /
+caldera_criticalmass_timeline:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timeline.yml"
+    prefix: /
+
+caldera_criticalmass_city:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
+    prefix: /
+
+caldera_criticalmass_citymanagement:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/citymanagement.yml"
+    prefix: /
 
 caldera_criticalmass_ride:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/ride.yml"
@@ -104,10 +104,6 @@ caldera_criticalmass_ride:
 
 caldera_criticalmass_ridemanagement:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/ridemanagement.yml"
-    prefix: /
-
-caldera_criticalmass_timeline:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timeline.yml"
     prefix: /
 
 caldera_criticalmass_sudride:

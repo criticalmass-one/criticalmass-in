@@ -42,4 +42,11 @@ class TimelineController extends AbstractController
             ]
         );
     }
+
+    public function indexAction(Request $request)
+    {
+        $dateTime = new \DateTime();
+
+        return $this->yearmonthAction($request, $dateTime->format('Y'), $dateTime->format('M'));
+    }
 }

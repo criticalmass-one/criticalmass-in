@@ -3,7 +3,15 @@
 {% block title %}criticalmass.in{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Startseite</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_timeline_index') }}">
+            Timeline
+        </a>
+    </li>
+
+    <li class="active">
+        {{ startDateTime|date('F Y') }}
+    </li>
 {% endblock %}
 
 {% block content %}
