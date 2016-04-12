@@ -20,7 +20,17 @@ class CachedTimeline extends Timeline
 
     public function execute()
     {
-        $cachedContent = $this->memcache->get('timeline-content');
+        $cacheKey = 'timeline-content';
+
+        if ($this->startDateTime) {
+            $cacheKey .= '-start-'.$this->startDateTime->format('Y-m-d-H-i-s');
+        }
+
+        if ($this->endDateTime) {
+            $cacheKey .= '-end-'.$this->endDateTime->format('Y-m-d-H-i-s');
+        }
+
+        $cachedContent = $this->memcache->get($cacheKey);
 
         if ($cachedContent) {
             $this->content = $cachedContent;
