@@ -70,7 +70,7 @@ class TimelineController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth',
             [
                 'year' => $dateTime->format('Y'),
-                'month' => $dateTime->format('M')
+                'month' => $dateTime->format('m')
             ]);
     }
 
