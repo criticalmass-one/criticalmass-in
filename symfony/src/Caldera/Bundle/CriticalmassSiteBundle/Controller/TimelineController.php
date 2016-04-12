@@ -67,7 +67,11 @@ class TimelineController extends AbstractController
     {
         $dateTime = new \DateTime();
 
-        return $this->yearmonthAction($request, $dateTime->format('Y'), $dateTime->format('M'));
+        return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth',
+            [
+                'year' => $dateTime->format('Y'),
+                'month' => $dateTime->format('M')
+            ]);
     }
 
     protected function getNextDateTime(\DateTime $dateTime)
