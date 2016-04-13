@@ -4,27 +4,39 @@ define(['socketio', 'dateformat'], function(io) {
     };
 
     ChatPage.prototype._userToken = null;
+    ChatPage.prototype._nameId = null;
+    ChatPage.prototype._socket = null;
 
     ChatPage.prototype.setUserToken = function(userToken) {
         this._userToken = userToken;
     };
 
+    ChatPage.prototype.setAnonymousNameId = function(nameId) {
+        this._nameId = nameId;
+    };
+
     ChatPage.prototype.startChat = function() {
-        var socket = io('http://criticalmass.cm:3000');
+        this._initSocket();
 
-        var that = this;
+        $('form').submit(this._submitMessage.bind(this));
 
-        $('form').submit(function() {
-            var message = that._buildMessage();
+        this._socket.on('message', this._printMessage.bind(this));
+    };
 
-            socket.emit('message', message);
+    ChatPage.prototype._initSocket = function() {
+        this._socket = io('http://criticalmass.cm:3000');
+    };
 
-            $('#m').val('');
+    ChatPage.prototype._submitMessage = function(e) {
+        e.preventDefault();
 
-            return false;
-        });
+        var message = this._buildMessage();
 
-        socket.on('message', this._printMessage);
+        this._socket.emit('message', message);
+
+        $('#m').val('');
+
+        return false;
     };
 
     ChatPage.prototype._printMessage = function(message) {
@@ -53,6 +65,7 @@ define(['socketio', 'dateformat'], function(io) {
     ChatPage.prototype._buildMessage = function() {
         return {
             userToken: this._userToken || '',
+            nameId: this._nameId,
             message: $('#m').val()
         };
     };

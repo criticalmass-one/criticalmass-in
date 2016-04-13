@@ -9,9 +9,12 @@ class ChatController extends AbstractController
 {
     public function indexAction(Request $request)
     {
+        $recentMessages = $this->getPostRepository()->findRecentChatMessages();
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Chat:index.html.twig',
             [
+                'recentMessages' => $recentMessages
             ]
         );
     }

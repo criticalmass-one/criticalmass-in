@@ -32,7 +32,20 @@
         <div class="row">
             <div class="col-md-12">
                 <ul id="messages" class="list-unstyled">
-
+                {% for post in recentMessages %}
+                    <li>
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=64" alt="...">
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ post.user.username }}</h4>
+                                {{ post.message }}
+                                <small style="display: block;">{{ post.dateTime|date('d.m.Y H:i:s') }}&nbsp;Uhr</small>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
                 </ul>
             </div>
         </div>
@@ -42,6 +55,8 @@
         CriticalMass.loadModule('ChatPage', null, null, function(chatPage) {
             {% if app.getUser() %}
             chatPage.setUserToken('{{ app.getUser().token }}');
+            {% else %}
+            chatPage.setAnonymousNameId(3);
             {% endif %}
 
             chatPage.startChat();

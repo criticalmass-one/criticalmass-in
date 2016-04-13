@@ -57,7 +57,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=32)
      */
-    protected $pingToken;
+    protected $token;
 
     /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
@@ -70,7 +70,7 @@ class User extends BaseUser
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
 
-        $this->pingToken = md5(microtime());
+        $this->token = md5(microtime());
     }
 
     /**
@@ -182,14 +182,14 @@ class User extends BaseUser
         $this->colorBlue = $colorBlue;
     }
 
-    public function setPingToken($pingToken)
+    public function setToken($token)
     {
-        $this->pingToken = $pingToken;
+        $this->token = $token;
     }
 
-    public function getPingToken()
+    public function getToken()
     {
-        return $this->pingToken;
+        return $this->token;
     }
 
     public function equals(User $user)

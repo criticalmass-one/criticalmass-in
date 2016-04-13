@@ -97,6 +97,11 @@ class Post
      */
     protected $enabled = true;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $chat = false;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -435,5 +440,28 @@ class Post
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Set chat
+     *
+     * @param boolean $chat
+     * @return Post
+     */
+    public function setChat($chat)
+    {
+        $this->chat = $chat;
+
+        return $this;
+    }
+
+    /**
+     * Get chat
+     *
+     * @return boolean
+     */
+    public function getChat()
+    {
+        return $this->chat;
     }
 }
