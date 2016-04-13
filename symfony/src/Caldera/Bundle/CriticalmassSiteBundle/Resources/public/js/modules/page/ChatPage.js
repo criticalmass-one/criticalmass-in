@@ -8,7 +8,7 @@ define(['socketio'], function(io) {
         });
 
         socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text(msg));
+            $('#messages').prepend($('<li>').text(msg));
         });
     };
 
