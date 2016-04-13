@@ -90,6 +90,10 @@ caldera_criticalmass_timeline:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/timeline.yml"
     prefix: /
 
+caldera_criticalmass_chat:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/chat.yml"
+    prefix: /
+
 caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /

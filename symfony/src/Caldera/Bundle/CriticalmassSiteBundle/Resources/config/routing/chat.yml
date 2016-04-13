@@ -1,0 +1,3 @@
+caldera_criticalmass_chat_index:
+    pattern:  /chat
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Chat:index }
