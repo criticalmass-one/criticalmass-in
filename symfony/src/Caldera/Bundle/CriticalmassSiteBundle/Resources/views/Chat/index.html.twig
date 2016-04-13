@@ -29,6 +29,12 @@
     </div>
 
     <script type="text/javascript">
-        CriticalMass.loadModule('ChatPage');
+        CriticalMass.loadModule('ChatPage', null, null, function(chatPage) {
+            {% if app.getUser() %}
+            chatPage.setUserToken('{{ app.getUser().token }}');
+            {% endif %}
+
+            chatPage.startChat();
+        });
     </script>
 {% endblock %}
