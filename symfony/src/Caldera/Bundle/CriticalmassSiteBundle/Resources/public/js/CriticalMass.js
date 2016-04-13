@@ -63,6 +63,7 @@ require.config({
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
+        "ChatPage": "/bundles/calderacriticalmasssite/js/modules/page/ChatPage",
         "CityStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/CityStatisticPage",
         "FacebookStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/FacebookStatisticPage",
         "StatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/StatisticPage",
@@ -133,6 +134,9 @@ require.config({
         'leaflet-markercluster': {
             deps: ['leaflet'],
             exports: 'L.MarkerClusterGroup'
+        },
+        'socketio': {
+            exports: 'io'
         },
         typeahead:{
             deps: ['jquery'],
