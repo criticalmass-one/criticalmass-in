@@ -11,10 +11,17 @@ class ChatController extends AbstractController
     {
         $recentMessages = $this->getPostRepository()->findRecentChatMessages();
 
+        $anonymousName = null;
+
+        if (!$this->getUser()) {
+            $anonymousName = $this->getAnonymousNameRepository()->findOneRandomUnusedName();
+        }
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Chat:index.html.twig',
             [
-                'recentMessages' => $recentMessages
+                'recentMessages' => $recentMessages,
+                'anonymousName' => $anonymousName
             ]
         );
     }

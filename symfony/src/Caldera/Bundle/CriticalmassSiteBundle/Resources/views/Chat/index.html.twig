@@ -6,31 +6,26 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% if app.getUser() %}
                 <h1>
-                    Chat
+                    Hej {{ app.getUser().username }}!
                 </h1>
-
                 <p class="lead">
                     Gerade unterwegs? Unterhalte dich mit anderen Teilnehmern deiner Masse.
                 </p>
+                {% elseif anonymousName %}
+                <h1>
+                    Hej {{ anonymousName.name }}!
+                </h1>
+                <p class="lead">
+                    Gerade unterwegs? Unterhalte dich mit anderen Teilnehmern deiner Masse. Falls dir dein automatisch gewählter Chat-Name nicht gefällt, kannst du dich <a href="{{ path('fos_user_registration_register') }}">registrieren</a> und dir einen schöneren Namen aussuchen.
+                </p>
+                {% endif %}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <form class="form-inline" action="">
-                    <div class="form-group">
-                        <input id="m" class="form-control" autocomplete="off" />
-                        <button class="btn btn-success">
-                            Absenden
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <ul id="messages" class="list-unstyled">
                 {% for post in recentMessages %}
                     <li>
@@ -47,6 +42,17 @@
                     </li>
                 {% endfor %}
                 </ul>
+            </div>
+
+            <div class="col-md-4">
+                <form class="form-inline" action="">
+                    <div class="form-group">
+                        <input id="m" class="form-control" autocomplete="off" />
+                        <button class="btn btn-success">
+                            Absenden
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
