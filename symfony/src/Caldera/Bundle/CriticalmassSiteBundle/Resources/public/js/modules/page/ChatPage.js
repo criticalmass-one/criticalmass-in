@@ -43,9 +43,9 @@ define(['socketio', 'dateformat'], function(io) {
         var date = new Date(message.timestamp);
 
         var html = '';
-        html += '<li>';
+        html += '<li class="margin-bottom-medium">';
         html += '<div class="media">';
-        html += '<div class="media-left"><a href="#"><img class="media-object" src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=64" alt="..."></a></div>';
+        html += '<div class="media-left"><a href="#"><img class="media-object img-circle" src="http://www.gravatar.com/avatar/' + message.gravatarHash + '?s=64" alt="..."></a></div>';
         html += '<div class="media-body">';
         html += '<h4 class="media-heading" style="color: ' + message.userColor + ';">' + message.username + '</h4>';
         html += message.message;

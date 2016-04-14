@@ -487,26 +487,26 @@ class Post
     }
 
     /**
-     * Set username
+     * Set anonymousName
      *
-     * @param string $username
+     * @param AnonymousName $anonymousName
      * @return Post
      */
-    public function setUsername($username)
+    public function setAnonymousName($anonymousName)
     {
-        $this->username = $username;
+        $this->anonymousName = $anonymousName;
 
         return $this;
     }
 
     /**
-     * Get username
+     * Get anonymousName
      *
-     * @return string
+     * @return AnonymousName
      */
-    public function getUsername()
+    public function getAnonymousName()
     {
-        return $this->username;
+        return $this->anonymousName;
     }
 
     /**

@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10 col-md-offset-1">
                 {% if app.getUser() %}
                 <h1>
                     Hej {{ app.getUser().username }}!
@@ -25,16 +25,35 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10 col-md-offset-1">
+                <form class="" action="">
+                    <div class="form-group">
+                        <input id="m" class="form-control" autocomplete="off" placeholder="Deine Nachricht…" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
                 <ul id="messages" class="list-unstyled">
                 {% for post in recentMessages %}
-                    <li>
+                {% if post.user %}
+                {% set username = post.user.username %}
+                {% set gravatarUrl = gravatarUrl(post.user) %}
+                {% else %}
+                {% set username = post.anonymousName.name %}
+                {% set gravatarUrl = 'http://www.gravatar.com/avatar/?d=identicon&s=64' %}
+                {% endif %}
+
+
+                    <li class="margin-bottom-medium">
                         <div class="media">
                             <div class="media-left">
-                                <img class="media-object" src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=64" alt="...">
+                                <img class="media-object img-circle" src="{{ gravatarUrl }}" alt="...">
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">{{ post.user.username }}</h4>
+                                <h4 class="media-heading">{{ username }}</h4>
                                 {{ post.message }}
                                 <small style="display: block;">{{ post.dateTime|date('d.m.Y H:i:s') }}&nbsp;Uhr</small>
                             </div>
@@ -42,17 +61,6 @@
                     </li>
                 {% endfor %}
                 </ul>
-            </div>
-
-            <div class="col-md-4">
-                <form class="form-inline" action="">
-                    <div class="form-group">
-                        <input id="m" class="form-control" autocomplete="off" />
-                        <button class="btn btn-success">
-                            Absenden
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -62,7 +70,7 @@
             {% if app.getUser() %}
             chatPage.setUserToken('{{ app.getUser().token }}');
             {% else %}
-            chatPage.setAnonymousNameId(3);
+            chatPage.setAnonymousNameId({{ anonymousName.id }});
             {% endif %}
 
             chatPage.startChat();

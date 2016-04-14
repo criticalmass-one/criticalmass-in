@@ -10,11 +10,15 @@ class ChatController extends AbstractController
     public function indexAction(Request $request)
     {
         $recentMessages = $this->getPostRepository()->findRecentChatMessages();
-
-        $anonymousName = null;
-
-        if (!$this->getUser()) {
+        
+        if (!$this->getUser() and !$this->getSession()->get('anonymousName')) {
             $anonymousName = $this->getAnonymousNameRepository()->findOneRandomUnusedName();
+
+            $this->getSession()->set('anonymousName', $anonymousName);
+        } elseif (!$this->getUser() and $this->getSession()->get('anonymousName')) {
+            $anonymousName = $this->getSession()->get('anonymousName');
+        } else {
+            $anonymousName = null;
         }
 
         return $this->render(
