@@ -4,15 +4,15 @@ define(['socketio', 'dateformat'], function(io) {
     };
 
     ChatPage.prototype._userToken = null;
-    ChatPage.prototype._nameId = null;
+    ChatPage.prototype._anonymousNameId = null;
     ChatPage.prototype._socket = null;
 
     ChatPage.prototype.setUserToken = function(userToken) {
         this._userToken = userToken;
     };
 
-    ChatPage.prototype.setAnonymousNameId = function(nameId) {
-        this._nameId = nameId;
+    ChatPage.prototype.setAnonymousNameId = function(anonymousNameId) {
+        this._anonymousNameId = anonymousNameId;
     };
 
     ChatPage.prototype.startChat = function() {
@@ -57,15 +57,11 @@ define(['socketio', 'dateformat'], function(io) {
 
         $('#messages').prepend(html);
     };
-
-
-
-
-
+    
     ChatPage.prototype._buildMessage = function() {
         return {
             userToken: this._userToken || '',
-            nameId: this._nameId,
+            anonymousNameId: this._anonymousNameId,
             message: $('#m').val()
         };
     };
