@@ -87,6 +87,12 @@ class Post
     protected $dateTime;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AnonymousName", inversedBy="posts")
+     * @ORM\JoinColumn(name="anonymous_name_id", referencedColumnName="id")
+     */
+    protected $anonymousName;
+
+    /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
@@ -101,6 +107,21 @@ class Post
      * @ORM\Column(type="boolean")
      */
     protected $chat = false;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $colorRed = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $colorGreen = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $colorBlue = 0;
 
     public function __construct()
     {
@@ -463,5 +484,97 @@ class Post
     public function getChat()
     {
         return $this->chat;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Post
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set colorRed
+     *
+     * @param integer $colorRed
+     * @return City
+     */
+    public function setColorRed($colorRed)
+    {
+        $this->colorRed = $colorRed;
+
+        return $this;
+    }
+
+    /**
+     * Get colorRed
+     *
+     * @return integer
+     */
+    public function getColorRed()
+    {
+        return $this->colorRed;
+    }
+
+    /**
+     * Set colorGreen
+     *
+     * @param integer $colorGreen
+     * @return City
+     */
+    public function setColorGreen($colorGreen)
+    {
+        $this->colorGreen = $colorGreen;
+
+        return $this;
+    }
+
+    /**
+     * Get colorGreen
+     *
+     * @return integer
+     */
+    public function getColorGreen()
+    {
+        return $this->colorGreen;
+    }
+
+    /**
+     * Set colorBlue
+     *
+     * @param integer $colorBlue
+     * @return City
+     */
+    public function setColorBlue($colorBlue)
+    {
+        $this->colorBlue = $colorBlue;
+
+        return $this;
+    }
+
+    /**
+     * Get colorBlue
+     *
+     * @return integer
+     */
+    public function getColorBlue()
+    {
+        return $this->colorBlue;
     }
 }
