@@ -98,7 +98,7 @@ require.config({
         "bloodhound": "/bundles/calderacriticalmasssite/js/external/typeahead/bloodhound",
         "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min",
         "dateformat": "/bundles/calderacriticalmasssite/js/external/dateformat/dateformat",
-        "socketio": "https://cdn.socket.io/socket.io-1.4.5",
+        "socketio": "/bundles/calderacriticalmasssite/js/external/socketio/socketio",
         "chartjs": "/bundles/calderacriticalmasssite/js/external/chartjs/chartjs"
 
     },
