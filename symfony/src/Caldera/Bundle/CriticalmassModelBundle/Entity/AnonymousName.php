@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="anonymous_name")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\AnonymousNameRepository")
  */
 class AnonymousName
 {

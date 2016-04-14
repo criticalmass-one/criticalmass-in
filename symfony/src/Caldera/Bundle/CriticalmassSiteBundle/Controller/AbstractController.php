@@ -3,8 +3,10 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\AnonymousName;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Repository\AnonymousNameRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\BoardRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
 use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
@@ -42,6 +44,14 @@ abstract class AbstractController extends Controller
         } else {
             throw new NotFoundHttpException();
         }
+    }
+
+    /**
+     * @return AnonymousNameRepository
+     */
+    protected function getAnonymousNameRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:AnonymousName');
     }
 
     /**
