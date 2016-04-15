@@ -38,14 +38,13 @@
             <div class="col-md-10 col-md-offset-1">
                 <ul id="messages" class="list-unstyled">
                 {% for post in recentMessages %}
-                {% if post.user %}
-                {% set username = post.user.username %}
-                {% set gravatarUrl = gravatarUrl(post.user) %}
-                {% else %}
-                {% set username = post.anonymousName.name %}
-                {% set gravatarUrl = 'http://www.gravatar.com/avatar/?d=identicon&s=64' %}
-                {% endif %}
-
+                    {% if post.user %}
+                        {% set username = post.user.username %}
+                        {% set gravatarUrl = gravatarUrl(post.user) %}
+                    {% else %}
+                        {% set username = post.anonymousName.name %}
+                        {% set gravatarUrl = 'http://www.gravatar.com/avatar/?d=identicon&s=64' %}
+                    {% endif %}
 
                     <li class="margin-bottom-medium">
                         <div class="media">
