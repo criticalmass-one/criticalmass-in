@@ -23,7 +23,10 @@ class SiteTwigExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFilter('markdown', [$this, 'markdown'], array(
                 'is_safe' => array('html')
-            ))
+            )),
+            new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
+                'is_safe' => array('html')
+            )),
         ];
     }
 
@@ -57,7 +60,7 @@ class SiteTwigExtension extends \Twig_Extension
     public function getTests()
     {
         return [
-            'instanceof' =>  new \Twig_Function_Method($this, 'isInstanceof'),
+            'instanceof' => new \Twig_Function_Method($this, 'isInstanceof'),
             'today' => new \Twig_Function_Method($this, 'today')
         ];
     }
@@ -78,7 +81,7 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function gravatarUrl(User $user, $size = 64)
     {
-        return 'http://www.gravatar.com/avatar/'.$this->gravatarHash($user).'?s='.$size;
+        return 'http://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
     }
 
     public function daysSince($dateTimeString)
@@ -93,11 +96,13 @@ class SiteTwigExtension extends \Twig_Extension
         return $diffDays;
     }
 
-    public function isInstanceof($var, $instance) {
+    public function isInstanceof($var, $instance)
+    {
         return $var instanceof $instance;
     }
 
-    public function today(\DateTime $dateTime) {
+    public function today(\DateTime $dateTime)
+    {
         $today = new \DateTime();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
@@ -116,7 +121,7 @@ class SiteTwigExtension extends \Twig_Extension
 
         $username = str_replace('/', '', $username);
 
-        $username = '@'.$username;
+        $username = '@' . $username;
 
         return $username;
     }
@@ -141,6 +146,25 @@ class SiteTwigExtension extends \Twig_Extension
         $hostname = str_replace('www.', '', $hostname);
 
         return $hostname;
+    }
+
+    public function hashtagToCity($string)
+    {
+        preg_match_all('/#([a-zA-Z0-9]*)/', $string, $result);
+
+        foreach ($result[0] as $hashtag) {
+            $lcHashtag = strtolower($hashtag);
+
+            $citySlug = substr($lcHashtag, 1, strlen($hashtag) - 1);
+
+            $path = $this->container->get('router')->generate('caldera_criticalmass_desktop_city_show', ['citySlug' => $citySlug]);
+
+            $link = '<a href="'.$path.'">'.$hashtag.'</a>';
+            
+            $string = str_replace($hashtag, $link, $string);
+        }
+
+        return $string;
     }
 
     public function getName()
