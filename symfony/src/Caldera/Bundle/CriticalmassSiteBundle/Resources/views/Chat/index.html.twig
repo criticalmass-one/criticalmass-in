@@ -35,7 +35,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-7 col-md-offset-1">
                 <ul id="messages" class="list-unstyled">
                 {% for post in recentMessages %}
                     {% if post.user %}
@@ -59,6 +59,12 @@
                         </div>
                     </li>
                 {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <ul id="members">
+
                 </ul>
             </div>
         </div>

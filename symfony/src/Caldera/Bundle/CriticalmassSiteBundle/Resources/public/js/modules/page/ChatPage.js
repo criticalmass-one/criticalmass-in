@@ -21,6 +21,7 @@ define(['socketio', 'dateformat'], function(io) {
         $('form').submit(this._submitMessage.bind(this));
 
         this._socket.on('message', this._printMessage.bind(this));
+        this._socket.on('joined', this._memberJoined.bind(this));
     };
 
     ChatPage.prototype._initSocket = function() {
@@ -56,6 +57,14 @@ define(['socketio', 'dateformat'], function(io) {
         html += '</li>';
 
         $('#messages').prepend(html);
+    };
+
+    ChatPage.prototype._memberJoined = function(message) {
+        $('#members').prepend('<li>' + message.username + '</li>');
+    };
+
+    ChatPage.prototype._memberLeft = function(message) {
+
     };
     
     ChatPage.prototype._buildMessage = function() {
