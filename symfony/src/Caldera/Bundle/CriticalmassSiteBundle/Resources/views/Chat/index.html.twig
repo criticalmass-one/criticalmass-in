@@ -56,32 +56,60 @@
             </div>
 
             <div class="col-md-3">
-                <div class="row">
+                {% if not app.getUser() %}
+                <div class="row" id="gender-selector">
                     <div class="col-md-12">
-                        <div class="text-center">
-                            <div id="chat-gender-buttons" class="btn-group" role="group" aria-label="...">
-                                <button data-gender="male" class="btn btn-default" id="chat-button-male">
-                                    <i class="fa fa-mars" aria-hidden="true"></i>
-                                </button>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Mitreden?
+                                </h3>
+                            </div>
 
-                                <button data-gender="transgender" class="btn btn-default" id="chat-button-transgender">
-                                    <i class="fa fa-transgender" aria-hidden="true"></i>
-                                </button>
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <div id="chat-gender-buttons" class="btn-group" role="group" aria-label="...">
+                                        <button data-gender="male" class="btn btn-default" id="chat-button-male">
+                                            <i class="fa fa-mars" aria-hidden="true"></i>
+                                        </button>
 
-                                <button data-gender="genderless" class="btn btn-default" id="chat-button-genderless">
-                                    <i class="fa fa-genderless" aria-hidden="true"></i>
-                                </button>
+                                        <button data-gender="transgender" class="btn btn-default" id="chat-button-transgender">
+                                            <i class="fa fa-transgender" aria-hidden="true"></i>
+                                        </button>
 
-                                <button data-gender="female" class="btn btn-default" id="chat-button-female">
-                                    <i class="fa fa-venus" aria-hidden="true"></i>
-                                </button>
+                                        <button data-gender="genderless" class="btn btn-default" id="chat-button-genderless">
+                                            <i class="fa fa-genderless" aria-hidden="true"></i>
+                                        </button>
+
+                                        <button data-gender="female" class="btn btn-default" id="chat-button-female">
+                                            <i class="fa fa-venus" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ul id="members">
+                {% endif %}
 
-                </ul>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Gerade online
+                                </h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <ul id="members" class="list-unstyled">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
