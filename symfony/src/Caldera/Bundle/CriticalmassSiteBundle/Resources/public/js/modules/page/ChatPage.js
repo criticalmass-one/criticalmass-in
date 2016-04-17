@@ -5,6 +5,7 @@ define(['socketio', 'dateformat'], function(io) {
 
     ChatPage.prototype._userToken = null;
     ChatPage.prototype._anonymousNameId = null;
+    ChatPage.prototype._anonymousName = null;
     ChatPage.prototype._socket = null;
 
     ChatPage.prototype.setUserToken = function(userToken) {
@@ -27,22 +28,33 @@ define(['socketio', 'dateformat'], function(io) {
     ChatPage.prototype._initEvents = function() {
         $('form').submit(this._submitMessage.bind(this));
 
-        $('#chat-gender-buttons button').on('click', this._chooseGender);
+        var that = this;
+
+        $('#chat-gender-buttons button').on('click', function(button) {
+            var gender = $(this).data('gender');
+
+            that._chooseGender(gender);
+        });
     };
     
-    ChatPage.prototype._chooseGender = function() {
-        var gender = $(this).data('gender');
+    ChatPage.prototype._chooseGender = function(gender) {
+        var that = this;
 
         $.get('/app_dev.php/chat/anonymoususername?gender=' + gender, function(response) {
-            alert(JSON.stringify(response));
+            that._anonymousNameId = response.anonymousNameId;
+            that._anonymousName = response.anonymousName;
+
+            that._join();
         });
-
-
     };
     
 
     ChatPage.prototype._initSocket = function() {
         this._socket = io('http://criticalmass.cm:3000');
+
+        if (this._userToken) {
+            this._join();
+        }
     };
 
     ChatPage.prototype._join = function() {

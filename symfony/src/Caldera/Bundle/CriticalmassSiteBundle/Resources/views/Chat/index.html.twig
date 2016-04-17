@@ -13,13 +13,6 @@
                 <p class="lead">
                     Gerade unterwegs? Unterhalte dich mit anderen Teilnehmern deiner Masse.
                 </p>
-                {% elseif anonymousName %}
-                <h1>
-                    Hej {{ anonymousName.name }}!
-                </h1>
-                <p class="lead">
-                    Gerade unterwegs? Unterhalte dich mit anderen Teilnehmern deiner Masse. Falls dir dein automatisch gewählter Chat-Name nicht gefällt, kannst du dich <a href="{{ path('fos_user_registration_register') }}">registrieren</a> und dir einen schöneren Namen aussuchen.
-                </p>
                 {% endif %}
             </div>
         </div>
@@ -97,8 +90,6 @@
         CriticalMass.loadModule('ChatPage', null, null, function(chatPage) {
             {% if app.getUser() %}
             chatPage.setUserToken('{{ app.getUser().token }}');
-            {% else %}
-            chatPage.setAnonymousNameId({{ anonymousName.id }});
             {% endif %}
 
             chatPage.startChat();
