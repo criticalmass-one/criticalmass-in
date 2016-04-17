@@ -26,6 +26,17 @@ define(['socketio', 'dateformat'], function(io) {
 
     ChatPage.prototype._initSocket = function() {
         this._socket = io('http://criticalmass.cm:3000');
+
+        this._join();
+    };
+
+    ChatPage.prototype._join = function() {
+        var joinMessage = {
+            userToken: this._userToken || null,
+            anonymousNameId: this._anonymousNameId || null
+        };
+
+        this._socket.emit('join', joinMessage);
     };
 
     ChatPage.prototype._submitMessage = function(e) {
@@ -69,8 +80,7 @@ define(['socketio', 'dateformat'], function(io) {
     
     ChatPage.prototype._buildMessage = function() {
         return {
-            userToken: this._userToken || '',
-            anonymousNameId: this._anonymousNameId,
+
             message: $('#m').val()
         };
     };
