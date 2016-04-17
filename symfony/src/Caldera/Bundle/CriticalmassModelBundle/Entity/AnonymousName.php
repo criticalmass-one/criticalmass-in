@@ -24,6 +24,11 @@ class AnonymousName
     protected $name;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $gender;
+
+    /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     protected $locale;
@@ -64,6 +69,29 @@ class AnonymousName
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return AnonymousName
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
     }
 
     /**
