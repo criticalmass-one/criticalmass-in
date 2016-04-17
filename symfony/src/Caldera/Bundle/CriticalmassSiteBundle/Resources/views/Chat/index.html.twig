@@ -92,6 +92,10 @@
             chatPage.setUserToken('{{ app.getUser().token }}');
             {% endif %}
 
+            {% if anonymousNameId %}
+            chatPage.setAnonymousNameId({{ anonymousNameId }});
+            {% endif %}
+
             chatPage.startChat();
         });
     </script>

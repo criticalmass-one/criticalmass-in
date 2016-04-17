@@ -52,7 +52,7 @@ define(['socketio', 'dateformat'], function(io) {
     ChatPage.prototype._initSocket = function() {
         this._socket = io('http://criticalmass.cm:3000');
 
-        if (this._userToken) {
+        if (this._userToken || this._anonymousNameId) {
             this._join();
         }
     };
