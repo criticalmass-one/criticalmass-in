@@ -18,16 +18,31 @@ define(['socketio', 'dateformat'], function(io) {
     ChatPage.prototype.startChat = function() {
         this._initSocket();
 
-        $('form').submit(this._submitMessage.bind(this));
+        this._initEvents();
 
         this._socket.on('message', this._printMessage.bind(this));
         this._socket.on('joined', this._memberJoined.bind(this));
     };
 
+    ChatPage.prototype._initEvents = function() {
+        $('form').submit(this._submitMessage.bind(this));
+
+        $('#chat-gender-buttons button').on('click', this._chooseGender);
+    };
+    
+    ChatPage.prototype._chooseGender = function() {
+        var gender = $(this).data('gender');
+
+        $.get('/app_dev.php/chat/anonymoususername?gender=' + gender, function(response) {
+            alert(JSON.stringify(response));
+        });
+
+
+    };
+    
+
     ChatPage.prototype._initSocket = function() {
         this._socket = io('http://criticalmass.cm:3000');
-
-        this._join();
     };
 
     ChatPage.prototype._join = function() {

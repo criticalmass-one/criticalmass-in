@@ -39,6 +39,11 @@ class AnonymousName
     protected $enabled = true;
 
     /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="anonymousName")
+     */
+    protected $posts;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -64,7 +69,7 @@ class AnonymousName
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
