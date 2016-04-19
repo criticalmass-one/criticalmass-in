@@ -56,7 +56,7 @@
             </div>
 
             <div class="col-md-3">
-                {% if not app.getUser() %}
+                {% if not app.getUser() and not anonymousNameId %}
                 <div class="row" id="gender-selector">
                     <div class="col-md-12">
                         <div class="panel panel-default">
