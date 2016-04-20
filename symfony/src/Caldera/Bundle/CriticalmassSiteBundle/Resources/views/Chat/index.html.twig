@@ -10,10 +10,14 @@
                 <h1>
                     Hej {{ app.getUser().username }}!
                 </h1>
+                {% else %}
+                <h1>
+                    Hej!
+                </h1>
+                {% endif %}
                 <p class="lead">
                     Gerade unterwegs? Unterhalte dich mit anderen Teilnehmern deiner Masse.
                 </p>
-                {% endif %}
             </div>
         </div>
 
