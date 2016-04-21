@@ -1,0 +1,41 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Kalender{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
+    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li class="active">Kalender</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Gefahrenstellen in {{ city.city }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 400px;">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('IncidentEditPage', null, null, function(incidentPage) {
+
+        });
+    </script>
+{% endblock %}

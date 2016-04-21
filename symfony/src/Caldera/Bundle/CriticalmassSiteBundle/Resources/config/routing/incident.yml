@@ -1,3 +1,7 @@
 caldera_criticalmass_incident:
     pattern:  /{citySlug}/incidents
     defaults: { _controller: CalderaCriticalmassSiteBundle:Incident:list }
+
+caldera_criticalmass_incident_add:
+    pattern:  /{citySlug}/incidents/add
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Incident:add }
