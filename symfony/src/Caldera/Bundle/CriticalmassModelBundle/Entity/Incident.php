@@ -48,7 +48,7 @@ class Incident
     /**
      * @ORM\Column(type="text")
      */
-    protected $latLngList;
+    protected $polyline;
 
     /**
      * @ORM\Column(type="boolean")
@@ -145,26 +145,26 @@ class Incident
     }
 
     /**
-     * Set latLngList
+     * Set polyline
      *
-     * @param string $latLngList
+     * @param string $polyline
      * @return Incident
      */
-    public function setLatLngList($latLngList)
+    public function setPolyline($polyline)
     {
-        $this->latLngList = $latLngList;
+        $this->polyline = $polyline;
 
         return $this;
     }
 
     /**
-     * Get latLngList
+     * Get polyline
      *
      * @return string 
      */
-    public function getLatLngList()
+    public function getPolyline()
     {
-        return $this->latLngList;
+        return $this->polyline;
     }
 
     /**
