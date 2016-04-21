@@ -55,6 +55,7 @@ require.config({
         "StravaImportPage": "/bundles/calderacriticalmasssite/js/modules/page/StravaImportPage",
         "FacebookImportRidePage": "/bundles/calderacriticalmasssite/js/modules/page/FacebookImportRidePage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
+        "IncidentEditPage": "/bundles/calderacriticalmasssite/js/modules/page/IncidentEditPage",
         "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "Notification": "/bundles/calderacriticalmasssite/js/modules/Notification",
         "Timelapse": "/bundles/calderacriticalmasssite/js/modules/map/Timelapse",
@@ -69,6 +70,7 @@ require.config({
         "StatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/StatisticPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
         "AutoMap": "/bundles/calderacriticalmasssite/js/modules/map/AutoMap",
+        "DrawMap": "/bundles/calderacriticalmasssite/js/modules/map/DrawMap",
         "Geocoding": "/bundles/calderacriticalmasssite/js/modules/Geocoding",
         "Modal": "/bundles/calderacriticalmasssite/js/modules/Modal",
         "MapLayerControl": "/bundles/calderacriticalmasssite/js/modules/map/MapLayerControl",
@@ -92,6 +94,7 @@ require.config({
         "leaflet-polyline": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-polyline",
         "leaflet-extramarkers": "/bundles/calderacriticalmasssite/js/external/leaflet/ExtraMarkers",
         "leaflet-markercluster": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-markercluster",
+        "leaflet-draw": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.draw",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
@@ -100,7 +103,6 @@ require.config({
         "dateformat": "/bundles/calderacriticalmasssite/js/external/dateformat/dateformat",
         "socketio": "/bundles/calderacriticalmasssite/js/external/socketio/socketio",
         "chartjs": "/bundles/calderacriticalmasssite/js/external/chartjs/chartjs"
-
     },
     shim: {
         'leaflet-locate': {
@@ -134,6 +136,10 @@ require.config({
         'leaflet-markercluster': {
             deps: ['leaflet'],
             exports: 'L.MarkerClusterGroup'
+        },
+        'leaflet-draw': {
+            deps: ['leaflet'],
+            exports: 'L.Control.Draw'
         },
         'socketio': {
             exports: 'io'
