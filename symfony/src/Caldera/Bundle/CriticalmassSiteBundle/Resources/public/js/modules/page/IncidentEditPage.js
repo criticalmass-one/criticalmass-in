@@ -1,30 +1,34 @@
 define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
     IncidentEditPage = function () {
         this._initMap();
+        this._initMarkerIcon();
+        this._initDrawControl();
         this._initDrawableStuff();
     };
 
     IncidentEditPage.prototype._map = null;
     IncidentEditPage.prototype._markerIcon = null;
+    IncidentEditPage.prototype._drawnItems = null;
 
     IncidentEditPage.prototype._initMap = function() {
         this._map = new DrawMap('map');
     };
 
-    IncidentEditPage.prototype._initDrawableStuff = function() {
-        var drawnItems = new L.FeatureGroup();
-        this._map.map.addLayer(drawnItems);
-
+    IncidentEditPage.prototype._initMarkerIcon = function() {
         this._markerIcon = L.ExtraMarkers.icon({
             icon: 'fa-bomb',
             markerColor: 'red',
             shape: 'round',
             prefix: 'fa'
         });
+    };
+
+    IncidentEditPage.prototype._initDrawControl = function() {
+        this._drawnItems = new L.FeatureGroup();
 
         var drawControl = new L.Control.Draw({
             edit: {
-                featureGroup: drawnItems
+                featureGroup: this._drawnItems
             },
             draw: {
                 polyline: false,
@@ -37,7 +41,9 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
         });
 
         this._map.map.addControl(drawControl);
+    };
 
+    IncidentEditPage.prototype._initDrawableStuff = function() {
         var that = this;
 
         this._map.map.on('draw:created', function (e) {
