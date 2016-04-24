@@ -1,21 +1,27 @@
-define(['DrawMap', 'leaflet-polyline'], function() {
+define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
     IncidentEditPage = function () {
         this._initMap();
         this._initDrawableStuff();
     };
 
     IncidentEditPage.prototype._map = null;
+    IncidentEditPage.prototype._markerIcon = null;
 
     IncidentEditPage.prototype._initMap = function() {
         this._map = new DrawMap('map');
     };
 
     IncidentEditPage.prototype._initDrawableStuff = function() {
-        // Initialise the FeatureGroup to store editable layers
         var drawnItems = new L.FeatureGroup();
         this._map.map.addLayer(drawnItems);
 
-// Initialise the draw control and pass it the FeatureGroup of editable layers
+        this._markerIcon = L.ExtraMarkers.icon({
+            icon: 'fa-bomb',
+            markerColor: 'red',
+            shape: 'round',
+            prefix: 'fa'
+        });
+
         var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems
@@ -23,7 +29,10 @@ define(['DrawMap', 'leaflet-polyline'], function() {
             draw: {
                 polyline: false,
                 rectangle: false,
-                circle: false
+                circle: false,
+                marker: {
+                    icon: this._markerIcon
+                }
             }
         });
 
@@ -35,17 +44,13 @@ define(['DrawMap', 'leaflet-polyline'], function() {
             var type = e.layerType,
                 layer = e.layer;
 
-            if (type === 'marker') {
-                alert('foooo');
-                // Do marker specific actions
+            if (type === 'polygon') {
+                var latLngList = layer.getLatLngs();
+
+                var polyline = L.PolylineUtil.encode(latLngList);
+
+                $('#incident_polyline').val(polyline);
             }
-
-            var latLngList = layer.getLatLngs();
-
-            var polyline = L.PolylineUtil.encode(latLngList);
-
-            $('#incident_polyline').val(polyline);
-
 
             // Do whatever else you need to. (save to db, add to map etc)
             that._map.map.addLayer(layer);
