@@ -16,6 +16,9 @@ class Incident
     const INCIDENT_ROADWORKS = 'Arbeitsstelle';
     const INCIDENT_DANGER = 'Gefahrenstelle';
 
+    const GEOMETRY_POLYLINE = 'Polyline';
+    const GEOMETRY_MARKER = 'Marker';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

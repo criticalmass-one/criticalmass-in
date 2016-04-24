@@ -14,7 +14,7 @@ class IncidentType extends AbstractType
         $builder
             ->add('title', 'text', array('required' => false))
             ->add('description', 'textarea', array('required' => false))
-            ->add('polyline', 'textarea')
+            ->add('polyline', 'hidden')
             ->add('geometryType', 'hidden')
             ->add('incidentType', ChoiceType::class,
                 [
