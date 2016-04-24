@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity
@@ -11,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Incident
 {
+    const INCIDENT_RAGE = 'Road Rage';
+    const INCIDENT_ROADWORKS = 'Arbeitsstelle';
+    const INCIDENT_DANGER = 'Gefahrenstelle';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -43,7 +48,12 @@ class Incident
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $type;
+    protected $geometryType;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $incidentType;
 
     /**
      * @ORM\Column(type="text")
@@ -64,6 +74,16 @@ class Incident
      * @ORM\Column(type="datetime")
      */
     protected $visibleTo;
+
+    public function __construct()
+    {
+        $dateInterval = new \DateInterval('P3M');
+
+        $this->visibleFrom = new \DateTime();
+        $this->visibleTo = new \DateTime();
+
+        $this->visibleTo->add($dateInterval);
+    }
 
     /**
      * Get id
@@ -122,26 +142,49 @@ class Incident
     }
 
     /**
-     * Set type
+     * Set incidentType
      *
-     * @param string $type
+     * @param string $incidentType
      * @return Incident
      */
-    public function setType($type)
+    public function setIncidentType($incidentType)
     {
-        $this->type = $type;
+        $this->type = $incidentType;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Get incidentType
      *
-     * @return string 
+     * @return string
      */
-    public function getType()
+    public function getIncidentType()
     {
-        return $this->type;
+        return $this->incidentType;
+    }
+
+    /**
+     * Set geometryType
+     *
+     * @param string $type
+     * @return Incident
+     */
+    public function setGeometryType($geometryType)
+    {
+        $this->geometryType = $geometryType;
+
+        return $this;
+    }
+
+    /**
+     * Get geometryType
+     *
+     * @return string
+     */
+    public function getGeometryType()
+    {
+        return $this->geometryType;
     }
 
     /**

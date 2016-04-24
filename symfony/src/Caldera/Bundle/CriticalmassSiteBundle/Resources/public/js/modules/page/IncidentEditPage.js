@@ -27,7 +27,7 @@ define(['DrawMap'], function() {
                 // Do marker specific actions
             }
 
-            alert(layer.getLatLngs());
+            $('#incident_polyline').val(layer.getLatLngs());
 
 
             // Do whatever else you need to. (save to db, add to map etc)
