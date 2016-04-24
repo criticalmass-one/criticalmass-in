@@ -1,9 +1,16 @@
 define(['DrawMap'], function() {
     IncidentEditPage = function () {
+        this._initMap();
+        this._initDrawableStuff();
+    };
+
+    IncidentEditPage.prototype._map = null;
+
+    IncidentEditPage.prototype._initMap = function() {
         this._map = new DrawMap('map');
+    };
 
-        this._map.setView([53, 9], 10);
-
+    IncidentEditPage.prototype._initDrawableStuff = function() {
         // Initialise the FeatureGroup to store editable layers
         var drawnItems = new L.FeatureGroup();
         this._map.map.addLayer(drawnItems);
@@ -35,7 +42,10 @@ define(['DrawMap'], function() {
         });
     };
 
-    IncidentEditPage.prototype._map = null;
+    IncidentEditPage.prototype.setView = function(centerLatLng, zoom) {
+        this._map.setView(centerLatLng, zoom);
+    };
+
 
     return IncidentEditPage;
 });

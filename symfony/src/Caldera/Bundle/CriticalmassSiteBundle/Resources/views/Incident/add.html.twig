@@ -35,7 +35,7 @@
 
     <script>
         CriticalMass.loadModule('IncidentEditPage', null, null, function(incidentPage) {
-
+            incidentPage.setView([{{ city.latitude }}, {{ city.longitude }}], 10);
         });
     </script>
 {% endblock %}
