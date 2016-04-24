@@ -1,4 +1,4 @@
-define(['DrawMap'], function() {
+define(['DrawMap', 'leaflet-polyline'], function() {
     IncidentEditPage = function () {
         this._initMap();
         this._initDrawableStuff();
@@ -19,8 +19,14 @@ define(['DrawMap'], function() {
         var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems
+            },
+            draw: {
+                polyline: false,
+                rectangle: false,
+                circle: false
             }
         });
+
         this._map.map.addControl(drawControl);
 
         var that = this;
@@ -34,7 +40,11 @@ define(['DrawMap'], function() {
                 // Do marker specific actions
             }
 
-            $('#incident_polyline').val(layer.getLatLngs());
+            var latLngList = layer.getLatLngs();
+
+            var polyline = L.PolylineUtil.encode(latLngList);
+
+            $('#incident_polyline').val(polyline);
 
 
             // Do whatever else you need to. (save to db, add to map etc)
