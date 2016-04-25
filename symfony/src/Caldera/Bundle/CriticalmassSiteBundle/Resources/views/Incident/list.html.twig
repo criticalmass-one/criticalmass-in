@@ -1,11 +1,22 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Kalender{% endblock %}
+{% block title %}Gefahren- und Arbeitsstellen in {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li class="active">Kalender</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Gefahrenstellen
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -15,6 +26,10 @@
                 <h1>
                     Gefahren- und Arbeitsstellen in {{ city.city }}
                 </h1>
+
+                <p class="lead">
+                    Augen auf! Die folgende Karte zeigt einige Arbeitsstellen oder Gefahrenstellen in {{ city.city }}, in deren Nähe Teilnehmer der Critical Mass ganz besonders aufpassen sollten.
+                </p>
             </div>
         </div>
 
