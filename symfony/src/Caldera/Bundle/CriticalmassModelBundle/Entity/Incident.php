@@ -152,7 +152,7 @@ class Incident
      */
     public function setIncidentType($incidentType)
     {
-        $this->type = $incidentType;
+        $this->incidentType = $incidentType;
 
         return $this;
     }

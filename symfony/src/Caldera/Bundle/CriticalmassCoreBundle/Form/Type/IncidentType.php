@@ -19,9 +19,9 @@ class IncidentType extends AbstractType
             ->add('incidentType', ChoiceType::class,
                 [
                     'choices'  => [
-                        Incident::INCIDENT_RAGE,
-                        Incident::INCIDENT_DANGER,
-                        Incident::INCIDENT_ROADWORKS
+                        0 => Incident::INCIDENT_RAGE,
+                        1 => Incident::INCIDENT_DANGER,
+                        2 => Incident::INCIDENT_ROADWORKS
                     ]
                 ]
             )

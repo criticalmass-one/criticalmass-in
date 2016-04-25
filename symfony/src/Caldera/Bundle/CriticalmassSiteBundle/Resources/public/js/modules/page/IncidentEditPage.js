@@ -50,12 +50,23 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
             var type = e.layerType,
                 layer = e.layer;
 
-            if (type === 'polygon') {
+            if (type == 'polygon') {
                 var latLngList = layer.getLatLngs();
 
                 var polyline = L.PolylineUtil.encode(latLngList);
 
                 $('#incident_polyline').val(polyline);
+                $('#incident_geometryType').val('polygon');
+            }
+
+            if (type == 'marker') {
+                var latLng = layer.getLatLng();
+
+                var polyline = L.PolylineUtil.encode([latLng]);
+
+                alert(polyline);
+                $('#incident_polyline').val(polyline);
+                $('#incident_geometryType').val('marker');
             }
 
             // Do whatever else you need to. (save to db, add to map etc)
