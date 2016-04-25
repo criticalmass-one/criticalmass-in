@@ -1,4 +1,4 @@
-define(['leaflet', 'BaseEntity', 'leaflet-polyline'], function() {
+define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal'], function() {
     IncidentEntity = function(title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
         this._title = title;
         this._description = description;
@@ -26,23 +26,45 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline'], function() {
     IncidentEntity.prototype.addToLayer = function(markerLayer) {
         var latLngList = L.PolylineUtil.decode(this._polyline);
 
+        var polyOptions = { color: 'red' };
+
         if (this._geometryType == 'polygon') {
-            this._layer = new L.polygon(latLngList);
+            this._layer = new L.polygon(latLngList, polyOptions);
         }
 
         if (this._geometryType == 'polyline') {
-            var latLngList = L.PolylineUtil.decode(this._polyline);
-
-            this._layer = new L.polyline(latLngList)
+            this._layer = new L.polyline(latLngList, polyOptions)
         }
 
         if (this._geometryType == 'marker') {
-            var latLng = L.PolylineUtil.decode(this._polyline);
+            var icon = markerIcon = L.ExtraMarkers.icon({
+                icon: 'fa-bomb',
+                markerColor: 'red',
+                shape: 'round',
+                prefix: 'fa'
+            });
 
-            this._layer = new L.marker(latLngList[0]);
+            this._layer = new L.marker(latLngList[0], { icon: icon });
         }
 
-        markerLayer.addLayer(this._layer);
+        if (this._layer) {
+            markerLayer.addLayer(this._layer);
+            this._initPopup();
+        }
+    };
+
+    IncidentEntity.prototype._initPopup = function() {
+        this._modal = new Modal();
+        this._modal.setSize('md');
+
+        this._modal.setTitle(this._title);
+        this._modal.setBody(this._description);
+
+        var that = this;
+
+        this._layer.on('click', function() {
+            that._modal.show();
+        });
     };
 
     return IncidentEntity;
