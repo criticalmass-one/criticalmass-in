@@ -10,17 +10,28 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IncidentController extends AbstractController
 {
-    public function listAction(Request $request, $citySlug)
+    public function listAction(Request $request, $citySlug, $rideDate = null)
     {
         $city = $this->getCheckedCity($citySlug);
 
-        $incidents = $this->getIncidentRepository()->findByCity($city);
+        if ($rideDate) {
+            $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+            $incidents = $this->getIncidentRepository()->findByRide($ride);
+        } else {
+            $ride = null;
+
+            $incidents = $this->getIncidentRepository()->findByCity($city);
+        }
+
+
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Incident:list.html.twig',
             [
                 'incidents' => $incidents,
-                'city' => $city
+                'city' => $city,
+                'ride' => $ride
             ]
         );
     }

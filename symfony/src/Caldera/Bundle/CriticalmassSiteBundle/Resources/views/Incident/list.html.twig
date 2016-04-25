@@ -1,6 +1,12 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Gefahren- und Arbeitsstellen in {{ city.city }}{% endblock %}
+{% if ride %}
+{% set title = 'Gefahren- und Arbeitsstellen in ' ~ city.city ~ ' am ' ~ ride.dateTime|date('d.m.Y') %}
+{% else %}
+{% set title = 'Gefahren- und Arbeitsstellen in ' ~ city.city %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
     <li>
@@ -14,6 +20,14 @@
         </a>
     </li>
 
+    {% if ride %}
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    {% endif %}
+
     <li class="active">
         Gefahrenstellen
     </li>
@@ -24,7 +38,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Gefahren- und Arbeitsstellen in {{ city.city }}
+                    {{ title }}
                 </h1>
 
                 <p class="lead">

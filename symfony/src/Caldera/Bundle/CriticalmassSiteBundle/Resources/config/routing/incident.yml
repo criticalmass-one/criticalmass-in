@@ -1,5 +1,9 @@
-caldera_criticalmass_incident:
+caldera_criticalmass_incidents_city:
     pattern:  /{citySlug}/incidents
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Incident:list }
+
+caldera_criticalmass_incidents_ride:
+    pattern:  /{citySlug}/{rideDate}/incidents
     defaults: { _controller: CalderaCriticalmassSiteBundle:Incident:list }
 
 caldera_criticalmass_incident_add:
