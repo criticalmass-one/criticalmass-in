@@ -31,7 +31,6 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
                 featureGroup: this._drawnItems
             },
             draw: {
-                polyline: false,
                 rectangle: false,
                 circle: false,
                 marker: {
@@ -49,6 +48,15 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
         this._map.map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
+
+            if (type == 'polyline') {
+                var latLngList = layer.getLatLngs();
+
+                var polyline = L.PolylineUtil.encode(latLngList);
+
+                $('#incident_polyline').val(polyline);
+                $('#incident_geometryType').val('polyline');
+            }
 
             if (type == 'polygon') {
                 var latLngList = layer.getLatLngs();

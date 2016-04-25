@@ -1,34 +1,29 @@
-define(['Map', 'Container', 'CityEntity'], function() {
-    RegionPage = function () {
-        this._initContainer();
+define(['Map', 'Container', 'IncidentEntity'], function() {
+    IncidentPage = function () {
         this._initMap();
     };
 
-    RegionPage.prototype._map = null;
-    RegionPage.prototype._cityContainer = null;
+    IncidentPage.prototype._map = null;
+    IncidentPage.prototype._incidentContainer = new Container();
 
-    RegionPage.prototype._initContainer = function() {
-        this._cityContainer = new Container();
-    };
-
-    RegionPage.prototype._initMap = function() {
+    IncidentPage.prototype._initMap = function() {
         this._map = new Map('map', []);
-
-        this._cityContainer.addToMap(this._map);
     };
 
-    RegionPage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
-        var cityEntity = new CityEntity(city, title, slug, description, latitude, longitude);
+    IncidentPage.prototype.addIncident = function(title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
+        var incidentEntity = new IncidentEntity(title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo);
 
-        this._cityContainer.addEntity(cityEntity);
-
-        return cityEntity;
+        incidentEntity.addToContainer(this._incidentContainer);
     };
 
-    RegionPage.prototype.setFocus = function() {
-        var bounds = this._cityContainer.getBounds();
+    IncidentPage.prototype.init = function() {
+        this._incidentContainer.addToMap(this._map);
+    };
+
+    IncidentPage.prototype.setFocus = function() {
+        var bounds = this._incidentContainer.getBounds();
         this._map.fitBounds(bounds);
     };
 
-    return RegionPage;
+    return IncidentPage;
 });

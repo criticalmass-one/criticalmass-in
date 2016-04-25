@@ -43,6 +43,7 @@ require.config({
         "TimelapseTrackEntity": "/bundles/calderacriticalmasssite/js/modules/entity/TimelapseTrackEntity",
         "SubrideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/SubrideEntity",
         "PositionEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PositionEntity",
+        "IncidentEntity": "/bundles/calderacriticalmasssite/js/modules/entity/IncidentEntity",
         "BaseEntity": "/bundles/calderacriticalmasssite/js/modules/entity/BaseEntity",
         "MarkerEntity": "/bundles/calderacriticalmasssite/js/modules/entity/MarkerEntity",
         "PhotoEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PhotoEntity",

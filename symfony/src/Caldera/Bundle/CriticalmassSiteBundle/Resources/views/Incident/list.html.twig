@@ -60,8 +60,11 @@
     <script>
         CriticalMass.loadModule('IncidentPage', null, null, function(incidentPage) {
             {% for incident in incidents %}
-
+            incidentPage.addIncident('{{ incident.title|e }})', '{{ incident.description|e }}', '{{ incident.geometryType }}', '{{ incident.incidentType }}', '{{ incident.polyline|replace({'\\': '\\\\'}) }}', '{{ incident.expires }}', '{{ incident.visibleFrom|date('Y-m-d') }}', '{{ incident.visibleTo|date('Y-m-d') }}');
             {% endfor %}
+
+            incidentPage.init();
+            incidentPage.setFocus();
         });
     </script>
 {% endblock %}
