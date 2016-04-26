@@ -1,4 +1,4 @@
-define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal'], function() {
+define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton'], function() {
     IncidentEntity = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
         this._id = id;
         this._title = title;
@@ -51,22 +51,28 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
 
         if (this._layer) {
             markerLayer.addLayer(this._layer);
+            
             this._initPopup();
+
+            var that = this;
+
+            this._layer.on('click', function() {
+                that.openPopup();
+            });
         }
     };
 
     IncidentEntity.prototype._initPopup = function() {
         this._modal = new Modal();
+
         this._modal.setSize('md');
 
         this._modal.setTitle(this._title);
         this._modal.setBody(this._description);
 
-        var that = this;
+        this._modal.resetButtons();
+        this._modal.addButton(new CloseModalButton());
 
-        this._layer.on('click', function() {
-            that.openPopup();
-        });
     };
 
     IncidentEntity.prototype.openPopup = function() {

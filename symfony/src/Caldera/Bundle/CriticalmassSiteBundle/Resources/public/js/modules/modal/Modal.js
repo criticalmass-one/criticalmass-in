@@ -1,6 +1,6 @@
 define([], function() {
 
-    Modal = function(context, options) {
+    Modal = function() {
     };
 
     Modal.prototype.$modal = null;
@@ -8,6 +8,7 @@ define([], function() {
     Modal.prototype._modalBody = '';
     Modal.prototype._modalFooter = '';
     Modal.prototype._size = 'lg';
+    Modal.prototype._buttonList = [];
 
     Modal.prototype.setSize = function(size) {
         this._size = size;
@@ -37,10 +38,34 @@ define([], function() {
         }
     };
 
+    Modal.prototype.addButton = function(button) {
+        this._buttonList.push(button);
+    };
+
+    Modal.prototype.resetButtons = function() {
+        this._buttonList = [];
+    };
+
+    Modal.prototype._renderButtons = function() {
+        var footerHtml = '';
+
+        $.each(this._buttonList, function(index, button) {
+            footerHtml += button.render();
+        });
+
+        this.setFooter(footerHtml);
+    };
+
     Modal.prototype.show = function() {
+        if (this._buttonList.length > 0) {
+            this._renderButtons();
+        }
+
         this._buildHtml();
         this._inject();
         this.$modal.modal();
+
+        this._installDestroyEvent();
     };
 
     Modal.prototype.isVisible = function() {
@@ -49,6 +74,15 @@ define([], function() {
         }
 
         return this.$modal.hasClass('in');
+    };
+
+    Modal.prototype._installDestroyEvent = function() {
+        var that = this;
+
+        this.$modal.on('hidden.bs.modal', function() {
+            that.$modal.remove();
+            that.$modal = null;
+        });
     };
 
     Modal.prototype._buildHtml = function() {
