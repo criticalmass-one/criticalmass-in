@@ -115,7 +115,8 @@ class RideTabsController extends AbstractController
                 'dateTime' => new \DateTime(),
                 'estimateForm' => $estimateForm->createView(),
                 'weatherForecast' => $weatherForecast,
-                'location' => $location
+                'location' => $location,
+                'incidentCounter' => $this->getIncidentRepository()->countByRide($ride)
             ]
         );
     }

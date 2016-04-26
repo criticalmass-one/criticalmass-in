@@ -3,9 +3,19 @@
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path(city) }}">{{ city.city }}</a></li>
-    <li class="active">{{ ride.getFancyTitle() }}</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+    <li class="active">
+        {{ ride.getFancyTitle() }}
+    </li>
 {% endblock %}
 
 {% block content %}
