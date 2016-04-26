@@ -1,4 +1,4 @@
-define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton'], function() {
+define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function() {
     IncidentEntity = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
         this._id = id;
         this._title = title;
@@ -24,6 +24,8 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
     IncidentEntity.prototype._visibleFrom = null;
     IncidentEntity.prototype._visibleTo = null;
     IncidentEntity.prototype._layer = null;
+
+    IncidentEntity.prototype._map = null;
 
     IncidentEntity.prototype.addToLayer = function(markerLayer) {
         var latLngList = L.PolylineUtil.decode(this._polyline);
@@ -51,7 +53,7 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
 
         if (this._layer) {
             markerLayer.addLayer(this._layer);
-            
+
             this._initPopup();
 
             var that = this;
@@ -73,6 +75,17 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
         this._modal.resetButtons();
         this._modal.addButton(new CloseModalButton());
 
+        var focusButton = new ModalButton();
+        focusButton.setCaption('Anzeigen');
+        focusButton.setClass('btn-success');
+
+        var that = this;
+        focusButton.setOnClickEvent(function() {
+            that._map.fitBounds(that.getBounds());
+        });
+
+        this._modal.addButton(focusButton);
+
     };
 
     IncidentEntity.prototype.openPopup = function() {
@@ -81,6 +94,10 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
 
     IncidentEntity.prototype.getBounds = function() {
         return this._layer.getBounds();
+    };
+
+    IncidentEntity.prototype.setMap = function(map) {
+        this._map = map;
     };
 
     return IncidentEntity;

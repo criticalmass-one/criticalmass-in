@@ -5,7 +5,6 @@ define([], function() {
     CloseModalButton.prototype._$button = null;
     CloseModalButton.prototype._html = null;
 
-
     CloseModalButton.prototype.render = function() {
         this._html = '<button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>';
 
@@ -13,7 +12,6 @@ define([], function() {
 
         return this._html;
     };
-
 
     return CloseModalButton;
 });

@@ -47,21 +47,22 @@ define([], function() {
     };
 
     Modal.prototype._renderButtons = function() {
-        var footerHtml = '';
+        var $btnGroup = $('<div class="btn-group">');
 
         $.each(this._buttonList, function(index, button) {
-            footerHtml += button.render();
+            $btnGroup.prepend(button.render());
         });
 
-        this.setFooter(footerHtml);
+        this.$modal.find('.modal-footer').append($btnGroup);
     };
 
     Modal.prototype.show = function() {
+        this._buildHtml();
+
         if (this._buttonList.length > 0) {
             this._renderButtons();
         }
 
-        this._buildHtml();
         this._inject();
         this.$modal.modal();
 

@@ -13,6 +13,8 @@ define(['Map', 'Container', 'IncidentEntity'], function() {
     IncidentPage.prototype.addIncident = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
         var incidentEntity = new IncidentEntity(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo);
 
+        incidentEntity.setMap(this._map);
+        
         incidentEntity.addToContainer(this._incidentContainer, id);
     };
 
