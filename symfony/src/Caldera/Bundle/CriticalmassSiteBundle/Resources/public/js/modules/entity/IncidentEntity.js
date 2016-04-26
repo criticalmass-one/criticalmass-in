@@ -1,5 +1,6 @@
 define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal'], function() {
-    IncidentEntity = function(title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
+    IncidentEntity = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
+        this._id = id;
         this._title = title;
         this._description = description;
         this._geometryType = geometryType;
@@ -13,6 +14,7 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
     IncidentEntity.prototype = new BaseEntity();
     IncidentEntity.prototype.constructor = IncidentEntity;
 
+    IncidentEntity.prototype._id = null;
     IncidentEntity.prototype._title = null;
     IncidentEntity.prototype._description = null;
     IncidentEntity.prototype._geometryType = null;
@@ -63,8 +65,16 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
         var that = this;
 
         this._layer.on('click', function() {
-            that._modal.show();
+            that.openPopup();
         });
+    };
+
+    IncidentEntity.prototype.openPopup = function() {
+        this._modal.show();
+    };
+
+    IncidentEntity.prototype.getBounds = function() {
+        return this._layer.getBounds();
     };
 
     return IncidentEntity;

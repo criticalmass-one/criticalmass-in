@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
                     {% for incident in incidents %}
-                        <tr>
+                        <tr class="incident" data-incident-id="{{ incident.id }}">
                             <td>
                                 {{ incident.title }}
                             </td>
@@ -89,7 +89,7 @@
     <script>
         CriticalMass.loadModule('IncidentPage', null, null, function(incidentPage) {
             {% for incident in incidents %}
-            incidentPage.addIncident('{{ incident.title|e }}', '{{ incident.description|e }}', '{{ incident.geometryType }}', '{{ incident.incidentType }}', '{{ incident.polyline|replace({'\\': '\\\\'}) }}', '{{ incident.expires }}', '{{ incident.visibleFrom|date('Y-m-d') }}', '{{ incident.visibleTo|date('Y-m-d') }}');
+            incidentPage.addIncident({{ incident.id }}, '{{ incident.title|e }}', '{{ incident.description|e }}', '{{ incident.geometryType }}', '{{ incident.incidentType }}', '{{ incident.polyline|replace({'\\': '\\\\'}) }}', '{{ incident.expires }}', '{{ incident.visibleFrom|date('Y-m-d') }}', '{{ incident.visibleTo|date('Y-m-d') }}');
             {% endfor %}
 
             incidentPage.init();
