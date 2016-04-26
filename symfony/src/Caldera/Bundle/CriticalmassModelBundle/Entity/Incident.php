@@ -77,6 +77,16 @@ class Incident
      */
     protected $visibleTo;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDateTime;
+
     public function __construct()
     {
         $dateInterval = new \DateInterval('P3M');
@@ -85,6 +95,8 @@ class Incident
         $this->visibleTo = new \DateTime();
 
         $this->visibleTo->add($dateInterval);
+
+        $this->creationDateTime = new \DateTime();
     }
 
     /**
@@ -325,5 +337,29 @@ class Incident
     public function getCity()
     {
         return $this->city;
+    }
+
+    public function setCreationDateTime(\DateTime $creationDateTime)
+    {
+        $this->creationDateTime = $creationDateTime;
+
+        return $this;
+    }
+
+    public function getCreationDateTime()
+    {
+        return $this->creationDateTime;
+    }
+
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }
