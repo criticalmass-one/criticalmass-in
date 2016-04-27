@@ -1,19 +1,22 @@
-define(['Map', 'Container', 'IncidentEntity'], function() {
+define(['CriticalService', 'Map', 'Container', 'IncidentEntity'], function(CriticalService) {
     IncidentPage = function () {
+        this._CriticalService = CriticalService;
+
         this._initMap();
     };
 
+    IncidentPage.prototype._CriticalService = null;
     IncidentPage.prototype._map = null;
     IncidentPage.prototype._incidentContainer = new Container();
 
     IncidentPage.prototype._initMap = function() {
         this._map = new Map('map', []);
+
+        this._CriticalService.setMap(this._map);
     };
 
     IncidentPage.prototype.addIncident = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
         var incidentEntity = new IncidentEntity(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo);
-
-        incidentEntity.setMap(this._map);
         
         incidentEntity.addToContainer(this._incidentContainer, id);
     };

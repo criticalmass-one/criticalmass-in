@@ -1,4 +1,4 @@
-define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function() {
+define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function(CriticalService) {
     IncidentEntity = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
         this._id = id;
         this._title = title;
@@ -9,10 +9,14 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
         this._expires = expires;
         this._visibleFrom = visibleFrom;
         this._visibleTo = visibleTo;
+
+        this._CriticalService = CriticalService;
     };
 
     IncidentEntity.prototype = new BaseEntity();
     IncidentEntity.prototype.constructor = IncidentEntity;
+
+    IncidentEntity.prototype._CriticalService = CriticalService;
 
     IncidentEntity.prototype._id = null;
     IncidentEntity.prototype._title = null;
@@ -24,8 +28,6 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
     IncidentEntity.prototype._visibleFrom = null;
     IncidentEntity.prototype._visibleTo = null;
     IncidentEntity.prototype._layer = null;
-
-    IncidentEntity.prototype._map = null;
 
     IncidentEntity.prototype.addToLayer = function(markerLayer) {
         var latLngList = L.PolylineUtil.decode(this._polyline);
@@ -81,7 +83,7 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
 
         var that = this;
         focusButton.setOnClickEvent(function() {
-            that._map.fitBounds(that.getBounds());
+            that._CriticalService.getMap().fitBounds(that.getBounds());
         });
 
         this._modal.addButton(focusButton);
@@ -94,10 +96,6 @@ define(['leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Mo
 
     IncidentEntity.prototype.getBounds = function() {
         return this._layer.getBounds();
-    };
-
-    IncidentEntity.prototype.setMap = function(map) {
-        this._map = map;
     };
 
     return IncidentEntity;
