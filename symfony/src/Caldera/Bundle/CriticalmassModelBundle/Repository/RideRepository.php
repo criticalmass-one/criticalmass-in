@@ -22,7 +22,7 @@ class RideRepository extends EntityRepository
         $builder->where($builder->expr()->gte('ride.dateTime', '\''.$dateTime->format('Y-m-d h:i:s').'\''));
         $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
 
-        $builder->addOrderBy('ride.dateTime', 'DESC');
+        $builder->addOrderBy('ride.dateTime', 'ASC');
 
         $query = $builder->getQuery();
         $query->setMaxResults(1);
