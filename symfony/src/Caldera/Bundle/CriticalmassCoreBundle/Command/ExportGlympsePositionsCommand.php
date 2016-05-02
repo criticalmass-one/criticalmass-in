@@ -64,7 +64,7 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
             foreach ($tickets as $ticket) {
                 $this->export($ticket);
             }
-        } else {
+        } elseif ($input->hasArgument('ticketId')) {
             /**
              * @var Ticket $ticket
              */
