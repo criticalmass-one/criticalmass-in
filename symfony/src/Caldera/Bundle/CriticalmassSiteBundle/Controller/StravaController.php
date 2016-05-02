@@ -7,6 +7,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline\TrackPolyline;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -215,7 +216,7 @@ class StravaController extends AbstractController
         $track->setRide($ride);
 
         $this->loadTrackProperties($track);
-        $this->generateSimpleLatLngList($track);
+        $this->generatePolyline($track);
 
         $this->addRideEstimate($track, $ride);
 
@@ -294,5 +295,24 @@ class StravaController extends AbstractController
             ->getList();
 
         $track->setLatLngList($list);
+    }
+
+    protected function generatePolyline(Track $track)
+    {
+        /**
+         * @var TrackPolyline $trackPolyline
+         */
+        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+
+        $trackPolyline->loadTrack($track);
+
+        $trackPolyline->execute();
+
+        $track->setPolyline($trackPolyline->getPolyline());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+
     }
 }
