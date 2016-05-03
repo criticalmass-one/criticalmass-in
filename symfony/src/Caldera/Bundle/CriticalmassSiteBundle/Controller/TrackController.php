@@ -3,17 +3,11 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngArrayGenerator\SimpleLatLngArrayGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TrackPolyline;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker\TrackChecker;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline\TrackPolyline;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CriticalmassCoreBundle\Uploader\TrackUploader\TrackUploader;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
@@ -21,7 +15,6 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class TrackController extends AbstractController
 {

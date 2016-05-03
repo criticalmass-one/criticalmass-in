@@ -50,97 +50,117 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Stadt
-                        </th>
-                        <th>
-                            Tour
-                        </th>
-                        <th>
-                            Beginn
-                        </th>
-                        <th>
-                            Ende
-                        </th>
-                        <th>
-                            Distanz
-                        </th>
-                        <th>
-                            Optionen
-                        </th>
-                    </tr>
-                    {% for track in tracks %}{% if track.getRide() %}
-                        {% if not track.getActivated() %}
-                            <tr style="text-decoration: line-through;">
-                        {% else %}
-                            <tr>
-                        {% endif %}
-                        <td>
-                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': track.getId() }) }}">
-                                {{ track.ride.dateTime|date('d.m.Y') }}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ path(track.ride.city) }}">
-                                {{ track.ride.city.city }}
-                            </a>
-                        </td>
-                        <td>
+        {% for track in tracks %}
+        <div class="row margin-bottom-medium">
+            <div class="col-md-3">
+                <div id="map-{{ track.id }}" class="preview-map" style="height: 150px;" data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})" data-lock-map="true" data-polyline="{{ track.polyline }}">
+
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="no-margin-top">
                             <a href="{{ path(track.ride) }}">
                                 {{ track.ride.getFancyTitle() }}
                             </a>
-                        </td>
-                        <td>
-                            {{ track.startDateTime|date('H:i', 'Europe/Berlin') }} Uhr
-                        </td>
-                        <td>
-                            {{ track.endDateTime|date('H:i', 'Europe/Berlin') }} Uhr
-                        </td>
-                        <td>
-                            {{ track.distance()|round(2) }} Kilometer
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
-                                    <i class="fa fa-file"></i>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <dl>
+                            <dt>
+                                Stadt
+                            </dt>
+
+                            <dd>
+                                <a href="{{ path(track.ride.city) }}">
+                                    {{ track.ride.city.city }}
                                 </a>
-                                {% if track.getActivated() %}
-                                    <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
-                                        <i class="fa fa-eye-slash"></i>
-                                    </a>
-                                {% else %}
-                                    <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                {% endif %}
-                                <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}>
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
-                                <a class="btn btn-default btn-xs" title="Beschneiden" href="{{ path('caldera_criticalmass_track_range', { trackId: track.getId() }) }}">
-                                    <i class="fa fa-scissors"></i>
-                                </a>
-                                <a class="btn btn-default btn-xs" title="Zeit anpassen" href="{{ path('caldera_criticalmass_track_time', { trackId: track.getId() }) }}">
-                                    <i class="fa fa-clock-o"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-md-3">
+                        <dl>
+                            <dt>
+                                Datum
+                            </dt>
+
+                            <dd>
+                                {{ track.ride.dateTime|date('d.m.Y') }}
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-md-3">
+                        <dl>
+                            <dt>
+                                Länge
+                            </dt>
+
+                            <dd>
+                                {{ track.distance|round }}&nbsp;Kilometer
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-md-3">
+                        <dl>
+                            <dt>
+                                Beginn
+                            </dt>
+
+                            <dd>
+                                {{ track.startDateTime|date('H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-md-3">
+                        <dl>
+                            <dt>
+                                Ende
+                            </dt>
+
+                            <dd>
+                                {{ track.endDateTime|date('H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="btn-group-vertical" role="group" aria-label="...">
+                    <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
+                        <i class="fa fa-file"></i>
+                    </a>
+                    {% if track.getActivated() %}
+                        <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                            <i class="fa fa-eye-slash"></i>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                            <i class="fa fa-eye"></i>
+                        </a>
                     {% endif %}
-                    {% endfor %}
-                    
-                    {% if tracks|length == 0 %}
-                        <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen :(</td>
-                    {% endif %}
-                </table>
+                    <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}>
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a class="btn btn-default btn-xs" title="Beschneiden" href="{{ path('caldera_criticalmass_track_range', { trackId: track.getId() }) }}">
+                        <i class="fa fa-scissors"></i>
+                    </a>
+                    <a class="btn btn-default btn-xs" title="Zeit anpassen" href="{{ path('caldera_criticalmass_track_time', { trackId: track.getId() }) }}">
+                        <i class="fa fa-clock-o"></i>
+                    </a>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 
     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
@@ -163,4 +183,8 @@
             </div>
         </div>
     </div>
+
+    <script>
+        CriticalMass.loadModule('TrackListPage');
+    </script>
 {% endblock %}

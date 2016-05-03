@@ -55,6 +55,7 @@ require.config({
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
         "RegionPage": "/bundles/calderacriticalmasssite/js/modules/page/RegionPage",
         "StravaImportPage": "/bundles/calderacriticalmasssite/js/modules/page/StravaImportPage",
+        "TrackListPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackListPage",
         "FacebookImportRidePage": "/bundles/calderacriticalmasssite/js/modules/page/FacebookImportRidePage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
         "IncidentEditPage": "/bundles/calderacriticalmasssite/js/modules/page/IncidentEditPage",
