@@ -7,6 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user_user")
+ * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseUser
 {
@@ -58,6 +59,16 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=32)
      */
     protected $token;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
 
     /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
@@ -228,5 +239,48 @@ class User extends BaseUser
     public function getTracks()
     {
         return $this->tracks;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     *
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Hook on pre-update operations
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }
