@@ -1,4 +1,4 @@
-define(['Map', 'PhotoEntity'], function() {
+define(['AutoMap', 'PhotoEntity'], function() {
     ViewPhotoPage = function() {
         this._installNavigation();
     };
@@ -33,11 +33,7 @@ define(['Map', 'PhotoEntity'], function() {
     };
 
     ViewPhotoPage.prototype.initMap = function() {
-        this._map = new Map('map');
-
-        this._map.setView(this._photo.getLatLng(), 14);
-
-        this._photo.addToMap(this._map);
+        this._map = new AutoMap('map');
     };
 
     return ViewPhotoPage;

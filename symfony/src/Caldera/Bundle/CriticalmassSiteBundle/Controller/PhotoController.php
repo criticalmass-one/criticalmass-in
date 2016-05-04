@@ -8,6 +8,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ class PhotoController extends AbstractController
         $city = $this->getCheckedCity($citySlug);
         $ride = null;
         $event = null;
+        $track = null;
 
         if ($rideDate) {
             $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -29,15 +31,18 @@ class PhotoController extends AbstractController
             $event = $this->getEventRepository()->findOneBySlug($eventSlug);
         }
 
-        /**
-         * @var Photo $photo
-         */
+        /** @var Photo $photo */
         $photo = $this->getPhotoRepository()->find($photoId);
 
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
 
         $this->countView($photo);
+
+        if ($ride and $photo->getUser()) {
+            /** @var Track $track */
+            $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
+        }
 
         return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
             [
@@ -46,7 +51,8 @@ class PhotoController extends AbstractController
                 'previousPhoto' => $previousPhoto,
                 'city' => $city,
                 'ride' => $ride,
-                'event' => $event
+                'event' => $event,
+                'track' => $track
             ]
         );
     }

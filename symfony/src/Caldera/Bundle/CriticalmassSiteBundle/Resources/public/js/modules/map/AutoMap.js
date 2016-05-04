@@ -24,6 +24,8 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
     AutoMap.prototype = Object.create(Map.prototype);
     AutoMap.prototype.constructor = AutoMap;
 
+    AutoMap.prototype._mapViewSet = false;
+
     AutoMap.prototype._init = function () {
         this._loadStyles();
         this._initMap();
@@ -48,6 +50,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
 
         if (latitude && longitude && zoomLevel) {
             this.map.setView([latitude, longitude], zoomLevel);
+            this._mapViewSet = true;
         }
     };
 
@@ -60,7 +63,9 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
 
             polyline.addTo(this.map);
 
-            this.map.fitBounds(polyline);
+            if (!this._mapViewSet) {
+                this.map.fitBounds(polyline);
+            }
         }
     };
 
@@ -68,6 +73,21 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
         var latitude = this._$mapContainer.data('map-marker-latitude');
         var longitude = this._$mapContainer.data('map-marker-longitude');
 
+        var markerColor = this._$mapContainer.data('map-marker-color');
+        var markerShape = this._$mapContainer.data('map-marker-shape');
+        var markerIcon = this._$mapContainer.data('map-marker-icon');
+
+        if (latitude && longitude && markerColor && markerShape && markerIcon) {
+             var extraMarkerIcon = L.ExtraMarkers.icon({
+                icon: 'fa-bicycle',
+                markerColor: 'yellow',
+                shape: 'square',
+                prefix: 'fa'
+            });
+
+            var marker = L.marker([latitude, longitude], { icon: extraMarkerIcon });
+            marker.addTo(this.map);
+        }
     };
 
     AutoMap.prototype._autoSetPolylineMarker = function() {
@@ -92,7 +112,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
                     prefix: 'fa'
                 });
 
-                var marker = L.marker(latLng, {icon: extraMarkerIcon});
+                var marker = L.marker(latLng, { icon: extraMarkerIcon });
 
                 markerList.push(marker);
             }
@@ -101,9 +121,9 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
 
             markerGroup.addTo(this.map);
 
-            if (markerLatLngs.length > 1) {
+            if (!this._mapViewSet && markerLatLngs.length > 1) {
                 this.map.fitBounds(markerGroup.getBounds());
-            } else {
+            } else if (!this._mapViewSet) {
                 var latLng = markerLatLngs.pop();
 
                 this.setView(latLng, 13);
