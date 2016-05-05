@@ -34,8 +34,6 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
     };
 
     AutoMap.prototype._autoSettings = function() {
-        this._$mapContainer = $('#' + this._mapId);
-
         this._autoSetView();
         this._autoSetPolyline();
         this._autoSetMarker();

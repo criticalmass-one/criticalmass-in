@@ -20,6 +20,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         zoomControlPosition: 'bottomright'
     };
 
+    Map.prototype._$mapContainer = null;
+
     Map.prototype._init = function () {
         this._loadStyles();
         this._initMap();
@@ -37,6 +39,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype._initMap = function () {
+        this._$mapContainer = $('#' + this._mapId);
+
         this.map = L.map(this._mapId,
             {
                 zoomControl: false
@@ -78,6 +82,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype.disableInteraction = function() {
+        this._$mapContainer.css('cursor', 'default');
         this.map.dragging.disable();
         this.map.touchZoom.disable();
         this.map.doubleClickZoom.disable();
