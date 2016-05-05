@@ -73,9 +73,10 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
         var latitude = this._$mapContainer.data('map-marker-latitude');
         var longitude = this._$mapContainer.data('map-marker-longitude');
 
-        var markerColor = this._$mapContainer.data('map-marker-color');
-        var markerShape = this._$mapContainer.data('map-marker-shape');
-        var markerIcon = this._$mapContainer.data('map-marker-icon');
+        var markerColor = this._$mapContainer.data('map-marker-color') || 'yellow';
+        var markerShape = this._$mapContainer.data('map-marker-shape') || 'square';
+        var markerIcon = this._$mapContainer.data('map-marker-icon') || 'fa-bicycle';
+        var markerClickable = this._$mapContainer.data('map-marker-clickable') || false;
 
         if (latitude && longitude && markerColor && markerShape && markerIcon) {
              var extraMarkerIcon = L.ExtraMarkers.icon({
@@ -85,7 +86,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
                 prefix: 'fa'
             });
 
-            var marker = L.marker([latitude, longitude], { icon: extraMarkerIcon });
+            var marker = L.marker([latitude, longitude], { icon: extraMarkerIcon, clickable: markerClickable });
             marker.addTo(this.map);
         }
     };
@@ -93,9 +94,10 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
     AutoMap.prototype._autoSetPolylineMarker = function() {
         var polyline = this._$mapContainer.data('map-markers-polyline-list');
 
-        var markerColor = this._$mapContainer.data('map-marker-color');
-        var markerShape = this._$mapContainer.data('map-marker-shape');
-        var markerIcon = this._$mapContainer.data('map-marker-icon');
+        var markerColor = this._$mapContainer.data('map-marker-color') || 'yellow';
+        var markerShape = this._$mapContainer.data('map-marker-shape') || 'square';
+        var markerIcon = this._$mapContainer.data('map-marker-icon') || 'fa-bicycle';
+        var markerClickable = this._$mapContainer.data('map-marker-clickable') || false;
 
         if (polyline && markerColor && markerShape && markerIcon) {
             var markerLatLngs = L.PolylineUtil.decode(polyline);
@@ -112,7 +114,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
                     prefix: 'fa'
                 });
 
-                var marker = L.marker(latLng, { icon: extraMarkerIcon });
+                var marker = L.marker(latLng, { icon: extraMarkerIcon, clickable: markerClickable });
 
                 markerList.push(marker);
             }
