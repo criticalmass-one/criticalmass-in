@@ -41,6 +41,11 @@ class User extends BaseUser
     protected $tracks;
 
     /**
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="user")
+     */
+    protected $archiveRides;
+
+    /**
      * @ORM\Column(type="smallint")
      */
     protected $colorRed = 0;
@@ -59,6 +64,11 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=32)
      */
     protected $token;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
+     */
+    protected $participations;
 
     /**
      * @ORM\Column(type="datetime")

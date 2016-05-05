@@ -4,12 +4,13 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ParticipateableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="ride")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Ride implements ParticipateableInterface
 {
@@ -19,12 +20,14 @@ class Ride implements ParticipateableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="rides")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $user;
 
@@ -33,6 +36,7 @@ class Ride implements ParticipateableInterface
      *
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $city;
 
@@ -48,11 +52,13 @@ class Ride implements ParticipateableInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $description;
 
@@ -60,6 +66,7 @@ class Ride implements ParticipateableInterface
      * Startdatum und -uhrzeit der Tour.
      *
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $dateTime;
 
@@ -67,6 +74,7 @@ class Ride implements ParticipateableInterface
      * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
      *
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $hasTime;
 
@@ -74,6 +82,7 @@ class Ride implements ParticipateableInterface
      * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
      *
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $hasLocation;
 
@@ -81,6 +90,7 @@ class Ride implements ParticipateableInterface
      * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
      *
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
      */
     protected $location;
 
@@ -88,6 +98,7 @@ class Ride implements ParticipateableInterface
      * Breitengrad des Treffpunktes.
      *
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $latitude;
 
@@ -95,47 +106,59 @@ class Ride implements ParticipateableInterface
      * Laengengrad des Treffpunktes.
      *
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $longitude;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Expose
      */
     protected $estimatedParticipants;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $estimatedDistance;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $estimatedDuration;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archive_rides", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archiveRides", fetch="EAGER")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
     protected $archiveParent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="archiveParent")
+     */
+    protected $archiveRides;
 
     /**
      * @ORM\Column(type="boolean")
@@ -176,19 +199,26 @@ class Ride implements ParticipateableInterface
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $participationsNumberYes = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $participationsNumberMaybe = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $participationsNumberNo = 0;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Participation", mappedBy="ride")
+     */
+    protected $participations;
 
     /**
      * Get id
