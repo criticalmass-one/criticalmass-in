@@ -1,19 +1,19 @@
 caldera_criticalmass_api_app_list:
-    pattern: /app/list
+    path: /app/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:App:list }
 
 caldera_criticalmass_api_app_add:
-    pattern: /app/add
+    path: /app/add
     defaults: { _controller: CalderaCriticalmassSiteBundle:App:add }
 
 caldera_criticalmass_api_app_edit:
-    pattern: /app/edit/{appId}
+    path: /app/edit/{appId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:App:edit }
 
 caldera_criticalmass_api_app_delete:
-    pattern: /app/delete/{appId}
+    path: /app/delete/{appId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:App:delete }
 
 caldera_criticalmass_api_documentation:
-    pattern: /app/api
+    path: /app/api
     defaults: { _controller: CalderaCriticalmassSiteBundle:App:api }

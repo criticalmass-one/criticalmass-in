@@ -1,15 +1,15 @@
 caldera_criticalmass_photo_ajaxview:
-    pattern: /{citySlug}/{rideDate}/ajaxphotoview
+    path: /{citySlug}/{rideDate}/ajaxphotoview
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:ajaxphotoview }
 
 caldera_criticalmass_photo_show_ride:
-    pattern: /{citySlug}/{rideDate}/photo/{photoId}
+    path: /{citySlug}/{rideDate}/photo/{photoId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:show }
     requirements:
         rideDate: "([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})"
 
 caldera_criticalmass_photo_show_event:
-    pattern: /{citySlug}/{eventSlug}/photo/{photoId}
+    path: /{citySlug}/{eventSlug}/photo/{photoId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Photo:show }
     requirements:
         eventSlug: "^([a-zA-Z0-9\-]*)$"

@@ -1,7 +1,7 @@
 caldera_criticalmass_search_query:
-    pattern:  /search/query
+    path:  /search/query
     defaults: { _controller: CalderaCriticalmassSiteBundle:Search:query }
 
 caldera_criticalmass_search_prefetch:
-    pattern:  /search/prefetch
+    path:  /search/prefetch
     defaults: { _controller: CalderaCriticalmassSiteBundle:Search:prefetch }

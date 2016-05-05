@@ -1,27 +1,27 @@
 caldera_criticalmass_photo_user_list:
-    pattern: /photos/list
+    path: /photos/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:list }
 
 caldera_criticalmass_photo_manage:
-    pattern: /{citySlug}/{rideDate}/managephotos
+    path: /{citySlug}/{rideDate}/managephotos
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:manage }
 
 caldera_criticalmass_photo_place_single:
-    pattern: /{citySlug}/{rideDate}/managephotos/{photoId}/place
+    path: /{citySlug}/{rideDate}/managephotos/{photoId}/place
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:placeSingle }
 
 caldera_criticalmass_photo_toggle:
-    pattern: /{citySlug}/{rideDate}/photo/{photoId}/toggle
+    path: /{citySlug}/{rideDate}/photo/{photoId}/toggle
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:toggle }
 
 caldera_criticalmass_photo_delete:
-    pattern: /{citySlug}/{rideDate}/managephotos/{photoId}/delete
+    path: /{citySlug}/{rideDate}/managephotos/{photoId}/delete
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:delete }
 
 caldera_criticalmass_photo_relocate:
-    pattern: /{citySlug}/{rideDate}/relocatephotos
+    path: /{citySlug}/{rideDate}/relocatephotos
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:relocate }
 
 caldera_criticalmass_gallery_photos_rearrange:
-    pattern: /{citySlug}/{rideDate}/gallery/rearrange
+    path: /{citySlug}/{rideDate}/gallery/rearrange
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:rearrange }

@@ -1,15 +1,15 @@
 caldera_criticalmass_desktop_subride_add:
-    pattern:  /{citySlug}/{rideDate}/addsubride
+    path:  /{citySlug}/{rideDate}/addsubride
     defaults: { _controller: CalderaCriticalmassSiteBundle:Subride:add }
 
 caldera_criticalmass_desktop_subride_edit:
-    pattern:  /{citySlug}/{rideDate}/editsubride/{subrideId}
+    path:  /{citySlug}/{rideDate}/editsubride/{subrideId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Subride:edit }
     
 caldera_criticalmass_subride_preparecopy:
-    pattern:  /{citySlug}/{rideDate}/preparecopysubrides
+    path:  /{citySlug}/{rideDate}/preparecopysubrides
     defaults: { _controller: CalderaCriticalmassSiteBundle:Subride:preparecopy }
     
 caldera_criticalmass_desktop_subride_copy:
-    pattern:  /{citySlug}/{newDate}/copysubrides/{oldDate}
+    path:  /{citySlug}/{newDate}/copysubrides/{oldDate}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Subride:copy }

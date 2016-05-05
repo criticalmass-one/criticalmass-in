@@ -1,35 +1,35 @@
 caldera_criticalmass_track_deleteconfirm:
-    pattern:  /track/delete/{trackId}
+    path:  /track/delete/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:delete }
 
 caldera_criticalmass_track_toggle:
-    pattern:  /track/toggle/{trackId}
+    path:  /track/toggle/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:toggle }
 
 caldera_criticalmass_track_download:
-    pattern:  /track/download/{trackId}
+    path:  /track/download/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:download }
 
 caldera_criticalmass_track_gpxgenerate:
-    pattern:  /track/generate/{rideId}
+    path:  /track/generate/{rideId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:gpxgenerate }
 
 caldera_criticalmass_track_list:
-    pattern:  /track/list
+    path:  /track/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:list }
 
 caldera_criticalmass_track_upload:
-    pattern:  /{citySlug}/{rideDate}/addtrack
+    path:  /{citySlug}/{rideDate}/addtrack
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:upload }
 
 caldera_criticalmass_track_view:
-    pattern:  /track/view/{trackId}
+    path:  /track/view/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:view }
 
 caldera_criticalmass_track_range:
-    pattern:  /track/range/{trackId}
+    path:  /track/range/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:range }
 
 caldera_criticalmass_track_time:
-    pattern:  /track/time/{trackId}
+    path:  /track/time/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:time }

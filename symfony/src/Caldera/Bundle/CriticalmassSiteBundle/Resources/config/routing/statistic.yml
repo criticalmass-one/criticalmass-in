@@ -1,11 +1,11 @@
 caldera_criticalmass_statistic_city:
-    pattern: /{citySlug}/statistic
+    path: /{citySlug}/statistic
     defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:citystatistic }
 
 caldera_criticalmass_statistic_facebook:
-    pattern: /facebookstatistic
+    path: /facebookstatistic
     defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:facebookstatistic }
 
 caldera_criticalmass_statistic_overview:
-    pattern: /statistic
+    path: /statistic
     defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:overview }

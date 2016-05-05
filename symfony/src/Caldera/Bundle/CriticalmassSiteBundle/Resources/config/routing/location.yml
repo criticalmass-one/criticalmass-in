@@ -1,7 +1,7 @@
 caldera_criticalmass_location_show:
-    pattern:  /{citySlug}/location/{locationSlug}
+    path:  /{citySlug}/location/{locationSlug}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Location:show }
 
 caldera_criticalmass_location_ride:
-    pattern:  /{citySlug}/{rideDate}/location
+    path:  /{citySlug}/{rideDate}/location
     defaults: { _controller: CalderaCriticalmassSiteBundle:Location:ride }
