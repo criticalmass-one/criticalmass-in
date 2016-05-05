@@ -1,13 +1,5 @@
-define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
-    RideEntity = function (title, description, latitude, longitude, location, date, time, weather) {
-        this._title = title;
-        this._description = description;
-        this._latitude = latitude;
-        this._longitude = longitude;
-        this._location = location;
-        this._date = date;
-        this._time = time;
-        this._weather = weather;
+define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function() {
+    RideEntity = function () {
     };
 
     RideEntity.prototype = new MarkerEntity();
@@ -15,10 +7,9 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
 
     RideEntity.prototype._title = null;
     RideEntity.prototype._description = null;
+    RideEntity.prototype._citySlug = null;
     RideEntity.prototype._location = null;
-    RideEntity.prototype._date = null;
-    RideEntity.prototype._time = null;
-    RideEntity.prototype._weather = null;
+    RideEntity.prototype._timestamp = null;
 
     RideEntity.prototype._initIcon = function() {
         this._icon = L.ExtraMarkers.icon({
@@ -33,8 +24,9 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
         this._modal.setTitle(this._title);
 
         var content = '<dl class="dl-horizontal">';
-        content += '<dt>Datum:</dt><dd>' + this._date + '</dd>';
-        content += '<dt>Uhrzeit:</dt><dd>' + this._time + ' Uhr</dd>';
+
+        content += '<dt>Datum:</dt><dd>' + this._timestamp.format('dd.mm.yyyy') + '</dd>';
+        content += '<dt>Uhrzeit:</dt><dd>' + this._timestamp.format('HH:MM') + ' Uhr</dd>';
         content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
 
         if (this._weather) {
@@ -42,9 +34,25 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
         }
 
         content += '</dl>';
-        content += '<p>' + this._description + '</p>';
+
+        if (this._description) {
+            content += '<p>' + this._description + '</p>';
+        }
 
         this._modal.setBody(content);
+        
+        var cityButton = new ModalButton();
+        cityButton.setCaption('Städteseite');
+        cityButton.setIcon('university');
+        cityButton.setClass('btn-success');
+        //cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', { citySlug: this._citySlug }));
+
+        var buttons = [
+            cityButton,
+            new CloseModalButton()
+        ];
+
+        this._modal.setButtons(buttons);
     };
 
     RideEntity.prototype.getDate = function() {

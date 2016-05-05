@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Diese Entitaet stellt einen so genannten Slug einer Stadt dar, ueber den die
@@ -16,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  * @ORM\Table(name="cityslug")
+ * @JMS\ExclusionPolicy("all")
  */
 class CitySlug
 {
@@ -25,6 +27,7 @@ class CitySlug
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
 	 */
   protected $id;
 
@@ -32,6 +35,7 @@ class CitySlug
 	 * Zeichenkette des eigentlichen Slugs.
 	 *
 	 * @ORM\Column(type="string", length=50)
+     * @JMS\Expose
 	 */
 	protected $slug;
 

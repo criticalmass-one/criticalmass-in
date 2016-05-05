@@ -27,7 +27,6 @@ class Ride implements ParticipateableInterface
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="rides")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @JMS\Expose
      */
     protected $user;
 
@@ -52,7 +51,6 @@ class Ride implements ParticipateableInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
      */
     protected $title;
 
@@ -561,6 +559,17 @@ class Ride implements ParticipateableInterface
         return $this->url;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("timestamp")
+     * @JMS\Type("integer")
+     * @return integer
+     */
+    public function getTimestamp()
+    {
+        return $this->dateTime->format('U');
+    }
+
     public function getDate()
     {
         return $this->dateTime;
@@ -675,6 +684,12 @@ class Ride implements ParticipateableInterface
         return $this->tracks;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("title")
+     * @JMS\Type("string")
+     * @return string
+     */
     public function getFancyTitle()
     {
         if (!$this->title)

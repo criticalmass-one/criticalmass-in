@@ -86,11 +86,7 @@
             {#livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});#}
 
             {% for ride in rides %}
-            {% if ride.hasLocation() %}
-            ride = livePage.addRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.latitude }}, {{ ride.longitude }}, '{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
-            {% else %}
-            ride = livePage.addNoLocationRide('{{ ride.getFancyTitle() }}', '{{ ride.description|e('js') }}', {{ ride.city.latitude }}, {{ ride.city.longitude }}, '{{ ride.location }}', '{{ ride.dateTime.format('d.m.Y') }}', '{{ ride.dateTime.format('H:i') }}', '');
-            {% endif %}
+            ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
             {% endfor %}
 
             {% if rides|length == 1 %}

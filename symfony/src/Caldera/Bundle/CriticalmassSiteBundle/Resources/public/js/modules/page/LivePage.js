@@ -1,5 +1,7 @@
-define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash'], function() {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash'], function(CriticalService) {
     LivePage = function (context, options) {
+        this._CriticalService = CriticalService;
+
         this._options = options;
 
         this._initContainer();
@@ -12,6 +14,7 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
         this._startLive();
     };
 
+    LivePage.prototype._CriticalService = null;
     LivePage.prototype._options = null;
     LivePage.prototype._map = null;
     LivePage.prototype._hash = null;
@@ -83,9 +86,10 @@ define(['Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 
         return cityEntity;
     };
 
-    LivePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        var rideEntity = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
+    LivePage.prototype.addRide = function(rideJson) {
+        var rideEntity = this._CriticalService.factory.createRide(rideJson);
 
+        console.log(rideEntity);
         this._rideContainer.addEntity(rideEntity);
 
         return rideEntity;

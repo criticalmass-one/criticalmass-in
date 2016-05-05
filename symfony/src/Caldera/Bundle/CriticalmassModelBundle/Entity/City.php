@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
@@ -15,6 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
+ * @JMS\ExclusionPolicy("all")
  */
 class City implements BoardInterface
 {
@@ -24,6 +26,7 @@ class City implements BoardInterface
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
 	 */
     protected $id;
 
@@ -42,6 +45,7 @@ class City implements BoardInterface
     /**
      * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
      * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $mainSlug;
 
@@ -50,6 +54,7 @@ class City implements BoardInterface
 	 *
 	 * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
+     * @JMS\Expose
 	 */
 	protected $city;
 
@@ -59,6 +64,7 @@ class City implements BoardInterface
 	 *
 	 * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
+     * @JMS\Expose
 	 */
 	protected $title;
 
@@ -66,6 +72,7 @@ class City implements BoardInterface
      * Kurze Beschreibung der Critical Mass dieser Stadt.
      *
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $description;
 
@@ -74,6 +81,7 @@ class City implements BoardInterface
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
 	 */
 	protected $url;
 
@@ -82,6 +90,7 @@ class City implements BoardInterface
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
 	 */
 	protected $facebook;
 
@@ -90,6 +99,7 @@ class City implements BoardInterface
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
 	 */
 	protected $twitter;
 
@@ -97,6 +107,7 @@ class City implements BoardInterface
 	 * Breitengrad der Stadt.
 	 *
 	 * @ORM\Column(type="float")
+     * @JMS\Expose
 	 */
 	protected $latitude;
 
@@ -104,6 +115,7 @@ class City implements BoardInterface
 	 * Längengrad der Stadt.
 	 *
 	 * @ORM\Column(type="float")
+     * @JMS\Expose
 	 */
 	protected $longitude;
 
@@ -140,62 +152,74 @@ class City implements BoardInterface
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $isStandardable = false;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Expose
      */
     protected $standardDayOfWeek;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Expose
      */
     protected $standardWeekOfMonth;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $isStandardableTime = false;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @JMS\Expose
      */
     protected $standardTime;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $isStandardableLocation = false;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
      */
     protected $standardLocation;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $standardLatitude;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $standardLongitude;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
+     * @JMS\Expose
      */
     protected $cityPopulation = 0;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
      */
     protected $punchLine;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $longDescription;
 
@@ -258,31 +282,37 @@ class City implements BoardInterface
      * @ORM\Column(type="string", length=255)
      *
      * @var string
+     * @JMS\Expose
      */
     protected $timezone;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $threadNumber = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $postNumber = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $colorRed = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $colorGreen = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $colorBlue = 0;
 

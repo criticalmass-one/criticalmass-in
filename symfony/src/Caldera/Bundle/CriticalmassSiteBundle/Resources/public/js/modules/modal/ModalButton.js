@@ -20,8 +20,12 @@ define([], function() {
         this._href = href;
     };
 
-    ModalButton.prototype.setClass = function(clas) {
-        this._class = clas;
+    ModalButton.prototype.setClass = function(btnClass) {
+        this._class = btnClass;
+    };
+
+    ModalButton.prototype.setIcon = function(icon) {
+        this._icon = icon;
     };
 
     ModalButton.prototype.setOnClickEvent = function(callback) {
@@ -29,10 +33,16 @@ define([], function() {
     };
 
     ModalButton.prototype.render = function() {
+        var icon = '';
+
+        if (this._icon) {
+            icon = '<i class="fa fa-' + this._icon + '" aria-hidden="true"></i> ';
+        }
+
         if (this._href) {
-            this._html = '<a class="btn ' + this._class + '" href="' + this._href + '">' + this._caption + '</a>';
+            this._html = '<a class="btn ' + this._class + '" href="' + this._href + '">' + icon + this._caption + '</a>';
         } else {
-            this._html = '<button class="btn ' + this._class + '">' + this._caption + '</button>';
+            this._html = '<button class="btn ' + this._class + '">' + icon + this._caption + '</button>';
         }
 
         this._$button = $(this._html);

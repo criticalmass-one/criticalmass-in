@@ -1,4 +1,4 @@
-define([], function() {
+define(['Factory'], function() {
     var instance = null;
 
     function CriticalService(){
@@ -11,7 +11,7 @@ define([], function() {
 
     CriticalService.prototype = {
         initialize: function(){
-
+            this.factory = new Factory();
         },
 
         setMap: function(map) {

@@ -42,6 +42,10 @@ define([], function() {
         this._buttonList.push(button);
     };
 
+    Modal.prototype.setButtons = function(buttonList) {
+        this._buttonList = buttonList;
+    };
+
     Modal.prototype.resetButtons = function() {
         this._buttonList = [];
     };
@@ -50,7 +54,7 @@ define([], function() {
         var $btnGroup = $('<div class="btn-group">');
 
         $.each(this._buttonList, function(index, button) {
-            $btnGroup.prepend(button.render());
+            $btnGroup.append(button.render());
         });
 
         this.$modal.find('.modal-footer').append($btnGroup);
