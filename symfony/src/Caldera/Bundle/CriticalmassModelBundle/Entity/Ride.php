@@ -31,18 +31,18 @@ class Ride implements ParticipateableInterface
     /**
      * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
      *
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="rides")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="EAGER")
      */
     protected $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="EAGER")
      */
     protected $subrides;
 
@@ -132,7 +132,7 @@ class Ride implements ParticipateableInterface
     protected $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archive_rides")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archive_rides", fetch="EAGER")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
     protected $archiveParent;
@@ -156,14 +156,14 @@ class Ride implements ParticipateableInterface
     /**
      * Array mit den Kommentaren zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="EAGER")
      */
     protected $posts;
 
     /**
      * Array mit den Bildern zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="EAGER")
      */
     protected $photos;
 
