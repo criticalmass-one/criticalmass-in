@@ -96,6 +96,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype.enableInteraction = function() {
+        this._$mapContainer.css('cursor', 'move');
         this.map.dragging.enable();
         this.map.touchZoom.enable();
         this.map.doubleClickZoom.enable();
