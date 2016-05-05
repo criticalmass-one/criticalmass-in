@@ -74,12 +74,16 @@ class SiteTwigExtension extends \Twig_Extension
         return $text;
     }
 
-    public function gravatarHash(User $user)
+    public function gravatarHash(User $user = null)
     {
+        if (!$user) {
+            return 'avatar';
+        }
+        
         return md5($user->getEmail());
     }
 
-    public function gravatarUrl(User $user, $size = 64)
+    public function gravatarUrl(User $user = null, $size = 64)
     {
         return 'http://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
     }
