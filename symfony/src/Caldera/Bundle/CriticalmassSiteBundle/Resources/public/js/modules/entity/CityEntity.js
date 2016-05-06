@@ -26,7 +26,7 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers'], function() {
     };
 
     CityEntity.prototype._setupModalContent = function () {
-        this._modal.setTitle(this._title + ' wefwefe ');
+        this._modal.setTitle(this._title);
         this._modal.setBody(this._description);
     };
 

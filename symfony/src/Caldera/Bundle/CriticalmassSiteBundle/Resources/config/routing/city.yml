@@ -9,7 +9,9 @@ caldera_criticalmass_desktop_city_show_seo2:
 caldera_criticalmass_desktop_city_show:
     path:  /{citySlug}
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
-
+    options:
+        expose: true
+        
 caldera_criticalmass_desktop_city_list:
     path:  /city/list
     defaults: { _controller: CalderaCriticalmassSiteBundle:City:list }

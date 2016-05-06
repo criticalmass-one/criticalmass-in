@@ -1,4 +1,4 @@
-define(['RideEntity'], function() {
+define(['RideEntity', 'CityEntity'], function() {
 
     Factory = function () {
     };
@@ -11,8 +11,22 @@ define(['RideEntity'], function() {
         return rideEntity;
     };
 
-    Factory.prototype._transferProperties = function(entity, jsonData) {
-        var object = JSON.parse(jsonData);
+    Factory.prototype.createCity = function(cityJson) {
+        var cityEntity = new CityEntity();
+
+        cityEntity = this._transferProperties(cityEntity, cityJson);
+
+        return cityEntity;
+    };
+
+    Factory.prototype._transferProperties = function(entity, data) {
+        var object = null;
+
+        if (data !== null && typeof data === 'object') {
+            object = data;
+        } else {
+            object = JSON.parse(data);
+        }
 
         for (var property in object) {
             if (object.hasOwnProperty(property)) {
@@ -20,6 +34,8 @@ define(['RideEntity'], function() {
 
                 if (entityProperty == 'timestamp') {
                     entity['_' + entityProperty] = new Date(object[property] * 1000);
+                } else if (entityProperty == 'city') {
+                    entity['_' + entityProperty] = this.createCity(object[property]);
                 } else {
                     entity['_' + entityProperty] = object[property];
                 }

@@ -45,7 +45,7 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'Close
         cityButton.setCaption('Städteseite');
         cityButton.setIcon('university');
         cityButton.setClass('btn-success');
-        //cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', { citySlug: this._citySlug }));
+        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', { citySlug: this._city._slug }));
 
         var buttons = [
             cityButton,

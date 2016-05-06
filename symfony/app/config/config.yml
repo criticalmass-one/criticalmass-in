@@ -16,3 +16,8 @@ imports:
     - { resource: elastic.yml }
     - { resource: translation.yml }
     - { resource: memcache.yml }
+
+jms_serializer:
+    property_naming:
+        separator:  ~
+        lower_case: false

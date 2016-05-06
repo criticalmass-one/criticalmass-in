@@ -55,6 +55,7 @@ class City implements BoardInterface
 	 * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      * @JMS\Expose
+     * @JMS\SerializedName("name")
 	 */
 	protected $city;
 
@@ -382,6 +383,12 @@ class City implements BoardInterface
 		return $this->getCity();
 	}
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("slug")
+     * @JMS\Type("string")
+     * @return string
+     */
     public function getMainSlugString()
     {
         return $this->getMainSlug()->getSlug();
