@@ -79,6 +79,17 @@ class RideTabsController extends AbstractController
         );
     }
 
+    public function renderMusicTabAction(Request $request, Ride $ride)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:RideTabs:MusicTab.html.twig',
+            [
+                'ride' => $ride,
+                'dateTime' => new \DateTime()
+            ]
+        );
+    }
+
     public function renderDetailsTabAction(Request $request, Ride $ride)
     {
         /**

@@ -69,6 +69,12 @@
                         </span>
                     </a>
                 </li>
+                <li role="presentation">
+                    <a href="#music" aria-controls="profile" role="tab" data-toggle="tab">
+                        <i class="fa fa-music"></i>
+                        Musik
+                    </a>
+                </li>
                 {% endif %}
             </ul>
 
@@ -79,6 +85,7 @@
 
                 {% if pastRide %}
                 {% render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderTracksTab', { 'ride': ride } )) %}
+                {% render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderMusicTab', { 'ride': ride } )) %}
                 {% endif %}
             </div>
         </div>
