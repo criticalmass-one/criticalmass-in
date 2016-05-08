@@ -1,35 +1,18 @@
 define(['Factory'], function() {
-    var instance = null;
+    CriticalService = function() {
 
-    function CriticalService(){
-        if(instance !== null){
-            throw new Error("Cannot instantiate more than one MySingleton, use MySingleton.getInstance()");
-        }
-
-        this.initialize();
-    }
-
-    CriticalService.prototype = {
-        initialize: function(){
-            this.factory = new Factory();
-        },
-
-        setMap: function(map) {
-            this._map = map;
-        },
-
-        getMap: function() {
-            return this._map;
-        }
-    };
-    CriticalService.getInstance = function(){
-        // summary:
-        //      Gets an instance of the singleton. It is better to use
-        if(instance === null){
-            instance = new CriticalService();
-        }
-        return instance;
     };
 
-    return CriticalService.getInstance();
+    CriticalService.prototype._map = null;
+    CriticalService.prototype.factory = require('Factory');
+
+    CriticalService.prototype.setMap = function(map) {
+        this._map = map;
+    };
+
+    CriticalService.prototype.getMap = function(map) {
+        return this._map;
+    };
+
+    return new CriticalService;
 });

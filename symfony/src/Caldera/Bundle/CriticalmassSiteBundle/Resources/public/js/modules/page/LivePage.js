@@ -34,6 +34,8 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
         this._map = new Map('map', []);
 
         this._hash = new L.Hash(this._map.map);
+
+        this._CriticalService.setMap(this._map);
     };
 
     LivePage.prototype._initLive = function() {

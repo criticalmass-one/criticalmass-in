@@ -1,4 +1,4 @@
-define(['RideEntity', 'CityEntity'], function() {
+define([], function() {
 
     Factory = function () {
     };
@@ -46,5 +46,5 @@ define(['RideEntity', 'CityEntity'], function() {
         return entity;
     };
 
-    return Factory;
+    return new Factory;
 });

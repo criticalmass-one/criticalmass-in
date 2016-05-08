@@ -16,7 +16,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity.prototype = new BaseEntity();
     IncidentEntity.prototype.constructor = IncidentEntity;
 
-    IncidentEntity.prototype._CriticalService = CriticalService;
+    IncidentEntity.prototype._CriticalService = null;
 
     IncidentEntity.prototype._id = null;
     IncidentEntity.prototype._title = null;
