@@ -1,4 +1,4 @@
-define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function() {
+define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function(CriticalService) {
 
     RidePage = function(context, options) {
         this.options = options;
@@ -11,6 +11,8 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tim
         this._initPhotoViewModal();
         this._initSubrideEvents();
         this._initTimelapse();
+
+        this._CriticalService = CriticalService;
     };
 
     RidePage.prototype._map = null;
@@ -20,6 +22,7 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tim
     RidePage.prototype._layerControl = null;
     RidePage.prototype._layers = null;
     RidePage.prototype._timelapse = null;
+    RidePage.prototype._CriticalService = CriticalService;
 
     RidePage.prototype.init = function() {
 
@@ -122,8 +125,8 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tim
         this._city.addToContainer(this._cityContainer);
     };
 
-    RidePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
+    RidePage.prototype.addRide = function(rideJson) {
+        this._ride = this._CriticalService.factory.createRide(rideJson);
 
         this._ride.addToContainer(this._rideContainer);
     };
@@ -162,17 +165,17 @@ define(['Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'Tim
         this._trackContainer.toggleIndexEntityInLayer(trackId);
     };
 
-    RidePage.prototype.addPhoto = function(photoId, latitude, longitude, description, dateTime, filename) {
-        var photo = new PhotoEntity(photoId, latitude, longitude, description, dateTime, filename);
+    RidePage.prototype.addPhoto = function(photoJson, filename) {
+        var photo = this._CriticalService.factory.createPhoto(photoJson);
 
-        var entityId = this._photoContainer.countEntities() + 1;
+        photo.setFilename(filename);
 
-        photo.addToContainer(this._photoContainer, entityId);
+        photo.addToContainer(this._photoContainer, photo.getId());
 
         var that = this;
 
         photo.on('click', function() {
-            that._photoViewModal.showPhoto(entityId);
+            that._photoViewModal.showPhoto(photo.getId());
         });
     };
 

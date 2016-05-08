@@ -1,17 +1,10 @@
 define(['MarkerEntity', 'leaflet-extramarkers'], function() {
-    PhotoEntity = function(id, latitude, longitude, description, dateTime, filename) {
-        this._id = id;
-        this._latitude = latitude;
-        this._longitude = longitude;
-        this._description = description;
-        this._dateTime = dateTime;
-        this._filename = filename;
+    PhotoEntity = function() {
     };
 
     PhotoEntity.prototype = new MarkerEntity();
     PhotoEntity.prototype.constructor = PhotoEntity;
 
-    PhotoEntity.prototype._id = null;
     PhotoEntity.prototype._description = null;
     PhotoEntity.prototype._dateTime = null;
     PhotoEntity.prototype._filename = null;
@@ -27,6 +20,10 @@ define(['MarkerEntity', 'leaflet-extramarkers'], function() {
 
     PhotoEntity.prototype.getId = function() {
         return this._id;
+    };
+
+    PhotoEntity.prototype.setFilename = function(filename) {
+        this._filename = filename;
     };
 
     PhotoEntity.prototype.getFilename = function() {

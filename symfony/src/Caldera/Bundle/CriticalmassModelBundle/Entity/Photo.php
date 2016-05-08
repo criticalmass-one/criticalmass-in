@@ -6,11 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="photo")
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Photo
 {
@@ -18,6 +20,7 @@ class Photo
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     private $id;
 
@@ -47,16 +50,19 @@ class Photo
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $latitude;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $longitude;
     
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $description;
 
@@ -77,11 +83,13 @@ class Photo
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $dateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $creationDateTime;
 

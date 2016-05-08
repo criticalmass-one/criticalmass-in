@@ -1,4 +1,4 @@
-define(['CityEntity', 'TrackEntity'], function() {
+define(['CityEntity', 'TrackEntity', 'PhotoEntity'], function() {
 
     Factory = function () {
     };
@@ -17,6 +17,14 @@ define(['CityEntity', 'TrackEntity'], function() {
         cityEntity = this._transferProperties(cityEntity, cityJson);
 
         return cityEntity;
+    };
+
+    Factory.prototype.createPhoto = function(photoJson) {
+        var photoEntity = new PhotoEntity();
+
+        photoEntity = this._transferProperties(photoEntity, photoJson);
+
+        return photoEntity;
     };
 
     Factory.prototype.createIncident = function(incidentJson) {
