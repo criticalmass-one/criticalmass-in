@@ -1,10 +1,5 @@
 define(['leaflet', 'MarkerEntity', 'leaflet-polyline'], function() {
-    TrackEntity = function (trackId, polylineString, colorRed, colorGreen, colorBlue) {
-        this._trackId = trackId;
-
-        this.setColor(colorRed, colorGreen, colorBlue);
-
-        this._polyline = L.Polyline.fromEncoded(polylineString, { color: this._color });
+    TrackEntity = function () {
     };
 
     TrackEntity.prototype = new MarkerEntity();
@@ -14,16 +9,26 @@ define(['leaflet', 'MarkerEntity', 'leaflet-polyline'], function() {
     TrackEntity.prototype._polyline = null;
     TrackEntity.prototype._color = null;
 
+    TrackEntity.prototype._createPolyline = function() {
+        this._color = 'rgb(' + this._colorRed + ',' + this._colorGreen + ',' + this._colorBlue + ')';
+
+        this._polyline = L.Polyline.fromEncoded(this._polylineString, { color: this._color });
+    };
+
     TrackEntity.prototype.addToMap = function(map) {
-        if (this._polyline) {
-            this._polyline.addTo(map.map);
+        if (!this._polyline) {
+            this._createPolyline();
         }
+
+        this._polyline.addTo(map.map);
     };
 
     TrackEntity.prototype.addToLayer = function(trackLayer) {
-        if (this._polyline) {
-            trackLayer.addLayer(this._polyline);
+        if (!this._polyline) {
+            this._createPolyline();
         }
+
+        trackLayer.addLayer(this._polyline);
     };
 
     TrackEntity.prototype.setColor = function(colorRed, colorGreen, colorBlue) {

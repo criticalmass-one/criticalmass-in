@@ -1,4 +1,4 @@
-define(['CityEntity'], function() {
+define(['CityEntity', 'TrackEntity'], function() {
 
     Factory = function () {
     };
@@ -25,6 +25,14 @@ define(['CityEntity'], function() {
         incidentEntity = this._transferProperties(incidentEntity, incidentJson);
 
         return incidentEntity;
+    };
+
+    Factory.prototype.createTrack = function(trackJson) {
+        var trackEntity = new TrackEntity();
+
+        trackEntity = this._transferProperties(trackEntity, trackJson);
+
+        return trackEntity;
     };
 
     Factory.prototype._transferProperties = function(entity, data) {

@@ -6,11 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="track")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository")
  * @Vich\Uploadable
+ * @JMS\ExclusionPolicy("all")
  */
 class Track
 {
@@ -18,11 +20,13 @@ class Track
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
 	 */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     protected $username;
 
@@ -57,36 +61,43 @@ class Track
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $startDateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $distance;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $points;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $startPoint;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $endPoint;
 
@@ -107,6 +118,8 @@ class Track
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\SerializedName("polylineString")
      */
     protected $polyline;
 
@@ -464,6 +477,10 @@ class Track
         return $this->polyline;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("colorRed")
+     */
     public function getColorRed()
     {
         if ($this->getUser()) {
@@ -477,6 +494,10 @@ class Track
         return null;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("colorGreen")
+     */
     public function getColorGreen()
     {
         if ($this->getUser()) {
@@ -490,6 +511,10 @@ class Track
         return null;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("colorBlue")
+     */
     public function getColorBlue()
     {
         if ($this->getUser()) {

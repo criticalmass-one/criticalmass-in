@@ -118,7 +118,7 @@
 
     <script>
         CriticalMass.loadModule('TrackViewPage', null, null, function(viewPage) {
-            viewPage.addTrack({{ track.id }}, '{{ track.polyline|replace({'\\': '\\\\'}) }}', {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+            viewPage.addTrack('{{ track|serialize|raw|e('js') }}');
 
             viewPage.focus();
         });
