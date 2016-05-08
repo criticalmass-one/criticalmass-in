@@ -1,4 +1,4 @@
-define(['CityEntity', 'TrackEntity', 'PhotoEntity', 'SubrideEntity'], function() {
+define([], function() {
 
     Factory = function () {
     };
