@@ -1,4 +1,4 @@
-define(['CityEntity', 'TrackEntity', 'PhotoEntity'], function() {
+define(['CityEntity', 'TrackEntity', 'PhotoEntity', 'SubrideEntity'], function() {
 
     Factory = function () {
     };
@@ -9,6 +9,14 @@ define(['CityEntity', 'TrackEntity', 'PhotoEntity'], function() {
         rideEntity = this._transferProperties(rideEntity, rideJson);
 
         return rideEntity;
+    };
+
+    Factory.prototype.createSubride = function(subrideJson) {
+        var subrideEntity = new SubrideEntity();
+
+        subrideEntity = this._transferProperties(subrideEntity, subrideJson);
+
+        return subrideEntity;
     };
 
     Factory.prototype.createCity = function(cityJson) {

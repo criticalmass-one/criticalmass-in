@@ -131,10 +131,10 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._ride.addToContainer(this._rideContainer);
     };
 
-    RidePage.prototype.addSubride = function(subrideId, title, description, latitude, longitude, location, date, time) {
-        var subride = new SubrideEntity(subrideId, title, description, latitude, longitude, location, date, time);
+    RidePage.prototype.addSubride = function(subrideJson) {
+        var subride = this._CriticalService.factory.createSubride(subrideJson);
 
-        subride.addToContainer(this._subrideContainer, subrideId);
+        subride.addToContainer(this._subrideContainer, subride.getId());
     };
 
     RidePage.prototype._initSubrideEvents = function() {

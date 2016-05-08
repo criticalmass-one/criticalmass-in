@@ -4,10 +4,12 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository")
  * @ORM\Table(name="subride")
+ * @JMS\ExclusionPolicy("all")
  */
 class Subride
 {
@@ -17,67 +19,79 @@ class Subride
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
 	 */
     protected $id;
 
 	/**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $ride;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $dateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $creationDateTime;
 
 	/**
 	 * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
+     * @JMS\Expose
 	 */
     protected $location;
 
 	/**
 	 * @ORM\Column(type="float")
+     * @JMS\Expose
 	 */
     protected $latitude;
 
 	/**
 	 * @ORM\Column(type="float")
+     * @JMS\Expose
 	 */
     protected $longitude;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $url;
 
@@ -180,6 +194,17 @@ class Subride
         return $this->description;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("timestamp")
+     * @JMS\Type("integer")
+     * @return integer
+     */
+    public function getTimestamp()
+    {
+        return $this->dateTime->format('U');
+    }
+    
     /**
      * Set dateTime
      *

@@ -118,7 +118,7 @@
         {% endfor %}
 
         {% for subride in subrides %}
-        ridePage.addSubride({{ subride.id }}, '{{ subride.title }}', '{{ subride.description|e('js') }}', {{ subride.latitude }}, {{ subride.longitude }}, '{{ subride.location }}', '{{ subride.dateTime.format('d.m.Y') }}', '{{ subride.dateTime.format('H:i') }}');
+        ridePage.addSubride('{{ subride|serialize|raw|e('js')}}');
         {% endfor %}
 
         ridePage.init();
