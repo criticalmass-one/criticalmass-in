@@ -14,6 +14,7 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router as sfRouter;
 
@@ -54,12 +55,8 @@ class Router extends sfRouter
             return $this->generateLocationUrl($object, $referenceType);
         }
 
-        if ($object instanceof RideBoard) {
-            return $this->generateRideBoardUrl($object, $referenceType);
-        }
-
-        if ($object instanceof RideThread) {
-            return $this->generateCityRideThreadUrl($object, $referenceType);
+        if ($object instanceof Track) {
+            return $this->generateTrackUrl($object, $referenceType);
         }
 
         if ($object instanceof Region) {
@@ -149,17 +146,6 @@ class Router extends sfRouter
         return parent::generate($route, $parameters, $referenceType);
     }
 
-    private function generateCityBoardUrl(CityBoard $cityTalkBoard, $referenceType)
-    {
-        $route = 'caldera_criticalmass_board_cityboard';
-
-        $parameters = [
-            'citySlug' => $cityTalkBoard->getCity()->getMainSlugString()
-        ];
-
-        return parent::generate($route, $parameters, $referenceType);
-    }
-
     private function generateBoardUrl(Board $board, $referenceType)
     {
         $route = 'caldera_criticalmass_board_listthreads';
@@ -171,13 +157,12 @@ class Router extends sfRouter
         return parent::generate($route, $parameters, $referenceType);
     }
 
-    private function generateCityRideThreadUrl(RideThread $cityRideThread, $referenceType)
+    private function generateTrackUrl(Track $track, $referenceType)
     {
-        $route = 'caldera_criticalmass_board_ridethread';
+        $route = 'caldera_criticalmass_track_view';
 
         $parameters = [
-            'citySlug' => $cityRideThread->getRide()->getCity()->getMainSlugString(),
-            'rideDate' => $cityRideThread->getRide()->getFormattedDate()
+            'trackId' => $track->getId()
         ];
 
         return parent::generate($route, $parameters, $referenceType);

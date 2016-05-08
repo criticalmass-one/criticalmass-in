@@ -91,7 +91,9 @@
                             </dt>
 
                             <dd>
-                                {{ track.ride.dateTime|date('d.m.Y') }}
+                                <a href="{{ path(track) }}">
+                                    {{ track.ride.dateTime|date('d.m.Y') }}
+                                </a>
                             </dd>
                         </dl>
                     </div>
