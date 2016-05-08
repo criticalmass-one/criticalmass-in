@@ -80,6 +80,8 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
 
     RidePage.prototype._initMap = function() {
         this._map = new Map('map');
+
+        this._CriticalService.setMap(this._map);
     };
 
     RidePage.prototype._initContainers = function() {
@@ -150,6 +152,8 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
     RidePage.prototype._panMapToSubride = function(subrideId) {
         var subride = this._subrideContainer.getEntity(subrideId);
 
+        subride.openPopup();
+        
         var latLng = subride.getLatLng();
 
         this._map.setView(latLng, 14);

@@ -1,5 +1,6 @@
-define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'dateformat'], function() {
-    SubrideEntity = function () {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'dateformat'], function(CriticalService) {
+    SubrideEntity = function () {this._CriticalService = CriticalService;
+        this._CriticalService = CriticalService;
     };
 
     SubrideEntity.prototype = new MarkerEntity();
@@ -11,6 +12,8 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'dateformat'], functi
     SubrideEntity.prototype._location = null;
     SubrideEntity.prototype._timestamp = null;
     SubrideEntity.prototype._weather = null;
+
+    SubrideEntity.prototype._CriticalService = null;
 
     SubrideEntity.prototype._initIcon = function() {
         this._icon = L.ExtraMarkers.icon({
@@ -40,6 +43,25 @@ define(['leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'dateformat'], functi
         }
 
         this._modal.setBody(content);
+
+        var that = this;
+
+        var centerButton = new ModalButton();
+        centerButton.setCaption('Zentrieren');
+        centerButton.setIcon('map-pin');
+        centerButton.setClass('btn-success');
+        centerButton.setOnClickEvent(function() {
+            that._CriticalService.getMap().setView([that._latitude, that._longitude], 15);
+        });
+
+        var closeButton = new CloseModalButton;
+
+        var buttons = [
+            centerButton,
+            closeButton
+        ];
+
+        this._modal.setButtons(buttons);
     };
 
     return SubrideEntity;

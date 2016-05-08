@@ -50,7 +50,6 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         centerButton.setIcon('map-pin');
         centerButton.setClass('btn-success');
         centerButton.setOnClickEvent(function() {
-
             that._CriticalService.getMap().setView([that._latitude, that._longitude], 13);
         });
 
