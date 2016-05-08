@@ -15,10 +15,10 @@ define(['CriticalService', 'Map', 'Container', 'IncidentEntity'], function(Criti
         this._CriticalService.setMap(this._map);
     };
 
-    IncidentPage.prototype.addIncident = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
-        var incidentEntity = new IncidentEntity(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo);
-        
-        incidentEntity.addToContainer(this._incidentContainer, id);
+    IncidentPage.prototype.addIncident = function(incidentJson) {
+        var incidentEntity = this._CriticalService.factory.createIncident(incidentJson);
+
+        incidentEntity.addToContainer(this._incidentContainer, incidentEntity.getId());
     };
 
     IncidentPage.prototype.init = function() {

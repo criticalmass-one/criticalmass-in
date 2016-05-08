@@ -15,5 +15,9 @@ define(['leaflet'], function() {
         container.addEntity(this, index);
     };
 
+    BaseEntity.prototype.getId = function() {
+        return this._id;
+    };
+
     return BaseEntity;
 });

@@ -103,7 +103,7 @@
     <script>
         CriticalMass.loadModule('IncidentPage', null, null, function(incidentPage) {
             {% for incident in incidents %}
-            incidentPage.addIncident({{ incident.id }}, '{{ incident.title|e }}', '{{ incident.description|e }}', '{{ incident.geometryType }}', '{{ incident.incidentType }}', '{{ incident.polyline|replace({'\\': '\\\\'}) }}', '{{ incident.expires }}', '{{ incident.visibleFrom|date('Y-m-d') }}', '{{ incident.visibleTo|date('Y-m-d') }}');
+            incidentPage.addIncident('{{ incident|serialize|raw|e('js') }}');
             {% endfor %}
 
             incidentPage.init();

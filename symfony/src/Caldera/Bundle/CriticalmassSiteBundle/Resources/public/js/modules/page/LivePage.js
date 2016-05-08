@@ -91,7 +91,6 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
     LivePage.prototype.addRide = function(rideJson) {
         var rideEntity = this._CriticalService.factory.createRide(rideJson);
 
-        console.log(rideEntity);
         this._rideContainer.addEntity(rideEntity);
 
         return rideEntity;

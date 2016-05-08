@@ -3,11 +3,12 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\IncidentRepository")
  * @ORM\Table(name="incident")
+ * @JMS\ExclusionPolicy("all")
  */
 class Incident
 {
@@ -22,6 +23,7 @@ class Incident
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     protected $id;
 
@@ -34,56 +36,67 @@ class Incident
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="incidents")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text")
+     * @JMS\Expose
      */
     protected $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     protected $geometryType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     protected $incidentType;
 
     /**
      * @ORM\Column(type="text")
+     * @JMS\Expose
      */
     protected $polyline;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $expires;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $visibleFrom;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $visibleTo;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $creationDateTime;
 

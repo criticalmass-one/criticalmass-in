@@ -1,4 +1,4 @@
-define([], function() {
+define(['CityEntity'], function() {
 
     Factory = function () {
     };
@@ -17,6 +17,14 @@ define([], function() {
         cityEntity = this._transferProperties(cityEntity, cityJson);
 
         return cityEntity;
+    };
+
+    Factory.prototype.createIncident = function(incidentJson) {
+        var incidentEntity = new IncidentEntity();
+
+        incidentEntity = this._transferProperties(incidentEntity, incidentJson);
+
+        return incidentEntity;
     };
 
     Factory.prototype._transferProperties = function(entity, data) {
