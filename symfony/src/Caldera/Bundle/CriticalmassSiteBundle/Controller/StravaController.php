@@ -2,13 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
+use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\TrackHandlingTrait;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline\TrackPolyline;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
@@ -18,11 +13,12 @@ use Strava\API\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class StravaController extends AbstractController
 {
+    use TrackHandlingTrait;
+
     protected function initOauthForRide(Request $request, Ride $ride)
     {
         $redirectUri = $request->getUriForPath($this->generateUrl(
@@ -230,89 +226,5 @@ class StravaController extends AbstractController
                 'trackId' => $track->getId()
             ]
         );
-    }
-
-    protected function saveLatLngList(Track $track)
-    {
-        /**
-         * @var RangeLatLngListGenerator $llag
-         */
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
-        $llag->loadTrack($track);
-        $llag->execute();
-        $track->setLatLngList($llag->getList());
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
-    }
-
-    protected function addRideEstimate(Track $track, Ride $ride)
-    {
-        /**
-         * @var RideEstimateService $estimateService
-         */
-        $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-        $estimateService->addEstimate($track);
-        $estimateService->calculateEstimates($ride);
-    }
-
-    protected function loadTrackProperties(Track $track)
-    {
-        /**
-         * @var TrackReader $gr
-         */
-        $gr = $this->get('caldera.criticalmass.gps.trackreader');
-        $gr->loadTrack($track);
-
-        $track->setPoints($gr->countPoints());
-
-        $track->setStartPoint(0);
-        $track->setEndPoint($gr->countPoints() - 1);
-
-        $track->setStartDateTime($gr->getStartDateTime());
-        $track->setEndDateTime($gr->getEndDateTime());
-        $track->setMd5Hash($gr->getMd5Hash());
-
-        /**
-         * @var TrackDistanceCalculator $tdc
-         */
-        $tdc = $this->get('caldera.criticalmass.gps.distancecalculator.track');
-        $tdc->loadTrack($track);
-
-        $track->setDistance($tdc->calculate());
-    }
-
-    protected function generateSimpleLatLngList(Track $track)
-    {
-        /**
-         * @var SimpleLatLngListGenerator $generator
-         */
-        $generator = $this->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
-        $list = $generator
-            ->loadTrack($track)
-            ->execute()
-            ->getList();
-
-        $track->setLatLngList($list);
-    }
-
-    protected function generatePolyline(Track $track)
-    {
-        /**
-         * @var TrackPolyline $trackPolyline
-         */
-        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
-
-        $trackPolyline->loadTrack($track);
-
-        $trackPolyline->execute();
-
-        $track->setPolyline($trackPolyline->getPolyline());
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
-
     }
 }
