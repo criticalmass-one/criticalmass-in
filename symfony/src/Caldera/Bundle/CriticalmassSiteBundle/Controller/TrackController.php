@@ -155,9 +155,11 @@ class TrackController extends AbstractController
             header('Content-disposition: attachment; filename=track.gpx');
             header('Content-type: text/plain');
 
-            $track->loadTrack();
+            $path = $this->getParameter('kernel.root_dir');
+            $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+            $filename = $helper->asset($track, 'trackFile');
 
-            echo $track->getGpx();
+            readfile($path.'/../web'.$filename);
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
