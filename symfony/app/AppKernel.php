@@ -26,7 +26,8 @@ class AppKernel extends Kernel
             new FOS\ElasticaBundle\FOSElasticaBundle(),
             new Lsw\MemcacheBundle\LswMemcacheBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle()
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Caldera\Bundle\StatisticBundle\CalderaStatisticBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
