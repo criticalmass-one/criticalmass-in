@@ -1,6 +1,0 @@
-services:
-    caldera.statistic.kernel_request_listener:
-        class: Caldera\Bundle\StatisticBundle\EventListener\RequestListener
-        tags:
-          - { name: kernel.event_listener, event: kernel.request, method: listen }
-        

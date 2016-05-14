@@ -1,3 +1,0 @@
-caldera_statistic_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: CalderaStatisticBundle:Default:index }
