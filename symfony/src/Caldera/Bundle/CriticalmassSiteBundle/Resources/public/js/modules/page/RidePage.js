@@ -153,16 +153,16 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         var subride = this._subrideContainer.getEntity(subrideId);
 
         subride.openPopup();
-        
+
         var latLng = subride.getLatLng();
 
         this._map.setView(latLng, 14);
     };
 
-    RidePage.prototype.addTrack = function(trackId, polyline, colorRed, colorGreen, colorBlue, username, backgroundImage) {
-        var track = new TimelapseTrackEntity(trackId, polyline, colorRed, colorGreen, colorBlue, username, backgroundImage);
+    RidePage.prototype.addTrack = function(trackJson) {
+        var track = this._CriticalService.factory.createTrack(trackJson);
 
-        track.addToContainer(this._trackContainer, trackId);
+        track.addToContainer(this._trackContainer, track.getId());
     };
 
     RidePage.prototype._toggleTrack = function(trackId) {
