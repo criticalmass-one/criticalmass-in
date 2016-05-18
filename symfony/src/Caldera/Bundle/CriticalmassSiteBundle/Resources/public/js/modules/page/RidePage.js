@@ -121,8 +121,8 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._photoViewModal.setMap(this._map);
     };
 
-    RidePage.prototype.addCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
-        this._city = new CityEntity(cityName, cityTitle, slug, description, latitude, longitude);
+    RidePage.prototype.addCity = function(cityJson) {
+        this._city = this._CriticalService.factory.createCity(cityJson);
 
         this._city.addToContainer(this._cityContainer);
     };

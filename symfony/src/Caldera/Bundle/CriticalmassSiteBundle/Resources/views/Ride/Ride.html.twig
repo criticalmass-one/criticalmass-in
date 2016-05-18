@@ -104,7 +104,7 @@
         {% if ride.getHasLocation() and ride.latitude != 0 and ride.getLongitude != 0 %}
         ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
         {% else %}
-        ridePage.addCity('{{ city.title }}', '{{ city.city }}', '{{ city.getMainSlugString() }}', '{{ city.description|e('js') }}', {{ city.latitude }}, {{ city.longitude }});
+        ridePage.addCity('{{ city|serialize|raw|e('js') }}');
         {% endif %}
 
         {% for track in tracks %}
