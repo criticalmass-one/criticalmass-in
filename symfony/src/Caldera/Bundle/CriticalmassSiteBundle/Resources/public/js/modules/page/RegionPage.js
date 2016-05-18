@@ -1,9 +1,12 @@
-define(['Map', 'Container', 'CityEntity'], function() {
+define(['CriticalService', 'Map', 'Container', 'CityEntity'], function(CriticalService) {
     RegionPage = function () {
+        this._CriticalService = CriticalService;
+
         this._initContainer();
         this._initMap();
     };
 
+    RegionPage.prototype._CriticalService = null;
     RegionPage.prototype._map = null;
     RegionPage.prototype._cityContainer = null;
 
@@ -17,8 +20,8 @@ define(['Map', 'Container', 'CityEntity'], function() {
         this._cityContainer.addToMap(this._map);
     };
 
-    RegionPage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
-        var cityEntity = new CityEntity(city, title, slug, description, latitude, longitude);
+    RegionPage.prototype.addCity = function(cityJson) {
+        var cityEntity = this._CriticalService.factory.createCity(cityJson);
 
         this._cityContainer.addEntity(cityEntity);
 
