@@ -18,6 +18,8 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity'], function(CriticalS
         this._map = new Map('map', []);
 
         this._cityContainer.addToMap(this._map);
+
+        this._CriticalService.setMap(this._map);
     };
 
     RegionPage.prototype.addCity = function(cityJson) {
