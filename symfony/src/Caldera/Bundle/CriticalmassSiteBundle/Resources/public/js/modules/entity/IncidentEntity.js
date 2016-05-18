@@ -1,14 +1,5 @@
 define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function(CriticalService) {
-    IncidentEntity = function(id, title, description, geometryType, incidentType, polyline, expires, visibleFrom, visibleTo) {
-        this._id = id;
-        this._title = title;
-        this._description = description;
-        this._geometryType = geometryType;
-        this._incidentType = incidentType;
-        this._polyline = polyline;
-        this._expires = expires;
-        this._visibleFrom = visibleFrom;
-        this._visibleTo = visibleTo;
+    IncidentEntity = function() {
     };
 
     IncidentEntity.prototype = new BaseEntity();

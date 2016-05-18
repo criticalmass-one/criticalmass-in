@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'IncidentEntity'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'IncidentEntity', 'CityEntity'], function(CriticalService) {
     IncidentPage = function () {
         this._CriticalService = CriticalService;
 
