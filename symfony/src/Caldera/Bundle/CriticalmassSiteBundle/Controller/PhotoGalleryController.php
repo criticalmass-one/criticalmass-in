@@ -41,7 +41,7 @@ class PhotoGalleryController extends AbstractController
         );
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:PhotoGallery:gallery.html.twig',
+            'CalderaCriticalmassSiteBundle:PhotoGallery:gallerylist.html.twig',
             [
                 'ride' => $ride,
                 'event' => $event,
