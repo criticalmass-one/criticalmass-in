@@ -27,7 +27,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
         if (this._description) {
             this._modal.setBody(this._description);
         } else {
-            this._modal.setBody('<p>')
+            this._modal.setBody('<div class="alert alert-info" role="alert"><strong>Schade!</strong> Zu dieser Stadt wurden bislang keine weiteren Informationen hinterlegt.</div>');
         }
 
         var that = this;
