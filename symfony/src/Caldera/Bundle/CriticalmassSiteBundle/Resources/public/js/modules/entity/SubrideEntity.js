@@ -1,6 +1,5 @@
 define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'dateformat'], function(CriticalService) {
-    SubrideEntity = function () {this._CriticalService = CriticalService;
-        this._CriticalService = CriticalService;
+    SubrideEntity = function () {
     };
 
     SubrideEntity.prototype = new MarkerEntity();
@@ -13,7 +12,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'd
     SubrideEntity.prototype._timestamp = null;
     SubrideEntity.prototype._weather = null;
 
-    SubrideEntity.prototype._CriticalService = null;
+    SubrideEntity.prototype._CriticalService = CriticalService;
 
     SubrideEntity.prototype._initIcon = function() {
         this._icon = L.ExtraMarkers.icon({

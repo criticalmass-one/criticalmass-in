@@ -9,14 +9,12 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         this._expires = expires;
         this._visibleFrom = visibleFrom;
         this._visibleTo = visibleTo;
-
-        this._CriticalService = CriticalService;
     };
 
     IncidentEntity.prototype = new BaseEntity();
     IncidentEntity.prototype.constructor = IncidentEntity;
 
-    IncidentEntity.prototype._CriticalService = null;
+    IncidentEntity.prototype._CriticalService = CriticalService;
 
     IncidentEntity.prototype._id = null;
     IncidentEntity.prototype._title = null;

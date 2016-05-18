@@ -1,12 +1,11 @@
 define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModalButton', 'leaflet-extramarkers'], function(CriticalService) {
     CityEntity = function () {
-        this._CriticalService = CriticalService;
     };
 
     CityEntity.prototype = new MarkerEntity();
     CityEntity.prototype.constructor = CityEntity;
 
-    CityEntity.prototype._CriticalService = null;
+    CityEntity.prototype._CriticalService = CriticalService;
     CityEntity.prototype._title = null;
     CityEntity.prototype._name = null;
     CityEntity.prototype._slug = null;

@@ -1,12 +1,11 @@
 define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function(CriticalService) {
     RideEntity = function () {
-        this._CriticalService = CriticalService;
     };
 
     RideEntity.prototype = new MarkerEntity();
     RideEntity.prototype.constructor = RideEntity;
 
-    RideEntity.prototype._CriticalService = null;
+    RideEntity.prototype._CriticalService = CriticalService;
     RideEntity.prototype._title = null;
     RideEntity.prototype._description = null;
     RideEntity.prototype._citySlug = null;
