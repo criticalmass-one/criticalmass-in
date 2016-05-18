@@ -157,7 +157,7 @@
         {% endif %}
 
         {% if photo.hasCoordinates() %}
-        page.addPhoto({{ photo.id }}, {{ photo.latitude }}, {{ photo.longitude }}, '{{ photo.description|e('js') }}', '{{ photo.dateTime.format('Y-m-d H:i:s') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+        page.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
         page.initMap();
         {% endif %}
     });

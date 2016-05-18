@@ -1,8 +1,11 @@
-define(['AutoMap', 'PhotoEntity'], function() {
+define(['CriticalService', 'AutoMap', 'PhotoEntity'], function(CriticalService) {
     ViewPhotoPage = function() {
         this._installNavigation();
+
+        this._CriticalService = CriticalService;
     };
 
+    ViewPhotoPage.prototype._CriticalService = null;
     ViewPhotoPage.prototype._nextPhotoUrl = null;
     ViewPhotoPage.prototype._previousPhotoUrl = null;
 
@@ -28,8 +31,9 @@ define(['AutoMap', 'PhotoEntity'], function() {
         });
     };
 
-    ViewPhotoPage.prototype.addPhoto = function(photoId, latitude, longitude, description, dateTime, filename) {
-        this._photo = new PhotoEntity(photoId, latitude, longitude, description, dateTime, filename);
+    ViewPhotoPage.prototype.addPhoto = function(photoJson, filename) {
+        this._photo = this._CriticalService.factory.createPhoto(photoJson);
+        this._photo.setFilename(filename);
     };
 
     ViewPhotoPage.prototype.initMap = function() {
