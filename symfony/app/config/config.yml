@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: criticalmass.yml }
     - { resource: security.yml }
     
     - { resource: assetic.yml }
