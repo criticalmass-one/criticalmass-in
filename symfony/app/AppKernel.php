@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Caldera\Bundle\CalderaBundle\CalderaBundle(),
             new Caldera\Bundle\CriticalmassModelBundle\CalderaCriticalmassModelBundle(),
             new Caldera\Bundle\CriticalmassSiteBundle\CalderaCriticalmassSiteBundle(),
             new Caldera\Bundle\CriticalmassCoreBundle\CalderaCriticalmassCoreBundle(),
