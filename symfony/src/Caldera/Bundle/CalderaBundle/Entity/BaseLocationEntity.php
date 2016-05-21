@@ -9,6 +9,9 @@ use Caldera\Bundle\CriticalmassModelBundle\Entity\City as City;
 /**
  * @ORM\Table(name="caldera_baselocationentity")
  * @ORM\Entity()
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap( {"BikeShop" = "BikeShop"} )
  */
 class BaseLocationEntity
 {
@@ -20,7 +23,7 @@ class BaseLocationEntity
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
