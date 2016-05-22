@@ -204,6 +204,24 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findFutureRides()
+    {
+        $dateTime = new \DateTime();
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->where($builder->expr()->gt('ride.dateTime', '\''.$dateTime->format('Y-m-d H:i:s').'\''));
+
+        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+
+        $builder->orderBy('ride.dateTime', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
     {
         if (!$startDateTime) {

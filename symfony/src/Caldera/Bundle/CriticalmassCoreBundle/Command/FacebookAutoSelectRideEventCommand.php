@@ -45,7 +45,7 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
          */
         $fera = $this->getContainer()->get('caldera.criticalmass.facebookapi.eventride');
 
-        $rides = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findRidesInInterval();
+        $rides = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findFutureRides();
 
         /**
          * @var Ride $ride
