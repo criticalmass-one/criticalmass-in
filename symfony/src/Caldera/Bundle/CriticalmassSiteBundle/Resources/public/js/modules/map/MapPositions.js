@@ -95,7 +95,9 @@ define(['leaflet', 'PositionEntity'], function(L) {
         }
 
         function errorCallback() {
-            that._offlineCallback();
+            if (that._offlineCallback) {
+                that._offlineCallback();
+            }
         }
 
         var apiUrl = this._options.apiUrl;
@@ -136,6 +138,18 @@ define(['leaflet', 'PositionEntity'], function(L) {
 
     MapPositions.prototype.getBounds = function() {
 	    return this._container.getBounds();
+    };
+
+    MapPositions.prototype.getLatestLatLng = function() {
+        var positionList = this._container.getList();
+
+        var latestPosition = positionList[0];
+
+        if (latestPosition) {
+            return latestPosition.getLatLng();
+        }
+
+        return null;
     };
 
     return MapPositions;

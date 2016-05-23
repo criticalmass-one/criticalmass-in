@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
     LivePage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -42,6 +42,8 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
         this._mapPositions = new MapPositions(null, this._options);
 
         this._mapPositions.addToControl(this._layers, 'Teilnehmer');
+
+        this._CriticalService.setMapPositions(this._mapPositions);
     };
 
     LivePage.prototype._initLayers = function() {
@@ -69,7 +71,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
     };
 
     LivePage.prototype._initCallbacks = function() {
-        this._mapPositions.setOfflineCallback(this.offlineCallback);
+        //this._mapPositions.setOfflineCallback(this.offlineCallback);
     };
 
     LivePage.prototype.offlineCallback = function() {
@@ -99,7 +101,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
     };
 
     LivePage.prototype.addRide = function(rideJson) {
-        var rideEntity = this._CriticalService.factory.createRide(rideJson);
+        var rideEntity = this._CriticalService.factory.createLiveRide(rideJson);
 
         this._rideContainer.addEntity(rideEntity);
 

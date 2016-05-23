@@ -11,6 +11,14 @@ define([], function() {
         return rideEntity;
     };
 
+    Factory.prototype.createLiveRide = function(liveRideJson) {
+        var liveRideEntity = new LiveRideEntity();
+
+        liveRideEntity = this._transferProperties(liveRideEntity, liveRideJson);
+
+        return liveRideEntity;
+    };
+
     Factory.prototype.createSubride = function(subrideJson) {
         var subrideEntity = new SubrideEntity();
 

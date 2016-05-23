@@ -39,6 +39,7 @@ require.config({
         "WritePost": "/bundles/calderacriticalmasssite/js/modules/WritePost",
         "CriticalService": "/bundles/calderacriticalmasssite/js/modules/CriticalService",
         "RideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/RideEntity",
+        "LiveRideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/LiveRideEntity",
         "Factory": "/bundles/calderacriticalmasssite/js/modules/entity/Factory",
         "NoLocationRideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/NoLocationRideEntity",
         "TrackEntity": "/bundles/calderacriticalmasssite/js/modules/entity/TrackEntity",

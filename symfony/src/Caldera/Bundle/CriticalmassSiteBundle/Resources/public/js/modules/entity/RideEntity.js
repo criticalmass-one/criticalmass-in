@@ -42,6 +42,10 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
 
         this._modal.setBody(content);
 
+        this._setupModalButtons();
+    };
+
+    RideEntity.prototype._setupModalButtons = function() {
         var that = this;
 
         var centerButton = new ModalButton();
