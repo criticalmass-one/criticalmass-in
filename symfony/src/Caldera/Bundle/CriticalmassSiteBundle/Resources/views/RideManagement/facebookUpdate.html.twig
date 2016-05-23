@@ -95,7 +95,7 @@
                         <label class="control-label" for="title">
                             Titel:
                         </label>
-                        {{ form_widget(form.title, { 'attr' : { 'class': 'form-control value' } }) }}
+                        {{ form_widget(form.title, { 'attr' : { 'class': 'form-control string-value' } }) }}
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@
                         <label class="control-label" for="description">
                             Beschreibung:
                         </label>
-                        {{ form_widget(form.description, { 'attr' : { 'class': 'form-control value', 'rows': 10 } }) }}
+                        {{ form_widget(form.description, { 'attr' : { 'class': 'form-control string-value', 'rows': 10 } }) }}
                     </div>
                 </div>
 
@@ -173,7 +173,7 @@
                         <label class="control-label" for="date">
                             Datum:
                         </label>
-                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control value' } }) }}
+                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control date-value' } }) }}
                     </div>
                 </div>
 
@@ -220,7 +220,7 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.hasTime) }}
                         </span>
-                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control value' } }) }}
+                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control time-value' } }) }}
                     </div>
                 </div>
 
@@ -274,7 +274,7 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.hasLocation) }}
                         </span>
-                        {{ form_widget(form.location, { 'attr' : { 'class': 'form-control value' } }) }}
+                        {{ form_widget(form.location, { 'attr' : { 'class': 'form-control string-value' } }) }}
                     </div>
                 </div>
 
