@@ -45,23 +45,6 @@
 {% endblock %}
 
 {% block content %}
-    <div class="modal fade" id="offlineModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Uuuups</h4>
-                </div>
-                <div class="modal-body">
-                    Momentan gibt es ein Problem. Offenbar ist der Server mit den Positionsdaten momentan nicht erreichbar. Bitte warte einen Moment oder versuche es später erneut :(
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="map">
         <div id="glympse-logo-container">
             <a href="http://www.glympse.com/">
@@ -83,8 +66,6 @@
 
         CriticalMass.loadModule('LivePage', null, options, function(livePage) {
             var ride = null;
-            {#livePage.addCity('{{ ride.getCity().getCity() }}', '{{ ride.getCity().getTitle() }}', '{{ ride.getCity().getMainSlugString() }}', '{{ ride.getCity().getDescription()|e('js') }}', {{ride.getCity().getLatitude()}},{{ride.getCity().getLongitude()}});#}
-
             {% for ride in rides %}
             ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
             {% endfor %}

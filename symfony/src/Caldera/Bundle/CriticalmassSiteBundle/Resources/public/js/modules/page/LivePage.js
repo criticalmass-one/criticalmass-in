@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
     LivePage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -10,7 +10,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
         this._initLayers();
         this._initLayerControl();
         this._initLocationControl();
-        this._initOfflineCallback();
+        this._initCallbacks();
         this._startLive();
     };
 
@@ -21,7 +21,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
     LivePage.prototype._rideContainer = null;
     LivePage.prototype._cityContainer = null;
     LivePage.prototype._layers = [];
-    LivePage.prototype._offlineCallbackShown = false;
+    LivePage.prototype._offlineModal = null;
 
     LivePage.prototype._initContainer = function() {
         this._rideContainer = new Container();
@@ -68,15 +68,25 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'RideEntity', 'NoLo
         this._locationControl.addTo(this._map);
     };
 
-    LivePage.prototype._initOfflineCallback = function() {
+    LivePage.prototype._initCallbacks = function() {
         this._mapPositions.setOfflineCallback(this.offlineCallback);
     };
 
     LivePage.prototype.offlineCallback = function() {
-        if (!this._offlineCallbackShown) {
-            $('#offlineModal').modal();
+        if (this._offlineModal && this._offlineModal.isVisible()) {
+            this._offlineModal.show();
+        } else {
+            this._offlineModal = new Modal();
 
-            this._offlineCallbackShown = true;
+            this._offlineModal.setSize('md');
+            this._offlineModal.setTitle('Ooops');
+            this._offlineModal.setBody('Es ist leider ein Problem mit der Übertragung der Positionsdaten aufgetreten. Bitte versuche es gleich noch einmal.');
+
+            this._offlineModal.setButtons([
+                new CloseModalButton()
+            ]);
+
+            this._offlineModal.show();
         }
     };
 
