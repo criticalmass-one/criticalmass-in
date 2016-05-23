@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-bottom-medium">
             <div class="col-md-4">
                 <div
                     id="left-map"
@@ -78,11 +78,15 @@
 
             <div class="row">
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </button>
+
                     <div class="form-group">
                         <label>
                             Titel:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.title }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.title }}" />
                     </div>
                 </div>
 
@@ -91,27 +95,35 @@
                         <label class="control-label" for="title">
                             Titel:
                         </label>
-                        {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(form.title, { 'attr' : { 'class': 'form-control value' } }) }}
                     </div>
                 </div>
 
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    </button>
+
                     <div class="form-group">
                         <label>
                             Titel:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.title }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.title }}" />
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </button>
+
                     <div class="form-group">
                         <label class="control-label">
                             Beschreibung:
                         </label>
-                        <textarea disabled="disabled" class="form-control" rows="10">
+                        <textarea disabled="disabled" class="form-control value" rows="10">
                             {{ ride.description }}
                         </textarea>
                     </div>
@@ -122,16 +134,20 @@
                         <label class="control-label" for="description">
                             Beschreibung:
                         </label>
-                        {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
+                        {{ form_widget(form.description, { 'attr' : { 'class': 'form-control value', 'rows': 10 } }) }}
                     </div>
                 </div>
 
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    </button>
+
                     <div class="form-group">
                         <label class="control-label">
                             Beschreibung:
                         </label>
-                        <textarea disabled="disabled" class="form-control" rows="10">
+                        <textarea disabled="disabled" class="form-control value" rows="10">
                             {{ facebookRide.description }}
                         </textarea>
                     </div>
@@ -140,11 +156,15 @@
 
             <div class="row">
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </button>
+
                     <div class="form-group">
                         <label class="control-label">
                             Datum:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
                     </div>
                 </div>
 
@@ -153,22 +173,30 @@
                         <label class="control-label" for="date">
                             Datum:
                         </label>
-                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control value' } }) }}
                     </div>
                 </div>
 
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    </button>
+
                     <div class="form-group">
                         <label class="control-label">
                             Datum:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </button>
+
                     <label class="control-label">
                         Uhrzeit:
                     </label>
@@ -180,7 +208,7 @@
                             <input type="checkbox" disabled="disabled" class="form-control" />
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.dateTime|date('H:i', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.dateTime|date('H:i', 'Europe/Berlin') }}" />
                     </div>
                 </div>
 
@@ -192,11 +220,15 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.hasTime) }}
                         </span>
-                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control value' } }) }}
                     </div>
                 </div>
 
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    </button>
+
                     <label class="control-label">
                         Uhrzeit:
                     </label>
@@ -208,13 +240,17 @@
                             <input type="checkbox" disabled="disabled" class="form-control" />
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.dateTime|date('H:i', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.dateTime|date('H:i', 'Europe/Berlin') }}" />
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </button>
+
                     <label class="control-label" for="location">
                         Treffpunkt:
                     </label>
@@ -226,7 +262,7 @@
                             <input type="checkbox" disabled="disabled" class="form-control" />
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ ride.location }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.location }}" />
                     </div>
                 </div>
 
@@ -238,11 +274,15 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.hasLocation) }}
                         </span>
-                        {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(form.location, { 'attr' : { 'class': 'form-control value' } }) }}
                     </div>
                 </div>
 
                 <div class="col-md-4">
+                    <button type="button" class="copy-button btn btn-xs btn-default pull-right">
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    </button>
+
                     <label class="control-label" for="location">
                         Treffpunkt:
                     </label>
@@ -254,7 +294,7 @@
                             <input type="checkbox" disabled="disabled" class="form-control" />
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control" value="{{ facebookRide.location }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.location }}" />
                     </div>
                 </div>
             </div>
@@ -269,7 +309,7 @@
                         Abbrechen
                     </a>
 
-                    <button type="submit" class="btn btn-success">
+                    <button type="button" type="submit" class="btn btn-success">
                         Speichern
                     </button>
                 </div>
