@@ -21,7 +21,7 @@ class RideEstimate
 	protected $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
@@ -29,13 +29,13 @@ class RideEstimate
 	/**
 	 * Tour, zu der diese Entitaet abgespeichert wurde.
 	 *
-	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates")
+	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
 	 */
 	protected $ride;
 
     /**
-     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"}, fetch="LAZY")
      * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
      */
     protected $track;
