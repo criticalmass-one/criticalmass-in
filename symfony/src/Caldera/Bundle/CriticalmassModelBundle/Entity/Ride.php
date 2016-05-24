@@ -25,7 +25,7 @@ class Ride implements ParticipateableInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="rides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -33,19 +33,19 @@ class Ride implements ParticipateableInterface
     /**
      * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
      *
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @JMS\Expose
      */
     protected $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="LAZY")
      */
     protected $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="LAZY")
      */
     protected $subrides;
 
@@ -148,13 +148,13 @@ class Ride implements ParticipateableInterface
     protected $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archiveRides", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archiveRides", fetch="LAZY")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
      */
     protected $archiveParent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="archiveParent")
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="archiveParent", fetch="LAZY")
      */
     protected $archiveRides;
 
@@ -169,7 +169,7 @@ class Ride implements ParticipateableInterface
     protected $archiveDateTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_rides")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_rides", fetch="LAZY")
      * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
      */
     protected $archiveUser;
@@ -177,14 +177,14 @@ class Ride implements ParticipateableInterface
     /**
      * Array mit den Kommentaren zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
      */
     protected $posts;
 
     /**
      * Array mit den Bildern zu dieser Tour.
      *
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
      */
     protected $photos;
 
@@ -214,9 +214,14 @@ class Ride implements ParticipateableInterface
     protected $participationsNumberNo = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="Participation", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="Participation", mappedBy="ride", fetch="LAZY")
      */
     protected $participations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RideEstimate", mappedBy="ride", fetch="LAZY")
+     */
+    protected $estimates;
 
     /**
      * Get id

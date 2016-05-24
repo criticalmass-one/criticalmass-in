@@ -191,11 +191,8 @@ class RideRepository extends EntityRepository
         $builder = $this->createQueryBuilder('ride');
 
         $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.estimatedParticipants', 0));
-        $builder->andWhere($builder->expr()->gt('ride.estimatedDuration', 0));
-        $builder->andWhere($builder->expr()->gt('ride.estimatedDuration', 0));
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
+        $builder->join('ride.estimates', 'estimates');
 
         $builder->orderBy('ride.dateTime', 'DESC');
 
