@@ -889,6 +889,7 @@ class City implements BoardInterface
 
             if ($this->standardTime)
             {
+                $this->standardTime->setTimezone(new \DateTimeZone('UTC'));
                 $result.= ' um '.$this->standardTime->format('H.i').' Uhr';
             }
         }

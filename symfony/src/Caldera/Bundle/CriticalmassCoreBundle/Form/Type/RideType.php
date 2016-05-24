@@ -14,13 +14,9 @@ class RideType extends AbstractType
             ->add('description', 'textarea', array('required' => false))
             ->add('date', 'date',
                 [
-                    'model_timezone' => 'UTC',
-                    'view_timezone' => 'Europe/Berlin'
                 ])
             ->add('time', 'time',
                 [
-                    'model_timezone' => 'UTC',
-                    'view_timezone' => 'Europe/Berlin'
                 ])
             ->add('location', 'text', array('required' => false))
             ->add('latitude', 'hidden')

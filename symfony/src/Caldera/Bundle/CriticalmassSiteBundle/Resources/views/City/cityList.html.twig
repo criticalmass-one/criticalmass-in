@@ -57,7 +57,7 @@
                             data-cityslug="{{ city.slug }}"
                             data-latitude="{{ city.latitude }}"
                             data-longitude="{{ city.longitude }}"
-                            data-currentRide="{% if currentRide %}{{ currentRide.dateTime.format('Y-m-d H:i') }}{% else %}9999-99-99 99:99{% endif %}"
+                            data-currentRide="{% if currentRide %}{{ currentRide.dateTime|date('Y-m-d H:i', 'Europe/Berlin') }}{% else %}9999-99-99 99:99{% endif %}"
                         >
                             <td>
                                 <a href="{{ path(city) }}">

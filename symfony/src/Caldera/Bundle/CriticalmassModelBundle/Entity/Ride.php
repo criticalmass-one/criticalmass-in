@@ -575,24 +575,26 @@ class Ride implements ParticipateableInterface
         return $this->dateTime->format('U');
     }
 
-    public function getDate()
-    {
-        return $this->dateTime;
-    }
+
 
     public function getFormattedDate()
     {
         return $this->dateTime->format('Y-m-d');
     }
 
-    public function setDate(\DateTime $date)
+    public function getDate()
     {
-        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'));
+        return $this->dateTime;
     }
 
     public function getTime()
     {
         return $this->dateTime;
+    }
+
+    public function setDate(\DateTime $date)
+    {
+        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'));
     }
 
     public function setTime(\DateTime $time)
