@@ -257,11 +257,11 @@
         };
 
         CriticalMass.loadModule('EditRidePage', options, null, function(editRidePage) {
-            var cityLatLng = L.latLng({{ city.getLatitude() }}, {{ city.getLongitude() }});
+            var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
 
             editRidePage.setCityLatLng(cityLatLng);
 
-            {% for ride in city.getRides() %}
+            {% for ride in oldRides %}
             editRidePage.addRideDate(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
             {% endfor %}
 

@@ -133,6 +133,8 @@ class RideManagementController extends AbstractController
 
     protected function editGetAction(Request $request, Ride $ride, City $city, Form $form)
     {
+        $oldRides = $this->getRideRepository()->findRidesForCity($city);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
             array(
@@ -140,13 +142,16 @@ class RideManagementController extends AbstractController
                 'city' => $city,
                 'form' => $form->createView(),
                 'hasErrors' => null,
-                'dateTime' => new \DateTime()
+                'dateTime' => new \DateTime(),
+                'oldRides' => $oldRides
             )
         );
     }
     
     protected function editPostAction(Request $request, Ride $ride, City $city, Form $form)
     {
+        $oldRides = $this->getRideRepository()->findRidesForCity($city);
+        
         $archiveRide = clone $ride;
         $archiveRide->setArchiveUser($this->getUser());
         $archiveRide->setArchiveParent($ride);
@@ -176,7 +181,8 @@ class RideManagementController extends AbstractController
                 'city' => $city, 
                 'form' => $form->createView(), 
                 'hasErrors' => $hasErrors, 
-                'dateTime' => new \DateTime()
+                'dateTime' => new \DateTime(),
+                'oldRides' => $oldRides
             )
         );
     }
