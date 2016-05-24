@@ -95,7 +95,7 @@ class RideEstimateCalculator
 
         if ($participantsCounter)
         {
-            $participants /= $participantsCounter;
+            ceil($participants /= $participantsCounter);
         }
 
         $this->ride->setEstimatedParticipants($participants);

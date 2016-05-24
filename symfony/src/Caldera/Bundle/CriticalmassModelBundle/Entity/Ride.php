@@ -219,6 +219,11 @@ class Ride implements ParticipateableInterface
     protected $participations;
 
     /**
+     * @ORM\OneToMany(targetEntity="RideEstimate", mappedBy="ride", fetch="LAZY")
+     */
+    protected $estimates;
+
+    /**
      * Get id
      *
      * @return integer
