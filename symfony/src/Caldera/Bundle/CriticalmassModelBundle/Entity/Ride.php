@@ -582,9 +582,7 @@ class Ride implements ParticipateableInterface
 
     public function setDate(\DateTime $date)
     {
-        $newDate = new \DateTime($this->dateTime->format('Y-m-d') . ' 00:00:00');
-
-        $this->dateTime = $newDate->add($newDate->diff($date));
+        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'));
     }
 
     public function getTime()

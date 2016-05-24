@@ -7,9 +7,9 @@
             <div class="col-md-12">
                 <dl>
                     <dt>Datum</dt>
-                    <dd>{{ ride.dateTime.format('d.m.Y') }}</dd>
+                    <dd>{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}</dd>
                     <dt>Uhrzeit</dt>
-                    <dd>{{ ride.dateTime.format('H:i') }} Uhr</dd>
+                    <dd>{{ ride.dateTime|date('H:i', 'Europe/Berlin') }} Uhr</dd>
                     <dt>Treffpunkt</dt>
                     {% if ride.hasLocation() %}
                     {% if location %}
