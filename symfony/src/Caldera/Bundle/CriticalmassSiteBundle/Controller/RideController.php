@@ -49,7 +49,7 @@ class RideController extends AbstractController
         $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
 
         if ($weather) {
-            $weatherForecast = $weather->getTemperatureEvening() . ' °C, ' . $weather->getWeatherDescription();
+            $weatherForecast = round($weather->getTemperatureEvening()) . ' °C, ' . $weather->getWeatherDescription();
         } else {
             $weatherForecast = null;
         }
