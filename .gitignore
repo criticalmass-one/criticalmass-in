@@ -9,7 +9,6 @@ symfony/app/config/parameters.yml
 symfony/app/logs/*
 symfony/bin/
 symfony/build/
-symfony/composer.lock
 symfony/vendor
 symfony/web/bundles
 symfony/web/css
