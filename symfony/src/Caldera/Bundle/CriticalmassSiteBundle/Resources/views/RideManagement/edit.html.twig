@@ -141,24 +141,22 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label" for="date">
-                                Datum:
+                            <label class="control-label" for="dateTime">
+                                Datum und Uhrzeit:
                             </label>
-                            {{ form_widget(form.date, { 'attr' : { 'class': 'form-control' } }) }}
+                            {{ form_widget(form.dateTime, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="control-label" for="time">
-                            Uhrzeit:
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                {{ form_widget(form.hasTime) }}
-                            </span>
-                            {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
+                        <div class="form-group">
+                            <label class="control-label" for="time">
+                                Uhrzeit anzeigen
+                            </label>
+
+                            {{ form_widget(form.hasTime) }}
                         </div>
                         <p class="help-block">
                             Mit der Checkbox kann die Anzeige der Uhrzeit deaktiviert werden, falls die Uhrzeit noch nicht bekannt sein sollte.
