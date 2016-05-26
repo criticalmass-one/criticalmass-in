@@ -27,8 +27,18 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         var content = '<dl class="dl-horizontal">';
 
         content += '<dt>Datum:</dt><dd>' + this._timestamp.format('dd.mm.yyyy') + '</dd>';
-        content += '<dt>Uhrzeit:</dt><dd>' + this._timestamp.format('HH:MM') + ' Uhr</dd>';
-        content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
+
+        if (this._hasTime) {
+            content += '<dt>Uhrzeit:</dt><dd>' + this._timestamp.format('HH:MM') + ' Uhr</dd>';
+        } else {
+            content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
+        }
+
+        if (this._hasLocation && this._location) {
+            content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
+        } else {
+            content += '<dt>Treffpunkt:</dt><dd>der Treffpunkt ist noch nicht bekannt</dd>';
+        }
 
         if (this._weather) {
             content += '<dt>Wetter:</dt><dd>' + this._weather + '</dd>';

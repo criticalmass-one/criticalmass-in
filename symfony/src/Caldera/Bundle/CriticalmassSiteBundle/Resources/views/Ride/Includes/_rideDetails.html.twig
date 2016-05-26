@@ -9,7 +9,11 @@
                     <dt>Datum</dt>
                     <dd>{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}</dd>
                     <dt>Uhrzeit</dt>
+                    {% if ride.hasTime %}
                     <dd>{{ ride.dateTime|date('H:i', 'Europe/Berlin') }} Uhr</dd>
+                    {% else %}
+                    <dd>die Uhrzeit ist noch nicht bekannt</dd>
+                    {% endif %}
                     <dt>Treffpunkt</dt>
                     {% if ride.hasLocation() %}
                     {% if location %}
