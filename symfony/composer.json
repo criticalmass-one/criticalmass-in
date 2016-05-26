@@ -31,7 +31,8 @@
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
         "facebook/php-sdk-v4" : "~5.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "doctrine/doctrine-migrations-bundle": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [
