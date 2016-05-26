@@ -13,8 +13,6 @@ define(['chartjs'], function() {
 
     FacebookStatisticPage.prototype.addDay = function(day) {
         this._days.push(day);
-
-        console.log(day);
     };
 
     FacebookStatisticPage.prototype.addCity = function(cityName, citySlug, colorRed, colorGreen, colorBlue) {
