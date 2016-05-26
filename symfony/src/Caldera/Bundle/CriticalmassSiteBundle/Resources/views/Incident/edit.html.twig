@@ -3,9 +3,24 @@
 {% block title %}Gefahrenstellen in {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li class="active">Kalender</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_incidents_city', { citySlug: city.slug }) }}">
+            Gefahrenstellen
+        </a>
+    </li>
+    <li class="active">
+        neue Gefahrenstelle hinzufügen
+    </li>
 {% endblock %}
 
 {% block content %}
