@@ -26,6 +26,21 @@ class StatisticController extends AbstractController
         );
     }
 
+    public function ridestatisticAction(Request $request, $citySlug, $rideDate)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $frp = $this->getFacebookRidePropertiesRepository()->findByRide($ride);
+
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Statistic:ridestatistic.html.twig',
+            [
+                'ride' => $ride,
+                'frp' => $frp
+            ]
+        );
+    }
+    
     public function facebookstatisticAction(Request $request)
     {
         $cityPropertiesList = $this->getFacebookCityPropertiesRepository()->findAll();

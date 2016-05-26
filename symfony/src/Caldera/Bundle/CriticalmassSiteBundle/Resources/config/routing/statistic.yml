@@ -2,6 +2,10 @@ caldera_criticalmass_statistic_city:
     path: /{citySlug}/statistic
     defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:citystatistic }
 
+caldera_criticalmass_statistic_ride:
+    path: /{citySlug}/{rideDate}/statistic
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:ridestatistic }
+
 caldera_criticalmass_statistic_facebook:
     path: /facebookstatistic
     defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:facebookstatistic }

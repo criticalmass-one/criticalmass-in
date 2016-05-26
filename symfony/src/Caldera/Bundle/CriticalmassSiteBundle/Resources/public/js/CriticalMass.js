@@ -60,6 +60,7 @@ require.config({
         "TrackListPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackListPage",
         "FacebookImportRidePage": "/bundles/calderacriticalmasssite/js/modules/page/FacebookImportRidePage",
         "RidePage": "/bundles/calderacriticalmasssite/js/modules/page/RidePage",
+        "RideStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/RideStatisticPage",
         "IncidentEditPage": "/bundles/calderacriticalmasssite/js/modules/page/IncidentEditPage",
         "PhotoViewModal": "/bundles/calderacriticalmasssite/js/modules/PhotoViewModal",
         "Notification": "/bundles/calderacriticalmasssite/js/modules/Notification",
