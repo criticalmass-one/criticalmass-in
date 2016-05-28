@@ -63,7 +63,9 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     };
 
     Map.prototype._addTileLayer = function () {
-        L.tileLayer(this.settings.tileLayerUrl + '?access_token=' + this.settings.mapBoxAccessToken, {
+
+        //L.tileLayer(this.settings.tileLayerUrl + '?access_token=' + this.settings.mapBoxAccessToken, {
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: this.settings.mapAttribution,
             detectRetina: this.settings.detectRetina
         }).addTo(this.map);
