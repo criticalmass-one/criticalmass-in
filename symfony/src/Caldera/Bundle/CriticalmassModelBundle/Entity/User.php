@@ -66,6 +66,11 @@ class User extends BaseUser
     protected $token;
 
     /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $mobilePhoneNumber;
+
+    /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
     protected $participations;
@@ -273,6 +278,18 @@ class User extends BaseUser
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function setMobilePhoneNumber($mobilePhoneNumber)
+    {
+        $this->mobilePhoneNumber = $mobilePhoneNumber;
+
+        return $this;
+    }
+
+    public function getMobilePhoneNumber()
+    {
+        return $this->mobilePhoneNumber;
     }
 
     /**
