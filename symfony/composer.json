@@ -32,7 +32,8 @@
         "facebook/php-sdk-v4" : "~5.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "jms/serializer-bundle": "^1.1",
-        "doctrine/doctrine-migrations-bundle": "^1.0"
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "messagebird/php-rest-api": "1.4.x"
     },
     "scripts": {
         "post-install-cmd": [
