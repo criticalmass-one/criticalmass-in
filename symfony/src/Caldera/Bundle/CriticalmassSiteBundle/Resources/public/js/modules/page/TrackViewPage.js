@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map'], function(CriticalService) {
+define(['CriticalService', 'Map', 'TrackEntity'], function(CriticalService) {
     TrackViewPage = function(context, options) {
         this._initMap();
 
