@@ -4,6 +4,8 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user_user")
@@ -67,6 +69,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="string", length=32)
+     * @Assert\Regex("/^00491(5|6|7)(\d+)$/")
      */
     protected $mobilePhoneNumber;
 
