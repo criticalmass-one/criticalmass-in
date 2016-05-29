@@ -38,6 +38,10 @@ caldera_criticalmass_board:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/board.yml"
     prefix:   /
 
+caldera_criticalmass_profile:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/profile.yml"
+    prefix:   /
+
 caldera_criticalmass_photo:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photo.yml"
     prefix:   /
