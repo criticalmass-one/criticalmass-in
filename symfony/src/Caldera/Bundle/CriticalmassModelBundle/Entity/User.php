@@ -71,7 +71,22 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=32)
      * @Assert\Regex("/^00491(5|6|7)(\d+)$/")
      */
-    protected $mobilePhoneNumber;
+    protected $phoneNumber;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $phoneNumberVerified;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $phoneNumberVerificationDateTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $phoneNumberVerificationToken;
 
     /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
@@ -283,18 +298,6 @@ class User extends BaseUser
         return $this;
     }
 
-    public function setMobilePhoneNumber($mobilePhoneNumber)
-    {
-        $this->mobilePhoneNumber = $mobilePhoneNumber;
-
-        return $this;
-    }
-
-    public function getMobilePhoneNumber()
-    {
-        return $this->mobilePhoneNumber;
-    }
-
     /**
      * @ORM\PrePersist()
      *
@@ -312,5 +315,163 @@ class User extends BaseUser
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string 
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Set phoneNumberVerified
+     *
+     * @param boolean $phoneNumberVerified
+     * @return User
+     */
+    public function setPhoneNumberVerified($phoneNumberVerified)
+    {
+        $this->phoneNumberVerified = $phoneNumberVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumberVerified
+     *
+     * @return boolean 
+     */
+    public function getPhoneNumberVerified()
+    {
+        return $this->phoneNumberVerified;
+    }
+
+    /**
+     * Set phoneNumberVerificationDateTime
+     *
+     * @param \DateTime $phoneNumberVerificationDateTime
+     * @return User
+     */
+    public function setPhoneNumberVerificationDateTime($phoneNumberVerificationDateTime)
+    {
+        $this->phoneNumberVerificationDateTime = $phoneNumberVerificationDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumberVerificationDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getPhoneNumberVerificationDateTime()
+    {
+        return $this->phoneNumberVerificationDateTime;
+    }
+
+    /**
+     * Set phoneNumberVerificationToken
+     *
+     * @param boolean $phoneNumberVerificationToken
+     * @return User
+     */
+    public function setPhoneNumberVerificationToken($phoneNumberVerificationToken)
+    {
+        $this->phoneNumberVerificationToken = $phoneNumberVerificationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumberVerificationToken
+     *
+     * @return boolean 
+     */
+    public function getPhoneNumberVerificationToken()
+    {
+        return $this->phoneNumberVerificationToken;
+    }
+
+    /**
+     * Add archiveRides
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides
+     * @return User
+     */
+    public function addArchiveRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides)
+    {
+        $this->archiveRides[] = $archiveRides;
+
+        return $this;
+    }
+
+    /**
+     * Remove archiveRides
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides
+     */
+    public function removeArchiveRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides)
+    {
+        $this->archiveRides->removeElement($archiveRides);
+    }
+
+    /**
+     * Get archiveRides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArchiveRides()
+    {
+        return $this->archiveRides;
+    }
+
+    /**
+     * Add participations
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations
+     * @return User
+     */
+    public function addParticipation(\Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations)
+    {
+        $this->participations[] = $participations;
+
+        return $this;
+    }
+
+    /**
+     * Remove participations
+     *
+     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations
+     */
+    public function removeParticipation(\Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations)
+    {
+        $this->participations->removeElement($participations);
+    }
+
+    /**
+     * Get participations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParticipations()
+    {
+        return $this->participations;
     }
 }

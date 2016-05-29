@@ -21,9 +21,9 @@
         {{ form_start(mobilePhoneNumberForm) }}
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group{% if form_errors(mobilePhoneNumberForm.mobilePhoneNumber) %} has-error has-feedback{% endif %}">
+                <div class="form-group{% if form_errors(mobilePhoneNumberForm.phoneNumber) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Deine Handy-Nummer:</label>
-                    {{ form_widget(mobilePhoneNumberForm.mobilePhoneNumber, { 'attr' : { 'class': 'form-control'} }) }}
+                    {{ form_widget(mobilePhoneNumberForm.phoneNumber, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
         </div>
