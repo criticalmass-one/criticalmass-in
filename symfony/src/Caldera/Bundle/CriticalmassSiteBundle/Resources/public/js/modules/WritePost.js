@@ -1,4 +1,4 @@
-define([], function() {
+define(['jquery'], function() {
 
     WritePost = function(context, options) {
         this._$form = $(context);
