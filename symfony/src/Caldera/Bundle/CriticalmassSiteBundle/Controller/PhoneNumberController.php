@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ProfileController extends AbstractController
+class PhoneNumberController extends AbstractController
 {
-    public function editmobilephonenumberAction(Request $request)
+    public function editAction(Request $request)
     {
         $form = $this->createForm(
             new UserMobilePhoneNumberType(),
@@ -30,13 +30,13 @@ class ProfileController extends AbstractController
         );
 
         if ('POST' == $request->getMethod()) {
-            return $this->editmobilephonenumberPostAction($request, $form);
+            return $this->editPostAction($request, $form);
         } else {
-            return $this->editmobilephonenumberGetAction($request, $form);
+            return $this->editGetAction($request, $form);
         }
     }
 
-    protected function editmobilephonenumberGetAction(Request $request, Form $form)
+    protected function editGetAction(Request $request, Form $form)
     {
         return $this->render('CalderaCriticalmassSiteBundle:Profile:editmobilephonenumber.html.twig',
             [
@@ -45,7 +45,7 @@ class ProfileController extends AbstractController
         );
     }
 
-    protected function editmobilephonenumberPostAction(Request $request, Form $form)
+    protected function editPostAction(Request $request, Form $form)
     {
         $form->handleRequest($request);
 
@@ -55,6 +55,6 @@ class ProfileController extends AbstractController
             $em->flush();
         }
 
-        return $this->editmobilephonenumberGetAction($request, $form);
+        return $this->editGetAction($request, $form);
     }
 }
