@@ -1,12 +1,97 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% block content %}
+    <div class="container">
+
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
     {% if flow.getCurrentStepNumber() == 1 %}
-        <div>
-            When selecting four wheels you have to choose the engine in the next step.<br />
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Wähle deine Stadt
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    Bitte ziehe auf der folgenden Karte den roten Marker auf den Mittelpunkt der Stadt.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 250px;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
+                    <button id="search-city-button" class="btn btn-default btn-xs pull-right" type="button">
+                        <i class="fa fa-map-marker"></i>
+                    </button>
+                    <label class="control-label" for="">Name:</label>
+                    {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if flow.getCurrentStepNumber == 2 %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Titel:</label>
+                    {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Beschreibung:</label>
+                    {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Punchline:</label>
+                    {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“ oder „Reclaim the streets“ ist ja schon fast Standard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Lange Beschreibung:</label>
+                    {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.cityPopulation) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Einwohnerzahl:</label>
+                    {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer Stadt benötigt.</p>
+                </div>
+            </div>
         </div>
     {% endif %}
 
@@ -14,4 +99,14 @@
 
     {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' %}
     {{ form_end(form) }}
+    </div>
+
+    <script type="text/javascript">
+        var options = {
+            country: '{{ country }}',
+            state: '{{ state }}'
+        };
+
+        CriticalMass.loadModule('EditCityPage', options, null);
+    </script>
 {% endblock %}

@@ -184,9 +184,16 @@ class CityManagementController extends AbstractController
         );
     }
 
-    public function createCityFlowAction(Request $request)
+    public function createCityFlowAction(Request $request, $slug1, $slug2, $slug3)
     {
+        /**
+         * @var Region $region
+         */
+        $region = $this->getRegionRepository()->findOneBySlug($slug3);
+
         $city = new City();
+        $city->setRegion($region);
+        $city->setUser($this->getUser());
 
         $flow = $this->get('caldera.criticalmass.flow.create_city');
         $flow->bind($city);
@@ -212,7 +219,10 @@ class CityManagementController extends AbstractController
         return $this->render('CalderaCriticalmassSiteBundle:CityManagement:create.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
-            'city' => $city
+            'city' => $city,
+            'country' => $region->getParent()->getName(),
+            'state' => $region->getName(),
+            'region' => $region
         ));
     }
 }
