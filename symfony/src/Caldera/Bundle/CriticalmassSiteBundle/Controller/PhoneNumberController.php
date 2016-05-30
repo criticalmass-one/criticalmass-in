@@ -3,6 +3,8 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\UserPhoneNumberType;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +14,7 @@ class PhoneNumberController extends AbstractController
 {
     public function editAction(Request $request)
     {
-        $form = $this->createForm(
+        $numberForm = $this->createForm(
             new UserPhoneNumberType(),
             $this->getUser(),
             [
@@ -20,32 +22,45 @@ class PhoneNumberController extends AbstractController
             ]
         );
 
+        $verificationForm = $this->createFormBuilder()
+            ->add('verificationNumber', TextType::class)
+            ->getForm();
+
         if ('POST' == $request->getMethod()) {
-            return $this->editPostAction($request, $form);
+            return $this->editPostAction($request, $numberForm, $verificationForm);
         } else {
-            return $this->editGetAction($request, $form);
+            return $this->editGetAction($request, $numberForm, $verificationForm);
         }
     }
 
-    protected function editGetAction(Request $request, Form $form)
+    protected function editGetAction(Request $request, Form $numberForm, Form $verificationForm)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:Profile:editmobilephonenumber.html.twig',
+        return $this->render('CalderaCriticalmassSiteBundle:Profile:edit.html.twig',
             [
-                'mobilePhoneNumberForm' => $form->createView()
+                'phoneNumberForm' => $numberForm->createView(),
+                'verificationForm' => $verificationForm->createView()
             ]
         );
     }
 
-    protected function editPostAction(Request $request, Form $form)
+    protected function editPostAction(Request $request, Form $numberForm, Form $verificationForm)
     {
-        $form->handleRequest($request);
+        $numberForm->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($numberForm->isValid()) {
+            /**
+             * @var User $user
+             */
+            $user = $this->getUser();
+
+            $user->setPhoneNumberVerified(false);
+            $user->setPhoneNumberVerificationToken(mt_rand(100000, 999999));
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($this->getUser());
+            $em->persist($user);
             $em->flush();
         }
 
-        return $this->editGetAction($request, $form);
+        return $this->editGetAction($request, $numberForm, $verificationForm);
     }
 }

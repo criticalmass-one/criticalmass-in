@@ -84,7 +84,7 @@ class User extends BaseUser
     protected $phoneNumberVerificationDateTime;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=32)
      */
     protected $phoneNumberVerificationToken;
 
@@ -389,7 +389,7 @@ class User extends BaseUser
     /**
      * Set phoneNumberVerificationToken
      *
-     * @param boolean $phoneNumberVerificationToken
+     * @param string $phoneNumberVerificationToken
      * @return User
      */
     public function setPhoneNumberVerificationToken($phoneNumberVerificationToken)
@@ -402,7 +402,7 @@ class User extends BaseUser
     /**
      * Get phoneNumberVerificationToken
      *
-     * @return boolean 
+     * @return string
      */
     public function getPhoneNumberVerificationToken()
     {

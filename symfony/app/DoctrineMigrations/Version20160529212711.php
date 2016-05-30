@@ -18,7 +18,7 @@ class Version20160529212711 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE fos_user_user ADD phoneNumberVerified TINYINT(1) NOT NULL, ADD phoneNumberVerificationDateTime DATETIME NOT NULL, ADD phoneNumberVerificationToken TINYINT(1) NOT NULL, CHANGE mobilephonenumber phoneNumber VARCHAR(32) NOT NULL');
+        $this->addSql('ALTER TABLE fos_user_user ADD phoneNumberVerified TINYINT(1) NOT NULL, ADD phoneNumberVerificationDateTime DATETIME NOT NULL, ADD phoneNumberVerificationToken VARCHAR(32) NOT NULL, CHANGE mobilephonenumber phoneNumber VARCHAR(32) NOT NULL');
     }
 
     /**
