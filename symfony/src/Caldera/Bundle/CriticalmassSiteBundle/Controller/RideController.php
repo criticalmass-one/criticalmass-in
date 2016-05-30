@@ -2,16 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi;
+use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class RideController extends AbstractController
