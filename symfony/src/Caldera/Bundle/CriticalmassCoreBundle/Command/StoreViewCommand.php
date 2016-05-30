@@ -2,10 +2,13 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\ThreadView;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -42,97 +45,125 @@ class StoreViewCommand extends ContainerAwareCommand
         $this->manager = $this->doctrine->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
 
-        $this->persistPhotoViews();
-        $this->persistThreadViews();
+        $this->persistPhotoViews($output);
+        $this->persistThreadViews($output);
+        $this->persistCityViews($output);
+        $this->persistEventViews($output);
+        $this->persistRideViews($output);
     }
-    
-    protected function persistPhotoViews()
+
+    protected function setViewEntity(ViewInterface $view, ViewableInterface $entity)
     {
+        if ($entity instanceof Photo) {
+            $view->setPhoto($entity);
+        }
+
+        if ($entity instanceof Thread) {
+            $view->setThread($entity);
+        }
+
+        if ($entity instanceof Ride) {
+            $view->setRide($entity);
+        }
+
+        if ($entity instanceof City) {
+            $view->setCity($entity);
+        }
+
+        if ($entity instanceof Event) {
+            $view->setEvent($entity);
+        }
+    }
+
+    protected function storeViews(OutputInterface $output, $identifier, array $entities, $storageClassName)
+    {
+        /**
+         * @var ViewableInterface $entity
+         */
+        foreach ($entities as $entity) {
+            $additionalViews = $this->memcache->get($identifier.$entity->getId().'_additionalviews');
+
+            if ($additionalViews) {
+                $output->writeln('Entity #'.$entity->getId().': '.$additionalViews.' views');
+
+                for ($i = 1; $i <= $additionalViews; ++$i) {
+                    $viewArray = $this->memcache->get($identifier.$entity->getId().'_view'.$i);
+
+                    $user = null;
+
+                    if ($viewArray['userId']) {
+                        $user = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:User')->find($viewArray['userId']);
+                    }
+
+                    $viewDateTime = new \DateTime($viewArray['dateTime']);
+
+                    /**
+                     * @var ViewInterface $view
+                     */
+                    $view = new $storageClassName();
+
+                    $this->setViewEntity($view, $entity);
+
+                    $view->setUser($user);
+                    $view->setDateTime($viewDateTime);
+
+                    $this->manager->persist($view);
+
+                    $this->memcache->delete($identifier.$entity->getId().'_view'.$i);
+                }
+
+                $entity->setViews($entity->getViews() + $additionalViews);
+
+                $this->manager->merge($entity);
+
+                $this->memcache->delete($identifier.$entity->getId().'_additionalviews');
+
+                $this->manager->flush();
+            }
+        }
+    }
+    protected function persistPhotoViews(OutputInterface $output)
+    {
+        $output->writeln('Storing photo views');
+
         $photos = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findAll();
 
-        /**
-         * @var Photo $photo
-         */
-        foreach ($photos as $photo) {
-            $additionalPhotoViews = $this->memcache->get('gallery_photo'.$photo->getId().'_additionalviews');
-
-            if ($additionalPhotoViews) {
-                $output->writeln('Photo #'.$photo->getId().': '.$additionalPhotoViews.' views');
-
-                for ($i = 1; $i <= $additionalPhotoViews; ++$i) {
-                    $photoViewArray = $this->memcache->get('gallery_photo'.$photo->getId().'_view'.$i);
-
-                    $user = null;
-
-                    if ($photoViewArray['userId']) {
-                        $user = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:User')->find($photoViewArray['userId']);
-                    }
-
-                    $viewDateTime = new \DateTime($photoViewArray['dateTime']);
-
-                    $photoView = new PhotoView();
-                    $photoView->setPhoto($photo);
-                    $photoView->setUser($user);
-                    $photoView->setDateTime($viewDateTime);
-
-                    $this->manager->persist($photoView);
-
-                    $this->memcache->delete('gallery_photo'.$photo->getId().'_view'.$i);
-                }
-
-                $photo->setViews($photo->getViews() + $additionalPhotoViews);
-
-                $this->manager->merge($photo);
-
-                $this->memcache->delete('gallery_photo'.$photo->getId().'_additionalviews');
-
-                $this->manager->flush();
-            }
-        }
+        $this->storeViews($output, 'photo', $photos, 'Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView');
     }
 
-    protected function persistThreadViews()
+    protected function persistThreadViews(OutputInterface $output)
     {
+        $output->writeln('Storing thread views');
+
         $threads = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findAll();
 
-        /**
-         * @var Thread $thread
-         */
-        foreach ($threads as $thread) {
-            $additionalThreadViews = $this->memcache->get('board_thread'.$thread->getId().'_additionalviews');
+        $this->storeViews($output, 'thread', $threads, 'Caldera\Bundle\CriticalmassModelBundle\Entity\ThreadView');
+    }
 
-            if ($additionalThreadViews) {
-                $output->writeln('Thread #'.$thread->getId().': '.$additionalThreadViews.' views');
+    protected function persistEventViews(OutputInterface $output)
+    {
+        $output->writeln('Storing event views');
 
-                for ($i = 1; $i <= $additionalThreadViews; ++$i) {
-                    $threadViewArray = $this->memcache->get('board_thread'.$thread->getId().'_view'.$i);
+        $threads = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Event')->findAll();
 
-                    $user = null;
+        $this->storeViews($output, 'event', $threads, 'Caldera\Bundle\CriticalmassModelBundle\Entity\EventView');
+    }
 
-                    if ($threadViewArray['userId']) {
-                        $user = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:User')->find($threadViewArray['userId']);
-                    }
+    protected function persistRideViews(OutputInterface $output)
+    {
+        $output->writeln('Storing ride views');
 
-                    $viewDateTime = new \DateTime($threadViewArray['dateTime']);
+        $rides = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findAll();
 
-                    $threadView = new ThreadView();
-                    $threadView->setThread($thread);
-                    $threadView->setUser($user);
-                    $threadView->setDateTime($viewDateTime);
+        $this->storeViews($output, 'ride', $rides, 'Caldera\Bundle\CriticalmassModelBundle\Entity\RideView');
+    }
 
-                    $this->manager->persist($threadView);
+    protected function persistCityViews(OutputInterface $output)
+    {
+        $output->writeln('Storing city views');
 
-                    $this->memcache->delete('board_thread'.$thread->getId().'_view'.$i);
-                }
+        $cities = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:City')->findAll();
 
-                $thread->setViewNumber($thread->getViewNumber() + $additionalThreadViews);
-
-                $this->manager->merge($thread);
-
-                $this->memcache->delete('board_thread'.$thread->getId().'_additionalviews');
-
-                $this->manager->flush();
-            }
-        }
+        $this->storeViews($output, 'city', $cities, 'Caldera\Bundle\CriticalmassModelBundle\Entity\CityView');
     }
 }
