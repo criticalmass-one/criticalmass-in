@@ -2,14 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
 use Caldera\Bundle\CriticalmassModelBundle\Entity\ThreadView;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
