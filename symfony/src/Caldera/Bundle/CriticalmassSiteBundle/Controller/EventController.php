@@ -8,6 +8,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventController extends AbstractController
 {
+    use ViewStorageTrait;
+
     public function showAction(Request $request, $citySlug, $eventSlug)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -17,6 +19,8 @@ class EventController extends AbstractController
         if (!$event) {
             throw new NotFoundHttpException('Dieses Event gibt es leider nicht :(');
         }
+
+        $this->countEventView($event);
 
         $photoCounter = $this->getPhotoRepository()->countPhotosByEvent($event);
         $postCounter = $this->getPostRepository()->countPostsForEvent($event);

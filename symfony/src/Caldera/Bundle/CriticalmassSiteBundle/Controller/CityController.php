@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CityController extends AbstractController
 {
+    use ViewStorageTrait;
+
     public function listAction()
     {
         $this
@@ -151,6 +153,8 @@ class CityController extends AbstractController
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
 
+        $this->countCityView($city);
+        
         $this->getMetadata()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in '.$city->getCity());
 

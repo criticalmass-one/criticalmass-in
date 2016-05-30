@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotoController extends AbstractController
 {
+    use ViewStorageTrait;
+
     public function showAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null, $photoId)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -31,7 +33,7 @@ class PhotoController extends AbstractController
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
 
-        $this->countView($photo);
+        $this->countPhotoView($photo);
 
         if ($ride and $photo->getUser()) {
             /** @var Track $track */
@@ -69,60 +71,11 @@ class PhotoController extends AbstractController
         $photo = $this->getPhotoRepository()->find($photoId);
 
         if ($photo) {
-            $this->countView($photo);
+            $this->countPhotoView($photo);
         }
 
         return new Response(null);
     }
 
-    /**
-     * This method saves a call of a photo. This is done by storing the view
-     * into the memcache server to avoid unwanted database i/o by hundreds of
-     * write operations per minute.
-     *
-     * In the background there is a cron awaking a symfony command to store all
-     * those views in the database. Basically we just increase the memcached
-     * number of pending views and add a new array with datetime information
-     * about this view.
-     *
-     * @param Photo $photo
-     * @author maltehuebner
-     * @since 2016
-     */
-    protected function countView(Photo $photo)
-    {
-        $memcache = $this->get('memcache.criticalmass');
 
-        // first get the number of currently memcached views for this photo
-        $additionalPhotoViews = $memcache->get('gallery_photo'.$photo->getId().'_additionalviews');
-
-        // are there already any views stored by memcache?
-        if (!$additionalPhotoViews) {
-            // okay, then we start with view number 1
-            $additionalPhotoViews = 1;
-        } else {
-            // otherwise increase number of photo views
-            ++$additionalPhotoViews;
-        }
-
-        $viewDateTime = new \DateTime();
-
-        // build an array to be stored as a new PhotoView entity later
-        $photoViewArray =
-            [
-                // photo id
-                'photoId' => $photo->getId(),
-                // user id
-                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
-                // datetime
-                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ]
-        ;
-
-        // update the number of memcached views
-        $memcache->set('gallery_photo'.$photo->getId().'_additionalviews', $additionalPhotoViews);
-
-        // add this view’s data to memcache, too
-        $memcache->set('gallery_photo'.$photo->getId().'_view'.$additionalPhotoViews, $photoViewArray);
-    }
 }

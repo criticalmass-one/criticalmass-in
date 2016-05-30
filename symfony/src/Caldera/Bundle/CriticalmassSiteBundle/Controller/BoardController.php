@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BoardController extends AbstractController
 {
+    use ViewStorageTrait;
+
     public function overviewAction(Request $request)
     {
         $boards = $this->getBoardRepository()->findEnabledBoards();
@@ -88,7 +90,7 @@ class BoardController extends AbstractController
         $thread = $this->getThreadRepository()->findThreadBySlug($threadSlug);
         $posts = $this->getPostRepository()->findPostsForThread($thread);
 
-        $this->countView($thread);
+        $this->countThreadView($thread);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Board:viewThread.html.twig',
@@ -191,31 +193,5 @@ class BoardController extends AbstractController
                 'form' => $form->createView()
             ]
         );
-    }
-
-    protected function countView(Thread $thread)
-    {
-        $memcache = $this->get('memcache.criticalmass');
-
-        $additionalThreadViews = $memcache->get('board_thread'.$thread->getId().'_additionalviews');
-
-        if (!$additionalThreadViews) {
-            $additionalThreadViews = 1;
-        } else {
-            ++$additionalThreadViews;
-        }
-
-        $viewDateTime = new \DateTime();
-
-        $threadViewArray =
-            [
-                'threadId' => $thread->getId(),
-                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
-                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ]
-        ;
-
-        $memcache->set('board_thread'.$thread->getId().'_additionalviews', $additionalThreadViews);
-        $memcache->set('board_thread'.$thread->getId().'_view'.$additionalThreadViews, $threadViewArray);
     }
 }

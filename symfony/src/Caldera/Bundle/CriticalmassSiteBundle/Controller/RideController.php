@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RideController extends AbstractController
 {
+    use ViewStorageTrait;
+
     public function listAction(Request $request)
     {
         $ridesResult = $this->getRideRepository()->findRidesInInterval();
@@ -37,6 +39,8 @@ class RideController extends AbstractController
         
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
+
+        $this->countRideView($ride);
 
         /**
          * @var Weather $weather
