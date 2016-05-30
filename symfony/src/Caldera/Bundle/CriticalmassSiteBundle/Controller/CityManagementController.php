@@ -183,4 +183,36 @@ class CityManagementController extends AbstractController
             ]
         );
     }
+
+    public function createCityFlowAction(Request $request)
+    {
+        $city = new City();
+
+        $flow = $this->get('caldera.criticalmass.flow.create_city');
+        $flow->bind($city);
+
+        $form = $flow->createForm();
+
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep()) {
+                $form = $flow->createForm();
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($city);
+                $em->flush();
+
+                $flow->reset();
+
+                return $this->redirect($this->generateUrl('home')); // redirect when done
+            }
+        }
+
+        return $this->render('CalderaCriticalmassSiteBundle:CityManagement:create.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+            'city' => $city
+        ));
+    }
 }

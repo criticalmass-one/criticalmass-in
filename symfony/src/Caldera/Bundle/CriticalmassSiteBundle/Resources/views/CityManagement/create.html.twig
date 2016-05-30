@@ -1,0 +1,17 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% if flow.getCurrentStepNumber() == 1 %}
+        <div>
+            When selecting four wheels you have to choose the engine in the next step.<br />
+        </div>
+    {% endif %}
+
+    {{ form_rest(form) }}
+
+    {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' %}
+    {{ form_end(form) }}
+{% endblock %}
