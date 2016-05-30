@@ -23,7 +23,7 @@ trait ViewStorageTrait
             ++$additionalViews;
         }
 
-        $viewDateTime = new \DateTime();
+        $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $viewArray =
             [
