@@ -45,47 +45,5 @@ class ThreadViewCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
-
-        $threads = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findAll();
-
-        /**
-         * @var Thread $thread
-         */
-        foreach ($threads as $thread) {
-            $additionalThreadViews = $this->memcache->get('board_thread'.$thread->getId().'_additionalviews');
-
-            if ($additionalThreadViews) {
-                $output->writeln('Thread #'.$thread->getId().': '.$additionalThreadViews.' views');
-
-                for ($i = 1; $i <= $additionalThreadViews; ++$i) {
-                    $threadViewArray = $this->memcache->get('board_thread'.$thread->getId().'_view'.$i);
-
-                    $user = null;
-
-                    if ($threadViewArray['userId']) {
-                        $user = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:User')->find($threadViewArray['userId']);
-                    }
-
-                    $viewDateTime = new \DateTime($threadViewArray['dateTime']);
-
-                    $threadView = new ThreadView();
-                    $threadView->setThread($thread);
-                    $threadView->setUser($user);
-                    $threadView->setDateTime($viewDateTime);
-
-                    $this->manager->persist($threadView);
-
-                    $this->memcache->delete('board_thread'.$thread->getId().'_view'.$i);
-                }
-
-                $thread->setViewNumber($thread->getViewNumber() + $additionalThreadViews);
-
-                $this->manager->merge($thread);
-
-                $this->memcache->delete('board_thread'.$thread->getId().'_additionalviews');
-
-                $this->manager->flush();
-            }
-        }
     }
 }
