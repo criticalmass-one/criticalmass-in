@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\BoardInterface;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,7 +19,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface
+class City implements BoardInterface, ViewableInterface
 {
 	/**
 	 * Numerische ID der Stadt.

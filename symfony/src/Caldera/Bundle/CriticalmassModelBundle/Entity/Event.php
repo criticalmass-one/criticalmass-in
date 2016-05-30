@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ParticipateableInterface;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\EventRepository")
  */
-class Event implements ParticipateableInterface
+class Event implements ParticipateableInterface, ViewableInterface
 {
     /**
      * @ORM\Id

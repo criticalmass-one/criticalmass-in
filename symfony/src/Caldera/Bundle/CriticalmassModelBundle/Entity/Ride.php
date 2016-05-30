@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
 use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ParticipateableInterface;
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
@@ -12,7 +13,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Ride implements ParticipateableInterface
+class Ride implements ParticipateableInterface, ViewableInterface
 {
     /**
      * Numerische ID der Tour.

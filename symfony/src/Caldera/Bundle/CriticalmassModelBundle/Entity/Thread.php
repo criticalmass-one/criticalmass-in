@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="thread")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\ThreadRepository")
  */
-class Thread
+class Thread implements ViewableInterface
 {
     /**
      * @ORM\Id

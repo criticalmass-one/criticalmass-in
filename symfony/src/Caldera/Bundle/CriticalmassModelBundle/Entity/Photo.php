@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 
+use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +15,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo
+class Photo implements ViewableInterface
 {
     /**
      * @ORM\Id
