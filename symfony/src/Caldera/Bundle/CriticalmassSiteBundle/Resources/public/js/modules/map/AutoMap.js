@@ -78,9 +78,9 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], functio
 
         if (latitude && longitude && markerColor && markerShape && markerIcon) {
              var extraMarkerIcon = L.ExtraMarkers.icon({
-                icon: 'fa-bicycle',
-                markerColor: 'yellow',
-                shape: 'square',
+                icon: markerIcon,
+                markerColor: markerColor,
+                shape: markerShape,
                 prefix: 'fa'
             });
 
