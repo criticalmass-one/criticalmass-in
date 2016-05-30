@@ -31,7 +31,7 @@ class StoreViewCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:photo:storeviews')
+            ->setName('criticalmass:storeviews')
             ->setDescription('Store saved views')
         ;
     }
@@ -41,6 +41,9 @@ class StoreViewCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
+
+        $this->persistPhotoViews();
+        $this->persistThreadViews();
     }
     
     protected function persistPhotoViews()
