@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="event_view")
  * @ORM\Entity()
  */
-class EventView
+class EventView implements ViewInterface
 {
     /**
      * @ORM\Id
@@ -26,7 +26,7 @@ class EventView
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="event_views")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="event_views")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event;
@@ -79,9 +79,9 @@ class EventView
     }
 
     /**
-     * @param mixed $dateTime
+     * @param \DateTime $dateTime
      */
-    public function setDateTime($dateTime)
+    public function setDateTime(\DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
 
