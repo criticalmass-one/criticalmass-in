@@ -340,15 +340,18 @@ class Photo implements ViewableInterface
         return $this->imageName;
     }
 
-    public function setViews($views) {
+    public function setViews($views)
+    {
         $this->views = $views;
     }
 
-    public function getViews() {
+    public function getViews()
+    {
         return $this->views;
     }
 
-    public function incViews() {
+    public function incViews()
+    {
         ++$this->views;
     }
 

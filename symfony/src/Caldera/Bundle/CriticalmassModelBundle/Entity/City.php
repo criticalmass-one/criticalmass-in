@@ -324,6 +324,11 @@ class City implements BoardInterface, ViewableInterface
      */
     protected $lastThread;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 0;
+
     public function setRegion(Region $region)
     {
         $this->region = $region;
@@ -1426,5 +1431,20 @@ class City implements BoardInterface, ViewableInterface
     public function removePhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
     {
         $this->photos->removeElement($photos);
+    }
+
+    public function setViews($views)
+    {
+        $this->views = $views;
+    }
+
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    public function incViews()
+    {
+        ++$this->views;
     }
 }

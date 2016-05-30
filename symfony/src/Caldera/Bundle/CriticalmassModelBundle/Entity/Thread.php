@@ -45,7 +45,7 @@ class Thread implements ViewableInterface
     /**
      * @ORM\Column(type="integer")
      */
-    protected $viewNumber = 0;
+    protected $views = 0;
 
     /**
      * @ORM\Column(type="integer")
@@ -211,16 +211,19 @@ class Thread implements ViewableInterface
         return $this->lastPost;
     }
 
-    public function setViewNumber($viewNumber)
+    public function setViews($views)
     {
-        $this->viewNumber = $viewNumber;
-
-        return $this;
+        $this->views = $views;
     }
 
-    public function getViewNumber()
+    public function getViews()
     {
-        return $this->viewNumber;
+        return $this->views;
+    }
+
+    public function incViews()
+    {
+        ++$this->views;
     }
 
     public function setPostNumber($postNumber)

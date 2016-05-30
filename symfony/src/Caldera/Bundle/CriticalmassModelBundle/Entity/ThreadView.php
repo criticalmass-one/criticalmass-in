@@ -52,7 +52,7 @@ class ThreadView implements ViewInterface
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getUser()
     {
@@ -60,9 +60,9 @@ class ThreadView implements ViewInterface
     }
 
     /**
-     * @param mixed $user
+     * @param User $user
      */
-    public function setUser($user)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -70,7 +70,7 @@ class ThreadView implements ViewInterface
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -78,9 +78,9 @@ class ThreadView implements ViewInterface
     }
 
     /**
-     * @param mixed $dateTime
+     * @param \DateTime $dateTime
      */
-    public function setDateTime($dateTime)
+    public function setDateTime(\DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
 

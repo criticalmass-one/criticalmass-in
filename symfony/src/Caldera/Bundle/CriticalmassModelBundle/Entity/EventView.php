@@ -52,7 +52,7 @@ class EventView implements ViewInterface
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getUser()
     {
@@ -60,9 +60,9 @@ class EventView implements ViewInterface
     }
 
     /**
-     * @param mixed $user
+     * @param User $user
      */
-    public function setUser($user)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -70,7 +70,7 @@ class EventView implements ViewInterface
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateTime()
     {

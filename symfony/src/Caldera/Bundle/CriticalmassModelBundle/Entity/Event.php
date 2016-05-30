@@ -146,6 +146,12 @@ class Event implements ParticipateableInterface, ViewableInterface
      * @ORM\Column(type="integer")
      */
     protected $participationsNumberNo = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 0;
+
     /**
      * Constructor
      */
@@ -735,5 +741,20 @@ class Event implements ParticipateableInterface, ViewableInterface
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    public function setViews($views)
+    {
+        $this->views = $views;
+    }
+
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    public function incViews()
+    {
+        ++$this->views;
     }
 }

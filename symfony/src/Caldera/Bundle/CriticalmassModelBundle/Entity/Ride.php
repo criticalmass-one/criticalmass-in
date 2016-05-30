@@ -225,6 +225,11 @@ class Ride implements ParticipateableInterface, ViewableInterface
     protected $estimates;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 0;
+
+    /**
      * Get id
      *
      * @return integer
@@ -1003,5 +1008,20 @@ class Ride implements ParticipateableInterface, ViewableInterface
     public function getParticipationsNumberNo()
     {
         return $this->participationsNumberNo;
+    }
+
+    public function setViews($views)
+    {
+        $this->views = $views;
+    }
+
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    public function incViews()
+    {
+        ++$this->views;
     }
 }
