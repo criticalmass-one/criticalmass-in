@@ -36,6 +36,8 @@ class CreateCityType extends AbstractType
                     ->add('twitter')
                 ;
 
+                break;
+
             case 4:
                 $builder
                     ->add('isStandardable', 'checkbox', array('required' => false))
@@ -48,6 +50,8 @@ class CreateCityType extends AbstractType
                     ->add('standardLatitude', 'hidden', array('required' => false))
                     ->add('standardLongitude', 'hidden', array('required' => false))
                 ;
+
+                break;
         }
     }
 
