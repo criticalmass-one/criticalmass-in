@@ -2,12 +2,31 @@
 
 namespace Caldera\Bundle\CriticalmassPhotoBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
-    public function indexAction($name)
+    public function indexAction(Request $request, $citySlug, $rideDate)
     {
-        return $this->render('CalderaCriticalmassPhotoBundle:Default:index.html.twig', array('name' => $name));
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
+
+        $paginator = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            64
+        );
+
+        return $this->render(
+            'CalderaCriticalmassPhotoBundle:Default:index.html.twig',
+            [
+                'ride' => $ride,
+                'pagination' => $pagination
+            ]
+        );
     }
 }

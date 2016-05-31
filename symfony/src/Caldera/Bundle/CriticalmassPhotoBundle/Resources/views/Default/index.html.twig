@@ -1,1 +1,71 @@
-Hello {{ name }}!
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>Starter Template for Bootstrap</title>
+
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassrocks/css/bootstrap.min.css') }}" />
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row m-t-3">
+                <div class="col-md-12">
+                    <div class="text-xs-center">
+                        <h1>
+                            {{ ride.city.title }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-t-3">
+                <div class="col-md-12">
+                    <div class="text-xs-center">
+                        <p class="lead">
+                            Fotos von der Critical Mass in {{ ride.city.city }} am {{ ride.dateTime|date('d.m.Y') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-t-3">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="row">
+                            <div class="photo-list">
+                                {% for photo in pagination %}
+                                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-2">
+                                        <a href="{{ path(photo) }}">
+                                            <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    {{ knp_pagination_render(pagination) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="{{ asset('bundles/calderacriticalmassrocks/js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
+
