@@ -21,6 +21,8 @@ class DefaultController extends AbstractController
             64
         );
 
+        $this->getMetadata()->setDescription('Foto-Galerie von der '.$ride->getCity()->getTitle().' am '.$ride->getDateTime()->format('d.m.Y'));
+        
         return $this->render(
             'CalderaCriticalmassPhotoBundle:Default:index.html.twig',
             [
