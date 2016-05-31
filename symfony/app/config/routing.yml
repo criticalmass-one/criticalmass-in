@@ -28,4 +28,9 @@ caldera_criticalmass:
     host: "%domain.criticalmass%"
     prefix:   /
 
+caldera_criticalmass_rocks:
+    resource: "@CalderaCriticalmassRocksBundle/Resources/config/routing.yml"
+    host: "%domain.criticalmassrocks%"
+    prefix:   /
+
 

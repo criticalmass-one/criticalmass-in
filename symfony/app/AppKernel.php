@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
+            new Caldera\Bundle\CriticalmassRocksBundle\CalderaCriticalmassRocksBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
