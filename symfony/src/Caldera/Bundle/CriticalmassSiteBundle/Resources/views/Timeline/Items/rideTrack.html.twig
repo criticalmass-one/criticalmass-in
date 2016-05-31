@@ -55,7 +55,7 @@
                     </dt>
 
                     <dd>
-                        {{ item.distance }} Kilometer
+                        {{ item.distance|number_format(2, ',', '.') }} Kilometer
                     </dd>
                 </dl>
             </div>
@@ -67,7 +67,7 @@
                     </dt>
 
                     <dd>
-                        {{ (item.duration / 60 / 60)|round(2) }} Stunden
+                        {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
                     </dd>
                 </dl>
             </div>
