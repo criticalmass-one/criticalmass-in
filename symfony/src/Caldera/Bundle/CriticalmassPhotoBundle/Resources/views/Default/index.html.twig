@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <div class="text-center">
                         <p class="lead">
-                            Fotos von der Critical Mass in {{ ride.city.city }} am {{ ride.dateTime|date('d.m.Y') }}
+                            Fotos von der <a href="{{ path(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am <a href="{{ path(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
                         </p>
                     </div>
                 </div>
