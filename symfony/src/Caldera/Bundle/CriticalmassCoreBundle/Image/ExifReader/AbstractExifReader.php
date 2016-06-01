@@ -12,6 +12,7 @@ abstract class AbstractExifReader {
     protected $photo;
 
     protected $exifData;
+
     protected $filename;
 
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
@@ -26,7 +27,7 @@ abstract class AbstractExifReader {
 
         $this->filename = $this->rootDirectory.$this->uploaderHelper->asset($this->photo, 'imageFile');
 
-        $this->exifData = exif_read_data($this->filename, 0, true);
+        $this->exif = exif_read_data($this->filename, 0, true);
 
         return $this;
     }

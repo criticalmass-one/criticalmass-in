@@ -1,13 +1,15 @@
-define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container'], function() {
+define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'], function() {
     AutoMap = function (mapId, settings) {
         this._mapId = mapId;
+
+        alert('fefwef' + mapId);
 
         this.settings = $.extend(this._defaults, settings);
 
         this._init();
     };
 
-    Map.prototype._defaults = {
+    AutoMap.prototype._defaults = {
         tileLayerUrl: 'https://api.tiles.mapbox.com/v4/maltehuebner.i1c90m12/{z}/{x}/{y}.png',
         mapBoxAccessToken: 'pk.eyJ1IjoibWFsdGVodWVibmVyIiwiYSI6IjB5c2QtNXcifQ.I7OHZr0wtAvqE0wIY_psfg',
         mapAttribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',

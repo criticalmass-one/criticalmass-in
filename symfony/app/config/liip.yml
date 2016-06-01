@@ -17,6 +17,14 @@ liip_imagine:
                     image: ../src/Caldera/Bundle/CriticalmassSiteBundle/Resources/public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
+        gallery_photo_large:
+            quality: 60
+            filters:
+                thumbnail: { size: [2000, 2000], mode: inset }
+                watermark:
+                    image: ../src/Caldera/Bundle/CriticalmassSiteBundle/Resources/public/images/watermark/criticalmass.png
+                    size: 0.15
+                    position: bottomright
         city_image_wide:
             quality: 60
             filters:

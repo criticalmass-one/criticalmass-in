@@ -2,11 +2,16 @@
 
 namespace Caldera\Bundle\CriticalmassPhotoBundle\Controller;
 
+use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController
 {
+    use ViewStorageTrait;
+
     public function indexAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -28,6 +33,35 @@ class DefaultController extends AbstractController
             [
                 'ride' => $ride,
                 'pagination' => $pagination
+            ]
+        );
+    }
+
+    public function showAction(Request $request, $citySlug, $rideDate, $photoId)
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        /** @var Photo $photo */
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
+        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
+
+        $this->countPhotoView($photo);
+
+        /** @var Track $track */
+        $track = null;
+
+        if ($ride and $photo->getUser()) {
+            $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
+        }
+
+        return $this->render('CalderaCriticalmassPhotoBundle:Default:show.html.twig',
+            [
+                'photo' => $photo,
+                'nextPhoto' => $nextPhoto,
+                'previousPhoto' => $previousPhoto,
+                'track' => $track
             ]
         );
     }

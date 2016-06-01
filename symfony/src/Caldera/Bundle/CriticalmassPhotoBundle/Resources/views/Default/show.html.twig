@@ -3,7 +3,10 @@
     <head>
         {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-        <title>Fotos von der Critical Mass in {{ ride.city.city }} am {{ ride.dateTime|date('d.m.Y') }}</title>
+        <title>Fotos von der Critical Mass in {{ photo.ride.city.city }} am {{ photo.ride.dateTime|date('d.m.Y') }}</title>
+
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
 
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}" />
     </head>
@@ -12,9 +15,124 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+                    <div class="text-center">
+                        <h1>
+                            {{ photo.ride.city.title }} am {{ photo.ride.dateTime|date('d.m.Y') }}
+                        </h1>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_large') }}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel title</h3>
+                        </div>
+                        <div class="panel-body">
+                            <dl>
+                                <dt>
+                                    Aufnahmezeitpunkt:
+                                </dt>
+                                <dd>
+                                    24. September 1988, 15.17 Uhr
+                                </dd>
+                                <dt>
+                                    Belichtungszeit:
+                                </dt>
+                                <dd>
+                                    1/500 Sekunde
+                                </dd>
+                                <dt>
+                                    Brennweite:
+                                </dt>
+                                <dd>
+                                    17mm
+                                </dd>
+                                <dt>
+                                    Blende
+                                </dt>
+                                <dd>
+                                    2.8
+                                </dd>
+                                <dt>
+                                    Modell:
+                                </dt>
+                                <dd>
+                                    Canon EOS 70D
+                                </dd>
+                                <dt>
+                                    Objektiv
+                                </dt>
+                                <dd>
+                                    Canon EF-S 17-55mm
+                                </dd>
+                                <dt>
+                                    Blitz
+                                </dt>
+                                <dd>
+                                    Nein
+                                </dd>
+                                <dt>
+                                    Urheber
+                                </dt>
+                                <dd>
+                                    Malte Hübner
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel title</h3>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel title</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="map" style="height: 150px;"
+                                 data-map-center-latitude="{{ photo.latitude }}"
+                                 data-map-center-longitude="{{ photo.longitude }}"
+                                 data-map-zoomlevel="13"
+                                 data-lock-map="true"
+                                 data-map-marker-latitude="{{ photo.latitude }}"
+                                 data-map-marker-longitude="{{ photo.longitude }}"
+                                 data-map-marker-color="yellow"
+                                 data-map-marker-icon="fa-camera"
+                                 data-map-marker-shape="circle"
+                                    {% if track %}
+                                        data-polyline="{{ track.polyline }}"
+                                        data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+                                    {% endif %}
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        CriticalMass.loadModule('AutoMap', 'map');
+    </script>
     </body>
 </html>
