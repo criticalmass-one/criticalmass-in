@@ -1,9 +1,7 @@
 define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'], function() {
     AutoMap = function (mapId, settings) {
         this._mapId = mapId;
-
-        alert('fefwef' + mapId);
-
+        
         this.settings = $.extend(this._defaults, settings);
 
         this._init();

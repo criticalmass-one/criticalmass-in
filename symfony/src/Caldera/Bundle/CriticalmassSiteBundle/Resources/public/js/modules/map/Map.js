@@ -41,7 +41,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     Map.prototype._initMap = function () {
         this._$mapContainer = $('#' + this._mapId);
 
-        alert(this._mapId);
         this.map = L.map(this._mapId,
             {
                 zoomControl: false
