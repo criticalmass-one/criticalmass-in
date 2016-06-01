@@ -1,166 +1,20 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-{% block title %}Foto {{ photo.id }} aus {{ photo.city.city }}{% endblock %}
+        <title>Fotos von der Critical Mass in {{ ride.city.city }} am {{ ride.dateTime|date('d.m.Y') }}</title>
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li>
-        {% if ride %}
-        <a href="{{ path(ride) }}">
-            {{ ride.getFancyTitle() }}
-        </a>
-        {% else %}
-        <a href="{{ path(event) }}">
-            {{ event.title }}
-        </a>
-        {% endif %}
-    </li>
-    <li>
-        {% if ride %}
-        <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
-            Fotos
-        </a>
-        {% else %}
-            Fotos
-        {% endif %}
-    </li>
-    <li class="active">
-        Foto {{ photo.id }} aus {{ city.city }}
-    </li>
-{% endblock %}
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}" />
+    </head>
 
-{% block navigation %}
-<div class="row">
-    <div class="col-md-12">
-        <ul class="pager">
-            {% if previousPhoto %}
-                <li class="previous">
-                    <a href="{{ path(previousPhoto) }}">
-                        &larr; Voriges Foto
-                    </a>
-                </li>
-            {% else %}
-                <li class="previous disabled">
-                    <a href="#">
-                        &larr; Voriges Foto
-                    </a>
-                </li>
-            {% endif %}
-
-            {% if nextPhoto %}
-                <li class="next">
-                    <a href="{{ path(nextPhoto) }}">
-                        Nächstes Foto &rarr;
-                    </a>
-                </li>
-            {% else %}
-                <li class="next disabled">
-                    <a href="#">
-                        Nächstes Foto &rarr;
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
-</div>
-{% endblock %}
-
-{% block content %}
-<div class="container">
-    {{ block('navigation') }}
-
-    <div class="row">
-        <div class="col-md-12">
-            <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
-        </div>
-    </div>
-
-    <div class="row margin-top-medium">
-        {% if photo.hasCoordinates() %}
-        <div class="col-md-8">
-        {% else %}
-        <div class="col-md-12">
-        {% endif %}
+    <body>
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    {% if app.getUser() %}
-                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-add-post">
-                        Kommentar hinzufügen
-                    </button>
-                    {% endif %}
-
-                    <h3 class="no-margin-top">
-                        Kommentare zu dieser Tour
-                    </h3>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    {{ render(controller('CalderaCriticalmassSiteBundle:Post:list', { 'photoId': photo.id })) }}
-
-                    {% if app.getUser() %}
-                        {{ render(controller('CalderaCriticalmassSiteBundle:Post:write', { 'photoId': photo.id, 'noButton': true })) }}
-                    {% endif %}
+                    <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
                 </div>
             </div>
         </div>
-
-        {% if photo.hasCoordinates() %}
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Übersicht</h3>
-                </div>
-                <div class="panel-body">
-                    <div id="map" style="height: 150px;"
-                         data-map-center-latitude="{{ photo.latitude }}"
-                         data-map-center-longitude="{{ photo.longitude }}"
-                         data-map-zoomlevel="13"
-                         data-lock-map="true"
-                         data-map-marker-latitude="{{ photo.latitude }}"
-                         data-map-marker-longitude="{{ photo.longitude }}"
-                         data-map-marker-color="yellow"
-                         data-map-marker-icon="fa-camera"
-                         data-map-marker-shape="circle"
-                         {% if track %}
-                         data-polyline="{{ track.polyline }}"
-                         data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
-                         {% endif %}
-                    ></div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-
-    {{ block('navigation') }}
-</div>
-
-<script>
-    CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
-        {% if previousPhoto %}
-        page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
-        {% endif %}
-
-        {% if nextPhoto %}
-        page.setNextPhotoUrl('{{ path(nextPhoto) }}');
-        {% endif %}
-
-        {% if photo.hasCoordinates() %}
-        page.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-        page.initMap();
-        {% endif %}
-    });
-</script>
-
-{% endblock %}
+    </body>
+</html>
