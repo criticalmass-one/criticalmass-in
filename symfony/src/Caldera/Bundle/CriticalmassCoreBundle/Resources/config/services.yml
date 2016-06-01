@@ -84,6 +84,10 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader
         arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
 
+    caldera.criticalmass.image.exifreader:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\ExifReader
+        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+
     caldera.criticalmass.board.builder.boardbuilder:
         class: Caldera\Bundle\CriticalmassCoreBundle\Board\Builder\BoardBuilder
         arguments: [ @doctrine ]

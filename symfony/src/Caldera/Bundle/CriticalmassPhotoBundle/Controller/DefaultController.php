@@ -49,6 +49,11 @@ class DefaultController extends AbstractController
 
         $this->countPhotoView($photo);
 
+        $exifData = $this
+            ->get('caldera.criticalmass.image.exifreader')
+            ->setPhoto($photo)
+            ->execute();
+
         /** @var Track $track */
         $track = null;
 
@@ -61,7 +66,8 @@ class DefaultController extends AbstractController
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,
                 'previousPhoto' => $previousPhoto,
-                'track' => $track
+                'track' => $track,
+                'exif' => $exifData
             ]
         );
     }

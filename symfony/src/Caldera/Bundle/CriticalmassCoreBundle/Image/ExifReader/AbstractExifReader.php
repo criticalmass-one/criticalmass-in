@@ -11,7 +11,7 @@ abstract class AbstractExifReader {
      */
     protected $photo;
 
-    protected $exifData;
+    protected $exif;
 
     protected $filename;
 

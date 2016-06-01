@@ -4,6 +4,11 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpsConverter;
 
+/**
+ * Class GpsExifReader
+ * @package Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader
+ * @deprecated 
+ */
 class GpsExifReader extends AbstractExifReader
 {
     protected $latitude;
@@ -12,10 +17,10 @@ class GpsExifReader extends AbstractExifReader
     public function hasGpsExifData()
     {
         return (
-            $this->exifData &&
-            array_key_exists('GPS', $this->exifData) &&
-            isset($this->exifData['GPS']['GPSLatitude']) &&
-            isset($this->exifData['GPS']['GPSLongitude'])
+            $this->exif &&
+            array_key_exists('GPS', $this->exif) &&
+            isset($this->exif['GPS']['GPSLatitude']) &&
+            isset($this->exif['GPS']['GPSLongitude'])
         );
     }
 
@@ -25,8 +30,8 @@ class GpsExifReader extends AbstractExifReader
         {
             $gc = new GpsConverter();
             
-            $this->latitude = $gc->convert($this->exifData['GPS']['GPSLatitude']);
-            $this->longitude = $gc->convert($this->exifData['GPS']['GPSLongitude']);
+            $this->latitude = $gc->convert($this->exif['GPS']['GPSLatitude']);
+            $this->longitude = $gc->convert($this->exif['GPS']['GPSLongitude']);
 
             $this->photo->setLatitude($this->latitude);
             $this->photo->setLongitude($this->longitude);

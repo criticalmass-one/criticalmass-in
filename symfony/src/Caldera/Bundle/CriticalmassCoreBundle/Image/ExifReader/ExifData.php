@@ -30,6 +30,11 @@ class ExifData
     protected $aperture;
 
     /**
+     * @var integer $iso
+     */
+    protected $iso;
+
+    /**
      * @var string $model
      */
     protected $model;
@@ -58,6 +63,8 @@ class ExifData
     public function setPhotoDateTime($photoDateTime)
     {
         $this->photoDateTime = $photoDateTime;
+
+        return $this;
     }
 
     /**
@@ -74,6 +81,8 @@ class ExifData
     public function setShutterSpeed($shutterSpeed)
     {
         $this->shutterSpeed = $shutterSpeed;
+
+        return $this;
     }
 
     /**
@@ -90,6 +99,8 @@ class ExifData
     public function setFocalLength($focalLength)
     {
         $this->focalLength = $focalLength;
+
+        return $this;
     }
 
     /**
@@ -106,6 +117,8 @@ class ExifData
     public function setFocus($focus)
     {
         $this->focus = $focus;
+
+        return $this;
     }
 
     /**
@@ -122,6 +135,26 @@ class ExifData
     public function setAperture($aperture)
     {
         $this->aperture = $aperture;
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getIso()
+    {
+        return $this->iso;
+    }
+
+    /**
+     * @param integer $iso
+     */
+    public function setIso($iso)
+    {
+        $this->iso = $iso;
+
+        return $this;
     }
 
     /**
@@ -138,6 +171,8 @@ class ExifData
     public function setModel($model)
     {
         $this->model = $model;
+
+        return $this;
     }
 
     /**
@@ -154,6 +189,8 @@ class ExifData
     public function setLens($lens)
     {
         $this->lens = $lens;
+
+        return $this;
     }
 
     /**
@@ -170,5 +207,7 @@ class ExifData
     public function setFlash($flash)
     {
         $this->flash = $flash;
+
+        return $this;
     }
 }

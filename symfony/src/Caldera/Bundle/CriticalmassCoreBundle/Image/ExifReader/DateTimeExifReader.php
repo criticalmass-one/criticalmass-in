@@ -2,8 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-
+/**
+ * Class DateTimeExifReader
+ * @package Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader
+ * @deprecated
+ */
 class DateTimeExifReader extends AbstractExifReader {
     /**
      * @var \DateTime $dateTime
@@ -12,8 +15,8 @@ class DateTimeExifReader extends AbstractExifReader {
 
     public function execute()
     {
-        if (isset($this->exifData['EXIF']['DateTimeOriginal'])) {
-            $this->dateTime = new \DateTime($this->exifData['EXIF']['DateTimeOriginal']);
+        if (isset($this->exif['EXIF']['DateTimeOriginal'])) {
+            $this->dateTime = new \DateTime($this->exif['EXIF']['DateTimeOriginal']);
 
             //$this->dateTime->setTimezone(new \DateTimeZone('Europe/Berlin'));
         }

@@ -9,6 +9,7 @@
         <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
 
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
     </head>
 
     <body>
@@ -24,7 +25,7 @@
             </div>
         </div>
 
-        <div class="container-fluid">
+        <div class="container-fluid margin-top-large">
             <div class="row">
                 <div class="col-md-12">
                     <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_large') }}" />
@@ -32,7 +33,7 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container margin-top-large">
             <div class="row">
                 <div class="col-md-4">
                     <div class="panel panel-default">
@@ -45,49 +46,53 @@
                                     Aufnahmezeitpunkt:
                                 </dt>
                                 <dd>
-                                    24. September 1988, 15.17 Uhr
+                                    {{ exif.photoDateTime|date('d.m.Y H:i:s') }} Uhr
                                 </dd>
                                 <dt>
                                     Belichtungszeit:
                                 </dt>
                                 <dd>
-                                    1/500 Sekunde
+                                    {{ exif.shutterSpeed }} Sekunde
                                 </dd>
                                 <dt>
                                     Brennweite:
                                 </dt>
                                 <dd>
-                                    17mm
+                                    {{ exif.focalLength }} mm
                                 </dd>
                                 <dt>
                                     Blende
                                 </dt>
                                 <dd>
-                                    2.8
+                                    F{{ exif.aperture }}
                                 </dd>
                                 <dt>
                                     Modell:
                                 </dt>
                                 <dd>
-                                    Canon EOS 70D
+                                    {{ exif.model }}
                                 </dd>
                                 <dt>
                                     Objektiv
                                 </dt>
                                 <dd>
-                                    Canon EF-S 17-55mm
+                                    {{ exif.lens }}
                                 </dd>
                                 <dt>
                                     Blitz
                                 </dt>
                                 <dd>
-                                    Nein
+                                    {% if exif.flash %}
+                                    ja
+                                    {% else %}
+                                    nein
+                                    {% endif %}
                                 </dd>
                                 <dt>
                                     Urheber
                                 </dt>
                                 <dd>
-                                    Malte Hübner
+                                    {{ photo.user.username }}
                                 </dd>
                             </dl>
                         </div>
