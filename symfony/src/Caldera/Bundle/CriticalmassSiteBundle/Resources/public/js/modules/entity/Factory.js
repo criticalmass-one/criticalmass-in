@@ -59,6 +59,15 @@ define([], function() {
         return trackEntity;
     };
 
+    Factory.prototype.createUser = function(userJson) {
+        alert(JSON.stringify(userJson));
+        var userEntity = new UserEntity();
+
+        userEntity = this._transferProperties(userEntity, userJson);
+
+        return userEntity;
+    };
+
     Factory.prototype._transferProperties = function(entity, data) {
         var object = null;
 
@@ -76,6 +85,8 @@ define([], function() {
                     entity['_' + entityProperty] = new Date(object[property] * 1000);
                 } else if (entityProperty == 'city') {
                     entity['_' + entityProperty] = this.createCity(object[property]);
+                } else if (entityProperty == 'user') {
+                    entity['_' + entityProperty] = this.createUser(object[property]);
                 } else {
                     entity['_' + entityProperty] = object[property];
                 }

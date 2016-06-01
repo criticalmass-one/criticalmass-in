@@ -47,6 +47,7 @@ require.config({
         "SubrideEntity": "/bundles/calderacriticalmasssite/js/modules/entity/SubrideEntity",
         "PositionEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PositionEntity",
         "IncidentEntity": "/bundles/calderacriticalmasssite/js/modules/entity/IncidentEntity",
+        "UserEntity": "/bundles/calderacriticalmasssite/js/modules/entity/UserEntity",
         "BaseEntity": "/bundles/calderacriticalmasssite/js/modules/entity/BaseEntity",
         "MarkerEntity": "/bundles/calderacriticalmasssite/js/modules/entity/MarkerEntity",
         "PhotoEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PhotoEntity",

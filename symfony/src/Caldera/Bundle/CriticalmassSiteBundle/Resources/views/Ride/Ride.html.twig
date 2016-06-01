@@ -108,7 +108,7 @@
         {% endif %}
 
         {% for track in tracks %}
-        ridePage.addTrack('{{ track|serialize|raw|e('js') }}');
+        ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
         {% endfor %}
 
         {% for photo in photos %}
