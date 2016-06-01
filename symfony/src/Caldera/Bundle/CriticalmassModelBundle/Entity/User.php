@@ -5,11 +5,13 @@ namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user_user")
  * @ORM\HasLifecycleCallbacks
+ * @JMS\ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -19,8 +21,17 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
      */
     protected $id;
+
+    /**
+     * @var string
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     */
+    protected $username;
 
     /**
      * Enthaelt eine kurze Beschreibung zur eigenen Person.
@@ -49,16 +60,22 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="smallint")
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
      */
     protected $colorRed = 0;
 
     /**
      * @ORM\Column(type="smallint")
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
      */
     protected $colorGreen = 0;
 
     /**
      * @ORM\Column(type="smallint")
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
      */
     protected $colorBlue = 0;
 
@@ -118,10 +135,9 @@ class User extends BaseUser
     }
 
     /**
-     * Hasht die E-Mail-Adresse per MD5, um das dazugehörige Gravartar-Profilbild
-     * aufrufen zu können.
-     *
-     * @return String: MD5-gehashte E-Mail-Adresse
+     * @JMS\Groups({"timelapse"})
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("gravatarHash")
      */
     public function getGravatarHash()
     {

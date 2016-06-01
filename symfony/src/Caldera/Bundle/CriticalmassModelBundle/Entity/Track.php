@@ -20,12 +20,14 @@ class Track
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
 	 */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $username;
@@ -39,6 +41,8 @@ class Track
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
      */
     protected $user;
 
@@ -61,42 +65,49 @@ class Track
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startDateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $distance;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $points;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startPoint;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endPoint;
@@ -118,6 +129,7 @@ class Track
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
      */
@@ -478,6 +490,7 @@ class Track
     }
 
     /**
+     * @JMS\Groups({"timelapse"})
      * @JMS\VirtualProperty
      * @JMS\SerializedName("colorRed")
      */
@@ -495,6 +508,7 @@ class Track
     }
 
     /**
+     * @JMS\Groups({"timelapse"})
      * @JMS\VirtualProperty
      * @JMS\SerializedName("colorGreen")
      */
@@ -512,6 +526,7 @@ class Track
     }
 
     /**
+     * @JMS\Groups({"timelapse"})
      * @JMS\VirtualProperty
      * @JMS\SerializedName("colorBlue")
      */
