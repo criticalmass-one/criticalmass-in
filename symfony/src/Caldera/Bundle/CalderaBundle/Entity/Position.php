@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * schaften aus der Geolocation-Spezifikation ausgestattet ist.
  *
  * @ORM\Table(name="position")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PositionRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\PositionRepository")
  */
 class Position
 {

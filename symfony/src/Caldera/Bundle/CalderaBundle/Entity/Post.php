@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="post")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\PostRepository")
  */
 class Post
 {

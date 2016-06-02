@@ -3,26 +3,26 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\AnonymousName;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\AnonymousNameRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\BoardRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\ContentRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\EventRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\FacebookRidePropertiesRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\IncidentRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\LocationRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\ParticipationRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\PostRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\RegionRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\SubrideRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\ThreadRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\WeatherRepository;
+use Caldera\Bundle\CalderaBundle\Entity\AnonymousName;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Repository\AnonymousNameRepository;
+use Caldera\Bundle\CalderaBundle\Repository\BoardRepository;
+use Caldera\Bundle\CalderaBundle\Repository\CityRepository;
+use Caldera\Bundle\CalderaBundle\Repository\ContentRepository;
+use Caldera\Bundle\CalderaBundle\Repository\EventRepository;
+use Caldera\Bundle\CalderaBundle\Repository\FacebookRidePropertiesRepository;
+use Caldera\Bundle\CalderaBundle\Repository\IncidentRepository;
+use Caldera\Bundle\CalderaBundle\Repository\LocationRepository;
+use Caldera\Bundle\CalderaBundle\Repository\ParticipationRepository;
+use Caldera\Bundle\CalderaBundle\Repository\PhotoRepository;
+use Caldera\Bundle\CalderaBundle\Repository\PostRepository;
+use Caldera\Bundle\CalderaBundle\Repository\RegionRepository;
+use Caldera\Bundle\CalderaBundle\Repository\RideRepository;
+use Caldera\Bundle\CalderaBundle\Repository\SubrideRepository;
+use Caldera\Bundle\CalderaBundle\Repository\ThreadRepository;
+use Caldera\Bundle\CalderaBundle\Repository\TrackRepository;
+use Caldera\Bundle\CalderaBundle\Repository\WeatherRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -53,7 +53,7 @@ abstract class AbstractController extends Controller
      */
     protected function getAnonymousNameRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:AnonymousName');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:AnonymousName');
     }
 
     /**
@@ -61,7 +61,7 @@ abstract class AbstractController extends Controller
      */
     protected function getBlogArticleRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Article');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Article');
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class AbstractController extends Controller
      */
     protected function getBoardRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Board');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Board');
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class AbstractController extends Controller
      */
     protected function getContentRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Content');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Content');
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class AbstractController extends Controller
      */
     protected function getEventRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Event');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Event');
     }
 
     /**
@@ -93,7 +93,7 @@ abstract class AbstractController extends Controller
      */
     protected function getRideRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Ride');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Ride');
     }
 
     /**
@@ -101,7 +101,7 @@ abstract class AbstractController extends Controller
      */
     protected function getCitySlugRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:CitySlug');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:CitySlug');
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class AbstractController extends Controller
      */
     protected function getCityRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:City');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:City');
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class AbstractController extends Controller
      */
     protected function getFacebookCityPropertiesRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:FacebookCityProperties');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:FacebookCityProperties');
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class AbstractController extends Controller
      */
     protected function getFacebookRidePropertiesRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:FacebookRideProperties');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:FacebookRideProperties');
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class AbstractController extends Controller
      */
     protected function getIncidentRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Incident');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Incident');
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class AbstractController extends Controller
      */
     protected function getLocationRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Location');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Location');
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class AbstractController extends Controller
      */
     protected function getRegionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Region');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Region');
     }
 
     /**
@@ -157,7 +157,7 @@ abstract class AbstractController extends Controller
      */
     protected function getPhotoRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Photo');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Photo');
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class AbstractController extends Controller
      */
     protected function getPostRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Post');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Post');
     }
 
     /**
@@ -173,7 +173,7 @@ abstract class AbstractController extends Controller
      */
     protected function getTrackRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Track');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Track');
     }
 
     /**
@@ -181,7 +181,7 @@ abstract class AbstractController extends Controller
      */
     protected function getThreadRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Thread');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Thread');
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class AbstractController extends Controller
      */
     protected function getParticipationRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Participation');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Participation');
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class AbstractController extends Controller
      */
     protected function getPositionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Position');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Position');
     }
 
     /**
@@ -205,7 +205,7 @@ abstract class AbstractController extends Controller
      */
     protected function getSubrideRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Subride');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Subride');
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class AbstractController extends Controller
      */
     protected function getGlympseTicketRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Ticket');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Ticket');
     }
 
     /**
@@ -221,7 +221,7 @@ abstract class AbstractController extends Controller
      */
     protected function getWeatherRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:Weather');
+        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Weather');
     }
 
     /**

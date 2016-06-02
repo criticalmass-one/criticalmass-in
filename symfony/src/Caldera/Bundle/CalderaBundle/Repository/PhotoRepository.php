@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Event;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class PhotoRepository extends EntityRepository

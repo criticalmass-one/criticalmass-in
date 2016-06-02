@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="criticalmaps_user")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\CriticalmapsUserRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\CriticalmapsUserRepository")
  */
 class CriticalmapsUser
 {

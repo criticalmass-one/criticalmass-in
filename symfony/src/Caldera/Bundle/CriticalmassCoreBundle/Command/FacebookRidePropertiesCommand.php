@@ -4,8 +4,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi;
 use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Facebook\FacebookRequest;
 use \Facebook\Facebook;
 use Facebook\FacebookResponse;
@@ -45,7 +45,7 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
          */
         $fera = $this->getContainer()->get('caldera.criticalmass.facebookapi.eventride');
 
-        $rides = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findRidesWithFacebookInInterval();
+        $rides = $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findRidesWithFacebookInInterval();
 
         /**
          * @var Ride $ride

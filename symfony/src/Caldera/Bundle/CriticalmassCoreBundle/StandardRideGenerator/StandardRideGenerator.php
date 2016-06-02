@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 
 class StandardRideGenerator {
     protected $year;

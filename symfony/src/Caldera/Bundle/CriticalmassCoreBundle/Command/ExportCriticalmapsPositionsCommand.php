@@ -7,11 +7,11 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\CriticalmapsUserRepository;
+use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Ticket;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Repository\CriticalmapsUserRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -61,7 +61,7 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
         /**
          * @var CriticalmapsUserRepository $repository
          */
-        $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:CriticalmapsUser');
+        $repository = $this->doctrine->getRepository('CalderaCalderaBundle:CriticalmapsUser');
 
         if ($input->hasOption('all')) {
             $criticalmapsUsers = $repository->findNotExportedAssignedUsers();

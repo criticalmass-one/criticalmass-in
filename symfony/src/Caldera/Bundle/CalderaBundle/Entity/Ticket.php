@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\TicketRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\TicketRepository")
  * @ORM\Table(name="glympse_ticket")
  */
 class Ticket

@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\City;
 
 class CityEditItem extends AbstractItem
 {

@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
+use Caldera\Bundle\CalderaBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 

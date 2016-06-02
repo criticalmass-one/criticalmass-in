@@ -2,13 +2,13 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewInterface;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Event;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -92,7 +92,7 @@ class StoreViewCommand extends ContainerAwareCommand
                     $user = null;
 
                     if ($viewArray['userId']) {
-                        $user = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:User')->find($viewArray['userId']);
+                        $user = $this->doctrine->getRepository('CalderaCalderaBundle:User')->find($viewArray['userId']);
                     }
 
                     $viewDateTime = new \DateTime($viewArray['dateTime']);
@@ -126,44 +126,44 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $output->writeln('Storing photo views');
 
-        $photos = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findAll();
+        $photos = $this->doctrine->getRepository('CalderaCalderaBundle:Photo')->findAll();
 
-        $this->storeViews($output, 'photo', $photos, 'Caldera\Bundle\CriticalmassModelBundle\Entity\PhotoView');
+        $this->storeViews($output, 'photo', $photos, 'Caldera\Bundle\CalderaBundle\Entity\PhotoView');
     }
 
     protected function persistThreadViews(OutputInterface $output)
     {
         $output->writeln('Storing thread views');
 
-        $threads = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findAll();
+        $threads = $this->doctrine->getRepository('CalderaCalderaBundle:Thread')->findAll();
 
-        $this->storeViews($output, 'thread', $threads, 'Caldera\Bundle\CriticalmassModelBundle\Entity\ThreadView');
+        $this->storeViews($output, 'thread', $threads, 'Caldera\Bundle\CalderaBundle\Entity\ThreadView');
     }
 
     protected function persistEventViews(OutputInterface $output)
     {
         $output->writeln('Storing event views');
 
-        $threads = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Event')->findAll();
+        $threads = $this->doctrine->getRepository('CalderaCalderaBundle:Event')->findAll();
 
-        $this->storeViews($output, 'event', $threads, 'Caldera\Bundle\CriticalmassModelBundle\Entity\EventView');
+        $this->storeViews($output, 'event', $threads, 'Caldera\Bundle\CalderaBundle\Entity\EventView');
     }
 
     protected function persistRideViews(OutputInterface $output)
     {
         $output->writeln('Storing ride views');
 
-        $rides = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findAll();
+        $rides = $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findAll();
 
-        $this->storeViews($output, 'ride', $rides, 'Caldera\Bundle\CriticalmassModelBundle\Entity\RideView');
+        $this->storeViews($output, 'ride', $rides, 'Caldera\Bundle\CalderaBundle\Entity\RideView');
     }
 
     protected function persistCityViews(OutputInterface $output)
     {
         $output->writeln('Storing city views');
 
-        $cities = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:City')->findAll();
+        $cities = $this->doctrine->getRepository('CalderaCalderaBundle:City')->findAll();
 
-        $this->storeViews($output, 'city', $cities, 'Caldera\Bundle\CriticalmassModelBundle\Entity\CityView');
+        $this->storeViews($output, 'city', $cities, 'Caldera\Bundle\CalderaBundle\Entity\CityView');
     }
 }

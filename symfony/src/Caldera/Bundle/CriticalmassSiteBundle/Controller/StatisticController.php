@@ -2,9 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\FacebookCityProperties;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\FacebookCityProperties;
+use Caldera\Bundle\CalderaBundle\Entity\Region;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class StatisticController extends AbstractController

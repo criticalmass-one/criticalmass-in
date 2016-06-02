@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

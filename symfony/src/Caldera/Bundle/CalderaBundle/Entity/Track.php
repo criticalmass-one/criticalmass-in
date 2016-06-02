@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\TrackRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\TrackRepository")
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */

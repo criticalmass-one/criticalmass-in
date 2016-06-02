@@ -4,14 +4,14 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RidePhotoItem;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RideTrackItem;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findForTimelineRideTrackCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaCalderaBundle:Track')->findForTimelineRideTrackCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -43,7 +43,7 @@ class User extends BaseUser
     /**
      * Vom Benutzer momentan ausgewaehlte Stadt.
      *
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $currentCity;
@@ -428,10 +428,10 @@ class User extends BaseUser
     /**
      * Add archiveRides
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides
      * @return User
      */
-    public function addArchiveRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides)
+    public function addArchiveRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides)
     {
         $this->archiveRides[] = $archiveRides;
 
@@ -441,9 +441,9 @@ class User extends BaseUser
     /**
      * Remove archiveRides
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides
      */
-    public function removeArchiveRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $archiveRides)
+    public function removeArchiveRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides)
     {
         $this->archiveRides->removeElement($archiveRides);
     }
@@ -461,10 +461,10 @@ class User extends BaseUser
     /**
      * Add participations
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Participation $participations
      * @return User
      */
-    public function addParticipation(\Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations)
+    public function addParticipation(\Caldera\Bundle\CalderaBundle\Entity\Participation $participations)
     {
         $this->participations[] = $participations;
 
@@ -474,9 +474,9 @@ class User extends BaseUser
     /**
      * Remove participations
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Participation $participations
      */
-    public function removeParticipation(\Caldera\Bundle\CriticalmassModelBundle\Entity\Participation $participations)
+    public function removeParticipation(\Caldera\Bundle\CalderaBundle\Entity\Participation $participations)
     {
         $this->participations->removeElement($participations);
     }

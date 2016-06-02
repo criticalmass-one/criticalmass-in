@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator;
 
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 
 class TrackDistanceCalculator extends BaseDistanceCalculator
 {

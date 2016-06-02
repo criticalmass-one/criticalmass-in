@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,7 +38,7 @@ class Heatmap
     protected $public;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City")
+     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City")
      * @ORM\JoinTable(name="heatmap_city",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="city_id", referencedColumnName="id")}
@@ -47,7 +47,7 @@ class Heatmap
     protected $cities;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Ride")
+     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CalderaBundle\Entity\Ride")
      * @ORM\JoinTable(name="heatmap_ride",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="ride_id", referencedColumnName="id")}
@@ -56,7 +56,7 @@ class Heatmap
     protected $rides;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\Track")
+     * @ORM\ManyToMany(targetEntity="Caldera\Bundle\CalderaBundle\Entity\Track")
      * @ORM\JoinTable(name="heatmap_track",
      *      joinColumns={@ORM\JoinColumn(name="heatmap_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="track_id", referencedColumnName="id")}

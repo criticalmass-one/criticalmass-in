@@ -3,14 +3,14 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\ThreadItem;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 
 class ThreadCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Thread')->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaCalderaBundle:Thread')->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

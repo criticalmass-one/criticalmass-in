@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\EntityInterface;
+namespace Caldera\Bundle\CalderaBundle\EntityInterface;
 
 interface TwitterInterface
 {

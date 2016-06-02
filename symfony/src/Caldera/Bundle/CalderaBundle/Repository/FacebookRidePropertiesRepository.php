@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class FacebookRidePropertiesRepository extends EntityRepository

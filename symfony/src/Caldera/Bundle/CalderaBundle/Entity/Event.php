@@ -1,15 +1,15 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ParticipateableInterface;
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="event")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\EventRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\EventRepository")
  */
 class Event implements ParticipateableInterface, ViewableInterface
 {
@@ -565,10 +565,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Set user
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\User $user
+     * @param \Caldera\Bundle\CalderaBundle\Entity\User $user
      * @return Event
      */
-    public function setUser(\Caldera\Bundle\CriticalmassModelBundle\Entity\User $user = null)
+    public function setUser(\Caldera\Bundle\CalderaBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -578,7 +578,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
      */
     public function getUser()
     {
@@ -588,10 +588,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Set city
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\City $city
+     * @param \Caldera\Bundle\CalderaBundle\Entity\City $city
      * @return Event
      */
-    public function setCity(\Caldera\Bundle\CriticalmassModelBundle\Entity\City $city = null)
+    public function setCity(\Caldera\Bundle\CalderaBundle\Entity\City $city = null)
     {
         $this->city = $city;
 
@@ -601,7 +601,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\City 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\City 
      */
     public function getCity()
     {
@@ -611,10 +611,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Set archiveParent
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Event $archiveParent
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Event $archiveParent
      * @return Event
      */
-    public function setArchiveParent(\Caldera\Bundle\CriticalmassModelBundle\Entity\Event $archiveParent = null)
+    public function setArchiveParent(\Caldera\Bundle\CalderaBundle\Entity\Event $archiveParent = null)
     {
         $this->archiveParent = $archiveParent;
 
@@ -624,7 +624,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get archiveParent
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\Event 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Event 
      */
     public function getArchiveParent()
     {
@@ -634,10 +634,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Set archiveUser
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\User $archiveUser
+     * @param \Caldera\Bundle\CalderaBundle\Entity\User $archiveUser
      * @return Event
      */
-    public function setArchiveUser(\Caldera\Bundle\CriticalmassModelBundle\Entity\User $archiveUser = null)
+    public function setArchiveUser(\Caldera\Bundle\CalderaBundle\Entity\User $archiveUser = null)
     {
         $this->archiveUser = $archiveUser;
 
@@ -647,7 +647,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get archiveUser
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
      */
     public function getArchiveUser()
     {
@@ -657,10 +657,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Add posts
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Post $posts
      * @return Event
      */
-    public function addPost(\Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts)
+    public function addPost(\Caldera\Bundle\CalderaBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -670,9 +670,9 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Remove posts
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Post $posts
      */
-    public function removePost(\Caldera\Bundle\CriticalmassModelBundle\Entity\Post $posts)
+    public function removePost(\Caldera\Bundle\CalderaBundle\Entity\Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -690,10 +690,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Add photos
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Photo $photos
      * @return Event
      */
-    public function addPhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    public function addPhoto(\Caldera\Bundle\CalderaBundle\Entity\Photo $photos)
     {
         $this->photos[] = $photos;
 
@@ -703,9 +703,9 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Remove photos
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Photo $photos
      */
-    public function removePhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    public function removePhoto(\Caldera\Bundle\CalderaBundle\Entity\Photo $photos)
     {
         $this->photos->removeElement($photos);
     }

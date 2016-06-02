@@ -14,7 +14,7 @@ fos_elastica:
                         isArchived: ~
                     persistence:
                         driver: orm
-                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Content
+                        model: Caldera\Bundle\CalderaBundle\Entity\Content
                         provider: ~
                         listener:
                             immediate: ~
@@ -30,7 +30,7 @@ fos_elastica:
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
-                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\Ride
+                        model: Caldera\Bundle\CalderaBundle\Entity\Ride
                         provider: ~
                         listener:
                             immediate: ~
@@ -48,7 +48,7 @@ fos_elastica:
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
-                        model: Caldera\Bundle\CriticalmassModelBundle\Entity\City
+                        model: Caldera\Bundle\CalderaBundle\Entity\City
                         provider: ~
                         listener:
                             immediate: ~

@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackReader extends GpxReader {

@@ -2,9 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\User;
 
 class RideEditItem extends AbstractItem
 {

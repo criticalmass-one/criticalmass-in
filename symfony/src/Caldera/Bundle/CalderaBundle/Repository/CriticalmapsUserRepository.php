@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

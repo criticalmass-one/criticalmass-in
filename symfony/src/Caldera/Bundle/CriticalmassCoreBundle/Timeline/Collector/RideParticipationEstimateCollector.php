@@ -5,15 +5,15 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RideParticipationEstimateItem;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RidePhotoItem;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RideTrackItem;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findForTimelineRideParticipantsEstimateCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaCalderaBundle:RideEstimate')->findForTimelineRideParticipantsEstimateCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

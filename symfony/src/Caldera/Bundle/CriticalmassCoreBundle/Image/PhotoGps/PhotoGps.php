@@ -6,8 +6,8 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\GpsExifReader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class PhotoGps {

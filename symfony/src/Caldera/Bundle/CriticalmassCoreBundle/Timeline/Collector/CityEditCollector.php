@@ -3,13 +3,13 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\CityEditItem;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\City;
 
 class CityEditCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:City')->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaCalderaBundle:City')->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

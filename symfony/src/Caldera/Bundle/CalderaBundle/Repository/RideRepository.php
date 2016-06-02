@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Location;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CalderaBundle\Entity\Location;
+use Caldera\Bundle\CalderaBundle\Entity\Region;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
@@ -82,7 +82,7 @@ class RideRepository extends EntityRepository
     
     public function findRideByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
     {
-        $queryString = 'SELECT r AS ride, SQRT((r.latitude - '.$latitude.') * (r.latitude - '.$latitude.') + (r.longitude - '.$longitude.') * (r.longitude - '.$longitude.')) AS distance FROM CalderaCriticalmassModelBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' ORDER BY distance ASC';
+        $queryString = 'SELECT r AS ride, SQRT((r.latitude - '.$latitude.') * (r.latitude - '.$latitude.') + (r.longitude - '.$longitude.') * (r.longitude - '.$longitude.')) AS distance FROM CalderaCalderaBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' ORDER BY distance ASC';
 
         $query = $this->getEntityManager()->createQuery($queryString);
         $query->setMaxResults(1);
@@ -97,7 +97,7 @@ class RideRepository extends EntityRepository
 
     public function findCityRideByDate(City $city, \DateTime $dateTime)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r WHERE DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' AND r.city = '.$city->getId())->setMaxResults(1);
+        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCalderaBundle:Ride r WHERE DATE(r.dateTime) = \''.$dateTime->format('Y-m-d').'\' AND r.city = '.$city->getId())->setMaxResults(1);
 
         $result = $query->getResult();
 
@@ -264,7 +264,7 @@ class RideRepository extends EntityRepository
 
     public function findLatestForCitySlug($citySlug)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r JOIN CalderaCriticalmassModelBundle:City c WITH c.id = r.city JOIN CalderaCriticalmassModelBundle:CitySlug cs WITH cs.city = c.id WHERE cs.slug = \''.$citySlug.'\' GROUP BY r.city ORDER BY r.dateTime DESC');
+        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCalderaBundle:Ride r JOIN CalderaCalderaBundle:City c WITH c.id = r.city JOIN CalderaCalderaBundle:CitySlug cs WITH cs.city = c.id WHERE cs.slug = \''.$citySlug.'\' GROUP BY r.city ORDER BY r.dateTime DESC');
 
         $result = $query->setMaxResults(1)->getResult();
 
@@ -333,7 +333,7 @@ class RideRepository extends EntityRepository
 
     public function findLatestRidesOrderByParticipants(\DateTime $startDateTime, \DateTime $endDateTime)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCriticalmassModelBundle:Ride r WHERE r.dateTime >= \''.$startDateTime->format('Y-m-d H:i:s').'\' AND r.dateTime <= \''.$endDateTime->format('Y-m-d H:i:s').'\' ORDER BY r.estimatedParticipants DESC');
+        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaCalderaBundle:Ride r WHERE r.dateTime >= \''.$startDateTime->format('Y-m-d H:i:s').'\' AND r.dateTime <= \''.$endDateTime->format('Y-m-d H:i:s').'\' ORDER BY r.estimatedParticipants DESC');
 
         $result = array();
 

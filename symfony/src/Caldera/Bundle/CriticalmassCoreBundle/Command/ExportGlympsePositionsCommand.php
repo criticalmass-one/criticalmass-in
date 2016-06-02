@@ -7,9 +7,9 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Ticket;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -56,7 +56,7 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
 
-        $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ticket');
+        $repository = $this->doctrine->getRepository('CalderaCalderaBundle:Ticket');
 
         if ($input->hasOption('all') && $input->getOption('all')) {
             $tickets = $repository->findBy(['exported' => false]);

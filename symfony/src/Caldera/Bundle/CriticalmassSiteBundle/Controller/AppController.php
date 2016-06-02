@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\AppType;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\App;
+use Caldera\Bundle\CalderaBundle\Entity\App;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,7 +11,7 @@ class AppController extends Controller
 {
     public function listAction()
     {
-        $apps = $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:App')->findBy(array('user' => $this->getUser()->getId(), 'deleted' => 0));
+        $apps = $this->getDoctrine()->getRepository('CalderaCalderaBundle:App')->findBy(array('user' => $this->getUser()->getId(), 'deleted' => 0));
 
         return $this->render('CalderaCriticalmassSiteBundle:App:list.html.twig', array('apps' => $apps));
     }
@@ -48,7 +48,7 @@ class AppController extends Controller
 
     public function editAction(Request $request, $appId)
     {
-        $app = $this->getDoctrine()->getRepository('CalderaCriticalmassModelBundle:App')->find($appId);
+        $app = $this->getDoctrine()->getRepository('CalderaCalderaBundle:App')->find($appId);
 
         $form = $this->createForm(new AppType(), $app, array('action' => $this->generateUrl('caldera_criticalmass_api_app_edit', array('appId' => $app->getId()))));
 
@@ -76,7 +76,7 @@ class AppController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $app = $em->find('CalderaCriticalmassModelBundle:App', $appId);
+        $app = $em->find('CalderaCalderaBundle:App', $appId);
 
         if ($app && $app->getUser()->equals($this->getUser()))
         {

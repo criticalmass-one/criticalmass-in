@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
+use Caldera\Bundle\CalderaBundle\Entity\Weather;
 
 class OpenWeatherReader
 {

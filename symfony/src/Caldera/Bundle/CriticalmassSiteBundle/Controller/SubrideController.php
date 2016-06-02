@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\SubrideType;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Subride;
+use Caldera\Bundle\CalderaBundle\Entity\Subride;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

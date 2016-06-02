@@ -2,12 +2,12 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\BaseTrait;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Event;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 
 trait ViewStorageTrait
 {

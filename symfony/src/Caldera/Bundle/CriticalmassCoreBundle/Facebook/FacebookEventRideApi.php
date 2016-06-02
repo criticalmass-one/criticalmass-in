@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Facebook;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\FacebookRideProperties;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\FacebookRideProperties;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;
 use Facebook\GraphNodes\GraphPage;

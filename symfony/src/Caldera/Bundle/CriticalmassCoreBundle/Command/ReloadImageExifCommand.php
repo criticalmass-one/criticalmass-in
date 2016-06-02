@@ -5,8 +5,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -40,7 +40,7 @@ class ReloadImageExifCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        $photos = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findAll();
+        $photos = $this->doctrine->getRepository('CalderaCalderaBundle:Photo')->findAll();
 
         /**
          * @var DateTimeExifReader $dter

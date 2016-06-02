@@ -2,14 +2,14 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Post;
+use Caldera\Bundle\CalderaBundle\Entity\Board;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Event;
+use Caldera\Bundle\CalderaBundle\Entity\Post;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\BoardInterface;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

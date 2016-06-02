@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;

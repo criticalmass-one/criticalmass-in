@@ -3,9 +3,9 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter;
 
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
+use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CalderaBundle\Entity\Position;
+use Caldera\Bundle\CalderaBundle\Entity\Ticket;
 
 class GpxExporter
 {
@@ -40,11 +40,11 @@ class GpxExporter
     protected function findPositions()
     {
         if ($this->ticket) {
-            $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findPositionsForTicket($this->ticket);
+            $this->positionArray = $this->doctrine->getRepository('CalderaCalderaBundle:Position')->findPositionsForTicket($this->ticket);
         }
 
         if ($this->criticalmapsUser) {
-            $this->positionArray = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position')->findPositionsForCriticalmapsUser($this->criticalmapsUser);
+            $this->positionArray = $this->doctrine->getRepository('CalderaCalderaBundle:Position')->findPositionsForCriticalmapsUser($this->criticalmapsUser);
         }
     }
 

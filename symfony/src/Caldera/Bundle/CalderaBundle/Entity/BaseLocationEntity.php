@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City as City;
+use Caldera\Bundle\CalderaBundle\Entity\City as City;
 
 /**
  * @ORM\Table(name="caldera_baselocationentity")
@@ -23,7 +23,7 @@ class BaseLocationEntity
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;

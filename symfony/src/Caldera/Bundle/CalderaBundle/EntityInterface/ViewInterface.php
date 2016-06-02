@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\EntityInterface;
+namespace Caldera\Bundle\CalderaBundle\EntityInterface;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
+use Caldera\Bundle\CalderaBundle\Entity\User;
 
 interface ViewInterface
 {

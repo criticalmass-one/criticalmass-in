@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\LocationRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\LocationRepository")
  */
 class Location
 {
@@ -133,10 +133,10 @@ class Location
     /**
      * Set city
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\City $city
+     * @param \Caldera\Bundle\CalderaBundle\Entity\City $city
      * @return Location
      */
-    public function setCity(\Caldera\Bundle\CriticalmassModelBundle\Entity\City $city = null)
+    public function setCity(\Caldera\Bundle\CalderaBundle\Entity\City $city = null)
     {
         $this->city = $city;
 
@@ -146,7 +146,7 @@ class Location
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\City
+     * @return \Caldera\Bundle\CalderaBundle\Entity\City
      */
     public function getCity()
     {

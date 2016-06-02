@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Region;
+use Caldera\Bundle\CalderaBundle\Entity\Region;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 

@@ -7,7 +7,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorExcepti
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NotEnoughCoordsException;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Exception;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 

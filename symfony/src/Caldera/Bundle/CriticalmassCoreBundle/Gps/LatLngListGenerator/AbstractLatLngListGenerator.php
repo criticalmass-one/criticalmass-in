@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractLatLngListGenerator

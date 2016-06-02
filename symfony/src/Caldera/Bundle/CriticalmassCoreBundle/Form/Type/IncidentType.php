@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Form\Type;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Incident;
+use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -5,7 +5,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -50,7 +50,7 @@ class OptimizeTracksCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        $repository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track');
+        $repository = $this->doctrine->getRepository('CalderaCalderaBundle:Track');
 
         /**
          * @var Track $track

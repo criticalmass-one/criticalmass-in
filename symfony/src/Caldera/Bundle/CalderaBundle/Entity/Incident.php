@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\IncidentRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\IncidentRepository")
  * @ORM\Table(name="incident")
  * @JMS\ExclusionPolicy("all")
  */
@@ -322,7 +322,7 @@ class Incident
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
      */
     public function getUser()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 class EventRepository extends EntityRepository

@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\EntityInterface;
+namespace Caldera\Bundle\CalderaBundle\EntityInterface;
 
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
 
 interface BoardInterface
 {

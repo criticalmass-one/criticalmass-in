@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\BoardInterface;
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +14,7 @@ use JMS\Serializer\Annotation as JMS;
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
  * derer einzelne Critical-Mass-Touren stattfinden.
  *
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\CityRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
@@ -1413,10 +1413,10 @@ class City implements BoardInterface, ViewableInterface
     /**
      * Add photos
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Photo $photos
      * @return City
      */
-    public function addPhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    public function addPhoto(\Caldera\Bundle\CalderaBundle\Entity\Photo $photos)
     {
         $this->photos[] = $photos;
 
@@ -1426,9 +1426,9 @@ class City implements BoardInterface, ViewableInterface
     /**
      * Remove photos
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Photo $photos
      */
-    public function removePhoto(\Caldera\Bundle\CriticalmassModelBundle\Entity\Photo $photos)
+    public function removePhoto(\Caldera\Bundle\CalderaBundle\Entity\Photo $photos)
     {
         $this->photos->removeElement($photos);
     }

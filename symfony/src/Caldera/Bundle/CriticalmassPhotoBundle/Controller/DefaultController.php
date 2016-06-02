@@ -3,8 +3,8 @@
 namespace Caldera\Bundle\CriticalmassPhotoBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 

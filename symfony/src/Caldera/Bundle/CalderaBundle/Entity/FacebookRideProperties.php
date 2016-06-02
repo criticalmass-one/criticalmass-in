@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -369,10 +369,10 @@ class FacebookRideProperties
     /**
      * Set ride
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $ride
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $ride
      * @return FacebookRideProperties
      */
-    public function setRide(\Caldera\Bundle\CriticalmassModelBundle\Entity\Ride $ride = null)
+    public function setRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $ride = null)
     {
         $this->ride = $ride;
 
@@ -382,7 +382,7 @@ class FacebookRideProperties
     /**
      * Get ride
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\Ride 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride 
      */
     public function getRide()
     {

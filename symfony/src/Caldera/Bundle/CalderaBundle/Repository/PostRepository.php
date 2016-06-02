@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Event;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Event;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
-use \Caldera\Bundle\CriticalmassModelBundle\Entity\Thread;
+use \Caldera\Bundle\CalderaBundle\Entity\Thread;
 
 class PostRepository extends EntityRepository
 {
@@ -14,7 +14,7 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(post.id)');
-        $qb->from('CalderaCriticalmassModelBundle:Post', 'post');
+        $qb->from('CalderaCalderaBundle:Post', 'post');
 
         return $qb->getQuery()->getSingleScalarResult();
     }

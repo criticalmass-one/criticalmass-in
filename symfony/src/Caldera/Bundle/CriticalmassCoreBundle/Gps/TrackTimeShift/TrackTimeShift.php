@@ -4,8 +4,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Position;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 
 class TrackTimeShift
 {

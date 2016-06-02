@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\UserPhoneNumberType;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
+use Caldera\Bundle\CalderaBundle\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;

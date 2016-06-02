@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractExifReader {

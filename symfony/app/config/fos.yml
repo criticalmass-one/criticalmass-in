@@ -1,7 +1,7 @@
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Caldera\Bundle\CriticalmassModelBundle\Entity\User #Application\Sonata\UserBundle\Entity\User
+    user_class: Caldera\Bundle\CalderaBundle\Entity\User #Application\Sonata\UserBundle\Entity\User
 #    group:
 #        group_class:   Application\Sonata\UserBundle\Entity\Group
 #        group_manager: sonata.user.orm.group_manager                    # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)

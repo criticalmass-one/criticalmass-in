@@ -4,9 +4,9 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\TrackHandlingTrait;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Position;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Position;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Polyline;
 use Pest;
 use Strava\API\Client;

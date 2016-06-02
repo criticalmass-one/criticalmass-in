@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator\StandardRideGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,7 +23,7 @@ class TracksTransformCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $tracks = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Track')->findAll();
+        $tracks = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Track')->findAll();
 
         $em = $this->getContainer()->get('doctrine')->getManager();
 

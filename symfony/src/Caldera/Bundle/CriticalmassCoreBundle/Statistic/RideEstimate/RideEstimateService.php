@@ -3,9 +3,9 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\RideEstimate;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\ORM\EntityManager;
 
 class RideEstimateService
@@ -48,7 +48,7 @@ class RideEstimateService
     
     public function calculateEstimates(Ride $ride)
     {
-        $estimates = $this->entityManager->getRepository('CalderaCriticalmassModelBundle:RideEstimate')->findByRide($ride->getId());
+        $estimates = $this->entityManager->getRepository('CalderaCalderaBundle:RideEstimate')->findByRide($ride->getId());
 
         $rec = new RideEstimateCalculator();
         $rec->setRide($ride);

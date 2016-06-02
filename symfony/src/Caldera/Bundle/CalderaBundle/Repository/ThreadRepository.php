@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Board;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Board;
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @package Caldera\Bundle\CriticalmassModelBundle\Repository
+ * @package Caldera\Bundle\CalderaBundle\Repository
  * @author maltehuebner
  * @since 2016-02-13
  */

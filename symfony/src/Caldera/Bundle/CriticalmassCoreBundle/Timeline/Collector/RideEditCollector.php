@@ -8,7 +8,7 @@ class RideEditCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findForTimelineRideEditCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findForTimelineRideEditCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

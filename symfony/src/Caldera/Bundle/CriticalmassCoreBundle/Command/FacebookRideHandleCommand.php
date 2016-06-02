@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Facebook\FacebookRequest;
 use \Facebook\Facebook;
 use Facebook\FacebookResponse;
@@ -40,7 +40,7 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
 
         $this->initFacebook();
 
-        $cities = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:City')->findCitiesWithFacebook();
+        $cities = $this->doctrine->getRepository('CalderaCalderaBundle:City')->findCitiesWithFacebook();
 
         /**
          * @var City $city
@@ -84,7 +84,7 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
             return null;
         }
 
-        $rides = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findByCityAndMonth($city, $month);
+        $rides = $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findByCityAndMonth($city, $month);
 
         if (count($rides) > 1) {
             $output->writeln('Zu viele Rides für diesen Monat');

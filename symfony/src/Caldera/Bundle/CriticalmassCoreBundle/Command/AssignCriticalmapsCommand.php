@@ -7,12 +7,12 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\CriticalmapsUser;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\PositionRepository;
-use Caldera\Bundle\CriticalmassModelBundle\Repository\RideRepository;
+use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Ticket;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Repository\PositionRepository;
+use Caldera\Bundle\CalderaBundle\Repository\RideRepository;
 use Caldera\CriticalmassStatisticBundle\Utility\Heatmap\Position;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -55,17 +55,17 @@ class AssignCriticalmapsCommand extends ContainerAwareCommand
         /**
          * @var ObjectRepository $criticalmapsUserRepository
          */
-        $criticalmapsUserRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:CriticalmapsUser');
+        $criticalmapsUserRepository = $this->doctrine->getRepository('CalderaCalderaBundle:CriticalmapsUser');
 
         /**
          * @var RideRepository $rideRepository
          */
-        $rideRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride');
+        $rideRepository = $this->doctrine->getRepository('CalderaCalderaBundle:Ride');
 
         /**
          * @var PositionRepository $positionRepository
          */
-        $positionRepository = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Position');
+        $positionRepository = $this->doctrine->getRepository('CalderaCalderaBundle:Position');
 
         $criticalmapsUsers = $criticalmapsUserRepository->findBy(['ride' => null, 'city' => null]);
 

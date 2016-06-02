@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -67,13 +67,13 @@ class ReplaceImagesCommand extends ContainerAwareCommand
          */
         $this->manager = $this->doctrine->getManager();
 
-        $ride = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
         $user = $this->doctrine->getRepository('ApplicationSonataUserBundle:User')->findOneByUsername($input->getArgument('username'));
 
         echo $ride->getId();
 
-        $track = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Track')->findByUserAndRide($ride, $user);
-        $photos = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:Photo')->findPhotosByRide($ride);
+        $track = $this->doctrine->getRepository('CalderaCalderaBundle:Track')->findByUserAndRide($ride, $user);
+        $photos = $this->doctrine->getRepository('CalderaCalderaBundle:Photo')->findPhotosByRide($ride);
 
         foreach ($photos as $photo) {
             $this->photoGps->setPhoto($photo);

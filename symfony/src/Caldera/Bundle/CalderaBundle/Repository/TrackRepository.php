@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Repository;
+namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CriticalmassModelBundle\Entity\User;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\User;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  * 
  * Reposity for Track entites.
  *
- * @package Caldera\Bundle\CriticalmassModelBundle\Repository
+ * @package Caldera\Bundle\CalderaBundle\Repository
  * @author maltehuebner
  * @since 2015-09-18
  */

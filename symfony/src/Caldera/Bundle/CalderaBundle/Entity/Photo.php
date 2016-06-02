@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
-use Caldera\Bundle\CriticalmassModelBundle\EntityInterface\ViewableInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @ORM\Table(name="photo")
  * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CriticalmassModelBundle\Repository\PhotoRepository")
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
 class Photo implements ViewableInterface
@@ -381,10 +381,10 @@ class Photo implements ViewableInterface
     /**
      * Set event
      *
-     * @param \Caldera\Bundle\CriticalmassModelBundle\Entity\Event $event
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Event $event
      * @return Photo
      */
-    public function setEvent(\Caldera\Bundle\CriticalmassModelBundle\Entity\Event $event = null)
+    public function setEvent(\Caldera\Bundle\CalderaBundle\Entity\Event $event = null)
     {
         $this->event = $event;
 
@@ -394,7 +394,7 @@ class Photo implements ViewableInterface
     /**
      * Get event
      *
-     * @return \Caldera\Bundle\CriticalmassModelBundle\Entity\Event 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Event 
      */
     public function getEvent()
     {

@@ -4,8 +4,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery;
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\Weather;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Weather;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,7 +48,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $halfDateTime = new \DateTime();
         $halfDateTime->sub($halfDayInterval);
 
-        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
+        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
         $this->em = $this->getContainer()->get('doctrine')->getManager();
         $this->query = $this->getContainer()->get('caldera.criticalmass.weather.openweather.query');
         $this->reader = $this->getContainer()->get('caldera.criticalmass.weather.openweather.reader');
@@ -59,7 +59,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             /**
              * @var Weather $currentWeather
              */
-            $currentWeather = $this->getContainer()->get('doctrine')->getRepository('CalderaCriticalmassModelBundle:Weather')->findCurrentWeatherForRide($ride);
+            $currentWeather = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Weather')->findCurrentWeatherForRide($ride);
 
             if (!$currentWeather or $currentWeather->getCreationDateTime() < $halfDateTime) {
                 $this->retrieveWeather($ride);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassModelBundle\Entity;
+namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,13 +24,13 @@ class ApiUser
     protected $token;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\App", inversedBy="api_users")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\App", inversedBy="api_users")
      * @ORM\JoinColumn(name="app_id", referencedColumnName="id", nullable=false)
      */
     protected $app;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CriticalmassModelBundle\Entity\City", inversedBy="api_users")
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City", inversedBy="api_users")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
     protected $city;

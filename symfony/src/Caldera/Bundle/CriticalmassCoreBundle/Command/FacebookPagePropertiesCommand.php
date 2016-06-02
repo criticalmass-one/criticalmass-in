@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi;
-use Caldera\Bundle\CriticalmassModelBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use \Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -36,7 +36,7 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
          */
         $fpa = $this->getContainer()->get('caldera.criticalmass.facebookapi.citypageproperties');
 
-        $cities = $this->doctrine->getRepository('CalderaCriticalmassModelBundle:City')->findCitiesWithFacebook();
+        $cities = $this->doctrine->getRepository('CalderaCalderaBundle:City')->findCitiesWithFacebook();
 
         /**
          * @var City $city
