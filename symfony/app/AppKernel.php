@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Caldera\Bundle\CalderaBundle\CalderaBundle(),
-            new Caldera\Bundle\CriticalmassModelBundle\CalderaCriticalmassModelBundle(),
             new Caldera\Bundle\CriticalmassSiteBundle\CalderaCriticalmassSiteBundle(),
             new Caldera\Bundle\CriticalmassCoreBundle\CalderaCriticalmassCoreBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
