@@ -46,7 +46,7 @@ class ApiCallsCommand extends ContainerAwareCommand
         $this->manager = $this->doctrine->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
 
-        $apps = $this->doctrine->getRepository('CalderaCalderaBundle:App')->findAll();
+        $apps = $this->doctrine->getRepository('CalderaBundle:App')->findAll();
 
         /**
          * @var App $app

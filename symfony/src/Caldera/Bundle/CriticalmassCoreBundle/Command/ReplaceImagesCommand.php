@@ -67,13 +67,13 @@ class ReplaceImagesCommand extends ContainerAwareCommand
          */
         $this->manager = $this->doctrine->getManager();
 
-        $ride = $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
         $user = $this->doctrine->getRepository('ApplicationSonataUserBundle:User')->findOneByUsername($input->getArgument('username'));
 
         echo $ride->getId();
 
-        $track = $this->doctrine->getRepository('CalderaCalderaBundle:Track')->findByUserAndRide($ride, $user);
-        $photos = $this->doctrine->getRepository('CalderaCalderaBundle:Photo')->findPhotosByRide($ride);
+        $track = $this->doctrine->getRepository('CalderaBundle:Track')->findByUserAndRide($ride, $user);
+        $photos = $this->doctrine->getRepository('CalderaBundle:Photo')->findPhotosByRide($ride);
 
         foreach ($photos as $photo) {
             $this->photoGps->setPhoto($photo);

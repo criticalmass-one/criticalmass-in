@@ -36,7 +36,7 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
          */
         $fpa = $this->getContainer()->get('caldera.criticalmass.facebookapi.citypageproperties');
 
-        $cities = $this->doctrine->getRepository('CalderaCalderaBundle:City')->findCitiesWithFacebook();
+        $cities = $this->doctrine->getRepository('CalderaBundle:City')->findCitiesWithFacebook();
 
         /**
          * @var City $city

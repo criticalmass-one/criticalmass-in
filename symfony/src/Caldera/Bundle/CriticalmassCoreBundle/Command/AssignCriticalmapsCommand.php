@@ -55,17 +55,17 @@ class AssignCriticalmapsCommand extends ContainerAwareCommand
         /**
          * @var ObjectRepository $criticalmapsUserRepository
          */
-        $criticalmapsUserRepository = $this->doctrine->getRepository('CalderaCalderaBundle:CriticalmapsUser');
+        $criticalmapsUserRepository = $this->doctrine->getRepository('CalderaBundle:CriticalmapsUser');
 
         /**
          * @var RideRepository $rideRepository
          */
-        $rideRepository = $this->doctrine->getRepository('CalderaCalderaBundle:Ride');
+        $rideRepository = $this->doctrine->getRepository('CalderaBundle:Ride');
 
         /**
          * @var PositionRepository $positionRepository
          */
-        $positionRepository = $this->doctrine->getRepository('CalderaCalderaBundle:Position');
+        $positionRepository = $this->doctrine->getRepository('CalderaBundle:Position');
 
         $criticalmapsUsers = $criticalmapsUserRepository->findBy(['ride' => null, 'city' => null]);
 

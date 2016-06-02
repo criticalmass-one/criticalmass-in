@@ -53,7 +53,7 @@ abstract class AbstractController extends Controller
      */
     protected function getAnonymousNameRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:AnonymousName');
+        return $this->getDoctrine()->getRepository('CalderaBundle:AnonymousName');
     }
 
     /**
@@ -61,7 +61,7 @@ abstract class AbstractController extends Controller
      */
     protected function getBlogArticleRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Article');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Article');
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class AbstractController extends Controller
      */
     protected function getBoardRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Board');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Board');
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class AbstractController extends Controller
      */
     protected function getContentRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Content');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Content');
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class AbstractController extends Controller
      */
     protected function getEventRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Event');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Event');
     }
 
     /**
@@ -93,7 +93,7 @@ abstract class AbstractController extends Controller
      */
     protected function getRideRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Ride');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Ride');
     }
 
     /**
@@ -101,7 +101,7 @@ abstract class AbstractController extends Controller
      */
     protected function getCitySlugRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:CitySlug');
+        return $this->getDoctrine()->getRepository('CalderaBundle:CitySlug');
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class AbstractController extends Controller
      */
     protected function getCityRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:City');
+        return $this->getDoctrine()->getRepository('CalderaBundle:City');
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class AbstractController extends Controller
      */
     protected function getFacebookCityPropertiesRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:FacebookCityProperties');
+        return $this->getDoctrine()->getRepository('CalderaBundle:FacebookCityProperties');
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class AbstractController extends Controller
      */
     protected function getFacebookRidePropertiesRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:FacebookRideProperties');
+        return $this->getDoctrine()->getRepository('CalderaBundle:FacebookRideProperties');
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class AbstractController extends Controller
      */
     protected function getIncidentRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Incident');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Incident');
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class AbstractController extends Controller
      */
     protected function getLocationRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Location');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Location');
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class AbstractController extends Controller
      */
     protected function getRegionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Region');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Region');
     }
 
     /**
@@ -157,7 +157,7 @@ abstract class AbstractController extends Controller
      */
     protected function getPhotoRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Photo');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Photo');
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class AbstractController extends Controller
      */
     protected function getPostRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Post');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Post');
     }
 
     /**
@@ -173,7 +173,7 @@ abstract class AbstractController extends Controller
      */
     protected function getTrackRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Track');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Track');
     }
 
     /**
@@ -181,7 +181,7 @@ abstract class AbstractController extends Controller
      */
     protected function getThreadRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Thread');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Thread');
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class AbstractController extends Controller
      */
     protected function getParticipationRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Participation');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Participation');
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class AbstractController extends Controller
      */
     protected function getPositionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Position');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Position');
     }
 
     /**
@@ -205,7 +205,7 @@ abstract class AbstractController extends Controller
      */
     protected function getSubrideRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Subride');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Subride');
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class AbstractController extends Controller
      */
     protected function getGlympseTicketRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Ticket');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Ticket');
     }
 
     /**
@@ -221,7 +221,7 @@ abstract class AbstractController extends Controller
      */
     protected function getWeatherRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaCalderaBundle:Weather');
+        return $this->getDoctrine()->getRepository('CalderaBundle:Weather');
     }
 
     /**

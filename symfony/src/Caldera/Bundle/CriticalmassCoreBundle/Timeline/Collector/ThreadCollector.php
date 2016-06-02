@@ -10,7 +10,7 @@ class ThreadCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCalderaBundle:Thread')->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaBundle:Thread')->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

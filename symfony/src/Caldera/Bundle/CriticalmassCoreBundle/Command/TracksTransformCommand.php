@@ -23,7 +23,7 @@ class TracksTransformCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $tracks = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Track')->findAll();
+        $tracks = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Track')->findAll();
 
         $em = $this->getContainer()->get('doctrine')->getManager();
 

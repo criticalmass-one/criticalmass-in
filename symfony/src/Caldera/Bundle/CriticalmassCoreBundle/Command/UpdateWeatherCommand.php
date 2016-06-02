@@ -48,7 +48,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $halfDateTime = new \DateTime();
         $halfDateTime->sub($halfDayInterval);
 
-        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
+        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
         $this->em = $this->getContainer()->get('doctrine')->getManager();
         $this->query = $this->getContainer()->get('caldera.criticalmass.weather.openweather.query');
         $this->reader = $this->getContainer()->get('caldera.criticalmass.weather.openweather.reader');
@@ -59,7 +59,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             /**
              * @var Weather $currentWeather
              */
-            $currentWeather = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Weather')->findCurrentWeatherForRide($ride);
+            $currentWeather = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Weather')->findCurrentWeatherForRide($ride);
 
             if (!$currentWeather or $currentWeather->getCreationDateTime() < $halfDateTime) {
                 $this->retrieveWeather($ride);

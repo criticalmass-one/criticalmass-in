@@ -48,7 +48,7 @@ class RideEstimateService
     
     public function calculateEstimates(Ride $ride)
     {
-        $estimates = $this->entityManager->getRepository('CalderaCalderaBundle:RideEstimate')->findByRide($ride->getId());
+        $estimates = $this->entityManager->getRepository('CalderaBundle:RideEstimate')->findByRide($ride->getId());
 
         $rec = new RideEstimateCalculator();
         $rec->setRide($ride);

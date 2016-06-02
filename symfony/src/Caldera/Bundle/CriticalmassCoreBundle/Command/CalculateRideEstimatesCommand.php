@@ -27,7 +27,7 @@ class CalculateRideEstimatesCommand extends ContainerAwareCommand
          */
         $res = $this->getContainer()->get('caldera.criticalmass.statistic.rideestimate');
         
-        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:Ride')->findEstimatedRides();
+        $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Ride')->findEstimatedRides();
         
         foreach ($rides as $ride) {
             $output->writeln($ride->getCity()->getCity().': '.$ride->getFormattedDate());

@@ -39,7 +39,7 @@ class StandardRideCommand extends ContainerAwareCommand
         $year = $input->getArgument('year');
         $month = $input->getArgument('month');
 
-        $cities = $this->getContainer()->get('doctrine')->getRepository('CalderaCalderaBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
+        $cities = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
         
         foreach ($cities as $city)
         {

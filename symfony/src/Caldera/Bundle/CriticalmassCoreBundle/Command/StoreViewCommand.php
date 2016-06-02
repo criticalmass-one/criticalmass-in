@@ -92,7 +92,7 @@ class StoreViewCommand extends ContainerAwareCommand
                     $user = null;
 
                     if ($viewArray['userId']) {
-                        $user = $this->doctrine->getRepository('CalderaCalderaBundle:User')->find($viewArray['userId']);
+                        $user = $this->doctrine->getRepository('CalderaBundle:User')->find($viewArray['userId']);
                     }
 
                     $viewDateTime = new \DateTime($viewArray['dateTime']);
@@ -126,7 +126,7 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $output->writeln('Storing photo views');
 
-        $photos = $this->doctrine->getRepository('CalderaCalderaBundle:Photo')->findAll();
+        $photos = $this->doctrine->getRepository('CalderaBundle:Photo')->findAll();
 
         $this->storeViews($output, 'photo', $photos, 'Caldera\Bundle\CalderaBundle\Entity\PhotoView');
     }
@@ -135,7 +135,7 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $output->writeln('Storing thread views');
 
-        $threads = $this->doctrine->getRepository('CalderaCalderaBundle:Thread')->findAll();
+        $threads = $this->doctrine->getRepository('CalderaBundle:Thread')->findAll();
 
         $this->storeViews($output, 'thread', $threads, 'Caldera\Bundle\CalderaBundle\Entity\ThreadView');
     }
@@ -144,7 +144,7 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $output->writeln('Storing event views');
 
-        $threads = $this->doctrine->getRepository('CalderaCalderaBundle:Event')->findAll();
+        $threads = $this->doctrine->getRepository('CalderaBundle:Event')->findAll();
 
         $this->storeViews($output, 'event', $threads, 'Caldera\Bundle\CalderaBundle\Entity\EventView');
     }
@@ -153,7 +153,7 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $output->writeln('Storing ride views');
 
-        $rides = $this->doctrine->getRepository('CalderaCalderaBundle:Ride')->findAll();
+        $rides = $this->doctrine->getRepository('CalderaBundle:Ride')->findAll();
 
         $this->storeViews($output, 'ride', $rides, 'Caldera\Bundle\CalderaBundle\Entity\RideView');
     }
@@ -162,7 +162,7 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $output->writeln('Storing city views');
 
-        $cities = $this->doctrine->getRepository('CalderaCalderaBundle:City')->findAll();
+        $cities = $this->doctrine->getRepository('CalderaBundle:City')->findAll();
 
         $this->storeViews($output, 'city', $cities, 'Caldera\Bundle\CalderaBundle\Entity\CityView');
     }

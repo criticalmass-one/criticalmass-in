@@ -61,7 +61,7 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
         /**
          * @var CriticalmapsUserRepository $repository
          */
-        $repository = $this->doctrine->getRepository('CalderaCalderaBundle:CriticalmapsUser');
+        $repository = $this->doctrine->getRepository('CalderaBundle:CriticalmapsUser');
 
         if ($input->hasOption('all')) {
             $criticalmapsUsers = $repository->findNotExportedAssignedUsers();

@@ -9,7 +9,7 @@ class CityEditCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCalderaBundle:City')->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaBundle:City')->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

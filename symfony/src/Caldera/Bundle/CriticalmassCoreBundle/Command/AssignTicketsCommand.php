@@ -48,8 +48,8 @@ class AssignTicketsCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $em = $this->doctrine->getManager();
 
-        $ticketRepository = $this->doctrine->getRepository('CalderaCalderaBundle:Ticket');
-        $rideRepository = $this->doctrine->getRepository('CalderaCalderaBundle:Ride');
+        $ticketRepository = $this->doctrine->getRepository('CalderaBundle:Ticket');
+        $rideRepository = $this->doctrine->getRepository('CalderaBundle:Ride');
 
         $tickets = $ticketRepository->findBy(['ride' => null]);
 

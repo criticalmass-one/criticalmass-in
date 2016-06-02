@@ -8,7 +8,7 @@ class ContentCommentCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaCalderaBundle:Post')->findForTimelineContentCommentCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaBundle:Post')->findForTimelineContentCommentCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)

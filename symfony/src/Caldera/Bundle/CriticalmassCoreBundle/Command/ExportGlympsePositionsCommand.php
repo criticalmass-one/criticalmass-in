@@ -56,7 +56,7 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
 
-        $repository = $this->doctrine->getRepository('CalderaCalderaBundle:Ticket');
+        $repository = $this->doctrine->getRepository('CalderaBundle:Ticket');
 
         if ($input->hasOption('all') && $input->getOption('all')) {
             $tickets = $repository->findBy(['exported' => false]);
