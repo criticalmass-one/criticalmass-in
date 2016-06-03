@@ -41,60 +41,7 @@
                             <h3 class="panel-title">Aufnahmedaten</h3>
                         </div>
                         <div class="panel-body">
-                            <dl>
-                                <dt>
-                                    Aufnahmezeitpunkt:
-                                </dt>
-                                <dd>
-                                    {{ exif.photoDateTime|date('d.m.Y H:i:s') }} Uhr
-                                </dd>
-                                <dt>
-                                    Belichtungszeit:
-                                </dt>
-                                <dd>
-                                    {{ exif.shutterSpeed }} Sekunde
-                                </dd>
-                                <dt>
-                                    Brennweite:
-                                </dt>
-                                <dd>
-                                    {{ exif.focalLength }} mm
-                                </dd>
-                                <dt>
-                                    Blende
-                                </dt>
-                                <dd>
-                                    F{{ exif.aperture }}
-                                </dd>
-                                <dt>
-                                    Modell:
-                                </dt>
-                                <dd>
-                                    {{ exif.model }}
-                                </dd>
-                                <dt>
-                                    Objektiv
-                                </dt>
-                                <dd>
-                                    {{ exif.lens }}
-                                </dd>
-                                <dt>
-                                    Blitz
-                                </dt>
-                                <dd>
-                                    {% if exif.flash %}
-                                    ja
-                                    {% else %}
-                                    nein
-                                    {% endif %}
-                                </dd>
-                                <dt>
-                                    Urheber
-                                </dt>
-                                <dd>
-                                    {{ photo.user.username }}
-                                </dd>
-                            </dl>
+                            {% include('CalderaCriticalmassPhotoBundle:Includes:_exif.html.twig') with { 'photo': photo, 'exif': exif } %}
                         </div>
                     </div>
                 </div>
