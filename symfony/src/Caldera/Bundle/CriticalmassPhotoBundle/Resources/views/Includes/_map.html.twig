@@ -1,0 +1,21 @@
+{% if photo.hasCoordinates() %}
+    <div id="map" style="height: 150px;"
+         data-map-center-latitude="{{ photo.latitude }}"
+         data-map-center-longitude="{{ photo.longitude }}"
+         data-map-zoomlevel="13"
+         data-lock-map="true"
+         data-map-marker-latitude="{{ photo.latitude }}"
+         data-map-marker-longitude="{{ photo.longitude }}"
+         data-map-marker-color="yellow"
+         data-map-marker-icon="fa-camera"
+         data-map-marker-shape="circle"
+            {% if track %}
+                data-polyline="{{ track.polyline }}"
+                data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+            {% endif %}
+    ></div>
+{% else %}
+    <p>
+        Zu diesem Foto sind keine geografischen Informationen abgespeichert worden.
+    </p>
+{% endif %}
