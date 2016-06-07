@@ -1,6 +1,6 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}{{ location.title }}{% endblock %}
+{% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
 
 {% block breadcrumb %}
     <li>
@@ -47,7 +47,32 @@
 
         <div class="row">
             <div class="col-md-8">
-            {{ location.description|markdown }}
+                {% if location.hasCoordinates() %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="map" style="height: 250px;"
+                             data-map-center-latitude="{{ location.latitude }}"
+                             data-map-center-longitude="{{ location.longitude }}"
+                             data-map-zoomlevel="15"
+                             data-map-marker-latitude="{{ location.latitude }}"
+                             data-map-marker-longitude="{{ location.longitude }}"
+                             data-map-marker-color="red"
+                             data-map-marker-icon="fa-dot-circle-o"
+                             data-map-marker-shape="circle"
+                        ></div>
+                    </div>
+                </div>
+
+                <script>
+                    CriticalMass.loadModule('AutoMap', 'map');
+                </script>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ location.description|markdown }}
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-4">

@@ -198,4 +198,9 @@ class Location
     {
         return $this->slug;
     }
+
+    public function hasCoordinates()
+    {
+        return ($this->latitude and $this->longitude);
+    }
 }
