@@ -5,20 +5,18 @@ fos_elastica:
         criticalmass:
             client: default
             finder:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter   : [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
             types:
-                content:
-                    mappings:
-                        id: ~
-                        title: ~
-                        text: ~
-                        isArchived: ~
-                    persistence:
-                        driver: orm
-                        model: Caldera\Bundle\CalderaBundle\Entity\Content
-                        provider: ~
-                        listener:
-                            immediate: ~
-                        finder: ~
                 ride:
                     mappings:
                         id: ~
@@ -28,6 +26,7 @@ fos_elastica:
                         country: { type: string, index: not_analyzed }
                         location: ~
                         isArchived: ~
+                        isEnabled: ~
                         dateTime: ~
                         pin: { type: geo_point }
                     persistence:

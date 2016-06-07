@@ -12,11 +12,16 @@ class SearchController extends AbstractController
 {
     protected function createQuery($queryPhrase, \Elastica\Filter\AbstractFilter $cityFilter, \Elastica\Filter\AbstractFilter $countryFilter)
     {
-        $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'location']);
+        if ($queryPhrase) {
+            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'location']);
+        } else {
+            $simpleQueryString = new \Elastica\Query\MatchAll();
+        }
 
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
+        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $cityFilter, $countryFilter]);
+        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $enabledFilter, $cityFilter, $countryFilter]);
 
         $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
 
