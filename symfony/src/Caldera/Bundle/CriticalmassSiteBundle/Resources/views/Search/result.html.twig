@@ -8,70 +8,42 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Suchergebnisse für „{{ query }}“
+                    Suchergebnisse für „“
                 </h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#cityResults" aria-controls="cityResults" role="tab" data-toggle="tab">
-                            Städte
-                            <span class="badge">{{ cityResults|length }}</span>
-                        </a>
+            <div class="col-md-3">
+                <ul>
+                {% for city in resultSet.getAggregations().city.buckets %}
+                    <li>
+                        <input type="checkbox" /> {{ city.key }} ({{ city.doc_count }})
                     </li>
-                    <li role="presentation">
-                        <a href="#rideResults" aria-controls="rideResults" role="tab" data-toggle="tab">
-                            Touren
-                            <span class="badge">{{ rideResults|length }}</span>
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#contentResults" aria-controls="contentResults" role="tab" data-toggle="tab">
-                            Inhalte
-                            <span class="badge">{{ contentResults|length }}</span>
-                        </a>
-                    </li>
+                {% endfor %}
                 </ul>
 
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="cityResults">
-                        {% for city in cityResults %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="{{ path(city) }}">
-                                        {{ city.title }}
-                                    </a>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="rideResults">
-                        {% for ride in rideResults %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="{{ path(ride) }}">
-                                        {{ ride.title }}
-                                    </a>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                <ul>
+                {% for country in resultSet.getAggregations().country.buckets %}
+                    <li>
+                        {{ country.key }} ({{ country.doc_count }})
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
 
-                    <div role="tabpanel" class="tab-pane" id="contentResults">
-                        {% for content in contentResults %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="{{ path(content) }}">
-                                        {{ content.title }}
-                                    </a>
-                                </div>
-                            </div>
-                        {% endfor %}
+            <div class="col-md-9">
+                {% for result in results %}
+                <div class="row">
+                    <div class="col-md-12">
+                    {% if result.standardLocation is defined %}
+                        Stadt: {{ result.title }}
+                    {% else %}
+                        Tour: {{ result.getFancyTitle() }}
+                    {% endif %}
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -1024,4 +1024,13 @@ class Ride implements ParticipateableInterface, ViewableInterface
     {
         ++$this->views;
     }
+
+    public function getCountry()
+    {
+        if ($this->city) {
+            return $this->city->getCountry();
+        }
+
+        return null;
+    }
 }

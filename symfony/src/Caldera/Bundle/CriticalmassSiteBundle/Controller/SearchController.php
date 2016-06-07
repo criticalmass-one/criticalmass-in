@@ -2,54 +2,16 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Elastica\Query;
+use Elastica\ResultSet;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected function searchContent($queryPhrase)
+    protected function createQuery($queryPhrase)
     {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.content');
-
-        $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'text']);
-
-        $term = new \Elastica\Filter\Term(['isArchived' => false]);
-
-        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $term);
-
-        $query = new \Elastica\Query($filteredQuery);
-
-        $query->setSize(50);
-
-        return $finder->find($query);
-    }
-
-
-    protected function searchCity($queryPhrase)
-    {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
-
-        $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['city', 'title', 'description', 'longDescription', 'punchLine', 'standardLocation']);
-
-        $archivedFilter= new \Elastica\Filter\Term(['isArchived' => false]);
-        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
-
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $enabledFilter]);
-
-        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
-
-        $query = new \Elastica\Query($filteredQuery);
-
-        $query->setSize(50);
-
-        return $finder->find($query);
-    }
-
-    protected function searchRide($queryPhrase)
-    {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.ride');
-
         $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'location']);
 
         $archivedFilter= new \Elastica\Filter\Term(['isArchived' => false]);
@@ -60,24 +22,56 @@ class SearchController extends AbstractController
 
         $query->setSize(50);
 
-        return $finder->find($query);
+        return $query;
+    }
+
+    protected function performSearch(\Elastica\Query $query)
+    {
+        $mngr = $this->get('fos_elastica.index_manager');
+
+        $search = $mngr->getIndex('criticalmass')->createSearch();
+
+        $search->addType('ride');
+        $search->addType('city');
+
+        return $search->search($query);
+    }
+
+    protected function addAggregations(\Elastica\Query $query)
+    {
+
+
+        return $query;
     }
 
     public function queryAction(Request $request)
     {
         $queryPhrase = $request->get('query');
 
-        $contentResults = $this->searchContent($queryPhrase);
-        $cityResults = $this->searchCity($queryPhrase);
-        $rideResults = $this->searchRide($queryPhrase);
+        $query = $this->createQuery($queryPhrase);
 
-        return $this->render(
-            'CalderaCriticalmassSiteBundle:Search:result.html.twig',
+        $aggregation = new \Elastica\Aggregation\Terms('city');
+        $aggregation->setField('city');
+        $aggregation->setSize(50);
+        $query->addAggregation($aggregation);
+
+        $aggregation = new \Elastica\Aggregation\Terms('country');
+        $aggregation->setField('country');
+        $aggregation->setSize(50);
+        $query->addAggregation($aggregation);
+
+        /** @var ResultSet $resultSet */
+        $resultSet = $this->performSearch($query);
+
+        $transformer = $this->get('fos_elastica.elastica_to_model_transformer.collection.criticalmass');
+
+        $results = $transformer->transform($resultSet->getResults());
+
+        return $this->render('CalderaCriticalmassSiteBundle:Search:result.html.twig',
             [
-                'query' => $queryPhrase,
-                'contentResults' => $contentResults,
-                'cityResults' => $cityResults,
-                'rideResults' => $rideResults,
+                'results' => $results,
+                'resultSet' => $resultSet
+
             ]
         );
     }

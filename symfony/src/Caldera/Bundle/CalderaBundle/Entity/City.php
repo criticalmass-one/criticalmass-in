@@ -1447,4 +1447,13 @@ class City implements BoardInterface, ViewableInterface
     {
         ++$this->views;
     }
+
+    public function getCountry()
+    {
+        if ($this->region) {
+            return $this->region->getParent();
+        }
+
+        return null;
+    }
 }
