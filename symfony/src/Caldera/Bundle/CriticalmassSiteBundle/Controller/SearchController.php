@@ -10,13 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected function createQuery($queryPhrase)
+    protected function createQuery($queryPhrase, \Elastica\Filter\AbstractFilter $cityFilter, \Elastica\Filter\AbstractFilter $countryFilter)
     {
         $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'location']);
 
-        $archivedFilter= new \Elastica\Filter\Term(['isArchived' => false]);
+        $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
 
-        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $archivedFilter);
+        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $cityFilter, $countryFilter]);
+
+        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
 
         $query = new \Elastica\Query($filteredQuery);
 
@@ -39,17 +41,6 @@ class SearchController extends AbstractController
 
     protected function addAggregations(\Elastica\Query $query)
     {
-
-
-        return $query;
-    }
-
-    public function queryAction(Request $request)
-    {
-        $queryPhrase = $request->get('query');
-
-        $query = $this->createQuery($queryPhrase);
-
         $aggregation = new \Elastica\Aggregation\Terms('city');
         $aggregation->setField('city');
         $aggregation->setSize(50);
@@ -59,6 +50,53 @@ class SearchController extends AbstractController
         $aggregation->setField('country');
         $aggregation->setSize(50);
         $query->addAggregation($aggregation);
+
+        return $query;
+    }
+
+    protected function createCityFilter(array $cities = [])
+    {
+        $filters = [];
+
+        foreach ($cities as $city) {
+            $filters[] = new \Elastica\Filter\Term(['city' => $city]);
+        }
+
+        return new \Elastica\Filter\BoolOr($filters);
+    }
+
+    protected function createCountryFilter(array $countries = [])
+    {
+        $filters = [];
+
+        foreach ($countries as $country) {
+            $filters[] = new \Elastica\Filter\Term(['country' => $country]);
+        }
+
+        return new \Elastica\Filter\BoolOr($filters);
+    }
+
+    public function queryAction(Request $request)
+    {
+        $queryPhrase = $request->get('query');
+        $cities = $request->get('cities');
+        $countries = $request->get('countries');
+
+        if ($cities) {
+            $cityFilter = $this->createCityFilter($cities);
+        } else {
+            $cityFilter = new \Elastica\Filter\MatchAll();
+        }
+
+        if ($countries) {
+            $countryFilter = $this->createCountryFilter($countries);
+        } else {
+            $countryFilter = new \Elastica\Filter\MatchAll();
+        }
+
+        $query = $this->createQuery($queryPhrase, $cityFilter, $countryFilter);
+
+        $query = $this->addAggregations($query);
 
         /** @var ResultSet $resultSet */
         $resultSet = $this->performSearch($query);
