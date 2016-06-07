@@ -1033,4 +1033,13 @@ class Ride implements ParticipateableInterface, ViewableInterface
 
         return null;
     }
+
+    public function getIsEnabled()
+    {
+        if ($this->city) {
+            return $this->city->isEnabled();
+        }
+
+        return null;
+    }
 }

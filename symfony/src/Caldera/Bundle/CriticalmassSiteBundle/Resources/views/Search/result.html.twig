@@ -50,15 +50,12 @@
 
                 <div class="col-md-9">
                     {% for result in results %}
-                    <div class="row">
-                        <div class="col-md-12">
                         {% if result.standardLocation is defined %}
-                            Stadt: {{ result.title }}
+                            {% include 'CalderaCriticalmassSiteBundle:Search:city.html.twig' with { city: result } %}
                         {% else %}
-                            Tour: {{ result.getFancyTitle() }}
+                            {% include 'CalderaCriticalmassSiteBundle:Search:ride.html.twig' with { ride: result } %}
                         {% endif %}
-                        </div>
-                    </div>
+
                     {% endfor %}
                 </div>
             </div>
