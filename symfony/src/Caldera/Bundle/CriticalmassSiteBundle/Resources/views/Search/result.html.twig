@@ -19,7 +19,7 @@
                         <label for="query-input">
                             Deine Suchanfrage
                         </label>
-                        <input type="text" class="form-control" name="query" id="query-input" placeholder="Deine Suchanfrage" />
+                        <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="Deine Suchanfrage" />
 
                     </div>
 
@@ -40,11 +40,11 @@
                     </ul>
 
                     <ul>
-                    {% for country in resultSet.getAggregations().country.buckets %}
-                        <li>
-                            <input type="checkbox" name="countries[]" value="{{ country.key }}" /> {{ country.key }} ({{ country.doc_count }})
-                        </li>
-                    {% endfor %}
+                        {% for country in resultSet.getAggregations().country.buckets %}
+                            <li>
+                                <input type="checkbox" name="countries[]" value="{{ country.key }}" /> {{ country.key }} ({{ country.doc_count }})
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
 

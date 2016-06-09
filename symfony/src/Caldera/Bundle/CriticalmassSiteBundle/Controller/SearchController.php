@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
 use Elastica\Query;
 use Elastica\ResultSet;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,16 +17,28 @@ class SearchController extends AbstractController
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
 
+        $dateTimeRange = new \Elastica\Query\Range();
+        $dateTimeRange->addField('dateTime',
+            [
+                'lte' => '2013-01-01 00:00:00',
+            ]
+        );
+
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery->addMust($simpleQueryString);
+        $boolQuery->addMust($dateTimeRange);
+
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
 
         $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $enabledFilter, $cityFilter, $countryFilter]);
 
-        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
+        $filteredQuery = new \Elastica\Query\Filtered($boolQuery, $filter);
 
         $query = new \Elastica\Query($filteredQuery);
 
         $query->setSize(50);
+        $query->addSort('_score');
 
         return $query;
     }
@@ -113,7 +124,8 @@ class SearchController extends AbstractController
         return $this->render('CalderaCriticalmassSiteBundle:Search:result.html.twig',
             [
                 'results' => $results,
-                'resultSet' => $resultSet
+                'resultSet' => $resultSet,
+                'query' => $queryPhrase
 
             ]
         );

@@ -29,6 +29,7 @@ fos_elastica:
                         isEnabled: ~
                         dateTime: ~
                         pin: { type: geo_point }
+                        country: { type: string, index: not_analyzed }
                     persistence:
                         driver: orm
                         model: Caldera\Bundle\CalderaBundle\Entity\Ride
@@ -48,6 +49,7 @@ fos_elastica:
                         isEnabled: ~
                         country: { type: string, index: not_analyzed }
                         pin: { type: geo_point }
+                        dateTime: ~
                     persistence:
                         driver: orm
                         model: Caldera\Bundle\CalderaBundle\Entity\City
