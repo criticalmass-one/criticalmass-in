@@ -1456,4 +1456,9 @@ class City implements BoardInterface, ViewableInterface
 
         return null;
     }
+
+    public function getDateTime()
+    {
+        return null;
+    }
 }
