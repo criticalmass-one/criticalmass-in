@@ -1,0 +1,9 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:MasterTemplate.html.twig' %}
+
+{% block masterContent %}
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
+
+        {% block content %}{% endblock %}
+
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
+{% endblock %}
