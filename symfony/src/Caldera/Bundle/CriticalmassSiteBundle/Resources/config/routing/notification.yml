@@ -1,0 +1,3 @@
+caldera_criticalmass_notification_list:
+    path:  /notification/list
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Notification:List }

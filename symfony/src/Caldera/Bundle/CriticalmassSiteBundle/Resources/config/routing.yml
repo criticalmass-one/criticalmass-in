@@ -98,6 +98,10 @@ caldera_criticalmass_chat:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/chat.yml"
     prefix: /
 
+caldera_criticalmass_notification:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/notification.yml"
+    prefix: /
+
 caldera_criticalmass_city:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/city.yml"
     prefix: /

@@ -1,0 +1,60 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Benachrichtigungen verwalten{% endblock %}
+
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Deine Benachrichtigungen
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Bezeichnung
+                            </th>
+                            <th>
+                                E-Mail
+                            </th>
+                            <th>
+                                Push-Nachricht
+                            </th>
+                            <th>
+                                SMS
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for notification in notifications %}
+                        <tr>
+                            <td>
+                                foo
+                            </td>
+                            <td>
+                                <input type="checkbox" />
+                            </td>
+                            <td>
+                                <input type="checkbox" />
+                            </td>
+                            <td>
+                                <input type="checkbox" />
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

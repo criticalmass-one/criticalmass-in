@@ -144,6 +144,15 @@ abstract class AbstractController extends Controller
         return $this->getDoctrine()->getRepository('CalderaBundle:Location');
     }
 
+
+    /**
+     * @return LocationRepository
+     */
+    protected function getNotificationSubscriptionRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaBundle:NotificationSubscription');
+    }
+
     /**
      * @return RegionRepository
      */
