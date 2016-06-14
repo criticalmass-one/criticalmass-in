@@ -38,9 +38,9 @@ caldera_criticalmass_board:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/board.yml"
     prefix:   /
 
-caldera_criticalmass_phonenumber:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/phonenumber.yml"
-    prefix:   /
+caldera_criticalmass_profile:
+    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile
 
 caldera_criticalmass_photo:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing/photo.yml"
