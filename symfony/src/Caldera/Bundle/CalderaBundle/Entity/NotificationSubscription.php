@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Table(name="notification")
+ * @ORM\Table(name="notification_subscription")
  * @ORM\Entity()
  */
-class Notification
+class NotificationSubscription
 {
     /**
      * @ORM\Id
@@ -20,26 +20,26 @@ class Notification
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="notification_subscriptions")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="notification_subscriptions")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="notification_subscriptions")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event;
     
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="notifications")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="notification_subscriptions")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
