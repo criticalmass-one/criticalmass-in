@@ -130,5 +130,9 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Form\Flow\CreateCityFlow
         parent: craue.form.flow
 
+    caldera.criticalmass.notification.dispatcher:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Notification\Dispatcher\NotificationDispatcher
+        arguments: [@doctrine]
+
 imports:
   - { resource: ./services/timeline.yml }
