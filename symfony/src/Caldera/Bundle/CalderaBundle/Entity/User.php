@@ -106,6 +106,11 @@ class User extends BaseUser
     protected $phoneNumberVerificationToken;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $pushoverToken;
+
+    /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
     protected $participations;
@@ -423,6 +428,18 @@ class User extends BaseUser
     public function getPhoneNumberVerificationToken()
     {
         return $this->phoneNumberVerificationToken;
+    }
+
+    public function getPushoverToken()
+    {
+        return $this->pushoverToken;
+    }
+
+    public function setPushoverToken($pushoverToken)
+    {
+        $this->pushoverToken = $pushoverToken;
+
+        return $this;
     }
 
     /**
