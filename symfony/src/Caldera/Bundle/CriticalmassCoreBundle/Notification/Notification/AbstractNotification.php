@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Notification;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification;
 
-class Notification
+abstract class AbstractNotification
 {
     const ON_CHANGE = 1;
     const ON_CREATE = 2;

@@ -2,25 +2,15 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider;
 
-
 use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification;
 
-class PushoverNotificationProvider
+class PushoverNotificationProvider extends AbstractNotificationProvider
 {
-    /** @var Notification $notification */
-    protected $notification;
+    protected $pushoverToken;
 
-    protected $userList = [];
-
-    public function setNotification(Notification $notification)
+    public function __construct($pushoverToken)
     {
-        $this->notification = $notification;
-    }
-
-    public function addUser(User $user)
-    {
-        array_push($this->userList, $user);
+        $this->pushoverToken = $pushoverToken;
     }
 
     public function send()
@@ -29,17 +19,21 @@ class PushoverNotificationProvider
 
         /** @var User $user */
         foreach ($this->userList as $user) {
+            if (!$user->getPushoverToken()) {
+                continue;
+            }
+
             $options = [
                 CURLOPT_URL => "https://api.pushover.net/1/messages.json",
                 CURLOPT_POSTFIELDS => [
-                    "token" => "wP7MBPTf5TFvazDCtWf2mL1eH9m1fK",
+                    "token" => $this->pushoverToken,
                     "user" => $user->getPushoverToken(),
                     "message" => $this->notification->getShortMessage()
                 ],
                 CURLOPT_SAFE_UPLOAD => true,
+                CURLOPT_RETURNTRANSFER => true
             ];
 
-            curl_setopt_array($ch, $options);
             curl_exec($ch);
         }
 
