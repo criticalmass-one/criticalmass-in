@@ -47,6 +47,8 @@ class NotificationDispatcher
     {
         $this->pushoverProvider->setNotification($notification);
         $this->emailProvider->setNotification($notification);
+
+        return $this;
     }
 
     public function dispatch()
@@ -67,6 +69,8 @@ class NotificationDispatcher
                 $this->shortmessageProvider->addUser($subscription->getUser());
             }
         }
+
+        return $this;
     }
 
     public function send()
@@ -74,5 +78,7 @@ class NotificationDispatcher
         $this->pushoverProvider->send();
         $this->emailProvider->send();
         $this->shortmessageProvider->send();
+
+        return $this;
     }
 }

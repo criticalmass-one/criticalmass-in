@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CalderaBundle\Repository\RideRepository;
+use Caldera\Bundle\CriticalmassCoreBundle\Notification\Dispatcher\NotificationDispatcher;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -12,24 +14,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class NotifyCommand extends ContainerAwareCommand
 {
-    /**
-     * @var Registry $doctrine
-     */
+    /** @var Registry $doctrine */
     protected $doctrine;
 
-    /**
-     * @var EntityManager $manager
-     */
+    /** @var EntityManager $manager */
     protected $manager;
-
-    protected $messageBird;
-
+    
+    /** @var NotificationDispatcher $notificationDispatcher */
+    protected $notificationDispatcher;
+    
     protected function configure()
     {
         $this
             ->setName('criticalmass:notification:send')
             ->setDescription('Send notifications')
-            ->addOption('ride-id', InputOption::VALUE_REQUIRED)
+            ->addOption('city-slug', 'cs', InputOption::VALUE_REQUIRED)
+            ->addOption('ride-date', 'rd', InputOption::VALUE_REQUIRED)
         ;
     }
 
@@ -39,8 +39,13 @@ class NotifyCommand extends ContainerAwareCommand
         $this->manager = $this->doctrine->getManager();
         $this->notificationDispatcher = $this->getContainer()->get('caldera.criticalmass.notification.dispatcher');
 
-        if ($input->getOption('ride-id')) {
-            $ride = $this->manager->getRepository('Caldera:Ride')->find($input->getOption('ride-id'));
+        if ($input->getOption('city-slug') and $input->getOption('ride-date')) {
+            $citySlug = $input->getOption('city-slug');
+            $rideDate = $input->getOption('ride-date');
+
+            /** @var RideRepository $rideRepository */
+            $rideRepository = $this->manager->getRepository('CalderaBundle:Ride');
+            $ride = $rideRepository->findByCitySlugAndRideDate($citySlug, $rideDate);
 
             $output->writeln($ride->getId());
         }
