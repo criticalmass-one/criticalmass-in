@@ -19,7 +19,6 @@ class EmailNotificationProvider extends AbstractNotificationProvider
     {
         /** @var User $user */
         foreach ($this->userList as $user) {
-            echo $user->getEmail();
             $message = \Swift_Message::newInstance()
                 ->setSubject($this->notification->getTitle())
                 ->setFrom($this->senderAddress)
