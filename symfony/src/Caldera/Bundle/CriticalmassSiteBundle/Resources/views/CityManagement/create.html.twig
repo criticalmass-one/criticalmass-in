@@ -41,7 +41,14 @@
                 </div>
             </div>
         </div>
+
+        {{ form_widget(form.longitude) }}
+        {{ form_widget(form.longitude) }}
+
     {% endif %}
+
+
+
 
     {% if flow.getCurrentStepNumber == 2 %}
         <div class="row">
@@ -95,6 +102,9 @@
         </div>
     {% endif %}
 
+
+
+
     {% if flow.getCurrentStepNumber == 3 %}
         <div class="row">
             <div class="col-md-12">
@@ -127,9 +137,145 @@
         </div>
     {% endif %}
 
+
+
+
+    {% if flow.getCurrentStepNumber == 4 %}
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 250px;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.isStandardable) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Hat regelmäßige Touren:</label>
+                    {{ form_widget(form.isStandardable, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Aktiviere diese Checkbox, um vordefinierte Touren für diese Stadt einzutragen.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.standardDayOfWeek) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Wochentag der Touren:</label>
+                    {{ form_widget(form.standardDayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Stelle hier den Wochentag ein, an dem die Touren stattfinden.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.standardWeekOfMonth) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Woche der Touren:</label>
+                    {{ form_widget(form.standardWeekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Wähle hier die Woche, in der die Touren stattfinden.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.standardTime) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Uhrzeit der Touren:</label>
+                    <div class="input-group">
+                                <span class="input-group-addon">
+                                    {{ form_widget(form.isStandardableTime) }}
+                                </span>
+                        {% if city != null and city.getIsStandardableTime() %}
+                            {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control' } }) }}
+                        {% else %}
+                            {{ form_widget(form.standardTime, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                        {% endif %}
+                    </div>
+                    <p class="help-block">Startzeit der Touren.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{% if form_errors(form.standardLocation) %} has-error has-feedback{% endif %}">
+                    <label class="control-label" for="">Treffpunkt der Touren:</label>
+                    <button id="search-location-button" class="btn btn-default btn-xs pull-right" type="button">
+                        <i class="fa fa-map-marker"></i>
+                    </button>
+                    <div class="input-group">
+                                <span class="input-group-addon">
+                                    {{ form_widget(form.isStandardableLocation) }}
+                                </span>
+                        {% if city != null and city.getIsStandardableLocation() %}
+                            {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control' } }) }}
+                        {% else %}
+                            {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+                        {% endif %}
+                    </div>
+                    <p class="help-block">Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+
+    {% if flow.getCurrentStepNumber == 5 %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Zeitzone:</label>
+                    {{ form_widget(form.timezone, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Wähle die Zeitzone dieser Stadt aus.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Forum anzeigen:</label>
+                    {{ form_widget(form.enableBoard, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu aktivieren.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+    {#
+    {% if flow.getCurrentStepNumber == 6 %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Header-Grafik</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Datei:</label>
+                    {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
+                    <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind Bildabmessungen von 2.280 mal 500 Pixel.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    #}
+
+
+
     {{ form_rest(form) }}
 
-    {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' %}
+    {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' with {
+        craue_formflow_button_class_last: 'btn btn-success',
+        craue_formflow_button_class_back: 'btn btn-default',
+        craue_formflow_button_class_reset: 'btn btn-default',
+        } %}
+
     {{ form_end(form) }}
     </div>
 

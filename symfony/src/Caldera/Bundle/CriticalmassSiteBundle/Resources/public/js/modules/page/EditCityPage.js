@@ -211,14 +211,18 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
     };
 
     EditCityPage.prototype._handleGeocodingCity = function(data) {
-        var latLng = {
-            lat: data.lat,
-            lng: data.lon
-        };
+        if (data && data.lat && data.lon) {
+            var latLng = {
+                lat: data.lat,
+                lng: data.lon
+            };
 
-        this._updateCityPosition(latLng);
-        this._moveCityMarker(latLng);
-        this.map.setView(latLng, 15);
+            this._updateCityPosition(latLng);
+            this._moveCityMarker(latLng);
+            this.map.setView(latLng, 15);
+        } else {
+            alert('Die Stadt wurde nicht gefunden. Bitte schiebe den Marker mauell auf den Mittelpunkt der Stadt.');
+        }
     };
 
     EditCityPage.prototype._handleGeocodingLocation = function(data) {

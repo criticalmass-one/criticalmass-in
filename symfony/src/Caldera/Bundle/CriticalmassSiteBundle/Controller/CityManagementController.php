@@ -186,6 +186,10 @@ class CityManagementController extends AbstractController
 
     public function createCityFlowAction(Request $request, $slug1, $slug2, $slug3)
     {
+        if ($this->container->has('profiler')) {
+            $this->container->get('profiler')->disable();
+        }
+
         /**
          * @var Region $region
          */
@@ -207,12 +211,18 @@ class CityManagementController extends AbstractController
                 $form = $flow->createForm();
             } else {
                 $em = $this->getDoctrine()->getManager();
+
+                $csg = new CitySlugGenerator($city);
+                $citySlug = $csg->execute();
+                $city->addSlug($citySlug);
+
+                $em->persist($citySlug);
                 $em->persist($city);
                 $em->flush();
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('home')); // redirect when done
+                return $this->redirect($this->generateUrl($city));
             }
         }
 

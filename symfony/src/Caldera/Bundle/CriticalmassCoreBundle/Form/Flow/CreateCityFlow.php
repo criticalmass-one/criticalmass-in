@@ -26,6 +26,14 @@ class CreateCityFlow extends FormFlow {
                 'form_type' => 'Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CreateCityType',
             ),
             array(
+                'label' => 'Technisches',
+                'form_type' => 'Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CreateCityType',
+            ),
+/*            array(
+                'label' => 'Header-Grafik',
+                'form_type' => 'Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CreateCityType',
+            ),
+*/            array(
                 'label' => 'confirmation',
             ),
         );
