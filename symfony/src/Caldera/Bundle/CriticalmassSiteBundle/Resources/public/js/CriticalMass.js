@@ -112,7 +112,8 @@ require.config({
         "jquery": "/bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min",
         "dateformat": "/bundles/calderacriticalmasssite/js/external/dateformat/dateformat",
         "socketio": "/bundles/calderacriticalmasssite/js/external/socketio/socketio",
-        "chartjs": "/bundles/calderacriticalmasssite/js/external/chartjs/chartjs"
+        "chartjs": "/bundles/calderacriticalmasssite/js/external/chartjs/chartjs",
+        "hammerjs": "/bundles/calderacriticalmasssite/js/external/hammerjs/hammer.min"
     },
     shim: {
         'leaflet-locate': {

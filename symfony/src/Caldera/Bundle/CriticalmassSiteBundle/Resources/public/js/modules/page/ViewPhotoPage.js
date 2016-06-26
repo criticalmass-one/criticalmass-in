@@ -1,4 +1,4 @@
-define(['CriticalService', 'AutoMap', 'PhotoEntity'], function(CriticalService) {
+define(['CriticalService', 'AutoMap', 'PhotoEntity', 'hammerjs'], function(CriticalService) {
     ViewPhotoPage = function() {
         this._installNavigation();
 
@@ -21,17 +21,39 @@ define(['CriticalService', 'AutoMap', 'PhotoEntity'], function(CriticalService) 
         var that = this;
 
         $('body').keydown(function(e) {
-            if ((e.keyCode || e.which) == 37 && that._previousPhotoUrl) {
-                $(location).attr('href', that._previousPhotoUrl);
+            if ((e.keyCode || e.which) == 37) {
+                that._navigateBackwards();
             }
 
-            if ((e.keyCode || e.which) == 39 && that._nextPhotoUrl) {
-                $(location).attr('href', that._nextPhotoUrl);
+            if ((e.keyCode || e.which) == 39) {
+                that._navigateForwards();
             }
+        });
+
+        var mc = new Hammer(document.getElementById('photo'), { velocity: 50 });
+
+        mc.on('panleft', function(ev) {
+            that._navigateBackwards();
+        });
+
+        mc.on('panright', function(ev) {
+            that._navigateForwards();
         });
     };
 
-    ViewPhotoPage.prototype.addPhoto = function(photoJson, filename) {
+    ViewPhotoPage.prototype._navigateBackwards = function() {
+        if (this._previousPhotoUrl) {
+            $(location).attr('href', this._previousPhotoUrl);
+        }
+    };
+
+    ViewPhotoPage.prototype._navigateForwards = function() {
+        if (this._nextPhotoUrl) {
+            $(location).attr('href', this._nextPhotoUrl);
+        }
+    };
+
+    ViewPhotoPage.prototype.setPhoto = function(photoJson, filename) {
         this._photo = this._CriticalService.factory.createPhoto(photoJson);
         this._photo.setFilename(filename);
     };
