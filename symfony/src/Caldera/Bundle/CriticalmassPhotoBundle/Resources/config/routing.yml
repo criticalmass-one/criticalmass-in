@@ -1,7 +1,7 @@
-caldera_criticalmass_photo_index:
+caldera_criticalmassphoto_photo_index:
     path:     /{citySlug}/{rideDate}
     defaults: { _controller: CalderaCriticalmassPhotoBundle:Default:index }
 
-caldera_criticalmass_photo_show:
+caldera_criticalmassphoto_photo_show:
     path:     /{citySlug}/{rideDate}/{photoId}
     defaults: { _controller: CalderaCriticalmassPhotoBundle:Default:show }
