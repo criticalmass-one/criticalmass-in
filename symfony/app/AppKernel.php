@@ -30,7 +30,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new Caldera\Bundle\CriticalmassRocksBundle\CalderaCriticalmassRocksBundle(),
-            new Caldera\Bundle\CriticalmassPhotoBundle\CalderaCriticalmassPhotoBundle(),
+            new Caldera\Bundle\CriticalmassPhotoBundle\CalderaCriticalmassPhotoBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
