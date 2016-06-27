@@ -1,3 +1,5 @@
+
+
 sonata_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -43,4 +45,7 @@ caldera_criticalmassphoto:
     host: "%domain.criticalmassphoto%"
     prefix:   /
 
-
+caldera_criticalmassone:
+    resource: "@CalderaCriticalmassOneBundle/Resources/config/routing.yml"
+    host: "%domain.criticalmassone%"
+    prefix:   /
