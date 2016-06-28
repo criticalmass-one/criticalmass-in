@@ -12,7 +12,7 @@ class DefaultController extends AbstractController
 {
     use ViewStorageTrait;
 
-    public function indexAction(Request $request, $citySlug, $rideDate)
+    public function listAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -29,7 +29,7 @@ class DefaultController extends AbstractController
         $this->getMetadata()->setDescription('Foto-Galerie von der '.$ride->getCity()->getTitle().' am '.$ride->getDateTime()->format('d.m.Y'));
         
         return $this->render(
-            'CalderaCriticalmassPhotoBundle:Default:index.html.twig',
+            'CalderaCriticalmassPhotoBundle:Default:list.html.twig',
             [
                 'ride' => $ride,
                 'pagination' => $pagination
