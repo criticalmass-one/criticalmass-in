@@ -1,4 +1,4 @@
-caldera_criticalmassphoto_photo_index:
+caldera_criticalmassphoto_photo_list:
     path:     /{citySlug}/{rideDate}
     defaults: { _controller: CalderaCriticalmassPhotoBundle:Default:index }
 

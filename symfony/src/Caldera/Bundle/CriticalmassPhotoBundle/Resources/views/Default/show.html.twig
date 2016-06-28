@@ -40,9 +40,11 @@
 
                 <div class="col-md-8 col-lg-8">
                     <div class="text-center">
-                        <h1>
-                            {{ photo.ride.city.title }} am {{ photo.ride.dateTime|date('d.m.Y') }}
-                        </h1>
+                        <a href="{{ path('caldera_criticalmassphoto_photo_list', { rideDate: previousPhoto.ride.getFormattedDate(), citySlug: previousPhoto.ride.city.slug, photoId: previousPhoto.id }) }}">
+                            <h1>
+                                {{ photo.ride.city.title }} am {{ photo.ride.dateTime|date('d.m.Y') }}
+                            </h1>
+                        </a>
                     </div>
                 </div>
 
