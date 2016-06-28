@@ -54,7 +54,7 @@ class DefaultController extends AbstractController
             ->setPhoto($photo)
             ->execute();
 
-        $this->getMetadata()->setDescription('Foto-Galerie von der '.$ride->getCity()->getTitle().' am '.$ride->getDateTime()->format('d.m.Y'));
+        $this->getMetadata()->setDescription('Foto von der '.$ride->getCity()->getTitle().' am '.$ride->getDateTime()->format('d.m.Y'));
 
         /** @var Track $track */
         $track = null;
