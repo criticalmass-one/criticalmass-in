@@ -111,7 +111,7 @@ class City implements BoardInterface, ViewableInterface
 	 * @ORM\Column(type="float")
      * @JMS\Expose
 	 */
-	protected $latitude;
+	protected $latitude = 0;
 
 	/**
 	 * Längengrad der Stadt.
@@ -119,7 +119,7 @@ class City implements BoardInterface, ViewableInterface
 	 * @ORM\Column(type="float")
      * @JMS\Expose
 	 */
-	protected $longitude;
+	protected $longitude = 0;
 
     /**
      * @ORM\Column(type="boolean")
@@ -198,13 +198,13 @@ class City implements BoardInterface, ViewableInterface
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
-    protected $standardLatitude;
+    protected $standardLatitude = 0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
-    protected $standardLongitude;
+    protected $standardLongitude = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -621,14 +621,18 @@ class City implements BoardInterface, ViewableInterface
     }
 
     /**
-     * Add slugs
+     * Add slug
      *
-     * @param CitySlug $slugs
+     * @param CitySlug $slug
      * @return City
      */
-    public function addSlug(CitySlug $slugs)
+    public function addSlug(CitySlug $slug)
     {
-        $this->slugs[] = $slugs;
+        if (!$this->mainSlug) {
+            $this->mainSlug = $slug;
+        }
+
+        $this->slugs[] = $slug;
     
         return $this;
     }
