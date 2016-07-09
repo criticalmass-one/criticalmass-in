@@ -54,6 +54,8 @@ class CityRepository extends EntityRepository
         $builder->where($builder->expr()->eq('city.enabled', 1));
         $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
         $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
+        $builder->andWhere($builder->expr()->neq('city.latitude', 0));
+        $builder->andWhere($builder->expr()->neq('city.longitude', 0));
 
         $builder->orderBy('city.city', 'ASC');
 
