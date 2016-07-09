@@ -11,6 +11,19 @@ use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
 {
+    public function findRidesWithPhotos()
+    {
+        $builder = $this->createQueryBuilder('ride');
+        
+        $builder->join('ride.photos', 'photos');
+
+        $builder->orderBy('ride.dateTime', 'desc');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findCurrentRideForCity(City $city)
     {
         $dateTime = new \DateTime();

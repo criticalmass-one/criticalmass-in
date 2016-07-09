@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+
+        <title>Fotos von Critical-Mass-Touren</title>
+
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h1>
+                            Fotos von Critical-Mass-Touren
+                        </h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Titel
+                            </th>
+
+                            <th>
+                                Datum
+                            </th>
+
+                            <th>
+                                Stadt
+                            </th>
+
+                            <th>
+                                Galerie
+                            </th>
+                        </tr>
+                    </thead>
+                {% for ride in rides %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}">
+                                {{ ride.fancyTitle }}
+                            </a>
+                        </td>
+
+                        <td>
+                            {{ ride.dateTime|date('d.m.Y') }}
+                        </td>
+
+                        <td>
+                            <a href="{{ path(ride.city) }}">
+                                {{ ride.city.city }}
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}">
+                                Fotos anzeigen
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+
+            {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
+        </div>
+
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap3/bootstrap.min.js') }}"></script>
+    </body>
+</html>
+

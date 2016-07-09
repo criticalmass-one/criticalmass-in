@@ -12,6 +12,18 @@ class DefaultController extends AbstractController
 {
     use ViewStorageTrait;
 
+    public function indexAction(Request $request)
+    {
+        $rides = $this->getRideRepository()->findRidesWithPhotos();
+
+        return $this->render(
+            'CalderaCriticalmassPhotoBundle:Default:index.html.twig',
+            [
+                'rides' => $rides
+            ]
+        );
+    }
+    
     public function listAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
