@@ -75,9 +75,6 @@ class ImportImagesCommand extends ContainerAwareCommand
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
 
-        /**
-         * @var Registry $manager
-         */
         $this->manager = $this->doctrine->getManager();
 
         $this->ride = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
@@ -90,7 +87,11 @@ class ImportImagesCommand extends ContainerAwareCommand
 
         $fileList = $this->getImageFileList($input);
 
+        $output->writeln(sprintf('Adding photos to %s by user %s', $this->ride->getFancyTitle(), $this->user->getUsername()));
+
         foreach ($fileList as $file) {
+            $output->writeln(sprintf('Processing image file %s', $file));
+
             $filename = $input->getArgument('path').'/'.$file;
 
             $this->createPhotoEntity($filename);
