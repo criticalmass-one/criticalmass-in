@@ -119,6 +119,7 @@ class Photo implements ViewableInterface
     {
         $this->dateTime = new \DateTime();
         $this->creationDateTime = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->description = '';
     }
 
