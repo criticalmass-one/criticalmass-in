@@ -146,8 +146,7 @@ class PhotoRepository extends EntityRepository
         /**
          * @var Photo $photo
          */
-        foreach ($result as $row)
-        {
+        foreach ($result as $row) {
             /**
              * @var Ride $ride
              */
