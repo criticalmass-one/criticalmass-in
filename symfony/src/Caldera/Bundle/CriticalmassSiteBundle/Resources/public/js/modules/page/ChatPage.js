@@ -24,6 +24,11 @@ define(['socketio', 'dateformat'], function(io) {
         this._socket.on('message', this._printMessage.bind(this));
         this._socket.on('memberlist', this._memberlist.bind(this));
         this._socket.on('joined', this._memberJoined.bind(this));
+        this._socket.on('left', this._memberLeft.bind(this));
+
+        if (this._userToken || this._anonymousNameId) {
+            //alert('fooo');
+        }
     };
 
     ChatPage.prototype._initEvents = function() {
@@ -50,7 +55,6 @@ define(['socketio', 'dateformat'], function(io) {
             that._join();
         });
     };
-    
 
     ChatPage.prototype._initSocket = function() {
         this._socket = io('http://criticalmass.cm:3000');
@@ -67,6 +71,7 @@ define(['socketio', 'dateformat'], function(io) {
     };
 
     ChatPage.prototype._join = function() {
+        //alert('JOAIN');
         var joinMessage = {
             userToken: this._userToken || null,
             anonymousNameId: this._anonymousNameId || null
@@ -108,7 +113,7 @@ define(['socketio', 'dateformat'], function(io) {
 
     ChatPage.prototype._memberJoined = function(joinMessage) {
         var html = '';
-        html += '<li class="margin-bottom-medium">';
+        html += '<li class="margin-bottom-medium" id="member-' + joinMessage.userId + '">';
         html += '<div class="media">';
         html += '<div class="media-left"><img class="media-object img-circle" src="http://www.gravatar.com/avatar/' + joinMessage.gravatarHash + '?s=16" alt="..."></div>';
         html += '<div class="media-body">';
@@ -122,7 +127,7 @@ define(['socketio', 'dateformat'], function(io) {
     };
 
     ChatPage.prototype._memberLeft = function(message) {
-
+        $('#member-' + message.userId).remove();
     };
 
     ChatPage.prototype._memberlist = function(memberlist) {
@@ -132,7 +137,7 @@ define(['socketio', 'dateformat'], function(io) {
             var member = memberlist[index];
 
             var html = '';
-            html += '<li class="margin-bottom-medium">';
+            html += '<li class="margin-bottom-medium" id="member-' + member.userId + '">';
             html += '<div class="media">';
             html += '<div class="media-left"><img class="media-object img-circle" src="http://www.gravatar.com/avatar/' + member.gravatarHash + '?s=16" alt="..."></div>';
             html += '<div class="media-body">';
@@ -152,6 +157,6 @@ define(['socketio', 'dateformat'], function(io) {
             message: $('#m').val()
         };
     };
-
+    
     return ChatPage;
 });
