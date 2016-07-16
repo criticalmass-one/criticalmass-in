@@ -39,22 +39,26 @@ define(['CriticalService', 'AutoMap', 'PhotoEntity', 'hammerjs'], function(Criti
         var triggerWidth = $photo.width() * 0.3;
 
         mc.on('panleft', function(ev) {
-            $photo.css({
-                'margin-left': ev.deltaX + "px"
-            });
+            if (that._nextPhotoUrl) {
+                $photo.css({
+                    'margin-left': ev.deltaX + "px"
+                });
 
-            if (ev.deltaX < -triggerWidth) {
-                that._navigateBackwards();
+                if (ev.deltaX < -triggerWidth) {
+                    that._navigateForwards();
+                }
             }
         });
 
         mc.on('panright', function(ev) {
-            $photo.css({
-                'margin-left': ev.deltaX + "px"
-            });
+            if (that._previousPhotoUrl) {
+                $photo.css({
+                    'margin-left': ev.deltaX + "px"
+                });
 
-            if (ev.deltaX > triggerWidth) {
-                that._navigateForwards();
+                if (ev.deltaX > triggerWidth) {
+                    that._navigateBackwards();
+                }
             }
         });
     };
