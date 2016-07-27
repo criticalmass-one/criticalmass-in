@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
     LivePage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -20,11 +20,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     LivePage.prototype._hash = null;
     LivePage.prototype._rideContainer = null;
     LivePage.prototype._cityContainer = null;
+    LivePage.prototype._eventContainer = null;
     LivePage.prototype._layers = [];
     LivePage.prototype._offlineModal = null;
 
     LivePage.prototype._initContainer = function() {
         this._rideContainer = new Container();
+        this._eventContainer = new Container();
         this._cityContainer = new Container();
     };
 
@@ -48,6 +50,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
 
     LivePage.prototype._initLayers = function() {
         this._rideContainer.addToMap(this._map);
+        this._eventContainer.addToMap(this._map);
         this._mapPositions.addToMap(this._map);
         //this._map.addLayer(this._rideContainer.getLayer());
         //this._map.addLayer(this._cityContainer.getLayer());
@@ -106,6 +109,14 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._rideContainer.addEntity(rideEntity);
 
         return rideEntity;
+    };
+
+    LivePage.prototype.addEvent = function(eventJson) {
+        var eventEntity = this._CriticalService.factory.createEvent(eventJson);
+
+        this._eventContainer.addEntity(eventEntity);
+
+        return eventEntity;
     };
 
     LivePage.prototype.addNoLocationRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
