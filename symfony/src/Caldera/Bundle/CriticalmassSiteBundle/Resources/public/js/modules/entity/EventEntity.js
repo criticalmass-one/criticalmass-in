@@ -8,14 +8,15 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
     EventEntity.prototype._CriticalService = CriticalService;
     EventEntity.prototype._title = null;
     EventEntity.prototype._description = null;
-    EventEntity.prototype._citySlug = null;
+    EventEntity.prototype._slug = null;
+    EventEntity.prototype._title = null;
     EventEntity.prototype._location = null;
     EventEntity.prototype._timestamp = null;
 
     EventEntity.prototype._initIcon = function() {
         this._icon = L.ExtraMarkers.icon({
-            icon: 'fa-bicycle',
-            markerColor: 'red',
+            icon: 'fa-calendar',
+            markerColor: 'white',
             shape: 'round',
             prefix: 'fa'
         });
@@ -35,9 +36,9 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         }
 
         if (this._hasLocation && this._location) {
-            content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
+            content += '<dt>Ort:</dt><dd>' + this._location + '</dd>';
         } else {
-            content += '<dt>Treffpunkt:</dt><dd>der Treffpunkt ist noch nicht bekannt</dd>';
+            content += '<dt>Ort:</dt><dd>der Ort ist noch nicht bekannt</dd>';
         }
 
         if (this._weather) {
@@ -66,23 +67,16 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
             that._CriticalService.getMap().setView([that._latitude, that._longitude], 13);
         });
 
-        var cityButton = new ModalButton();
-        cityButton.setCaption('Städteseite');
-        cityButton.setIcon('university');
-        cityButton.setClass('btn-success');
-        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', { citySlug: this._city._slug }));
-
-        var rideButton = new ModalButton();
-        rideButton.setCaption('Tourseite');
-        rideButton.setIcon('bicycle');
-        rideButton.setClass('btn-success');
-        rideButton.setHref(Routing.generate('caldera_criticalmass_ride_show', { citySlug: this._city._slug, rideDate: this._timestamp.format('yyyy-mm-dd') }));
+        var eventButton = new ModalButton();
+        eventButton.setCaption('Eventseite');
+        eventButton.setIcon('calendar');
+        eventButton.setClass('btn-success');
+        eventButton.setHref(Routing.generate('caldera_criticalmass_event_show', { eventSlug: this._slug, citySlug: this._city._slug }));
 
         var closeButton = new CloseModalButton;
 
         var buttons = [
-            cityButton,
-            rideButton,
+            eventButton,
             centerButton,
             closeButton
         ];
