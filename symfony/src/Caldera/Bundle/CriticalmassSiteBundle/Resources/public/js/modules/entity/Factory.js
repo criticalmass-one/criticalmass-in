@@ -19,6 +19,14 @@ define([], function() {
         return liveRideEntity;
     };
 
+    Factory.prototype.createEvent = function(eventJson) {
+        var eventEntity = new EventEntity();
+
+        eventEntity = this._transferProperties(eventEntity, eventJson);
+
+        return eventEntity;
+    };
+
     Factory.prototype.createSubride = function(subrideJson) {
         var subrideEntity = new SubrideEntity();
 

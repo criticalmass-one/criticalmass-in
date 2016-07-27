@@ -6,10 +6,12 @@ use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\EventRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Event implements ParticipateableInterface, ViewableInterface
 {
@@ -17,6 +19,7 @@ class Event implements ParticipateableInterface, ViewableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     protected $id;
 
@@ -29,69 +32,82 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="events")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     protected $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $dateTime;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $hasTime;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $hasLocation;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
      */
     protected $location;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $latitude;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $longitude;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Expose
      */
     protected $url;
 
@@ -129,26 +145,31 @@ class Event implements ParticipateableInterface, ViewableInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
      */
     protected $createdAt;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $participationsNumberYes = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $participationsNumberMaybe = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $participationsNumberNo = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $views = 0;
 
@@ -238,6 +259,17 @@ class Event implements ParticipateableInterface, ViewableInterface
     public function getDateTime()
     {
         return $this->dateTime;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("timestamp")
+     * @JMS\Type("integer")
+     * @return integer
+     */
+    public function getTimestamp()
+    {
+        return $this->dateTime->format('U');
     }
 
     /**
