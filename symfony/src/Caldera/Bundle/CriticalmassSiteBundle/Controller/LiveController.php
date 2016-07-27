@@ -22,7 +22,8 @@ class LiveController extends AbstractController
         return $this->render(
             'CalderaCriticalmassSiteBundle:Live:index.html.twig',
             array(
-                'rides' => $rides
+                'rides' => $rides,
+                'events' => []
             )
         );
     }
@@ -39,13 +40,16 @@ class LiveController extends AbstractController
          */
         $ride = $this->getRideRepository()->findCurrentRideForCity($city);
 
+        $events = $this->getEventRepository()->findEventsForRide($ride);
+
         $this->getMetadata()
             ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in '.$city->getCity().' gerade befindet!');
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:Live:index.html.twig',
             array(
-                'rides' => [$ride]
+                'rides' => [$ride],
+                'events' => $events
             )
         );
     }

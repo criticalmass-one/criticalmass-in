@@ -74,6 +74,10 @@
             {#ride.openPopup();#}
             {% endif %}
 
+            {% for event in events %}
+             livePage.addEvent('{{ event|serialize|raw|e('js') }}');
+            {% endfor %}
+
             livePage.setFocus();
         });
     </script>
