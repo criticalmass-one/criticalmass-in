@@ -96,7 +96,7 @@ class User extends BaseUser
     protected $phoneNumberVerified;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $phoneNumberVerificationDateTime;
 
