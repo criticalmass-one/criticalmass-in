@@ -68,7 +68,7 @@ define([], function() {
     };
 
     Factory.prototype.createUser = function(userJson) {
-        alert(JSON.stringify(userJson));
+        //alert(JSON.stringify(userJson));
         var userEntity = new UserEntity();
 
         userEntity = this._transferProperties(userEntity, userJson);

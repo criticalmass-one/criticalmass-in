@@ -45,7 +45,7 @@ define(['jquery'], function() {
     WritePost.prototype._updatePositionInputFields = function(position) {
         var coord = position.coords;
 
-        alert(JSON.stringify(position));
+        //alert(JSON.stringify(position));
         $('#form_latitude').val(coord.latitude);
         $('#form_longitude').val(coord.longitude);
 

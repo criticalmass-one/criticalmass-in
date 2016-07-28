@@ -72,7 +72,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function() {
 
                 var polyline = L.PolylineUtil.encode([latLng]);
 
-                alert(polyline);
+                //alert(polyline);
                 $('#incident_polyline').val(polyline);
                 $('#incident_geometryType').val('marker');
             }
