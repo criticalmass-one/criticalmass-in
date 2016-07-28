@@ -80,12 +80,12 @@ class User extends BaseUser
     protected $colorBlue = 0;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $token;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      * @Assert\Regex("/^00491(5|6|7)(\d+)$/")
      */
     protected $phoneNumber;
@@ -106,7 +106,7 @@ class User extends BaseUser
     protected $phoneNumberVerificationToken;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $pushoverToken;
 
