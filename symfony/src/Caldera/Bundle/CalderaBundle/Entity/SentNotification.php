@@ -59,7 +59,7 @@ class SentNotification
     protected $shortmessage;
 
     /**
-     * @ORM\Column(type="type", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     protected $type;
 
@@ -145,10 +145,10 @@ class SentNotification
     /**
      * Set type
      *
-     * @param \type $type
+     * @param $type
      * @return SentNotification
      */
-    public function setType(\type $type)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -158,7 +158,7 @@ class SentNotification
     /**
      * Get type
      *
-     * @return \type 
+     * @return type
      */
     public function getType()
     {
