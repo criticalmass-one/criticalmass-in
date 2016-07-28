@@ -101,7 +101,7 @@ class User extends BaseUser
     protected $phoneNumberVerificationDateTime;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $phoneNumberVerificationToken;
 
