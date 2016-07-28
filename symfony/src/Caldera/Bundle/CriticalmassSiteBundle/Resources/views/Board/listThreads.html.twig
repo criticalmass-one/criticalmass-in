@@ -17,10 +17,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% if app.getUser() %}
                 <a href="{{ newThreadUrl }}" class="btn btn-success pull-right margin-top-medium">
                     neues Thema eröffnen
                 </a>
-
+                {% endif %}
                 <h1>
                     {{ board.title }}
                 </h1>
