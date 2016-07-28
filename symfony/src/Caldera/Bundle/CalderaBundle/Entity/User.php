@@ -91,7 +91,7 @@ class User extends BaseUser
     protected $phoneNumber;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $phoneNumberVerified;
 
