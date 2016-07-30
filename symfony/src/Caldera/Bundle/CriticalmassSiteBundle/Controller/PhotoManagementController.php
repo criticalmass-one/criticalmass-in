@@ -77,7 +77,7 @@ class PhotoManagementController extends AbstractController
                 return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
             }
 
-            return $this->render('CriticalmassGalleryBundle:Default:edit.html.twig', array('form' => $form->createView()));
+            return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:edit.html.twig', array('form' => $form->createView()));
         }
     }
 
@@ -96,7 +96,7 @@ class PhotoManagementController extends AbstractController
 
         $this->countView($photo);
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
+        return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:show.html.twig',
             [
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,
@@ -236,7 +236,7 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:place.html.twig',
+        return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:place.html.twig',
             [
                 'photo' => $photo,
                 'previousPhoto' => $previousPhoto,
@@ -274,7 +274,7 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:relocate.html.twig',
+        return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:relocate.html.twig',
             [
                 'photos' => $photos,
                 'track' => $track
@@ -301,7 +301,7 @@ class PhotoManagementController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Photo:citygallery.html.twig',
+            'CalderaCriticalmassSiteBundle:PhotoManagement:citygallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList
