@@ -21,7 +21,7 @@ class PhotoManagementController extends AbstractController
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:userlist.html.twig',
+        return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:userlist.html.twig',
             [
                 'result' => $result
             ]
@@ -50,7 +50,7 @@ class PhotoManagementController extends AbstractController
         );
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Photo:ridelist.html.twig',
+            'CalderaCriticalmassSiteBundle:PhotoManagement:ridelist.html.twig',
             [
                 'ride' => $ride,
                 'pagination' => $pagination
