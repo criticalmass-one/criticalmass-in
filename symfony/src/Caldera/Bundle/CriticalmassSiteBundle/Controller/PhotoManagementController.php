@@ -276,6 +276,7 @@ class PhotoManagementController extends AbstractController
 
         return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:relocate.html.twig',
             [
+                'ride' => $ride,
                 'photos' => $photos,
                 'track' => $track
             ]

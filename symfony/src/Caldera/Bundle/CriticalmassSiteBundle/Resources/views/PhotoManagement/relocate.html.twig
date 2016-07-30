@@ -1,22 +1,54 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Fotos sortieren{% endblock %}
+{% block title %}Fotos ausrichten{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path(ride.city) }}">
+            {{ ride.city.title }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_photo_manage', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+            Fotos verwalten
+        </a>
+    </li>
+    <li class="active">
+        Fotos ausrichten
+    </li>
+{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Fotos neu ausrichten</h1>
+                <h1>Fotos ausrichten</h1>
             </div>
         </div>
 
+        {% if track %}
         <div class="row">
             <div class="col-md-12">
                 <div id="map" style="height: 350px;">
             </div>
         </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um anschließend Fotos zu verorten.
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 
+    {% if track %}
     <script type="text/javascript">
         CriticalMass.loadModule('RelocatePhotosPage', null, null, function(relocatePage) {
             relocatePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
@@ -30,6 +62,7 @@
             relocatePage.relocateByTime(600);
         });
     </script>
+    {% endif %}
         {#
         <script type="text/javascript">
             /* Map */
