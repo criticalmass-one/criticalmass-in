@@ -46,8 +46,8 @@ class ImportImagesCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:images:import')
-            ->setDescription('Import images to a tour')
+            ->setName('criticalmass:photos:import')
+            ->setDescription('Import photos to a tour')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
