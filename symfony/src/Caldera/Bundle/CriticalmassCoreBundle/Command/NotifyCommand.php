@@ -30,24 +30,38 @@ class NotifyCommand extends ContainerAwareCommand
             ->setDescription('Send notifications')
             ->addOption('city-slug', 'cs', InputOption::VALUE_REQUIRED)
             ->addOption('ride-date', 'rd', InputOption::VALUE_REQUIRED)
+            ->addOption('type', 't', InputOption::VALUE_REQUIRED)
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
         $this->notificationDispatcher = $this->getContainer()->get('caldera.criticalmass.notification.dispatcher');
 
-        if ($input->getOption('city-slug') and $input->getOption('ride-date')) {
-            $citySlug = $input->getOption('city-slug');
-            $rideDate = $input->getOption('ride-date');
+        $this->input = $input;
+        $this->output = $output;
 
-            /** @var RideRepository $rideRepository */
-            $rideRepository = $this->manager->getRepository('CalderaBundle:Ride');
-            $ride = $rideRepository->findByCitySlugAndRideDate($citySlug, $rideDate);
-
-            $output->writeln($ride->getId());
+        if ($this->input->getOption('type') == 'rideLocationPublished' and
+            $this->input->getOption('city-slug') and
+            $this->input->getOption('ride-date'))
+        {
+            $this->notifiyRideLocation();
         }
+    }
+
+    protected function notifiyRideLocationPublished()
+    {
+        $citySlug = $this->input->getOption('city-slug');
+        $rideDate = $this->input->getOption('ride-date');
+
+        /** @var RideRepository $rideRepository */
+        $rideRepository = $this->manager->getRepository('CalderaBundle:Ride');
+        $ride = $rideRepository->findByCitySlugAndRideDate($citySlug, $rideDate);
+/*
+        $this->notificationDispatcher
+            ->setNotification($notificaition);*/
+        $this->output->writeln($ride->getId());
     }
 }
