@@ -131,70 +131,6 @@ class PhotoManagementController extends AbstractController
         ));
     }
 
-    public function uploadAction(Request $request, $citySlug, $rideDate)
-    {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
-        if ($request->getMethod() == 'POST') {
-            return $this->uploadPostAction($request, $ride);
-        } else {
-            return $this->render('CalderaCriticalmassSiteBundle:Photo:upload.html.twig', [
-                'ride' => $ride
-            ]);
-        }
-    }
-
-    protected function uploadPostAction(Request $request, Ride $ride)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $photo = new Photo();
-
-        $photo->setImageFile($request->files->get('file'));
-        $photo->setUser($this->getUser());
-        $photo->setRide($ride);
-        $photo->setCity($ride->getCity());
-
-        $em->persist($photo);
-        $em->flush();
-
-        /**
-         * @var DateTimeExifReader $dter
-         */
-        $dter = $this->get('caldera.criticalmass.image.exifreader.datetime');
-
-        $dateTime = $dter
-            ->setPhoto($photo)
-            ->execute()
-            ->getDateTime();
-
-        $photo->setDateTime($dateTime);
-
-        $em->persist($photo);
-        $em->flush();
-
-        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
-
-        if ($track) {
-            /**
-             * @var PhotoGps $pgps
-             */
-            $pgps = $this->get('caldera.criticalmass.image.photogps');
-
-            $pgps
-                ->setPhoto($photo)
-                ->setTrack($track)
-                ->execute();
-
-            $em->merge($photo);
-            $em->flush();
-        }
-
-        return new Response('foo');
-    }
-
-
-
     public function manageAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -259,48 +195,6 @@ class PhotoManagementController extends AbstractController
         }
 
         return null;
-    }
-
-    protected function countView(Photo $photo)
-    {
-        $memcache = $this->get('memcache.criticalmass');
-
-        $additionalPhotoViews = $memcache->get('gallery_photo'.$photo->getId().'_additionalviews');
-
-        if (!$additionalPhotoViews) {
-            $additionalPhotoViews = 1;
-        } else {
-            ++$additionalPhotoViews;
-        }
-
-        $viewDateTime = new \DateTime();
-
-        $photoViewArray =
-            [
-                'photoId' => $photo->getId(),
-                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
-                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ]
-        ;
-
-        $memcache->set('gallery_photo'.$photo->getId().'_additionalviews', $additionalPhotoViews);
-        $memcache->set('gallery_photo'.$photo->getId().'_view'.$additionalPhotoViews, $photoViewArray);
-    }
-
-    public function ajaxphotoviewAction(Request $request)
-    {
-        $photoId = $request->get('photoId');
-
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        if ($photo) {
-            $this->countView($photo);
-        }
-
-        return new Response(null);
     }
 
     public function placeSingleAction(Request $request, $citySlug, $rideDate, $photoId)
