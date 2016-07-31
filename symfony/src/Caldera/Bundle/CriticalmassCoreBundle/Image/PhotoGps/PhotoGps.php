@@ -10,7 +10,8 @@ use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class PhotoGps {
+class PhotoGps
+{
     /**
      * @var Track $track
      */
