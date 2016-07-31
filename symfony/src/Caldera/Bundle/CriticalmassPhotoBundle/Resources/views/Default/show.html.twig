@@ -18,29 +18,10 @@
     </head>
 
     <body>
-
         <div class="container">
-            <div class="row hidden-xs hidden-sm margin-bottom-medium">
-                <div class="col-md-2 col-lg-2">
-                    <ul class="pager">
-                        {% if previousPhoto %}
-                            <li class="previous">
-                                <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: previousPhoto.ride.getFormattedDate(), citySlug: previousPhoto.ride.city.slug, photoId: previousPhoto.id }) }}">
-                                    &larr; Voriges Foto
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="previous disabled">
-                                <a href="#">
-                                    &larr; Voriges Foto
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-
-                <div class="col-md-8 col-lg-8">
-                    <div class="text-center">
+            <div class="row hidden-xs hidden-sm margin-bottom-medium m-t-1">
+                <div class="col-md-12">
+                    <div class="text-md-center">
                         <a href="{{ path('caldera_criticalmassphoto_photo_list', { rideDate: photo.ride.getFormattedDate(), citySlug: photo.ride.city.slug }) }}">
                             <h1>
                                 {{ photo.ride.city.title }} am {{ photo.ride.dateTime|date('d.m.Y') }}
@@ -48,31 +29,15 @@
                         </a>
                     </div>
                 </div>
-
-                <div class="col-md-2 col-lg-2">
-                    <ul class="pager">
-                        {% if nextPhoto %}
-                            <li class="next">
-                                <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: nextPhoto.ride.getFormattedDate(), citySlug: nextPhoto.ride.city.slug, photoId: nextPhoto.id }) }}">
-                                    Nächstes Foto &rarr;
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="next disabled">
-                                <a href="#">
-                                    Nächstes Foto &rarr;
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
             </div>
         </div>
 
         <div class="container-fluid margin-top-small">
             <div class="row">
                 <div class="col-md-12">
-                    <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_large') }}" />
+                    <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: nextPhoto.ride.getFormattedDate(), citySlug: nextPhoto.ride.city.slug, photoId: nextPhoto.id }) }}">
+                        <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_large') }}" />
+                    </a>
                 </div>
             </div>
         </div>
@@ -80,22 +45,24 @@
         <div class="container margin-top-large">
             <div class="row">
                 <div class="hidden-xs hidden-sm col-md-6 col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Aufnahmedaten</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            Aufnahmedaten
                         </div>
-                        <div class="panel-body">
+
+                        <div class="card-block">
                             {% include('CalderaCriticalmassPhotoBundle:Includes:_exif.html.twig') with { 'photo': photo, 'exif': exif } %}
                         </div>
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Karte</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            Karte
                         </div>
-                        <div class="panel-body">
+
+                        <div class="card-block">
                             {% include('CalderaCriticalmassPhotoBundle:Includes:_map.html.twig') with { 'photo': photo, 'track': track } %}
                         </div>
                     </div>
@@ -106,7 +73,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="text-center small">
+                    <div class="text-md-center text-muted">
                         <a href="{{ path(photo) }}">
                             Sieh dir dieses Foto auf criticalmass.in an
                         </a>
