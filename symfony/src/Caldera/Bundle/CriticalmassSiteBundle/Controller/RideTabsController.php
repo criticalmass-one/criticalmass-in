@@ -32,7 +32,7 @@ class RideTabsController extends AbstractController
 
     public function renderTracksTabAction(Request $request, Ride $ride)
     {
-        $tracks = $this->getTrackRepository()->findSuitableTracksByRide($ride);
+        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
         return $this->render(
             'CalderaCriticalmassSiteBundle:RideTabs:TracksTab.html.twig',

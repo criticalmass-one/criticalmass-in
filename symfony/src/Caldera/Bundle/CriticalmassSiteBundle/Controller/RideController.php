@@ -64,7 +64,7 @@ class RideController extends AbstractController
             array(
                 'city' => $city, 
                 'ride' => $ride,
-                'tracks' => $this->getTrackRepository()->findSuitableTracksByRide($ride),
+                'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
                 'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
                 'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
                 'nextRide' => $nextRide,
