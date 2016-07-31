@@ -71,10 +71,24 @@
                                 <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
                                     <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
                                 </td>
-                                <td>{{ track.username }}</td>
-                                <td>{{ track.getDurationInterval.format('%h:%i') }}&nbsp;Stunden</td>
-                                <td>{{ track.distance|round(2) }}&nbsp;Kilometer</td>
-                                <td>{{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
+                                <td>
+                                    {{ track.username }}
+                                </td>
+                                <td>
+                                    {% if track.getDurationInterval() %}
+                                    {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if track.distance %}
+                                    {{ track.distance|round(2) }}&nbsp;Kilometer
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if track.getAverageVelocity() %}
+                                    {{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% set trackNumber = trackNumber + 1 %}
                         {% endif %}

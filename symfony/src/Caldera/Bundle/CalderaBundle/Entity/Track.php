@@ -343,7 +343,9 @@ class Track
      */
     public function getStartDateTime()
     {
-        return $this->startDateTime->setTimezone(new \DateTimeZone('GMT'));
+        if ($this->startDateTime) {
+            return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
+        }
     }
 
     /**
@@ -366,7 +368,9 @@ class Track
      */
     public function getEndDateTime()
     {
-        return $this->endDateTime->setTimezone(new \DateTimeZone('GMT'));
+        if ($this->endDateTime) {
+            return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
+        }
     }
 
     /**
@@ -683,7 +687,11 @@ class Track
     
     public function getDurationInterval()
     {
-        return $this->getEndDateTime()->diff($this->getStartDateTime());
+        if ($this->startDateTime and $this->endDateTime) {
+            return $this->getEndDateTime()->diff($this->getStartDateTime());
+        }
+
+        return null;
     }
     
     public function getDurationInSeconds()
@@ -693,14 +701,18 @@ class Track
     
     public function getAverageVelocity()
     {
-        $kilometres = $this->getDistance();
-        $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
-        
-        $hours = (float) $seconds / 3600;
+        if ($this->startDateTime and $this->endDateTime and $this->distance) {
+            $kilometres = $this->getDistance();
+            $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
 
-        $velocity = $kilometres / ($hours + 0.0001);
-        
-        return $velocity;
+            $hours = (float)$seconds / 3600;
+
+            $velocity = $kilometres / ($hours + 0.0001);
+
+            return $velocity;
+        }
+
+        return null;
     }
 
     public function getStartTime()
