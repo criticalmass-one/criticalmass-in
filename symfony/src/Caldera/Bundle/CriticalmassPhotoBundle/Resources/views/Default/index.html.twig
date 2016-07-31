@@ -13,67 +13,55 @@
 
     <body>
         <div class="container">
-            <div class="row m-t-3">
+            <div class="row m-t-3 m-b-3">
                 <div class="col-md-12">
                     <div class="text-md-center">
                         <h1>
-                            Fotos von Critical-Mass-Touren
+                            Critical-Mass-Fotogalerie
                         </h1>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Titel
-                            </th>
+                <div class="col-md-12">
+                    <div class="card-columns">
+                        {% for ride in rides %}
+                        <div class="card">
+                            {% set previewPhoto = random(ride.photos) %}
 
-                            <th>
-                                Datum
-                            </th>
-
-                            <th>
-                                Stadt
-                            </th>
-
-                            <th>
-                                Galerie
-                            </th>
-                        </tr>
-                    </thead>
-                {% for ride in rides %}
-                    <tr>
-                        <td>
                             <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}">
-                                {{ ride.fancyTitle }}
+                                <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ ride.city.city }}" />
                             </a>
-                        </td>
 
-                        <td>
-                            {{ ride.dateTime|date('d.m.Y') }}
-                        </td>
+                            <div class="card-block">
+                                <h4 class="card-title text-md-center">
+                                    {{ ride.fancyTitle }}
+                                </h4>
+                                <p class="card-text">
+                                    {{ ride.photos|length }} Fotos von der Critical Mass in {{ ride.city.city }}
+                                </p>
+                                <a href="{{ path(ride) }}" class="card-link">
+                                    zur Tour
+                                </a>
+                                <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}" class="card-link">
+                                    zur Galerie
+                                </a>
 
-                        <td>
-                            <a href="{{ path(ride.city) }}">
-                                {{ ride.city.city }}
-                            </a>
-                        </td>
-
-                        <td>
-                            <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}">
-                                Fotos anzeigen
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </table>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        hochgeladen am {{ ride.dateTime|date('d.m.Y') }}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-
-            {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
         </div>
+
+        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
 
         <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
         <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>

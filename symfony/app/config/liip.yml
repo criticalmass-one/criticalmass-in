@@ -8,7 +8,7 @@ liip_imagine:
         gallery_photo_thumb:
             quality: 60
             filters:
-                thumbnail: { size: [200, 150], mode: inset }
+                thumbnail: { size: [400, 300], mode: inset }
         gallery_photo_standard:
             quality: 60
             filters:
