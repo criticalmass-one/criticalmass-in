@@ -119,6 +119,56 @@ class PhotoRepository extends EntityRepository
         ];
     }
 
+    public function findRidesForGallery(City $city = null)
+    {
+        $builder = $this->createQueryBuilder('photo');
+
+        $builder->select('photo');
+        $builder->addSelect('ride');
+        $builder->addSelect('city');
+        $builder->addSelect('COUNT(photo)');
+        $builder->addSelect('RAND() AS HIDDEN rand');
+
+        $builder->where($builder->expr()->eq('photo.deleted', 0));
+
+        if ($city) {
+            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+        }
+
+        $builder->innerJoin('photo.ride', 'ride');
+        $builder->join('ride.city', 'city');
+
+        $builder->orderBy('rand');
+
+        $builder->orderBy('ride.dateTime', 'desc');
+
+        $builder->groupBy('ride');
+
+        $query = $builder->getQuery();
+        $result = $query->getResult();
+
+        $galleryResult = [];
+
+        foreach ($result as $row) {
+            $ride = $row[0]->getRide();
+            $previewPhoto = $row[0];
+            $counter = $row[1];
+
+            $key = $ride->getFormattedDate().'_'.$ride->getId();
+
+            $galleryResult[$key]['ride'] = $ride;
+            $galleryResult[$key]['counter'] = $counter;
+            $galleryResult[$key]['previewPhoto'] = $previewPhoto;
+        }
+
+        return $galleryResult;
+    }
+
+    /**
+     * @param City|null $city
+     * @return array
+     * @deprecated
+     */
     public function findRidesWithPhotoCounter(City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');

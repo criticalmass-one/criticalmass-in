@@ -14,12 +14,12 @@ class DefaultController extends AbstractController
 
     public function indexAction(Request $request)
     {
-        $rides = $this->getRideRepository()->findRidesWithPhotos();
+        $galleryResult = $this->getPhotoRepository()->findRidesForGallery();
 
         return $this->render(
             'CalderaCriticalmassPhotoBundle:Default:index.html.twig',
             [
-                'rides' => $rides
+                'galleryResult' => $galleryResult
             ]
         );
     }

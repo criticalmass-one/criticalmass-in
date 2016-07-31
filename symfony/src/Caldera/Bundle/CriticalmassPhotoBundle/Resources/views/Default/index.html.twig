@@ -12,13 +12,14 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-light bg-faded">
+        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
             <a class="navbar-brand" href="#">
                 criticalmass.photos
             </a>
         </nav>
 
-        <div class="container">
+        <div class="container m-t-3">
+            {#
             <div class="row m-t-3 m-b-3">
                 <div class="col-md-12">
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -54,36 +55,36 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div>#}
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card-columns">
-                        {% for ride in rides %}
+                        {% for result in galleryResult %}
                         <div class="card">
-                            {% set previewPhoto = random(ride.photos) %}
-
-                            <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}">
-                                <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ ride.city.city }}" />
+                            <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}">
+                                <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(result.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
                             </a>
-
                             <div class="card-block">
                                 <h4 class="card-title text-md-center">
-                                    {{ ride.fancyTitle }}
+                                    {{ result.ride.fancyTitle }}
                                 </h4>
+
                                 <p class="card-text">
-                                    {{ ride.photos|length }} Fotos von der Critical Mass in {{ ride.city.city }}
+                                    {{ result.counter }} Fotos von der Critical Mass in {{ result.ride.city.city }}
                                 </p>
-                                <a href="{{ path(ride) }}" class="card-link">
+
+                                <a href="{{ path(result.ride) }}" class="card-link">
                                     zur Tour
                                 </a>
-                                <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: ride.city.slug, rideDate: ride.formattedDate }) }}" class="card-link">
+
+                                <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}" class="card-link">
                                     zur Galerie
                                 </a>
 
                                 <p class="card-text">
                                     <small class="text-muted">
-                                        hochgeladen am {{ ride.dateTime|date('d.m.Y') }}
+                                        hochgeladen am {{ result.ride.dateTime|date('d.m.Y') }}
                                     </small>
                                 </p>
                             </div>
