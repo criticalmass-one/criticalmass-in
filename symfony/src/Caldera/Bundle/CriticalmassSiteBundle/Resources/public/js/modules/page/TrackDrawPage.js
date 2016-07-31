@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
+define(['CriticalService', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
     TrackDrawPage = function(context, options) {
         this._CriticalService = CriticalService;
 
@@ -50,8 +50,7 @@ define(['CriticalService', 'Map', 'leaflet-routing', 'leaflet-routing-draw', 'le
         this._routing.draw();
     };
 
-    TrackDrawPage.prototype._router = function(m1, m2, cb)
-    {
+    TrackDrawPage.prototype._router = function(m1, m2, cb) {
         var proxy = '/routingproxy.php';
         var params = '?flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
 
@@ -66,13 +65,17 @@ define(['CriticalService', 'Map', 'leaflet-routing', 'leaflet-routing-draw', 'le
         });
     };
 
-    TrackDrawPage.prototype._initEvents = function()
-    {
-        var that = this;
+    TrackDrawPage.prototype._initEvents = function() {
+        $('#save-track').on('click', this._saveLatLngs.bind(this));
+    };
 
-        $('#save-track').on('click', function() {
-            alert(that._routing.toPolyline());
-        });
+    TrackDrawPage.prototype._saveLatLngs = function() {
+        var polyline = this._routing.toPolyline();
+        var latLngs = polyline.getLatLngs().join();
+
+        var polylineString = L.PolylineUtil.encode(latLngs);
+
+        $('#polyline').val(polylineString);
     };
 
 

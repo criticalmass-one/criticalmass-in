@@ -329,9 +329,12 @@ class TrackController extends AbstractController
 
     public function drawAction(Request $request, $citySlug, $rideDate)
     {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:Track:draw.html.twig',
             [
+                'ride' => $ride
             ]
         );
     }
