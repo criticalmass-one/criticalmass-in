@@ -331,10 +331,45 @@ class TrackController extends AbstractController
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
+        if ('POST' == $request->getMethod()) {
+            return $this->drawPostAction($request, $ride);
+        } else {
+            return $this->drawGetAction($request, $ride);
+        }
+    }
+
+    protected function drawGetAction(Request $request, Ride $ride)
+    {
         return $this->render(
             'CalderaCriticalmassSiteBundle:Track:draw.html.twig',
             [
                 'ride' => $ride
+            ]
+        );
+    }
+
+    protected function drawPostAction(Request $request, Ride $ride)
+    {
+        $polyline = $request->request->get('polyline');
+
+        $track = new Track();
+
+        $track->setCreationDateTime(new \DateTime());
+        $track->setPolyline($polyline);
+        $track->setRide($ride);
+        $track->setUser($this->getUser());
+        $track->setUsername($this->getUser()->getUsername());
+        $track->setTrackFilename('foo');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($track);
+        $em->flush();
+
+        return $this->redirectToRoute(
+            'caldera_criticalmass_track_draw',
+            [
+                'citySlug' => $ride->getCity()->getSlug(),
+                'rideDate' => $ride->getFormattedDate()
             ]
         );
     }

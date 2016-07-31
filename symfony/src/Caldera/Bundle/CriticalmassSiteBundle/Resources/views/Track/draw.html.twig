@@ -20,14 +20,13 @@
 
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ path('caldera_criticalmass_track_draw', { citySlug: ride.city.slug, rideDate: ride.getFormattedDate() }) }}">
+                <form method="post" action="{{ path('caldera_criticalmass_track_draw', { citySlug: ride.city.slug, rideDate: ride.getFormattedDate() }) }}">
                     <input type="hidden" id="polyline" name="polyline" />
 
-
+                    <button type="submit" id="save-track" class="btn btn-default">
+                        Speichern
+                    </button>
                 </form>
-                <button type="submit" id="save-track" class="btn btn-default">
-                    Speichern
-                </button>
             </div>
         </div>
     </div>
