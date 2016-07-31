@@ -78,7 +78,7 @@ define(['CriticalService', 'RideEntity', 'CityEntity', 'Map', 'leaflet-polyline'
 
     TrackDrawPage.prototype._saveLatLngs = function() {
         var polyline = this._routing.toPolyline();
-        var latLngs = polyline.getLatLngs().join();
+        var latLngs = polyline.getLatLngs();
 
         var polylineString = L.PolylineUtil.encode(latLngs);
 
