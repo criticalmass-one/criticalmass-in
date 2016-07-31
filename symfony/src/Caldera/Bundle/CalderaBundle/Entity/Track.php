@@ -71,49 +71,49 @@ class Track
     protected $creationDateTime;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startDateTime;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $distance;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $points;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startPoint;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endPoint;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $md5Hash;
 
