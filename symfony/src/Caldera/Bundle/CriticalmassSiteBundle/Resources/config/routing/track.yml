@@ -33,3 +33,7 @@ caldera_criticalmass_track_range:
 caldera_criticalmass_track_time:
     path:  /track/time/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:time }
+
+caldera_criticalmass_track_draw:
+    path:  /{citySlug}/{rideDate}/drawtrack
+    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:draw }

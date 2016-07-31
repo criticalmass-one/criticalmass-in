@@ -1,0 +1,36 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Deine Tracks{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('fos_user_profile_show') }}">Dein Benutzerkonto</a></li>
+    <li class="active">Deine Tracks</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 400px;">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button id="save-track" class="btn btn-default">
+                    Speichern
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('TrackDrawPage', null, null, function(drawPage) {
+
+        });
+    </script>
+
+{% endblock %}

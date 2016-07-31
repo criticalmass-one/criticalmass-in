@@ -70,6 +70,7 @@ require.config({
         "TrackRangePage": "/bundles/calderacriticalmasssite/js/modules/page/TrackRangePage",
         "TrackUploadPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackUploadPage",
         "TrackViewPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackViewPage",
+        "TrackDrawPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackDrawPage",
         "ViewPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
         "ChatPage": "/bundles/calderacriticalmasssite/js/modules/page/ChatPage",
@@ -106,6 +107,13 @@ require.config({
         "leaflet-extramarkers": "/bundles/calderacriticalmasssite/js/external/leaflet/ExtraMarkers",
         "leaflet-markercluster": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet-markercluster",
         "leaflet-draw": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.draw",
+        "leaflet-routing-draw": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Routing.Draw",
+        "leaflet-routing-edit": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Routing.Edit",
+        "leaflet-routing": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Routing",
+        "leaflet-routing-storage": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Routing.Storage",
+        "leaflet-snapping-lineutil": "/bundles/calderacriticalmasssite/js/external/leaflet/LineUtil.Snapping",
+        "leaflet-snapping-marker": "/bundles/calderacriticalmasssite/js/external/leaflet/Marker.Snapping",
+        "leaflet-snapping-polyline": "/bundles/calderacriticalmasssite/js/external/leaflet/Polyline.Snapping",
         "bootstrap-slider": "/bundles/calderacriticalmasssite/js/external/bootstrap/bootstrap-slider",
         "dropzone": "/bundles/calderacriticalmasssite/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/calderacriticalmasssite/js/external/typeahead/typeahead",
@@ -152,6 +160,34 @@ require.config({
         'leaflet-draw': {
             deps: ['leaflet'],
             exports: 'L.Control.Draw'
+        },
+        'leaflet-routing': {
+            deps: ['leaflet'],
+            exports: 'L.Routing'
+        },
+        'leaflet-routing-draw': {
+            deps: ['leaflet', 'leaflet-routing'],
+            exports: 'L.Routing.Draw'
+        },
+        'leaflet-routing-edit': {
+            deps: ['leaflet', 'leaflet-routing'],
+            exports: 'L.Routing.Edit'
+        },
+        'leaflet-routing-storage': {
+            deps: ['leaflet', 'leaflet-routing'],
+            exports: 'L.Routing.Storage'
+        },
+        'leaflet-snapping-marker': {
+            deps: ['leaflet'],
+            exports: 'L.Marker'
+        },
+        'leaflet-snapping-lineutil': {
+            deps: ['leaflet'],
+            exports: 'L.LineUtil'
+        },
+        'leaflet-snapping-polyline': {
+            deps: ['leaflet'],
+            exports: 'L.Polyline'
         },
         'socketio': {
             exports: 'io'

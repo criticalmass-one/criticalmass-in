@@ -326,4 +326,13 @@ class TrackController extends AbstractController
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
+
+    public function drawAction(Request $request, $citySlug, $rideDate)
+    {
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Track:draw.html.twig',
+            [
+            ]
+        );
+    }
 }

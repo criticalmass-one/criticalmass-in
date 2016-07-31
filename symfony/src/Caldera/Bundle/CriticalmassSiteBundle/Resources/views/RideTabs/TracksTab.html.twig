@@ -22,6 +22,12 @@
                                 GPX-Datei hochladen
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Track manuell zeichnen">
+                                <i class="fa fa-map-signs"></i>
+                                Track manuell zeichnen
+                            </a>
+                        </li>
                     </ul>
                 </div>
             {% endif %}
