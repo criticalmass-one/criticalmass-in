@@ -34,7 +34,9 @@
 
     <script>
         CriticalMass.loadModule('TrackDrawPage', null, null, function(drawPage) {
+            drawPage.setRide('{{ ride|serialize|raw|e('js') }}');
 
+            drawPage.init();
         });
     </script>
 

@@ -1,20 +1,27 @@
-define(['CriticalService', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
+define(['CriticalService', 'RideEntity', 'CityEntity', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
     TrackDrawPage = function(context, options) {
         this._CriticalService = CriticalService;
+    };
 
+    TrackDrawPage.prototype._map = null;
+    TrackDrawPage.prototype._ride = null;
+    TrackDrawPage.prototype._routing = null;
+    TrackDrawPage.prototype._CriticalService = null;
+
+    TrackDrawPage.prototype.init = function() {
         this._initMap();
         this._initRouting();
         this._initEvents();
     };
 
-    TrackDrawPage.prototype._map = null;
-    TrackDrawPage.prototype._track = null;
-    TrackDrawPage.prototype._routing = null;
-    TrackDrawPage.prototype._CriticalService = null;
+    TrackDrawPage.prototype.setRide = function(rideJson) {
+        this._ride = this._CriticalService.factory.createRide(rideJson);
+    };
 
     TrackDrawPage.prototype._initMap = function() {
         this._map = new Map('map');
-        this._map.setView([53, 9], 13);
+
+        this._map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 13);
     };
 
     TrackDrawPage.prototype._initRouting = function() {
