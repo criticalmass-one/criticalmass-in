@@ -121,14 +121,22 @@ class PhotoRepository extends EntityRepository
 
     public function findRidesForGallery(City $city = null)
     {
+        $subQueryBuilder = $this->createQueryBuilder('photo');
+
+        $subQueryBuilder->select('photo');
+        $subQueryBuilder->addSelect('RAND() AS HIDDEN rand');
+        $subQueryBuilder->where($subQueryBuilder->expr()->eq('photo.deleted', 0));
+        $subQueryBuilder->orderBy('rand', 'DESC');
+
         $builder = $this->createQueryBuilder('photo');
 
+        //$builder->select('('.$subQueryBuilder->getDQL().')');
         $builder->select('photo');
         $builder->addSelect('ride');
         $builder->addSelect('city');
         $builder->addSelect('COUNT(photo)');
-        $builder->addSelect('RAND() AS HIDDEN rand');
 
+        //$builder->where($builder->expr()->in('photo.id', $subQueryBuilder->getDQL()));
         $builder->where($builder->expr()->eq('photo.deleted', 0));
 
         if ($city) {
@@ -137,8 +145,6 @@ class PhotoRepository extends EntityRepository
 
         $builder->innerJoin('photo.ride', 'ride');
         $builder->join('ride.city', 'city');
-
-        $builder->orderBy('rand');
 
         $builder->orderBy('ride.dateTime', 'desc');
 
