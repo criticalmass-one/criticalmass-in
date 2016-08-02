@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader;
 
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\BoundingBox;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\Coord;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Caldera\Bundle\CalderaBundle\Entity\Position;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
@@ -255,5 +257,44 @@ class GpxReader {
         }
 
         return $positionArray;
+    }
+    
+    public function getBoundingBoxes()
+    {
+        $firstCoord = $this->simpleXml->trk->trkseg->trkpt[0];
+
+        $north = (float) $firstCoord['lat'];
+        $east = (float) $firstCoord['lon'];
+        $south = (float) $firstCoord['lat'];
+        $west = (float) $firstCoord['lon'];
+
+        $index = 1;
+        
+        while ($index < $this->countPoints()) {
+            $coord = $this->simpleXml->trk->trkseg->trkpt[$index];
+
+            if ($north < (float) $coord['lat']) {
+                $north = (float) $coord['lat'];
+            }
+
+            if ($west > (float) $coord['lon']) {
+                $west = (float) $coord['lon'];
+            }
+
+            if ($south > (float) $coord['lat']) {
+                $south = (float) $coord['lat'];
+            }
+
+            if ($east < (float) $coord['lon']) {
+                $east = (float) $coord['lon'];
+            }
+
+            ++$index;
+        }
+
+        $northWest = new Coord($north, $west);
+        $southEast = new Coord($south, $east);
+
+        return new BoundingBox($northWest, $southEast);
     }
 }

@@ -130,6 +130,10 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Form\Flow\CreateCityFlow
         parent: craue.form.flow
 
+    caldera.criticalmass.leaflet.printer:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Leaflet\LeafletPrinter\LeafletPrinter
+        arguments: [@doctrine, @caldera.criticalmass.gps.trackreader]
+
 imports:
   - { resource: ./services/timeline.yml }
   - { resource: ./services/notification.yml }
