@@ -22,4 +22,14 @@ class BoundingBox
         $this->northWest = $northWest;
         $this->southEast = $southEast;
     }
+
+    public function getNorthWest()
+    {
+        return $this->northWest;
+    }
+
+    public function getSouthEast()
+    {
+        return $this->southEast;
+    }
 }

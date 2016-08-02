@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
+namespace Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap;
 
 class OSMCoordCalculator {
 
