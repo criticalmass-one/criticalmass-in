@@ -17,11 +17,11 @@ class OsmCoordCalculator
 
     public static function latitudeToOSMYTile($latitude, $zoom)
     {
-        return floor((1 - log(tan(deg2rad($latitude)) + 1 / cos(deg2rad($latitude))) / pi()) /2 * pow(2, $zoom));
+        return (int) floor((1 - log(tan(deg2rad($latitude)) + 1 / cos(deg2rad($latitude))) / pi()) /2 * pow(2, $zoom));
     }
 
     public static function longitudeToOSMXTile($longitude, $zoom)
     {
-        return floor((($longitude + 180) / 360) * pow(2, $zoom));
+        return (int) floor((($longitude + 180) / 360) * pow(2, $zoom));
     }
 } 

@@ -9,7 +9,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\Util\OsmCoordCalculator;
 
 class OsmTileResolver extends AbstractTileResolver
 {
-    protected $url = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+    static protected $url = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 
     static public function getByCoord(Coord $coord, $zoomLevel)
     {

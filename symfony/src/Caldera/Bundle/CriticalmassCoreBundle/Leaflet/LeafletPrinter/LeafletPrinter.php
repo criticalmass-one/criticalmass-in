@@ -7,6 +7,8 @@ use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\BoundingBox;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\Coord;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\TileGrid\OsmTileGrid;
+use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\Util\OsmCoordCalculator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class LeafletPrinter extends AbstractLeafletPrinter
@@ -26,6 +28,9 @@ class LeafletPrinter extends AbstractLeafletPrinter
     /** @var array $boundingBoxes */
     protected $boundingBoxes = [];
 
+    /** @var OsmTileGrid $grid */
+    protected $grid = null;
+
     public function __construct(Registry $doctrine, TrackReader $trackReader)
     {
         $this->doctrine = $doctrine;
@@ -41,7 +46,7 @@ class LeafletPrinter extends AbstractLeafletPrinter
     {
         $this->collectTracks();
         $this->calculateBoundingBoxes();
-        $this->calculateTileSize();
+        $this->createGrid();
     }
 
     protected function collectTracks()
@@ -59,7 +64,7 @@ class LeafletPrinter extends AbstractLeafletPrinter
         }
     }
 
-    protected function calculateTileSize()
+    protected function createGrid()
     {
         $northTileNumber = null;
         $westTileNumber = null;
@@ -74,10 +79,10 @@ class LeafletPrinter extends AbstractLeafletPrinter
             /** @var Coord $southEast */
             $southEast = $boundingBox->getSouthEast();
 
-            $boxNorthTileNumber = OSMCoordCalculator::latitudeToOSMYTile($northWest->getLatitude(), 15);
-            $boxWestTileNumber = OSMCoordCalculator::longitudeToOSMXTile($northWest->getLongitude(), 15);
-            $boxSouthTileNumber = OSMCoordCalculator::latitudeToOSMYTile($southEast->getLatitude(), 15);
-            $boxEastTileNumber = OSMCoordCalculator::longitudeToOSMXTile($southEast->getLongitude(), 15);
+            $boxNorthTileNumber = OsmCoordCalculator::latitudeToOSMYTile($northWest->getLatitude(), 15);
+            $boxWestTileNumber = OsmCoordCalculator::longitudeToOSMXTile($northWest->getLongitude(), 15);
+            $boxSouthTileNumber = OsmCoordCalculator::latitudeToOSMYTile($southEast->getLatitude(), 15);
+            $boxEastTileNumber = OsmCoordCalculator::longitudeToOSMXTile($southEast->getLongitude(), 15);
 
             if (!$northTileNumber or $northTileNumber < $boxNorthTileNumber) {
                 $northTileNumber = $boxNorthTileNumber;
@@ -94,12 +99,18 @@ class LeafletPrinter extends AbstractLeafletPrinter
             if (!$eastTileNumber or $eastTileNumber > $boxEastTileNumber) {
                 $eastTileNumber = $boxEastTileNumber;
             }
-
-            var_dump($northTileNumber);
-            var_dump($westTileNumber);
-            var_dump($southTileNumber);
-            var_dump($eastTileNumber);
-
         }
+
+        $width = $eastTileNumber - $westTileNumber;
+        $height = $southTileNumber - $northTileNumber;
+
+        $this->grid = new OsmTileGrid($width, $height);
+        $this->grid
+            ->setLeftPosition($westTileNumber)
+            ->setTopPosition($northTileNumber)
+            ->setZoomLevel(15)
+            ->fill();
+
+        var_dump($this->grid);
     }
 }
