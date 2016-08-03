@@ -4,7 +4,6 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Leaflet\LeafletPrinter;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\OSMCoordCalculator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\BoundingBox;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\Coord;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;

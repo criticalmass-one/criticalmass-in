@@ -1,8 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap;
+namespace Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\Util;
 
-class OSMCoordCalculator {
+class OsmCoordCalculator
+{
 
     public static function osmYTileToLatitude($osmYTile, $zoom)
     {
