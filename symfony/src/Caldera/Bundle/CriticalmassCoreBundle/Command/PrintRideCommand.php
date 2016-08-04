@@ -51,9 +51,5 @@ class PrintRideCommand extends ContainerAwareCommand
 
         $this->ride = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
 
-        $printer = $this->getContainer()->get('caldera.criticalmass.leaflet.printer');
-        $printer->setRide($this->ride);
-        $printer->execute();
-        
     }
 }
