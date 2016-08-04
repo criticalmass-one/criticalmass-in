@@ -54,4 +54,19 @@ class TileGrid
 
         return $this;
     }
+
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    public function getTile($x, $y)
+    {
+        return $this->grid[$x][$y];
+    }
 }

@@ -22,6 +22,7 @@ class BackgroundImageTile extends AbstractTile
     {
         $this->backgroundImageUrl = $backgroundImageUrl;
 
+        echo "LALLAA".$backgroundImageUrl."EFWEFWE";
         return $this;
     }
 }

@@ -7,6 +7,8 @@ use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\BoundingBox;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\Coord;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Map\TileGridPrinter\TileGridPrinter;
+use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\TileGrid\OsmBackgroundImageTileGrid;
 use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\TileGrid\OsmTileGrid;
 use Caldera\Bundle\CriticalmassCoreBundle\OpenStreetMap\Util\OsmCoordCalculator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -104,13 +106,18 @@ class LeafletPrinter extends AbstractLeafletPrinter
         $width = $eastTileNumber - $westTileNumber;
         $height = $southTileNumber - $northTileNumber;
 
-        $this->grid = new OsmTileGrid($width, $height);
+        $this->grid = new OsmBackgroundImageTileGrid($width, $height);
+        
         $this->grid
             ->setLeftPosition($westTileNumber)
             ->setTopPosition($northTileNumber)
             ->setZoomLevel(15)
             ->fill();
 
-        var_dump($this->grid);
+        $tileGridPrinter = new TileGridPrinter();
+        $tileGridPrinter->setGrid($this->grid)
+            ->createGridImage()
+            ->copyTilesToGridImage()
+            ->save();
     }
 }

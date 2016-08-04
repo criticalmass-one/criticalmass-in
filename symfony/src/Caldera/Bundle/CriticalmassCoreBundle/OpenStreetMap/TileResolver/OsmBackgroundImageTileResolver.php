@@ -13,7 +13,8 @@ class OsmBackgroundImageTileResolver extends OsmTileResolver
         $tile
             ->setPositionLeft($x)
             ->setPositionTop($y)
-            ->setZoomLevel($z);
+            ->setZoomLevel($z)
+            ->setBackgroundImageUrl(self::getUrlWithServer($x, $y, $z));
 
         return $tile;
     }
