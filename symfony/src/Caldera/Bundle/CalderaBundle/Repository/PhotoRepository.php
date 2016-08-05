@@ -8,6 +8,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class PhotoRepository extends EntityRepository
 {
@@ -121,35 +122,61 @@ class PhotoRepository extends EntityRepository
 
     public function findRidesForGallery(City $city = null)
     {
-        $subQueryBuilder = $this->createQueryBuilder('photo');
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager(), ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT);
+        $rsm->addRootEntityFromClassMetadata('Caldera\Bundle\CalderaBundle\Entity\Photo', 'p');
+        $rsm->addJoinedEntityFromClassMetadata('Caldera\Bundle\CalderaBundle\Entity\Ride', 'r', 'p', 'ride', ['id' => 'ride_id']);
 
-        $subQueryBuilder->select('photo');
-        $subQueryBuilder->addSelect('RAND() AS HIDDEN rand');
-        $subQueryBuilder->where($subQueryBuilder->expr()->eq('photo.deleted', 0));
-        $subQueryBuilder->orderBy('rand', 'DESC');
+        $selectClause = $rsm->generateSelectClause();
+        echo $selectClause;
+        $rsm->addJoinedEntityFromClassMetadata('Caldera\Bundle\CalderaBundle\Entity\City', 'c', 'r', 'city', ['id' => 'city_id']);
+
+
+
+
+        $selectClause.= ', (SELECT p2.id FROM photo AS p2 WHERE p2.ride_id = r.id ORDER BY RAND() LIMIT 1) AS randomPhoto';
+
+        $result = $this->getEntityManager()
+            ->createNativeQuery(
+                'SELECT '.$selectClause.' FROM photo AS p
+JOIN ride AS r ON r.id = p.ride_id
+JOIN city AS c ON c.id = r.city_id
+GROUP BY r.id
+ORDER BY r.dateTime DESC;',
+                $rsm
+            )
+            ->getResult();
+
+        echo '<p>&nbsp;</p>';
+        echo '<p>&nbsp;</p>';
+        //var_dump($result);
+        return $result;
+
+/*
+        $subQueryBuilder = $this->createQueryBuilder('featuredPhoto');
+        $subQueryBuilder->where('featuredPhoto.ride = ride.id');
+        $subQueryBuilder->setMaxResults(1);
 
         $builder = $this->createQueryBuilder('photo');
 
-        //$builder->select('('.$subQueryBuilder->getDQL().')');
         $builder->select('photo');
         $builder->addSelect('ride');
         $builder->addSelect('city');
         $builder->addSelect('COUNT(photo)');
+        $builder->addSelect('('.$subQueryBuilder->getDQL().')');
 
-        //$builder->where($builder->expr()->in('photo.id', $subQueryBuilder->getDQL()));
         $builder->where($builder->expr()->eq('photo.deleted', 0));
 
         if ($city) {
             $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
         }
 
-        $builder->innerJoin('photo.ride', 'ride');
+        $builder->join('photo.ride', 'ride');
         $builder->join('ride.city', 'city');
 
         $builder->orderBy('ride.dateTime', 'desc');
 
-        $builder->groupBy('ride');
-
+        $builder->groupBy('ride');*/
+/*
         $query = $builder->getQuery();
         $result = $query->getResult();
 
@@ -166,7 +193,9 @@ class PhotoRepository extends EntityRepository
             $galleryResult[$key]['counter'] = $counter;
             $galleryResult[$key]['previewPhoto'] = $previewPhoto;
         }
+*/
 
+        return null;
         return $galleryResult;
     }
 
