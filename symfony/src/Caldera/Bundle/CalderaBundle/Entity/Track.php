@@ -696,7 +696,11 @@ class Track
     
     public function getDurationInSeconds()
     {
-        return $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
+        if ($this->startDateTime and $this->endDateTime) {
+            return $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
+        }
+
+        return 0;
     }
     
     public function getAverageVelocity()
