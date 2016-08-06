@@ -16,8 +16,6 @@ use JMS\Serializer\Annotation as JMS;
 class Ride implements ParticipateableInterface, ViewableInterface
 {
     /**
-     * Numerische ID der Tour.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -32,8 +30,6 @@ class Ride implements ParticipateableInterface, ViewableInterface
     protected $user;
 
     /**
-     * Numerische ID der dazugehörigen Stadt, in der die Tour stattfindet.
-     *
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @JMS\Expose
@@ -62,48 +58,36 @@ class Ride implements ParticipateableInterface, ViewableInterface
     protected $description;
 
     /**
-     * Startdatum und -uhrzeit der Tour.
-     *
      * @ORM\Column(type="datetime")
      * @JMS\Expose
      */
     protected $dateTime;
 
     /**
-     * Angabe, ob die Zeitangabe in den Tourinformationen dargestellt werden soll.
-     *
      * @ORM\Column(type="boolean")
      * @JMS\Expose
      */
     protected $hasTime;
 
     /**
-     * Angabe, ob der Treffpunkt in den Tourinformationen dargestellt werden soll.
-     *
      * @ORM\Column(type="boolean")
      * @JMS\Expose
      */
     protected $hasLocation;
 
     /**
-     * Bezeichnung des Treffpunktes der Tour als Zeichenkette.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      */
     protected $location;
 
     /**
-     * Breitengrad des Treffpunktes.
-     *
      * @ORM\Column(type="float")
      * @JMS\Expose
      */
     protected $latitude;
 
     /**
-     * Laengengrad des Treffpunktes.
-     *
      * @ORM\Column(type="float")
      * @JMS\Expose
      */
@@ -176,23 +160,18 @@ class Ride implements ParticipateableInterface, ViewableInterface
     protected $archiveUser;
 
     /**
-     * Array mit den Kommentaren zu dieser Tour.
-     *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
      */
     protected $posts;
 
     /**
-     * Array mit den Bildern zu dieser Tour.
-     *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
      */
     protected $photos;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
@@ -228,6 +207,12 @@ class Ride implements ParticipateableInterface, ViewableInterface
      * @ORM\Column(type="integer")
      */
     protected $views = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="featuredRides", fetch="LAZY")
+     * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
+     */
+    protected $featuredPhoto;
 
     /**
      * Get id
@@ -1041,5 +1026,15 @@ class Ride implements ParticipateableInterface, ViewableInterface
         }
 
         return null;
+    }
+
+    public function setFeaturedPhoto(Photo $featuredPhoto)
+    {
+        $this->featuredPhoto = $featuredPhoto;
+    }
+
+    public function getFeaturedPhoto()
+    {
+        return $this->featuredPhoto;
     }
 }

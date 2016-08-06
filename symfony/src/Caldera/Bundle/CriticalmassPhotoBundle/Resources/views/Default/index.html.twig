@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
     </head>
 
     <body>
@@ -62,9 +62,11 @@
                     <div class="card-columns">
                         {% for result in galleryResult %}
                         <div class="card">
+                            {% if result.ride.featuredPhoto %}
                             <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}">
-                                <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(result.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
+                                <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(result.ride.featuredPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
                             </a>
+                            {% endif %}
                             <div class="card-block">
                                 <h4 class="card-title text-md-center">
                                     {{ result.ride.fancyTitle }}

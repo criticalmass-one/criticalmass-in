@@ -23,7 +23,7 @@ class Photo implements ViewableInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
@@ -99,21 +99,26 @@ class Photo implements ViewableInterface
      *
      * @var File
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $imageName;
+    protected $imageName;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
+     */
+    protected $featuredRides;
 
     public function __construct()
     {
