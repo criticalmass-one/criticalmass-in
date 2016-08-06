@@ -79,6 +79,7 @@
                                         <a href="{{ path('caldera_criticalmass_photo_delete', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
+
                                         {% if photo.enabled %}
                                             <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
                                                 <i class="fa fa-eye-slash"></i>
@@ -91,6 +92,24 @@
                                         <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
                                             <i class="fa fa-location-arrow"></i>
                                         </a>
+
+                                        <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=left" class="btn btn-default btn-xs">
+                                            <i class="fa fa-rotate-left"></i>
+                                        </a>
+
+                                        <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=right" class="btn btn-default btn-xs">
+                                            <i class="fa fa-rotate-right"></i>
+                                        </a>
+
+                                        {% if photo.ride.featuredPhoto == photo %}
+                                        <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
+                                            <i class="fa fa-flag"></i>
+                                        </a>
+                                        {% else %}
+                                        <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
+                                            <i class="fa fa-flag-o"></i>
+                                        </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -309,4 +309,49 @@ class PhotoManagementController extends AbstractController
             ]
         );
     }
+
+    public function rotateAction(Request $request, $citySlug, $rideDate, $photoId)
+    {
+        /**
+         * @var Photo $photo
+         */
+        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+
+        $rotate = 90;
+
+        if ($request->query->get('rotate') and $request->query->get('rotate') == 'right') {
+            $rotate = -90;
+        }
+
+        $path = $this->getParameter('kernel.root_dir').'/../web';
+        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+
+        $image = imagecreatefromjpeg($path.$filename);
+        $image = imagerotate($image, $rotate, 0);
+        imagejpeg($image, $path.$filename, 100);
+        imagedestroy($image);
+
+        $this->recachePhoto($photo);
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
+            [
+                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
+                'rideDate' => $photo->getRide()->getFormattedDate()
+            ]
+        ));
+    }
+
+    protected function recachePhoto(Photo $photo)
+    {
+        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+
+        $imagineCache = $this->get('liip_imagine.cache.manager');
+        $imagineCache->remove($filename);
+
+        $imagineController = $this->get('liip_imagine.controller');
+        $imagineController->filterAction(new Request(), $filename, 'gallery_photo_thumb');
+        $imagineController->filterAction(new Request(), $filename, 'gallery_photo_standard');
+        $imagineController->filterAction(new Request(), $filename, 'gallery_photo_large');
+        $imagineController->filterAction(new Request(), $filename, 'city_image_wide');
+    }
 }

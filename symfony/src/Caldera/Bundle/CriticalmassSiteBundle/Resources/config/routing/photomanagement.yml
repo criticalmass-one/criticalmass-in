@@ -10,6 +10,10 @@ caldera_criticalmass_photo_place_single:
     path: /{citySlug}/{rideDate}/managephotos/{photoId}/place
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:placeSingle }
 
+caldera_criticalmass_photo_rotate:
+    path: /{citySlug}/{rideDate}/managephotos/{photoId}/rotate
+    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:rotate }
+
 caldera_criticalmass_photo_toggle:
     path: /{citySlug}/{rideDate}/photo/{photoId}/toggle
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:toggle }
