@@ -72,6 +72,12 @@ class Post
     protected $event;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Blog", inversedBy="posts")
+     * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
+     */
+    protected $blog;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -91,6 +97,16 @@ class Post
      * @ORM\JoinColumn(name="anonymous_name_id", referencedColumnName="id")
      */
     protected $anonymousName;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $abstract;
 
     /**
      * @ORM\Column(type="text")
@@ -223,11 +239,57 @@ class Post
     /**
      * Get message
      *
-     * @return string 
+     * @return string
      */
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Post
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set message
+     *
+     * @param string $abstract
+     * @return Post
+     */
+    public function setAbstract($abstract)
+    {
+        $this->abstract = $abstract;
+
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string
+     */
+    public function getAbstract()
+    {
+        return $this->abstract;
     }
 
     /**
@@ -576,5 +638,24 @@ class Post
     public function getColorBlue()
     {
         return $this->colorBlue;
+    }
+
+    /**
+     * @return Blog
+     */
+    public function getBlog()
+    {
+        return $this->blog;
+    }
+
+    /**
+     * @param Blog $blog
+     * @return Post $this
+     */
+    public function setBlog(Blog $blog)
+    {
+        $this->blog = $blog;
+
+        return $this;
     }
 }
