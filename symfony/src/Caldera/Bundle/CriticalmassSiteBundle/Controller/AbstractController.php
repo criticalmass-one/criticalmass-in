@@ -57,14 +57,6 @@ abstract class AbstractController extends Controller
     }
 
     /**
-     * @return ObjectRepository
-     */
-    protected function getBlogArticleRepository()
-    {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Article');
-    }
-
-    /**
      * @return BoardRepository
      */
     protected function getBoardRepository()
@@ -143,7 +135,6 @@ abstract class AbstractController extends Controller
     {
         return $this->getDoctrine()->getRepository('CalderaBundle:Location');
     }
-
 
     /**
      * @return LocationRepository
