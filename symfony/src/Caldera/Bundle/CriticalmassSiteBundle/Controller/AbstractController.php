@@ -57,6 +57,14 @@ abstract class AbstractController extends Controller
     }
 
     /**
+     * @return ObjectRepository
+     */
+    protected function getBlogRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaBundle:Blog');
+    }
+
+    /**
      * @return BoardRepository
      */
     protected function getBoardRepository()
