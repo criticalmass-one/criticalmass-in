@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+
+    <title>Fahrradterroristen</title>
+
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+
+    {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
+</head>
+
+<body>
+
+<div class="container m-t-3">
+    <div class="row">
+        <div class="col-md-12 text-md-center">
+            <h1 class="display-2">
+                Fahrradterroristen
+            </h1>
+            <p class="lead">
+                Das Critical-Mass-Weblog von Caldera
+            </p>
+        </div>
+    </div>
+
+    {% for post in posts %}
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h2>
+                    {{ post.title }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-1">
+                {{ post.message | markdown }}
+            </div>
+
+            <div class="col-md-2">
+                {{ post.dateTime | date('d.m.Y') }}
+                <br />
+                von {{ post.user.username }}
+            </div>
+        </div>
+
+
+    {% endfor %}
+</div>
+
+{% include('CalderaCriticalmassBlogBundle:Includes:_footer.html.twig') %}
+
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+</body>
+</html>
+

@@ -1,3 +1,7 @@
+caldera_criticalmass_blog:
+    resource: "@CalderaCriticalmassBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
 
 
 sonata_user_security:
@@ -43,4 +47,9 @@ caldera_criticalmassrocks:
 caldera_criticalmassphoto:
     resource: "@CalderaCriticalmassPhotoBundle/Resources/config/routing.yml"
     host: "%domain.criticalmassphoto%"
+    prefix:   /
+
+caldera_criticalmassblog:
+    resource: "@CalderaCriticalmassBlogBundle/Resources/config/routing.yml"
+    host: "%domain.criticalmassblog%"
     prefix:   /
