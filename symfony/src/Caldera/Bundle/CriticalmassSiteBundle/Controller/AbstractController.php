@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Repository\BlogPostRepository;
 use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
 use Caldera\Bundle\CalderaBundle\Entity\AnonymousName;
 use Caldera\Bundle\CalderaBundle\Entity\City;
@@ -62,6 +63,14 @@ abstract class AbstractController extends Controller
     protected function getBlogRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaBundle:Blog');
+    }
+
+    /**
+     * @return BlogPostRepository
+     */
+    protected function getBlogPostRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaBundle:BlogPost');
     }
 
     /**
