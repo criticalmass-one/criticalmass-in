@@ -4,4 +4,4 @@ caldera_criticalmass_blog_homepage:
 
 caldera_criticalmass_blog_post:
     path:     /{slug}
-    defaults: { _controller: CalderaCriticalmassBlogBundle:Default:index }
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Default:view }
