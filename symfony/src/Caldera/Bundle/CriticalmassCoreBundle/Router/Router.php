@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Router;
 
+use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\RideBoard;
 use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
@@ -61,6 +62,10 @@ class Router extends sfRouter
 
         if ($object instanceof Region) {
             return $this->generateRegionUrl($object, $referenceType);
+        }
+
+        if ($object instanceof BlogPost) {
+            return $this->generateBlogPostUrl($object, $referenceType);
         }
 
         return parent::generate($object, $parameters, $referenceType);
@@ -163,6 +168,17 @@ class Router extends sfRouter
 
         $parameters = [
             'trackId' => $track->getId()
+        ];
+
+        return parent::generate($route, $parameters, $referenceType);
+    }
+
+    private function generateBlogPostUrl(BlogPost $blogPost, $referenceType)
+    {
+        $route = 'caldera_criticalmass_blog_post';
+
+        $parameters = [
+            'slug' => $blogPost->getSlug()
         ];
 
         return parent::generate($route, $parameters, $referenceType);
