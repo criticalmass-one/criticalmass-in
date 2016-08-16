@@ -28,7 +28,7 @@ class BlogPostCollector extends AbstractTimelineCollector
             $item->setUsername($postEntity->getUser()->getUsername());
             $item->setTitle($postEntity->getTitle());
             $item->setBlogPost($postEntity);
-            $item->setText($postEntity->getText());
+            $item->setText($postEntity->getAbstract());
             $item->setDateTime($postEntity->getDateTime());
 
             $this->addItem($item);
