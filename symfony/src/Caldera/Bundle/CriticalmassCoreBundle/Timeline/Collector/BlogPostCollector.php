@@ -2,14 +2,14 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
-use Caldera\Bundle\CalderaBundle\Entity\Post;
+use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\BlogPostItem;
 
 class BlogPostCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaBundle:Post')->findForTimelineBlogPostCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('CalderaBundle:BlogPost')->findForTimelineBlogPostCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)
@@ -20,15 +20,15 @@ class BlogPostCollector extends AbstractTimelineCollector
     protected function convertGroupedEntities(array $groupedEntities)
     {
         /**
-         * @var Post $postEntity
+         * @var BlogPost $postEntity
          */
         foreach ($groupedEntities as $postEntity) {
             $item = new BlogPostItem();
 
             $item->setUsername($postEntity->getUser()->getUsername());
             $item->setTitle($postEntity->getTitle());
-            $item->setPost($postEntity);
-            $item->setText($postEntity->getMessage());
+            $item->setBlogPost($postEntity);
+            $item->setText($postEntity->getText());
             $item->setDateTime($postEntity->getDateTime());
 
             $this->addItem($item);

@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
-use Caldera\Bundle\CalderaBundle\Entity\Post;
+use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 
 class BlogPostItem extends AbstractItem
 {
@@ -12,9 +12,9 @@ class BlogPostItem extends AbstractItem
     public $username;
 
     /**
-     * @var Post $post
+     * @var BlogPost $blogPost
      */
-    public $post;
+    public $blogPost;
 
     /**
      * @var string $title
@@ -43,19 +43,19 @@ class BlogPostItem extends AbstractItem
     }
 
     /**
-     * @return Post
+     * @return BlogPost
      */
-    public function getPost()
+    public function getBlogPost()
     {
-        return $this->post;
+        return $this->blogPost;
     }
 
     /**
-     * @param Post $post
+     * @param BlogPost $blogPost
      */
-    public function setPost($post)
+    public function setBlogPost($blogPost)
     {
-        $this->post = $post;
+        $this->blogPost = $blogPost;
     }
 
     /**
