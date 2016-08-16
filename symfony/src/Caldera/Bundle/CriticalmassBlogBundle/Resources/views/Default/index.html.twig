@@ -26,25 +26,39 @@
     </div>
 
     {% for post in posts %}
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <h2>
-                    {{ post.title }}
-                </h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 offset-md-1">
-                {{ post.message | markdown }}
+    <div class="row m-b-3">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        {{ post.title }}
+                    </h2>
+                </div>
             </div>
 
-            <div class="col-md-2">
-                {{ post.dateTime | date('d.m.Y') }}
-                <br />
-                von {{ post.user.username }}
+            <div class="row">
+                <div class="col-md-10">
+                    {{ post.text | markdown }}
+                </div>
+
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12 text-md-center">
+                            <img src="{{ gravatarUrl(post.user, 256) }}" class="img-circle img-fluid" />
+                        </div>
+                    </div>
+
+                    <div class="row m-t-2">
+                        <div class="col-md-12 text-md-center">
+                            {{ post.user.username }}
+                            <br />
+                            {{ post.dateTime | date('d.m.Y') }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
 
     {% endfor %}
