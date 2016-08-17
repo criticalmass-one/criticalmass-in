@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\Board;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
@@ -22,7 +23,8 @@ class PostController extends AbstractController
         $photoId = null, 
         $contentId = null,
         $threadId = null,
-        $eventId = null
+        $eventId = null,
+        $blogPostId = null
     ) {
         /**
          * @var Post $post
@@ -30,12 +32,14 @@ class PostController extends AbstractController
          * @var City $city
          * @var Thread $thread
          * @var Event $event
+         * @var BlogPost $blogPost
          */
         $post = new Post();
         $ride = null;
         $city = null;
         $thread = null;
         $event = null;
+        $blogPost = null;
 
         if ($cityId) {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
@@ -77,6 +81,7 @@ class PostController extends AbstractController
             $post->setEvent($event);
 
             $redirectUrl = $this->generateUrl($event);
+        } elseif ($blogPostId) {
         } else {
             $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
 
@@ -143,7 +148,8 @@ class PostController extends AbstractController
         $rideId = null, 
         $photoId = null, 
         $contentId = null,
-        $eventId = null
+        $eventId = null,
+        $blogPostId = null
     ) {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
@@ -168,6 +174,10 @@ class PostController extends AbstractController
 
         if ($eventId) {
             $criteria['event'] = $eventId;
+        }
+
+        if ($blogPostId) {
+            $criteria['blogPost'] = $blogPostId;
         }
 
         /* Now fetch all posts with matching criteria. */

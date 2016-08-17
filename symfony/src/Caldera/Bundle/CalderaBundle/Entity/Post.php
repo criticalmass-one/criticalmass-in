@@ -72,6 +72,12 @@ class Post
     protected $event;
 
     /**
+     * @ORM\ManyToOne(targetEntity="BlogPost", inversedBy="posts")
+     * @ORM\JoinColumn(name="blog_post_id", referencedColumnName="id")
+     */
+    protected $blogPost;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -320,6 +326,18 @@ class Post
     public function getCity()
     {
         return $this->city;
+    }
+
+    public function setBlogPost(BlogPost $blogPost)
+    {
+        $this->blogPost = $blogPost;
+
+        return $this;
+    }
+
+    public function getBlogPost()
+    {
+        return $this->blogPost;
     }
 
     /**
