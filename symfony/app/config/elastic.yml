@@ -35,7 +35,6 @@ fos_elastica:
                         model: Caldera\Bundle\CalderaBundle\Entity\Ride
                         provider: ~
                         listener:
-                            immediate: ~
                         finder: ~
                 city:
                     mappings:
@@ -54,6 +53,5 @@ fos_elastica:
                         driver: orm
                         model: Caldera\Bundle\CalderaBundle\Entity\City
                         provider: ~
-                        listener:
-                            immediate: ~
+                        listener: ~
                         finder: ~
