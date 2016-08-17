@@ -21,7 +21,6 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "phpunit/phpunit": "4.0.*",
-        "erusev/parsedown": "dev-master",
         "vich/uploader-bundle": "^0.14.0",
         "liip/imagine-bundle": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",

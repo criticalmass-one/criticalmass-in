@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "636c32413599fd1295ca96c7ebd90e6e",
-    "content-hash": "6787978127c0a5366e359a04e152f98f",
+    "hash": "e7cd7bfcedc374d880e369f4b612e285",
+    "content-hash": "ea3b3fd42623ce80df04401f2580c7c5",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -1097,48 +1097,6 @@
                 "maps"
             ],
             "time": "2016-04-05 01:18:39"
-        },
-        {
-            "name": "erusev/parsedown",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/erusev/parsedown.git",
-                "reference": "f671ae73647b6666c1442cbaac98e5d60208e409"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/f671ae73647b6666c1442cbaac98e5d60208e409",
-                "reference": "f671ae73647b6666c1442cbaac98e5d60208e409",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Parsedown": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Emanuil Rusev",
-                    "email": "hello@erusev.com",
-                    "homepage": "http://erusev.com"
-                }
-            ],
-            "description": "Parser for Markdown.",
-            "homepage": "http://parsedown.org",
-            "keywords": [
-                "markdown",
-                "parser"
-            ],
-            "time": "2016-07-27 08:05:24"
         },
         {
             "name": "facebook/php-sdk-v4",
@@ -4764,7 +4722,6 @@
     "stability-flags": {
         "symfony/assetic-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
-        "erusev/parsedown": 20,
         "craue/formflow-bundle": 20
     },
     "prefer-stable": false,

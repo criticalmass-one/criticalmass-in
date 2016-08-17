@@ -21,9 +21,6 @@ class SiteTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], array(
-                'is_safe' => array('html')
-            )),
             new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
@@ -63,15 +60,6 @@ class SiteTwigExtension extends \Twig_Extension
             'instanceof' => new \Twig_Function_Method($this, 'isInstanceof'),
             'today' => new \Twig_Function_Method($this, 'today')
         ];
-    }
-
-    public function markdown($text)
-    {
-        $parsedown = new \Parsedown();
-
-        $text = $parsedown->parse($text);
-
-        return $text;
     }
 
     public function gravatarHash(User $user = null)
