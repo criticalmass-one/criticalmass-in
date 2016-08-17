@@ -31,6 +31,24 @@ class BlogPost
     protected $blog;
 
     /**
+     * @ORM\ManyToMany(targetEntity="City")
+     * @ORM\JoinTable(name="blog_post_city",
+     *      joinColumns={@ORM\JoinColumn(name="blog_post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="city_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $cities;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Ride")
+     * @ORM\JoinTable(name="blog_post_ride",
+     *      joinColumns={@ORM\JoinColumn(name="blog_post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="ride_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $rides;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
@@ -253,5 +271,79 @@ class BlogPost
     public function getBlog()
     {
         return $this->blog;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add cities
+     *
+     * @param City $cities
+     * @return BlogPost
+     */
+    public function addCity(City $cities)
+    {
+        $this->cities[] = $cities;
+
+        return $this;
+    }
+
+    /**
+     * Remove cities
+     *
+     * @param City $cities
+     */
+    public function removeCity(City $cities)
+    {
+        $this->cities->removeElement($cities);
+    }
+
+    /**
+     * Get cities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCities()
+    {
+        return $this->cities;
+    }
+
+    /**
+     * Add rides
+     *
+     * @param Ride $rides
+     * @return BlogPost
+     */
+    public function addRide(Ride $rides)
+    {
+        $this->rides[] = $rides;
+
+        return $this;
+    }
+
+    /**
+     * Remove rides
+     *
+     * @param Ride $rides
+     */
+    public function removeRide(Ride $rides)
+    {
+        $this->rides->removeElement($rides);
+    }
+
+    /**
+     * Get rides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRides()
+    {
+        return $this->rides;
     }
 }

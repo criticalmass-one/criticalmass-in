@@ -53,6 +53,26 @@
                                     {{ post.dateTime | date('d.m.Y') }}
                                 </div>
                             </div>
+
+                            {% if post.cities | length > 0 %}
+                            <div class="row m-t-3">
+                                <div class="col-xs-12 text-xs-center">
+                                    <p>
+                                        Tags:
+                                    </p>
+
+                                    <ul class="list-unstyled">
+                                    {% for city in post.cities %}
+                                        <li>
+                                            <a href="{{ path(city) }}">
+                                                #{{ city.slug }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
 
