@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CriticalmassLiveBundle\Controller;
 
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 
-class LiveController extends AbstractController
+class DefaultController extends AbstractController
 {
     public function indexAction($name)
     {
