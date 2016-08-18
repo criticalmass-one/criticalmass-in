@@ -9,11 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LiveController extends AbstractController
 {
-    public function indexAction($name)
-    {
-        return $this->render('CalderaCriticalmassLiveBundle:Default:index.html.twig', array('name' => $name));
-    }
-
     public function cityAction(Request $request, $citySlug)
     {
         /**
