@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Caldera\Bundle\CriticalmassPhotoBundle\CalderaCriticalmassPhotoBundle(),
             new Caldera\Bundle\CriticalmassBlogBundle\CalderaCriticalmassBlogBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Caldera\Bundle\CriticalmassLiveBundle\CalderaCriticalmassLiveBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
