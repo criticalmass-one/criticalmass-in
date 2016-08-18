@@ -1,0 +1,85 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:FullscreenTemplate.html.twig' %}
+
+{% set menu_selected = 'two' %}
+
+{% block title %}Live{% endblock %}
+
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+
+    <style>
+        #map {
+            position: absolute;
+            top: 30px;
+            bottom: 0;
+            width: 100%;
+            z-index: 0;
+
+        }
+        
+        div.user-position {
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 0 0 15px 0 black;
+        }
+        
+        div.user-position div.user-position-inline {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border-width: 5px;
+            border-style: solid;
+            background-position: -5px -5px;
+        }
+
+        #glympse-logo-container {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            height: 40px;
+            width: 150px;
+            z-index: 500000;
+            opacity: 0.8;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="map">
+        <div id="glympse-logo-container">
+            <a href="http://www.glympse.com/">
+                <img id="glympse-logo" src="/bundles/calderacriticalmasssite/images/glympse/glympse-150.png" />
+            </a>
+        </div>
+    </div>
+
+    <script>
+
+        var options = {
+        {% if rides|length == 1 %}
+            apiUrl: window.location.origin + '/api/positions/{{ rides[0].city.slug }}',
+        {% else %}
+            apiUrl: window.location.origin + '/api/positions/all',
+        {% endif %}
+            apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
+        };
+
+        CriticalMass.loadModule('LivePage', null, options, function(livePage) {
+            var ride = null;
+            {% for ride in rides %}
+            ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
+            {% endfor %}
+
+            {% if rides|length == 1 %}
+            {#ride.openPopup();#}
+            {% endif %}
+
+            {% for event in events %}
+             livePage.addEvent('{{ event|serialize|raw|e('js') }}');
+            {% endfor %}
+
+            livePage.setFocus();
+        });
+    </script>
+{% endblock %}
+

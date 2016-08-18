@@ -1,3 +1,7 @@
 caldera_criticalmass_live_homepage:
-    path:     /hello/{name}
+    path:     /
     defaults: { _controller: CalderaCriticalmassLiveBundle:Default:index }
+
+caldera_criticalmass_live_live_city:
+    path:     /{citySlug}
+    defaults: { _controller: CalderaCriticalmassLiveBundle:Live:city }
