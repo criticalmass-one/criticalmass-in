@@ -35,7 +35,7 @@
                             <select class="form-control" id="exampleSelect1">
                                 {% for ride in rides %}
                                     <option>
-                                        {{ ride.city.city }} ({{ ride.dateTime | date('Y-m-d H:i') }})
+                                        {{ ride.city.city }}
                                     </option>
                                 {% endfor %}
                             </select>
