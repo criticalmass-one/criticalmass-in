@@ -1,16 +1,71 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:FullscreenTemplate.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-{% set menu_selected = 'two' %}
+        <title>Fotos von Critical-Mass-Touren</title>
 
-{% block title %}Critical Mass live{% endblock %}
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
 
-{% block content %}
+        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
+    </head>
 
-    <div class="container">
-        <div class="col-md-6 col-md-offset-3">
+    <body>
+    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+        <a class="navbar-brand" href="#">
+            criticalmass.live
+        </a>
+    </nav>
 
+    <div class="container m-t-3">
+        <div class="row">
+            <div class="col-xs-6 offset-xs-3">
+                <form name="" class="form-inline">
+                    <div class="row">
+                        <div class="col-xs-12 text-xs-center">
+                            <label for="exampleSelect1">
+                                Select your city
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 text-xs-center">
+                            <select class="form-control" id="exampleSelect1">
+                                {% for ride in rides %}
+                                    <option>
+                                        {{ ride.city.city }} ({{ ride.dateTime | date('Y-m-d H:i') }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-1">
+                        <div class="col-xs-12 text-xs-center">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-success">
+                                    Ride on
+                                </button>
+                                <button type="button" class="btn btn-default">
+                                    Autoselect
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-{% endblock %}
+    {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
+
+    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
+    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+
+    {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
+    </body>
+</html>
+
 
