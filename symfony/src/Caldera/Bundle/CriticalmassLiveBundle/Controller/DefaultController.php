@@ -13,10 +13,10 @@ class DefaultController extends AbstractController
             ->setDescription('Live-Tracking für Critical-Mass-Touren');
 
         $startDateTime = new \DateTime();
-        $endDateTime = new \DateTime();
+        $startDateTime->sub(new \DateInterval('PT6H'));
 
-        $interval = new \DateInterval('P3D');
-        $endDateTime->add($interval);
+        $endDateTime = new \DateTime();
+        $endDateTime->add(new \DateInterval('PT24H'));
 
         $rides = $this->getRideRepository()->findRidesInInterval($startDateTime, $endDateTime);
 
