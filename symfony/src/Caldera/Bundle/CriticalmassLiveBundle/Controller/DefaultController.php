@@ -3,11 +3,25 @@
 namespace Caldera\Bundle\CriticalmassLiveBundle\Controller;
 
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController
 {
-    public function indexAction($name)
+    public function indexAction(Request $request)
     {
-        return $this->render('CalderaCriticalmassLiveBundle:Default:index.html.twig', array('name' => $name));
+        $startDateTime = new \DateTime();
+        $endDateTime = new \DateTime();
+
+        $interval = new \DateInterval('P3D');
+        $endDateTime->add($interval);
+
+        $rides = $this->getRideRepository()->findRidesInInterval($startDateTime, $endDateTime);
+
+        return $this->render(
+            'CalderaCriticalmassLiveBundle:Default:index.html.twig',
+            [
+                'rides' => $rides
+            ]
+        );
     }
 }
