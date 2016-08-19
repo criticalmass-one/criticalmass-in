@@ -9,6 +9,12 @@
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
 
         {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
+
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
     </head>
 
     <body>
@@ -32,9 +38,9 @@
 
                     <div class="row">
                         <div class="col-xs-12 text-xs-center">
-                            <select class="form-control" id="exampleSelect1">
+                            <select class="form-control" id="select-ride">
                                 {% for ride in rides %}
-                                    <option>
+                                    <option data-city-slug="{{ ride.city.slug }}">
                                         {{ ride.city.city }}
                                     </option>
                                 {% endfor %}
@@ -45,10 +51,10 @@
                     <div class="row m-t-1">
                         <div class="col-xs-12 text-xs-center">
                             <div class="btn-group">
-                                <button type="submit" class="btn btn-success">
+                                <button id="ride-on" type="submit" class="btn btn-success">
                                     Ride on
                                 </button>
-                                <button type="button" class="btn btn-default">
+                                <button id="auto-select" type="button" class="btn btn-default">
                                     Autoselect
                                 </button>
                             </div>
@@ -59,6 +65,9 @@
         </div>
     </div>
 
+    <script>
+        CriticalMass.loadModule('LiveFrontPage');
+    </script>
     {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
 
     <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>

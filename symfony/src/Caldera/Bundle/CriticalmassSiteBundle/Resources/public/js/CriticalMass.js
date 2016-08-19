@@ -57,6 +57,7 @@ require.config({
         "EditCityPage": "/bundles/calderacriticalmasssite/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
+        "LiveFrontPage": "/bundles/calderacriticalmasssite/js/modules/page/LiveFrontPage",
         "RegionPage": "/bundles/calderacriticalmasssite/js/modules/page/RegionPage",
         "StravaImportPage": "/bundles/calderacriticalmasssite/js/modules/page/StravaImportPage",
         "TrackListPage": "/bundles/calderacriticalmasssite/js/modules/page/TrackListPage",

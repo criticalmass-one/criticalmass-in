@@ -5,3 +5,5 @@ caldera_criticalmass_live_homepage:
 caldera_criticalmass_live_live_city:
     path:     /{citySlug}
     defaults: { _controller: CalderaCriticalmassLiveBundle:Live:city }
+    options:
+        expose: true
