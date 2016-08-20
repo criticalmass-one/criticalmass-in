@@ -27,11 +27,12 @@
     <div class="container m-t-3">
         <div class="row">
             <div class="col-xs-6 offset-xs-3">
+                {% if rides | length > 0 %}
                 <form name="" class="form-inline">
                     <div class="row">
                         <div class="col-xs-12 text-xs-center">
                             <label for="exampleSelect1">
-                                Select your city
+                                Wähle deine Stadt
                             </label>
                         </div>
                     </div>
@@ -61,6 +62,23 @@
                         </div>
                     </div>
                 </form>
+                {% else %}
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <h2>
+                            Nichts los auf den Straßen
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <p class="lead">
+                            Leider ist momentan keine kritische Masse unterwegs. Schau dir die <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Liste weltweiter Critical-Mass-Touren</a> an, um eine Tour in deiner Nähe zu finden.
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
