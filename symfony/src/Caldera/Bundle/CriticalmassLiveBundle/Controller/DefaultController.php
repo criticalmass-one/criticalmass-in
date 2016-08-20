@@ -18,7 +18,7 @@ class DefaultController extends AbstractController
         $endDateTime = new \DateTime();
         $endDateTime->add(new \DateInterval('PT24H'));
 
-        $rides = $this->getRideRepository()->findRidesInInterval($startDateTime, $endDateTime);
+        $rides = $this->getRideRepository()->findRidesAndCitiesInInterval($startDateTime, $endDateTime);
 
         return $this->render(
             'CalderaCriticalmassLiveBundle:Default:index.html.twig',

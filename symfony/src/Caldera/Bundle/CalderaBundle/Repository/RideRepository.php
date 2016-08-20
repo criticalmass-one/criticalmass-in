@@ -259,6 +259,38 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findRidesAndCitiesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
+    {
+        if (!$startDateTime) {
+            $startDateTime = new \DateTime();
+        }
+
+        if (!$endDateTime) {
+            $endDate = new \DateTime();
+            $dayInterval = new \DateInterval('P1M');
+            $endDateTime = $endDate->add($dayInterval);
+        }
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder
+            ->select('ride')
+            ->join('ride.city', 'city')
+            ->where($builder->expr()->gt('ride.dateTime', '\''.$startDateTime->format('Y-m-d').'\''))
+            ->andWhere($builder->expr()->lt('ride.dateTime', '\''.$endDateTime->format('Y-m-d').'\''))
+            ->andWhere($builder->expr()->eq('ride.isArchived', 0))
+            ->andWhere($builder->expr()->eq('city.enabled', 1))
+            ->addOrderBy('city.city', 'ASC')
+            ->addOrderBy('ride.dateTime', 'ASC')
+        ;
+        
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+
+
     public function findRidesByYearMonth($year, $month)
     {
         $startDateTime = new \DateTime($year.'-'.$month.'-01');
