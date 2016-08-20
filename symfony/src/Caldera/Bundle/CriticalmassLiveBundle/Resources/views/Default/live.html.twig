@@ -56,22 +56,19 @@
     <script>
 
         var options = {
-        {% if rides|length == 1 %}
-            apiUrl: window.location.origin + '/api/positions/{{ rides[0].city.slug }}',
-        {% else %}
-            apiUrl: window.location.origin + '/api/positions/all',
-        {% endif %}
+            apiUrl: window.location.origin + '/api/positions/{{ city.slug }}',
             apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
         };
 
         CriticalMass.loadModule('LivePage', null, options, function(livePage) {
-            var ride = null;
-            {% for ride in rides %}
+            {% if ride.hasLocation() and ride.latitude != 0 and ride.longitude != 0 %}
             ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
-            {% endfor %}
 
-            {% if rides|length == 1 %}
-            {#ride.openPopup();#}
+            ride.openPopup();
+            {% else %}
+            city = livePage.addCity('{{ city|serialize|raw|e('js') }}');
+
+            city.openPopup();
             {% endif %}
 
             {% for event in events %}

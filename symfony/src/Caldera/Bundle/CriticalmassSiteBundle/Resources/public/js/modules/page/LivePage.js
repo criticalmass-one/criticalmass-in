@@ -50,6 +50,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
 
     LivePage.prototype._initLayers = function() {
         this._rideContainer.addToMap(this._map);
+        this._cityContainer.addToMap(this._map);
         this._eventContainer.addToMap(this._map);
         this._mapPositions.addToMap(this._map);
         //this._map.addLayer(this._rideContainer.getLayer());
@@ -95,8 +96,8 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         }
     };
 
-    LivePage.prototype.addCity = function(city, title, slug, description, latitude, longitude) {
-        var cityEntity = new CityEntity(city, title, slug, description, latitude, longitude);
+    LivePage.prototype.addCity = function(cityJson) {
+        var cityEntity = this._CriticalService.factory.createCity(cityJson);
 
         this._cityContainer.addEntity(cityEntity);
 
@@ -137,8 +138,8 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
                 var ride = this._rideContainer.getEntity(0);
                 this._map.setView([ride.getLatitude(), ride.getLongitude()], 12);
             } else {
-                var bounds = this._rideContainer.getBounds();
-                this._map.fitBounds(bounds);
+                var city = this._cityContainer.getEntity(0);
+                this._map.setView([city.getLatitude(), city.getLongitude()], 12);
             }
         }
     };
