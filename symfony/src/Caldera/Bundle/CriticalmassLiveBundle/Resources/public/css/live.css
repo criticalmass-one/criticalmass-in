@@ -5,3 +5,37 @@
 .m-t-5 {
   margin-top: 5rem !important;
 }
+
+#map {
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+    width: 100%;
+    z-index: 0;
+
+}
+
+div.user-position {
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 15px 0 black;
+}
+
+div.user-position div.user-position-inline {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-width: 5px;
+    border-style: solid;
+    background-position: -5px -5px;
+}
+
+#glympse-logo-container {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    height: 40px;
+    width: 150px;
+    z-index: 500000;
+    opacity: 0.8;
+}
