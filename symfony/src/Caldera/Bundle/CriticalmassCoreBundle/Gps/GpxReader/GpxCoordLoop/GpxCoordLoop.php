@@ -6,15 +6,30 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 
 class GpxCoordLoop
 {
+    /** @var GpxReader $gpxReader*/
     protected $gpxReader;
+
+    /** @var int $startIndex */
     protected $startIndex;
+
+    /** @var int $endIndex */
     protected $endIndex;
+
+    /** @var \DateTimeZone */
+    protected $dateTimeZone = null;
     
     public function __construct(GpxReader $gpxReader)
     {
         $this->gpxReader = $gpxReader;
         $this->startIndex = 0;
         $this->endIndex = $this->gpxReader->countPoints();
+    }
+
+    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
+    {
+        $this->dateTimeZone = $dateTimeZone;
+
+        return $this;
     }
     
     public function execute(\DateTime $dateTime)
@@ -24,9 +39,15 @@ class GpxCoordLoop
         while (!$found) {
             $mid = $this->startIndex + (int) floor(($this->endIndex - $this->startIndex) / 2);
 
-            if ($this->gpxReader->getDateTimeOfPoint($mid)->format('U') < $dateTime->format('U')) {
+            $midDateTime = $this->gpxReader->getDateTimeOfPoint($mid);
+
+            if ($this->dateTimeZone) {
+                $midDateTime->setTimezone($this->dateTimeZone);
+            }
+
+            if ($midDateTime->format('Y-m-d-H-i-s') < $dateTime->format('Y-m-d-H-i-s')) {
                 $this->startIndex = $mid;
-            } elseif ($this->gpxReader->getDateTimeOfPoint($mid)->format('U') > $dateTime->format('U')) {
+            } elseif ($midDateTime->format('Y-m-d-H-i-s') > $dateTime->format('Y-m-d-H-i-s')) {
                 $this->endIndex = $mid;
             } else {
                 return $mid;
@@ -37,5 +58,4 @@ class GpxCoordLoop
             }
         }
     }
-    
 }

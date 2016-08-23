@@ -16,10 +16,20 @@ class GpxReader {
     protected $uploaderHelper;
     protected $rootDirectory;
 
+    /** @var \DateTimeZone */
+    protected $dateTimeZone = null;
+
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
     {
         $this->uploaderHelper = $uploaderHelper;
         $this->rootDirectory = $rootDirectory.'/../web';
+    }
+
+    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
+    {
+        $this->dateTimeZone = $dateTimeZone;
+
+        return $this;
     }
     
     public function loadFile($path)
@@ -210,8 +220,10 @@ class GpxReader {
     public function findCoordNearDateTime(\DateTime $dateTime)
     {
         $gcl = new GpxCoordLoop($this);
+        $gcl->setDateTimeZone($this->dateTimeZone);
+
         $result = $gcl->execute($dateTime);
-        
+
         return [
             'latitude' => $this->getLatitudeOfPoint($result),
             'longitude' => $this->getLongitudeOfPoint($result)

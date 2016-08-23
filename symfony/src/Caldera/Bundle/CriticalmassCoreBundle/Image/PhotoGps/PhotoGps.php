@@ -52,6 +52,9 @@ class PhotoGps
      */
     protected $dateTimeExifReader;
 
+    /** @var \DateTimeZone */
+    protected $dateTimeZone;
+
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory, GpsExifReader $gpsExifReader, DateTimeExifReader $dateTimeExifReader, TrackReader $trackReader)
     {
         $this->uploaderHelper = $uploaderHelper;
@@ -61,13 +64,26 @@ class PhotoGps
         $this->trackReader = $trackReader;
     }
 
+    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
+    {
+        $this->dateTimeZone = $dateTimeZone;
+        $this->trackReader->setDateTimeZone($dateTimeZone);
+
+        return $this;
+    }
+
     public function setPhoto(Photo $photo)
     {
         $this->photo = $photo;
 
         return $this;
     }
-    
+
+    public function getPhoto(Photo $photo)
+    {
+        return $this->photo;
+    }
+
     public function setTrack(Track $track)
     {
         $this->track = $track;
