@@ -58,29 +58,6 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function editAction(Request $request, $photoId = 0)
-    {
-        if ($photoId > 0) {
-            $em = $this->getDoctrine()->getManager();
-            $photo = $em->find('CriticalmassGalleryBundle:Photo', $photoId);
-            $form = $this->createFormBuilder($photo)
-                ->setAction($this->generateUrl('criticalmass_gallery_photos_edit', array('photoId' => $photoId)))
-                ->add('description')
-                ->getForm();
-
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em->merge($photo);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('criticalmass_gallery_photos_list'));
-            }
-
-            return $this->render('CalderaCriticalmassSiteBundle:PhotoManagement:edit.html.twig', array('form' => $form->createView()));
-        }
-    }
-
     public function showAction(Request $request, $citySlug, $rideDate, $photoId)
     {
         $city = $this->getCheckedCity($citySlug);
