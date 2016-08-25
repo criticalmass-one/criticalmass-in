@@ -46,6 +46,8 @@ class RideManagementController extends AbstractController
 
     protected function addGetAction(Request $request, Ride $ride, City $city, Form $form)
     {
+        $oldRides = $this->getRideRepository()->findRidesForCity($city);
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
             [
@@ -53,13 +55,16 @@ class RideManagementController extends AbstractController
                 'ride' => null,
                 'form' => $form->createView(),
                 'city' => $city,
-                'dateTime' => new \DateTime()
+                'dateTime' => new \DateTime(),
+                'oldRides' => $oldRides
             ]
         );
     }
 
     protected function addPostAction(Request $request, Ride $ride, City $city, Form $form)
     {
+        $oldRides = $this->getRideRepository()->findRidesForCity($city);
+
         $form->handleRequest($request);
 
         // TODO: remove this shit and test the validation in the template
@@ -100,7 +105,8 @@ class RideManagementController extends AbstractController
                 'ride' => $ride,
                 'form' => $form->createView(),
                 'city' => $city,
-                'dateTime' => new \DateTime()
+                'dateTime' => new \DateTime(),
+                'oldRides' => $oldRides
             )
         );
     }
