@@ -137,9 +137,12 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
             if (this._rideContainer.countEntities() == 1) {
                 var ride = this._rideContainer.getEntity(0);
                 this._map.setView([ride.getLatitude(), ride.getLongitude()], 12);
-            } else {
+            } else if (this._cityContainer.countEntities() > 0) {
                 var city = this._cityContainer.getEntity(0);
                 this._map.setView([city.getLatitude(), city.getLongitude()], 12);
+            } else {
+                var bounds = this._rideContainer.getBounds();
+                this._map.fitBounds(bounds);
             }
         }
     };
