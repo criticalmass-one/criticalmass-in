@@ -38,5 +38,9 @@ define(['MarkerEntity', 'leaflet-extramarkers'], function() {
         return null;
     };
 
+    PhotoEntity.prototype.getDateTime = function() {
+        return this._dateTime;
+    };
+
     return PhotoEntity;
 });
