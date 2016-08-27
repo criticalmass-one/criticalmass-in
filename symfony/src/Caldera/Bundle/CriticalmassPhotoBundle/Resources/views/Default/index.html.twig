@@ -3,9 +3,10 @@
 {% block title %}Fotos von Critical-Mass-Radfahrten{% endblock %}
 
 {% block content %}
-{#
-<div class="row m-t-3 m-b-3">
-    <div class="col-md-12">
+
+    {#
+<div class="row m-t-5 m-b-3">
+    <div class="col-xs-10 offset-xs-1">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -15,15 +16,15 @@
                 <li data-target="#carousel-example-generic" data-slide-to="4"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
-                {% for ride in rides|slice(0, 5) %}
+                {% for result in galleryResult|slice(0, 5) %}
                 <div class="carousel-item{% if loop.first %} active{% endif %}">
-                    <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350×150&w=1140&h=600" alt="First slide">
+                    <img src="{{ vich_uploader_asset(result.ride.featuredPhoto, 'imageFile')|imagine_filter('gallery_photo_large') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
                     <div class="carousel-caption">
                         <h3>
-                            {{ ride.city.title }}
+                            {{ result.ride.city.title }}
                         </h3>
                         <p>
-                            {{ ride.photos|length }} Fotos vom {{ ride.dateTime|date('d.m.Y') }}
+                            {{ result.counter }} Fotos vom {{ result.ride.dateTime|date('d.m.Y') }}
                         </p>
                     </div>
                 </div>
@@ -40,9 +41,10 @@
         </div>
     </div>
 </div>#}
+
 <div class="container m-t-5">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="card-columns">
                 {% for result in galleryResult %}
                 <div class="card">
