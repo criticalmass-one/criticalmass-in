@@ -10,6 +10,12 @@
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
 
         {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
+
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
     </head>
 
     <body>
@@ -17,7 +23,7 @@
             <a class="navbar-brand" href="{{ path('caldera_criticalmassphoto_photo_index') }}">
                 criticalmass.photos
             </a>
-            
+
             <ul class="nav navbar-nav">
                 {% block additionalNavbarItems %}{% endblock %}
             </ul>

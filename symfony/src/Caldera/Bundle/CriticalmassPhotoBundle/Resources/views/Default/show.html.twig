@@ -78,4 +78,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
+        {% if previousPhoto %}
+        page.setPreviousPhotoUrl('{{ path('caldera_criticalmassphoto_photo_show', { rideDate: previousPhoto.ride.getFormattedDate(), citySlug: previousPhoto.ride.city.slug, photoId: previousPhoto.id }) }}');
+        {% endif %}
+
+        {% if nextPhoto %}
+        page.setNextPhotoUrl('{{ path('caldera_criticalmassphoto_photo_show', { rideDate: nextPhoto.ride.getFormattedDate(), citySlug: nextPhoto.ride.city.slug, photoId: nextPhoto.id }) }}');
+        {% endif %}
+
+        {% if photo.hasCoordinates() %}
+        page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+        page.initMap();
+        {% endif %}
+    });
+</script>
 {% endblock %}
