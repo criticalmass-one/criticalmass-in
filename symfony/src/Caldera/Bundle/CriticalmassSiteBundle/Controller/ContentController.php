@@ -11,8 +11,6 @@ class ContentController extends AbstractController
     public function showAction(Request $request, $slug)
     {
         $content = $this->getContentRepository()->findBySlug($slug);
-        
-        $content = array_pop($content);
 
         if (!$content) {
             throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
@@ -29,9 +27,7 @@ class ContentController extends AbstractController
     public function editAction(Request $request, $slug)
     {
         $content = $this->getContentRepository()->findBySlug($slug);
-
-        $content = array_pop($content);
-
+        
         if (!$content) {
             throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
         }
