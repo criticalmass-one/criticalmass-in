@@ -18,6 +18,10 @@ caldera_criticalmass_photo_toggle:
     path: /{citySlug}/{rideDate}/photo/{photoId}/toggle
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:toggle }
 
+caldera_criticalmass_photo_featured:
+    path: /{citySlug}/{rideDate}/photo/{photoId}/featured
+    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:featuredPhoto }
+
 caldera_criticalmass_photo_delete:
     path: /{citySlug}/{rideDate}/managephotos/{photoId}/delete
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:delete }

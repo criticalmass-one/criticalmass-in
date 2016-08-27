@@ -102,11 +102,11 @@
                                         </a>
 
                                         {% if photo.ride.featuredPhoto == photo %}
-                                        <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
+                                        <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
                                             <i class="fa fa-flag"></i>
                                         </a>
                                         {% else %}
-                                        <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
+                                        <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
                                             <i class="fa fa-flag-o"></i>
                                         </a>
                                         {% endif %}
