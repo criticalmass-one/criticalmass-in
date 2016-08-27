@@ -2,11 +2,13 @@
 
 namespace Caldera\Bundle\CriticalmassPhotoBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\Content;
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends AbstractController
 {
@@ -82,6 +84,23 @@ class DefaultController extends AbstractController
                 'previousPhoto' => $previousPhoto,
                 'track' => $track,
                 'exif' => $exifData
+            ]
+        );
+    }
+
+    public function contentAction(Request $request, $contentSlug)
+    {
+        /** @var Content $content */
+        $content = $this->getContentRepository()->findBySlug($contentSlug);
+
+        if (!$content) {
+            throw new NotFoundHttpException('Schade, unter dem Stichwort '.$contentSlug.' wurde kein Inhalt hinterlegt.');
+        }
+
+        return $this->render(
+            'CalderaCriticalmassPhotoBundle:Default:content.html.twig',
+            [
+                'content' => $content
             ]
         );
     }

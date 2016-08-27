@@ -9,3 +9,7 @@ caldera_criticalmassphoto_photo_list:
 caldera_criticalmassphoto_photo_show:
     path:     /{citySlug}/{rideDate}/{photoId}
     defaults: { _controller: CalderaCriticalmassPhotoBundle:Default:show }
+
+caldera_criticalmassphoto_content_show:
+    path:     /{contentSlug}
+    defaults: { _controller: CalderaCriticalmassPhotoBundle:Default:content }
