@@ -14,9 +14,29 @@
 
     <body>
         <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ path('caldera_criticalmassphoto_photo_index') }}">
                 criticalmass.photos
             </a>
+            <ul class="nav navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Hilfe
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">
+                            Was ist die Critical Mass?
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Über diese Seite
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Urheberrecht
+                        </a>
+                    </div>
+                </li>
+                {% block additionalNavbarItems %}{% endblock %}
+            </ul>
+
         </nav>
 
         {% block content %}{% endblock %}
