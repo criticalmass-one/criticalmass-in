@@ -1,5 +1,7 @@
 {% extends 'CalderaCriticalmassPhotoBundle:Template:MasterTemplate.html.twig' %}
 
+{% block title %}Foto von der Critical Mass in {{ photo.ride.city.city }} am {{ photo.ride.dateTime|date('d.m.Y') }}{% endblock %}
+
 {% block additionalNavbarItems %}
     <li class="nav-item">
         <a class="nav-link" href="{{ path('caldera_criticalmassphoto_photo_index') }}">

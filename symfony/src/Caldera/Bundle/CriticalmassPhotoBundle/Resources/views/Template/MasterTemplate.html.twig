@@ -3,7 +3,7 @@
     <head>
         {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-        <title>Fotos von Critical-Mass-Touren</title>
+        <title>{% block title %}{% endblock %} &mdash; criticalmass.photos</title>
 
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassphoto/css/main.css') }}" />
