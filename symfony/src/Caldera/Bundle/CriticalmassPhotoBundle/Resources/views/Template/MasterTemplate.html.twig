@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+
+        <title>Fotos von Critical-Mass-Touren</title>
+
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassphoto/css/main.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+
+        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
+    </head>
+
+    <body>
+        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+            <a class="navbar-brand" href="#">
+                criticalmass.photos
+            </a>
+        </nav>
+
+        {% block content %}{% endblock %}
+
+        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
+
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
+    </body>
+</html>
+

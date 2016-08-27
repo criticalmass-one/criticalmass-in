@@ -1,70 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+{% extends 'CalderaCriticalmassPhotoBundle:Template:MasterTemplate.html.twig' %}
 
-        <title>Fotos von der Critical Mass in {{ ride.city.city }} am {{ ride.dateTime|date('d.m.Y') }}</title>
+{% block content %}
+<div class="container m-t-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-md-center">
+                <h1>
+                    {{ ride.city.title }}
+                </h1>
+            </div>
+        </div>
+    </div>
 
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-md-center">
+                <p class="lead">
+                    Fotos von der <a href="{{ path(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am <a href="{{ path(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row m-t-3">
-                <div class="col-md-12">
-                    <div class="text-md-center">
-                        <h1>
-                            {{ ride.city.title }}
-                        </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="photo-list">
+                    {% for photo in pagination %}
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 photo-thumb margin-bottom-medium text-xs-center text-sm-center text-md-center text-lg-center">
+                        <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: ride.getFormattedDate(), citySlug: ride.city.slug, photoId: photo.id }) }}">
+                            <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                        </a>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-md-center">
-                        <p class="lead">
-                            Fotos von der <a href="{{ path(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am <a href="{{ path(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="photo-list">
-                            {% for photo in pagination %}
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 photo-thumb margin-bottom-medium text-xs-center text-sm-center text-md-center text-lg-center">
-                                <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: ride.getFormattedDate(), citySlug: ride.city.slug, photoId: photo.id }) }}">
-                                    <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
-                                </a>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="text-md-center">
-                                {{ knp_pagination_render(pagination, 'CalderaCriticalmassCoreBundle:KnpPagination:bootstrap34template.html.twig') }}
-                            </div>
-                        </div>
+                        {{ knp_pagination_render(pagination, 'CalderaCriticalmassCoreBundle:KnpPagination:bootstrap34template.html.twig') }}
                     </div>
                 </div>
             </div>
         </div>
-
-        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
-
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
-
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
-</html>
-
-
+    </div>
+</div>
+{% endblock %}

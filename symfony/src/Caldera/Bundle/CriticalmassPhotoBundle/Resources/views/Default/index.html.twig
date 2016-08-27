@@ -1,108 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+{% extends 'CalderaCriticalmassPhotoBundle:Template:MasterTemplate.html.twig' %}
 
-        <title>Fotos von Critical-Mass-Touren</title>
-
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
-
-        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
-    </head>
-
-    <body>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-            <a class="navbar-brand" href="#">
-                criticalmass.photos
+{% block content %}
+{#
+<div class="row m-t-3 m-b-3">
+    <div class="col-md-12">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                {% for ride in rides|slice(0, 5) %}
+                <div class="carousel-item{% if loop.first %} active{% endif %}">
+                    <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350×150&w=1140&h=600" alt="First slide">
+                    <div class="carousel-caption">
+                        <h3>
+                            {{ ride.city.title }}
+                        </h3>
+                        <p>
+                            {{ ride.photos|length }} Fotos vom {{ ride.dateTime|date('d.m.Y') }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="icon-prev" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
             </a>
-        </nav>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="icon-next" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>#}
+<div class="container m-t-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-columns">
+                {% for result in galleryResult %}
+                <div class="card">
+                    {% if result.ride.featuredPhoto %}
+                    <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}">
+                        <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(result.ride.featuredPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
+                    </a>
+                    {% endif %}
+                    <div class="card-block">
+                        <h4 class="card-title text-md-center">
+                            {{ result.ride.fancyTitle }}
+                        </h4>
 
-        <div class="container m-t-3">
-            {#
-            <div class="row m-t-3 m-b-3">
-                <div class="col-md-12">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-                        </ol>
-                        <div class="carousel-inner" role="listbox">
-                            {% for ride in rides|slice(0, 5) %}
-                            <div class="carousel-item{% if loop.first %} active{% endif %}">
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350×150&w=1140&h=600" alt="First slide">
-                                <div class="carousel-caption">
-                                    <h3>
-                                        {{ ride.city.title }}
-                                    </h3>
-                                    <p>
-                                        {{ ride.photos|length }} Fotos vom {{ ride.dateTime|date('d.m.Y') }}
-                                    </p>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                            <span class="icon-prev" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
+                        <p class="card-text">
+                            {{ result.counter }} Fotos von der Critical Mass in {{ result.ride.city.city }}
+                        </p>
+
+                        <a href="{{ path(result.ride) }}" class="card-link">
+                            zur Tour
                         </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                            <span class="icon-next" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
+
+                        <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}" class="card-link">
+                            zur Galerie
                         </a>
+
+                        <p class="card-text">
+                            <small class="text-muted">
+                                hochgeladen am {{ result.ride.dateTime|date('d.m.Y') }}
+                            </small>
+                        </p>
                     </div>
                 </div>
-            </div>#}
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card-columns">
-                        {% for result in galleryResult %}
-                        <div class="card">
-                            {% if result.ride.featuredPhoto %}
-                            <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}">
-                                <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(result.ride.featuredPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
-                            </a>
-                            {% endif %}
-                            <div class="card-block">
-                                <h4 class="card-title text-md-center">
-                                    {{ result.ride.fancyTitle }}
-                                </h4>
-
-                                <p class="card-text">
-                                    {{ result.counter }} Fotos von der Critical Mass in {{ result.ride.city.city }}
-                                </p>
-
-                                <a href="{{ path(result.ride) }}" class="card-link">
-                                    zur Tour
-                                </a>
-
-                                <a href="{{ path('caldera_criticalmassphoto_photo_list', { citySlug: result.ride.city.slug, rideDate: result.ride.formattedDate }) }}" class="card-link">
-                                    zur Galerie
-                                </a>
-
-                                <p class="card-text">
-                                    <small class="text-muted">
-                                        hochgeladen am {{ result.ride.dateTime|date('d.m.Y') }}
-                                    </small>
-                                </p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-
-        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
-
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
-
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
-</html>
-
+    </div>
+</div>
+{% endblock %}

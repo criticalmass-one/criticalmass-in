@@ -1,111 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+{% extends 'CalderaCriticalmassPhotoBundle:Template:MasterTemplate.html.twig' %}
 
-        <title>Fotos von der Critical Mass in {{ photo.ride.city.city }} am {{ photo.ride.dateTime|date('d.m.Y') }}</title>
+{% block content %}
+    <div class="container m-t-5">
+    <div class="row hidden-xs hidden-sm m-b-2">
+        <div class="col-md-12">
+            <div class="text-md-center">
+                <a href="{{ path('caldera_criticalmassphoto_photo_list', { rideDate: photo.ride.getFormattedDate(), citySlug: photo.ride.city.slug }) }}">
+                    <h1>
+                        {{ photo.ride.city.title }} am {{ photo.ride.dateTime|date('d.m.Y') }}
+                    </h1>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+<div class="container-fluid m-t-1">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: nextPhoto.ride.getFormattedDate(), citySlug: nextPhoto.ride.city.slug, photoId: nextPhoto.id }) }}">
+                <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_large') }}" />
+            </a>
+        </div>
+    </div>
+</div>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+<div class="container m-t-3">
+    <div class="row">
+        <div class="hidden-xs hidden-sm col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    Aufnahmedaten
+                </div>
 
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row hidden-xs hidden-sm margin-bottom-medium m-t-1">
-                <div class="col-md-12">
-                    <div class="text-md-center">
-                        <a href="{{ path('caldera_criticalmassphoto_photo_list', { rideDate: photo.ride.getFormattedDate(), citySlug: photo.ride.city.slug }) }}">
-                            <h1>
-                                {{ photo.ride.city.title }} am {{ photo.ride.dateTime|date('d.m.Y') }}
-                            </h1>
-                        </a>
-                    </div>
+                <div class="card-block">
+                    {% include('CalderaCriticalmassPhotoBundle:Includes:_exif.html.twig') with { 'photo': photo, 'exif': exif } %}
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid margin-top-small">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: nextPhoto.ride.getFormattedDate(), citySlug: nextPhoto.ride.city.slug, photoId: nextPhoto.id }) }}">
-                        <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_large') }}" />
-                    </a>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    Karte
+                </div>
+
+                <div class="card-block">
+                    {% include('CalderaCriticalmassPhotoBundle:Includes:_map.html.twig') with { 'photo': photo, 'track': track } %}
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="container margin-top-large">
-            <div class="row">
-                <div class="hidden-xs hidden-sm col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            Aufnahmedaten
-                        </div>
-
-                        <div class="card-block">
-                            {% include('CalderaCriticalmassPhotoBundle:Includes:_exif.html.twig') with { 'photo': photo, 'exif': exif } %}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            Karte
-                        </div>
-
-                        <div class="card-block">
-                            {% include('CalderaCriticalmassPhotoBundle:Includes:_map.html.twig') with { 'photo': photo, 'track': track } %}
-                        </div>
-                    </div>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-md-center text-muted">
+                <a href="{{ path(photo) }}">
+                    Sieh dir dieses Foto auf criticalmass.in an
+                </a>
             </div>
         </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-md-center text-muted">
-                        <a href="{{ path(photo) }}">
-                            Sieh dir dieses Foto auf criticalmass.in an
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
-
-        <script>
-            CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
-                {% if previousPhoto %}
-                page.setPreviousPhotoUrl('{{ path('caldera_criticalmassphoto_photo_show', { rideDate: previousPhoto.ride.getFormattedDate(), citySlug: previousPhoto.ride.city.slug, photoId: previousPhoto.id }) }}');
-                {% endif %}
-
-                {% if nextPhoto %}
-                page.setNextPhotoUrl('{{ path('caldera_criticalmassphoto_photo_show', { rideDate: nextPhoto.ride.getFormattedDate(), citySlug: nextPhoto.ride.city.slug, photoId: nextPhoto.id }) }}');
-                {% endif %}
-
-                {% if photo.hasCoordinates() %}
-                page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-                page.initMap();
-                {% endif %}
-            });
-        </script>
-
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
-
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
-</html>
-
-
+    </div>
+</div>
+{% endblock %}
