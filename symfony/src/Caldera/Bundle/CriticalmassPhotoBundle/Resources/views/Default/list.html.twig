@@ -37,9 +37,9 @@
             <div class="row">
                 <div class="photo-list">
                     {% for photo in pagination %}
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 photo-thumb margin-bottom-medium text-xs-center text-sm-center text-md-center text-lg-center">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-xs-center m-b-1">
                         <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: ride.getFormattedDate(), citySlug: ride.city.slug, photoId: photo.id }) }}">
-                            <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                            <img class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
                         </a>
                     </div>
                     {% endfor %}
