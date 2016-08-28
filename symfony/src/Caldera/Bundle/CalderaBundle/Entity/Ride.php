@@ -215,6 +215,11 @@ class Ride implements ParticipateableInterface, ViewableInterface
     protected $featuredPhoto;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $restrictedPhotoAccess = false;
+
+    /**
      * Get id
      *
      * @return integer
@@ -1036,5 +1041,17 @@ class Ride implements ParticipateableInterface, ViewableInterface
     public function getFeaturedPhoto()
     {
         return $this->featuredPhoto;
+    }
+
+    public function getRestrictedPhotoAccess()
+    {
+        return $this->restrictedPhotoAccess;
+    }
+
+    public function setRestrictedPhotoAccess($restrictedPhotoAccess)
+    {
+        $this->restrictedPhotoAccess = $restrictedPhotoAccess;
+
+        return $this;
     }
 }

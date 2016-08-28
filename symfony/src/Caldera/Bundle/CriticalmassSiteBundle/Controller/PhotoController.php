@@ -2,6 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Event;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
@@ -16,15 +19,26 @@ class PhotoController extends AbstractController
 
     public function showAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null, $photoId)
     {
+        /** @var City $city */
         $city = $this->getCheckedCity($citySlug);
+
+        /** @var Ride $ride */
         $ride = null;
+
+        /** @var Event $event */
         $event = null;
+
+        /** @var Track $track */
         $track = null;
 
         if ($rideDate) {
             $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         } else {
             $event = $this->getEventRepository()->findOneBySlug($eventSlug);
+        }
+
+        if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
+            throw $this->createAccessDeniedException();
         }
 
         /** @var Photo $photo */

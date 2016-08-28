@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PhotoCoordType;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
@@ -19,12 +20,19 @@ class PhotoGalleryController extends AbstractController
 {
     public function galleryAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null)
     {
+        /** @var Ride $ride */
         $ride = null;
+
+        /** @var Event $event */
         $event = null;
 
         if ($rideDate) {
             $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
+            if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
+                throw $this->createAccessDeniedException();
+            }
+            
             $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
         } else {
             $event = $this->getEventRepository()->findOneBySlug($eventSlug);
