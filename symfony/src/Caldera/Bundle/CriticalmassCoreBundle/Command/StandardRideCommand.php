@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,23 +27,32 @@ class StandardRideCommand extends ContainerAwareCommand
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
             )
-            ->addOption(
-                'force',
-                'f',
-                InputOption::VALUE_OPTIONAL,
-                'Use to create the rides, otherwise you only get a preview')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var int $year */
         $year = $input->getArgument('year');
+
+        /** @var int $month */
         $month = $input->getArgument('month');
 
-        $cities = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:City')->findBy(array('isArchived' => false, 'enabled' => true), array('city' => 'ASC'));
-        
-        foreach ($cities as $city)
-        {
+        $doctrine = $this->getContainer()->get('doctrine');
+        $entityManager = $doctrine->getManager();
+
+        $cities = $doctrine->getRepository('CalderaBundle:City')->findBy(
+            [
+                'isArchived' => false,
+                'enabled' => true
+            ],
+            [
+                'city' => 'ASC'
+            ]
+        );
+
+        /** @var City $city */
+        foreach ($cities as $city) {
             $output->writeln($city->getTitle());
 
             if ($city->getIsStandardable()) {
@@ -69,11 +79,7 @@ class StandardRideCommand extends ContainerAwareCommand
                     $output->writeln('');
                     $output->writeln('');
                     
-                    if ($input->hasOption('force')) {
-                        $em = $this->getContainer()->get('doctrine')->getManager();
-                        $em->persist($ride);
-                        $em->flush();
-                    }
+                    $entityManager->persist($ride);
                 }
             }
             else
@@ -82,8 +88,6 @@ class StandardRideCommand extends ContainerAwareCommand
             }
         }
 
-        if (!$input->hasOption('force')) {
-            $output->writeln('This was only a preview. Use --force to create rides.');
-        }
+        $entityManager->flush();
     }
 }

@@ -2,15 +2,24 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 
-class StandardRideGenerator {
+class StandardRideGenerator
+{
+    /** @var int year */
     protected $year;
+
+    /** @var int $month */
     protected $month;
+
+    /** @var City $city */
     protected $city;
+
+    /** @var Ride $ride */
     protected $ride;
 
-    public function __construct($city, $year, $month)
+    public function __construct(City $city, int $year, int $month)
     {
         $this->year = $year;
         $this->month = $month;
@@ -20,10 +29,9 @@ class StandardRideGenerator {
         $this->ride->setCity($city);
     }
 
-    public function execute()
+    public function execute(): Ride
     {
-        if (!$this->city->getIsStandardable())
-        {
+        if (!$this->city->getIsStandardable()) {
             return null;
         }
         
@@ -42,26 +50,20 @@ class StandardRideGenerator {
 
         $dayInterval = new \DateInterval('P1D');
 
-        while ($dateTime->format('w') != $this->city->getStandardDayOfWeek())
-        {
+        while ($dateTime->format('w') != $this->city->getStandardDayOfWeek()) {
             $dateTime->add($dayInterval);
         }
 
-        if ($this->city->getStandardWeekOfMonth() > 0)
-        {
+        if ($this->city->getStandardWeekOfMonth() > 0) {
             $weekInterval = new \DateInterval('P7D');
 
-            for ($weekOfMonth = 1; $weekOfMonth < $this->city->getStandardWeekOfMonth(); ++$weekOfMonth)
-            {
+            for ($weekOfMonth = 1; $weekOfMonth < $this->city->getStandardWeekOfMonth(); ++$weekOfMonth) {
                 $dateTime->add($weekInterval);
             }
-        }
-        else
-        {
+        } else {
             $weekInterval = new \DateInterval('P7D');
 
-            while ($dateTime->format('m') == $this->month)
-            {
+            while ($dateTime->format('m') == $this->month) {
                 $dateTime->add($weekInterval);
             }
 
@@ -75,8 +77,7 @@ class StandardRideGenerator {
     {
         $this->ride->setHasTime($this->city->getStandardTime() != null);
 
-        if ($this->city->getStandardTime())
-        {
+        if ($this->city->getStandardTime()) {
             $timeInterval = new \DateInterval('PT'.$this->city->getStandardTime()->format('H').'H'.$this->city->getStandardTime()->format('i').'M');
             $this->ride->setDateTime($this->ride->getDateTime()->add($timeInterval));
         }
@@ -84,29 +85,24 @@ class StandardRideGenerator {
 
     protected function calculateLocation()
     {
-        if ($this->city->getStandardLocation() && $this->city->getStandardLatitude() && $this->city->getStandardLongitude())
-        {
+        if ($this->city->getStandardLocation() && $this->city->getStandardLatitude() && $this->city->getStandardLongitude()) {
             $this->ride->setLocation($this->city->getStandardLocation());
             $this->ride->setLatitude($this->city->getStandardLatitude());
             $this->ride->setLongitude($this->city->getStandardLongitude());
             $this->ride->setHasLocation(true);
-        }
-        else
-        {
+        } else {
             $this->ride->setHasLocation(false);
         }
     }
 
-    public function isRideDuplicate()
+    public function isRideDuplicate(): bool
     {
-        foreach ($this->city->getRides() as $ride)
-        {
-            if ($ride->isSameRide($this->ride))
-            {
+        foreach ($this->city->getRides() as $ride) {
+            if ($ride->isSameRide($this->ride)) {
                 return true;
             }
         }
 
         return false;
     }
-} 
+}
