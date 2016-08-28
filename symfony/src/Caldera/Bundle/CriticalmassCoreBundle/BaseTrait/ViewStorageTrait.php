@@ -8,11 +8,13 @@ use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
+use Lsw\MemcacheBundle\Cache\LoggingMemcache;
 
 trait ViewStorageTrait
 {
-    protected function countView(ViewableInterface $viewable, $identifier)
+    protected function countView(ViewableInterface $viewable, string $identifier)
     {
+        /** @var LoggingMemcache $memcache */
         $memcache = $this->get('memcache.criticalmass');
 
         $additionalViews = $memcache->get($identifier.$viewable->getId().'_additionalviews');
