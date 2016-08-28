@@ -11,6 +11,12 @@ body #city-jumbotron {
     color: white;
     text-shadow: 0 0 3px #000; }
 
+footer#footer {
+  background-color: #eeeeee;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
 body .margin-top-small {
   margin-top: 10px; }
 body .margin-top-medium {
