@@ -1,118 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+{% extends 'CalderaCriticalmassLiveBundle:Template:MasterTemplate.html.twig' %}
 
-        <title>
-            criticalmass.live
-        </title>
-
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasslive/css/live.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
-
-        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />#}
-
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
-    </head>
-
-    <body>
-    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-        <a class="navbar-brand" href="#">
-            criticalmass.live
-        </a>
-
-        <ul class="nav navbar-nav">
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link">
-                    <i class="fa fa-bicycle"></i>
-                    Was ist Critical Mass?
-                </a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link">
-                    <i class="fa fa-bicycle"></i>
-                        So funktioniert’s
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a class="dropdown-item" href="http://www.spiegel.de/">
-                            Live-Tracking mit Glympse
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="http://www.spiegel.de/">
-                            Live-Tracking mit Criticalmaps
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="container m-t-5">
-        <div class="row">
-            <div class="col-xs-6 offset-xs-3">
-                {% if rides | length > 0 %}
-                <form name="" class="form-inline">
-                    <div class="row">
-                        <div class="col-xs-12 text-xs-center">
-                            <h2>
-                                Auf den Sattel, fertig los
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 text-xs-center">
-                            <p class="lead">
-                                Wo bist du heute unterwegs?
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 text-xs-center">
-                            <select class="form-control" id="select-ride">
-                                {% for ride in rides %}
-                                    {% if (ride.hasLocation() and ride.latitude and ride.longitude) %}
-                                    {% set latitude = ride.latitude %}
-                                    {% set longitude = ride.longitude %}
-                                    {% else %}
-                                    {% set latitude = ride.city.latitude %}
-                                    {% set longitude = ride.city.longitude %}
-                                    {% endif %}
-                                    <option data-city-slug="{{ ride.city.slug }}" data-latitude="{{ latitude }}" data-longitude="{{ longitude }}">
-                                        {{ ride.city.city }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row m-t-1">
-                        <div class="col-xs-12 text-xs-center">
-                            <div class="btn-group">
-                                <button id="ride-on" type="submit" class="btn btn-success">
-                                    Ride on
-                                </button>
-                                <button id="auto-select" type="button" class="btn btn-default">
-                                    Autoselect
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                {% else %}
+{% block content %}
+<div class="container m-t-5">
+    <div class="row">
+        <div class="col-xs-6 offset-xs-3">
+            {% if rides | length > 0 %}
+            <form name="" class="form-inline">
                 <div class="row">
                     <div class="col-xs-12 text-xs-center">
                         <h2>
-                            Nichts los auf den Straßen
+                            Auf den Sattel, fertig los
                         </h2>
                     </div>
                 </div>
@@ -120,25 +17,65 @@
                 <div class="row">
                     <div class="col-xs-12 text-xs-center">
                         <p class="lead">
-                            Leider ist momentan keine kritische Masse unterwegs. Schau dir die <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Liste weltweiter Critical-Mass-Touren</a> an, um eine Tour in deiner Nähe zu finden.
+                            Wo bist du heute unterwegs?
                         </p>
                     </div>
                 </div>
-                {% endif %}
+
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <select class="form-control" id="select-ride">
+                            {% for ride in rides %}
+                                {% if (ride.hasLocation() and ride.latitude and ride.longitude) %}
+                                {% set latitude = ride.latitude %}
+                                {% set longitude = ride.longitude %}
+                                {% else %}
+                                {% set latitude = ride.city.latitude %}
+                                {% set longitude = ride.city.longitude %}
+                                {% endif %}
+                                <option data-city-slug="{{ ride.city.slug }}" data-latitude="{{ latitude }}" data-longitude="{{ longitude }}">
+                                    {{ ride.city.city }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row m-t-1">
+                    <div class="col-xs-12 text-xs-center">
+                        <div class="btn-group">
+                            <button id="ride-on" type="submit" class="btn btn-success">
+                                Ride on
+                            </button>
+                            <button id="auto-select" type="button" class="btn btn-default">
+                                Autoselect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+            <div class="row">
+                <div class="col-xs-12 text-xs-center">
+                    <h2>
+                        Nichts los auf den Straßen
+                    </h2>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12 text-xs-center">
+                    <p class="lead">
+                        Leider ist momentan keine kritische Masse unterwegs. Schau dir die <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Liste weltweiter Critical-Mass-Touren</a> an, um eine Tour in deiner Nähe zu finden.
+                    </p>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
+</div>
 
-    <script>
-        CriticalMass.loadModule('LiveFrontPage');
-    </script>
-    {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
-
-    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
-
-    {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
-</html>
-
-
+<script>
+    CriticalMass.loadModule('LiveFrontPage');
+</script>
+{% endblock  %}
