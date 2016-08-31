@@ -3,41 +3,46 @@
 {% block title %}Fotos von Critical-Mass-Radfahrten{% endblock %}
 
 {% block content %}
-
     {#
-<div class="row m-t-5 m-b-3">
-    <div class="col-xs-10 offset-xs-1">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                {% for result in galleryResult|slice(0, 5) %}
-                <div class="carousel-item{% if loop.first %} active{% endif %}">
-                    <img src="{{ vich_uploader_asset(result.ride.featuredPhoto, 'imageFile')|imagine_filter('gallery_photo_large') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
-                    <div class="carousel-caption">
-                        <h3>
-                            {{ result.ride.city.title }}
-                        </h3>
-                        <p>
-                            {{ result.counter }} Fotos vom {{ result.ride.dateTime|date('d.m.Y') }}
-                        </p>
+<div class="container-fluid m-t-5">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    {% set counter = 0 %}
+                    {% for result in galleryResult if counter < 5 %}
+                    {% if result.ride.city.id == 1 %}
+                    <div class="carousel-item{% if loop.first %} active{% endif %}">
+                        <img src="{{ vich_uploader_asset(result.ride.featuredPhoto, 'imageFile')|imagine_filter('gallery_photo_large') }}" alt="Vorschaufoto der Critical Mass in {{ result.ride.city.city }}" />
+                        <div class="carousel-caption">
+                            <h3>
+                                {{ result.ride.city.title }}
+                            </h3>
+                            <p>
+                                {{ result.counter }} Fotos vom {{ result.ride.dateTime|date('d.m.Y') }}
+                            </p>
+                        </div>
                     </div>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="icon-prev" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="icon-next" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                <span class="icon-prev" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                <span class="icon-next" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
 </div>#}
