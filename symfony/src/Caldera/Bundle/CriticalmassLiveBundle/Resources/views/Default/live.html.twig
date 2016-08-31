@@ -1,68 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+{% extends 'CalderaCriticalmassLiveBundle:Template:MasterTemplate.html.twig' %}
 
-        <title>
-            criticalmass.live
-        </title>
+{% block content %}
+<div id="map">
+    <div id="glympse-logo-container">
+        <a href="http://www.glympse.com/">
+            <img id="glympse-logo" src="/bundles/calderacriticalmasssite/images/glympse/glympse-150.png" />
+        </a>
+    </div>
+</div>
 
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasslive/css/live.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+<script>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    var options = {
+        apiUrl: window.location.origin + '/api/positions/{{ city.slug }}',
+        apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
+    };
 
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    CriticalMass.loadModule('LivePage', null, options, function(livePage) {
+        {% if ride.hasLocation() and ride.latitude != 0 and ride.longitude != 0 %}
+        ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
 
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
-    </head>
+        ride.openPopup();
+        {% else %}
+        city = livePage.addCity('{{ city|serialize|raw|e('js') }}');
 
-    <body>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-            <a class="navbar-brand" href="#">
-                criticalmass.live
-            </a>
-        </nav>
+        city.openPopup();
+        {% endif %}
 
-        <div id="map">
-            <div id="glympse-logo-container">
-                <a href="http://www.glympse.com/">
-                    <img id="glympse-logo" src="/bundles/calderacriticalmasssite/images/glympse/glympse-150.png" />
-                </a>
-            </div>
-        </div>
+        {% for event in events %}
+         livePage.addEvent('{{ event|serialize|raw|e('js') }}');
+        {% endfor %}
 
-        <script>
-
-            var options = {
-                apiUrl: window.location.origin + '/api/positions/{{ city.slug }}',
-                apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
-            };
-
-            CriticalMass.loadModule('LivePage', null, options, function(livePage) {
-                {% if ride.hasLocation() and ride.latitude != 0 and ride.longitude != 0 %}
-                ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
-
-                ride.openPopup();
-                {% else %}
-                city = livePage.addCity('{{ city|serialize|raw|e('js') }}');
-
-                city.openPopup();
-                {% endif %}
-
-                {% for event in events %}
-                 livePage.addEvent('{{ event|serialize|raw|e('js') }}');
-                {% endfor %}
-
-                livePage.setFocus();
-            });
-        </script>
-
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
-
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
-</html>
+        livePage.setFocus();
+    });
+</script>
+{% endblock %}
