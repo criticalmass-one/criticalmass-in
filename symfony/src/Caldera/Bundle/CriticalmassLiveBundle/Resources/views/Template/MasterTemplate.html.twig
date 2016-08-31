@@ -54,14 +54,14 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#impressModal">
                         <i class="fa fa-bicycle"></i>
                         Impressum
                     </a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#legalModal">
                         <i class="fa fa-bicycle"></i>
                         Urheberrecht
                     </a>
@@ -71,7 +71,8 @@
 
         {% block content %}{% endblock %}
 
-        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
+        {% include('CalderaCriticalmassLiveBundle:Includes:_impressModal.html.twig') %}
+        {% include('CalderaCriticalmassLiveBundle:Includes:_legalModal.html.twig') %}
 
         <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
         <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
