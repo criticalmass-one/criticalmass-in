@@ -7,3 +7,7 @@ caldera_criticalmass_live_live_city:
     defaults: { _controller: CalderaCriticalmassLiveBundle:Live:city }
     options:
         expose: true
+
+caldera_criticalmass_live_content:
+    path:     /content/{contentSlug}
+    defaults: { _controller: CalderaCriticalmassLiveBundle:Content:show }
