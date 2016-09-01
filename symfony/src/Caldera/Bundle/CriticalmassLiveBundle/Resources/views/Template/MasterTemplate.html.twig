@@ -21,13 +21,13 @@
 
     <body>
         <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ path('caldera_criticalmass_live_frontpage') }}">
                 criticalmass.live
             </a>
 
             <ul class="nav navbar-nav">
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link">
+                    <a href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'was-ist-critical-mass' } ) }}" class="nav-link">
                         Was ist Critical Mass?
                     </a>
                 </li>
@@ -39,12 +39,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="http://www.spiegel.de/">
+                            <a class="dropdown-item" href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-geht-live-tracking-mit-glympse' } ) }}">
                                 Live-Tracking mit Glympse
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="http://www.spiegel.de/">
+                            <a class="dropdown-item" href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-geht-live-tracking-mit-criticalmaps' } ) }}">
                                 Live-Tracking mit Criticalmaps
                             </a>
                         </li>
