@@ -1,4 +1,4 @@
-caldera_criticalmass_live_homepage:
+caldera_criticalmass_live_frontpage:
     path:     /
     defaults: { _controller: CalderaCriticalmassLiveBundle:Default:index }
 
