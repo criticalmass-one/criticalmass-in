@@ -7,7 +7,7 @@
     <li class="active">{{ city.city }}</li>
 {% endblock %}
 
-{% set currentPath = 'https://criticalmass.in' ~ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+{% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
 {% block additionalHeaderElements %}
     <meta property="og:title" content="{{ city.title }}" />
