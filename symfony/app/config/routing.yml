@@ -23,10 +23,9 @@ _liip_imagine:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
-
 caldera_criticalmass_rest:
     resource: "@CalderaCriticalmassRestBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /rest
 
 caldera_criticalmass:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing.yml"

@@ -7,14 +7,14 @@ use Caldera\Bundle\CriticalmassCoreBundle\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
-class CityController extends BaseController
+class RideController extends BaseController
 {
     use RepositoryTrait;
     use UtilTrait;
 
-    public function showAction(string $citySlug): Response
+    public function showAction(string $citySlug, string $rideDate): Response
     {
-        $city = $this->getCheckedCity($citySlug);
+        $city = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $view = View::create();
         $view

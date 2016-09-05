@@ -19,7 +19,6 @@ fos_user:
                 address:        malte@criticalmass.in
                 sender_name:    Malte Hübner, criticalmass.in
 
-
 fos_rest:
     view:
         formats:
@@ -36,3 +35,8 @@ fos_rest:
             html: false
         failed_validation: HTTP_BAD_REQUEST
         default_engine: twig
+    service:
+        serializer: fos_rest.serializer.jms
+    serializer:
+        groups:               []
+        serialize_null:       true
