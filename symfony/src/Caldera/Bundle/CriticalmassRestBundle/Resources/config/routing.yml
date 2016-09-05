@@ -3,5 +3,9 @@ caldera_criticalmass_rest_city_show:
     defaults: { _controller: CalderaCriticalmassRestBundle:City:show }
 
 caldera_criticalmass_rest_ride_show:
+    path:     /{citySlug}/current
+    defaults: { _controller: CalderaCriticalmassRestBundle:Ride:showCurrent }
+
+caldera_criticalmass_rest_ride_show:
     path:     /{citySlug}/{rideDate}
     defaults: { _controller: CalderaCriticalmassRestBundle:Ride:show }

@@ -14,11 +14,26 @@ class RideController extends BaseController
 
     public function showAction(string $citySlug, string $rideDate): Response
     {
-        $city = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $view = View::create();
         $view
-            ->setData($city)
+            ->setData($ride)
+            ->setFormat('json')
+            ->setStatusCode(200);
+
+        return $this->handleView($view);
+    }
+
+    public function showCurrentAction(string $citySlug): Response
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $ride = $this->getRideRepository()->findCurrentRideForCity($city);
+
+        $view = View::create();
+        $view
+            ->setData($ride)
             ->setFormat('json')
             ->setStatusCode(200);
 
