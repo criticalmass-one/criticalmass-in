@@ -194,11 +194,6 @@ class StravaController extends AbstractController
 
         $exporter->execute();
 
-        $track = new Track();
-        $track->setUser($this->getUser());
-        $track->setRide($ride);
-        $track->setTrackFilename(uniqid().'.gpx');
-
         $filename = uniqid() . '.gpx';
 
         $fp = fopen('../web/tracks/' . $filename, 'w');
