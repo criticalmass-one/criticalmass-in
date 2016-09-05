@@ -124,6 +124,7 @@ class Track
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @deprecated
      */
     protected $latLngList;
 
