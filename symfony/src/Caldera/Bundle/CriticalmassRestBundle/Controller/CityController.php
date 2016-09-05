@@ -3,15 +3,18 @@
 namespace Caldera\Bundle\CriticalmassRestBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
+use Caldera\Bundle\CriticalmassCoreBundle\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends BaseController
 {
     use RepositoryTrait;
+    use UtilTrait;
 
-    public function showAction($citySlug)
+    public function showAction(string $citySlug): Response
     {
-        $city = $this->getCityRepository();
+        $city = $this->getCityRepository()->findOneByMainSlug($citySlug);
 
         $view = View::create();
         $view
