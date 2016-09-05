@@ -16,6 +16,15 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Track
 {
+    const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
+    const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
+    const TRACK_SOURCE_RUNKEEPER = 'TRACK_SOURCE_RUNKEEPER';
+    const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
+    const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
+    const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
+    const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
+    const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
+
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
@@ -157,6 +166,11 @@ class Track
      * @var \DateTime
      */
     protected $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
+     */
+    protected $source;
 
     public function __construct()
     {
@@ -740,5 +754,17 @@ class Track
         $newDate = new \DateTime($this->startDateTime->format('Y-m-d') . ' 00:00:00');
 
         $this->startDateTime = $newDate->add($newDate->diff($date));
+    }
+
+    public function setSource(string $source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
     }
 }
