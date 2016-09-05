@@ -3,7 +3,10 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Traits;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait UtilTrait
@@ -15,8 +18,9 @@ trait UtilTrait
      * @return City
      * @throws NotFoundHttpException
      */
-    protected function getCityBySlug($citySlug)
+    protected function getCityBySlug($citySlug): City
     {
+        /** @var CitySlug $citySlug */
         $citySlug = $this->getCitySlugRepository()->findOneBySlug($citySlug);
 
         if ($citySlug) {
@@ -29,12 +33,12 @@ trait UtilTrait
     /**
      * @return Metadata
      */
-    protected function getMetadata()
+    protected function getMetadata(): Metadata
     {
         return $this->get('caldera.criticalmass.metadata');
     }
 
-    protected function getCheckedCity($citySlug)
+    protected function getCheckedCity($citySlug): City
     {
         $city = $this->getCityBySlug($citySlug);
 
@@ -53,8 +57,9 @@ trait UtilTrait
      * @throws NotFoundHttpException
      * @return Ride
      */
-    protected function getCheckedRide(City $city, \DateTime $rideDateTime)
+    protected function getCheckedRide(City $city, \DateTime $rideDateTime): Ride
     {
+        /** @var Ride $ride */
         $ride = $this->getRideRepository()->findCityRideByDate($city, $rideDateTime);
 
         if (!$ride) {
@@ -64,7 +69,7 @@ trait UtilTrait
         return $ride;
     }
 
-    protected function getCheckedDateTime($dateTime)
+    protected function getCheckedDateTime(string $dateTime): \DateTime
     {
         try {
             $dateTime = new \DateTime($dateTime);
@@ -75,16 +80,21 @@ trait UtilTrait
         return $dateTime;
     }
 
-    protected function getCheckedCitySlugRideDateRide($citySlug, $dateTime)
+    protected function getCheckedCitySlugRideDateRide(string $citySlug, string $dateTime): Ride
     {
+        /** @var City $city */
         $city = $this->getCheckedCity($citySlug);
+
+        /** @var \DateTime $rideDateTime */
         $rideDateTime = $this->getCheckedDateTime($dateTime);
+
+        /** @var Ride $ride */
         $ride = $this->getCheckedRide($city, $rideDateTime);
 
         return $ride;
     }
 
-    protected function getSession()
+    protected function getSession(): Session
     {
         $session = new Session();
 
