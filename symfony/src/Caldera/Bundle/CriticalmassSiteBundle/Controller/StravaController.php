@@ -201,6 +201,8 @@ class StravaController extends AbstractController
         fclose($fp);
 
         $track = new Track();
+        $track->setSource(Track::TRACK_SOURCE_STRAVA);
+        $track->setStravaActivityId($activityId);
         $track->setUser($this->getUser());
         $track->setTrackFilename($filename);
         $track->setUsername($this->getUser()->getUsername());
