@@ -1,0 +1,3 @@
+caldera_criticalmass_rest_homepage:
+    path:     /foo/{name}
+    defaults: { _controller: CalderaCriticalmassRestBundle:City:show }

@@ -16,7 +16,7 @@ class DefaultController extends AbstractController
         $startDateTime->sub(new \DateInterval('PT6H'));
 
         $endDateTime = new \DateTime();
-        $endDateTime->add(new \DateInterval('PT24H'));
+        $endDateTime->add(new \DateInterval('P2M'));
 
         $rides = $this->getRideRepository()->findRidesAndCitiesInInterval($startDateTime, $endDateTime);
 

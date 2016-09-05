@@ -20,3 +20,19 @@ fos_user:
                 sender_name:    Malte Hübner, criticalmass.in
 
 
+fos_rest:
+    view:
+        formats:
+            json: true
+            xml: false
+            html: false
+            rss: false
+        templating_formats:
+            json: false
+            xml: false
+            html: false
+            rss: false
+        force_redirects:
+            html: false
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig

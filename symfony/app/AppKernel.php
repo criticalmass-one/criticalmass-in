@@ -34,6 +34,8 @@ class AppKernel extends Kernel
             new Caldera\Bundle\CriticalmassBlogBundle\CalderaCriticalmassBlogBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Caldera\Bundle\CriticalmassLiveBundle\CalderaCriticalmassLiveBundle(),
+            new Caldera\Bundle\CriticalmassRestBundle\CalderaCriticalmassRestBundle(),
+            new \FOS\RestBundle\FOSRestBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
