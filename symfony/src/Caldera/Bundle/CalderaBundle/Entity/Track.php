@@ -129,7 +129,12 @@ class Track
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $activated = true;
+    protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -446,21 +451,43 @@ class Track
     {
         return $this->points;
     }
-    
+
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getActivated()
+    public function getEnabled(): bool
     {
-        return $this->activated;
+        return $this->enabled;
     }
 
     /**
-     * @param mixed $activated
+     * @param bool $enabled
+     * @return Track $this
      */
-    public function setActivated($activated)
+    public function setEnabled($enabled): Track
     {
-        $this->activated = $activated;
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     * @return Track $this
+     */
+    public function setDeleted($deleted): Track
+    {
+        $this->deleted = $deleted;
+
+        return $this;
     }
     
     /**

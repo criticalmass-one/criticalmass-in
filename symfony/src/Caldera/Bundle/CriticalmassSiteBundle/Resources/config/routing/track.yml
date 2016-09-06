@@ -1,6 +1,8 @@
-caldera_criticalmass_track_deleteconfirm:
+caldera_criticalmass_track_delete:
     path:  /track/delete/{trackId}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Track:delete }
+    options:
+        expose: true
 
 caldera_criticalmass_track_toggle:
     path:  /track/toggle/{trackId}

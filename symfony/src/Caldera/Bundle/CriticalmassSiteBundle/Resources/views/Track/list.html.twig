@@ -7,27 +7,6 @@
     <li class="active">Deine Tracks</li>
 {% endblock %}
 
-{% block additionalHeaderElements %}
-    <script>
-        function prepareDeleteModal()
-        {
-            var deleteUrl = $(this).data('deleteurl');
-            
-            $('#deleteButton').prop('href', deleteUrl);
-            $('#cancelButton').on('click', function() {
-                $('#modalDelete').modal('hide');
-
-            });
-
-            $('#modalDelete').modal('show');
-        }
-
-        domReadyQueue.push(function($) {
-            $('.trackDeleteButton').on('click', prepareDeleteModal);
-        });
-    </script>
-{% endblock %}
-
 {% block content %}
     <div class="container main-container">
         <div class="row">
@@ -146,7 +125,7 @@
                         <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
                             <i class="fa fa-file"></i>
                         </a>
-                        {% if track.getActivated() %}
+                        {% if track.enabled %}
                             <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
                                 <i class="fa fa-eye-slash"></i>
                             </a>
@@ -162,7 +141,7 @@
                             <i class="fa fa-clock-o"></i>
                         </a>
                     {% endif %}
-                    <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}>
+                    <a class="btn btn-default btn-xs delete-track" title="Löschen" href="#" data-track-id="{{ track.id }}">
                         <i class="fa fa-trash-o"></i>
                     </a>
                 </div>

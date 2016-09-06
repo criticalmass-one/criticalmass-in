@@ -23,7 +23,8 @@ class TrackController extends AbstractController
          */
         $tracks = $this->getTrackRepository()->findBy(
             [
-                'user' => $this->getUser()->getId()
+                'user' => $this->getUser()->getId(),
+                'deleted' => false
             ],
             [
                 'startDateTime' => 'DESC'
@@ -182,7 +183,7 @@ class TrackController extends AbstractController
         if ($track && $track->getUser()->equals($this->getUser()))
         {
             $em = $this->getDoctrine()->getManager();
-            $track->setActivated(!$track->getActivated());
+            $track->setEnabled(!$track->getEnabled());
             $em->merge($track);
             $em->flush();
 
@@ -194,13 +195,16 @@ class TrackController extends AbstractController
 
     public function deleteAction(Request $request, $trackId)
     {
+        /** @var Track $track */
         $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
         
         if ($track && $track->getUser()->equals($this->getUser()))
         {
+            $track->setDeleted(true);
+
             $em = $this->getDoctrine()->getManager();
-            $em->remove($track);
+            $em->persist($track);
             $em->flush();
 
             $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($ride);
