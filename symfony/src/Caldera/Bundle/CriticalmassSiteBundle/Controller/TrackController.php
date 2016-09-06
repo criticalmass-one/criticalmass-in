@@ -368,12 +368,6 @@ class TrackController extends AbstractController
         $em->persist($track);
         $em->flush();
 
-        return $this->redirectToRoute(
-            'caldera_criticalmass_track_draw',
-            [
-                'citySlug' => $ride->getCity()->getSlug(),
-                'rideDate' => $ride->getFormattedDate()
-            ]
-        );
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 }
