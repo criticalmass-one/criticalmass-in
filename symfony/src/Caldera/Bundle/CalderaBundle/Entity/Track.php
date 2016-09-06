@@ -139,6 +139,11 @@ class Track
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     */
+    protected $geoJson;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
@@ -173,7 +178,7 @@ class Track
     protected $source = self::TRACK_SOURCE_UNKNOWN;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @var integer
      */
@@ -783,5 +788,17 @@ class Track
     public function getStravaActivityId()
     {
         return $this->stravaActitityId;
+    }
+
+    public function setGeoJson(string $geoJson): Track
+    {
+        $this->geoJson = $geoJson;
+
+        return $this;
+    }
+
+    public function getWaypointList(): string
+    {
+        return $this->geoJson;
     }
 }
