@@ -351,11 +351,13 @@ class TrackController extends AbstractController
     protected function drawPostAction(Request $request, Ride $ride)
     {
         $polyline = $request->request->get('polyline');
+        $geojson = $request->request->get('geojson');
 
         $track = new Track();
 
         $track->setCreationDateTime(new \DateTime());
         $track->setPolyline($polyline);
+        $track->setGeoJson($geojson);
         $track->setRide($ride);
         $track->setSource(Track::TRACK_SOURCE_DRAW);
         $track->setUser($this->getUser());

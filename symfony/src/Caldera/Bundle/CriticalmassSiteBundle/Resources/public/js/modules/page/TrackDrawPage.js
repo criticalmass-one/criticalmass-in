@@ -73,16 +73,34 @@ define(['CriticalService', 'RideEntity', 'CityEntity', 'Map', 'leaflet-polyline'
     };
 
     TrackDrawPage.prototype._initEvents = function() {
-        $('#save-track').on('click', this._saveLatLngs.bind(this));
+        var that = this;
+
+        $('#save-track').on('click', function(element) {
+            element.preventDefault();
+            that._save();
+        });
     };
 
-    TrackDrawPage.prototype._saveLatLngs = function() {
+    TrackDrawPage.prototype._save = function() {
+        this._savePolyline();
+        this._saveWaypoints();
+
+        $('form').submit();
+    };
+
+    TrackDrawPage.prototype._savePolyline = function() {
         var polyline = this._routing.toPolyline();
         var latLngs = polyline.getLatLngs();
 
         var polylineString = L.PolylineUtil.encode(latLngs);
 
         $('#polyline').val(polylineString);
+    };
+
+    TrackDrawPage.prototype._saveWaypoints = function() {
+        var geoJsonString = JSON.stringify(this._routing.toGeoJSON());
+
+        $('#geojson').val(geoJsonString);
     };
 
 
