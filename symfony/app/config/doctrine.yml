@@ -11,6 +11,8 @@ doctrine:
             datetime: Caldera\Bundle\CalderaBundle\DBAL\Type\UTCDateTimeType
             date: Caldera\Bundle\CalderaBundle\DBAL\Type\UTCDateType
             time: Caldera\Bundle\CalderaBundle\DBAL\Type\UTCTimeType
+        mapping_types:
+            enum: string
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
