@@ -138,26 +138,32 @@
 
             <div class="col-md-1">
                 <div class="btn-group-vertical" role="group" aria-label="...">
-                    <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
-                        <i class="fa fa-file"></i>
-                    </a>
-                    {% if track.getActivated() %}
-                        <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
-                            <i class="fa fa-eye-slash"></i>
+                    {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
+                        <a class="btn btn-default btn-xs" title="Track editieren" href="#">
+                            <i class="fa fa-pencil-square-o"></i>
                         </a>
                     {% else %}
-                        <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
-                            <i class="fa fa-eye"></i>
+                        <a class="btn btn-default btn-xs" title="Herunterladen" href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
+                            <i class="fa fa-file"></i>
+                        </a>
+                        {% if track.getActivated() %}
+                            <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                                <i class="fa fa-eye-slash"></i>
+                            </a>
+                        {% else %}
+                            <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        {% endif %}
+                        <a class="btn btn-default btn-xs" title="Beschneiden" href="{{ path('caldera_criticalmass_track_range', { trackId: track.getId() }) }}">
+                            <i class="fa fa-scissors"></i>
+                        </a>
+                        <a class="btn btn-default btn-xs" title="Zeit anpassen" href="{{ path('caldera_criticalmass_track_time', { trackId: track.getId() }) }}">
+                            <i class="fa fa-clock-o"></i>
                         </a>
                     {% endif %}
                     <a class="btn btn-default btn-xs trackDeleteButton" title="Löschen" href="#" data-deleteurl={{ path('caldera_criticalmass_track_deleteconfirm', { trackId: track.getId() }) }}>
                         <i class="fa fa-trash-o"></i>
-                    </a>
-                    <a class="btn btn-default btn-xs" title="Beschneiden" href="{{ path('caldera_criticalmass_track_range', { trackId: track.getId() }) }}">
-                        <i class="fa fa-scissors"></i>
-                    </a>
-                    <a class="btn btn-default btn-xs" title="Zeit anpassen" href="{{ path('caldera_criticalmass_track_time', { trackId: track.getId() }) }}">
-                        <i class="fa fa-clock-o"></i>
                     </a>
                 </div>
             </div>
