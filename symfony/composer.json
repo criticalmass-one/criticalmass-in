@@ -33,7 +33,8 @@
         "jms/serializer-bundle": "^1.1",
         "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "knplabs/knp-markdown-bundle": "^1.5"
+        "knplabs/knp-markdown-bundle": "^1.5",
+        "hwi/oauth-bundle": "^0.4.2"
     },
     "scripts": {
         "post-install-cmd": [

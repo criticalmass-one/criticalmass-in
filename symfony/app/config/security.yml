@@ -37,6 +37,17 @@ security:
         #        lifetime: 7200
         #        path:     /
         #        domain:   ~
+        secured_area:
+            anonymous: ~
+            oauth:
+                resource_owners:
+                    facebook:           "/login/check-facebook"
+                login_path:        /login
+                use_forward:       false
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: hwi_oauth.user.provider.fosub_bridge
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
