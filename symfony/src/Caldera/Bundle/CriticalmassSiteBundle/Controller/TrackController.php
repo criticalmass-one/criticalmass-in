@@ -357,6 +357,7 @@ class TrackController extends AbstractController
         $track->setCreationDateTime(new \DateTime());
         $track->setPolyline($polyline);
         $track->setRide($ride);
+        $track->setSource(Track::TRACK_SOURCE_DRAW);
         $track->setUser($this->getUser());
         $track->setUsername($this->getUser()->getUsername());
         $track->setTrackFilename('foo');
