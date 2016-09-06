@@ -376,7 +376,7 @@ class TrackController extends AbstractController
         /** @var Track $track */
         $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
-        
+
         if ($track->getUser() != $track->getUser()) {
             return $this->createAccessDeniedException();
         }
@@ -404,16 +404,8 @@ class TrackController extends AbstractController
         $polyline = $request->request->get('polyline');
         $geojson = $request->request->get('geojson');
 
-        $track = new Track();
-
-        $track->setCreationDateTime(new \DateTime());
         $track->setPolyline($polyline);
         $track->setGeoJson($geojson);
-        $track->setRide($ride);
-        $track->setSource(Track::TRACK_SOURCE_DRAW);
-        $track->setUser($this->getUser());
-        $track->setUsername($this->getUser()->getUsername());
-        $track->setTrackFilename('foo');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($track);
