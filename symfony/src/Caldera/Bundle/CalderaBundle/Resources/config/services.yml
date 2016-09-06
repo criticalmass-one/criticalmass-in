@@ -2,6 +2,6 @@ parameters:
 #    caldera.example.class: Caldera\Bundle\CalderaBundle\Example
 
 services:
-#    caldera.example:
-#        class: %caldera.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    caldera.user_provider:
+        class: Caldera\Bundle\CalderaBundle\UserProvider\FOSUBUserProvider
+        arguments: ["@fos_user.user_manager", {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
