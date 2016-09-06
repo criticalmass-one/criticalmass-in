@@ -139,6 +139,7 @@ class Track
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $geoJson;
 

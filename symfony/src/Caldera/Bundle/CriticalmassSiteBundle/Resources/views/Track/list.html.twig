@@ -139,7 +139,7 @@
             <div class="col-md-1">
                 <div class="btn-group-vertical" role="group" aria-label="...">
                     {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
-                        <a class="btn btn-default btn-xs" title="Track editieren" href="#">
+                        <a class="btn btn-default btn-xs" title="Track editieren" href="{{ path('caldera_criticalmass_track_edit', { trackId: track.getId() }) }}">
                             <i class="fa fa-pencil-square-o"></i>
                         </a>
                     {% else %}

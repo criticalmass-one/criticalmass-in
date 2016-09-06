@@ -1,10 +1,11 @@
-define(['CriticalService', 'RideEntity', 'CityEntity', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
+define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
     TrackDrawPage = function(context, options) {
         this._CriticalService = CriticalService;
     };
 
     TrackDrawPage.prototype._map = null;
     TrackDrawPage.prototype._ride = null;
+    TrackDrawPage.prototype._track = null;
     TrackDrawPage.prototype._routing = null;
     TrackDrawPage.prototype._CriticalService = null;
 
@@ -12,10 +13,15 @@ define(['CriticalService', 'RideEntity', 'CityEntity', 'Map', 'leaflet-polyline'
         this._initMap();
         this._initRouting();
         this._initEvents();
+        this._initTrack();
     };
 
     TrackDrawPage.prototype.setRide = function(rideJson) {
         this._ride = this._CriticalService.factory.createRide(rideJson);
+    };
+
+    TrackDrawPage.prototype.setTrack = function(trackJson) {
+        this._track = this._CriticalService.factory.createTrack(trackJson);
     };
 
     TrackDrawPage.prototype._initMap = function() {
@@ -55,6 +61,14 @@ define(['CriticalService', 'RideEntity', 'CityEntity', 'Map', 'leaflet-polyline'
         this._map.map.addControl(this._routing);
 
         this._routing.draw();
+    };
+
+    TrackDrawPage.prototype._initTrack = function() {
+        if (this._track) {
+            var geoJson = JSON.parse(this._track._geojson);
+
+            this._routing.loadGeoJSON(geoJson);
+        }
     };
 
     TrackDrawPage.prototype._router = function(m1, m2, cb) {
