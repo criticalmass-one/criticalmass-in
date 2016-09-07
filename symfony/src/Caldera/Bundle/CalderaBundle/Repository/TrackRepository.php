@@ -80,7 +80,8 @@ class TrackRepository extends EntityRepository
 
         $builder->select('track');
         $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.activated', 1));
+        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
         $builder->addOrderBy('track.startDateTime', 'ASC');
 
         $query = $builder->getQuery();
@@ -97,7 +98,8 @@ class TrackRepository extends EntityRepository
         $builder->select('track');
 
         $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.activated', 1));
+        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
         $builder->andWhere($builder->expr()->gt('track.distance', 5));
         $builder->andWhere($builder->expr()->gt('track.points', 100));
 
@@ -117,7 +119,8 @@ class TrackRepository extends EntityRepository
         $builder->select('track');
         $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
         $builder->andWhere($builder->expr()->eq('track.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('track.activated', true));
+        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
 
         $query = $builder->getQuery();
 
@@ -134,7 +137,8 @@ class TrackRepository extends EntityRepository
 
         $builder->where($builder->expr()->isNotNull('track.ride'));
         $builder->andWhere($builder->expr()->isNotNull('track.user'));
-        $builder->andWhere($builder->expr()->eq('track.activated', true));
+        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
+        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
 
         if ($startDateTime) {
             $builder->andWhere($builder->expr()->gte('track.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
