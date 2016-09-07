@@ -1,20 +1,50 @@
 blockquote {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
-    margin: 1.5em 10px;
-    padding: 0.5em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
+    display:block;
+    background: #fff;
+    padding: 0 15px 0 55px;
+    position: relative;
+    color: #666;
+    border-left: 15px solid #ddd;
+    min-height: 3.5rem;
 }
 
-blockquote:before {
-    color: #ccc;
-    content: open-quote;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
+blockquote::before {
+    content: "\201C";
+    font-family: Georgia, serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #999;
+    position: absolute;
+    left: 10px;
+    top: 5px;
+}
+
+blockquote::after {
+    content: "";
 }
 
 blockquote p {
-    display: inline;
+    margin-bottom: 0;
+}
+
+
+header {
+    height: 300px;
+    background-position: center center;
+}
+
+h2 {
+    font-weight: 400 !important;
+}
+
+h3 {
+    margin-top: 3rem !important;
+    margin-bottom: 2rem !important;
+    font-weight: 400 !important;
+    text-align: center;
+}
+
+a {
+    color: #999 !important;
+    text-decoration: underline !important;
 }
