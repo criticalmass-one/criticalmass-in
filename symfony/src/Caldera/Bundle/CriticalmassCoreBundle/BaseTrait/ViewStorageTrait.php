@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\BaseTrait;
 
+use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
@@ -62,5 +63,10 @@ trait ViewStorageTrait
     protected function countCityView(City $city)
     {
         $this->countView($city, 'city');
+    }
+
+    protected function countBlogPostView(BlogPost $blogPost)
+    {
+        $this->countView($blogPost, 'blogPost');
     }
 }

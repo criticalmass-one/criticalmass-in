@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="blog_post")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\BlogPostRepository")
  */
-class BlogPost
+class BlogPost implements ViewableInterface
 {
     /**
      * @ORM\Id
@@ -83,6 +84,11 @@ class BlogPost
      * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
      */
     protected $featuredPhoto;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 0;
 
     /**
      * Get id
@@ -362,5 +368,21 @@ class BlogPost
     public function getFeaturedPhoto(): Photo
     {
         return $this->featuredPhoto;
+    }
+
+
+    public function setViews($views)
+    {
+        $this->views = $views;
+    }
+
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    public function incViews()
+    {
+        ++$this->views;
     }
 }
