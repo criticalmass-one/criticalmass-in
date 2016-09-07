@@ -10,34 +10,42 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Lsw\MemcacheBundle\Cache\LoggingMemcache;
+use Memcached;
 
 trait ViewStorageTrait
 {
     protected function countView(ViewableInterface $viewable, string $identifier)
     {
-        /** @var LoggingMemcache $memcache */
-        $memcache = $this->get('memcache.criticalmass');
+        //$memcache = $this->get('memcache.criticalmass');
 
-        $additionalViews = $memcache->get($identifier.$viewable->getId().'_additionalviews');
-
-        if (!$additionalViews) {
-            $additionalViews = 1;
-        } else {
-            ++$additionalViews;
-        }
+        $memcache = new Memcached();
+        $memcache->addServer('localhost', 11211);
 
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
-        $viewArray =
-            [
-                'entityId' => $viewable->getId(),
-                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
-                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ]
-        ;
+        $view = [
+            'entityId' => $viewable->getId(),
+            'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
+            'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
+        ];
+        
+        do {
+            $cas = null;
 
-        $memcache->set($identifier.$viewable->getId().'_additionalviews', $additionalViews);
-        $memcache->set($identifier.$viewable->getId().'_view'.$additionalViews, $viewArray);
+            $serializedViews = $memcache->get($identifier.'_views', null, $cas);
+
+            if ($memcache->getResultCode() == Memcached::RES_NOTFOUND) {
+                $views = [$view];
+
+                $memcache->add($identifier.'_views', serialize($views));
+            } else {
+                $views = unserialize($serializedViews);
+
+                $views[] = $view;
+
+                $memcache->cas($identifier.'_views', serialize($views), $cas);
+            }
+        } while ($memcache->getResultCode() != Memcached::RES_SUCCESS);
     }
 
     protected function countThreadView(Thread $thread)
