@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+
+        <title>Fahrradterroristen</title>
+
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassblog/css/blog.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+    </head>
+
+    <body>
+        {% block content %}{% endblock %}
+
+        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
+
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
+        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+
+        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
+    </body>
+</html>
+
