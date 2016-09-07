@@ -20,6 +20,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class StoreViewCommand extends ContainerAwareCommand
 {
+    /** @var OutputInterface $output */
+    protected $output;
+
     /**
      * @var Registry $doctrine
      */
@@ -45,13 +48,14 @@ class StoreViewCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
+        $this->output = $output;
 
-        $this->persistPhotoViews($output);
-        $this->persistThreadViews($output);
-        $this->persistCityViews($output);
-        $this->persistEventViews($output);
-        $this->persistRideViews($output);
-        $this->persistBlogPostViews($output);
+        $this->persistPhotoViews();
+        $this->persistThreadViews();
+        $this->persistCityViews();
+        $this->persistEventViews();
+        $this->persistRideViews();
+        $this->persistBlogPostViews();
     }
 
     protected function setViewEntity(ViewInterface $view, ViewableInterface $entity)
@@ -81,7 +85,7 @@ class StoreViewCommand extends ContainerAwareCommand
         }
     }
 
-    protected function storeViews(OutputInterface $output, string $identifier, string $entityClassName, string $storageClassName)
+    protected function storeViews(string $identifier, string $entityClassName, string $storageClassName)
     {
         $serializedViewsArray = $this->memcache->get($identifier.'_views');
 
@@ -116,45 +120,45 @@ class StoreViewCommand extends ContainerAwareCommand
         }
     }
 
-    protected function persistPhotoViews(OutputInterface $output)
+    protected function persistPhotoViews()
     {
-        $output->writeln('Storing photo views');
+        $this->output->writeln('Storing photo views');
 
-        $this->storeViews($output, 'photo', 'Photo', 'Caldera\Bundle\CalderaBundle\Entity\PhotoView');
+        $this->storeViews('photo', 'Photo', 'Caldera\Bundle\CalderaBundle\Entity\PhotoView');
     }
 
-    protected function persistThreadViews(OutputInterface $output)
+    protected function persistThreadViews()
     {
-        $output->writeln('Storing thread views');
+        $this->output->writeln('Storing thread views');
 
-        $this->storeViews($output, 'thread', 'Thread', 'Caldera\Bundle\CalderaBundle\Entity\ThreadView');
+        $this->storeViews('thread', 'Thread', 'Caldera\Bundle\CalderaBundle\Entity\ThreadView');
     }
 
-    protected function persistEventViews(OutputInterface $output)
+    protected function persistEventViews()
     {
-        $output->writeln('Storing event views');
+        $this->output->writeln('Storing event views');
 
-        $this->storeViews($output, 'event', 'Event', 'Caldera\Bundle\CalderaBundle\Entity\EventView');
+        $this->storeViews('event', 'Event', 'Caldera\Bundle\CalderaBundle\Entity\EventView');
     }
 
-    protected function persistRideViews(OutputInterface $output)
+    protected function persistRideViews()
     {
-        $output->writeln('Storing ride views');
+        $this->output->writeln('Storing ride views');
 
-        $this->storeViews($output, 'ride', 'Ride', 'Caldera\Bundle\CalderaBundle\Entity\RideView');
+        $this->storeViews('ride', 'Ride', 'Caldera\Bundle\CalderaBundle\Entity\RideView');
     }
 
-    protected function persistCityViews(OutputInterface $output)
+    protected function persistCityViews()
     {
-        $output->writeln('Storing city views');
+        $this->output->writeln('Storing city views');
 
-        $this->storeViews($output, 'city', 'City', 'Caldera\Bundle\CalderaBundle\Entity\CityView');
+        $this->storeViews('city', 'City', 'Caldera\Bundle\CalderaBundle\Entity\CityView');
     }
 
-    protected function persistBlogPostViews(OutputInterface $output)
+    protected function persistBlogPostViews()
     {
-        $output->writeln('Storing blog post views');
+        $this->output->writeln('Storing blog post views');
 
-        $this->storeViews($output, 'blogPost', 'BlogPost', 'Caldera\Bundle\CalderaBundle\Entity\BlogPostView');
+        $this->storeViews('blogPost', 'BlogPost', 'Caldera\Bundle\CalderaBundle\Entity\BlogPostView');
     }
 }
