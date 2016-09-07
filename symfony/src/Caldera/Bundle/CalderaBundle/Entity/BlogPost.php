@@ -78,6 +78,11 @@ class BlogPost
      */
     protected $enabled = true;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="featuredBlogPosts", fetch="LAZY")
+     * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
+     */
+    protected $featuredPhoto;
 
     /**
      * Get id
@@ -345,5 +350,17 @@ class BlogPost
     public function getRides()
     {
         return $this->rides;
+    }
+
+    public function setFeaturedPhoto(Photo $featuredPhoto): BlogPost
+    {
+        $this->featuredPhoto = $featuredPhoto;
+
+        return $this;
+    }
+
+    public function getFeaturedPhoto(): Photo
+    {
+        return $this->featuredPhoto;
     }
 }
