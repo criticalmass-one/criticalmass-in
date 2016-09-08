@@ -85,13 +85,16 @@ class StoreViewCommand extends ContainerAwareCommand
         }
     }
 
-    protected function storeViews(string $identifier, string $entityClassName, string $storageClassName)
+    protected function storeViews(string $entityClassName)
     {
+        $identifier = lcfirst($entityClassName);
+        $storageClassName = 'Caldera\Bundle\CalderaBundle\Entity\\'.$entityClassName.'View';
+
         $serializedViewsArray = $this->memcache->get($identifier.'_views');
 
         if ($serializedViewsArray) {
             $viewsArray = unserialize($serializedViewsArray);
-
+            
             foreach ($viewsArray as $view) {
                 $user = null;
 
@@ -113,6 +116,8 @@ class StoreViewCommand extends ContainerAwareCommand
                 $viewEntity->setDateTime($viewDateTime);
 
                 $this->manager->persist($viewEntity);
+
+                $this->output->writeln('Storing view for '.$entityClassName.' #'.$view['entityId'].' ('.$viewDateTime->format('Y-m-d H:i:s').')');
             }
 
             $this->memcache->delete($identifier.'_views');
@@ -124,41 +129,41 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $this->output->writeln('Storing photo views');
 
-        $this->storeViews('photo', 'Photo', 'Caldera\Bundle\CalderaBundle\Entity\PhotoView');
+        $this->storeViews('Photo');
     }
 
     protected function persistThreadViews()
     {
         $this->output->writeln('Storing thread views');
 
-        $this->storeViews('thread', 'Thread', 'Caldera\Bundle\CalderaBundle\Entity\ThreadView');
+        $this->storeViews('Thread');
     }
 
     protected function persistEventViews()
     {
         $this->output->writeln('Storing event views');
 
-        $this->storeViews('event', 'Event', 'Caldera\Bundle\CalderaBundle\Entity\EventView');
+        $this->storeViews('Event');
     }
 
     protected function persistRideViews()
     {
         $this->output->writeln('Storing ride views');
 
-        $this->storeViews('ride', 'Ride', 'Caldera\Bundle\CalderaBundle\Entity\RideView');
+        $this->storeViews('Ride');
     }
 
     protected function persistCityViews()
     {
         $this->output->writeln('Storing city views');
 
-        $this->storeViews('city', 'City', 'Caldera\Bundle\CalderaBundle\Entity\CityView');
+        $this->storeViews('City');
     }
 
     protected function persistBlogPostViews()
     {
         $this->output->writeln('Storing blog post views');
 
-        $this->storeViews('blogPost', 'BlogPost', 'Caldera\Bundle\CalderaBundle\Entity\BlogPostView');
+        $this->storeViews('BlogPost');
     }
 }
