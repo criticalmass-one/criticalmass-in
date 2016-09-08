@@ -3,12 +3,15 @@
 {% block title %}Fahrradterroristen{% endblock %}
 
 {% block content %}
-<div class="container m-t-3">
+<div class="blog-index blog container m-t-3">
     <div class="row">
         <div class="col-xs-12 text-xs-center">
             <h1 class="display-2">
-                Fahrradterroristen
+                <a href="{{ path('caldera_criticalmass_blog_homepage') }}">
+                    Fahrradterroristen
+                </a>
             </h1>
+
             <p class="lead">
                 Das Critical-Mass-Weblog von Caldera
             </p>
@@ -30,7 +33,17 @@
 
             <div class="row">
                 <div class="col-xs-10">
-                    {{ post.text | markdown }}
+                    {% if post.abstract %}
+                    {{ post.abstract | markdown }}
+
+                    <a href="{{ path(post) }}" class="btn btn-secondary m-x-auto" style="width: 150px; display: block;">
+                        Weiterlesen
+                    </a>
+                    {% else %}
+                    <article>
+                        {{ post.text | markdown }}
+                    </article>
+                    {% endif %}
                 </div>
 
                 <div class="col-xs-2">
