@@ -27,14 +27,16 @@
     margin-bottom: 0;
 }
 
-
 .blog header {
     height: 300px;
     background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .blog h1 a,
-.blog h1 a:hover {
+.blog h1 a:hover,
+.blog h2 a,
+.blog h2 a:hover {
     text-decoration: none;
     color: black;
 }
