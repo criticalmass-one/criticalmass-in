@@ -2,6 +2,21 @@
 
 {% block title %}{{ post.title }}{% endblock %}
 
+
+{% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+{% block additionalHeaderElements %}
+    <meta property="og:title" content="{{ post.title }}" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:description" content="{{ post.abstract }}" />
+    <meta property="og:url" content="{{ currentPath }}" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="fahrradterroristen.de" />
+    {% if post.featuredPhoto %}
+        <meta property="og:image" content="{{ vich_uploader_asset(post.featuredPhoto, 'imageFile')|imagine_filter('blog_featuredphoto_standard') }}" />
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="blog-view blog container m-t-3">
     <div class="row">
