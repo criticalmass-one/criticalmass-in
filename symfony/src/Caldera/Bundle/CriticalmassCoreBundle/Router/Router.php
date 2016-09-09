@@ -3,9 +3,6 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Router;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\CityBoard;
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Board\RideBoard;
-use Caldera\Bundle\CriticalmassCoreBundle\Board\Thread\RideThread;
 use Caldera\Bundle\CalderaBundle\Entity\Board;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Content;
