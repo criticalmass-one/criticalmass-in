@@ -20,7 +20,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "phpunit/phpunit": "5.5.*",
-        "vich/uploader-bundle": "*",
+        "vich/uploader-bundle": "1.3.*",
         "liip/imagine-bundle": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "^3.1",
