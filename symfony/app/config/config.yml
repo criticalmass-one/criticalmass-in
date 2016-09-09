@@ -2,17 +2,17 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     
-    - { resource: assetic.yml }
+#    - { resource: assetic.yml }
     - { resource: doctrine.yml }
     - { resource: fos.yml }
     - { resource: framework.yml }
-    - { resource: sonata.yml }
-    - { resource: jms.yml }
-    - { resource: swiftmailer.yml }
-    - { resource: twig.yml }
+#    - { resource: sonata.yml }
+#    - { resource: jms.yml }
+#    - { resource: swiftmailer.yml }
+#    - { resource: twig.yml }
     - { resource: vich.yml }
-    - { resource: liip.yml }
-    - { resource: knp.yml }
-    - { resource: elastic.yml }
-    - { resource: translation.yml }
+#    - { resource: liip.yml }
+#    - { resource: knp.yml }
+#    - { resource: elastic.yml }
+#    - { resource: translation.yml }
     - { resource: memcache.yml }
