@@ -5,5 +5,4 @@ parameters:
 services:
     app.router:
         class: Caldera\Bundle\CriticalmassCoreBundle\Router\Router
-        #decorates: router.default
-        arguments: [ '@router']
+        arguments: [ '@router.default' ]
