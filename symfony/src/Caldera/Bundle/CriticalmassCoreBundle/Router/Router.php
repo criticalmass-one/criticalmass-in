@@ -14,10 +14,17 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router as sfRouter;
+use Symfony\Bundle\FrameworkBundle\Routing\Router as BaseRouter;
 
-class Router extends sfRouter
+class Router
 {
+    /** @var BaseRouter $router */
+    protected $router;
+
+    public function __construct(BaseRouter $router)
+    {
+        $this->router = $router;
+    }
 
     public function generate($object, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {

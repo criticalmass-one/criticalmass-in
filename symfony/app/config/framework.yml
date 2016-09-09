@@ -2,9 +2,9 @@ framework:
     #esi:             ~
     translator:      { fallback: '%locale%' }
     secret:          '%kernel.secret%'
-    router:
-        resource: '%router.class%'
-        strict_requirements: ~
+    #router:
+    #    resource: '%router.class%'
+    #    strict_requirements: ~
     form: ~
     csrf_protection:
         enabled: true

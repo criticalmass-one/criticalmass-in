@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    
+
 #    - { resource: assetic.yml }
     - { resource: doctrine.yml }
     - { resource: fos.yml }
@@ -16,3 +16,4 @@ imports:
     - { resource: elastic.yml }
     - { resource: translation.yml }
     - { resource: memcache.yml }
+    - { resource: services.yml }
