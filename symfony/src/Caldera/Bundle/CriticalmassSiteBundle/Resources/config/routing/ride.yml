@@ -2,7 +2,7 @@ caldera_criticalmass_ride_show:
     path:  /{citySlug}/{rideDate}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:show }
     requirements:
-        rideDate: "([0-9]{4,4})\-([0-9]{2,2})\-([0-9]{1,2})"
+        rideDate: '([0-9]{4,4})\\-([0-9]{2,2})\\-([0-9]{1,2})'
     options:
         expose: true
 
@@ -10,7 +10,7 @@ caldera_criticalmass_ride_show_seo:
     path:  /critical-mass-in-{citySlug}-am-{rideDate}
     defaults: { _controller: CalderaCriticalmassSiteBundle:Ride:show }
     requirements:
-        rideDate: "([0-9]{4,4})\-([0-9]{2,2})\-([0-9]{1,2})"
+        rideDate: '([0-9]{4,4})\\-([0-9]{2,2})\\-([0-9]{1,2})'
 
 caldera_criticalmass_ride_addestimate:
     path:  /{citySlug}/{rideDate}/addestimate
