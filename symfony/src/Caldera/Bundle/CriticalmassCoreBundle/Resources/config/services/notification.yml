@@ -1,15 +1,15 @@
 services:
     caldera.criticalmass.notification.dispatcher:
         class: Caldera\Bundle\CriticalmassCoreBundle\Notification\Dispatcher\NotificationDispatcher
-        arguments: [@doctrine, @caldera.criticalmass.notification.provider.pushover, @caldera.criticalmass.notification.provider.email, @caldera.criticalmass.notification.provider.shortmessage]
+        arguments: [ '@doctrine', '@caldera.criticalmass.notification.provider.pushover', '@caldera.criticalmass.notification.provider.email', '@caldera.criticalmass.notification.provider.shortmessage' ]
 
     caldera.criticalmass.notification.provider.pushover:
         class: Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\PushoverNotificationProvider
-        arguments: [%notification.pushover.token%]
+        arguments: [ '%notification.pushover.token%' ]
 
     caldera.criticalmass.notification.provider.email:
         class: Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\EmailNotificationProvider
-        arguments: [@mailer, %notification.mail.sender_address%]
+        arguments: [ '@mailer', '%notification.mail.sender_address%' ]
 
     caldera.criticalmass.notification.provider.shortmessage:
         class: Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\ShortmessageNotificationProvider

@@ -1,8 +1,6 @@
 parameters:
 
 services:
-
-
     caldera_criticalmass.language.kernel_request_listener:
         class: Caldera\Bundle\CriticalmassCoreBundle\EventListener\LanguageListener
         tags:
@@ -11,50 +9,50 @@ services:
     caldera_criticalmass.twig.extension:
         class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\SiteTwigExtension
         arguments:
-            - @translator
-            - @service_container
+            - '@translator'
+            - '@service_container'
         tags:
             - { name: twig.extension }
 
     caldera_criticalmass.twig.image_extension:
         class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\ImageTwigExtension
         arguments:
-            - @vich_uploader.templating.helper.uploader_helper
+            - '@vich_uploader.templating.helper.uploader_helper'
             - '%kernel.root_dir%'
         tags:
             - { name: twig.extension }
 
     caldera.criticalmass.gps.gpxexporter:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter
-        arguments: [ @doctrine.orm.entity_manager, @doctrine ]
+        arguments: [ '@doctrine.orm.entity_manager', '@doctrine' ]
 
     caldera.criticalmass.gps.gpxreader:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.gps.trackreader:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.simple:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
-        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.range:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
-        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.time:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
-        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.polyline.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline\TrackPolyline
-        arguments: [@caldera.criticalmass.gps.trackreader, '%track.gap_width%']
+        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.uploadvalidator.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.statistic.rideestimatecalculator:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateCalculator
@@ -62,47 +60,47 @@ services:
         
     caldera.criticalmass.statistic.rideestimate:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.trackreader ]
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.statistic.rideestimate.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.trackreader ]
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.statistic.rideestimate.gpx:
         class: Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ @doctrine.orm.entity_manager, @caldera.criticalmass.statistic.rideestimatecalculator, @caldera.criticalmass.gps.gpxreader ]
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.gpxreader' ]
 
     caldera.criticalmass.image.photogps:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%', @caldera.criticalmass.image.exifreader.gps, @caldera.criticalmass.image.exifreader.datetime, @caldera.criticalmass.gps.trackreader]
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.image.exifreader.gps:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\GpsExifReader
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader.datetime:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader:
         class: Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\ExifReader
-        arguments: [@vich_uploader.templating.helper.uploader_helper, '%kernel.root_dir%']
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.board.builder.boardbuilder:
         class: Caldera\Bundle\CriticalmassCoreBundle\Board\Builder\BoardBuilder
-        arguments: [ @doctrine ]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.gps.distancecalculator.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator
-        arguments: [@doctrine, @caldera.criticalmass.gps.trackreader]
+        arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.gps.timeshift.track:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift
-        arguments: [@doctrine, @caldera.criticalmass.gps.trackreader, @caldera.criticalmass.gps.gpxexporter ]
+        arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader', '@caldera.criticalmass.gps.gpxexporter' ]
 
     caldera.criticalmass.weather.openweather.query:
         class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery
-        arguments: ['%openweather.appid%']
+        arguments: [ '%openweather.appid%' ]
 
     caldera.criticalmass.weather.openweather.reader:
         class: Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader
@@ -120,11 +118,11 @@ services:
 
     caldera.criticalmass.facebookapi.eventride:
         class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi
-        arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
+        arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
 
     caldera.criticalmass.facebookapi.citypageproperties:
         class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi
-        arguments: ['%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%']
+        arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
 
     caldera.criticalmass.flow.create_city:
         class: Caldera\Bundle\CriticalmassCoreBundle\Form\Flow\CreateCityFlow
@@ -132,7 +130,7 @@ services:
 
     caldera.criticalmass.leaflet.printer:
         class: Caldera\Bundle\CriticalmassCoreBundle\Leaflet\LeafletPrinter\LeafletPrinter
-        arguments: [@doctrine, @caldera.criticalmass.gps.trackreader]
+        arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
 imports:
   - { resource: ./services/timeline.yml }

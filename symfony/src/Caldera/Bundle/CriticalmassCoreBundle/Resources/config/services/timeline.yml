@@ -1,70 +1,70 @@
 services:
     caldera.criticalmass.timeline.cached:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\CachedTimeline
-        arguments: [@doctrine, @templating, @memcache.criticalmass, '%timeline.ttl%']
+        arguments: [ '@doctrine', '@templating', '@memcache.criticalmass', '%timeline.ttl%' ]
         calls:
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridetrack']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.rideparticipationestimate']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.thread']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.threadpost']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.rideedit']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.cityedit']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.contentcomment']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.locationsharing']]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.ridephoto' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.ridetrack' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.rideparticipationestimate' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.thread' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.threadpost' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.rideedit' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.cityedit' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.contentcomment' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.locationsharing' ]]
             #- [addCollector, ['@caldera.criticalmass.timeline.collector.blogpost']]
 
     caldera.criticalmass.timeline:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline
-        arguments: [@doctrine, @templating]
+        arguments: [ '@doctrine', '@templating' ]
         calls:
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.ridetrack']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.rideparticipationestimate']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.thread']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.threadpost']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.rideedit']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.cityedit']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.contentcomment']]
-            - [addCollector, ['@caldera.criticalmass.timeline.collector.locationsharing']]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.ridephoto' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.ridetrack' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.rideparticipationestimate' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.thread' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.threadpost' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.rideedit' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.cityedit' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.contentcomment' ]]
+            - [addCollector, [ '@caldera.criticalmass.timeline.collector.locationsharing' ]]
             #- [addCollector, ['@caldera.criticalmass.timeline.collector.blogpost']]
 
     caldera.criticalmass.timeline.collector.ridephoto:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RidePhotoCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.ridetrack:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideTrackCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.rideparticipationestimate:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideParticipationEstimateCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.thread:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ThreadCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.threadpost:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ThreadPostCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.rideedit:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideEditCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.cityedit:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\CityEditCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.contentcomment:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ContentCommentCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.locationsharing:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\LocationSharingCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.blogpost:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\BlogPostCollector
-        arguments: [@doctrine]
+        arguments: [ '@doctrine' ]
