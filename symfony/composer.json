@@ -16,7 +16,7 @@
         "symfony/monolog-bundle": "2.3.*",
         "sensio/distribution-bundle": "2.3.*",
         "sensio/framework-extra-bundle": "3.*",
-        "sensio/generator-bundle": "2.3.*",
+        "sensio/generator-bundle": "3.0.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "phpunit/phpunit": "5.5.*",
