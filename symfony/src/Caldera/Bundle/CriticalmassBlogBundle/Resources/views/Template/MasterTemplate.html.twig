@@ -22,7 +22,7 @@
                         <h4 class="modal-title" id="myModalLabel">Login</h4>
                     </div>
                     <div class="modal-body">
-                        {{ render(controller('CalderaCriticalmassBlogBundle:Security:loginForm' )) }}
+                        {{ render(controller('CalderaCriticalmassBlogBundle:Security:loginForm', { modal: true } )) }}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

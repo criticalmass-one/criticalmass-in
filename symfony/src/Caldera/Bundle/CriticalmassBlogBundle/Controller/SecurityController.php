@@ -4,13 +4,14 @@ namespace Caldera\Bundle\CriticalmassBlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SecurityController extends Controller
 {
-    public function loginFormAction(Request $request)
+    public function loginFormAction(Request $request, bool $modal = false): Response
     {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
@@ -37,11 +38,14 @@ class SecurityController extends Controller
 
         $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
 
-        return $this->renderLogin(array(
+        return $this->renderLogin(
+            [
             'last_username' => $lastUsername,
             'error' => $error,
-            'csrf_token' => $csrfToken,
-        ));
+            'csrf_token' => $csrfToken
+            ],
+            $modal
+        );
     }
 
     /**
@@ -52,9 +56,11 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderLogin(array $data)
+    protected function renderLogin(array $data, $modal = false): Response
     {
-        return $this->render('CalderaCriticalmassBlogBundle:Security:loginForm.html.twig', $data);
+        $templateName = $modal ? 'loginModalForm.html.twig' : 'loginForm.html.twig';
+
+        return $this->render('CalderaCriticalmassBlogBundle:Security:'.$templateName, $data);
     }
 
     public function checkAction()
