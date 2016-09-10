@@ -10,3 +10,6 @@ caldera_criticalmass_blog_post:
     path:     /{slug}
     defaults: { _controller: CalderaCriticalmassBlogBundle:Default:view }
 
+caldera_criticalmass_blog_comment_write:
+    path:     /{slug}/comment
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Comment:write }

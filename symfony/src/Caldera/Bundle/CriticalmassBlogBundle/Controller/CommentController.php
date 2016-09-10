@@ -19,7 +19,7 @@ class CommentController extends AbstractController
     {
         $post = new Post();
 
-        $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_blog_post', array('slug' => $blogPost->getSlug()))));
+        $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_blog_comment_write', array('slug' => $blogPost->getSlug()))));
         $post->setBlogPost($blogPost);
 
         $redirectUrl = $this->generateUrl('caldera_criticalmass_blog_post', array('slug' => $blogPost->getSlug()));
@@ -37,11 +37,9 @@ class CommentController extends AbstractController
             /* Using the user’s referer will not work as the user might come from the writefailed page and would be
                redirected there again. */
             return new RedirectResponse($redirectUrl);
-        } elseif ($form->isSubmitted()) {
-            return $this->render('CalderaCriticalmassSiteBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Post:write.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassBlogBundle:Comment:write.html.twig', array('form' => $form->createView()));
     }
 
 
