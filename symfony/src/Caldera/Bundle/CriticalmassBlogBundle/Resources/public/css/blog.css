@@ -52,8 +52,8 @@
     text-align: center;
 }
 
-.blog a,
-.blog a:hover {
+.blog article a,
+.blog article a:hover {
     color: #999;
 }
 
