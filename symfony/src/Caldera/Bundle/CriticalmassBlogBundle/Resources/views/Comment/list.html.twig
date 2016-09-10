@@ -10,7 +10,7 @@
         Bislang hat noch niemand einen Kommentar geschrieben!
         {% if not app.user %}
         <br />
-        Bitte logge dich ein oder registriere dich, um einen Kommentar zu verfassen &mdash; es dauert nicht einmal 30 Sekunden!
+        Bitte <a href="#" data-toggle="modal" data-target="#myModal">logge dich ein</a> oder <a href="{{ path('fos_user_registration_register') }}">registriere dich</a>, um einen Kommentar zu verfassen &mdash; es dauert nicht einmal 30 Sekunden!
         {% endif %}
     </div>
 {% endif %}
