@@ -1,9 +1,10 @@
-{% if posts|length > 0 %}
-<div class="post-list">
-    {% for post in posts %}
-    {% include('CalderaCriticalmassSiteBundle:Post:post.html.twig') with { 'post':  post } %}
+{% if comments|length > 0 %}
+<div class="comment-list">
+    {% for comment in comments %}
+    {% include('CalderaCriticalmassBlogBundle:Comment:comment.html.twig') with { 'comment':  comment } %}
     {% endfor %}
 </div>
+
 {% else %}
     <div class="alert alert-info" role="alert">
         <strong>Schade!</strong>

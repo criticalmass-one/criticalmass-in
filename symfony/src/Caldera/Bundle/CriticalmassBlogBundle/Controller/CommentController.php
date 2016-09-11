@@ -17,6 +17,10 @@ class CommentController extends AbstractController
         BlogPost $blogPost
     ): Response
     {
+        if (!$this->isLoggedIn()) {
+            $this->createAccessDeniedException();
+        }
+        
         $post = new Post();
 
         $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_blog_comment_write', array('slug' => $blogPost->getSlug()))));
@@ -48,18 +52,18 @@ class CommentController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
-        Request $request, 
+        Request $request,
         BlogPost $blogPost
     ): Response
     {
         $criteria =
-        [
-            'enabled' => true,
-            'blogPost' => $blogPost
-        ];
+            [
+                'enabled' => true,
+                'blogPost' => $blogPost
+            ];
 
-        $posts = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
+        $comments = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
 
-        return $this->render('CalderaCriticalmassBlogBundle:Comment:list.html.twig', array('posts' => $posts));
+        return $this->render('CalderaCriticalmassBlogBundle:Comment:list.html.twig', array('comments' => $comments));
     }
 }

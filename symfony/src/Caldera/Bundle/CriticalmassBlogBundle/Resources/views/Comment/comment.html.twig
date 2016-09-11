@@ -1,0 +1,21 @@
+<div class="row comment m-b-1">
+    <div class="col-xs-2">
+        <img class="img-circle img-fluid" src="{{ gravatarUrl(comment.user, 256) }}" />
+    </div>
+
+    <div class="col-xs-10">
+        <h4 class="username">
+            {% if comment.getRide() %}
+                {{ comment.getUser().getUsername() }} schreibt zu <a href="{{ path(comment.ride) }}">{{ comment.ride.fancyTitle }}</a>:
+            {% elseif comment.getCity() %}
+                {{ comment.getUser().getUsername() }} schreibt über <a href="{{ path(comment.city) }}">{{ comment.city.title }}</a>:
+            {% else %}
+                {{ comment.getUser().getUsername() }} schreibt:
+            {% endif %}
+        </h4>
+
+        <time>{{ comment.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr</time>
+
+        {{ comment.message|markdown }}
+    </div>
+</div>
