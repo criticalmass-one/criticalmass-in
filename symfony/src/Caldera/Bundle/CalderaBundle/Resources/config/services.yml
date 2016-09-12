@@ -2,6 +2,9 @@ parameters:
 #    caldera.example.class: Caldera\Bundle\CalderaBundle\Example
 
 services:
-#    caldera.example:
-#        class: %caldera.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    caldera.parser.multistep:
+        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\MultiStepParser
+
+    caldera.parser.multistep.markdown:
+        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\MarkdownParserStep
+        arguments: [ '@markdown.parser' ]

@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
+use Caldera\Bundle\Parser\ParserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -24,6 +25,9 @@ class SiteTwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
+            new \Twig_SimpleFilter('parse', [$this, 'parse'], array(
+                'is_safe' => array('html')
+            ))
         ];
     }
 
@@ -157,6 +161,14 @@ class SiteTwigExtension extends \Twig_Extension
         }
 
         return $string;
+    }
+
+    public function parse(string $text): string
+    {
+        /** @var ParserInterface $parser */
+        $parser = $this->container->get('caldera.parser.multistep');
+
+        return $parser->parse($text);
     }
 
     public function getName()
