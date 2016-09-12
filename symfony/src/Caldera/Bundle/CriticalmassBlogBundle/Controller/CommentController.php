@@ -19,11 +19,10 @@ class CommentController extends AbstractController
     {
         $post = new Post();
 
-        $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
-        $city = $this->getCityRepository()->find($cityId);
-        $post->setCity($city);
+        $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_blog_post', array('slug' => $blogPost->getSlug()))));
+        $post->setBlogPost($blogPost);
 
-        $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', array('citySlug' => $city->getMainSlugString()));
+        $redirectUrl = $this->generateUrl('caldera_criticalmass_blog_post', array('slug' => $blogPost->getSlug()));
 
         $form->handleRequest($request);
 

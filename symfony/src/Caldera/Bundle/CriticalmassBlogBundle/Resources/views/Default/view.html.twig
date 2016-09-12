@@ -110,6 +110,10 @@
                     {{ render(controller('CalderaCriticalmassBlogBundle:Comment:list', { 'blogPost': post })) }}
                 </div>
             </div>
+
+            {% if app.user %}
+            {{ render(controller('CalderaCriticalmassBlogBundle:Comment:write', { 'blogPost': post })) }}
+            {% endif %}
         </div>
     </div>
 </div>
