@@ -4,14 +4,4 @@
     {% include('CalderaCriticalmassBlogBundle:Comment:comment.html.twig') with { 'comment':  comment } %}
     {% endfor %}
 </div>
-
-{% else %}
-    <div class="alert alert-info" role="alert">
-        <strong>Schade!</strong>
-        Bislang hat noch niemand einen Kommentar geschrieben!
-        {% if not app.user %}
-        <br />
-        Bitte <a href="#" data-toggle="modal" data-target="#myModal">logge dich ein</a> oder <a href="{{ path('fos_user_registration_register') }}">registriere dich</a>, um einen Kommentar zu verfassen &mdash; es dauert nicht einmal 30 Sekunden!
-        {% endif %}
-    </div>
 {% endif %}
