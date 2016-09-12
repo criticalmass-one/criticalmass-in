@@ -5,8 +5,12 @@ services:
     caldera.parser.multistep:
         class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\MultiStepParser
         calls:
+            - [ addStep, [ '@caldera.parser.multistep.link' ]]
             - [ addStep, [ '@caldera.parser.multistep.markdown' ]]
 
     caldera.parser.multistep.markdown:
         class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\MarkdownParserStep
         arguments: [ '@markdown.parser' ]
+
+    caldera.parser.multistep.link:
+        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\LinkParserStep
