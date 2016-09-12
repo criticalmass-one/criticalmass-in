@@ -13,6 +13,7 @@ services:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.contentcomment']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.locationsharing']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.blogpost']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.blogcomment']]
 
     caldera.criticalmass.timeline:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline
@@ -28,6 +29,7 @@ services:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.contentcomment']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.locationsharing']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.blogpost']]
+            - [addCollector, ['@caldera.criticalmass.timeline.collector.blogcomment']]
 
     caldera.criticalmass.timeline.collector.ridephoto:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RidePhotoCollector
@@ -67,4 +69,8 @@ services:
 
     caldera.criticalmass.timeline.collector.blogpost:
         class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\BlogPostCollector
+        arguments: [@doctrine]
+
+    caldera.criticalmass.timeline.collector.blogcomment:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\BlogPostCommentCollector
         arguments: [@doctrine]

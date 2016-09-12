@@ -181,16 +181,14 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineBlogPostCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
+    public function findForTimelineBlogPostCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
 
-        $builder->join('post.blog', 'blog');
-
         $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('post.blog'));
+        $builder->andWhere($builder->expr()->isNotNull('post.blogPost'));
 
         if ($startDateTime) {
             $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
