@@ -19,13 +19,13 @@ class DefaultController extends AbstractController
         $endDateTime->add(new \DateInterval('P2M'));
 
         $rides = $this->getRideRepository()->findRidesAndCitiesInInterval($startDateTime, $endDateTime);
-        $cities = $this->getCityRepository()->findBy(['isArchived' => 0]);
+        $popularRides = $this->getRideRepository()->findPopularRides(15);
 
         return $this->render(
             'CalderaCriticalmassLiveBundle:Default:index.html.twig',
             [
                 'rides' => $rides,
-                'cities' => $cities
+                'popularRides' => $popularRides
             ]
         );
     }

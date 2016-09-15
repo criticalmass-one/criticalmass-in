@@ -74,32 +74,32 @@
         </div>
     </div>
 
-    {% set citiesPerCol = (cities | length / 3) | round(0, 'floor') %}
-    {{ citiesPerCol }}
+    {% set ridesPerCol = (popularRides | length / 3) | round(0, 'floor') %}
+
     <div class="row m-t-5">
         <div class="col-md-4">
             <ul class="list-unstyled">
-                {% for city in cities|slice(0, citiesPerCol) %}
+                {% for ride in popularRides|slice(0, ridesPerCol) %}
                 <li>
-                    {{ city }}
+                    {{ ride.city.title }} Live Tracking
                 </li>
                 {% endfor %}
             </ul>
         </div>
         <div class="col-md-4">
             <ul class="list-unstyled">
-                {% for city in cities|slice(citiesPerCol, citiesPerCol) %}
+                {% for ride in popularRides|slice(ridesPerCol, ridesPerCol) %}
                     <li>
-                        {{ city }}
+                        {{ ride.city.title }} Live Tracking
                     </li>
                 {% endfor %}
             </ul>
         </div>
         <div class="col-md-4">
             <ul class="list-unstyled">
-                {% for city in cities|slice(2 * citiesPerCol, citiesPerCol + 1) %}
+                {% for ride in popularRides|slice(2 * ridesPerCol, ridesPerCol + 1) %}
                     <li>
-                        {{ city }}
+                        {{ ride.city.title }} Live Tracking
                     </li>
                 {% endfor %}
             </ul>

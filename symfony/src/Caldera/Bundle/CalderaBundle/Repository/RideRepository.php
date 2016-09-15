@@ -693,4 +693,24 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findPopularRides(int $limit = 15): array
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder->select('ride');
+        $builder->join('ride.city', 'city');
+
+        $builder->where($builder->expr()->eq('ride.isArchived', 0));
+
+        $builder->groupBy('ride.city');
+
+        $builder->orderBy('ride.estimatedParticipants', 'DESC');
+
+        $builder->setMaxResults($limit);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
