@@ -73,6 +73,38 @@
             {% endif %}
         </div>
     </div>
+
+    {% set citiesPerCol = (cities | length / 3) | round(0, 'floor') %}
+    {{ citiesPerCol }}
+    <div class="row m-t-5">
+        <div class="col-md-4">
+            <ul class="list-unstyled">
+                {% for city in cities|slice(0, citiesPerCol) %}
+                <li>
+                    {{ city }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-unstyled">
+                {% for city in cities|slice(citiesPerCol, citiesPerCol) %}
+                    <li>
+                        {{ city }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-unstyled">
+                {% for city in cities|slice(2 * citiesPerCol, citiesPerCol + 1) %}
+                    <li>
+                        {{ city }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 
 <script>
