@@ -93,7 +93,7 @@
             <ul class="list-unstyled">
                 {% for ride in popularRides|slice(0, ridesPerCol) %}
                 <li>
-                    {{ ride.city.title }} Live Tracking
+                    {{ ride.city.title }}
                 </li>
                 {% endfor %}
             </ul>
@@ -102,7 +102,7 @@
             <ul class="list-unstyled">
                 {% for ride in popularRides|slice(ridesPerCol, ridesPerCol) %}
                     <li>
-                        {{ ride.city.title }} Live Tracking
+                        {{ ride.city.title }}
                     </li>
                 {% endfor %}
             </ul>
@@ -111,7 +111,7 @@
             <ul class="list-unstyled">
                 {% for ride in popularRides|slice(2 * ridesPerCol, ridesPerCol + 1) %}
                     <li>
-                        {{ ride.city.title }} Live Tracking
+                        {{ ride.city.title }}
                     </li>
                 {% endfor %}
             </ul>
