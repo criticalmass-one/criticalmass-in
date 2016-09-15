@@ -105,7 +105,15 @@
             </h4>
 
             <p class="lead">
-                Wozu?
+                Was ist Live Tracking und was soll das?
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-10 offset-xs-1">
+            <p>
+                Falls du zu spät aus dem Bureau kommst, kurz an einer Tankstelle Getränkenachschub besorgst oder nach dem Corken schnell wieder nach vorne willst, kannst du dich immer auf digitale Helfer verlassen: Mit Glympse oder Critical Maps kannst du deinen Aufenthaltsort mit anderen Radfahrern deiner Stadt teilen und ihnen helfen, wieder zurück zur Masse zu finden. Andersherum kannst du mit Critical Maps und criticalmass.live sehen, wo die Masse gerade entlangrollt.
             </p>
         </div>
     </div>
@@ -131,7 +139,9 @@
                     <ul class="list-unstyled">
                         {% for ride in popularRides|slice(0, ridesPerCol) %}
                             <li>
-                                {{ ride.city.title }}
+                                <a href="{{ path('caldera_criticalmass_live_live_city', { citySlug: ride.city.slug }) }}">
+                                    {{ ride.city.title }}
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -140,7 +150,9 @@
                     <ul class="list-unstyled">
                         {% for ride in popularRides|slice(ridesPerCol, ridesPerCol) %}
                             <li>
-                                {{ ride.city.title }}
+                                <a href="{{ path('caldera_criticalmass_live_live_city', { citySlug: ride.city.slug }) }}">
+                                    {{ ride.city.title }}
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -149,7 +161,9 @@
                     <ul class="list-unstyled">
                         {% for ride in popularRides|slice(2 * ridesPerCol, ridesPerCol + 1) %}
                             <li>
-                                {{ ride.city.title }}
+                                <a href="{{ path('caldera_criticalmass_live_live_city', { citySlug: ride.city.slug }) }}">
+                                    {{ ride.city.title }}
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
