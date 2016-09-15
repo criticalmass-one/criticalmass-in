@@ -13,18 +13,21 @@ class DefaultController extends AbstractController
 
     public function indexAction(Request $request)
     {
+        $blog = $this->getBlogRepository()->find(1);
         $posts = $this->getBlogPostRepository()->findBy([], ['dateTime' => 'DESC']);
 
         return $this->render(
             'CalderaCriticalmassBlogBundle:Default:index.html.twig',
             [
-                'posts' => $posts
+                'posts' => $posts,
+                'blog' => $blog
             ]
         );
     }
 
     public function viewAction(Request $request, $slug)
     {
+        $blog = $this->getBlogRepository()->find(1);
         $post = $this->getBlogPostRepository()->findOneBySlug($slug);
 
         if (!$post) {
@@ -36,7 +39,8 @@ class DefaultController extends AbstractController
         return $this->render(
             'CalderaCriticalmassBlogBundle:Default:view.html.twig',
             [
-                'post' => $post
+                'post' => $post,
+                'blog' => $blog
             ]
         );
     }
