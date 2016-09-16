@@ -14,45 +14,41 @@ use Lsw\MemcacheBundle\Cache\LoggingMemcache;
 
 trait ViewStorageTrait
 {
-    protected function getIdentifier(ViewableInterface $viewable): string
+    protected function getClassName(ViewableInterface $viewable): string
     {
         $namespaceClass = get_class($viewable);
         $namespaceParts = explode('\\', $namespaceClass);
 
-        $classname = array_pop($namespaceParts);
+        $className = array_pop($namespaceParts);
 
-        $identifier = lcfirst($classname);
-
-        return $identifier;
+        return $className;
     }
 
     protected function countView(ViewableInterface $viewable)
     {
-        $identifier = $this->getIdentifier($viewable);
-
         /** @var LoggingMemcache $memcache */
         $memcache = $this->get('memcache.criticalmass');
 
-        $additionalViews = $memcache->get($identifier.$viewable->getId().'_additionalviews');
+        $viewStorage = $memcache->get('view_storage');
 
-        if (!$additionalViews) {
-            $additionalViews = 1;
-        } else {
-            ++$additionalViews;
+        if (!$viewStorage) {
+            $viewStorage = [];
         }
 
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
-        $viewArray =
+        $view =
             [
+                'className' => $this->getClassName($viewable),
                 'entityId' => $viewable->getId(),
                 'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
                 'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
             ]
         ;
 
-        $memcache->set($identifier.$viewable->getId().'_additionalviews', $additionalViews);
-        $memcache->set($identifier.$viewable->getId().'_view'.$additionalViews, $viewArray);
+        $viewStorage[] = $view;
+        
+        $memcache->set('view_storage', $viewStorage);
     }
 
     /**
