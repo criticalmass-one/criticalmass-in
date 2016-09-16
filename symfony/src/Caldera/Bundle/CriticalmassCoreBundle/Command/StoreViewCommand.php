@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Content;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
@@ -52,6 +53,7 @@ class StoreViewCommand extends ContainerAwareCommand
         $this->persistEventViews($output);
         $this->persistRideViews($output);
         $this->persistBlogPostViews($output);
+        $this->persistContentViews($output);
     }
 
     protected function setViewEntity(ViewInterface $view, ViewableInterface $entity)
@@ -78,6 +80,10 @@ class StoreViewCommand extends ContainerAwareCommand
 
         if ($entity instanceof BlogPost) {
             $view->setBlogPost($entity);
+        }
+
+        if ($entity instanceof Content) {
+            $view->setContent($entity);
         }
     }
 
@@ -180,5 +186,14 @@ class StoreViewCommand extends ContainerAwareCommand
         $blogPost = $this->doctrine->getRepository('CalderaBundle:BlogPost')->findAll();
 
         $this->storeViews($output, 'blogPost', $blogPost, 'Caldera\Bundle\CalderaBundle\Entity\BlogPostView');
+    }
+
+    protected function persistContentViews(OutputInterface $output)
+    {
+        $output->writeln('Storing content views');
+
+        $content = $this->doctrine->getRepository('CalderaBundle:Content')->findAll();
+
+        $this->storeViews($output, 'content', $content, 'Caldera\Bundle\CalderaBundle\Entity\ContentView');
     }
 }
