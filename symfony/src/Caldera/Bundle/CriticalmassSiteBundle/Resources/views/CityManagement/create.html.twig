@@ -13,11 +13,7 @@
                 <h1>
                     Wähle deine Stadt
                 </h1>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
                 <p class="lead">
                     Bitte ziehe auf der folgenden Karte den roten Marker auf den Mittelpunkt der Stadt.
                 </p>
@@ -30,7 +26,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top-medium">
             <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
                     <button id="search-city-button" class="btn btn-default btn-xs pull-right" type="button">
@@ -52,6 +48,18 @@
 
 
     {% if flow.getCurrentStepNumber == 2 %}
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Noch mehr Daten deiner Stadt
+                </h1>
+
+                <p class="lead">
+                    Bitte erzähle uns etwas mehr über deine Stadt.
+                </p>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
@@ -109,6 +117,18 @@
     {% if flow.getCurrentStepNumber == 3 %}
         <div class="row">
             <div class="col-md-12">
+                <h1>
+                    Soziale Netze
+                </h1>
+
+                <p class="lead">
+                    Meistens tauschen sich die Teilnehmer einer Critical Mass über facebook aus &mdash; bitte verlinke hier eine eventuell vorhandene Webseite, eine Seite auf facebook oder ein twitter-Benutzerkonto.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.url) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Webseite:</label>
                     {{ form_widget(form.url, { 'attr' : { 'class': 'form-control'} }) }}
@@ -144,11 +164,23 @@
     {% if flow.getCurrentStepNumber == 4 %}
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 250px;"></div>
+                <h1>
+                    Regelmäßig unterwegs?
+                </h1>
+
+                <p class="lead">
+                    Wenn die Critical Mass in deiner Stadt regelmäßig unterwegs ist, kannst du die monatlichen Touren automatisch generieren lassen.
+                </p>
             </div>
         </div>
 
         <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 250px;"></div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
             <div class="col-md-12">
                 <div class="form-group{% if form_errors(form.isStandardable) %} has-error has-feedback{% endif %}">
                     <label class="control-label" for="">Hat regelmäßige Touren:</label>
@@ -224,6 +256,18 @@
 
 
     {% if flow.getCurrentStepNumber == 5 %}
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Technisches
+                </h1>
+
+                <p class="lead">
+                    Du hst es fast geschafft: Bitte wähle jetzt noch die Zeitzone deiner Stadt und gib an, ob auf criticalmass.in ein Forum für diese Stadt angezeigt werden soll.
+                </p>
+            </div>
+        </div>
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
