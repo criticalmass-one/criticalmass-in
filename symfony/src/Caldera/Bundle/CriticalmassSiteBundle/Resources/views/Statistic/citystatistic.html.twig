@@ -87,6 +87,74 @@
                 <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Tabellarischer Vergleich
+                </h2>
+
+                <p class="lead">
+                    Gibt es einen Zusammenhang zwischen dem Wetter und den Teilnehmerzahlen?
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Datum
+                            </th>
+                            <th>
+                                Temperatur
+                            </th>
+                            <th>
+                                Niederschlag
+                            </th>
+                            <th>
+                                Windgeschwindigkeit
+                            </th>
+                            <th>
+                                Teilnehmerzahl
+                            </th>
+                            <th>
+                                Streckenlänge
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rides %}
+                        {% set weather = ride.weathers.first %}
+                        {% if weather %}
+                        <tr>
+                            <td>
+                                {{ ride.dateTime | date('d.m.Y H:i') }}
+                            </td>
+                            <td>
+                                {{ weather.temperatureEvening }} °C
+                            </td>
+                            <td>
+                                {{ weather.rain }} Millimeter
+                            </td>
+                            <td>
+                                {{ weather.windSpeed }} Meter pro Sekunde
+                            </td>
+                            <td>
+                                {{ ride.estimatedParticipants | default('unbekannt') }}
+                            </td>
+                            <td>
+                                {{ ride.estimatedDistance | default('unbekannt') }}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
         CriticalMass.loadModule('CityStatisticPage', null, null, function(page) {
