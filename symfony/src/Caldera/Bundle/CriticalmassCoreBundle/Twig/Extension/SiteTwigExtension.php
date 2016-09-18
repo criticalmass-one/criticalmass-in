@@ -54,6 +54,9 @@ class SiteTwigExtension extends \Twig_Extension
             )),
             new \Twig_SimpleFunction('hostname', [$this, 'hostname'], array(
                 'is_safe' => array('html')
+            )),
+            new \Twig_SimpleFunction('today', [$this, 'today'], array(
+                'is_safe' => array('html')
             ))
         ];
     }
