@@ -32,6 +32,27 @@ caldera_criticalmass_rest:
     resource: "@CalderaCriticalmassRestBundle/Resources/config/routing.yml"
     prefix:   /rest
 
+facebook_login:
+    pattern: /login/check-facebook
+
+strava_login:
+    pattern: /login/check-strava
+
+runkeeper_login:
+    pattern: /login/check-runkeeper
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /login
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /login
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /login
+
 caldera_criticalmass:
     resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing.yml"
     host: "%domain.criticalmass%"

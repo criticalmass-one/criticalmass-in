@@ -14,3 +14,7 @@ services:
 
     caldera.parser.multistep.link:
         class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\LinkParserStep
+
+    caldera.user_provider:
+        class: Caldera\Bundle\CalderaBundle\UserProvider\FOSUBUserProvider
+        arguments: ["@fos_user.user_manager", {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]

@@ -34,7 +34,8 @@
         "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "knplabs/knp-markdown-bundle": "^1.5",
-        "friendsofsymfony/rest-bundle": "^2.0"
+        "friendsofsymfony/rest-bundle": "^2.0",
+        "hwi/oauth-bundle": "^0.4.2"
     },
     "scripts": {
         "post-install-cmd": [
