@@ -16,6 +16,17 @@
 
         <time>{{ comment.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr</time>
 
-        {{ comment.message|markdown }}
+        {% if comment.obfuscated %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Schade!</strong> Dieser Kommentar enthält unangemessene Inhalte. <button class="btn btn-sm btn-secondary pull-right" onclick="$(this).parent().parent().find('.obfuscate').removeClass('obfuscate');$(this).remove();"><i class="fa fa-eye" aria-hidden="true"></i> Lesen</button>
+        </div>
+        <div class="message obfuscate">
+            {{ comment.message|markdown }}
+        </div>
+        {% else %}
+        <div class="message">
+            {{ comment.message|markdown }}
+        </div>
+        {% endif %}
     </div>
 </div>
