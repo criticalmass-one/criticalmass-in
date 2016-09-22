@@ -33,6 +33,27 @@
                 </label>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>
+                    Oder logge dich über eines dieser Netzwerke ein:
+                </p>
+
+                <div class="btn-group" role="group" aria-label="...">
+                    <a class="btn btn-default" style="background-color: rgb(60, 90, 150); color: white;" href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" title="Sign in with Facebook">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                        Facebook
+                    </a>
+                    <a class="btn btn-default" style="background-color: rgb(249, 77, 31); color: white;" href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}" title="Sign in with Strava">
+                        Strava
+                    </a>
+                    <a class="btn btn-default" style="background-color: rgb(57, 201, 214); color: white;" href="{{ path('hwi_oauth_service_redirect', {'service': 'runkeeper' }) }}" title="Sign in with Runkeeper">
+                        Runkeeper
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal-footer">
