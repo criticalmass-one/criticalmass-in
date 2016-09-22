@@ -80,6 +80,16 @@ class BlogPost implements ViewableInterface
     protected $enabled = true;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $showCoffeeButton = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $commentsEnabled = true;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Photo", inversedBy="featuredBlogPosts", fetch="LAZY")
      * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
      */
@@ -384,5 +394,51 @@ class BlogPost implements ViewableInterface
     public function incViews()
     {
         ++$this->views;
+    }
+
+    /**
+     * Set showCoffeeButton
+     *
+     * @param boolean $showCoffeeButton
+     * @return BlogPost
+     */
+    public function setShowCoffeeButton($showCoffeeButton)
+    {
+        $this->showCoffeeButton = $showCoffeeButton;
+
+        return $this;
+    }
+
+    /**
+     * Get showCoffeeButton
+     *
+     * @return boolean 
+     */
+    public function getShowCoffeeButton()
+    {
+        return $this->showCoffeeButton;
+    }
+
+    /**
+     * Set commentsEnabled
+     *
+     * @param boolean $commentsEnabled
+     * @return BlogPost
+     */
+    public function setCommentsEnabled($commentsEnabled)
+    {
+        $this->commentsEnabled = $commentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get commentsEnabled
+     *
+     * @return boolean 
+     */
+    public function getCommentsEnabled()
+    {
+        return $this->commentsEnabled;
     }
 }
