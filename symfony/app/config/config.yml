@@ -28,12 +28,13 @@ hwi_oauth:
             facebook: facebookId
             strava: stravaId
             runkeeper: runkeeperId
-
     resource_owners:
         facebook:
             type:                facebook
             client_id:           %facebook.app_id%
             client_secret:       %facebook.app_secret%
+            scope:               email
+            infos_url:           https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,gender
         strava:
             type:                strava
             client_id:           %strava.client_id%
