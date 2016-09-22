@@ -133,11 +133,15 @@
                 </div>
             </div>
 
-            {% if app.user %}
+            {% if app.user and post.commentsEnabled %}
             {{ render(controller('CalderaCriticalmassBlogBundle:Comment:write', { 'blogPost': post })) }}
             {% elseif not app.user %}
             <div class="alert alert-info" role="alert">
                 Bitte <a href="#" data-toggle="modal" data-target="#loginModal">logge dich ein</a> oder <a href="{{ path('fos_user_registration_register') }}">registriere dich</a>, um einen Kommentar zu verfassen &mdash; es dauert nicht einmal 30 Sekunden!
+            </div>
+            {% elseif not post.commentsEnabled %}
+            <div class="alert alert-warning" role="alert">
+                Schade &mdash; zu diesem Beitrag können leider keine Kommentare geschrieben werden.
             </div>
             {% endif %}
         </div>
