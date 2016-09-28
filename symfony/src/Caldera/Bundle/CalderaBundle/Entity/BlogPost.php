@@ -57,6 +57,11 @@ class BlogPost implements ViewableInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    protected $claim;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     protected $title;
 
     /**
@@ -440,5 +445,17 @@ class BlogPost implements ViewableInterface
     public function getCommentsEnabled()
     {
         return $this->commentsEnabled;
+    }
+
+    public function setClaim($claim)
+    {
+        $this->claim = $claim;
+
+        return $this;
+    }
+
+    public function getClaim()
+    {
+        return $this->claim;
     }
 }
