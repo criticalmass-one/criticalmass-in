@@ -1,0 +1,15 @@
+caldera_radverkehrspolitik_blog_login:
+    path:     /login
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Security:login }
+
+caldera_radverkehrspolitik_blog_homepage:
+    path:     /
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Default:index }
+
+caldera_radverkehrspolitik_blog_post:
+    path:     /{slug}
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Default:view }
+
+caldera_radverkehrspolitik_blog_comment_write:
+    path:     /{slug}/comment
+    defaults: { _controller: CalderaCriticalmassBlogBundle:Comment:write }

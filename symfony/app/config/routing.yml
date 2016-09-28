@@ -1,7 +1,12 @@
+caldera_radverkehrspolitik:
+    resource: "@CalderaCriticalmassBlogBundle/Resources/config/routing2.yml"
+    prefix:   /
+    host: "%domain.radverkehrspolitik%"
+
 caldera_criticalmassblog:
     resource: "@CalderaCriticalmassBlogBundle/Resources/config/routing.yml"
-    host: "%domain.criticalmassblog%"
     prefix:   /
+    host: "%domain.criticalmassblog%"
 
 sonata_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -72,13 +77,6 @@ caldera_criticalmassphoto:
     resource: "@CalderaCriticalmassPhotoBundle/Resources/config/routing.yml"
     host: "%domain.criticalmassphoto%"
     prefix:   /
-
-caldera_criticalmassblog:
-    resource: "@CalderaCriticalmassBlogBundle/Resources/config/routing.yml"
-    host: "%domain.criticalmassblog%"
-    prefix:   /
-
-
 
 caldera_criticalmasslive:
     resource: "@CalderaCriticalmassLiveBundle/Resources/config/routing.yml"
