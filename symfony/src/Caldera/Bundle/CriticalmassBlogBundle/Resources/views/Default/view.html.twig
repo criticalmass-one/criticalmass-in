@@ -83,10 +83,15 @@
                     {% if post.showCoffeeButton %}
                     <div class="row m-t-2">
                         <div class="col-sm-12 text-sm-center">
-                            <a class="btn btn-secondary btn-sm" href="https://ko-fi.com/A538AMI">
-                                <i class="fa fa-coffee" aria-hidden="true"></i>
-                                Buy Me a Coffee
-                            </a>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Buy me a coffee">
+                                <a class="btn btn-secondary" href="https://ko-fi.com/A538AMI">
+                                    <i class="fa fa-coffee" aria-hidden="true"></i>
+                                    Coffee
+                                </a>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#coffeeModal">
+                                    <i class="fa fa-question" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     {% endif %}
@@ -116,10 +121,15 @@
             {% if post.showCoffeeButton %}
             <div class="row m-t-3">
                 <div class="col-xs-12 text-xs-center">
-                    <a class="btn btn-secondary" href="https://ko-fi.com/A538AMI">
-                        <i class="fa fa-coffee" aria-hidden="true"></i>
-                        Buy Me a Coffee
-                    </a>
+                    <div class="btn-group" role="group" aria-label="Buy me a coffee">
+                        <a class="btn btn-secondary" href="https://ko-fi.com/A538AMI">
+                            <i class="fa fa-coffee" aria-hidden="true"></i>
+                            Buy Me a Coffee
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#coffeeModal">
+                            <i class="fa fa-question" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             {% endif %}
@@ -150,6 +160,27 @@
                 Schade &mdash; zu diesem Beitrag können leider keine Kommentare geschrieben werden.
             </div>
             {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="coffeeModal" tabindex="-1" role="dialog" aria-labelledby="coffeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="coffeeModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
