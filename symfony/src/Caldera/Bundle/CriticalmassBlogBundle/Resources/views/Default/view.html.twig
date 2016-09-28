@@ -45,6 +45,12 @@
             <div class="row">
                 <div class="row m-t-3">
                     <div class="col-xs-12 col-sm-10 text-xs-center">
+                        {% if post.claim %}
+                            <p class="m-b-0">
+                                {{ post.claim }}
+                            </p>
+                        {% endif %}
+
                         <h2>
                             {{ post.title }}
                         </h2>
