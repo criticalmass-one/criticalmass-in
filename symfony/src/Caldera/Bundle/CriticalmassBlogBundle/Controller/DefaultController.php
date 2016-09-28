@@ -25,6 +25,21 @@ class DefaultController extends AbstractController
         return $blog;
     }
 
+    protected function getBlogRoutes(Blog $blog): array
+    {
+        if ($blog->getId() == 1) {
+            return [
+                'blogHomepage' => 'caldera_criticalmass_blog_homepage',
+                'blogPost' => 'caldera_criticalmass_blog_post'
+            ];
+        } else {
+            return [
+                'blogHomepage' => 'caldera_radverkehrspolitik_blog_homepage',
+                'blogPost' => 'caldera_radverkehrspolitik_blog_post'
+            ];
+        }
+    }
+
     public function indexAction(Request $request)
     {
         $blog = $this->getBlog($request);
@@ -34,7 +49,8 @@ class DefaultController extends AbstractController
             'CalderaCriticalmassBlogBundle:Default:index.html.twig',
             [
                 'posts' => $posts,
-                'blog' => $blog
+                'blog' => $blog,
+                'routes' => $this->getBlogRoutes($blog)
             ]
         );
     }
@@ -54,7 +70,8 @@ class DefaultController extends AbstractController
             'CalderaCriticalmassBlogBundle:Default:view.html.twig',
             [
                 'post' => $post,
-                'blog' => $blog
+                'blog' => $blog,
+                'routes' => $this->getBlogRoutes($blog)
             ]
         );
     }
