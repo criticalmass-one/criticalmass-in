@@ -11,7 +11,7 @@
     <meta property="og:description" content="{{ post.abstract }}" />
     <meta property="og:url" content="{{ currentPath }}" />
     <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="fahrradterroristen.de" />
+    <meta property="og:site_name" content="{{ blog.hostname }}" />
     {% if post.featuredPhoto %}
         <meta property="og:image" content="{{ vich_uploader_asset(post.featuredPhoto, 'imageFile')|imagine_filter('blog_featuredphoto_standard') }}" />
     {% endif %}
