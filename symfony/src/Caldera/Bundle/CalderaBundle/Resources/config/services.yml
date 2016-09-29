@@ -7,6 +7,7 @@ services:
         calls:
             - [ addStep, [ '@caldera.parser.multistep.link' ]]
             - [ addStep, [ '@caldera.parser.multistep.markdown' ]]
+            - [ addStep, [ '@caldera.parser.multistep.anchor' ]]
 
     caldera.parser.multistep.markdown:
         class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\MarkdownParserStep
@@ -14,6 +15,9 @@ services:
 
     caldera.parser.multistep.link:
         class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\LinkParserStep
+
+    caldera.parser.multistep.anchor:
+        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\AnchorParserStep
 
     caldera.user_provider:
         class: Caldera\Bundle\CalderaBundle\UserProvider\FOSUBUserProvider
