@@ -44,7 +44,7 @@
                     {% if post.abstract %}
                     {{ post.abstract | markdown }}
 
-                    <a href="{{ path(post) }}" class="btn btn-secondary m-x-auto" style="width: 150px; display: block;">
+                    <a href="{{ path(routes.blogPost, { slug: post.slug }) }}" class="btn btn-secondary m-x-auto" style="width: 150px; display: block;">
                         Weiterlesen
                     </a>
                     {% else %}
