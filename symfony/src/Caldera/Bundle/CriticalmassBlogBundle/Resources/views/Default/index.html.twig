@@ -45,6 +45,7 @@
                     {{ post.abstract | markdown }}
 
                     <a href="{{ path(routes.blogPost, { slug: post.slug }) }}" class="btn btn-secondary m-x-auto" style="width: 150px; display: block;">
+                        <i class="fa fa-book" aria-hidden="true"></i>
                         Weiterlesen
                     </a>
                     {% else %}
