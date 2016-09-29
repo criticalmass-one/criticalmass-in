@@ -15,6 +15,14 @@
     {% if post.featuredPhoto %}
         <meta property="og:image" content="{{ vich_uploader_asset(post.featuredPhoto, 'imageFile')|imagine_filter('blog_featuredphoto_standard') }}" />
     {% endif %}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@calderacc" />
+    <meta name="twitter:creator" content="@maltehuebner" />
+    <meta name="twitter:title" content="{{ post.title }}" />
+    <meta name="twitter:description" content="{{ post.abstract }}" />
+    {% if post.featuredPhoto %}
+        <meta name="twitter:image" content="{{ vich_uploader_asset(post.featuredPhoto, 'imageFile')|imagine_filter('blog_featuredphoto_standard') }}" />
+    {% endif %}
 {% endblock %}
 
 {% block content %}
