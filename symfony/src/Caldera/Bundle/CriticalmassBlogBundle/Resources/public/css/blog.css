@@ -52,6 +52,13 @@
     text-align: center;
 }
 
+.blog h3 a.anchor,
+.blog h3 a.anchor:hover
+{
+    text-decoration: none;
+    color: black;
+}
+
 .blog article a,
 .blog article a:hover {
     color: #999;
