@@ -14,7 +14,7 @@
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="criticalmass.photos" />
     {% if ride.featuredPhoto %}
-        <meta property="og:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('blog_featuredphoto_standard') }}" />
+        <meta property="og:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
     {% endif %}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@calderacc" />
@@ -22,7 +22,7 @@
     <meta name="twitter:title" content="criticalmass.photos" />
     <meta name="twitter:description" content="{{ title }}" />
     {% if ride.featuredPhoto %}
-        <meta name="twitter:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('blog_featuredphoto_standard') }}" />
+        <meta name="twitter:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
     {% endif %}
 {% endblock %}
 

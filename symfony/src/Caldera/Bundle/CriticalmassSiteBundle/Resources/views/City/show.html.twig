@@ -17,7 +17,15 @@
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="criticalmass.in" />
     {% if city.imageName %}
-    <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }}" />
+    <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
+    {% endif %}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@calderacc" />
+    <meta name="twitter:creator" content="@maltehuebner" />
+    <meta name="twitter:title" content="{{ city.title }}" />
+    <meta name="twitter:description" content="{{ city.description }}" />
+    {% if city.imageName %}
+    <meta name="twitter:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
     {% endif %}
 {% endblock %}
 

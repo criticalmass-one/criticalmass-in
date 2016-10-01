@@ -33,3 +33,11 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
+        facebook_preview_image:
+            quality: 60
+            filters:
+                thumbnail: { size: [1600, 1600], mode: inset }
+        twitter_summary_large_image:
+            quality: 50
+            filters:
+                thumbnail: { size: [800, 800], mode: inset }
