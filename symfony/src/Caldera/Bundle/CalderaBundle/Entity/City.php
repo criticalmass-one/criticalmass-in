@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -19,7 +20,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface
 {
 	/**
 	 * Numerische ID der Stadt.

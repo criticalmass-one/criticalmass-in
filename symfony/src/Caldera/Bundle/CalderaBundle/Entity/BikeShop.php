@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Caldera\Bundle\CalderaBundle\EntityInterface\CoordinateInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\FacebookInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\TwitterInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\UrlInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="caldera_bikeshop")
  * @ORM\Entity()
  */
-class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterface, UrlInterface, ViewableInterface
+class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterface, UrlInterface, ViewableInterface, ElasticSearchPinInterface
 {
     /**
      * @ORM\Id
@@ -373,5 +374,10 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     public function getOpeningTimes(): Collection
     {
         return $this->openingTimes;
+    }
+
+    public function getPin(): string
+    {
+        return $this->latitude.','.$this->longitude;
     }
 }

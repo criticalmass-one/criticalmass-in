@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Ride implements ParticipateableInterface, ViewableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface
 {
     /**
      * @ORM\Id
