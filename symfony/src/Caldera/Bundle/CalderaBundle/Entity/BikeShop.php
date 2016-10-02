@@ -33,7 +33,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     protected $city;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     protected $title;
 
