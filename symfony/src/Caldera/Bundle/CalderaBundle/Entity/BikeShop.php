@@ -27,6 +27,13 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     protected $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="bikeShops")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
+     */
+    protected $city;
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $title;
@@ -86,6 +93,21 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
      * @ORM\Column(type="integer")
      */
     protected $views = 0;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $housenumber;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    protected $zip;
 
     public function __construct()
     {
