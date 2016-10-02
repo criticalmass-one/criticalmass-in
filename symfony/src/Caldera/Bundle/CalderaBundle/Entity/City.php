@@ -1235,7 +1235,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->imageName;
     }
 
-    public function getPin()
+    public function getPin(): string
     {
         return $this->latitude.','.$this->longitude;
     }

@@ -921,7 +921,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
-    public function getPin()
+    public function getPin(): string
     {
         return $this->latitude.','.$this->longitude;
     }
