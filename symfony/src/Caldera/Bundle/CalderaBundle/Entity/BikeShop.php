@@ -43,6 +43,16 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     protected $description;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $email;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
