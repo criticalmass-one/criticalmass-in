@@ -27,7 +27,6 @@ class Tag
 
     /**
      * @ORM\ManyToMany(targetEntity="BikeShop", inversedBy="tags")
-     * @ORM\JoinTable(name="caldera_bikeshop_tags")
      */
     protected $bikeShops;
 

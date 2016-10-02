@@ -29,7 +29,6 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="bikeShops")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @JMS\Expose
      */
     protected $city;
 
@@ -53,7 +52,6 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
      * @ORM\JoinTable(name="caldera_bikeshop_tags")
      */
     protected $tags;
-
 
     /**
      * @ORM\ManyToMany(targetEntity="OpeningTime")
