@@ -27,12 +27,6 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="bikeShops")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $city;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     protected $title;
@@ -110,7 +104,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $housenumber;
+    protected $city;
 
     /**
      * @ORM\Column(type="string", length=5, nullable=true)
@@ -409,5 +403,120 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     public function getPin(): string
     {
         return $this->latitude.','.$this->longitude;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return BikeShop
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return BikeShop
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     * @return BikeShop
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string 
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return BikeShop
+     */
+    public function setCity($city): BikeShop
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set zip
+     *
+     * @param string $zip
+     * @return BikeShop
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+
+        return $this;
+    }
+
+    /**
+     * Get zip
+     *
+     * @return string 
+     */
+    public function getZip()
+    {
+        return $this->zip;
     }
 }
