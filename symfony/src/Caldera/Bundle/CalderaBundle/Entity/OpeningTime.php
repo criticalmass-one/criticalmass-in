@@ -46,10 +46,10 @@ class OpeningTime
     /**
      * Set weekday
      *
-     * @param integer $weekday
+     * @param int $weekday
      * @return OpeningTime
      */
-    public function setWeekday(integer $weekday): OpeningTime
+    public function setWeekday(int $weekday): OpeningTime
     {
         $this->weekday = $weekday;
 
