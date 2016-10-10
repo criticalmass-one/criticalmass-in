@@ -21,8 +21,12 @@ class LiveController extends AbstractController
          */
         $ride = $this->getRideRepository()->findCurrentRideForCity($city);
 
-        $events = $this->getEventRepository()->findEventsForRide($ride);
+        $events = [];
 
+        if ($ride) {
+            $events = $this->getEventRepository()->findEventsForRide($ride);
+        }
+        
         $this->getMetadata()
             ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in '.$city->getCity().' gerade befindet!');
 
