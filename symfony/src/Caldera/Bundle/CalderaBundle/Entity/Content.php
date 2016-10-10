@@ -373,6 +373,16 @@ class Content implements ViewableInterface
         return $this->showInfobox;
     }
 
+    /**
+     * @return $this
+     */
+    public function incViews()
+    {
+        ++$this->views;
+
+        return $this;
+    }
+    
     public function getViews()
     {
         return $this->views;

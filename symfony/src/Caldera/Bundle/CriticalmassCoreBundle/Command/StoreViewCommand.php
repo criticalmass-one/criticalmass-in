@@ -73,6 +73,7 @@ class StoreViewCommand extends ContainerAwareCommand
         $viewClassName = 'Caldera\Bundle\CalderaBundle\Entity\\'.$viewArray['className'].'View';
         $viewMethod = 'set'.$viewArray['className'];
 
+        /** @var ViewableInterface $entity */
         $entity = $this->manager->getRepository('CalderaBundle:'.$viewArray['className'])->find($viewArray['entityId']);
 
         $viewDateTime = new \DateTime($viewArray['dateTime']);
@@ -89,7 +90,10 @@ class StoreViewCommand extends ContainerAwareCommand
         $view->setUser($user);
         $view->setDateTime($viewDateTime);
 
+        $entity->incViews();
+
         $this->manager->persist($view);
+        $this->manager->persist($entity);
 
         $this->output->writeln(
             sprintf('Stored <comment>%s</comment> <info>#%d</info> view (%s)', $viewArray['className'], $viewArray['entityId'], $viewDateTime->format('Y-m-d H:i:s'))

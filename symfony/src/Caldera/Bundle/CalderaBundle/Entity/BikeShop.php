@@ -312,6 +312,16 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     }
 
     /**
+     * @return $this
+     */
+    public function incViews()
+    {
+        ++$this->views;
+        
+        return $this;
+    }
+    
+    /**
      * Set views
      *
      * @param integer $views
