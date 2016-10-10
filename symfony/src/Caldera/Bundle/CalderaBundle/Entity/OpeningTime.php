@@ -19,7 +19,7 @@ class OpeningTime
     protected $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="integer")
      */
     protected $weekday;
 
