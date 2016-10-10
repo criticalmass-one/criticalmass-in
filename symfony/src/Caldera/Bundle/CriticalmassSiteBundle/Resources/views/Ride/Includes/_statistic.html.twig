@@ -26,7 +26,7 @@
                     <dd>{{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer</dd>
                     {% endif %}
 
-                    {% if ride.getDurationInterval() %}
+                    {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
                     <dt>Dauer</dt>
                     <dd>{{ ride.getDurationInterval().format('%h:%i') }}&nbsp;Stunden</dd>
                     {% endif %}
