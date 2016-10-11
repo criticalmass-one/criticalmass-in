@@ -38,13 +38,13 @@ caldera_criticalmass_rest:
     prefix:   /rest
 
 facebook_login:
-    pattern: /login/check-facebook
+    path: /login/check-facebook
 
 strava_login:
-    pattern: /login/check-strava
+    path: /login/check-strava
 
 runkeeper_login:
-    pattern: /login/check-runkeeper
+    path: /login/check-runkeeper
 
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"

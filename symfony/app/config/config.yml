@@ -20,7 +20,7 @@ imports:
 
 hwi_oauth:
     # list of names of the firewalls in which this bundle is active, this setting MUST be set
-    firewall_name: main
+    firewall_names: [main]
 
     fosub:
         username_iterations: 30
