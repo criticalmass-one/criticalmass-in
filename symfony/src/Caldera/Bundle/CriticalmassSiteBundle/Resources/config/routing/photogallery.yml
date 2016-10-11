@@ -2,19 +2,19 @@ caldera_criticalmass_photo_ride_list:
     path: /{citySlug}/{rideDate}/listphotos
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:gallery }
     requirements:
-        rideDate: '([0-9]{4,4})\\-([0-9]{1,2})\\-([0-9]{1,2})'
+        rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'
 
 caldera_criticalmass_photo_ride_list_seo:
     path: /fotos-der-critical-mass-in-{citySlug}-am-{rideDate}
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:gallery }
     requirements:
-        rideDate: '([0-9]{4,4})\\-([0-9]{1,2})\\-([0-9]{1,2})'
+        rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'
 
 caldera_criticalmass_photo_event_list:
     path:  /{citySlug}/{eventSlug}/listphotos
     defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoGallery:gallery }
     requirements:
-        eventSlug: '^([a-zA-Z0-9\\-]*)$'
+        eventSlug: '^([a-zA-Z0-9\-]*)$'
 
 caldera_criticalmass_photo_examplegallery:
     path: /city/gallery
