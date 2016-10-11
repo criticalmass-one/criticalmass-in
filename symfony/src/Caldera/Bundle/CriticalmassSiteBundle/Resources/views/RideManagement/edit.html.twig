@@ -18,14 +18,14 @@
     </li>
 
     <li>
-        <a href="{{ path(city) }}">
+        <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     {% if ride %}
     <li>
-        <a href="{{ path(ride) }}">
+        <a href="{{ objectPath(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
     </li>
@@ -76,7 +76,7 @@
                 </div>
         {% elseif hasErrors == false %}
                 <div class="alert alert-success" role="alert">
-                    Deine Änderungen wurden gespeichert. <a href="{{ path('caldera_criticalmass_ride_show', { citySlug: city.getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">
+                    Deine Änderungen wurden gespeichert. <a href="{{ objectPath(ride) }}">
                         Zurück zur Tour?
                     </a>
                 </div>
@@ -225,11 +225,11 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                <a href="{{ path(ride) }}" class="btn btn-default">
+                                <a href="{{ objectPath(ride) }}" class="btn btn-default">
                                     Abbrechen
                                 </a>
                                 {% else %}
-                                <a href="{{ path(city) }}" class="btn btn-default">
+                                <a href="{{ objectPath(city) }}" class="btn btn-default">
                                     Abbrechen
                                 </a>
                                 {% endif %}

@@ -4,7 +4,7 @@
 
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path(city) }}">{{ city.city }}</a></li>
+    <li><a href="{{ objectPath(city) }}">{{ city.city }}</a></li>
     <li class="active">{{ event.title }}</li>
 {% endblock %}
 

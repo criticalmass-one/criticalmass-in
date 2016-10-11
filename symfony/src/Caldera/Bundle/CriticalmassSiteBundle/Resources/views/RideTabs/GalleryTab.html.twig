@@ -42,7 +42,7 @@
                     {% for photo in photos %}
                         <div class="col-md-3">
                             <div class="photo margin-bottom-medium text-center">
-                                <a href="{{ path(photo) }}">
+                                <a href="{{ objectPath(photo) }}">
                                     <img src="#" data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
                                 </a>
                             </div>

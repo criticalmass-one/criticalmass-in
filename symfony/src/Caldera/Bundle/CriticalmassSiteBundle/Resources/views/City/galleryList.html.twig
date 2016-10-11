@@ -10,7 +10,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ path(city) }}">
+        <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
@@ -53,12 +53,12 @@
                         {% for key, ride in result.rides %}
                         <tr class="ride">
                             <td>
-                                <a href="{{ path(ride) }}">
+                                <a href="{{ objectPath(ride) }}">
                                     {{ ride.dateTime.format('d.m.Y') }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ path(ride) }}">
+                                <a href="{{ objectPath(ride) }}">
                                     {{ ride.getFancyTitle() }}
                                 </a>
                             </td>

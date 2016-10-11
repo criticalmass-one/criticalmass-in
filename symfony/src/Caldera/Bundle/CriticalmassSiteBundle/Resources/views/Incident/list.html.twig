@@ -15,14 +15,14 @@
         </a>
     </li>
     <li>
-        <a href="{{ path(city) }}">
+        <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     {% if ride %}
     <li>
-        <a href="{{ path(ride) }}">
+        <a href="{{ objectPath(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
     </li>

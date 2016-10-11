@@ -4,12 +4,12 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ path(ride.city) }}">
+        <a href="{{ objectPath(ride.city) }}">
             {{ ride.city.title }}
         </a>
     </li>
     <li>
-        <a href="{{ path(ride) }}">
+        <a href="{{ objectPath(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
     </li>

@@ -9,7 +9,7 @@
         <ul>
             {% for location in locations %}
             <li>
-                <a href="{{ path(location) }}">
+                <a href="{{ objectPath(location) }}">
                     {{ location.title }}
                 </a>
             </li>

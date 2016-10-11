@@ -11,7 +11,7 @@
 {% block breadcrumb %}
     {% if city %}
     <li>
-        <a href="{{ path(city) }}">
+        <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
@@ -27,7 +27,7 @@
 
     {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
         <li>
-            <a href="{{ path(region.parent.parent.parent) }}">
+            <a href="{{ objectPath(region.parent.parent.parent) }}">
                 {{ region.parent.parent.parent.name }}
             </a>
         </li>
@@ -35,7 +35,7 @@
 
     {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
         <li>
-            <a href="{{ path(region.parent.parent) }}">
+            <a href="{{ objectPath(region.parent.parent) }}">
                 {{ region.parent.parent.name }}
             </a>
         </li>
@@ -44,14 +44,14 @@
 
     {% if (region.parent and not region.parent.isWorld()) %}
         <li>
-            <a href="{{ path(region.parent) }}">
+            <a href="{{ objectPath(region.parent) }}">
                 {{ region.parent.name }}
             </a>
         </li>
     {% endif %}
 
     <li>
-        <a href="{{ path(region) }}">
+        <a href="{{ objectPath(region) }}">
             {{ region.name }}
         </a>
     </li>
@@ -69,7 +69,7 @@
             {% if hasErrors == true %}
                 <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
             {% elseif hasErrors == false %}
-                <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ path(city) }}">Zurück zur Stadt?</a></div>
+                <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ objectPath(city) }}">Zurück zur Stadt?</a></div>
             {% endif %}
         {% endif %}
 
@@ -326,11 +326,11 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     {% if city %}
-                    <a href="{{ path(city) }}" class="btn btn-default">
+                    <a href="{{ objectPath(city) }}" class="btn btn-default">
                         Abbrechen
                     </a>
                     {% else %}
-                    <a href="{{ path(region) }}" class="btn btn-default">
+                    <a href="{{ objectPath(region) }}" class="btn btn-default">
                         Abbrechen
                     </a>
                     {% endif %}

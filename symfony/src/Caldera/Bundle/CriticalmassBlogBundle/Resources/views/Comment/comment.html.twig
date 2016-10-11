@@ -6,9 +6,9 @@
     <div class="col-xs-10">
         <h4 class="username">
             {% if comment.getRide() %}
-                {{ comment.getUser().getUsername() }} schreibt zu <a href="{{ path(comment.ride) }}">{{ comment.ride.fancyTitle }}</a>:
+                {{ comment.getUser().getUsername() }} schreibt zu <a href="{{ objectPath(comment.ride) }}">{{ comment.ride.fancyTitle }}</a>:
             {% elseif comment.getCity() %}
-                {{ comment.getUser().getUsername() }} schreibt über <a href="{{ path(comment.city) }}">{{ comment.city.title }}</a>:
+                {{ comment.getUser().getUsername() }} schreibt über <a href="{{ objectPath(comment.city) }}">{{ comment.city.title }}</a>:
             {% else %}
                 {{ comment.getUser().getUsername() }} schreibt:
             {% endif %}

@@ -10,13 +10,13 @@
     </li>
 
     <li>
-        <a href="{{ path(location.city) }}">
+        <a href="{{ objectPath(location.city) }}">
             {{ location.city.city }}
         </a>
     </li>
     {% if ride %}
     <li>
-        <a href="{{ path(ride) }}">
+        <a href="{{ objectPath(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
     </li>
@@ -87,7 +87,7 @@
                         <ul>
                             {% for ride in rides %}
                                 <li>
-                                    <a href="{{ path(ride) }}">
+                                    <a href="{{ objectPath(ride) }}">
                                         {{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}
                                     </a>
                                 </li>
@@ -106,7 +106,7 @@
                         <ul>
                             {% for location in locations %}
                                 <li>
-                                    <a href="{{ path(location) }}">
+                                    <a href="{{ objectPath(location) }}">
                                         {{ location.title }}
                                     </a>
                                 </li>

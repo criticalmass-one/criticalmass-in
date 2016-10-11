@@ -113,7 +113,7 @@
                             <ul class="list-unstyled">
                             {% for city in post.cities %}
                                 <li>
-                                    <a href="{{ path(city) }}">
+                                    <a href="{{ objectPath(city) }}">
                                         #{{ city.slug }}
                                     </a>
                                 </li>

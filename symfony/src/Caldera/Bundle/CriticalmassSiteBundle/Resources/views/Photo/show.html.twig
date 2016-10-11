@@ -9,17 +9,17 @@
         </a>
     </li>
     <li>
-        <a href="{{ path(city) }}">
+        <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
     <li>
         {% if ride %}
-        <a href="{{ path(ride) }}">
+        <a href="{{ objectPath(ride) }}">
             {{ ride.getFancyTitle() }}
         </a>
         {% else %}
-        <a href="{{ path(event) }}">
+        <a href="{{ objectPath(event) }}">
             {{ event.title }}
         </a>
         {% endif %}
@@ -44,7 +44,7 @@
         <ul class="pager">
             {% if previousPhoto %}
                 <li class="previous">
-                    <a href="{{ path(previousPhoto) }}">
+                    <a href="{{ objectPath(previousPhoto) }}">
                         &larr; Voriges Foto
                     </a>
                 </li>
@@ -58,7 +58,7 @@
 
             {% if nextPhoto %}
                 <li class="next">
-                    <a href="{{ path(nextPhoto) }}">
+                    <a href="{{ objectPath(nextPhoto) }}">
                         Nächstes Foto &rarr;
                     </a>
                 </li>
@@ -149,11 +149,11 @@
 <script>
     CriticalMass.loadModule('ViewPhotoPage', null, null, function(page) {
         {% if previousPhoto %}
-        page.setPreviousPhotoUrl('{{ path(previousPhoto) }}');
+        page.setPreviousPhotoUrl('{{ objectPath(previousPhoto) }}');
         {% endif %}
 
         {% if nextPhoto %}
-        page.setNextPhotoUrl('{{ path(nextPhoto) }}');
+        page.setNextPhotoUrl('{{ objectPath(nextPhoto) }}');
         {% endif %}
 
         {% if photo.hasCoordinates() %}

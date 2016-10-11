@@ -38,7 +38,7 @@
                     {% for board in boards %}
                         <tr>
                             <td>
-                                <a href="{{ path(board) }}">
+                                <a href="{{ objectPath(board) }}">
                                     <h5 class="no-margin-top">
                                         {{ board.title }}
                                     </h5>
@@ -57,7 +57,7 @@
                             <td>
                                 {% if board.lastThread %}
                                     <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(board.lastThread.lastPost.user, 36) }}" alt="..." />
-                                    <a href="{{ path(board.lastThread) }}">
+                                    <a href="{{ objectPath(board.lastThread) }}">
                                         <strong>{{ board.lastThread.title }}</strong>
                                     </a>
                                     <br />
@@ -97,7 +97,7 @@
                             <td>
                                 {% if city.lastThread %}
                                     <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(city.lastThread.lastPost.user, 36) }}" alt="..." />
-                                    <a href="{{ path(city.lastThread) }}">
+                                    <a href="{{ objectPath(city.lastThread) }}">
                                         <strong>{{ city.lastThread.title }}</strong>
                                     </a>
                                     <br />

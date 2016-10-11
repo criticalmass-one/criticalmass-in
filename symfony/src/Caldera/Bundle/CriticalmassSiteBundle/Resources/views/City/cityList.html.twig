@@ -60,13 +60,13 @@
                             data-currentRide="{% if currentRide %}{{ currentRide.dateTime|date('Y-m-d H:i', 'Europe/Berlin') }}{% else %}9999-99-99 99:99{% endif %}"
                         >
                             <td>
-                                <a href="{{ path(city) }}">
+                                <a href="{{ objectPath(city) }}">
                                     {{ city.city }}
                                 </a>
                             </td>
                             <td>
                             {% if currentRide %}
-                                <a href="{{ path(currentRide) }}">
+                                <a href="{{ objectPath(currentRide) }}">
                                     {{ currentRide.dateTime|date('l, d. M, H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                 </a>
                             {% endif %}

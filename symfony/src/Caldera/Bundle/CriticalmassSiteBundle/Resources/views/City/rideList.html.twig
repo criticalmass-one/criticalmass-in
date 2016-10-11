@@ -10,7 +10,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ path(city) }}">
+        <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
@@ -79,7 +79,7 @@
                                 {{ ride.dateTime|date('H:i', 'Europe/Berlin') }}&nbsp;Uhr
                             </td>
                             <td>
-                                <a href="{{ path(ride) }}">
+                                <a href="{{ objectPath(ride) }}">
                                     {{ ride.getFancyTitle() }}
                                 </a>
                             </td>

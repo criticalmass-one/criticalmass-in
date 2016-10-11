@@ -50,7 +50,7 @@
         <div class="col-md-12">
             <div class="text-md-center">
                 <p class="lead">
-                    Fotos von der <a href="{{ path(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am <a href="{{ path(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
+                    Fotos von der <a href="{{ objectPath(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am <a href="{{ objectPath(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
                 </p>
             </div>
         </div>

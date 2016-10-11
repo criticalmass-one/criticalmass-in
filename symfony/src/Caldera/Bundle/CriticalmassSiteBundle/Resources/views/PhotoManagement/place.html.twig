@@ -9,12 +9,12 @@
         </a>
     </li>
     <li>
-        <a href="{{ path(photo.ride.city) }}">
+        <a href="{{ objectPath(photo.ride.city) }}">
             {{ photo.ride.city.title }}
         </a>
     </li>
     <li>
-        <a href="{{ path(photo.ride) }}">
+        <a href="{{ objectPath(photo.ride) }}">
             {{ photo.ride.getFancyTitle() }}
         </a>
     </li>
@@ -64,7 +64,7 @@
             <ul class="pager">
                 {% if previousPhoto %}
                     <li class="previous">
-                        <a href="{{ path(previousPhoto) }}">
+                        <a href="{{ objectPath(previousPhoto) }}">
                             &larr; Voriges Foto
                         </a>
                     </li>
@@ -78,7 +78,7 @@
 
                 {% if nextPhoto %}
                     <li class="next">
-                        <a href="{{ path(nextPhoto) }}">
+                        <a href="{{ objectPath(nextPhoto) }}">
                             Nächstes Foto &rarr;
                         </a>
                     </li>
