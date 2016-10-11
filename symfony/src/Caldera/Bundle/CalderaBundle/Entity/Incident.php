@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\CoordinateInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -10,7 +12,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="incident")
  * @JMS\ExclusionPolicy("all")
  */
-class Incident
+class Incident implements CoordinateInterface, ElasticSearchPinInterface
 {
     const INCIDENT_RAGE = 'Road Rage';
     const INCIDENT_ROADWORKS = 'Arbeitsstelle';
@@ -72,6 +74,18 @@ class Incident
      * @JMS\Expose
      */
     protected $polyline;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     */
+    protected $latitude = null;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     */
+    protected $longitude = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -377,5 +391,34 @@ class Incident
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    public function getPin(): string
+    {
+        return $this->latitude.','.$this->longitude;
     }
 }
