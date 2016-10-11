@@ -14,23 +14,65 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router as BaseRouter;
+use Symfony\Component\Routing\RouterInterface;
 
-class Router
+class ObjectRouter
 {
-    /** @var BaseRouter $router */
+    /** @var RouterInterface $router */
     protected $router;
 
-    public function __construct(BaseRouter $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
-    public function generate($object, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generate($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        
+        if ($object instanceof Ride) {
+            return $this->generateRideUrl($object, $referenceType);
+        }
 
-        return parent::generate($object, $parameters, $referenceType);
+        if ($object instanceof Event) {
+            return $this->generateEventUrl($object, $referenceType);
+        }
+
+        if ($object instanceof City) {
+            return $this->generateCityUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Photo) {
+            return $this->generatePhotoUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Content) {
+            return $this->generateContentUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Board) {
+            return $this->generateBoardUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Thread) {
+            return $this->generateThreadUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Location) {
+            return $this->generateLocationUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Track) {
+            return $this->generateTrackUrl($object, $referenceType);
+        }
+
+        if ($object instanceof Region) {
+            return $this->generateRegionUrl($object, $referenceType);
+        }
+
+        if ($object instanceof BlogPost) {
+            return $this->generateBlogPostUrl($object, $referenceType);
+        }
+
+        return $this->router->generate($object, [], $referenceType);
     }
 
     protected function generateRideUrl(Ride $ride, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -42,7 +84,7 @@ class Router
             'rideDate' => $ride->getFormattedDate()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     protected function generateEventUrl(Event $event, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -54,7 +96,7 @@ class Router
             'eventSlug' => $event->getSlug()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     protected function generateCityUrl(City $city, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -65,7 +107,7 @@ class Router
             'citySlug' => $city->getMainSlugString()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     protected function generatePhotoUrl(Photo $photo, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -87,7 +129,7 @@ class Router
             $parameters['eventSlug'] = $photo->getEvent()->getSlug();
         }
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     protected function generateContentUrl(Content $content, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -98,7 +140,7 @@ class Router
             'slug' => $content->getSlug()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     protected function generateLocationUrl(Location $location, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -110,7 +152,7 @@ class Router
             'locationSlug' => $location->getSlug()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     private function generateBoardUrl(Board $board, $referenceType)
@@ -121,7 +163,7 @@ class Router
             'boardSlug' => $board->getSlug()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     private function generateTrackUrl(Track $track, $referenceType)
@@ -132,7 +174,7 @@ class Router
             'trackId' => $track->getId()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     private function generateBlogPostUrl(BlogPost $blogPost, $referenceType)
@@ -143,7 +185,7 @@ class Router
             'slug' => $blogPost->getSlug()
         ];
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     private function generateThreadUrl(Thread $thread, $referenceType)
@@ -165,23 +207,23 @@ class Router
             ];
         }
 
-        return parent::generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     private function generateRegionUrl(Region $region, $referenceType)
     {
         if ($region->getParent() == null) {
-            return parent::generate(
+            return $this->router->generate(
                 'caldera_criticalmass_region_world', [], $referenceType);
         } elseif ($region->getParent()->getParent() == null) {
-            return parent::generate(
+            return $this->router->generate(
                 'caldera_criticalmass_region_world_region_1',
                 [
                     'slug1' => $region->getSlug()
                 ],
                 $referenceType);
         } elseif ($region->getParent()->getParent()->getParent() == null) {
-            return parent::generate(
+            return $this->router->generate(
                 'caldera_criticalmass_region_world_region_2',
                 [
                     'slug1' => $region->getParent()->getSlug(),
@@ -189,7 +231,7 @@ class Router
                 ],
                 $referenceType);
         } elseif ($region->getParent()->getParent()->getParent()->getParent() == null) {
-            return parent::generate(
+            return $this->router->generate(
                 'caldera_criticalmass_region_world_region_3',
                 [
                     'slug1' => $region->getParent()->getParent()->getSlug(),

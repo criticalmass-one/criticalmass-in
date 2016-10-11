@@ -25,9 +25,14 @@ services:
     caldera_criticalmass.twig.router_extension:
         class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\RouterTwigExtension
         arguments:
-            - '@router'
+            - '@caldera.criticalmass.routing.object_router'
         tags:
             - { name: twig.extension }
+
+    caldera.criticalmass.routing.object_router:
+        class: Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter
+        arguments:
+            - '@router'
 
     caldera.criticalmass.gps.gpxexporter:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter
