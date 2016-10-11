@@ -1,6 +1,26 @@
 {% extends 'CalderaCriticalmassPhotoBundle:Template:MasterTemplate.html.twig' %}
 
-{% block title %}Foto von der Critical Mass in {{ photo.ride.city.city }} am {{ photo.ride.dateTime|date('d.m.Y') }}{% endblock %}
+{% set title = 'Foto von der Critical Mass in ' ~ photo.ride.city.city ~ ' am ' ~ photo.ride.dateTime|date('d.m.Y') %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+{% block additionalHeaderElements %}
+    <meta property="og:title" content="criticalmass.photos" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:description" content="{{ title }}" />
+    <meta property="og:url" content="{{ currentPath }}" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="criticalmass.photos" />
+    <meta property="og:image" content="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@calderacc" />
+    <meta name="twitter:creator" content="@maltehuebner" />
+    <meta name="twitter:title" content="criticalmass.photos" />
+    <meta name="twitter:description" content="{{ title }}" />
+    <meta name="twitter:image" content="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
+{% endblock %}
 
 {% block additionalNavbarItems %}
     <li class="nav-item">

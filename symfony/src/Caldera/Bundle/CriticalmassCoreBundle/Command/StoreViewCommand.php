@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Content;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
@@ -12,6 +13,8 @@ use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Lsw\MemcacheBundle\Cache\LoggingMemcache;
+use Lsw\MemcacheBundle\Cache\LoggingMemcacheInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,20 +23,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class StoreViewCommand extends ContainerAwareCommand
 {
-    /** @var OutputInterface $output */
-    protected $output;
-
-    /**
-     * @var Registry $doctrine
-     */
-    protected $doctrine;
-
     /**
      * @var EntityManager $manager
      */
     protected $manager;
 
+    /**
+     * @var LoggingMemcacheInterface $memcache
+     */
     protected $memcache;
+
+    /**
+     * @var OutputInterface $output
+     */
+    protected $output;
 
     protected function configure()
     {
@@ -45,125 +48,55 @@ class StoreViewCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->doctrine = $this->getContainer()->get('doctrine');
-        $this->manager = $this->doctrine->getManager();
+        $this->manager = $this->getContainer()->get('doctrine')->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
         $this->output = $output;
 
-        $this->persistPhotoViews();
-        $this->persistThreadViews();
-        $this->persistCityViews();
-        $this->persistEventViews();
-        $this->persistRideViews();
-        $this->persistBlogPostViews();
-    }
+        $viewStorage = $this->memcache->get('view_storage');
+        $this->memcache->delete('view_storage');
 
-    protected function setViewEntity(ViewInterface $view, ViewableInterface $entity)
-    {
-        if ($entity instanceof Photo) {
-            $view->setPhoto($entity);
+        if (!$viewStorage || !is_array($viewStorage) || !count($viewStorage)) {
+            $output->writeln('Nothing to store');
+
+            return;
         }
 
-        if ($entity instanceof Thread) {
-            $view->setThread($entity);
+        foreach ($viewStorage as $view) {
+            $this->storeView($view);
         }
 
-        if ($entity instanceof Ride) {
-            $view->setRide($entity);
+        $this->manager->flush();
+    }
+
+    protected function storeView(array $viewArray)
+    {
+        $viewClassName = 'Caldera\Bundle\CalderaBundle\Entity\\'.$viewArray['className'].'View';
+        $viewMethod = 'set'.$viewArray['className'];
+
+        /** @var ViewableInterface $entity */
+        $entity = $this->manager->getRepository('CalderaBundle:'.$viewArray['className'])->find($viewArray['entityId']);
+
+        $viewDateTime = new \DateTime($viewArray['dateTime']);
+
+        $user = null;
+
+        if ($viewArray['userId']) {
+            $user = $this->manager->getRepository('CalderaBundle:User')->find($viewArray['userId']);
         }
 
-        if ($entity instanceof City) {
-            $view->setCity($entity);
-        }
+        /** @var ViewInterface $view */
+        $view = new $viewClassName;
+        $view->$viewMethod($entity);
+        $view->setUser($user);
+        $view->setDateTime($viewDateTime);
 
-        if ($entity instanceof Event) {
-            $view->setEvent($entity);
-        }
+        $entity->incViews();
 
-        if ($entity instanceof BlogPost) {
-            $view->setBlogPost($entity);
-        }
-    }
+        $this->manager->persist($view);
+        $this->manager->persist($entity);
 
-    protected function storeViews(string $entityClassName)
-    {
-        $identifier = lcfirst($entityClassName);
-        $storageClassName = 'Caldera\Bundle\CalderaBundle\Entity\\'.$entityClassName.'View';
-
-        $serializedViewsArray = $this->memcache->get($identifier.'_views');
-
-        if ($serializedViewsArray) {
-            $viewsArray = unserialize($serializedViewsArray);
-            
-            foreach ($viewsArray as $view) {
-                $user = null;
-
-                if ($view['userId']) {
-                    $user = $this->doctrine->getRepository('CalderaBundle:User')->find($view['userId']);
-                }
-
-                $viewDateTime = new \DateTime($view['dateTime']);
-
-                /**
-                 * @var ViewInterface $viewEntity
-                 */
-                $viewEntity = new $storageClassName();
-
-                $entity = $this->manager->getRepository('CalderaBundle:'.$entityClassName)->find($view['entityId']);
-
-                $this->setViewEntity($viewEntity, $entity);
-                $viewEntity->setUser($user);
-                $viewEntity->setDateTime($viewDateTime);
-
-                $this->manager->persist($viewEntity);
-
-                $this->output->writeln('Storing view for '.$entityClassName.' #'.$view['entityId'].' ('.$viewDateTime->format('Y-m-d H:i:s').')');
-            }
-
-            $this->memcache->delete($identifier.'_views');
-            $this->manager->flush();
-        }
-    }
-
-    protected function persistPhotoViews()
-    {
-        $this->output->writeln('Storing photo views');
-
-        $this->storeViews('Photo');
-    }
-
-    protected function persistThreadViews()
-    {
-        $this->output->writeln('Storing thread views');
-
-        $this->storeViews('Thread');
-    }
-
-    protected function persistEventViews()
-    {
-        $this->output->writeln('Storing event views');
-
-        $this->storeViews('Event');
-    }
-
-    protected function persistRideViews()
-    {
-        $this->output->writeln('Storing ride views');
-
-        $this->storeViews('Ride');
-    }
-
-    protected function persistCityViews()
-    {
-        $this->output->writeln('Storing city views');
-
-        $this->storeViews('City');
-    }
-
-    protected function persistBlogPostViews()
-    {
-        $this->output->writeln('Storing blog post views');
-
-        $this->storeViews('BlogPost');
+        $this->output->writeln(
+            sprintf('Stored <comment>%s</comment> <info>#%d</info> view (%s)', $viewArray['className'], $viewArray['entityId'], $viewDateTime->format('Y-m-d H:i:s'))
+        );
     }
 }

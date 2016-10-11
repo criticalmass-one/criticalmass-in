@@ -1,0 +1,30 @@
+{% extends 'CalderaCriticalmassDesktopBundle:Common:StandardTemplate.html.twig' %}
+
+{% block title %}Städte-Übersicht{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if city %}
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a></li>
+            <li class="active">Kommentar verfassen</li>
+        </ol>
+        {% endif %}
+
+        {% if ride %}
+        <ol class="breadcrumb">
+            <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+            <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a></li>
+            <li><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></li>
+            <li class="active">Kommentar verfassen</li>
+        </ol>
+        {% endif %}
+
+        <h1>Hoppla: Vertippt?</h1>
+
+        <p>Du hast leider gar keinen Kommentar eingegeben.</p>
+        {% include('CalderaCriticalmassTimelineBundle:Post:write.html.twig') with { 'form' :  form } %}
+    </div>
+{% endblock %}

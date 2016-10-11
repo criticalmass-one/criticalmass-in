@@ -340,6 +340,5 @@ class PhotoRepository extends EntityRepository
 
         return $query->getResult();
     }
-
 }
 

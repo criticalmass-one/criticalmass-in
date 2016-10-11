@@ -4,13 +4,18 @@ namespace Caldera\Bundle\CriticalmassBlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SecurityController extends Controller
 {
-    public function loginFormAction(Request $request)
+    const TEMPLATE_MODE_FULL = 1;
+    const TEMPLATE_MODE_FORM = 2;
+    const TEMPLATE_MODE_MODAL = 3;
+
+    public function loginAction(Request $request, $templateMode = self::TEMPLATE_MODE_FULL): Response
     {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
@@ -37,24 +42,38 @@ class SecurityController extends Controller
 
         $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
 
-        return $this->renderLogin(array(
+        return $this->renderLogin(
+            [
             'last_username' => $lastUsername,
             'error' => $error,
-            'csrf_token' => $csrfToken,
-        ));
+            'csrf_token' => $csrfToken
+            ],
+            $templateMode
+        );
     }
 
-    /**
-     * Renders the login template with the given parameters. Overwrite this function in
-     * an extended controller to provide additional data for the login template.
-     *
-     * @param array $data
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function renderLogin(array $data)
+    protected function renderLogin(array $data, $templateMode = false): Response
     {
-        return $this->render('CalderaCriticalmassBlogBundle:Security:loginForm.html.twig', $data);
+        $templateName = '';
+
+        switch ($templateMode) {
+            case self::TEMPLATE_MODE_FULL:
+                $templateName = 'login.html.twig';
+                break;
+            case self::TEMPLATE_MODE_FORM:
+                $templateName = 'loginForm.html.twig';
+                break;
+            case self::TEMPLATE_MODE_MODAL:
+                $templateName = 'loginModalForm.html.twig';
+                break;
+        }
+
+        return $this->render('CalderaCriticalmassBlogBundle:Security:'.$templateName, $data);
+    }
+
+    public function loginFormModalAction(Request $request): Response
+    {
+        return $this->loginAction($request, self::TEMPLATE_MODE_MODAL);
     }
 
     public function checkAction()

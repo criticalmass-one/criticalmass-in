@@ -10,8 +10,7 @@
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasslive/css/live.css') }}" />
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}" />
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
@@ -20,60 +19,53 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
-                &#9776;
-            </button>
+        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" id="navigation">
+            <a class="navbar-brand" href="{{ path('caldera_criticalmass_live_frontpage') }}">
+                criticalmass.live
+            </a>
 
-            <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-                <a class="navbar-brand" href="{{ path('caldera_criticalmass_live_frontpage') }}">
-                    criticalmass.live
-                </a>
+            <ul class="nav navbar-nav pull-xs-right">
+                {#<li class="nav-item">
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#commentModal">
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+                        <span class="hidden-xs-down">
+                            Kommentar
+                        </span>
+                    </a>
+                </li>#}
 
-                <ul class="nav navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'was-ist-critical-mass' } ) }}" class="nav-link">
-                            Was ist Critical Mass?
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'was-ist-critical-mass' } ) }}" class="nav-link">
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                        <span class="hidden-xs-down">
+                            Was ist die Masse?
+                        </span>
+                    </a>
+                </li>
 
-                    <li class="nav-item dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link">
-                            So funktioniert’s
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-geht-live-tracking-mit-glympse' } ) }}">
-                                    Live-Tracking mit Glympse
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-geht-live-tracking-mit-criticalmaps' } ) }}">
-                                    Live-Tracking mit Criticalmaps
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-funktioniert-critical-mass-live-tracking' } ) }}">
+                        <i class="fa fa-bicycle" aria-hidden="true"></i>
+                        <span class="hidden-xs-down">
+                            Live Tracking?
+                        </span>
+                    </a>
+                </li>
 
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" data-toggle="modal" data-target="#impressModal">
-                            Impressum
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" data-toggle="modal" data-target="#legalModal">
-                            Rechtliche Hinweise
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#legalModal">
+                        <i class="fa fa-gavel" aria-hidden="true"></i>
+                        <span class="hidden-xs-down">
+                            Impressum?
+                        </span>
+                    </a>
+                </li>
+            </ul>
         </nav>
 
         {% block content %}{% endblock %}
 
-        {% include('CalderaCriticalmassLiveBundle:Includes:_impressModal.html.twig') %}
+        {#{{ render(controller('CalderaCriticalmassSiteBundle:Post:write' )) }}#}
         {% include('CalderaCriticalmassLiveBundle:Includes:_legalModal.html.twig') %}
 
         <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>

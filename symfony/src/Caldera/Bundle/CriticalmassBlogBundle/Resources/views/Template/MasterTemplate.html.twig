@@ -3,38 +3,25 @@
     <head>
         {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-        <title>Fahrradterroristen</title>
+        <title>{% block title %}{% endblock %}</title>
 
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassblog/css/blog.css') }}" />
         <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
-
+        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}" />
+        
         {% block additionalHeaderElements %}{% endblock %}
     </head>
 
     <body>
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        {% if not app.user %}
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Login</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{ render(controller('CalderaCriticalmassBlogBundle:Security:loginForm' )) }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                    {{ render(controller('CalderaCriticalmassBlogBundle:Security:loginFormModal' )) }}
                 </div>
             </div>
         </div>
-
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Launch demo modal
-        </button>
+        {% endif %}
 
         {% block content %}{% endblock %}
 

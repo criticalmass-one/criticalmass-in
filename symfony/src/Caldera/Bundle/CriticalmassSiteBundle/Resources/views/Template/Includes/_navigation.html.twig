@@ -23,33 +23,6 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                        <i class="fa fa-map-marker"></i>
-                        {% trans %}criticalmass.navigation.live.live{% endtrans %}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_live') }}">
-                                {% trans %}criticalmass.navigation.live.map{% endtrans %}
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'glympse' }) }}">
-                                {% trans %}criticalmass.navigation.live.glympse{% endtrans %}
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_content_display', { slug: 'critical-maps' }) }}">
-                                {% trans %}criticalmass.navigation.live.criticalmaps{% endtrans %}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                         <i class="fa fa-bicycle"></i>
                         {% trans %}criticalmass.navigation.criticalmass.criticalmass{% endtrans %}
                         <span class="caret"></span>
@@ -190,7 +163,7 @@
                 </li>
                 {% else %}
                 <li>
-                    <a href="{{ path('fos_user_security_login') }}">
+                    <a href="#" data-toggle="modal" data-target="#loginModal">
                         <i class="fa fa-user"></i>
                         {% trans %}criticalmass.navigation.account.login{% endtrans %}
                     </a>

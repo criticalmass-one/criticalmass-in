@@ -57,6 +57,11 @@ class BlogPost implements ViewableInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    protected $claim;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     protected $title;
 
     /**
@@ -78,6 +83,16 @@ class BlogPost implements ViewableInterface
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $showCoffeeButton = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $commentsEnabled = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="Photo", inversedBy="featuredBlogPosts", fetch="LAZY")
@@ -384,5 +399,63 @@ class BlogPost implements ViewableInterface
     public function incViews()
     {
         ++$this->views;
+    }
+
+    /**
+     * Set showCoffeeButton
+     *
+     * @param boolean $showCoffeeButton
+     * @return BlogPost
+     */
+    public function setShowCoffeeButton($showCoffeeButton)
+    {
+        $this->showCoffeeButton = $showCoffeeButton;
+
+        return $this;
+    }
+
+    /**
+     * Get showCoffeeButton
+     *
+     * @return boolean 
+     */
+    public function getShowCoffeeButton()
+    {
+        return $this->showCoffeeButton;
+    }
+
+    /**
+     * Set commentsEnabled
+     *
+     * @param boolean $commentsEnabled
+     * @return BlogPost
+     */
+    public function setCommentsEnabled($commentsEnabled)
+    {
+        $this->commentsEnabled = $commentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get commentsEnabled
+     *
+     * @return boolean 
+     */
+    public function getCommentsEnabled()
+    {
+        return $this->commentsEnabled;
+    }
+
+    public function setClaim($claim)
+    {
+        $this->claim = $claim;
+
+        return $this;
+    }
+
+    public function getClaim()
+    {
+        return $this->claim;
     }
 }

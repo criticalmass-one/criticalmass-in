@@ -126,6 +126,36 @@ class User extends BaseUser
     protected $createdAt;
 
     /**
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     */
+    protected $facebookId;
+
+    /**
+     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     */
+    protected $facebookAccessToken;
+
+    /**
+     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
+     */
+    protected $stravaId;
+
+    /**
+     * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
+     */
+    protected $stravaAccessToken;
+
+    /**
+     * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
+     */
+    protected $runkeeperId;
+
+    /**
+     * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
+     */
+    protected $runkeeperAccessToken;
+
+    /**
      * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
      */
     public function __construct()
@@ -288,7 +318,7 @@ class User extends BaseUser
     /**
      * Get tracks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {
@@ -354,7 +384,7 @@ class User extends BaseUser
     /**
      * Get phoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber()
     {
@@ -377,7 +407,7 @@ class User extends BaseUser
     /**
      * Get phoneNumberVerified
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPhoneNumberVerified()
     {
@@ -400,7 +430,7 @@ class User extends BaseUser
     /**
      * Get phoneNumberVerificationDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPhoneNumberVerificationDateTime()
     {
@@ -468,7 +498,7 @@ class User extends BaseUser
     /**
      * Get archiveRides
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArchiveRides()
     {
@@ -501,10 +531,82 @@ class User extends BaseUser
     /**
      * Get participations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getParticipations()
     {
         return $this->participations;
+    }
+
+    public function setStravaId($stravaId)
+    {
+        $this->stravaId = $stravaId;
+
+        return $this;
+    }
+
+    public function getStravaId()
+    {
+        return $this->stravaId;
+    }
+
+    public function setStravaAccessToken($stravaAccessToken)
+    {
+        $this->stravaAccessToken = $stravaAccessToken;
+
+        return $this;
+    }
+
+    public function getStravaAccessToken()
+    {
+        return $this->stravaAccessToken;
+    }
+
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookAccessToken($facebookAccessToken)
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
+
+        return $this;
+    }
+
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
+    }
+
+    public function setRunkeeperId($runkeeperId)
+    {
+        $this->runkeeperId = $runkeeperId;
+
+        return $this;
+    }
+
+    public function getRunkeeperId()
+    {
+        return $this->runkeeperId;
+    }
+
+    public function setRunkeeperAccessToken($runkeeperAccessToken)
+    {
+        $this->runkeeperAccessToken = $runkeeperAccessToken;
+
+        return $this;
+    }
+
+    public function getRunkeeperAccessToken()
+    {
+        return $this->runkeeperAccessToken;
     }
 }

@@ -1,0 +1,22 @@
+{{ form_start(form, {'attr': {'id': 'form-post', 'role': 'form'}}) }}
+{{ form_errors(form) }}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+            <label for="" class="control-label">Dein Kommentar:</label>
+            {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <button type="submit" class="btn btn-primary pull-right">
+            <i class="fa fa-pencil"></i>
+            Speichern
+        </button>
+    </div>
+</div>
+
+{{ form_widget(form._token) }}
+{{ form_end(form) }}

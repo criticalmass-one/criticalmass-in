@@ -5,7 +5,7 @@ namespace Caldera\Bundle\CalderaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\FacebookCityPropertiesRepository")
  * @ORM\Table(name="facebook_city_properties")
  */
 class FacebookCityProperties

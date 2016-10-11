@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="content")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\ContentRepository")
  */
-class Content
+class Content implements ViewableInterface
 {
 	/**
 	 * @ORM\Id
@@ -80,6 +81,11 @@ class Content
      * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
      */
     protected $archiveUser;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views;
     
     /**
      * Get id
@@ -365,5 +371,25 @@ class Content
     public function getShowInfobox()
     {
         return $this->showInfobox;
+    }
+
+    /**
+     * @return $this
+     */
+    public function incViews()
+    {
+        ++$this->views;
+
+        return $this;
+    }
+    
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    public function setViews($views)
+    {
+        $this->views = $views;
     }
 }

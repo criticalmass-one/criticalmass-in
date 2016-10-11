@@ -43,7 +43,7 @@ class StatisticController extends AbstractController
     
     public function facebookstatisticAction(Request $request)
     {
-        $cityPropertiesList = $this->getFacebookCityPropertiesRepository()->findAll();
+        $cityPropertiesList = $this->getFacebookCityPropertiesRepository()->findForStatistic();
 
         $filteredProperties = [];
 

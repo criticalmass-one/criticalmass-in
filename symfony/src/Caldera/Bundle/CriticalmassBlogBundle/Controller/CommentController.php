@@ -17,13 +17,16 @@ class CommentController extends AbstractController
         BlogPost $blogPost
     ): Response
     {
+        if (!$this->isLoggedIn()) {
+            $this->createAccessDeniedException();
+        }
+        
         $post = new Post();
 
-        $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
-        $city = $this->getCityRepository()->find($cityId);
-        $post->setCity($city);
+        $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_blog_comment_write', array('slug' => $blogPost->getSlug()))));
+        $post->setBlogPost($blogPost);
 
-        $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', array('citySlug' => $city->getMainSlugString()));
+        $redirectUrl = $this->generateUrl('caldera_criticalmass_blog_post', array('slug' => $blogPost->getSlug()));
 
         $form->handleRequest($request);
 
@@ -38,11 +41,9 @@ class CommentController extends AbstractController
             /* Using the user’s referer will not work as the user might come from the writefailed page and would be
                redirected there again. */
             return new RedirectResponse($redirectUrl);
-        } elseif ($form->isSubmitted()) {
-            return $this->render('CalderaCriticalmassSiteBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Post:write.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassBlogBundle:Comment:write.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -51,18 +52,18 @@ class CommentController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
-        Request $request, 
+        Request $request,
         BlogPost $blogPost
     ): Response
     {
         $criteria =
-        [
-            'enabled' => true,
-            'blogPost' => $blogPost
-        ];
+            [
+                'enabled' => true,
+                'blogPost' => $blogPost
+            ];
 
-        $posts = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
+        $comments = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
 
-        return $this->render('CalderaCriticalmassBlogBundle:Comment:list.html.twig', array('posts' => $posts));
+        return $this->render('CalderaCriticalmassBlogBundle:Comment:list.html.twig', array('comments' => $comments));
     }
 }

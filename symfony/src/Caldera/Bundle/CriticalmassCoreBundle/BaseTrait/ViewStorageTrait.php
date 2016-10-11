@@ -4,103 +4,113 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\BaseTrait;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Content;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Lsw\MemcacheBundle\Cache\LoggingMemcache;
-use Memcached;
 
 trait ViewStorageTrait
 {
-    protected function countView(ViewableInterface $viewable, string $identifier)
+    protected function getClassName(ViewableInterface $viewable): string
     {
-        /** LoggingMemcache $memcache */
-        //$memcache = $this->get('memcache.criticalmass');
+        $namespaceClass = get_class($viewable);
+        $namespaceParts = explode('\\', $namespaceClass);
 
-        $memcache = new Memcached();
-        $memcache->addServer('localhost', 11211);
+        $className = array_pop($namespaceParts);
+
+        return $className;
+    }
+
+    protected function countView(ViewableInterface $viewable)
+    {
+        /** @var LoggingMemcache $memcache */
+        $memcache = $this->get('memcache.criticalmass');
+
+        $viewStorage = $memcache->get('view_storage');
+
+        if (!$viewStorage) {
+            $viewStorage = [];
+        }
 
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
-        $view = [
-            'entityId' => $viewable->getId(),
-            'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
-            'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-        ];
+        $view =
+            [
+                'className' => $this->getClassName($viewable),
+                'entityId' => $viewable->getId(),
+                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
+                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
+            ]
+        ;
 
-        $serializedViews = $memcache->get($identifier.'_views');
-
-        if (!$serializedViews) {
-            $views = [
-                uniqid() => $view
-            ];
-
-            $memcache->add($identifier.'_views', serialize($views));
-        } else {
-            $views = unserialize($serializedViews);
-
-            $views[uniqid()] = $view;
-
-            $memcache->set($identifier . '_views', serialize($views));
-        }
-
-            // It looks like cas is broken in PHP 7: https://github.com/php-memcached-dev/php-memcached/issues/159
-/*
-        do {
-            $cas = 0;
-
-            $serializedViews = $memcache->get($identifier.'_views', null, $cas);
-
-            if (!$serializedViews) {
-                $views = [
-                    uniqid() => $view
-                ];
-
-                $memcache->add($identifier.'_views', serialize($views));
-            } else {
-                $views = unserialize($serializedViews);
-
-                print_r($views);
-
-                echo "<br />";
-                $views[uniqid()] = $view;
-
-                print_r($views);
-                $memcache->cas($cas, $identifier.'_views', serialize($views));
-            }
-        } while ($memcache->getResultCode() != Memcached::RES_SUCCESS);
-*/
+        $viewStorage[] = $view;
+        
+        $memcache->set('view_storage', $viewStorage);
     }
 
+    /**
+     * @param Thread $thread
+     * @deprecated
+     */
     protected function countThreadView(Thread $thread)
     {
-        $this->countView($thread, 'thread');
+        $this->countView($thread);
     }
 
+    /**
+     * @param Photo $photo
+     * @deprecated
+     */
     protected function countPhotoView(Photo $photo)
     {
-        $this->countView($photo, 'photo');
+        $this->countView($photo);
     }
 
+    /**
+     * @param Ride $ride
+     * @deprecated
+     */
     protected function countRideView(Ride $ride)
     {
-        $this->countView($ride, 'ride');
+        $this->countView($ride);
     }
 
+    /**
+     * @param Event $event
+     * @deprecated
+     */
     protected function countEventView(Event $event)
     {
-        $this->countView($event, 'event');
+        $this->countView($event);
     }
 
+    /**
+     * @param City $city
+     * @deprecated
+     */
     protected function countCityView(City $city)
     {
-        $this->countView($city, 'city');
+        $this->countView($city);
     }
 
+    /**
+     * @param BlogPost $blogPost
+     * @deprecated
+     */
     protected function countBlogPostView(BlogPost $blogPost)
     {
-        $this->countView($blogPost, 'blogPost');
+        $this->countView($blogPost);
+    }
+
+    /**
+     * @param Content $content
+     * @deprecated
+     */
+    protected function countContentView(Content $content)
+    {
+        $this->countView($content);
     }
 }

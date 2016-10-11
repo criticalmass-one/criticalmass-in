@@ -37,6 +37,17 @@ security:
         #        lifetime: 7200
         #        path:     /
         #        domain:   ~
+            oauth:
+                resource_owners:
+                    facebook:  "/login/check-facebook"
+                    strava:    "/login/check-strava"
+                    runkeeper: "/login/check-runkeeper"
+                login_path:        /login
+                use_forward:       false
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: caldera.user_provider
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users

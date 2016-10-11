@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Ride implements ParticipateableInterface, ViewableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface
 {
     /**
      * @ORM\Id
@@ -218,6 +219,12 @@ class Ride implements ParticipateableInterface, ViewableInterface
      * @ORM\Column(type="boolean")
      */
     protected $restrictedPhotoAccess = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Weather", mappedBy="ride", fetch="LAZY")
+     * @ORM\OrderBy({"creationDateTime" = "DESC"})
+     */
+    protected $weathers;
 
     /**
      * Get id
@@ -914,7 +921,7 @@ class Ride implements ParticipateableInterface, ViewableInterface
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
-    public function getPin()
+    public function getPin(): string
     {
         return $this->latitude.','.$this->longitude;
     }
@@ -1053,5 +1060,137 @@ class Ride implements ParticipateableInterface, ViewableInterface
         $this->restrictedPhotoAccess = $restrictedPhotoAccess;
 
         return $this;
+    }
+
+    /**
+     * Add archiveRides
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides
+     * @return Ride
+     */
+    public function addArchiveRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides)
+    {
+        $this->archiveRides[] = $archiveRides;
+
+        return $this;
+    }
+
+    /**
+     * Remove archiveRides
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides
+     */
+    public function removeArchiveRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides)
+    {
+        $this->archiveRides->removeElement($archiveRides);
+    }
+
+    /**
+     * Get archiveRides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArchiveRides()
+    {
+        return $this->archiveRides;
+    }
+
+    /**
+     * Add participations
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Participation $participations
+     * @return Ride
+     */
+    public function addParticipation(\Caldera\Bundle\CalderaBundle\Entity\Participation $participations)
+    {
+        $this->participations[] = $participations;
+
+        return $this;
+    }
+
+    /**
+     * Remove participations
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Participation $participations
+     */
+    public function removeParticipation(\Caldera\Bundle\CalderaBundle\Entity\Participation $participations)
+    {
+        $this->participations->removeElement($participations);
+    }
+
+    /**
+     * Get participations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParticipations()
+    {
+        return $this->participations;
+    }
+
+    /**
+     * Add estimates
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\RideEstimate $estimates
+     * @return Ride
+     */
+    public function addEstimate(\Caldera\Bundle\CalderaBundle\Entity\RideEstimate $estimates)
+    {
+        $this->estimates[] = $estimates;
+
+        return $this;
+    }
+
+    /**
+     * Remove estimates
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\RideEstimate $estimates
+     */
+    public function removeEstimate(\Caldera\Bundle\CalderaBundle\Entity\RideEstimate $estimates)
+    {
+        $this->estimates->removeElement($estimates);
+    }
+
+    /**
+     * Get estimates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstimates()
+    {
+        return $this->estimates;
+    }
+
+    /**
+     * Add weathers
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Weather $weathers
+     * @return Ride
+     */
+    public function addWeather(\Caldera\Bundle\CalderaBundle\Entity\Weather $weathers)
+    {
+        $this->weathers[] = $weathers;
+
+        return $this;
+    }
+
+    /**
+     * Remove weathers
+     *
+     * @param \Caldera\Bundle\CalderaBundle\Entity\Weather $weathers
+     */
+    public function removeWeather(\Caldera\Bundle\CalderaBundle\Entity\Weather $weathers)
+    {
+        $this->weathers->removeElement($weathers);
+    }
+
+    /**
+     * Get weathers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWeathers()
+    {
+        return $this->weathers;
     }
 }

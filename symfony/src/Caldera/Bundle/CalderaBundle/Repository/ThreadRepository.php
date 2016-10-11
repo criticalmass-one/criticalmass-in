@@ -37,8 +37,12 @@ class ThreadRepository extends EntityRepository
 
         $builder->select('thread');
 
+        $builder->leftJoin('thread.lastPost', 'lastPost');
+
         $builder->where($builder->expr()->eq('thread.city', $city->getId()));
         $builder->andWhere($builder->expr()->eq('thread.enabled', 1));
+
+        $builder->orderBy('lastPost.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 

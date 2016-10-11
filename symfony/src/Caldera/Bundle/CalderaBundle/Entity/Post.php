@@ -129,6 +129,12 @@ class Post
      */
     protected $colorBlue = 0;
 
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $obfuscated = 0;
+    
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -594,5 +600,28 @@ class Post
     public function getColorBlue()
     {
         return $this->colorBlue;
+    }
+
+    /**
+     * Set obfuscated
+     *
+     * @param boolean $obfuscated
+     * @return Post
+     */
+    public function setObfuscated($obfuscated)
+    {
+        $this->obfuscated = $obfuscated;
+
+        return $this;
+    }
+
+    /**
+     * Get obfuscated
+     *
+     * @return boolean 
+     */
+    public function getObfuscated()
+    {
+        return $this->obfuscated;
     }
 }

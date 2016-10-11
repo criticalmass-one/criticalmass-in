@@ -48,57 +48,85 @@
 
         <div class="row">
             <div class="col-md-12">
-                <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+                <canvas id="chart" style="width: 100%; height: 250px;"></canvas>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Fahrtdauer
+                    Tabellarischer Vergleich
                 </h2>
 
-                <p>
-                    Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden angegeben.
+                <p class="lead">
+                    Gibt es einen Zusammenhang zwischen dem Wetter und den Teilnehmerzahlen?
                 </p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Fahrtlänge
-                </h2>
-
-                <p>
-                    Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern angegeben.
-                </p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Datum
+                            </th>
+                            <th>
+                                Temperatur
+                            </th>
+                            <th>
+                                Niederschlag
+                            </th>
+                            <th>
+                                Windgeschwindigkeit
+                            </th>
+                            <th>
+                                Teilnehmerzahl
+                            </th>
+                            <th>
+                                Streckenlänge
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rides %}
+                        {% set weather = ride.weathers.first %}
+                        {% if weather %}
+                        <tr>
+                            <td>
+                                {{ ride.dateTime | date('d.m.Y H:i') }}
+                            </td>
+                            <td>
+                                {{ weather.temperatureEvening }} °C
+                            </td>
+                            <td>
+                                {{ weather.rain }} Millimeter
+                            </td>
+                            <td>
+                                {{ weather.windSpeed }} Meter pro Sekunde
+                            </td>
+                            <td>
+                                {{ ride.estimatedParticipants | default('unbekannt') }}
+                            </td>
+                            <td>
+                                {{ ride.estimatedDistance | default('unbekannt') }}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     <script type="text/javascript">
         CriticalMass.loadModule('CityStatisticPage', null, null, function(page) {
-            page.setColor({{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
-
             {% for ride in rides %}
             page.addRideData('{{ ride.getFormattedDate }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
             {% endfor %}
 
-            page.createParticipantsChart($('#participants'));
-            page.createDurationChart($('#duration'));
-            page.createDistanceChart($('#distance'));
+            page.createChart($('#chart'));
         });
     </script>
 {% endblock %}

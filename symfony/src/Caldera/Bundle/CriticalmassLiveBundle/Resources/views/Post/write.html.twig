@@ -1,0 +1,41 @@
+{% if app.getUser() %}
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="label-add-post">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="label-add-post">Kommentar hinzufügen</h4>
+            </div>
+            {{ form_start(form, {'attr': {'id': 'form-post', 'role': 'form'}}) }}
+                <div class="modal-body">
+                    <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+                        <label for="" class="control-label">Dein Kommentar:</label>
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="form-post-share-location" checked="checked" /> Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares entfernen.
+                    </div>
+
+                    {{ form_widget(form._token) }}
+                    {{ form_widget(form.latitude) }}
+                    {{ form_widget(form.longitude) }}
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" id="button-submit-post" class="btn btn-success">
+                            <i class="fa fa-pencil"></i>
+                            Speichern</button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    CriticalMass.loadModule('WritePost', '#form-post');
+</script>
+{% endif %}

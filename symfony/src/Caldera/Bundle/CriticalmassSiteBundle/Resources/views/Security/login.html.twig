@@ -1,0 +1,29 @@
+{% extends 'CalderaCriticalmassSiteBundle:Template:MasterTemplate.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container m-t-3">
+        {% if error %}
+            <div class="row">
+                <div class="col-xs-8 offset-xs-2">
+                    <div class="alert alert-danger alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-xs-8 offset-xs-2">
+                <h1>Einloggen und losfahren!</h1>
+
+                <p>Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast, kannst du dir <a href="{{ path('fos_user_resetting_request') }}">ein neues zusenden lassen</a>. Und falls du noch kein Benutzerkonto hast, kannst du dich <a href="{{ path('fos_user_registration_register') }}">hier registrieren</a>.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8 offset-xs-2">
+                {% include 'CalderaCriticalmassBlogBundle:Security:loginForm.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

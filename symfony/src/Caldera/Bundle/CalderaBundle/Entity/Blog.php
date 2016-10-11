@@ -37,7 +37,7 @@ class Blog
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $slug;
+    protected $hostname;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
@@ -118,12 +118,12 @@ class Blog
     }
 
     /**
-     * @param string $slug
+     * @param string $hostname
      * @return Blog
      */
-    public function setSlug($slug)
+    public function setHostname($hostname)
     {
-        $this->slug = $slug;
+        $this->hostname = $hostname;
 
         return $this;
     }
@@ -131,8 +131,8 @@ class Blog
     /**
      * @return string
      */
-    public function getSlug()
+    public function getHostname()
     {
-        return $this->slug;
+        return $this->hostname;
     }
 }

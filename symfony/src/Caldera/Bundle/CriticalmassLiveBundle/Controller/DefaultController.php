@@ -16,14 +16,16 @@ class DefaultController extends AbstractController
         $startDateTime->sub(new \DateInterval('PT6H'));
 
         $endDateTime = new \DateTime();
-        $endDateTime->add(new \DateInterval('P2M'));
+        $endDateTime->add(new \DateInterval('P3D'));
 
         $rides = $this->getRideRepository()->findRidesAndCitiesInInterval($startDateTime, $endDateTime);
+        $popularRides = $this->getRideRepository()->findPopularRides(15);
 
         return $this->render(
             'CalderaCriticalmassLiveBundle:Default:index.html.twig',
             [
-                'rides' => $rides
+                'rides' => $rides,
+                'popularRides' => $popularRides
             ]
         );
     }

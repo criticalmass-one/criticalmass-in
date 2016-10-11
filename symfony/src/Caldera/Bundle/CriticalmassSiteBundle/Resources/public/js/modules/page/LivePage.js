@@ -31,7 +31,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     };
 
     LivePage.prototype._initMap = function() {
-        $('#map').css('top', $('nav#navigation').css('height'));
+        var height = $('nav#navigation').css('height');
+
+        if (!height) {
+            height = $('nav').css('height');
+        }
+
+        $('#map').css('top', height);
 
         this._map = new Map('map', []);
 

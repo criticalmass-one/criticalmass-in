@@ -12,4 +12,9 @@ abstract class AbstractController extends Controller
 {
     use RepositoryTrait;
     use UtilTrait;
+
+    protected function isLoggedIn(): bool
+    {
+        return $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY');
+    }
 }
