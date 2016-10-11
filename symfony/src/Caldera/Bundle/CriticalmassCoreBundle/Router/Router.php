@@ -28,49 +28,7 @@ class Router
 
     public function generate($object, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        if ($object instanceof Ride) {
-            return $this->generateRideUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Event) {
-            return $this->generateEventUrl($object, $referenceType);
-        }
-
-        if ($object instanceof City) {
-            return $this->generateCityUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Photo) {
-            return $this->generatePhotoUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Content) {
-            return $this->generateContentUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Board) {
-            return $this->generateBoardUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Thread) {
-            return $this->generateThreadUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Location) {
-            return $this->generateLocationUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Track) {
-            return $this->generateTrackUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Region) {
-            return $this->generateRegionUrl($object, $referenceType);
-        }
-
-        if ($object instanceof BlogPost) {
-            return $this->generateBlogPostUrl($object, $referenceType);
-        }
+        
 
         return parent::generate($object, $parameters, $referenceType);
     }
