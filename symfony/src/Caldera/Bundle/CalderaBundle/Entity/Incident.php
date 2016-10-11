@@ -15,6 +15,9 @@ class Incident
     const INCIDENT_RAGE = 'Road Rage';
     const INCIDENT_ROADWORKS = 'Arbeitsstelle';
     const INCIDENT_DANGER = 'Gefahrenstelle';
+    const INCIDENT_POLICE = 'Polizeikontrolle';
+    const INCIDENT_ACCIDENT = 'Unfall';
+    const INCIDENT_DEADLY_ACCIDENT = 'Tödlicher Unfall';
 
     const GEOMETRY_POLYLINE = 'Polyline';
     const GEOMETRY_MARKER = 'Marker';
