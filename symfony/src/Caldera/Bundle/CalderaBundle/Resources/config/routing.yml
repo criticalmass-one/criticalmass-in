@@ -1,3 +1,11 @@
 caldera_frontpage:
     path:     /
     defaults: { _controller: CalderaBundle:Frontpage:index }
+
+caldera_caldera_geobound_loadshops:
+    path:     /geobound/loadshops
+    defaults: { _controller: CalderaBundle:GeoBound:loadShops }
+
+caldera_caldera_geobound_loadincidents:
+    path:     /geobound/loadincidents
+    defaults: { _controller: CalderaBundle:GeoBound:loadIncidents }
