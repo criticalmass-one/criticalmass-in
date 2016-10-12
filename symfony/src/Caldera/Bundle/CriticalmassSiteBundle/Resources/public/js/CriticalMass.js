@@ -35,6 +35,7 @@ require.config({
     baseUrl: '/bundles/calderacriticalmasssite/',
     paths:
     {
+        "CalderaCityMapPage": "/bundles/calderacriticalmasssite/js/modules/page/CalderaCityMapPage",
         "CityEntity": "/bundles/calderacriticalmasssite/js/modules/entity/CityEntity",
         "WritePost": "/bundles/calderacriticalmasssite/js/modules/WritePost",
         "CriticalService": "/bundles/calderacriticalmasssite/js/modules/CriticalService",

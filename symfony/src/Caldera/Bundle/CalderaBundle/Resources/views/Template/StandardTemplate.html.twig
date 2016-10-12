@@ -1,0 +1,28 @@
+{% extends 'CalderaBundle:Template:MasterTemplate.html.twig' %}
+
+{% block masterContent %}
+        {% include('CalderaBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': 'false' } %}
+
+        {% block breadcrumbContainer %}
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}">Critical Mass</a>
+                </li>
+                {% block breadcrumb %}{% endblock %}
+            </ol>
+        </div>
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% include('CalderaBundle:Template:Includes/_adserver.html.twig') %}
+
+        {% include('CalderaBundle:Template:Includes/_footer.html.twig') %}
+
+        {% include('CalderaBundle:Template:Includes/_piwik.html.twig') %}
+
+    <script>
+        CriticalMass.loadModule('Notification');
+    </script>
+{% endblock %}

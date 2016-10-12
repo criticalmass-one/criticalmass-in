@@ -9,3 +9,7 @@ caldera_caldera_geobound_loadshops:
 caldera_caldera_geobound_loadincidents:
     path:     /geobound/loadincidents
     defaults: { _controller: CalderaBundle:GeoBound:loadIncidents }
+
+caldera_caldera_city_map:
+    path:     /{citySlug}/map
+    defaults: { _controller: CalderaBundle:Map:showCityMap }
