@@ -17,6 +17,33 @@ fos_elastica:
                             umlauts_filter:
                                 type: "asciifolding"
             types:
+                bikeshop:
+                    mappings:
+                        id: ~
+                        title: ~
+                        description: ~
+                        street: ~
+                        city: { type: string, index: not_analyzed }
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CalderaBundle\Entity\BikeShop
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                incident:
+                    mappings:
+                        id: ~
+                        title: ~
+                        description: ~
+                        city: { type: string, index: not_analyzed }
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: Caldera\Bundle\CalderaBundle\Entity\Incident
+                        provider: ~
+                        listener: ~
+                        finder: ~
                 ride:
                     mappings:
                         id: ~
@@ -34,7 +61,7 @@ fos_elastica:
                         driver: orm
                         model: Caldera\Bundle\CalderaBundle\Entity\Ride
                         provider: ~
-                        listener:
+                        listener: ~
                         finder: ~
                 city:
                     mappings:
