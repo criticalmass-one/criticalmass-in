@@ -20,7 +20,7 @@
         "vich/uploader-bundle": "1.3.*",
         "liip/imagine-bundle": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "friendsofsymfony/elastica-bundle": "^3.1",
+        "friendsofsymfony/elastica-bundle": "dev-master",
         "leaseweb/memcache-bundle": "*",
         "basvandorst/StravaPHP": "1.0.1",
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
@@ -63,9 +63,7 @@
         ]
     },
     "config": {
-        "platform": {
-            "php": "5.5.9"
-        }
+
     },
     "extra": {
         "symfony-app-dir": "app",
