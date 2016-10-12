@@ -1,28 +1,7 @@
 var CriticalMass = CriticalMass || {};
 
 CriticalMass.loadModule = function(name, context, options, callback) {
-    var modulePathPrefix = 'js/modules/';
-    var type = '';
-
-    if (name.search('Page') > 0) {
-        type = 'page/';
-    }
-
-    if (name.search('Entity') > 0) {
-        type = 'entity/';
-    }
-
-    if (name.search('Map') > 0) {
-        type = 'map/';
-    }
-
-    if (name.search('Marker') > 0) {
-        type = 'map/marker/';
-    }
-
-    var moduleName = modulePathPrefix + type + name;
-
-    require([moduleName], function(Module) {
+    require([name], function(Module) {
         var module = new Module(context, options);
 
         if (callback) {
@@ -97,6 +76,7 @@ require.config({
         "PositionMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/PositionMarker",
         "SubrideMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SubrideMarker",
         "SnapablePhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SnapablePhotoMarker",
+        "Search": "/bundles/calderacriticalmasssite/js/modules/Search",
         "leaflet": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/calderacriticalmasssite/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Control.Locate",
