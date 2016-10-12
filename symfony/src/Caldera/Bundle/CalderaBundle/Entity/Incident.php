@@ -419,6 +419,10 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
 
     public function getPin(): string
     {
-        return $this->latitude.','.$this->longitude;
+        if ($this->latitude && $this->longitude) {
+            return $this->latitude . ',' . $this->longitude;
+        }
+
+        return '0,0';
     }
 }
