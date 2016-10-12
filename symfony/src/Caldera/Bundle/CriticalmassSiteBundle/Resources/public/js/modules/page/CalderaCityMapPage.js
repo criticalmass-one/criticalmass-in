@@ -81,5 +81,9 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         }
     };
 
+    CalderaCityMapPage.prototype.initIncidentSource = function() {
+
+    };
+
     return CalderaCityMapPage;
 });
