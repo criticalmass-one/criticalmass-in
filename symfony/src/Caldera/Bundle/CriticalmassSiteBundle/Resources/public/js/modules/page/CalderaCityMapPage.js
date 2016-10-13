@@ -43,6 +43,10 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._CriticalService.setMap(this._map);
 
         this._map.setView([54, 10], 13);
+
+        var that = this;
+
+        this._map.on('moveend', this._onMapChange.bind(this));
     };
 
     CalderaCityMapPage.prototype._initLayers = function() {
@@ -83,6 +87,10 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
 
     CalderaCityMapPage.prototype.initIncidentSource = function() {
 
+    };
+
+    CalderaCityMapPage.prototype._onMapChange = function() {
+        console.log(this._map.getBounds().getNorthWest());
     };
 
     return CalderaCityMapPage;

@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GeoBoundController extends Controller
+class DataSourceController extends Controller
 {
     public function loadShopsAction(Request $request): Response
     {

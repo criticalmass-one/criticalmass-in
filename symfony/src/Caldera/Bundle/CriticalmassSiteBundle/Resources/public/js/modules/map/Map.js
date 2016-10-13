@@ -79,8 +79,20 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         this.map.setView(latLng, zoom);
     };
 
+    Map.prototype.getCenter = function() {
+        return this.map.getCenter();
+    };
+
     Map.prototype.fitBounds = function(bounds, options) {
         this.map.fitBounds(bounds, options);
+    };
+
+    Map.prototype.getBounds = function() {
+        return this.map.getBounds();
+    };
+
+    Map.prototype.on = function(event, callback) {
+        this.map.on(event, callback);
     };
 
     Map.prototype.disableInteraction = function() {
