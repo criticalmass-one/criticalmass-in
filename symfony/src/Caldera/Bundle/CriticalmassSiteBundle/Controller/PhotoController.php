@@ -90,6 +90,4 @@ class PhotoController extends AbstractController
 
         return new Response(null);
     }
-
-
 }
