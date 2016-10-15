@@ -30,7 +30,9 @@
             Fotos
         </a>
         {% else %}
+        <a href="{{ path('caldera_criticalmass_photo_event_list', { 'citySlug': event.city.slug, 'eventSlug': event.slug }) }}">
             Fotos
+        </a>
         {% endif %}
     </li>
     <li class="active">
