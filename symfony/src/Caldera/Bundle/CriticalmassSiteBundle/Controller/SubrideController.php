@@ -109,6 +109,7 @@ class SubrideController extends AbstractController
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
+        /** @var Subride $subride */
         $subride = $this->getSubrideRepository()->find($subrideId);
 
         if (!$subride->getRide()->equals($ride)) {
