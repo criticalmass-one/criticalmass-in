@@ -20,7 +20,7 @@ class SubrideController extends AbstractController
         $subride->setUser($this->getUser());
 
         $form = $this->createForm(
-            new SubRideType(),
+            SubrideType::class,
             $subride,
             [
                 'action' => $this->generateUrl(
@@ -69,7 +69,7 @@ class SubrideController extends AbstractController
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
             $form = $this->createForm(
-                new SubRideType(),
+                SubrideType::class,
                 $subride,
                 [
                     'action' => $this->generateUrl(
