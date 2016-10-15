@@ -56,6 +56,7 @@ require.config({
         "UploadPhotoPage": "/bundles/calderacriticalmasssite/js/modules/page/UploadPhotoPage",
         "ChatPage": "/bundles/calderacriticalmasssite/js/modules/page/ChatPage",
         "CityStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/CityStatisticPage",
+        "EditSubridePage": "/bundles/calderacriticalmasssite/js/modules/page/EditSubridePage",
         "FacebookStatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/FacebookStatisticPage",
         "StatisticPage": "/bundles/calderacriticalmasssite/js/modules/page/StatisticPage",
         "Map": "/bundles/calderacriticalmasssite/js/modules/map/Map",
