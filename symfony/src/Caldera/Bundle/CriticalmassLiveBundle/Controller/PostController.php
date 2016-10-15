@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 class PostController extends AbstractController
 {
     public function writeAction(
-        Request $request, 
-        $cityId = null, 
+        Request $request,
+        $cityId = null,
         $rideId = null
     ) {
         /**
@@ -34,13 +34,13 @@ class PostController extends AbstractController
         $form = null;
 
         if ($cityId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
             $city = $this->getCityRepository()->find($cityId);
             $post->setCity($city);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', array('citySlug' => $city->getMainSlugString()));
         } elseif ($rideId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId))));
             $ride = $this->getRideRepository()->find($rideId);
             $city = $this->getCityRepository()->find($ride->getCity());
             $post->setCity($city);
