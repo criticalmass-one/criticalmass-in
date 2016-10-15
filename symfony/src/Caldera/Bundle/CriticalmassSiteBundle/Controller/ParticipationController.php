@@ -31,7 +31,7 @@ class ParticipationController extends AbstractController
 
         $this->recalculateRideParticipations($ride);
 
-        return $this->redirectToRoute($ride);
+        return $this->redirectToObject($ride);
     }
 
     protected function recalculateRideParticipations(Ride $ride)
@@ -44,5 +44,4 @@ class ParticipationController extends AbstractController
         $em->merge($ride);
         $em->flush();
     }
-
 }
