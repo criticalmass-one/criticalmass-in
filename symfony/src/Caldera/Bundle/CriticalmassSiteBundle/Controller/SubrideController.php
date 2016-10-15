@@ -116,7 +116,7 @@ class SubrideController extends AbstractController
         }
 
         $form = $this->createForm(
-            new SubrideType(),
+            SubrideType::class,
             $subride,
             [
                 'action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit',
@@ -183,6 +183,7 @@ class SubrideController extends AbstractController
             'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
             [
                 'ride' => $subride->getRide(),
+                'city' => $subride->getRide()->getCity(),
                 'subride' => $subride,
                 'form' => $form->createView(),
                 'hasErrors' => $hasErrors,
