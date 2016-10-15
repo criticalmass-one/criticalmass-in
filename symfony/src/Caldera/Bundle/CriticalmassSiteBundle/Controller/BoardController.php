@@ -9,6 +9,8 @@ use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class BoardController extends AbstractController
 {
@@ -119,8 +121,8 @@ class BoardController extends AbstractController
 
         $data = [];
         $form = $this->createFormBuilder($data)
-            ->add('title', 'text')
-            ->add('message', 'textarea')
+            ->add('title', TextType::class)
+            ->add('message', TextareaType::class)
             ->getForm();
 
         if ('POST' == $request->getMethod()) {
@@ -183,7 +185,7 @@ class BoardController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute($thread);
+            return $this->redirectToObject($thread);
         }
 
         return $this->render(
