@@ -104,7 +104,7 @@ class RideTabsController extends AbstractController
         }
 
         $estimateForm = $this->createForm(
-            new RideEstimateType(),
+            RideEstimateType::class,
             new RideEstimate(),
             [
                 'action' => $this->generateUrl(
