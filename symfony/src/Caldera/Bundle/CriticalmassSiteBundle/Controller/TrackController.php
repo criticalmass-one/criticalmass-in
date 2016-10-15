@@ -8,7 +8,9 @@ use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -284,8 +286,8 @@ class TrackController extends AbstractController
                     'trackId' => $track->getId()
                 ]
             ))
-            ->add('startDate', 'date')
-            ->add('startTime', 'time')
+            ->add('startDate', DateType::class)
+            ->add('startTime', TimeType::class)
             ->getForm();
 
         if ('POST' == $request->getMethod()) {
