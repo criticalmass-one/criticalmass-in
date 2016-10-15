@@ -205,7 +205,7 @@ class PhotoManagementController extends AbstractController
 
         if ($photo) {
             $form = $this->createForm(
-                new PhotoCoordType(),
+                PhotoCoordType::class,
                 $photo,
                 [
                     'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
