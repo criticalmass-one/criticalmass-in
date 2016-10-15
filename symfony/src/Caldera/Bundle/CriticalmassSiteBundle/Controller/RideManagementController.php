@@ -25,7 +25,7 @@ class RideManagementController extends AbstractController
         $ride->setUser($this->getUser());
 
         $form = $this->createForm(
-            new RideType(),
+            RideType::class,
             $ride,
             [
                 'action' => $this->generateUrl(
@@ -81,7 +81,7 @@ class RideManagementController extends AbstractController
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
             $form = $this->createForm(
-                new RideType(), 
+                RideType::class,
                 $ride, 
                 [
                     'action' => $this->generateUrl(
@@ -118,7 +118,7 @@ class RideManagementController extends AbstractController
         $ride = $this->getCheckedRide($city, $rideDateTime);
 
         $form = $this->createForm(
-            new RideType(), 
+            RideType::class,
             $ride, 
             array(
                 'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', 
