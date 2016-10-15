@@ -89,7 +89,7 @@ class RideController extends AbstractController
         $rideEstimate->setRide($ride);
 
         $estimateForm = $this->createForm(
-            new RideEstimateType(),
+            RideEstimateType::class,
             $rideEstimate,
             [
                 'action' => $this->generateUrl(
