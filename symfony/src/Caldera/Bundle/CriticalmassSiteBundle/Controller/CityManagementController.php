@@ -222,7 +222,7 @@ class CityManagementController extends AbstractController
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl($city));
+                return $this->redirectToObject($city);
             }
         }
 
