@@ -3,6 +3,12 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RideType extends AbstractType
@@ -10,21 +16,21 @@ class RideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array('required' => false))
-            ->add('description', 'textarea', array('required' => false))
-            ->add('dateTime', 'datetime', [
+            ->add('title', TextType::class, array('required' => false))
+            ->add('description', TextareaType::class, array('required' => false))
+            ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'Europe/Berlin'
             ])
-            ->add('location', 'text', array('required' => false))
-            ->add('latitude', 'hidden')
-            ->add('longitude', 'hidden')
-            ->add('facebook', 'text', array('required' => false))
-            ->add('twitter', 'text', array('required' => false))
-            ->add('url', 'text', array('required' => false))
-            ->add('hasLocation', 'checkbox')
-            ->add('hasTime', 'checkbox')
-            ->add('save', 'submit');
+            ->add('location', TextType::class, array('required' => false))
+            ->add('latitude', HiddenType::class)
+            ->add('longitude', HiddenType::class)
+            ->add('facebook', TextType::class, array('required' => false))
+            ->add('twitter', TextType::class, array('required' => false))
+            ->add('url', TextType::class, array('required' => false))
+            ->add('hasLocation', CheckboxType::class)
+            ->add('hasTime', CheckboxType::class)
+            ->add('save', SubmitType::class);
     }
 
     public function getName()
