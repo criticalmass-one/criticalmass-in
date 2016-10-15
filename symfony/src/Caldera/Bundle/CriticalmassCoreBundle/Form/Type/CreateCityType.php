@@ -48,15 +48,15 @@ class CreateCityType extends AbstractType
                 $builder
                     ->add('latitude', HiddenType::class)
                     ->add('longitude', HiddenType::class)
-                    ->add('isStandardable', CheckboxType::class, array('required' => false))
-                    ->add('standardDayOfWeek', ChoiceType::class, array('label' => 'Wochentag', 'choices' => array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag'), 'required' => true))
-                    ->add('standardWeekOfMonth', ChoiceType::class, array('label' => 'Woche im Monat', 'choices' => array(1 => 'Erste Woche im Monat', 2 => 'Zweite Woche im Monat', 3 => 'Dritte Woche im Monat', 4 => 'Vierte Woche im Monat', 0 => 'Letzte Woche im Monat'), 'required' => true))
-                    ->add('isStandardableTime', CheckboxType::class, array('required' => false))
-                    ->add('standardTime', TimeType::class, array('required' => false))
-                    ->add('isStandardableLocation', CheckboxType::class, array('required' => false))
-                    ->add('standardLocation', TextType::class, array('required' => false))
-                    ->add('standardLatitude', HiddenType::class, array('required' => false))
-                    ->add('standardLongitude', HiddenType::class, array('required' => false))
+                    ->add('isStandardable', CheckboxType::class, ['required' => false])
+                    ->add('standardDayOfWeek', ChoiceType::class, ['label' => 'Wochentag', 'choices' => [1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag'], 'required' => true])
+                    ->add('standardWeekOfMonth', ChoiceType::class, ['label' => 'Woche im Monat', 'choices' => [1 => 'Erste Woche im Monat', 2 => 'Zweite Woche im Monat', 3 => 'Dritte Woche im Monat', 4 => 'Vierte Woche im Monat', 0 => 'Letzte Woche im Monat'], 'required' => true])
+                    ->add('isStandardableTime', CheckboxType::class, ['required' => false])
+                    ->add('standardTime', TimeType::class, ['required' => false])
+                    ->add('isStandardableLocation', CheckboxType::class, ['required' => false])
+                    ->add('standardLocation', TextType::class, ['required' => false])
+                    ->add('standardLatitude', HiddenType::class, ['required' => false])
+                    ->add('standardLongitude', HiddenType::class, ['required' => false])
                 ;
 
                 break;
