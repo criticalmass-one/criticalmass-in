@@ -60,7 +60,7 @@ class PostController extends AbstractController
             $photo = $this->getPhotoRepository()->find($photoId);
             $post->setPhoto($photo);
 
-            $redirectUrl = $this->generateUrl($photo);
+            $redirectUrl = $this->generateObjectUrl($photo);
         } elseif ($contentId) {
             $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
             $content = $this->getContentRepository()->find($contentId);
@@ -73,14 +73,14 @@ class PostController extends AbstractController
             $thread = $this->getThreadRepository()->find($threadId);
             $post->setThread($thread);
 
-            $redirectUrl = $this->generateUrl($thread);
+            $redirectUrl = $this->generateObjectUrl($thread);
         } elseif ($eventId) {
             $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_event', array('eventId' => $eventId))));
 
             $event = $this->getEventRepository()->find($eventId);
             $post->setEvent($event);
 
-            $redirectUrl = $this->generateUrl($event);
+            $redirectUrl = $this->generateObjectUrl($event);
         } elseif ($blogPostId) {
         } else {
             $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));

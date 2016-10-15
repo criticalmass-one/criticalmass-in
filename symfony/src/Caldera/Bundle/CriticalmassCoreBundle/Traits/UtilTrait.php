@@ -103,12 +103,19 @@ trait UtilTrait
         return $session;
     }
 
-    protected function redirectToObject($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    protected function generateObjectUrl($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         /** @var ObjectRouter $router */
         $router = $this->get('caldera.criticalmass.routing.object_router');
 
         $url = $router->generate($object, $referenceType);
+
+        return $url;
+    }
+
+    protected function redirectToObject($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        $url = $this->generateObjectUrl($object, $referenceType);
 
         return $this->redirect($url);
     }
