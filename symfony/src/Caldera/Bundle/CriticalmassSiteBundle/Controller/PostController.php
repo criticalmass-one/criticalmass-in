@@ -42,13 +42,13 @@ class PostController extends AbstractController
         $blogPost = null;
 
         if ($cityId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
             $city = $this->getCityRepository()->find($cityId);
             $post->setCity($city);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', array('citySlug' => $city->getMainSlugString()));
         } elseif ($rideId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', array('rideId' => $rideId))));
             $ride = $this->getRideRepository()->find($rideId);
             $city = $this->getCityRepository()->find($ride->getCity());
             $post->setCity($city);
@@ -56,26 +56,26 @@ class PostController extends AbstractController
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_ride_show', array('citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()));
         } elseif ($photoId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', array('photoId' => $photoId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', array('photoId' => $photoId))));
             $photo = $this->getPhotoRepository()->find($photoId);
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateUrl($photo);
         } elseif ($contentId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
             $content = $this->getContentRepository()->find($contentId);
             $post->setContent($content);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_content_display', array('slug' => $content->getSlug()));
         } elseif ($threadId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread', array('threadId' => $threadId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread', array('threadId' => $threadId))));
 
             $thread = $this->getThreadRepository()->find($threadId);
             $post->setThread($thread);
 
             $redirectUrl = $this->generateUrl($thread);
         } elseif ($eventId) {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_event', array('eventId' => $eventId))));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_event', array('eventId' => $eventId))));
 
             $event = $this->getEventRepository()->find($eventId);
             $post->setEvent($event);
@@ -83,7 +83,7 @@ class PostController extends AbstractController
             $redirectUrl = $this->generateUrl($event);
         } elseif ($blogPostId) {
         } else {
-            $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
+            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_timeline_list');
         }
