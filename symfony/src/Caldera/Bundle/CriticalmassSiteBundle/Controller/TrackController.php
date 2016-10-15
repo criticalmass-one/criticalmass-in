@@ -11,6 +11,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackController extends AbstractController
 {
@@ -49,7 +50,7 @@ class TrackController extends AbstractController
                 'citySlug' => $ride->getCity()->getMainSlugString(),
                 'rideDate' => $ride->getFormattedDate()
             ]))
-            ->add('trackFile', 'vich_file')
+            ->add('trackFile', VichFileType::class)
             ->getForm();
         
         if ('POST' == $request->getMethod()) {
