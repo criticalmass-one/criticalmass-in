@@ -6,8 +6,10 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
+use Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 trait UtilTrait
 {
@@ -99,5 +101,15 @@ trait UtilTrait
         $session = new Session();
 
         return $session;
+    }
+
+    protected function redirectToObject($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        /** @var ObjectRouter $router */
+        $router = $this->get('caldera.criticalmass.routing.object_router');
+
+        $url = $router->generate($object, $referenceType);
+
+        return $this->redirect($url);
     }
 }

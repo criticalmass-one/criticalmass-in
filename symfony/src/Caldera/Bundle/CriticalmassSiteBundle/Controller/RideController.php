@@ -116,6 +116,6 @@ class RideController extends AbstractController
             $estimateService->calculateEstimates($ride);
         }
 
-        return $this->redirectToRoute($ride);
+        return $this->redirectToObject($ride);
     }
 }
