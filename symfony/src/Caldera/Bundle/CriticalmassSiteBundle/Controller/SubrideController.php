@@ -58,6 +58,14 @@ class SubrideController extends AbstractController
     {
         $form->handleRequest($request);
 
+        $hasErrors = true;
+        $actionUrl = $this->generateUrl(
+            'caldera_criticalmass_desktop_subride_add',
+            [
+                'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
+                'rideDate' => $subride->getRide()->getFormattedDate()
+            ]);
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
@@ -66,37 +74,35 @@ class SubrideController extends AbstractController
             // TODO: remove also this
             $hasErrors = false;
 
-            /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
-            just to change the action url of the form, but we are far to stupid for this hack. */
-            $form = $this->createForm(
-                SubrideType::class,
-                $subride,
+            $actionUrl = $this->generateUrl(
+                'caldera_criticalmass_desktop_subride_edit',
                 [
-                    'action' => $this->generateUrl(
-                        'caldera_criticalmass_desktop_subride_edit',
-                        [
-                            'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
-                            'rideDate' => $subride->getRide()->getFormattedDate(),
-                            'subrideId' => $subride->getId()
-                        ]
-                    )
-                ]
-            );
-            // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
-            return $this->render(
-                'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
-                [
-                    'hasErrors' => $hasErrors,
-                    'subride' => $subride,
-                    'form' => $form->createView(),
-                    'city' => $subride->getRide()->getCity(),
-                    'ride' => $subride->getRide()
-                ]
-            );
-        } elseif ($form->isSubmitted()) {
-            // TODO: remove even more shit
-            $hasErrors = true;
+                    'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
+                    'rideDate' => $subride->getRide()->getFormattedDate(),
+                    'subrideId' => $subride->getId()
+                ]);
         }
+
+        /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
+        just to change the action url of the form, but we are far to stupid for this hack. */
+        $form = $this->createForm(
+            SubrideType::class,
+            $subride,
+            [
+                'action' => $actionUrl
+            ]
+        );
+        // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
+        return $this->render(
+            'CalderaCriticalmassSiteBundle:Subride:edit.html.twig',
+            [
+                'hasErrors' => $hasErrors,
+                'subride' => $subride,
+                'form' => $form->createView(),
+                'city' => $subride->getRide()->getCity(),
+                'ride' => $subride->getRide()
+            ]
+        );
     }
 
     public function editAction(Request $request, $citySlug, $rideDate, $subrideId)

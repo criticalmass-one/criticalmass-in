@@ -1,7 +1,9 @@
-define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
+define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function(CriticalService) {
 
     var EditSubridePage = function(context, options) {
         this._settings = $.extend(this._defaults, options);
+
+        this._CriticalService = CriticalService;
     };
 
     EditSubridePage.prototype._defaults = {
@@ -26,12 +28,12 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
         this._initMarkerEvent();
     };
 
-    EditSubridePage.prototype.addCity = function(cityName, cityTitle, slug, description, latitude, longitude) {
-        this._city = new CityEntity(cityName, cityTitle, slug, description, latitude, longitude);
+    EditSubridePage.prototype.addCity = function(cityJson) {
+        this._city = this._CriticalService.factory.createCity(cityJson);
     };
 
-    EditSubridePage.prototype.addRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
-        this._ride = new RideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
+    EditSubridePage.prototype.addRide = function(rideJson) {
+        this._ride = this._CriticalService.factory.createRide(rideJson);
     };
 
     EditSubridePage.prototype._initMap = function() {
@@ -47,6 +49,7 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
         if (this._ride.hasLocation()) {
             latLng = this._ride.getLatLng();
         } else {
+            alert(this._city.getLatLng());
             latLng = this._city.getLatLng();
         }
 
@@ -85,7 +88,7 @@ define(['Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function() {
         if (this._subrideHasLocation()) {
             latLng = this._getInputLatLng();
         } else if (this._ride.hasLocation()) {
-            latLng = this._getInputLatLng();
+            latLng = this._ride.getLatLng();
         } else {
             latLng = this._city.getLatLng();
         }
