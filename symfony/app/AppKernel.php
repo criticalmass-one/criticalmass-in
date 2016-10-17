@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Caldera\Bundle\CriticalmassRestBundle\CalderaCriticalmassRestBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Caldera\Bundle\CyclewaysBundle\CalderaCyclewaysBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
