@@ -8,6 +8,6 @@ class MapController extends Controller
 {
     public function mapAction()
     {
-        return $this->render('CalderaBundle:Frontpage:index.html.twig');
+        return $this->render('CalderaCyclewaysBundle:Frontpage:index.html.twig');
     }
 }
