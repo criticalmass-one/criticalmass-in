@@ -38,7 +38,7 @@ class FrontpageController extends AbstractController
         );
     }
 
-    public function getFrontpageRideList()
+    protected function getFrontpageRideList()
     {
         $rides = $this->getRideRepository()->findFrontpageRides();
 
