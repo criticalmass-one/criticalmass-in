@@ -58,7 +58,7 @@ class NotifyRideLocationCommand extends ContainerAwareCommand
         $message->datacoding = 'unicode';
         try {
             $MessageResult = $this->messageBird->messages->create($message);
-            var_dump($MessageResult);
+            //var_dump($MessageResult);
         } catch (\MessageBird\Exceptions\AuthenticateException $e) {
             // That means that your accessKey is unknown
             echo 'wrong login';
