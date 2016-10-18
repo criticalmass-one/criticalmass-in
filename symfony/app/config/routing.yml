@@ -63,6 +63,11 @@ caldera_criticalmass:
     host: "%domain.criticalmass%"
     prefix:   /
 
+caldera_cycleways:
+    resource: "@CalderaCyclewaysBundle/Resources/config/routing.yml"
+    host: "%domain.cycleways%"
+    prefix:   /
+
 caldera:
     resource: "@CalderaBundle/Resources/config/routing.yml"
     host: "%domain.caldera%"
@@ -82,3 +87,4 @@ caldera_criticalmasslive:
     resource: "@CalderaCriticalmassLiveBundle/Resources/config/routing.yml"
     host: "%domain.criticalmasslive%"
     prefix:   /
+

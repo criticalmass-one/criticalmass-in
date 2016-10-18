@@ -1,0 +1,35 @@
+{% extends 'CalderaCyclewaysBundle:Template:FullscreenTemplate.html.twig' %}
+
+{% set menu_selected = 'two' %}
+
+{% block title %}Live{% endblock %}
+
+{% block additionalHeaderElements %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+
+    <style>
+        #map {
+            position: absolute;
+            top: 30px;
+            bottom: 0;
+            width: 100%;
+            z-index: 0;
+
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="map">
+
+    </div>
+
+    <script>
+        var options = {};
+
+        CriticalMass.loadModule('CalderaCityMapPage', null, options, function(page) {
+
+        });
+    </script>
+{% endblock %}
+

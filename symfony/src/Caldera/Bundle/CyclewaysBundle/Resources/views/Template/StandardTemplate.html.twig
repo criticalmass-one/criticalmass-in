@@ -1,0 +1,28 @@
+{% extends 'CalderaCyclewaysBundle:Template:MasterTemplate.html.twig' %}
+
+{% block masterContent %}
+        {% include('CalderaCyclewaysBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': 'false' } %}
+
+        {% block breadcrumbContainer %}
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}">Critical Mass</a>
+                </li>
+                {% block breadcrumb %}{% endblock %}
+            </ol>
+        </div>
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% include('CalderaCyclewaysBundle:Template:Includes/_adserver.html.twig') %}
+
+        {% include('CalderaCyclewaysBundle:Template:Includes/_footer.html.twig') %}
+
+        {% include('CalderaCyclewaysBundle:Template:Includes/_piwik.html.twig') %}
+
+    <script>
+        CriticalMass.loadModule('Notification');
+    </script>
+{% endblock %}

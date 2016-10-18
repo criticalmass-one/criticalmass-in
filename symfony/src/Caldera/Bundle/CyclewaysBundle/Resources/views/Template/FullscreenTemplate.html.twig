@@ -1,0 +1,9 @@
+{% extends 'CalderaCyclewaysBundle:Template:MasterTemplate.html.twig' %}
+
+{% block masterContent %}
+        {% include('CalderaCyclewaysBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
+
+        {% block content %}{% endblock %}
+
+        {% include('CalderaCyclewaysBundle:Template:Includes/_piwik.html.twig') %}
+{% endblock %}
