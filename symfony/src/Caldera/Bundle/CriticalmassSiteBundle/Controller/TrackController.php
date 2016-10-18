@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackController extends AbstractController
@@ -157,14 +158,22 @@ class TrackController extends AbstractController
 
         if ($track && $track->getUser()->equals($this->getUser()))
         {
-            header('Content-disposition: attachment; filename=track.gpx');
-            header('Content-type: text/plain');
-
             $path = $this->getParameter('kernel.root_dir');
             $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
             $filename = $helper->asset($track, 'trackFile');
 
-            readfile($path.'/../web'.$filename);
+            $trackContent = file_get_contents($path.'/../web'.$filename);
+
+            $response = new Response();
+
+            $response->headers->add([
+                'Content-disposition' => 'attachment; filename=track.gpx',
+                'Content-type', 'text/plain'
+            ]);
+
+            $response->setContent($trackContent);
+
+            return $response;
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
