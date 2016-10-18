@@ -32,7 +32,7 @@ services:
     caldera.criticalmass.routing.object_router:
         class: Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter
         arguments:
-            - '@router'
+            - '@router.default'
 
     caldera.criticalmass.gps.gpxexporter:
         class: Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter
