@@ -117,17 +117,6 @@ class PhotoGps
         return new \DateTime(str_replace("T", " ", str_replace("Z", "", $xml)));
     }
 
-    function timeDiffinSec($difference)
-    {
-        return $difference->format('%s') + 60 * $difference->format("%i") + 3600 * $difference->format("%H");
-    }
-
-    function interpolate($firstPoint, $secondPoint, $i, $j) {
-        $n = $i + $j;
-        return floatval($firstPoint * (($n - $i) / floatval($n))) +
-        floatval($secondPoint * (($n - $j) / floatval($n)));
-    }
-
     public function approximateCoordinates()
     {
         $this->trackReader->loadTrack($this->track);
