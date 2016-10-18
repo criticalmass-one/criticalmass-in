@@ -29,7 +29,8 @@
                 </h1>
 
                 <p class="lead">
-                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der
+                    jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
                 </p>
             </div>
         </div>
@@ -38,30 +39,30 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Datum
-                            </th>
+                    <tr>
+                        <th>
+                            Datum
+                        </th>
 
-                            <th>
-                                Titel
-                            </th>
+                        <th>
+                            Titel
+                        </th>
 
-                            <th>
-                                Teilnehmer
-                            </th>
+                        <th>
+                            Teilnehmer
+                        </th>
 
-                            <th>
-                                Dauer
-                            </th>
+                        <th>
+                            Dauer
+                        </th>
 
-                            <th>
-                                Distanz
-                            </th>
-                        </tr>
+                        <th>
+                            Distanz
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for ride in rides %}
+                    {% for ride in rides %}
                         <tr>
                             <td>
                                 <a href="{{ objectPath(ride) }}">
@@ -87,7 +88,7 @@
                                 {{ ride.estimatedDistance|default('fehlt') }}
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

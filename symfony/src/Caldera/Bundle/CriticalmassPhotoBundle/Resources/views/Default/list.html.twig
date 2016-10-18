@@ -7,77 +7,81 @@
 {% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
 {% block additionalHeaderElements %}
-    <meta property="og:title" content="criticalmass.photos" />
-    <meta property="og:type" content="Website" />
-    <meta property="og:description" content="{{ title }}" />
-    <meta property="og:url" content="{{ currentPath }}" />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="criticalmass.photos" />
+    <meta property="og:title" content="criticalmass.photos"/>
+    <meta property="og:type" content="Website"/>
+    <meta property="og:description" content="{{ title }}"/>
+    <meta property="og:url" content="{{ currentPath }}"/>
+    <meta property="og:locale" content="de_DE"/>
+    <meta property="og:site_name" content="criticalmass.photos"/>
     {% if ride.featuredPhoto %}
-        <meta property="og:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
+        <meta property="og:image"
+              content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('facebook_preview_image') }}"/>
     {% endif %}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@calderacc" />
-    <meta name="twitter:creator" content="@maltehuebner" />
-    <meta name="twitter:title" content="criticalmass.photos" />
-    <meta name="twitter:description" content="{{ title }}" />
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@calderacc"/>
+    <meta name="twitter:creator" content="@maltehuebner"/>
+    <meta name="twitter:title" content="criticalmass.photos"/>
+    <meta name="twitter:description" content="{{ title }}"/>
     {% if ride.featuredPhoto %}
-        <meta name="twitter:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
+        <meta name="twitter:image"
+              content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('twitter_summary_large_image') }}"/>
     {% endif %}
 {% endblock %}
 
 {% block additionalNavbarItems %}
-<li class="nav-item">
-    <a class="nav-link" href="{{ path('caldera_criticalmassphoto_photo_index') }}">
-        Home
-    </a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('caldera_criticalmassphoto_photo_index') }}">
+            Home
+        </a>
+    </li>
 {% endblock %}
 
 {% block content %}
-<div class="container m-t-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="text-md-center">
-                <h1>
-                    {{ ride.city.title }}
-                </h1>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="text-md-center">
-                <p class="lead">
-                    Fotos von der <a href="{{ objectPath(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am <a href="{{ objectPath(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="photo-list">
-                    {% for photo in pagination %}
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-xs-center m-b-1">
-                        <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: ride.getFormattedDate(), citySlug: ride.city.slug, photoId: photo.id }) }}">
-                            <img class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-md-center">
-                        {{ knp_pagination_render(pagination, 'CalderaCriticalmassCoreBundle:KnpPagination:bootstrap34template.html.twig') }}
-                    </div>
+    <div class="container m-t-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-md-center">
+                    <h1>
+                        {{ ride.city.title }}
+                    </h1>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-md-center">
+                    <p class="lead">
+                        Fotos von der <a href="{{ objectPath(ride.city) }}">Critical Mass in {{ ride.city.city }}</a> am
+                        <a href="{{ objectPath(ride) }}">{{ ride.dateTime|date('d.m.Y') }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="photo-list">
+                        {% for photo in pagination %}
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 text-xs-center m-b-1">
+                                <a href="{{ path('caldera_criticalmassphoto_photo_show', { rideDate: ride.getFormattedDate(), citySlug: ride.city.slug, photoId: photo.id }) }}">
+                                    <img class="img-thumbnail img-fluid"
+                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-md-center">
+                            {{ knp_pagination_render(pagination, 'CalderaCriticalmassCoreBundle:KnpPagination:bootstrap34template.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}

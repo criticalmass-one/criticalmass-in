@@ -6,16 +6,16 @@ use Caldera\Bundle\CalderaBundle\Entity\Weather;
 
 class OpenWeatherReader
 {
-    
+
     protected $json;
     protected $date;
     protected $entity;
-    
+
     public function setJson($json)
     {
         $this->json = $json;
     }
-    
+
     public function setDate(\DateTime $date)
     {
         $this->date = $date;
@@ -26,26 +26,24 @@ class OpenWeatherReader
         $this->entity = new Weather();
 
         $weather = json_decode($this->json);
-        
+
         $dateTime = new \DateTime();
-        
+
         $dayFound = false;
-        
+
         foreach ($weather->list as $id => $weatherDay) {
             $dateTime->setTimestamp($weatherDay->dt);
-        
-            if ($this->date->format('Y-m-d') == $dateTime->format('Y-m-d'))
-            {
+
+            if ($this->date->format('Y-m-d') == $dateTime->format('Y-m-d')) {
                 $dayFound = true;
                 break;
             }
         }
-        
-        if (!$dayFound)
-        {
+
+        if (!$dayFound) {
             return null;
         }
-        
+
         $weather = $weather->list[$id];
 
         $this->entity->setJson($this->json);
@@ -65,12 +63,12 @@ class OpenWeatherReader
 
         $this->entity->setPressure($weather->pressure);
         $this->entity->setHumidity($weather->humidity);
-        
+
         $this->entity->setWindSpeed($weather->speed);
         $this->entity->setWindDeg($weather->deg);
 
         $this->entity->setClouds($weather->clouds);
-        $this->entity->setRain(isset($weather->rain) ?  $weather->rain : 0);
+        $this->entity->setRain(isset($weather->rain) ? $weather->rain : 0);
 
         return $this->entity;
     }

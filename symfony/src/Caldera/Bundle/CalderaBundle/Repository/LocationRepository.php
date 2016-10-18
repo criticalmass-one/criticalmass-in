@@ -33,7 +33,7 @@ class LocationRepository extends EntityRepository
 
         $builder->select('location');
 
-        $builder->where($builder->expr()->like('location.title', '\'%'.$ride->getLocation().'%\''));
+        $builder->where($builder->expr()->like('location.title', '\'%' . $ride->getLocation() . '%\''));
         $builder->andWhere($builder->expr()->eq('location.city', $ride->getCity()->getId()));
 
         $query = $builder->getQuery();

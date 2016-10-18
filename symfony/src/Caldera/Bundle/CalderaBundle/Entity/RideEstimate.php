@@ -11,28 +11,28 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RideEstimate
 {
-	/**
-	 * ID der Entitaet.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * ID der Entitaet.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 */
-	protected $user;
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
 
-	/**
-	 * Tour, zu der diese Entitaet abgespeichert wurde.
-	 *
-	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
-	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-	 */
-	protected $ride;
+    /**
+     * Tour, zu der diese Entitaet abgespeichert wurde.
+     *
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     */
+    protected $ride;
 
     /**
      * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"}, fetch="LAZY")
@@ -58,10 +58,10 @@ class RideEstimate
      */
     protected $estimatedDuration;
 
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $creationDateTime;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDateTime;
 
     public function __construct()
     {
@@ -71,11 +71,21 @@ class RideEstimate
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get estimatedParticipants
+     *
+     * @return integer
+     */
+    public function getEstimatedParticipants()
+    {
+        return $this->estimatedParticipants;
     }
 
     /**
@@ -92,13 +102,13 @@ class RideEstimate
     }
 
     /**
-     * Get estimatedParticipants
+     * Get estimatedDistance
      *
-     * @return integer 
+     * @return float
      */
-    public function getEstimatedParticipants()
+    public function getEstimatedDistance()
     {
-        return $this->estimatedParticipants;
+        return $this->estimatedDistance;
     }
 
     /**
@@ -115,13 +125,13 @@ class RideEstimate
     }
 
     /**
-     * Get estimatedDistance
+     * Get estimatedDuration
      *
-     * @return float 
+     * @return float
      */
-    public function getEstimatedDistance()
+    public function getEstimatedDuration()
     {
-        return $this->estimatedDistance;
+        return $this->estimatedDuration;
     }
 
     /**
@@ -138,13 +148,13 @@ class RideEstimate
     }
 
     /**
-     * Get estimatedDuration
+     * Get creationDateTime
      *
-     * @return float 
+     * @return \DateTime
      */
-    public function getEstimatedDuration()
+    public function getCreationDateTime()
     {
-        return $this->estimatedDuration;
+        return $this->creationDateTime;
     }
 
     /**
@@ -161,13 +171,13 @@ class RideEstimate
     }
 
     /**
-     * Get creationDateTime
+     * Get user
      *
-     * @return \DateTime 
+     * @return User
      */
-    public function getCreationDateTime()
+    public function getUser()
     {
-        return $this->creationDateTime;
+        return $this->user;
     }
 
     /**
@@ -184,13 +194,13 @@ class RideEstimate
     }
 
     /**
-     * Get user
+     * Get ride
      *
-     * @return User
+     * @return Ride
      */
-    public function getUser()
+    public function getRide()
     {
-        return $this->user;
+        return $this->ride;
     }
 
     /**
@@ -207,13 +217,13 @@ class RideEstimate
     }
 
     /**
-     * Get ride
+     * Get track
      *
-     * @return Ride
+     * @return Track
      */
-    public function getRide()
+    public function getTrack()
     {
-        return $this->ride;
+        return $this->track;
     }
 
     /**
@@ -227,15 +237,5 @@ class RideEstimate
         $this->track = $track;
 
         return $this;
-    }
-
-    /**
-     * Get track
-     *
-     * @return Track
-     */
-    public function getTrack()
-    {
-        return $this->track;
     }
 }

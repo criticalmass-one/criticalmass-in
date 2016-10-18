@@ -22,8 +22,7 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:facebook:rideproperties')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -42,12 +41,12 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
          * @var Ride $ride
          */
         foreach ($rides as $ride) {
-            $output->writeln('Looking up '.$ride->getFancyTitle());
+            $output->writeln('Looking up ' . $ride->getFancyTitle());
 
             $eventId = $this->getEventId($ride);
 
             if ($eventId) {
-                $output->writeln('Event ID is: '.$eventId);
+                $output->writeln('Event ID is: ' . $eventId);
 
                 $properties = $fera->getEventPropertiesForRide($ride);
 

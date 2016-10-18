@@ -9,7 +9,8 @@
         <div class="col-md-12">
             {% if pastRide and app.getUser() %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
+                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate"
+                       title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
                 </div>
             {% endif %}
 
@@ -36,7 +37,8 @@
             <td>
                 {% include('CalderaCriticalmassSiteBundle:Common/Ride:RideParticipants.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
+                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
         </tr>
         <tr>
             <th>Distanz</th>
@@ -44,7 +46,8 @@
             <td>
                 {% include('CalderaCriticalmassSiteBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
+                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
         </tr>
         <tr>
             <th>Dauer</th>
@@ -52,7 +55,8 @@
             <td>
                 {% include('CalderaCriticalmassSiteBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
+                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
         </tr>
         <tr>
             <th>Durchschnittsgeschwindigkeit</th>

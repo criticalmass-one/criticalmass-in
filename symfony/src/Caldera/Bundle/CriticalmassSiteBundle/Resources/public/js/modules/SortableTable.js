@@ -1,4 +1,4 @@
-define([], function() {
+define([], function () {
     var SortableTable = function (context, settings) {
         this.context = context;
         this.settings = settings;
@@ -76,7 +76,7 @@ define([], function() {
         $table.prepend('<thead>' + tableHeaderContent + '</thead>');
     };
 
-    SortableTable.prototype._updateTableHeader = function(sortAttribute) {
+    SortableTable.prototype._updateTableHeader = function (sortAttribute) {
         var $table = $('#' + this.settings.tableId);
         var $tableHeader = $table.find('thead');
         var $thCell = $tableHeader.find('th[data-sortAttribute="' + sortAttribute + '"]');

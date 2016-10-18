@@ -12,39 +12,34 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ApiUser
 {
     /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $token;
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\App", inversedBy="api_users")
+     * @ORM\JoinColumn(name="app_id", referencedColumnName="id", nullable=false)
+     */
+    protected $app;
+    /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City", inversedBy="api_users")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
+     */
+    protected $city;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDateTime;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled = 0;
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
-    protected $token;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\App", inversedBy="api_users")
-     * @ORM\JoinColumn(name="app_id", referencedColumnName="id", nullable=false)
-     */
-    protected $app;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City", inversedBy="api_users")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
-     */
-    protected $city;
-    
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $creationDateTime;
-    
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enabled = 0;
-    
     public function __construct()
     {
         $this->setToken(md5(microtime()));
@@ -53,11 +48,21 @@ class ApiUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get city
+     *
+     * @return City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**
@@ -74,15 +79,15 @@ class ApiUser
     }
 
     /**
-     * Get city
+     * Get token
      *
-     * @return City
+     * @return string
      */
-    public function getCity()
+    public function getToken()
     {
-        return $this->city;
+        return $this->token;
     }
-    
+
     /**
      * Set token
      *
@@ -97,13 +102,13 @@ class ApiUser
     }
 
     /**
-     * Get token
+     * Get creationDateTime
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getToken()
+    public function getCreationDateTime()
     {
-        return $this->token;
+        return $this->creationDateTime;
     }
 
     /**
@@ -120,15 +125,15 @@ class ApiUser
     }
 
     /**
-     * Get creationDateTime
+     * Get enabled
      *
-     * @return \DateTime 
+     * @return boolean
      */
-    public function getCreationDateTime()
+    public function getEnabled()
     {
-        return $this->creationDateTime;
+        return $this->enabled;
     }
-    
+
     /**
      * Set enabled
      *
@@ -140,15 +145,5 @@ class ApiUser
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return boolean 
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
     }
 }

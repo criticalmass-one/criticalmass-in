@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CriticalmapsUser
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
     /**
@@ -31,14 +31,14 @@ class CriticalmapsUser
     protected $ride;
 
     /**
-	 * @ORM\Column(type="string", length=255, nullable=false)
-	 */
-	protected $identifier;
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $identifier;
 
-	/**
-	 * @ORM\Column(type="datetime", nullable=false)
-	 */
-	protected $creationDateTime;
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $creationDateTime;
 
     /**
      * @ORM\Column(type="smallint")
@@ -73,11 +73,21 @@ class CriticalmapsUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get identifier
+     *
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     /**
@@ -94,13 +104,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get identifier
+     * Get creationDateTime
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getIdentifier()
+    public function getCreationDateTime()
     {
-        return $this->identifier;
+        return $this->creationDateTime;
     }
 
     /**
@@ -117,13 +127,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get creationDateTime
+     * Get colorRed
      *
-     * @return \DateTime 
+     * @return integer
      */
-    public function getCreationDateTime()
+    public function getColorRed()
     {
-        return $this->creationDateTime;
+        return $this->colorRed;
     }
 
     /**
@@ -140,13 +150,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get colorRed
+     * Get colorGreen
      *
-     * @return integer 
+     * @return integer
      */
-    public function getColorRed()
+    public function getColorGreen()
     {
-        return $this->colorRed;
+        return $this->colorGreen;
     }
 
     /**
@@ -163,13 +173,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get colorGreen
+     * Get colorBlue
      *
-     * @return integer 
+     * @return integer
      */
-    public function getColorGreen()
+    public function getColorBlue()
     {
-        return $this->colorGreen;
+        return $this->colorBlue;
     }
 
     /**
@@ -186,13 +196,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get colorBlue
+     * Get startDateTime
      *
-     * @return integer 
+     * @return \DateTime
      */
-    public function getColorBlue()
+    public function getStartDateTime()
     {
-        return $this->colorBlue;
+        return $this->startDateTime;
     }
 
     /**
@@ -209,13 +219,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get startDateTime
+     * Get endDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getStartDateTime()
+    public function getEndDateTime()
     {
-        return $this->startDateTime;
+        return $this->endDateTime;
     }
 
     /**
@@ -232,13 +242,13 @@ class CriticalmapsUser
     }
 
     /**
-     * Get endDateTime
+     * Get city
      *
-     * @return \DateTime 
+     * @return City
      */
-    public function getEndDateTime()
+    public function getCity()
     {
-        return $this->endDateTime;
+        return $this->city;
     }
 
     /**
@@ -254,14 +264,9 @@ class CriticalmapsUser
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
+    public function getRide()
     {
-        return $this->city;
+        return $this->ride;
     }
 
     public function setRide(Ride $ride = null)
@@ -271,9 +276,9 @@ class CriticalmapsUser
         return $this;
     }
 
-    public function getRide()
+    public function getExported()
     {
-        return $this->ride;
+        return $this->exported;
     }
 
     public function setExported($exported)
@@ -281,10 +286,5 @@ class CriticalmapsUser
         $this->exported = $exported;
 
         return $this;
-    }
-
-    public function getExported()
-    {
-        return $this->exported;
     }
 }

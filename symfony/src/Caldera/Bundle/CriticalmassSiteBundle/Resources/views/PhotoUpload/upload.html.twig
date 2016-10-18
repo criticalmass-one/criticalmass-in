@@ -23,13 +23,13 @@
 
     <li>
         {% if ride %}
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.getFancyTitle() }}
-        </a>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.getFancyTitle() }}
+            </a>
         {% else %}
-        <a href="{{ objectPath(event) }}">
-            {{ event.title }}
-        </a>
+            <a href="{{ objectPath(event) }}">
+                {{ event.title }}
+            </a>
         {% endif %}
     </li>
 
@@ -47,23 +47,25 @@
                 </h1>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <p>
                     Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen.
                 </p>
                 <p>
-                    Noch ein Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten enthalten, werden deine Fotos automatisch auf der Karte verortet.
+                    Noch ein Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten
+                    enthalten, werden deine Fotos automatisch auf der Karte verortet.
                 </p>
                 <p>
                     <strong>
-                        Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!
+                        Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
+                        lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!
                     </strong>
                 </p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">

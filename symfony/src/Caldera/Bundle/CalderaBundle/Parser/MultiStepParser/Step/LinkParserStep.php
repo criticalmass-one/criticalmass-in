@@ -23,12 +23,12 @@ class LinkParserStep implements StepInterface
         $ret = '';
         $url = $matches[2];
 
-        if ( empty($url) )
+        if (empty($url))
             return $matches[0];
         // removed trailing [.,;:] from URL
-        if ( in_array(substr($url, -1), array('.', ',', ';', ':')) === true ) {
+        if (in_array(substr($url, -1), array('.', ',', ';', ':')) === true) {
             $ret = substr($url, -1);
-            $url = substr($url, 0, strlen($url)-1);
+            $url = substr($url, 0, strlen($url) - 1);
         }
 
         return $matches[1] . "<a href=\"$url\" rel=\"nofollow\">$url</a>" . $ret;

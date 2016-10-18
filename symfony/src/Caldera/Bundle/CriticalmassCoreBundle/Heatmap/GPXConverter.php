@@ -29,17 +29,12 @@ class GpxConverter
         $startPosition = null;
         $endPosition = null;
 
-        foreach ($this->gpxXML->trk->trkseg as $trksg)
-        {
-            foreach ($trksg as $trackPoint)
-            {
-                if ($startPosition == null)
-                {
-                    $startPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
-                }
-                else
-                {
-                    $endPosition = new Position((float) $trackPoint['lat'], (float) $trackPoint['lon']);
+        foreach ($this->gpxXML->trk->trkseg as $trksg) {
+            foreach ($trksg as $trackPoint) {
+                if ($startPosition == null) {
+                    $startPosition = new Position((float)$trackPoint['lat'], (float)$trackPoint['lon']);
+                } else {
+                    $endPosition = new Position((float)$trackPoint['lat'], (float)$trackPoint['lon']);
 
                     $path = new Path($startPosition, $endPosition);
 

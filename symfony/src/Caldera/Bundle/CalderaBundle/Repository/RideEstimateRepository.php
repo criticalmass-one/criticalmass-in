@@ -16,11 +16,11 @@ class RideEstimateRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNull('estimate.estimatedDuration'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('estimate.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('estimate.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('estimate.creationDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('estimate.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

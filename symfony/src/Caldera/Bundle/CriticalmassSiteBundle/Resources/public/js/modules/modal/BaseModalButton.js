@@ -1,5 +1,5 @@
-define([], function() {
-    BaseModalButton = function() {
+define([], function () {
+    BaseModalButton = function () {
     };
 
     CloseModalButton.prototype._$button = null;

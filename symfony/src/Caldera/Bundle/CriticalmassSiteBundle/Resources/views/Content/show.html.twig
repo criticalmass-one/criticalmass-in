@@ -10,25 +10,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-            {{ content.text|markdown }}
+                {{ content.text|markdown }}
             </div>
         </div>
 
         <div class="row margin-top-large">
             <div class="col-md-10 col-md-offset-1">
                 <small>
-                    Diese Seite wurde am {{ content.lastEditionDateTime.format('d.m.Y') }} um {{ content.lastEditionDateTime.format('H:i') }} Uhr von {{ content.user.username }} geändert.
-                {% if content.isPublicEditable() and app.getUser() %}
-                    <a href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}">Diese Seite jetzt editieren</a>
-                {% endif %}
+                    Diese Seite wurde am {{ content.lastEditionDateTime.format('d.m.Y') }}
+                    um {{ content.lastEditionDateTime.format('H:i') }} Uhr von {{ content.user.username }} geändert.
+                    {% if content.isPublicEditable() and app.getUser() %}
+                        <a href="{{ path('caldera_criticalmass_content_edit', { 'slug': content.getSlug() }) }}">Diese
+                            Seite jetzt editieren</a>
+                    {% endif %}
                 </small>
             </div>
         </div>
-        
+
         <div class="row margin-top-large">
             <div class="col-md-10 col-md-offset-1">
                 {% if app.getUser() %}
-                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-add-post">
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal"
+                            data-target="#modal-add-post">
                         Kommentar hinzufügen
                     </button>
                 {% endif %}

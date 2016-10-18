@@ -1,6 +1,6 @@
-define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function(CriticalService) {
+define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], function (CriticalService) {
 
-    var EditSubridePage = function(context, options) {
+    var EditSubridePage = function (context, options) {
         this._settings = $.extend(this._defaults, options);
 
         this._CriticalService = CriticalService;
@@ -20,7 +20,7 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
     EditSubridePage.prototype._$longitudeInput = null;
 
 
-    EditSubridePage.prototype.init = function() {
+    EditSubridePage.prototype.init = function () {
         this._initMap();
         this._initView();
         this._initInputFields();
@@ -28,22 +28,22 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
         this._initMarkerEvent();
     };
 
-    EditSubridePage.prototype.addCity = function(cityJson) {
+    EditSubridePage.prototype.addCity = function (cityJson) {
         this._city = this._CriticalService.factory.createCity(cityJson);
     };
 
-    EditSubridePage.prototype.addRide = function(rideJson) {
+    EditSubridePage.prototype.addRide = function (rideJson) {
         this._ride = this._CriticalService.factory.createRide(rideJson);
     };
 
-    EditSubridePage.prototype._initMap = function() {
+    EditSubridePage.prototype._initMap = function () {
         this._map = new Map(this._settings.mapContainerId);
 
         this._city.addToMap(this._map);
         this._ride.addToMap(this._map);
     };
 
-    EditSubridePage.prototype._initView = function() {
+    EditSubridePage.prototype._initView = function () {
         var latLng = null;
 
         if (this._ride.hasLocation()) {
@@ -56,33 +56,33 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
         this._map.setView(latLng, 13);
     };
 
-    EditSubridePage.prototype._initInputFields = function() {
+    EditSubridePage.prototype._initInputFields = function () {
         this._$latitudeInput = $(this._settings.subrideLatitudeInputSelector);
         this._$longitudeInput = $(this._settings.subrideLongitudeInputSelector);
     };
 
-    EditSubridePage.prototype._getInputLatLng = function() {
+    EditSubridePage.prototype._getInputLatLng = function () {
         var latitude = this._$latitudeInput.val();
         var longitude = this._$longitudeInput.val();
 
         return [latitude, longitude];
     };
 
-    EditSubridePage.prototype._updateInput = function() {
+    EditSubridePage.prototype._updateInput = function () {
         var latLng = this._marker.getLatLng();
 
         this._$latitudeInput.val(latLng.lat);
         this._$longitudeInput.val(latLng.lng);
     };
 
-    EditSubridePage.prototype._subrideHasLocation = function() {
+    EditSubridePage.prototype._subrideHasLocation = function () {
         var latitude = this._$latitudeInput.val();
         var longitude = this._$longitudeInput.val();
 
         return (latitude != 0 && longitude != null);
     };
 
-    EditSubridePage.prototype._initMarker = function(latitude, longitude) {
+    EditSubridePage.prototype._initMarker = function (latitude, longitude) {
         var latLng = null;
 
         if (this._subrideHasLocation()) {
@@ -98,10 +98,10 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
         this._marker.addPopupText(this._settings.popupText, true);
     };
 
-    EditSubridePage.prototype._initMarkerEvent = function() {
+    EditSubridePage.prototype._initMarkerEvent = function () {
         var that = this;
 
-        this._marker.on('dragend', function() {
+        this._marker.on('dragend', function () {
             that._updateInput();
         });
     };

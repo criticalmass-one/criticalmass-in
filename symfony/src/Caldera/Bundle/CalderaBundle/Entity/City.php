@@ -22,14 +22,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface
 {
-	/**
-	 * Numerische ID der Stadt.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
+    /**
+     * Numerische ID der Stadt.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
-	 */
+     */
     protected $id;
 
     /**
@@ -51,25 +51,25 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      */
     protected $mainSlug;
 
-	/**
-	 * Name der Stadt.
-	 *
-	 * @ORM\Column(type="string", length=50)
+    /**
+     * Name der Stadt.
+     *
+     * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\SerializedName("name")
-	 */
-	protected $city;
+     */
+    protected $city;
 
-	/**
-	 * Bezeichnung der Critical Mass in dieser Stadt, etwa "Critical Mass Hamburg"
-	 * oder "Critical Mass Bremen".
-	 *
-	 * @ORM\Column(type="string", length=100)
+    /**
+     * Bezeichnung der Critical Mass in dieser Stadt, etwa "Critical Mass Hamburg"
+     * oder "Critical Mass Bremen".
+     *
+     * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @JMS\Expose
-	 */
-	protected $title;
+     */
+    protected $title;
 
     /**
      * Kurze Beschreibung der Critical Mass dieser Stadt.
@@ -80,47 +80,47 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $description;
 
     /**
-	 * Adresse der Webseite der Critical Mass in dieser Stadt.
-	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
+     * Adresse der Webseite der Critical Mass in dieser Stadt.
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
-	 */
-	protected $url;
+     */
+    protected $url;
 
-	/**
-	 * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
-	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
+    /**
+     * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
-	 */
-	protected $facebook;
+     */
+    protected $facebook;
 
-	/**
-	 * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
-	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
+    /**
+     * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
-	 */
-	protected $twitter;
+     */
+    protected $twitter;
 
-	/**
-	 * Breitengrad der Stadt.
-	 *
-	 * @ORM\Column(type="float")
+    /**
+     * Breitengrad der Stadt.
+     *
+     * @ORM\Column(type="float")
      * @JMS\Expose
-	 */
-	protected $latitude = 0;
+     */
+    protected $latitude = 0;
 
-	/**
-	 * Längengrad der Stadt.
-	 *
-	 * @ORM\Column(type="float")
+    /**
+     * Längengrad der Stadt.
+     *
+     * @ORM\Column(type="float")
      * @JMS\Expose
-	 */
-	protected $longitude = 0;
+     */
+    protected $longitude = 0;
 
     /**
      * @ORM\Column(type="boolean")
@@ -148,10 +148,10 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      */
     protected $photos;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
-	 */
-	protected $slugs;
+    /**
+     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
+     */
+    protected $slugs;
 
     /**
      * @ORM\Column(type="boolean")
@@ -379,16 +379,16 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     }
 
     /**
-	 * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
-	 * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
-	 * mit dem Namen ihrer Stadt dargestellt werden.
-	 *
-	 * @return String: Name der Stadt
-	 */
-	public function __toString()
-	{
-		return $this->getCity();
-	}
+     * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
+     * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
+     * mit dem Namen ihrer Stadt dargestellt werden.
+     *
+     * @return String: Name der Stadt
+     */
+    public function __toString()
+    {
+        return $this->getCity();
+    }
 
     /**
      * @JMS\VirtualProperty
@@ -401,7 +401,8 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->getMainSlug()->getSlug();
     }
 
-    public function getSlug() {
+    public function getSlug()
+    {
         return $this->getMainSlugString();
     }
 
@@ -416,11 +417,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->archiveDateTime = new \DateTime();
         $this->createdAt = new \DateTime();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -436,14 +437,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setCity($city)
     {
         $this->city = $city;
-    
+
         return $this;
     }
 
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -459,14 +460,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -482,14 +483,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setUrl($url)
     {
         $this->url = $url;
-    
+
         return $this;
     }
 
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -505,14 +506,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setFacebook($facebook)
     {
         $this->facebook = $facebook;
-    
+
         return $this;
     }
 
     /**
      * Get facebook
      *
-     * @return string 
+     * @return string
      */
     public function getFacebook()
     {
@@ -528,14 +529,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setTwitter($twitter)
     {
         $this->twitter = $twitter;
-    
+
         return $this;
     }
 
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -551,14 +552,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-    
+
         return $this;
     }
 
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -574,14 +575,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-    
+
         return $this;
     }
 
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -597,7 +598,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function addRide(Ride $rides)
     {
         $this->rides[] = $rides;
-    
+
         return $this;
     }
 
@@ -614,7 +615,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get rides
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRides()
     {
@@ -634,7 +635,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         }
 
         $this->slugs[] = $slug;
-    
+
         return $this;
     }
 
@@ -651,7 +652,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get slugs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSlugs()
     {
@@ -667,14 +668,14 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -702,7 +703,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -730,7 +731,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get isStandardable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsStandardable()
     {
@@ -753,7 +754,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get standardDayOfWeek
      *
-     * @return integer 
+     * @return integer
      */
     public function getStandardDayOfWeek()
     {
@@ -776,7 +777,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get standardWeekOfMonth
      *
-     * @return integer 
+     * @return integer
      */
     public function getStandardWeekOfMonth()
     {
@@ -799,7 +800,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get standardTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStandardTime()
     {
@@ -822,7 +823,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get standardLocation
      *
-     * @return string 
+     * @return string
      */
     public function getStandardLocation()
     {
@@ -845,7 +846,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get standardLatitude
      *
-     * @return float 
+     * @return float
      */
     public function getStandardLatitude()
     {
@@ -868,7 +869,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get standardLongitude
      *
-     * @return float 
+     * @return float
      */
     public function getStandardLongitude()
     {
@@ -879,9 +880,8 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     {
         $result = $this->getEventDateTimeString();
 
-        if ($this->standardLocation)
-        {
-            $result.= ': '.$this->standardLocation;
+        if ($this->standardLocation) {
+            $result .= ': ' . $this->standardLocation;
         }
 
         return $result;
@@ -894,14 +894,12 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
         $result = '';
 
-        if ($this->isStandardable)
-        {
-            $result = 'jeweils am '.$monthWeeks[$this->standardWeekOfMonth].' '.$weekDays[$this->standardDayOfWeek];
+        if ($this->isStandardable) {
+            $result = 'jeweils am ' . $monthWeeks[$this->standardWeekOfMonth] . ' ' . $weekDays[$this->standardDayOfWeek];
 
-            if ($this->standardTime)
-            {
+            if ($this->standardTime) {
                 $this->standardTime->setTimezone(new \DateTimeZone('UTC'));
-                $result.= ' um '.$this->standardTime->format('H.i').' Uhr';
+                $result .= ' um ' . $this->standardTime->format('H.i') . ' Uhr';
             }
         }
 
@@ -924,7 +922,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get cityPopulation
      *
-     * @return integer 
+     * @return integer
      */
     public function getCityPopulation()
     {
@@ -947,7 +945,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get punchLine
      *
-     * @return string 
+     * @return string
      */
     public function getPunchLine()
     {
@@ -970,7 +968,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get longDescription
      *
-     * @return string 
+     * @return string
      */
     public function getLongDescription()
     {
@@ -986,10 +984,8 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     {
         $result = array();
 
-        foreach ($this->rides as $ride)
-        {
-            if (!$ride->getIsArchived())
-            {
+        foreach ($this->rides as $ride) {
+            if (!$ride->getIsArchived()) {
                 $result[] = $ride;
             }
         }
@@ -1039,7 +1035,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {
@@ -1062,7 +1058,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get isArchived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsArchived()
     {
@@ -1085,7 +1081,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get archiveDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getArchiveDateTime()
     {
@@ -1161,7 +1157,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get isStandardableLocation
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsStandardableLocation()
     {
@@ -1184,7 +1180,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get isStandardableTime
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsStandardableTime()
     {
@@ -1237,7 +1233,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
     public function getPin(): string
     {
-        return $this->latitude.','.$this->longitude;
+        return $this->latitude . ',' . $this->longitude;
     }
 
     public function setEnableBoard($enableBoard)
@@ -1339,7 +1335,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -1362,7 +1358,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get colorRed
      *
-     * @return integer 
+     * @return integer
      */
     public function getColorRed()
     {
@@ -1385,7 +1381,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get colorGreen
      *
-     * @return integer 
+     * @return integer
      */
     public function getColorGreen()
     {
@@ -1408,7 +1404,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Get colorBlue
      *
-     * @return integer 
+     * @return integer
      */
     public function getColorBlue()
     {

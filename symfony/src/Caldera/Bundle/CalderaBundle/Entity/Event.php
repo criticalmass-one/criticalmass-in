@@ -185,7 +185,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -208,7 +208,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -231,7 +231,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -254,7 +254,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get dateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -288,7 +288,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get hasTime
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHasTime()
     {
@@ -311,7 +311,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get hasLocation
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHasLocation()
     {
@@ -334,7 +334,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get location
      *
-     * @return string 
+     * @return string
      */
     public function getLocation()
     {
@@ -357,7 +357,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -380,7 +380,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -403,7 +403,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get facebook
      *
-     * @return string 
+     * @return string
      */
     public function getFacebook()
     {
@@ -426,7 +426,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -449,7 +449,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -472,7 +472,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get isArchived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsArchived()
     {
@@ -495,7 +495,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get archiveDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getArchiveDateTime()
     {
@@ -518,7 +518,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -541,7 +541,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get participationsNumberYes
      *
-     * @return integer 
+     * @return integer
      */
     public function getParticipationsNumberYes()
     {
@@ -564,7 +564,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get participationsNumberMaybe
      *
-     * @return integer 
+     * @return integer
      */
     public function getParticipationsNumberMaybe()
     {
@@ -587,7 +587,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get participationsNumberNo
      *
-     * @return integer 
+     * @return integer
      */
     public function getParticipationsNumberNo()
     {
@@ -610,7 +610,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User
      */
     public function getUser()
     {
@@ -633,7 +633,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\City 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\City
      */
     public function getCity()
     {
@@ -656,7 +656,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get archiveParent
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Event 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Event
      */
     public function getArchiveParent()
     {
@@ -679,7 +679,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get archiveUser
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User
      */
     public function getArchiveUser()
     {
@@ -712,7 +712,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {
@@ -745,7 +745,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get photos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPhotos()
     {
@@ -768,7 +768,7 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {

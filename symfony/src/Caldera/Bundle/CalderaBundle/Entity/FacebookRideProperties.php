@@ -106,11 +106,21 @@ class FacebookRideProperties
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -127,13 +137,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get name
+     * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**
@@ -150,13 +160,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get description
+     * Get numberAttending
      *
-     * @return string 
+     * @return integer
      */
-    public function getDescription()
+    public function getNumberAttending()
     {
-        return $this->description;
+        return $this->numberAttending;
     }
 
     /**
@@ -173,13 +183,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get numberAttending
+     * Get numberMaybe
      *
-     * @return integer 
+     * @return integer
      */
-    public function getNumberAttending()
+    public function getNumberMaybe()
     {
-        return $this->numberAttending;
+        return $this->numberMaybe;
     }
 
     /**
@@ -196,13 +206,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get numberMaybe
+     * Get numberDeclined
      *
-     * @return integer 
+     * @return integer
      */
-    public function getNumberMaybe()
+    public function getNumberDeclined()
     {
-        return $this->numberMaybe;
+        return $this->numberDeclined;
     }
 
     /**
@@ -219,13 +229,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get numberDeclined
+     * Get numberInterested
      *
-     * @return integer 
+     * @return integer
      */
-    public function getNumberDeclined()
+    public function getNumberInterested()
     {
-        return $this->numberDeclined;
+        return $this->numberInterested;
     }
 
     /**
@@ -242,13 +252,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get numberInterested
+     * Get numberNoreply
      *
-     * @return integer 
+     * @return integer
      */
-    public function getNumberInterested()
+    public function getNumberNoreply()
     {
-        return $this->numberInterested;
+        return $this->numberNoreply;
     }
 
     /**
@@ -265,13 +275,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get numberNoreply
+     * Get startTime
      *
-     * @return integer 
+     * @return \DateTime
      */
-    public function getNumberNoreply()
+    public function getStartTime()
     {
-        return $this->numberNoreply;
+        return $this->startTime;
     }
 
     /**
@@ -288,13 +298,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get startTime
+     * Get endTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getStartTime()
+    public function getEndTime()
     {
-        return $this->startTime;
+        return $this->endTime;
     }
 
     /**
@@ -311,13 +321,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get endTime
+     * Get updatedTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getEndTime()
+    public function getUpdatedTime()
     {
-        return $this->endTime;
+        return $this->updatedTime;
     }
 
     /**
@@ -334,13 +344,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get updatedTime
+     * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getUpdatedTime()
+    public function getCreatedAt()
     {
-        return $this->updatedTime;
+        return $this->createdAt;
     }
 
     /**
@@ -357,13 +367,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get createdAt
+     * Get ride
      *
-     * @return \DateTime 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride
      */
-    public function getCreatedAt()
+    public function getRide()
     {
-        return $this->createdAt;
+        return $this->ride;
     }
 
     /**
@@ -380,13 +390,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get ride
+     * Get location
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride 
+     * @return string
      */
-    public function getRide()
+    public function getLocation()
     {
-        return $this->ride;
+        return $this->location;
     }
 
     /**
@@ -403,13 +413,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get location
+     * Get locationAddress
      *
-     * @return string 
+     * @return string
      */
-    public function getLocation()
+    public function getLocationAddress()
     {
-        return $this->location;
+        return $this->locationAddress;
     }
 
     /**
@@ -426,13 +436,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get locationAddress
+     * Get latitude
      *
-     * @return string 
+     * @return float
      */
-    public function getLocationAddress()
+    public function getLatitude()
     {
-        return $this->locationAddress;
+        return $this->latitude;
     }
 
     /**
@@ -449,13 +459,13 @@ class FacebookRideProperties
     }
 
     /**
-     * Get latitude
+     * Get longitude
      *
-     * @return float 
+     * @return float
      */
-    public function getLatitude()
+    public function getLongitude()
     {
-        return $this->latitude;
+        return $this->longitude;
     }
 
     /**
@@ -469,15 +479,5 @@ class FacebookRideProperties
         $this->longitude = $longitude;
 
         return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return float 
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
     }
 }

@@ -12,20 +12,20 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Beschreibung
-                            </th>
-                            <th>
-                                Themen
-                            </th>
-                            <th>
-                                Beiträge
-                            </th>
-                            <th>
-                                letzter Beitrag
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Beschreibung
+                        </th>
+                        <th>
+                            Themen
+                        </th>
+                        <th>
+                            Beiträge
+                        </th>
+                        <th>
+                            letzter Beitrag
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
                     <tr>
@@ -56,12 +56,13 @@
                             </td>
                             <td>
                                 {% if board.lastThread %}
-                                    <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(board.lastThread.lastPost.user, 36) }}" alt="..." />
+                                    <img class="pull-left" style="margin-right: 5px;"
+                                         src="{{ gravatarUrl(board.lastThread.lastPost.user, 36) }}" alt="..."/>
                                     <a href="{{ objectPath(board.lastThread) }}">
                                         <strong>{{ board.lastThread.title }}</strong>
                                     </a>
-                                    <br />
-                                    von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br />
+                                    <br/>
+                                    von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br/>
                                     {{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                 {% endif %}
                             </td>
@@ -96,12 +97,13 @@
                             </td>
                             <td>
                                 {% if city.lastThread %}
-                                    <img class="pull-left" style="margin-right: 5px;" src="{{ gravatarUrl(city.lastThread.lastPost.user, 36) }}" alt="..." />
+                                    <img class="pull-left" style="margin-right: 5px;"
+                                         src="{{ gravatarUrl(city.lastThread.lastPost.user, 36) }}" alt="..."/>
                                     <a href="{{ objectPath(city.lastThread) }}">
                                         <strong>{{ city.lastThread.title }}</strong>
                                     </a>
-                                    <br />
-                                    von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br />
+                                    <br/>
+                                    von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br/>
                                     {{ city.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                 {% endif %}
                             </td>

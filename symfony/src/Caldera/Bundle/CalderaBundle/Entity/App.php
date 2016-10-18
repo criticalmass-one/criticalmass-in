@@ -12,76 +12,64 @@ use Symfony\Component\Validator\Constraints as Assert;
 class App
 {
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="apps")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $token;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $apiCalls = 0;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDateTime;
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Assert\NotBlank()
+     */
+    protected $title;
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     */
+    protected $description;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $restrictedAccess = 0;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $allowedReferer;
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Assert\Url()
+     */
+    protected $url;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled = 0;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $approved = 0;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted = 0;
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="apps")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
-    protected $token;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $apiCalls = 0;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $creationDateTime;
-
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @Assert\NotBlank()
-     */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
-    protected $description;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $restrictedAccess = 0;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $allowedReferer;
-
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @Assert\Url()
-     */
-    protected $url;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enabled = 0;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $approved = 0;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $deleted = 0;
-    
     public function __construct()
     {
         $this->setToken(md5(microtime()));
@@ -91,11 +79,21 @@ class App
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 
     /**
@@ -112,13 +110,13 @@ class App
     }
 
     /**
-     * Get token
+     * Get apiCalls
      *
-     * @return string 
+     * @return integer
      */
-    public function getToken()
+    public function getApiCalls()
     {
-        return $this->token;
+        return $this->apiCalls;
     }
 
     /**
@@ -135,13 +133,13 @@ class App
     }
 
     /**
-     * Get apiCalls
+     * Get creationDateTime
      *
-     * @return integer 
+     * @return \DateTime
      */
-    public function getApiCalls()
+    public function getCreationDateTime()
     {
-        return $this->apiCalls;
+        return $this->creationDateTime;
     }
 
     /**
@@ -158,13 +156,13 @@ class App
     }
 
     /**
-     * Get creationDateTime
+     * Get user
      *
-     * @return \DateTime 
+     * @return User
      */
-    public function getCreationDateTime()
+    public function getUser()
     {
-        return $this->creationDateTime;
+        return $this->user;
     }
 
     /**
@@ -181,13 +179,13 @@ class App
     }
 
     /**
-     * Get user
+     * Get title
      *
-     * @return User
+     * @return string
      */
-    public function getUser()
+    public function getTitle()
     {
-        return $this->user;
+        return $this->title;
     }
 
     /**
@@ -204,13 +202,13 @@ class App
     }
 
     /**
-     * Get title
+     * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getDescription()
     {
-        return $this->title;
+        return $this->description;
     }
 
     /**
@@ -227,13 +225,13 @@ class App
     }
 
     /**
-     * Get description
+     * Get allowedReferer
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
+    public function getAllowedReferer()
     {
-        return $this->description;
+        return $this->allowedReferer;
     }
 
     /**
@@ -250,13 +248,13 @@ class App
     }
 
     /**
-     * Get allowedReferer
+     * Get url
      *
-     * @return string 
+     * @return string
      */
-    public function getAllowedReferer()
+    public function getUrl()
     {
-        return $this->allowedReferer;
+        return $this->url;
     }
 
     /**
@@ -273,13 +271,13 @@ class App
     }
 
     /**
-     * Get url
+     * Get enabled
      *
-     * @return string 
+     * @return boolean
      */
-    public function getUrl()
+    public function getEnabled()
     {
-        return $this->url;
+        return $this->enabled;
     }
 
     /**
@@ -296,13 +294,13 @@ class App
     }
 
     /**
-     * Get enabled
+     * Get approved
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getEnabled()
+    public function getApproved()
     {
-        return $this->enabled;
+        return $this->approved;
     }
 
     /**
@@ -319,13 +317,13 @@ class App
     }
 
     /**
-     * Get approved
+     * Get restrictedAccess
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getApproved()
+    public function getRestrictedAccess()
     {
-        return $this->approved;
+        return $this->restrictedAccess;
     }
 
     /**
@@ -342,13 +340,13 @@ class App
     }
 
     /**
-     * Get restrictedAccess
+     * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getRestrictedAccess()
+    public function getDeleted()
     {
-        return $this->restrictedAccess;
+        return $this->deleted;
     }
 
     /**
@@ -362,15 +360,5 @@ class App
         $this->deleted = $deleted;
 
         return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean 
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

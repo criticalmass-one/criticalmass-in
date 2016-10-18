@@ -2,12 +2,12 @@
  * @todo: Rename this to PhotoContainer
  *
  */
-define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers'], function() {
+define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers'], function () {
     ClusterContainer = function () {
         this._list = [];
         this._layer = L.markerClusterGroup({
             showCoverageOnHover: false,
-            iconCreateFunction: function(cluster) {
+            iconCreateFunction: function (cluster) {
                 return L.ExtraMarkers.icon({
                     icon: 'fa-camera',
                     markerColor: 'yellow',
@@ -21,12 +21,12 @@ define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers']
     ClusterContainer.prototype = new Container();
     ClusterContainer.prototype.constructor = ClusterContainer;
 
-    ClusterContainer.prototype.getPreviousIndex = function(entityIndex) {
+    ClusterContainer.prototype.getPreviousIndex = function (entityIndex) {
         var keys = Object.keys(this._list);
         var previousIndex = null;
         var previousDateTime = null;
         var dateTime = this.getEntity(entityIndex).getDateTime();
-        
+
         for (var keyIndex in keys) {
             var currentIndex = parseInt(keys[keyIndex]);
             var currentDateTime = this.getEntity(currentIndex).getDateTime();
@@ -42,8 +42,8 @@ define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers']
 
         return previousIndex;
     };
-    
-    Container.prototype.getNextIndex = function(entityIndex) {
+
+    Container.prototype.getNextIndex = function (entityIndex) {
         var keys = Object.keys(this._list);
         var nextIndex = null;
         var nextDateTime = null;

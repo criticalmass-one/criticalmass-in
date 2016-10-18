@@ -579,7 +579,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     }
 
 
-
     public function getFormattedDate()
     {
         return $this->dateTime->format('Y-m-d');
@@ -700,9 +699,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      */
     public function getFancyTitle()
     {
-        if (!$this->title)
-        {
-            return $this->city->getTitle().' '.$this->dateTime->format('d.m.Y');
+        if (!$this->title) {
+            return $this->city->getTitle() . ' ' . $this->dateTime->format('d.m.Y');
         }
 
         return $this->getTitle();
@@ -731,7 +729,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get isArchived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsArchived()
     {
@@ -754,7 +752,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get archiveDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getArchiveDateTime()
     {
@@ -817,7 +815,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         $this->posts[] = $posts;
     }
-    
+
     /**
      * Add subrides
      *
@@ -875,13 +873,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get photos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPhotos()
     {
         return $this->photos;
     }
-    
+
     /**
      * Remove subrides
      *
@@ -895,7 +893,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get subrides
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubrides()
     {
@@ -909,21 +907,21 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $hours = floor($totalMinutes / 60.0);
         $minutes = $totalMinutes % 60.0;
 
-        return new \DateInterval('PT'.$hours.'H'.$minutes.'M');
+        return new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
     }
-    
+
     public function getAverageVelocity()
     {
         if (!$this->getEstimatedDuration() || !$this->getEstimatedDistance()) {
             return 0;
         }
-        
+
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
     public function getPin(): string
     {
-        return $this->latitude.','.$this->longitude;
+        return $this->latitude . ',' . $this->longitude;
     }
 
     public function getCreatedAt()
@@ -954,7 +952,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get participationsNumberYes
      *
-     * @return integer 
+     * @return integer
      */
     public function getParticipationsNumberYes()
     {
@@ -977,7 +975,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get participationsNumberMaybe
      *
-     * @return integer 
+     * @return integer
      */
     public function getParticipationsNumberMaybe()
     {
@@ -1000,7 +998,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get participationsNumberNo
      *
-     * @return integer 
+     * @return integer
      */
     public function getParticipationsNumberNo()
     {
@@ -1088,7 +1086,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get archiveRides
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArchiveRides()
     {
@@ -1121,7 +1119,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get participations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getParticipations()
     {
@@ -1154,7 +1152,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get estimates
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEstimates()
     {
@@ -1187,7 +1185,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Get weathers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWeathers()
     {

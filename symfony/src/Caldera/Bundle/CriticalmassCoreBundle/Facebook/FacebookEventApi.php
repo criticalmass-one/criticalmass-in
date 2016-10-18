@@ -83,7 +83,7 @@ class FacebookEventApi extends FacebookApi
         $fieldString = implode(',', $fields);
 
         try {
-            $response = $this->facebook->get('/'.$eventId.'?fields='.$fieldString);
+            $response = $this->facebook->get('/' . $eventId . '?fields=' . $fieldString);
         } catch (\Exception $e) {
             return null;
         }

@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Class TrackRepository
- * 
+ *
  * Reposity for Track entites.
  *
  * @package Caldera\Bundle\CalderaBundle\Repository
@@ -21,7 +21,7 @@ class TrackRepository extends EntityRepository
     /**
      * Get the previous track of the parameterized track. Only collects tracks of the same user and sorts them by the
      * datetime of the ride.
-     * 
+     *
      * @param Track $track
      * @return Track
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -34,7 +34,7 @@ class TrackRepository extends EntityRepository
 
         $builder->select('track');
         $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->lt('ride.dateTime', '\''.$track->getRide()->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->where($builder->expr()->lt('ride.dateTime', '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
         $builder->addOrderBy('track.startDateTime', 'DESC');
         $builder->setMaxResults(1);
@@ -62,7 +62,7 @@ class TrackRepository extends EntityRepository
 
         $builder->select('track');
         $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\''.$track->getRide()->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
         $builder->addOrderBy('track.startDateTime', 'ASC');
         $builder->setMaxResults(1);
@@ -141,11 +141,11 @@ class TrackRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('track.deleted', 0));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('track.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('track.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('track.creationDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('track.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

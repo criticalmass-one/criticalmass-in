@@ -134,7 +134,7 @@ class Post
      * @ORM\Column(type="boolean")
      */
     protected $obfuscated = 0;
-    
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -143,11 +143,21 @@ class Post
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
     }
 
     /**
@@ -164,13 +174,13 @@ class Post
     }
 
     /**
-     * Get latitude
+     * Get longitude
      *
-     * @return float 
+     * @return float
      */
-    public function getLatitude()
+    public function getLongitude()
     {
-        return $this->latitude;
+        return $this->longitude;
     }
 
     /**
@@ -187,13 +197,13 @@ class Post
     }
 
     /**
-     * Get longitude
+     * Get dateTime
      *
-     * @return float 
+     * @return \DateTime
      */
-    public function getLongitude()
+    public function getDateTime()
     {
-        return $this->longitude;
+        return $this->dateTime;
     }
 
     /**
@@ -210,13 +220,13 @@ class Post
     }
 
     /**
-     * Get dateTime
+     * Get message
      *
-     * @return \DateTime 
+     * @return string
      */
-    public function getDateTime()
+    public function getMessage()
     {
-        return $this->dateTime;
+        return $this->message;
     }
 
     /**
@@ -233,13 +243,13 @@ class Post
     }
 
     /**
-     * Get message
+     * Get enabled
      *
-     * @return string
+     * @return boolean
      */
-    public function getMessage()
+    public function getEnabled()
     {
-        return $this->message;
+        return $this->enabled;
     }
 
     /**
@@ -256,13 +266,13 @@ class Post
     }
 
     /**
-     * Get enabled
+     * Get user
      *
-     * @return boolean 
+     * @return User
      */
-    public function getEnabled()
+    public function getUser()
     {
-        return $this->enabled;
+        return $this->user;
     }
 
     /**
@@ -279,13 +289,13 @@ class Post
     }
 
     /**
-     * Get user
+     * Get ride
      *
-     * @return User
+     * @return Ride
      */
-    public function getUser()
+    public function getRide()
     {
-        return $this->user;
+        return $this->ride;
     }
 
     /**
@@ -302,13 +312,13 @@ class Post
     }
 
     /**
-     * Get ride
+     * Get city
      *
-     * @return Ride
+     * @return City
      */
-    public function getRide()
+    public function getCity()
     {
-        return $this->ride;
+        return $this->city;
     }
 
     /**
@@ -324,14 +334,9 @@ class Post
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
+    public function getBlogPost()
     {
-        return $this->city;
+        return $this->blogPost;
     }
 
     public function setBlogPost(BlogPost $blogPost)
@@ -339,11 +344,6 @@ class Post
         $this->blogPost = $blogPost;
 
         return $this;
-    }
-
-    public function getBlogPost()
-    {
-        return $this->blogPost;
     }
 
     /**
@@ -363,6 +363,16 @@ class Post
     }
 
     /**
+     * Get parent
+     *
+     * @return Post
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Set parent
      *
      * @param Post $parent
@@ -373,16 +383,6 @@ class Post
         $this->parent = $parent;
 
         return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return Post
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 
     /**
@@ -411,11 +411,21 @@ class Post
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Get content
+     *
+     * @return Content
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -432,13 +442,13 @@ class Post
     }
 
     /**
-     * Get content
+     * Get thread
      *
-     * @return Content
+     * @return Thread
      */
-    public function getContent()
+    public function getThread()
     {
-        return $this->content;
+        return $this->thread;
     }
 
     /**
@@ -455,13 +465,13 @@ class Post
     }
 
     /**
-     * Get thread
+     * Get event
      *
-     * @return Thread
+     * @return Event
      */
-    public function getThread()
+    public function getEvent()
     {
-        return $this->thread;
+        return $this->event;
     }
 
     /**
@@ -478,13 +488,13 @@ class Post
     }
 
     /**
-     * Get event
+     * Get chat
      *
-     * @return Event
+     * @return boolean
      */
-    public function getEvent()
+    public function getChat()
     {
-        return $this->event;
+        return $this->chat;
     }
 
     /**
@@ -501,13 +511,13 @@ class Post
     }
 
     /**
-     * Get chat
+     * Get anonymousName
      *
-     * @return boolean
+     * @return AnonymousName
      */
-    public function getChat()
+    public function getAnonymousName()
     {
-        return $this->chat;
+        return $this->anonymousName;
     }
 
     /**
@@ -524,13 +534,13 @@ class Post
     }
 
     /**
-     * Get anonymousName
+     * Get colorRed
      *
-     * @return AnonymousName
+     * @return integer
      */
-    public function getAnonymousName()
+    public function getColorRed()
     {
-        return $this->anonymousName;
+        return $this->colorRed;
     }
 
     /**
@@ -547,13 +557,13 @@ class Post
     }
 
     /**
-     * Get colorRed
+     * Get colorGreen
      *
      * @return integer
      */
-    public function getColorRed()
+    public function getColorGreen()
     {
-        return $this->colorRed;
+        return $this->colorGreen;
     }
 
     /**
@@ -570,13 +580,13 @@ class Post
     }
 
     /**
-     * Get colorGreen
+     * Get colorBlue
      *
      * @return integer
      */
-    public function getColorGreen()
+    public function getColorBlue()
     {
-        return $this->colorGreen;
+        return $this->colorBlue;
     }
 
     /**
@@ -593,13 +603,13 @@ class Post
     }
 
     /**
-     * Get colorBlue
+     * Get obfuscated
      *
-     * @return integer
+     * @return boolean
      */
-    public function getColorBlue()
+    public function getObfuscated()
     {
-        return $this->colorBlue;
+        return $this->obfuscated;
     }
 
     /**
@@ -613,15 +623,5 @@ class Post
         $this->obfuscated = $obfuscated;
 
         return $this;
-    }
-
-    /**
-     * Get obfuscated
-     *
-     * @return boolean 
-     */
-    public function getObfuscated()
-    {
-        return $this->obfuscated;
     }
 }

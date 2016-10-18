@@ -1,4 +1,4 @@
-define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap'], function() {
+define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap'], function () {
     SnapablePhotoMarker = function (latLng) {
         this._latLng = latLng;
         this._draggable = true;
@@ -7,7 +7,7 @@ define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap'], funct
     SnapablePhotoMarker.prototype = new PhotoMarker();
     SnapablePhotoMarker.prototype.constructor = SnapablePhotoMarker;
 
-    SnapablePhotoMarker.prototype.snapToTrack = function(track) {
+    SnapablePhotoMarker.prototype.snapToTrack = function (track) {
         this._track = track;
 
         this._marker.snapediting = new L.Handler.MarkerSnap(this._map.map, this._marker);
@@ -15,7 +15,7 @@ define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap'], funct
         this._marker.snapediting.enable();
     };
 
-    SnapablePhotoMarker.prototype._initIcon = function() {
+    SnapablePhotoMarker.prototype._initIcon = function () {
         this._icon = L.icon({
             iconUrl: this._baseIconUrl + 'marker-yellow.png',
             iconRetinaUrl: this._baseIconUrl + 'marker-yellow-2x.png',

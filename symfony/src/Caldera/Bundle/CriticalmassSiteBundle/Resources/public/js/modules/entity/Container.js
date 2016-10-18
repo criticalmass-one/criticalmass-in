@@ -1,4 +1,4 @@
-define(['leaflet'], function() {
+define(['leaflet'], function () {
 
     /**
      * A container manages entities like Cities or Rides to display on a map.
@@ -59,33 +59,33 @@ define(['leaflet'], function() {
         return this;
     };
 
-    Container.prototype.removeEntity = function(index) {
+    Container.prototype.removeEntity = function (index) {
         this._list[index].removeFromLayer(this._layer);
         delete this._list[index];
 
         --this._counter;
     };
 
-    Container.prototype.removeIndexedEntityFromLayer = function(index) {
+    Container.prototype.removeIndexedEntityFromLayer = function (index) {
         var entity = this._list[index];
 
         entity.removeFromLayer(this._layer);
     };
 
-    Container.prototype.addIndexedEntityToLayer = function(index) {
+    Container.prototype.addIndexedEntityToLayer = function (index) {
         var entity = this._list[index];
 
         entity.addToLayer(this._layer);
     };
 
-    Container.prototype.isIndexedEntityInLayer = function(index) {
+    Container.prototype.isIndexedEntityInLayer = function (index) {
         var entity = this._list[index];
         var layer = entity.getLayer();
 
         return this._layer.hasLayer(layer);
     };
 
-    Container.prototype.toggleIndexEntityInLayer = function(index) {
+    Container.prototype.toggleIndexEntityInLayer = function (index) {
         if (this.isIndexedEntityInLayer(index)) {
             this.removeIndexedEntityFromLayer(index);
         } else {
@@ -103,7 +103,7 @@ define(['leaflet'], function() {
      * @param map
      * @returns {Container} this
      */
-    Container.prototype.addToMap = function(map) {
+    Container.prototype.addToMap = function (map) {
         map.addLayer(this._layer);
 
         return this;
@@ -139,7 +139,7 @@ define(['leaflet'], function() {
      * @param layerArray
      * @param title
      */
-    Container.prototype.addToControl = function(layerArray, title) {
+    Container.prototype.addToControl = function (layerArray, title) {
         layerArray[title] = this._layer;
     };
 
@@ -170,15 +170,15 @@ define(['leaflet'], function() {
         return null;
     };
 
-    Container.prototype.hasEntity = function(index) {
+    Container.prototype.hasEntity = function (index) {
         return (index in this._list);
     };
 
-    Container.prototype.getLayer = function() {
+    Container.prototype.getLayer = function () {
         return this._layer;
     };
 
-    Container.prototype.getList = function() {
+    Container.prototype.getList = function () {
         return this._list;
     };
 
@@ -194,7 +194,7 @@ define(['leaflet'], function() {
         }
     };
 
-    Container.prototype.getPreviousIndex = function(entityIndex) {
+    Container.prototype.getPreviousIndex = function (entityIndex) {
         var keys = Object.keys(this._list);
         var previousIndex = null;
 
@@ -211,11 +211,11 @@ define(['leaflet'], function() {
         return previousIndex;
     };
 
-    Container.prototype.getPreviousEntity = function(entityIndex) {
+    Container.prototype.getPreviousEntity = function (entityIndex) {
         return this.getEntity(this.getPreviousIndex(entityIndex));
     };
 
-    Container.prototype.getNextIndex = function(entityIndex) {
+    Container.prototype.getNextIndex = function (entityIndex) {
         var keys = Object.keys(this._list);
         var nextIndex = null;
 
@@ -232,7 +232,7 @@ define(['leaflet'], function() {
         return nextIndex;
     };
 
-    Container.prototype.getNextEntity = function(entityIndex) {
+    Container.prototype.getNextEntity = function (entityIndex) {
         return this.getEntity(this.getNextIndex(entityIndex));
     };
 

@@ -1,16 +1,16 @@
-define(['AutoMap', 'leaflet-polyline', 'Modal', 'ModalButton', 'CloseModalButton'], function() {
+define(['AutoMap', 'leaflet-polyline', 'Modal', 'ModalButton', 'CloseModalButton'], function () {
     TrackListPage = function (settings) {
         this._init();
     };
 
-    TrackListPage.prototype._init = function() {
+    TrackListPage.prototype._init = function () {
         var that = this;
 
-        $('.preview-map').each(function(index, value) {
+        $('.preview-map').each(function (index, value) {
             var map = new AutoMap($(value).attr('id'));
         });
 
-        $('a.delete-track').on('click', function(element) {
+        $('a.delete-track').on('click', function (element) {
             that._showDeleteModal($(this).data('track-id'));
         });
 
@@ -18,7 +18,7 @@ define(['AutoMap', 'leaflet-polyline', 'Modal', 'ModalButton', 'CloseModalButton
         this._modal.setSize('xs');
     };
 
-    TrackListPage.prototype._showDeleteModal = function(trackId) {
+    TrackListPage.prototype._showDeleteModal = function (trackId) {
         this._modal.setTitle('Track löschen');
 
         this._modal.setBody('Willst du diesen Track wirklich löschen?');
@@ -27,7 +27,7 @@ define(['AutoMap', 'leaflet-polyline', 'Modal', 'ModalButton', 'CloseModalButton
         deleteButton.setCaption('Löschen');
         deleteButton.setIcon('cross');
         deleteButton.setClass('btn-success');
-        deleteButton.setHref(Routing.generate('caldera_criticalmass_track_delete', { trackId: trackId }));
+        deleteButton.setHref(Routing.generate('caldera_criticalmass_track_delete', {trackId: trackId}));
 
         var closeButton = new CloseModalButton;
 
@@ -40,6 +40,6 @@ define(['AutoMap', 'leaflet-polyline', 'Modal', 'ModalButton', 'CloseModalButton
 
         this._modal.show();
     };
-    
+
     return TrackListPage;
 });

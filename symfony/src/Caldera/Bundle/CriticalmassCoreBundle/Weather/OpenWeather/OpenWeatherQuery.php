@@ -21,8 +21,18 @@ class OpenWeatherQuery
     public function setRide(Ride $ride)
     {
         $this->ride = $ride;
-        
+
         return $this;
+    }
+
+    public function execute()
+    {
+        $coords = $this->getCoords();
+
+        $jsonurl = 'http://api.openweathermap.org/data/2.5/forecast/daily?lat=' . $coords['latitude'] . '&lon=' . $coords['longitude'] . '&cnt=10&mode=json&units=metric&lang=de&appid=' . $this->appId;
+        $json = file_get_contents($jsonurl);
+
+        return $json;
     }
 
     protected function getCoords()
@@ -42,15 +52,5 @@ class OpenWeatherQuery
         }
 
         return $coords;
-    }
-    
-    public function execute()
-    {
-        $coords = $this->getCoords();
-
-        $jsonurl = 'http://api.openweathermap.org/data/2.5/forecast/daily?lat='.$coords['latitude'].'&lon='.$coords['longitude'].'&cnt=10&mode=json&units=metric&lang=de&appid='.$this->appId;
-        $json = file_get_contents($jsonurl);
-        
-        return $json;
     }
 }

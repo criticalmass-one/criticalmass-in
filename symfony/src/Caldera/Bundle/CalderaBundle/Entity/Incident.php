@@ -132,7 +132,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -155,7 +155,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -178,7 +178,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -247,7 +247,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get polyline
      *
-     * @return string 
+     * @return string
      */
     public function getPolyline()
     {
@@ -270,7 +270,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get expires
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getExpires()
     {
@@ -293,7 +293,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get visibleFrom
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getVisibleFrom()
     {
@@ -316,7 +316,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get visibleTo
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getVisibleTo()
     {
@@ -339,7 +339,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User
      */
     public function getUser()
     {

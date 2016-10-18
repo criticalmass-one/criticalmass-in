@@ -18,14 +18,13 @@ class GeoJsonUtility
     public function saveFile($filename)
     {
         $handle = fopen($filename, "w+");
-        fwrite($handle, 'var line = '.$this->json.';');
+        fwrite($handle, 'var line = ' . $this->json . ';');
         fclose($handle);
     }
 
     public function addTrackAsPolyline(Track $track)
     {
-        if (!$this->json)
-        {
+        if (!$this->json) {
             $this->createTemplate();
         }
 

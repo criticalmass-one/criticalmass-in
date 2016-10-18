@@ -20,29 +20,37 @@
 
 
         {% for dateString, rides in rides %}
-        <div class="row">
-            <div class="col-md-12">
-                <h4>{{ dateString|date('l, d. F Y') }}</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>{{ dateString|date('l, d. F Y') }}</h4>
+                </div>
             </div>
-        </div>
 
-        <table class="table">
-            <tr>
-                <th class="col-xs-4 col-sm-3 col-md-2 col-lg-2">Stadt</th>
-                <th class="hidden-xs col-sm-3 col-md-2 col-lg-2">Uhrzeit</th>
-                <th class="col-xs-8 col-sm-6 col-md-4 col-lg-4">Treffpunkt</th>
-                <th class="hidden-xs hidden-sm col-md-4 col-lg-4">Titel</th>
-            </tr>
+            <table class="table">
+                <tr>
+                    <th class="col-xs-4 col-sm-3 col-md-2 col-lg-2">Stadt</th>
+                    <th class="hidden-xs col-sm-3 col-md-2 col-lg-2">Uhrzeit</th>
+                    <th class="col-xs-8 col-sm-6 col-md-4 col-lg-4">Treffpunkt</th>
+                    <th class="hidden-xs hidden-sm col-md-4 col-lg-4">Titel</th>
+                </tr>
 
-            {% for ride in rides %}
-            <tr>
-                <td class="col-xs-4 col-sm-3 col-md-2 col-lg-2"><a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() }) }}">{{ ride.getCity() }}</a></td>
-                <td class="hidden-xs col-sm-3 col-md-2 col-lg-2"><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getTime().format('H:i') }} Uhr</a></td>
-                <td class="col-xs-8 col-sm-6 col-md-4 col-lg-4"><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</a></td>
-                <td class="hidden-xs hidden-sm col-md-4 col-lg-4"><a href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a></td>
-            </tr>
-            {% endfor %}
-        </table>
+                {% for ride in rides %}
+                    <tr>
+                        <td class="col-xs-4 col-sm-3 col-md-2 col-lg-2"><a
+                                    href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: ride.getCity().getMainSlugString() }) }}">{{ ride.getCity() }}</a>
+                        </td>
+                        <td class="hidden-xs col-sm-3 col-md-2 col-lg-2"><a
+                                    href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getTime().format('H:i') }}
+                                Uhr</a></td>
+                        <td class="col-xs-8 col-sm-6 col-md-4 col-lg-4"><a
+                                    href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</a>
+                        </td>
+                        <td class="hidden-xs hidden-sm col-md-4 col-lg-4"><a
+                                    href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.getFancyTitle() }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
         {% endfor %}
     </div>
 {% endblock %}

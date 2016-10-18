@@ -6,7 +6,8 @@ use Caldera\CriticalmassCoreBundle\Entity\City;
 use Caldera\CriticalmassStandardridesBundle\Utility\StandardRideGenerator\StandardRideGenerator;
 use PHPUnit_Framework_TestCase;
 
-class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase {
+class StandardRideGeneratorTest extends PHPUnit_Framework_TestCase
+{
 
     protected $testCity;
 

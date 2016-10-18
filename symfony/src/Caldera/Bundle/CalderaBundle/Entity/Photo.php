@@ -60,7 +60,7 @@ class Photo implements ViewableInterface
      * @JMS\Expose
      */
     protected $longitude;
-    
+
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
@@ -131,7 +131,7 @@ class Photo implements ViewableInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -303,7 +303,7 @@ class Photo implements ViewableInterface
     /**
      * Get creationDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreationDateTime()
     {
@@ -377,7 +377,7 @@ class Photo implements ViewableInterface
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -400,7 +400,7 @@ class Photo implements ViewableInterface
     /**
      * Get event
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Event 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Event
      */
     public function getEvent()
     {

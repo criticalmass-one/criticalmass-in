@@ -21,23 +21,16 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        if ($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
             // Handle XHR here
-        }
-        else
-        {
+        } else {
             // If the user tried to access a protected resource and was forces to login
             // redirect him back to that resource
-            if ($targetPath = $request->getSession()->get('_security.target_path'))
-            {
+            if ($targetPath = $request->getSession()->get('_security.target_path')) {
                 $url = $targetPath;
-            }
-            else
-            {
+            } else {
                 // Otherwise, redirect him to wherever you want
-                $url = $this->router->generate('caldera_criticalmass_multisite_index', array(
-                ));
+                $url = $this->router->generate('caldera_criticalmass_multisite_index', array());
             }
 
             return new RedirectResponse($url);
@@ -46,12 +39,9 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        if ($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
             // Handle XHR here
-        }
-        else
-        {
+        } else {
             // Create a flash message with the authentication error message
             $request->getSession()->setFlash('error', $exception->getMessage());
             $url = $this->router->generate('user_login');

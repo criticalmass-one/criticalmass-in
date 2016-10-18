@@ -19,9 +19,9 @@ class NotificationController extends AbstractController
         $notificationDispatcher->setNotification($notification);
         $notificationDispatcher->dispatch();
         $notificationDispatcher->send();
-        
+
         $notifications = $this->getNotificationSubscriptionRepository()->findAll();
-        
+
         return $this->render(
             'CalderaCriticalmassSiteBundle:NotificationSubscription:list.html.twig',
             [

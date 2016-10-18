@@ -1,21 +1,21 @@
 {% if events|length > 0 %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Andere Veranstaltungen
-        </h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Andere Veranstaltungen
+            </h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                {% for event in events %}
+                    <li>
+                        <a href="{{ objectPath(event) }}">
+                            {{ event.title }}
+                        </a>
+                        ({{ event.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr)
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-    <div class="panel-body">
-        <ul>
-            {% for event in events %}
-            <li>
-                <a href="{{ objectPath(event) }}">
-                    {{ event.title }}
-                </a>
-                ({{ event.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr)
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
 {% endif %}

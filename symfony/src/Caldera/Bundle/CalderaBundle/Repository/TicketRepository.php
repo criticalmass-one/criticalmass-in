@@ -20,11 +20,11 @@ class TicketRepository extends EntityRepository
         $builder->andWhere($builder->expr()->lte('ticket.counter', 5));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('ticket.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('ticket.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('ticket.creationDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('ticket.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

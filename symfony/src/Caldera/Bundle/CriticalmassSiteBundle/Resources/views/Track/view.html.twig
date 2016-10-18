@@ -13,9 +13,9 @@
         <div class="row">
             <div class="col-md-12">
                 {% if track.getRide().getTitle() %}
-                <h1>{{ track.getRide().getTitle() }}</h1>
+                    <h1>{{ track.getRide().getTitle() }}</h1>
                 {% else %}
-                <h1>{{ track.getRide().getCity().getTitle() }}</h1>
+                    <h1>{{ track.getRide().getCity().getTitle() }}</h1>
                 {% endif %}
             </div>
         </div>
@@ -58,9 +58,9 @@
                     </dt>
                     <dd>
                         {% if track.ride.getHasLocation and track.ride.location %}
-                        {{ track.ride.location }}
+                            {{ track.ride.location }}
                         {% else %}
-                        nicht bekannt
+                            nicht bekannt
                         {% endif %}
                     </dd>
                 </dl>
@@ -93,23 +93,25 @@
             <div class="col-md-12">
                 <ul class="pager">
                     {% if previousTrack %}
-                    <li class="previous">
-                        <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': previousTrack.getId() }) }}">&larr; Voriger Track</a>
-                    </li>
+                        <li class="previous">
+                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': previousTrack.getId() }) }}">&larr;
+                                Voriger Track</a>
+                        </li>
                     {% else %}
-                    <li class="previous disabled">
-                        <a href="#">&larr; Voriger Track</a>
-                    </li>
+                        <li class="previous disabled">
+                            <a href="#">&larr; Voriger Track</a>
+                        </li>
                     {% endif %}
 
                     {% if nextTrack %}
-                    <li class="next">
-                        <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': nextTrack.getId() }) }}">Nächster Track &rarr;</a>
-                    </li>
+                        <li class="next">
+                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': nextTrack.getId() }) }}">Nächster
+                                Track &rarr;</a>
+                        </li>
                     {% else %}
-                    <li class="next disabled">
-                        <a href="#">Nächster Track &rarr;</a>
-                    </li>
+                        <li class="next disabled">
+                            <a href="#">Nächster Track &rarr;</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
@@ -117,7 +119,7 @@
     </div>
 
     <script>
-        CriticalMass.loadModule('TrackViewPage', null, null, function(viewPage) {
+        CriticalMass.loadModule('TrackViewPage', null, null, function (viewPage) {
             viewPage.addTrack('{{ track|serialize|raw|e('js') }}');
 
             viewPage.focus();

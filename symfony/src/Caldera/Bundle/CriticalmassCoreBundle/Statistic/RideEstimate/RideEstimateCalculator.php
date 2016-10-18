@@ -15,11 +15,6 @@ class RideEstimateCalculator
 
     }
 
-    public function setRide(Ride $ride)
-    {
-        $this->ride = $ride;
-    }
-
     public function setEstimates($estimates)
     {
         $this->estimates = $estimates;
@@ -40,17 +35,14 @@ class RideEstimateCalculator
         /**
          * @var RideEstimate $estimate
          */
-        foreach ($this->estimates as $estimate)
-        {
-            if ($estimate->getEstimatedDistance())
-            {
+        foreach ($this->estimates as $estimate) {
+            if ($estimate->getEstimatedDistance()) {
                 $distance += $estimate->getEstimatedDistance();
                 ++$distanceCounter;
             }
         }
 
-        if ($distanceCounter)
-        {
+        if ($distanceCounter) {
             $distance /= $distanceCounter;
         }
 
@@ -62,17 +54,14 @@ class RideEstimateCalculator
         $duration = 0;
         $durationCounter = 0;
 
-        foreach ($this->estimates as $estimate)
-        {
-            if ($estimate->getEstimatedDuration())
-            {
+        foreach ($this->estimates as $estimate) {
+            if ($estimate->getEstimatedDuration()) {
                 $duration += $estimate->getEstimatedDuration();
                 ++$durationCounter;
             }
         }
 
-        if ($durationCounter)
-        {
+        if ($durationCounter) {
             $duration /= $durationCounter;
         }
 
@@ -84,17 +73,14 @@ class RideEstimateCalculator
         $participants = 0;
         $participantsCounter = 0;
 
-        foreach ($this->estimates as $estimate)
-        {
-            if ($estimate->getEstimatedParticipants())
-            {
+        foreach ($this->estimates as $estimate) {
+            if ($estimate->getEstimatedParticipants()) {
                 $participants += $estimate->getEstimatedParticipants();
                 ++$participantsCounter;
             }
         }
 
-        if ($participantsCounter)
-        {
+        if ($participantsCounter) {
             ceil($participants /= $participantsCounter);
         }
 
@@ -104,5 +90,10 @@ class RideEstimateCalculator
     public function getRide()
     {
         return $this->ride;
+    }
+
+    public function setRide(Ride $ride)
+    {
+        $this->ride = $ride;
     }
 } 

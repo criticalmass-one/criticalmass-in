@@ -154,11 +154,11 @@ class CityRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNotNull('city.archiveUser'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('city.archiveDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('city.archiveDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('city.archiveDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('city.archiveDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

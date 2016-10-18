@@ -13,7 +13,7 @@ class YearFunction extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-       return sprintf('YEAR(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('YEAR(%s)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser)

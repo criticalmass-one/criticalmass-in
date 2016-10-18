@@ -17,7 +17,8 @@
                 </h1>
 
                 <p class="lead">
-                    Der folgende Graph zeigt die Entwicklung der Like-Angaben auf den Seiten der jeweiligen Critical-Mass-Städte auf facebook.
+                    Der folgende Graph zeigt die Entwicklung der Like-Angaben auf den Seiten der jeweiligen
+                    Critical-Mass-Städte auf facebook.
                 </p>
             </div>
         </div>
@@ -30,7 +31,7 @@
     </div>
 
     <script type="text/javascript">
-        CriticalMass.loadModule('FacebookStatisticPage', null, null, function(page) {
+        CriticalMass.loadModule('FacebookStatisticPage', null, null, function (page) {
             {% for day in days %}
             page.addDay('{{ day }}');
             {% endfor %}

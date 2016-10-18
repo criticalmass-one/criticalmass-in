@@ -67,7 +67,7 @@ class GpxExporter
         $writer->startElement('time');
 
         $dateTime = $this->positionArray[0]->getCreationDateTime();
-        $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
+        $writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
 
         $writer->endElement();
         $writer->endElement();
@@ -78,8 +78,7 @@ class GpxExporter
         /**
          * @var Position $position
          */
-        foreach ($this->positionArray as $position)
-        {
+        foreach ($this->positionArray as $position) {
             $writer->startElement('trkpt');
             $writer->writeAttribute('lat', $position->getLatitude());
             $writer->writeAttribute('lon', $position->getLongitude());
@@ -100,7 +99,7 @@ class GpxExporter
                 $dateTime->setTimestamp($position->getTimestamp());
             }
 
-            $writer->text($dateTime->format('Y-m-d').'T'.$dateTime->format('H:i:s').'Z');
+            $writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
 
             $writer->endElement();
             $writer->endElement();

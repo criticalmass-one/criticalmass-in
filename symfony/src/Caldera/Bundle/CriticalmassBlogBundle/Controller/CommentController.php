@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 class CommentController extends AbstractController
 {
     public function writeAction(
-        Request $request, 
+        Request $request,
         BlogPost $blogPost
     ): Response
     {
         if (!$this->isLoggedIn()) {
             $this->createAccessDeniedException();
         }
-        
+
         $post = new Post();
 
         $form = $this->createForm(new PostType(), $post, array('action' => $this->generateUrl('caldera_criticalmass_blog_comment_write', array('slug' => $blogPost->getSlug()))));

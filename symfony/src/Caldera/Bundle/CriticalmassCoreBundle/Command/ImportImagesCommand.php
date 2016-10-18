@@ -66,8 +66,7 @@ class ImportImagesCommand extends ContainerAwareCommand
                 'path',
                 InputArgument::REQUIRED,
                 'Path of the image directory'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -91,7 +90,7 @@ class ImportImagesCommand extends ContainerAwareCommand
         foreach ($fileList as $file) {
             $output->writeln(sprintf('Processing image file %s', $file));
 
-            $filename = $input->getArgument('path').'/'.$file;
+            $filename = $input->getArgument('path') . '/' . $file;
 
             $this->createPhotoEntity($filename);
         }
@@ -140,9 +139,9 @@ class ImportImagesCommand extends ContainerAwareCommand
     {
         $photo = new Photo();
 
-        $imageFilename = uniqid().'.jpg';
-        $uploadDirectory = $this->getContainer()->getParameter('kernel.root_dir').'/../web/photos/';
-        $destinationFilename = $uploadDirectory.$imageFilename;
+        $imageFilename = uniqid() . '.jpg';
+        $uploadDirectory = $this->getContainer()->getParameter('kernel.root_dir') . '/../web/photos/';
+        $destinationFilename = $uploadDirectory . $imageFilename;
 
         copy($sourceFilename, $destinationFilename);
 

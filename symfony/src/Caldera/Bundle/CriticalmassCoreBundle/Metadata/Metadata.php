@@ -124,27 +124,27 @@ class Metadata
         $metaString = '';
 
         if ($this->author) {
-            $metaString .= '<meta name="author" content="'.$this->author.'" />';
+            $metaString .= '<meta name="author" content="' . $this->author . '" />';
             $metaString .= "\n";
         }
 
         if ($this->date) {
-            $metaString .= '<meta name="date" content="'.$this->date->format('Y-m-d H:i:s').'" />';
+            $metaString .= '<meta name="date" content="' . $this->date->format('Y-m-d H:i:s') . '" />';
             $metaString .= "\n";
         }
 
         if ($this->title) {
-            $metaString .= '<title>'.$this->title.'</title>';
+            $metaString .= '<title>' . $this->title . '</title>';
             $metaString .= "\n";
         }
 
         if ($this->keywords) {
-            $metaString .= '<meta name="keywords" content="'.$this->keywords.'" />';
+            $metaString .= '<meta name="keywords" content="' . $this->keywords . '" />';
             $metaString .= "\n";
         }
 
         if ($this->description) {
-            $metaString .= '<meta name="description" content="'.$this->description.'" />';
+            $metaString .= '<meta name="description" content="' . $this->description . '" />';
             $metaString .= "\n";
         }
 

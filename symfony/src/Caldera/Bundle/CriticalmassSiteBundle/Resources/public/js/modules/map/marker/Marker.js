@@ -1,4 +1,4 @@
-define(['leaflet'], function() {
+define(['leaflet'], function () {
     Marker = function (latLng, draggable) {
         this._latLng = latLng;
         this._draggable = draggable;
@@ -11,15 +11,15 @@ define(['leaflet'], function() {
     Marker.prototype._baseIconUrl = '/bundles/calderacriticalmasssite/images/marker/';
     Marker.prototype._isMapped = false;
 
-    Marker.prototype._initIcon = function() {
+    Marker.prototype._initIcon = function () {
 
     };
 
-    Marker.prototype.getLatLng = function() {
+    Marker.prototype.getLatLng = function () {
         return this._marker.getLatLng();
     };
 
-    Marker.prototype.setLatLng = function(latLng) {
+    Marker.prototype.setLatLng = function (latLng) {
         this._latLng = latLng;
 
         if (this._marker) {
@@ -33,10 +33,10 @@ define(['leaflet'], function() {
         this._initIcon();
 
         this._marker = L.marker(this._latLng,
-        {
-            icon: this._icon,
-            draggable: this._draggable
-        });
+            {
+                icon: this._icon,
+                draggable: this._draggable
+            });
 
         this._map = map;
         this._marker.addTo(this._map.map);
@@ -62,7 +62,7 @@ define(['leaflet'], function() {
         this._marker.on(event, func);
     };
 
-    Marker.prototype.isMapped = function() {
+    Marker.prototype.isMapped = function () {
         return this._isMapped;
     };
 

@@ -53,8 +53,7 @@ class ReplaceImagesCommand extends ContainerAwareCommand
                 'photoDateTimeZone',
                 InputArgument::OPTIONAL,
                 'Timezone of the photos datetime values'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -86,7 +85,7 @@ class ReplaceImagesCommand extends ContainerAwareCommand
             $this->photoGps->setTrack($track);
 
             $this->photoGps->execute();
-            
+
             $output->writeln(sprintf(
                 'Updated location of photo <comment>#%d</comment> to <info>%f,%f</info>',
                 $photo->getId(),

@@ -13,14 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Position
 {
-	/**
-	 * ID der Entitaet.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * ID der Entitaet.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
      * Sender dieses Datums.
@@ -48,101 +48,101 @@ class Position
      */
     protected $criticalmapsUser;
 
-	/**
-	 * Tour, zu der diese Entitaet abgespeichert wurde.
-	 *
-	 * @ORM\ManyToOne(targetEntity="Ride", inversedBy="positions")
-	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-	 */
-	protected $ride;
+    /**
+     * Tour, zu der diese Entitaet abgespeichert wurde.
+     *
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="positions")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     */
+    protected $ride;
 
-	/**
-	 * Breitengrad der Position.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $latitude;
+    /**
+     * Breitengrad der Position.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $latitude;
 
-	/**
-	 * Laengengrad der Position.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $longitude;
+    /**
+     * Laengengrad der Position.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $longitude;
 
-	/**
-	 * Vom Smartphone berechnete Genauigkeit dieser Positionsangabe.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $accuracy;
+    /**
+     * Vom Smartphone berechnete Genauigkeit dieser Positionsangabe.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $accuracy;
 
-	/**
-	 * Hoehe der Positon.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $altitude;
+    /**
+     * Hoehe der Positon.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $altitude;
 
-	/**
-	 * Vom Smartphone berechnete Genauigkeit der Hoehenangabe.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $altitudeAccuracy;
+    /**
+     * Vom Smartphone berechnete Genauigkeit der Hoehenangabe.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $altitudeAccuracy;
 
-	/**
-	 * Wert des eventuell eingebauten Kompasses.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $heading;
+    /**
+     * Wert des eventuell eingebauten Kompasses.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $heading;
 
-	/**
-	 * Momentane Geschwindigkeit des Geraetes.
-	 *
-	 * @ORM\Column(type="float")
-	 */
-	protected $speed;
+    /**
+     * Momentane Geschwindigkeit des Geraetes.
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $speed;
 
-	/**
-	 * Zeitpunkt, zu dem die obigen Angaben vom Smartphone ermittelt wurden.
-	 *
-	 * @ORM\Column(type="bigint")
-	 */
-	protected $timestamp;
+    /**
+     * Zeitpunkt, zu dem die obigen Angaben vom Smartphone ermittelt wurden.
+     *
+     * @ORM\Column(type="bigint")
+     */
+    protected $timestamp;
 
-	/**
-	 * Zeitpunkt der Erstellung dieses Positionsdatums.
-	 *
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $creationDateTime;
+    /**
+     * Zeitpunkt der Erstellung dieses Positionsdatums.
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDateTime;
 
-	/**
-	 * Vergleicht ein Positionsdatum mit einem weiteren Positionsdatum. Zwei Posi-
-	 * tionen sind per Definition identisch, wenn Laengen- und Breitengrad ueber-
-	 * einstimmen.
-	 *
-	 * @param Position $position: Zu vergleichendes Positions-Datum
-	 *
-	 * @return Boolean: True, wenn Laengen- und Breitengrad identisch sind
-	 */
-	public function isEqual(Position $position)
-	{
-		if (($position->getLatitude() == $this->getLatitude()) &&
-				($position->getLongitude() == $this->getLongitude()))
-		{
-			return true;
-		}
+    /**
+     * Vergleicht ein Positionsdatum mit einem weiteren Positionsdatum. Zwei Posi-
+     * tionen sind per Definition identisch, wenn Laengen- und Breitengrad ueber-
+     * einstimmen.
+     *
+     * @param Position $position : Zu vergleichendes Positions-Datum
+     *
+     * @return Boolean: True, wenn Laengen- und Breitengrad identisch sind
+     */
+    public function isEqual(Position $position)
+    {
+        if (($position->getLatitude() == $this->getLatitude()) &&
+            ($position->getLongitude() == $this->getLongitude())
+        ) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -165,7 +165,7 @@ class Position
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -188,7 +188,7 @@ class Position
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -211,7 +211,7 @@ class Position
     /**
      * Get accuracy
      *
-     * @return float 
+     * @return float
      */
     public function getAccuracy()
     {
@@ -234,7 +234,7 @@ class Position
     /**
      * Get altitude
      *
-     * @return float 
+     * @return float
      */
     public function getAltitude()
     {
@@ -257,7 +257,7 @@ class Position
     /**
      * Get altitudeAccuracy
      *
-     * @return float 
+     * @return float
      */
     public function getAltitudeAccuracy()
     {
@@ -280,7 +280,7 @@ class Position
     /**
      * Get heading
      *
-     * @return float 
+     * @return float
      */
     public function getHeading()
     {
@@ -303,7 +303,7 @@ class Position
     /**
      * Get speed
      *
-     * @return float 
+     * @return float
      */
     public function getSpeed()
     {
@@ -326,7 +326,7 @@ class Position
     /**
      * Get timestamp
      *
-     * @return integer 
+     * @return integer
      */
     public function getTimestamp()
     {
@@ -395,7 +395,7 @@ class Position
     /**
      * Get creationDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreationDateTime()
     {
@@ -441,7 +441,7 @@ class Position
     /**
      * Get ticket
      *
-     * @return Ticket 
+     * @return Ticket
      */
     public function getTicket()
     {

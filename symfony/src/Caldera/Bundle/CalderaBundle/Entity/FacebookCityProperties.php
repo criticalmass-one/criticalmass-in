@@ -71,11 +71,21 @@ class FacebookCityProperties
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -92,13 +102,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get name
+     * Get about
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getAbout()
     {
-        return $this->name;
+        return $this->about;
     }
 
     /**
@@ -115,13 +125,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get about
+     * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getAbout()
+    public function getDescription()
     {
-        return $this->about;
+        return $this->description;
     }
 
     /**
@@ -138,13 +148,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get description
+     * Get generalInfo
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
+    public function getGeneralInfo()
     {
-        return $this->description;
+        return $this->generalInfo;
     }
 
     /**
@@ -161,13 +171,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get generalInfo
+     * Get likeNumber
      *
-     * @return string 
+     * @return integer
      */
-    public function getGeneralInfo()
+    public function getLikeNumber()
     {
-        return $this->generalInfo;
+        return $this->likeNumber;
     }
 
     /**
@@ -184,13 +194,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get likeNumber
+     * Get checkinNumber
      *
-     * @return integer 
+     * @return integer
      */
-    public function getLikeNumber()
+    public function getCheckinNumber()
     {
-        return $this->likeNumber;
+        return $this->checkinNumber;
     }
 
     /**
@@ -207,13 +217,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get checkinNumber
+     * Get website
      *
-     * @return integer 
+     * @return string
      */
-    public function getCheckinNumber()
+    public function getWebsite()
     {
-        return $this->checkinNumber;
+        return $this->website;
     }
 
     /**
@@ -230,13 +240,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get website
+     * Get createdAt
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getWebsite()
+    public function getCreatedAt()
     {
-        return $this->website;
+        return $this->createdAt;
     }
 
     /**
@@ -253,13 +263,13 @@ class FacebookCityProperties
     }
 
     /**
-     * Get createdAt
+     * Get city
      *
-     * @return \DateTime 
+     * @return City
      */
-    public function getCreatedAt()
+    public function getCity()
     {
-        return $this->createdAt;
+        return $this->city;
     }
 
     /**
@@ -273,15 +283,5 @@ class FacebookCityProperties
         $this->city = $city;
 
         return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
-    {
-        return $this->city;
     }
 }

@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Region
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
     /**
@@ -57,11 +57,21 @@ class Region
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -78,13 +88,13 @@ class Region
     }
 
     /**
-     * Get name
+     * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**
@@ -101,13 +111,13 @@ class Region
     }
 
     /**
-     * Get description
+     * Get slug
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
+    public function getSlug()
     {
-        return $this->description;
+        return $this->slug;
     }
 
     /**
@@ -124,13 +134,13 @@ class Region
     }
 
     /**
-     * Get slug
+     * Get parent
      *
-     * @return string 
+     * @return Region
      */
-    public function getSlug()
+    public function getParent()
     {
-        return $this->slug;
+        return $this->parent;
     }
 
     /**
@@ -144,16 +154,6 @@ class Region
         $this->parent = $parent;
 
         return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return Region
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 
     public function isWorld()

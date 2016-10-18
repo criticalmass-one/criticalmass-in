@@ -10,48 +10,51 @@
 {% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
 {% block additionalHeaderElements %}
-    <meta property="og:title" content="{{ city.title }}" />
-    <meta property="og:type" content="Website" />
-    <meta property="og:description" content="{{ city.description }}" />
-    <meta property="og:url" content="{{ currentPath }}" />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="criticalmass.in" />
+    <meta property="og:title" content="{{ city.title }}"/>
+    <meta property="og:type" content="Website"/>
+    <meta property="og:description" content="{{ city.description }}"/>
+    <meta property="og:url" content="{{ currentPath }}"/>
+    <meta property="og:locale" content="de_DE"/>
+    <meta property="og:site_name" content="criticalmass.in"/>
     {% if city.imageName %}
-    <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
+        <meta property="og:image"
+              content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('facebook_preview_image') }}"/>
     {% endif %}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@calderacc" />
-    <meta name="twitter:creator" content="@maltehuebner" />
-    <meta name="twitter:title" content="{{ city.title }}" />
-    <meta name="twitter:description" content="{{ city.description }}" />
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@calderacc"/>
+    <meta name="twitter:creator" content="@maltehuebner"/>
+    <meta name="twitter:title" content="{{ city.title }}"/>
+    <meta name="twitter:description" content="{{ city.description }}"/>
     {% if city.imageName %}
-    <meta name="twitter:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
+        <meta name="twitter:image"
+              content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('twitter_summary_large_image') }}"/>
     {% endif %}
 {% endblock %}
 
 {% block optionsButton %}
-<div class="btn-group pull-right">
-    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-cogs"></i>
-        Optionen
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <li>
-            <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
-                <i class="fa fa-cogs"></i>
-                Stadt editieren
-            </a>
-        </li>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            <i class="fa fa-cogs"></i>
+            Optionen
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                    <i class="fa fa-cogs"></i>
+                    Stadt editieren
+                </a>
+            </li>
 
-        <li>
-            <a href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
-                <i class="fa fa-plus"></i>
-                Tour hinzufügen
-            </a>
-        </li>
-    </ul>
-</div>
+            <li>
+                <a href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                    <i class="fa fa-plus"></i>
+                    Tour hinzufügen
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -59,33 +62,34 @@
         <div class="row">
             <div class="col-md-12">
                 {% if city.imageName %}
-                <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="pull-right no-margin-top">
-                                {{ city.title }}
-                            </h1>
+                    <div class="jumbotron" id="city-jumbotron"
+                         style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="pull-right no-margin-top">
+                                    {{ city.title }}
+                                </h1>
+                            </div>
                         </div>
-                    </div>
 
-                    {% if city.punchline %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p class="lead pull-right no-margin-top">
-                                {{ city.punchline }}
-                            </p>
-                        </div>
-                    </div>
-                    {% endif %}
+                        {% if city.punchline %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="lead pull-right no-margin-top">
+                                        {{ city.punchline }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
 
-                    {% if app.getUser() %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ block('optionsButton') }}
-                        </div>
+                        {% if app.getUser() %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ block('optionsButton') }}
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
-                </div>
                 {% else %}
                     {% if app.getUser() %}
                         {{ block('optionsButton') }}
@@ -106,31 +110,34 @@
                 </div>
 
                 {% if photos|length > 0 %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>
-                            Fotos aus {{ city.city }}
-                        </h2>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>
+                                Fotos aus {{ city.city }}
+                            </h2>
 
-                        <p>
-                            Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ path('caldera_criticalmass_desktop_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht über Fotos aus {{ city.city }}</a> an.
-                        </p>
+                            <p>
+                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
+                                        href="{{ path('caldera_criticalmass_desktop_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
+                                    über Fotos aus {{ city.city }}</a> an.
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="photo-list">
-                        {% for photo in photos %}
-                            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                <div class="photo-thumb margin-bottom-medium text-center">
-                                    <a href="{{ objectPath(photo) }}">
-                                        <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
-                                    </a>
+                    <div class="row">
+                        <div class="photo-list">
+                            {% for photo in photos %}
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                    <div class="photo-thumb margin-bottom-medium text-center">
+                                        <a href="{{ objectPath(photo) }}">
+                                            <img class="img-responsive"
+                                                 src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             </div>
 

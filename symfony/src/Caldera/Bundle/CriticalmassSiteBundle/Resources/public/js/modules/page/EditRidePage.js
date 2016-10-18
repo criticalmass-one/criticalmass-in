@@ -1,6 +1,6 @@
-define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
+define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function () {
 
-    var EditRidePage = function(context, options) {
+    var EditRidePage = function (context, options) {
         this.settings = $.extend(this._defaults, options);
     };
 
@@ -37,31 +37,31 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
     EditRidePage.prototype.rideDateList = [];
     EditRidePage.prototype.rideDateTime = null;
 
-    EditRidePage.prototype.addRideDate = function(rideDate) {
+    EditRidePage.prototype.addRideDate = function (rideDate) {
         this.rideDateList.push(rideDate);
     };
 
-    EditRidePage.prototype.setRideDateTime = function(rideDateTime) {
+    EditRidePage.prototype.setRideDateTime = function (rideDateTime) {
         this.rideDateTime = rideDateTime;
     };
 
-    EditRidePage.prototype.setCityLatLng = function(cityLatLng) {
+    EditRidePage.prototype.setCityLatLng = function (cityLatLng) {
         this.cityLatLng = cityLatLng;
     };
 
-    EditRidePage.prototype._toggleLocationInput = function() {
+    EditRidePage.prototype._toggleLocationInput = function () {
 
         $(this.settings.rideLocationInputSelector).prop('disabled', !$(this.settings.rideHasLocationInputSelector).prop('checked'));
     };
 
-    EditRidePage.prototype._toggleTimeInput = function() {
+    EditRidePage.prototype._toggleTimeInput = function () {
         var $hasTimeInput = $(this.settings.rideHasTimeInputSelector);
 
         $(this.settings.rideTimeMinuteInputSelector).prop('disabled', !$hasTimeInput.prop('checked'));
         $(this.settings.rideTimeHourInputSelector).prop('disabled', !$hasTimeInput.prop('checked'));
     };
 
-    EditRidePage.prototype.init = function() {
+    EditRidePage.prototype.init = function () {
         this._initLatLngs();
         this._initMap();
         this._initCityMarker();
@@ -70,7 +70,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         //this._initLocationSearch();
     };
 
-    EditRidePage.prototype._initEventListeners = function() {
+    EditRidePage.prototype._initEventListeners = function () {
         var that = this;
 
         function toggleLocationFunction() {
@@ -93,7 +93,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         $(this.settings.rideDateYearInputSelector).on('click', checkFunction);
     };
 
-    EditRidePage.prototype._initLatLngs = function() {
+    EditRidePage.prototype._initLatLngs = function () {
         var rideLocationLatitude = $(this.settings.rideLatitudeInputSelector).val();
         var rideLocationLongitude = $(this.settings.rideLongitudeInputSelector).val();
 
@@ -104,7 +104,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         this.defaultCenterLatLng = L.latLng(this.settings.defaultCenterLatitude, this.settings.defaultCenterLongitude);
     };
 
-    EditRidePage.prototype._initMap = function() {
+    EditRidePage.prototype._initMap = function () {
         this.map = new Map(this.settings.mapContainerId, []);
 
         if (this.cityLatLng) {
@@ -118,14 +118,14 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         this.map.setView(this.mapCenter, this.mapZoom);
     };
 
-    EditRidePage.prototype._initCityMarker = function() {
+    EditRidePage.prototype._initCityMarker = function () {
 
         this.cityMarker = new CityMarker(this.mapCenter, false);
         this.cityMarker.addToMap(this.map);
         this.cityMarker.addPopupText(this.settings.cityMarkerPopupText, true);
     };
 
-    EditRidePage.prototype._initLocationMarker = function() {
+    EditRidePage.prototype._initLocationMarker = function () {
         var that = this;
 
         if ($(this.settings.rideHasLocationInputSelector).prop('checked')) {
@@ -144,7 +144,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         });
     };
 
-    EditRidePage.prototype._addStandardLocationMarker = function() {
+    EditRidePage.prototype._addStandardLocationMarker = function () {
         var that = this;
 
         if (this.rideLocationLatLng) {
@@ -156,7 +156,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         this.locationMarker.addToMap(this.map);
         this.locationMarker.addPopupText(this.settings.cityStandardLocationPopupText, true);
 
-        this.locationMarker.on('dragend', function(event) {
+        this.locationMarker.on('dragend', function (event) {
             var marker = event.target;
             var position = marker.getLatLng();
 
@@ -165,29 +165,27 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
 
     };
 
-    EditRidePage.prototype._removeStandardLocationMarker = function() {
+    EditRidePage.prototype._removeStandardLocationMarker = function () {
         this.locationMarker.removeFromMap(this.map);
     };
 
-    EditRidePage.prototype.isFloat = function(n) {
+    EditRidePage.prototype.isFloat = function (n) {
         n = parseFloat(n);
         return n === Number(n) && n % 1 !== 0;
     };
 
-    EditRidePage.prototype._moveLocationMarker = function(latLng) {
+    EditRidePage.prototype._moveLocationMarker = function (latLng) {
         this.locationMarker.setLatLng(latLng);
     };
 
-    EditRidePage.prototype._updateLocationPosition = function(position) {
+    EditRidePage.prototype._updateLocationPosition = function (position) {
         $(this.settings.rideLatitudeInputSelector).val(position.lat);
         $(this.settings.rideLongitudeInputSelector).val(position.lng);
     };
 
-    EditRidePage.prototype._searchForMonth = function(year, month) {
-        for (index in this.rideDateList)
-        {
-            if (this.rideDateList[index].getFullYear() == year && this.rideDateList[index].getMonth() + 1 == month  && !this._isSelfMonth(year, month))
-            {
+    EditRidePage.prototype._searchForMonth = function (year, month) {
+        for (index in this.rideDateList) {
+            if (this.rideDateList[index].getFullYear() == year && this.rideDateList[index].getMonth() + 1 == month && !this._isSelfMonth(year, month)) {
                 return true;
             }
         }
@@ -195,12 +193,10 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         return false;
     };
 
-    EditRidePage.prototype._searchForMonthDay = function(year, month, day) {
-        for (index in this.rideDateList)
-        {
+    EditRidePage.prototype._searchForMonthDay = function (year, month, day) {
+        for (index in this.rideDateList) {
             console.log(this.rideDateList[index], year, month, day);
-            if (this.rideDateList[index].getFullYear() == year && this.rideDateList[index].getMonth() + 1 == month && this.rideDateList[index].getDate() == day && !this._isSelfDateTime(year, month, day))
-            {
+            if (this.rideDateList[index].getFullYear() == year && this.rideDateList[index].getMonth() + 1 == month && this.rideDateList[index].getDate() == day && !this._isSelfDateTime(year, month, day)) {
                 return true;
             }
         }
@@ -208,17 +204,15 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         return false;
     };
 
-    EditRidePage.prototype._isSelfDateTime = function(year, month, day)
-    {
+    EditRidePage.prototype._isSelfDateTime = function (year, month, day) {
         return (this.rideDateTime && this.rideDateTime.getFullYear() == year && this.rideDateTime.getMonth() + 1 == month && this.rideDateTime.getDate() == day);
     };
 
-    EditRidePage.prototype._isSelfMonth = function(year,  month)
-    {
+    EditRidePage.prototype._isSelfMonth = function (year, month) {
         return (this.rideDateTime && this.rideDateTime.getFullYear() == year && this.rideDateTime.getMonth() + 1 == month);
     };
 
-    EditRidePage.prototype._checkRideDate = function() {
+    EditRidePage.prototype._checkRideDate = function () {
         var day = $(this.settings.rideDateDayInputSelector).val();
         var month = $(this.settings.rideDateMonthInputSelector).val();
         var year = $(this.settings.rideDateYearInputSelector).val();
@@ -242,11 +236,11 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
         }
     };
 
-    EditRidePage.prototype._initLocationSearch = function() {
+    EditRidePage.prototype._initLocationSearch = function () {
         var that = this;
 
         this._bloodhound = new Bloodhound({
-            datumTokenizer: function(data) {
+            datumTokenizer: function (data) {
                 return Bloodhound.tokenizers.whitespace(data.location);
             },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -273,7 +267,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
                 source: this._bloodhound.ttAdapter(),
                 displayKey: 'location',
                 templates: {
-                    suggestion: function(data) {
+                    suggestion: function (data) {
                         var html = '';
                         html += '<div class="row padding-top-small padding-bottom-small">';
                         html += '<div class="col-md-12">';
@@ -287,7 +281,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound'], function() {
             }
         );
 
-        $($('#ride_location')).bind('typeahead:select', function(ev, suggestion) {
+        $($('#ride_location')).bind('typeahead:select', function (ev, suggestion) {
             var latLng = {
                 lat: suggestion.latitude,
                 lng: suggestion.longitude

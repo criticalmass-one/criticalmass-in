@@ -3,7 +3,8 @@
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 
-class OSMMapDimensionCalculator {
+class OSMMapDimensionCalculator
+{
     protected $pathArray;
     protected $zoom;
 
@@ -24,25 +25,20 @@ class OSMMapDimensionCalculator {
         $maxLat = $path->getStartPosition()->getLatitude();
         $maxLon = $path->getStartPosition()->getLongitude();
 
-        while ($path != null)
-        {
-            if ($path->getEndPosition()->getLatitude() < $minLat)
-            {
+        while ($path != null) {
+            if ($path->getEndPosition()->getLatitude() < $minLat) {
                 $minLat = $path->getEndPosition()->getLatitude();
             }
 
-            if ($path->getEndPosition()->getLongitude() < $minLon)
-            {
+            if ($path->getEndPosition()->getLongitude() < $minLon) {
                 $minLon = $path->getEndPosition()->getLongitude();
             }
 
-            if ($path->getEndPosition()->getLatitude() > $maxLat)
-            {
+            if ($path->getEndPosition()->getLatitude() > $maxLat) {
                 $maxLat = $path->getEndPosition()->getLatitude();
             }
 
-            if ($path->getEndPosition()->getLongitude() > $maxLon)
-            {
+            if ($path->getEndPosition()->getLongitude() > $maxLon) {
                 $maxLon = $path->getEndPosition()->getLongitude();
             }
 

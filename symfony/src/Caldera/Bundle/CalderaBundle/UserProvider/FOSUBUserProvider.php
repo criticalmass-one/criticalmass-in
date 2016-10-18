@@ -17,9 +17,9 @@ class FOSUBUserProvider extends BaseClass
         $username = $response->getUsername();
 
         $service = $response->getResourceOwner()->getName();
-        $setter = 'set'.ucfirst($service);
-        $setter_id = $setter.'Id';
-        $setter_token = $setter.'AccessToken';
+        $setter = 'set' . ucfirst($service);
+        $setter_id = $setter . 'Id';
+        $setter_token = $setter . 'AccessToken';
 
         //we "disconnect" previously connected users
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
@@ -32,6 +32,7 @@ class FOSUBUserProvider extends BaseClass
         $user->$setter_token($response->getAccessToken());
         $this->userManager->updateUser($user);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -43,9 +44,9 @@ class FOSUBUserProvider extends BaseClass
         if (null === $user) {
             $service = $response->getResourceOwner()->getName();
 
-            $setter = 'set'.ucfirst($service);
-            $setter_id = $setter.'Id';
-            $setter_token = $setter.'AccessToken';
+            $setter = 'set' . ucfirst($service);
+            $setter_id = $setter . 'Id';
+            $setter_token = $setter . 'AccessToken';
 
             $user = $this->userManager->createUser();
             $user->$setter_id($username);
@@ -74,7 +75,6 @@ class FOSUBUserProvider extends BaseClass
             ->setUsername($username)
             ->setEmail($email)
             ->setPassword('')
-            ->setEnabled(true)
-        ;
+            ->setEnabled(true);
     }
 }

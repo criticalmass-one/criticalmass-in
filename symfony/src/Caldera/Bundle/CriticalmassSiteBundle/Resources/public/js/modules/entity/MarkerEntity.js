@@ -1,4 +1,4 @@
-define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
+define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function () {
     MarkerEntity = function () {
 
     };
@@ -13,15 +13,15 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
     MarkerEntity.prototype._modal = null;
 
     // this should be extended
-    MarkerEntity.prototype._initIcon = function() {
+    MarkerEntity.prototype._initIcon = function () {
     };
 
     // this should be extended, too
-    MarkerEntity.prototype._setupModalContent = function() {
+    MarkerEntity.prototype._setupModalContent = function () {
 
     };
 
-    MarkerEntity.prototype._initPopup = function() {
+    MarkerEntity.prototype._initPopup = function () {
         this._modal = new Modal();
         this._modal.setSize('md');
 
@@ -29,12 +29,12 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
 
         var that = this;
 
-        this._marker.on('click', function() {
+        this._marker.on('click', function () {
             that._modal.show();
         });
     };
 
-    MarkerEntity.prototype._createMarker = function() {
+    MarkerEntity.prototype._createMarker = function () {
         if (!this._icon) {
             this._initIcon();
         }
@@ -53,7 +53,7 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         }
     };
 
-    MarkerEntity.prototype.addToMap = function(map) {
+    MarkerEntity.prototype.addToMap = function (map) {
         if (this.hasLocation()) {
             this._createMarker();
 
@@ -61,7 +61,7 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         }
     };
 
-    MarkerEntity.prototype.addToLayer = function(markerLayer) {
+    MarkerEntity.prototype.addToLayer = function (markerLayer) {
         if (this.hasLocation()) {
             this._createMarker();
 
@@ -69,11 +69,11 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         }
     };
 
-    MarkerEntity.prototype.openPopup = function() {
+    MarkerEntity.prototype.openPopup = function () {
         this._modal.show();
     };
 
-    MarkerEntity.prototype.getMarker = function() {
+    MarkerEntity.prototype.getMarker = function () {
         if (!this._marker) {
             this._createMarker();
         }
@@ -81,7 +81,7 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         return this._marker;
     };
 
-    MarkerEntity.prototype.getLayer = function() {
+    MarkerEntity.prototype.getLayer = function () {
         return this.getMarker();
     };
 
@@ -89,19 +89,19 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         return (this._latitude != null && this._longitude != null && this._latitude != 0 && this._longitude != 0);
     };
 
-    MarkerEntity.prototype.getLatitude = function() {
+    MarkerEntity.prototype.getLatitude = function () {
         return this._latitude;
     };
 
-    MarkerEntity.prototype.getLongitude = function() {
+    MarkerEntity.prototype.getLongitude = function () {
         return this._longitude;
     };
 
-    MarkerEntity.prototype.getLatLng = function() {
+    MarkerEntity.prototype.getLatLng = function () {
         return [this._latitude, this._longitude];
     };
 
-    MarkerEntity.prototype.setLatitude = function(latitude) {
+    MarkerEntity.prototype.setLatitude = function (latitude) {
         this._latitude = latitude;
 
         if (this._marker) {
@@ -111,7 +111,7 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         return this;
     };
 
-    MarkerEntity.prototype.setLongitude = function(longitude) {
+    MarkerEntity.prototype.setLongitude = function (longitude) {
         this._longitude = longitude;
 
         if (this._marker) {
@@ -121,7 +121,7 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         return this;
     };
 
-    MarkerEntity.prototype.setLatLng = function(latLng) {
+    MarkerEntity.prototype.setLatLng = function (latLng) {
         this._latitude = latLng.lat;
         this._longitude = latLng.lng;
 
@@ -132,7 +132,7 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function() {
         return this;
     };
 
-    MarkerEntity.prototype.on = function(event, callback) {
+    MarkerEntity.prototype.on = function (event, callback) {
         this._marker.on(event, callback);
     };
 

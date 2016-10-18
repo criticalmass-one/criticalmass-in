@@ -1,4 +1,4 @@
-define(['Map', 'leaflet-draw'], function() {
+define(['Map', 'leaflet-draw'], function () {
     DrawMap = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -11,7 +11,7 @@ define(['Map', 'leaflet-draw'], function() {
     DrawMap.prototype = Object.create(Map.prototype);
     DrawMap.prototype.constructor = DrawMap;
 
-    DrawMap.prototype._loadStyles = function() {
+    DrawMap.prototype._loadStyles = function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',

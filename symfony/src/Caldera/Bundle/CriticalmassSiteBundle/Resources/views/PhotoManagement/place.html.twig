@@ -25,98 +25,100 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <img class="auto-scale pull-right" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
-            <h1>
-                Foto platzieren
-            </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <img class="auto-scale pull-right"
+                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                <h1>
+                    Foto platzieren
+                </h1>
 
-        </div>
-    </div>
-
-    <div id="map" style="height: 250px;">
-
-    </div>
-
-    <div class="row margin-top-medium">
-        <div class="col-md-12">
-            {{ form_start(form) }}
-            {{ form_widget(form.latitude) }}
-            {{ form_widget(form.longitude) }}
-
-            <div class="btn-group pull-right" role="group" aria-label="...">
-                <a href="{{ path('caldera_criticalmass_photo_manage', { citySlug: photo.ride.city.slug, rideDate: photo.ride.getFormattedDate() }) }}" class="btn btn-default">
-                    Abbrechen
-                </a>
-                <button type="submit" class="btn btn-success">
-                    Speichern
-                </button>
             </div>
+        </div>
 
-            {{ form_end(form) }}
+        <div id="map" style="height: 250px;">
+
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-12">
+                {{ form_start(form) }}
+                {{ form_widget(form.latitude) }}
+                {{ form_widget(form.longitude) }}
+
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a href="{{ path('caldera_criticalmass_photo_manage', { citySlug: photo.ride.city.slug, rideDate: photo.ride.getFormattedDate() }) }}"
+                       class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pager">
+                    {% if previousPhoto %}
+                        <li class="previous">
+                            <a href="{{ objectPath(previousPhoto) }}">
+                                &larr; Voriges Foto
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="previous disabled">
+                            <a href="#">
+                                &larr; Voriges Foto
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if nextPhoto %}
+                        <li class="next">
+                            <a href="{{ objectPath(nextPhoto) }}">
+                                Nächstes Foto &rarr;
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="next disabled">
+                            <a href="#">
+                                Nächstes Foto &rarr;
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="pager">
-                {% if previousPhoto %}
-                    <li class="previous">
-                        <a href="{{ objectPath(previousPhoto) }}">
-                            &larr; Voriges Foto
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="previous disabled">
-                        <a href="#">
-                            &larr; Voriges Foto
-                        </a>
-                    </li>
-                {% endif %}
+    <script>
+        var pageOptions = {
+            startCoord: {
+                latitude: {{ photo.ride.latitude }},
+                longitude: {{ photo.ride.longitude }}
+            },
+            photoCoord: {
+                latitude: {{ photo.latitude }},
+                longitude: {{ photo.longitude }}
+            },
+            inputFields: {
+                latitude: '#photos_latitude',
+                longitude: '#photos_longitude'
+            }
+        };
 
-                {% if nextPhoto %}
-                    <li class="next">
-                        <a href="{{ objectPath(nextPhoto) }}">
-                            Nächstes Foto &rarr;
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="next disabled">
-                        <a href="#">
-                            Nächstes Foto &rarr;
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</div>
+        CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function (placePage) {
+            {% if track %}
+            placePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+            {% endif %}
 
-<script>
-    var pageOptions = {
-        startCoord: {
-            latitude: {{ photo.ride.latitude }},
-            longitude: {{ photo.ride.longitude }}
-        },
-        photoCoord: {
-            latitude: {{ photo.latitude }},
-            longitude: {{ photo.longitude }}
-        },
-        inputFields: {
-            latitude: '#photos_latitude',
-            longitude: '#photos_longitude'
-        }
-    };
+            placePage.init();
 
-    CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function(placePage) {
-        {% if track %}
-        placePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
-        {% endif %}
-
-        placePage.init();
-
-    });
-</script>
+        });
+    </script>
 {% endblock %}

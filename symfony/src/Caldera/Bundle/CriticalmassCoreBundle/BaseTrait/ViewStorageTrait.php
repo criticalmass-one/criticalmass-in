@@ -43,11 +43,10 @@ trait ViewStorageTrait
                 'entityId' => $viewable->getId(),
                 'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
                 'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ]
-        ;
+            ];
 
         $viewStorage[] = $view;
-        
+
         $memcache->set('view_storage', $viewStorage);
     }
 

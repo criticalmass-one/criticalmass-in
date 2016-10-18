@@ -14,6 +14,11 @@ abstract class AbstractItem implements ItemInterface
      */
     protected $dateTime;
 
+    public function __construct()
+    {
+        $this->uniqId = uniqid();
+    }
+
     /**
      * @return \DateTime
      */
@@ -28,11 +33,6 @@ abstract class AbstractItem implements ItemInterface
     public function setDateTime(\DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
-    }
-
-    public function __construct()
-    {
-        $this->uniqId = uniqid();
     }
 
     public function getUniqId()

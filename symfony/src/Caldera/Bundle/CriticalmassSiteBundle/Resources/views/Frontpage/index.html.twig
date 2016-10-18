@@ -17,7 +17,8 @@
                         </h1>
 
                         <p class="lead">
-                            In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
+                            In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer
+                            gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
                         </p>
                     </div>
                 </div>
@@ -39,7 +40,8 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <p>
-                                Schau dir an, wo sich die Critical Mass in deiner Stadt gerade aufhält und deine Position mit anderen Radfahrern.
+                                Schau dir an, wo sich die Critical Mass in deiner Stadt gerade aufhält und deine
+                                Position mit anderen Radfahrern.
                             </p>
 
                             <div class="btn-group">
@@ -64,21 +66,25 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <p>
-                                Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im Feierabendverkehr?
+                                Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im
+                                Feierabendverkehr?
                             </p>
 
                             <div class="btn-group" role="group" aria-label="...">
-                                <a class="btn btn-default" role="button" href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
+                                <a class="btn btn-default" role="button"
+                                   href="{{ path('caldera_criticalmass_content_display', { slug: 'what-is-the-mass' }) }}">
                                     <i class="fa fa-bicycle"></i>
                                     Mehr darüber
                                 </a>
 
-                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_list') }}" role="button">
+                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_list') }}"
+                                   role="button">
                                     <i class="fa fa-university"></i>
                                     Städte
                                 </a>
 
-                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_calendar') }}" role="button">
+                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_calendar') }}"
+                                   role="button">
                                     <i class="fa fa-calendar"></i>
                                     Kalender
                                 </a>
@@ -95,23 +101,23 @@
                     </div>
                     <div class="panel-body">
                         <ul class="list-unstyled">
-                        {% for rideDate, rides in rideList %}
-                            <li>
-                                <h4>
-                                    {{ rideDate|date('d. F Y') }}
-                                </h4>
+                            {% for rideDate, rides in rideList %}
+                                <li>
+                                    <h4>
+                                        {{ rideDate|date('d. F Y') }}
+                                    </h4>
 
-                                <ul>
-                                {% for ride in rides %}
-                                    <li>
-                                        <a href="{{ objectPath(ride) }}">
-                                            {{ ride.getFancyTitle() }}
-                                        </a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        {% endfor %}
+                                    <ul>
+                                        {% for ride in rides %}
+                                            <li>
+                                                <a href="{{ objectPath(ride) }}">
+                                                    {{ ride.getFancyTitle() }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

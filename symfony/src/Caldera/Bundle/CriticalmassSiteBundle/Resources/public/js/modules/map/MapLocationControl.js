@@ -1,11 +1,11 @@
-define(['leaflet', 'leaflet-locate'], function(L) {
-    MapLocationControl = function() {
+define(['leaflet', 'leaflet-locate'], function (L) {
+    MapLocationControl = function () {
 
     };
 
     MapLocationControl.prototype._locateControl = null;
 
-    MapLocationControl.prototype.init = function() {
+    MapLocationControl.prototype.init = function () {
         this._locateControl = L.control.locate({
             position: "bottomright",
             drawCircle: true,
@@ -38,7 +38,7 @@ define(['leaflet', 'leaflet-locate'], function(L) {
         });
     };
 
-    MapLocationControl.prototype.addTo = function(map) {
+    MapLocationControl.prototype.addTo = function (map) {
         this._locateControl.addTo(map.map);
     };
 

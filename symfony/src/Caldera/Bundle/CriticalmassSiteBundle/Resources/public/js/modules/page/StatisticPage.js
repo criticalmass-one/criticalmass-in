@@ -1,5 +1,5 @@
-define(['chartjs'], function() {
-    StatisticPage = function(context, options) {
+define(['chartjs'], function () {
+    StatisticPage = function (context, options) {
     };
 
     StatisticPage.prototype._rideMonths = [];
@@ -11,13 +11,13 @@ define(['chartjs'], function() {
 
     StatisticPage.prototype._cities = [];
 
-    StatisticPage.prototype.addRideData = function(citySlug, rideMonth, participants, duration, distance) {
+    StatisticPage.prototype.addRideData = function (citySlug, rideMonth, participants, duration, distance) {
         this._participantsData[citySlug][rideMonth] = participants;
         this._durationData[citySlug][rideMonth] = duration;
         this._distanceData[citySlug][rideMonth] = distance;
     };
 
-    StatisticPage.prototype.addCity = function(cityName, citySlug, colorRed, colorGreen, colorBlue) {
+    StatisticPage.prototype.addCity = function (cityName, citySlug, colorRed, colorGreen, colorBlue) {
         this._participantsData[citySlug] = [];
         this._durationData[citySlug] = [];
         this._distanceData[citySlug] = [];
@@ -34,7 +34,7 @@ define(['chartjs'], function() {
         this._rideMonths.push(rideMonth);
     };
 
-    StatisticPage.prototype.createParticipantsChart = function($element) {
+    StatisticPage.prototype.createParticipantsChart = function ($element) {
         var datasets = this._createDataset(this._participantsData);
 
         var data = {
@@ -48,7 +48,7 @@ define(['chartjs'], function() {
         });
     };
 
-    StatisticPage.prototype.createDurationChart = function($element) {
+    StatisticPage.prototype.createDurationChart = function ($element) {
         var datasets = this._createDataset(this._durationData);
 
         var data = {
@@ -62,7 +62,7 @@ define(['chartjs'], function() {
         });
     };
 
-    StatisticPage.prototype.createDistanceChart = function($element) {
+    StatisticPage.prototype.createDistanceChart = function ($element) {
         var datasets = this._createDataset(this._distanceData);
 
         var data = {
@@ -76,7 +76,7 @@ define(['chartjs'], function() {
         });
     };
 
-    StatisticPage.prototype._createDataset = function(list) {
+    StatisticPage.prototype._createDataset = function (list) {
         var datasets = [];
 
         for (var citySlug in this._cities) {

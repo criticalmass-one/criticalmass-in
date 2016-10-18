@@ -18,7 +18,8 @@
 
         <div class="row">
             <div class="col-md-12">
-                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
+                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du
+                    versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
             </div>
         </div>
 
@@ -30,7 +31,7 @@
 
         <div class="row margin-top-medium">
             <div class="col-md-12">
-                <input id="slider" type="text" value="" style="width: 100%;" />
+                <input id="slider" type="text" value="" style="width: 100%;"/>
             </div>
         </div>
 
@@ -51,7 +52,7 @@
     </div>
 
     <script>
-        CriticalMass.loadModule('TrackRangePage', null, null, function(rangePage) {
+        CriticalMass.loadModule('TrackRangePage', null, null, function (rangePage) {
             rangePage.setStartPoint({{ track.startPoint }});
             rangePage.setEndPoint({{ track.endPoint }});
             rangePage.setGapWidth({{ gapWidth }});

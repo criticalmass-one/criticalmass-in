@@ -34,8 +34,8 @@ class StandardRideGenerator
         if (!$this->city->getIsStandardable()) {
             return null;
         }
-        
-        $this->ride->setDateTime(new \DateTime($this->year.'-'.$this->month.'-01 00:00:00'));
+
+        $this->ride->setDateTime(new \DateTime($this->year . '-' . $this->month . '-01 00:00:00'));
 
         $this->calculateDate();
         $this->calculateTime();
@@ -80,7 +80,7 @@ class StandardRideGenerator
         $this->ride->setHasTime($this->city->getStandardTime() != null);
 
         if ($this->city->getStandardTime()) {
-            $timeInterval = new \DateInterval('PT'.$this->city->getStandardTime()->format('H').'H'.$this->city->getStandardTime()->format('i').'M');
+            $timeInterval = new \DateInterval('PT' . $this->city->getStandardTime()->format('H') . 'H' . $this->city->getStandardTime()->format('i') . 'M');
             $this->ride->setDateTime($this->ride->getDateTime()->add($timeInterval));
         }
     }

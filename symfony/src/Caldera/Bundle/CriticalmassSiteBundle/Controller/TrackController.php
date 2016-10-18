@@ -36,7 +36,7 @@ class TrackController extends AbstractController
             ]
         );
 
-        return $this->render('CalderaCriticalmassSiteBundle:Track:list.html.twig', 
+        return $this->render('CalderaCriticalmassSiteBundle:Track:list.html.twig',
             array(
                 'tracks' => $tracks
             )
@@ -50,20 +50,20 @@ class TrackController extends AbstractController
 
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_track_upload',
-            [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
-            ]))
+                [
+                    'citySlug' => $ride->getCity()->getMainSlugString(),
+                    'rideDate' => $ride->getFormattedDate()
+                ]))
             ->add('trackFile', VichFileType::class)
             ->getForm();
-        
+
         if ('POST' == $request->getMethod()) {
             return $this->uploadPostAction($request, $track, $ride, $form, $embed);
         } else {
             return $this->uploadGetAction($request, $ride, $form, $embed);
         }
     }
-    
+
     protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed)
     {
         return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig',
@@ -73,7 +73,7 @@ class TrackController extends AbstractController
                 'errorMessage' => null
             ]);
     }
-    
+
     public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed)
     {
         $form->handleRequest($request);
@@ -107,13 +107,13 @@ class TrackController extends AbstractController
                     ]
                 );
             }
-            
+
             $this->loadTrackProperties($track);
-            
+
             $track->setRide($ride);
             $track->setUser($this->getUser());
             $track->setUsername($this->getUser()->getUsername());
-            
+
             $em->persist($track);
             $em->flush();
 
@@ -125,7 +125,7 @@ class TrackController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Track:upload.html.twig', 
+            'CalderaCriticalmassSiteBundle:Track:upload.html.twig',
             [
                 'form' => $form->createView(),
                 'ride' => $ride,
@@ -156,13 +156,12 @@ class TrackController extends AbstractController
     {
         $track = $this->getTrackRepository()->find($trackId);
 
-        if ($track && $track->getUser()->equals($this->getUser()))
-        {
+        if ($track && $track->getUser()->equals($this->getUser())) {
             $path = $this->getParameter('kernel.root_dir');
             $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
             $filename = $helper->asset($track, 'trackFile');
 
-            $trackContent = file_get_contents($path.'/../web'.$filename);
+            $trackContent = file_get_contents($path . '/../web' . $filename);
 
             $response = new Response();
 
@@ -193,8 +192,7 @@ class TrackController extends AbstractController
         $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
 
-        if ($track && $track->getUser()->equals($this->getUser()))
-        {
+        if ($track && $track->getUser()->equals($this->getUser())) {
             $em = $this->getDoctrine()->getManager();
             $track->setEnabled(!$track->getEnabled());
             $em->merge($track);
@@ -211,9 +209,8 @@ class TrackController extends AbstractController
         /** @var Track $track */
         $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
-        
-        if ($track && $track->getUser()->equals($this->getUser()))
-        {
+
+        if ($track && $track->getUser()->equals($this->getUser())) {
             $track->setDeleted(true);
 
             $em = $this->getDoctrine()->getManager();
@@ -254,7 +251,7 @@ class TrackController extends AbstractController
         $llag->loadTrack($track);
         $llag->execute();
 
-        return $this->render('CalderaCriticalmassSiteBundle:Track:range.html.twig', 
+        return $this->render('CalderaCriticalmassSiteBundle:Track:range.html.twig',
             [
                 'form' => $form->createView(),
                 'track' => $track,
@@ -268,8 +265,7 @@ class TrackController extends AbstractController
     {
         $form->handleRequest($request);
 
-        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser()))
-        {
+        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser())) {
             /**
              * @var Track $track
              */

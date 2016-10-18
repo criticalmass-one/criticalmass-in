@@ -1,4 +1,4 @@
-define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
+define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
     var EditCityPage = function (settings) {
         this.settings = $.extend(this._defaults, settings);
 
@@ -72,7 +72,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             this._initCityMarker();
             this._initLocationMarker();
         } else {
-            this._geocoding.searchState(this.settings.state, function(data) {
+            this._geocoding.searchState(this.settings.state, function (data) {
                 that.mapCenter = L.latLng(data.lat, data.lon);
 
                 that.mapZoom = 5;
@@ -106,7 +106,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
         if (this.standardLocationLatLng) {
             this._addStandardLocationMarker();
         }
-        
+
         $(this.settings.cityIsStandardableLocationInputSelector).on('click', function () {
             if ($(this).prop('checked')) {
                 that._addStandardLocationMarker();
@@ -155,15 +155,15 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
         $(this.settings.cityLongitudeInputSelector).val(position.lng);
     };
 
-    EditCityPage.prototype._moveCityMarker = function(latLng) {
+    EditCityPage.prototype._moveCityMarker = function (latLng) {
         this.cityMarker.setLatLng(latLng);
     };
 
-    EditCityPage.prototype._moveLocationMarker = function(latLng) {
+    EditCityPage.prototype._moveLocationMarker = function (latLng) {
         this.locationMarker.setLatLng(latLng);
     };
 
-    EditCityPage.prototype._getStandardLocationLatLng = function() {
+    EditCityPage.prototype._getStandardLocationLatLng = function () {
         return {
             lat: $(this.settings.cityStandardLatitudeInputSelector).val(),
             lng: $(this.settings.cityStandardLongitudeInputSelector).val()
@@ -175,22 +175,22 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
         $(this.settings.cityStandardLongitudeInputSelector).val(position.lng);
     };
 
-    EditCityPage.prototype._initGeolocationEvents = function() {
+    EditCityPage.prototype._initGeolocationEvents = function () {
         var that = this;
 
         this._$searchCityButton = $('#search-city-button');
         this._$searchLocationButton = $('#search-location-button');
         this._$countrySelect = $('#city_region');
 
-        this._$searchCityButton.on('click', function() {
+        this._$searchCityButton.on('click', function () {
             var cityName = $('#city_city').val();
 
-            that._geocoding.searchCity(cityName, function(data) {
+            that._geocoding.searchCity(cityName, function (data) {
                 that._handleGeocodingCity(data);
             });
         });
 
-        this._$searchLocationButton.on('click', function() {
+        this._$searchLocationButton.on('click', function () {
             var cityName = $('#city_city').val();
             var locationName = $('#city_standardLocation').val();
 
@@ -203,14 +203,14 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
             }
         });
 
-        this._$countrySelect.on('change', function(value) {
+        this._$countrySelect.on('change', function (value) {
             var stateName = that._$countrySelect.find('option:selected').text();
 
             that._geocoding.setState(stateName);
         });
     };
 
-    EditCityPage.prototype._handleGeocodingCity = function(data) {
+    EditCityPage.prototype._handleGeocodingCity = function (data) {
         if (data && data.lat && data.lon) {
             var latLng = {
                 lat: data.lat,
@@ -225,7 +225,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function() {
         }
     };
 
-    EditCityPage.prototype._handleGeocodingLocation = function(data) {
+    EditCityPage.prototype._handleGeocodingLocation = function (data) {
         var latLng = {
             lat: data.lat,
             lng: data.lon

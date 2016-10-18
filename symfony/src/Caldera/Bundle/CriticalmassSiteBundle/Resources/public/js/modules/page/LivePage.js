@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'MapPositions', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
     LivePage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -24,13 +24,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     LivePage.prototype._layers = [];
     LivePage.prototype._offlineModal = null;
 
-    LivePage.prototype._initContainer = function() {
+    LivePage.prototype._initContainer = function () {
         this._rideContainer = new Container();
         this._eventContainer = new Container();
         this._cityContainer = new Container();
     };
 
-    LivePage.prototype._initMap = function() {
+    LivePage.prototype._initMap = function () {
         var height = $('nav#navigation').css('height');
 
         if (!height) {
@@ -46,7 +46,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._CriticalService.setMap(this._map);
     };
 
-    LivePage.prototype._initLive = function() {
+    LivePage.prototype._initLive = function () {
         this._mapPositions = new MapPositions(null, this._options);
 
         this._mapPositions.addToControl(this._layers, 'Teilnehmer');
@@ -54,7 +54,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._CriticalService.setMapPositions(this._mapPositions);
     };
 
-    LivePage.prototype._initLayers = function() {
+    LivePage.prototype._initLayers = function () {
         this._rideContainer.addToMap(this._map);
         this._cityContainer.addToMap(this._map);
         this._eventContainer.addToMap(this._map);
@@ -64,7 +64,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         //this._map.addLayer(this._mapPositions.getLayer());
     };
 
-    LivePage.prototype._initLayerControl = function() {
+    LivePage.prototype._initLayerControl = function () {
         this._rideContainer.addToControl(this._layers, 'Tour');
         //this._cityContainer.addToControl(this._layers, 'Städte');
 
@@ -74,17 +74,17 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._layerControl.addTo(this._map);
     };
 
-    LivePage.prototype._initLocationControl = function() {
+    LivePage.prototype._initLocationControl = function () {
         this._locationControl = new MapLocationControl();
         this._locationControl.init();
         this._locationControl.addTo(this._map);
     };
 
-    LivePage.prototype._initCallbacks = function() {
+    LivePage.prototype._initCallbacks = function () {
         //this._mapPositions.setOfflineCallback(this.offlineCallback);
     };
 
-    LivePage.prototype.offlineCallback = function() {
+    LivePage.prototype.offlineCallback = function () {
         if (this._offlineModal && this._offlineModal.isVisible()) {
             this._offlineModal.show();
         } else {
@@ -102,7 +102,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         }
     };
 
-    LivePage.prototype.addCity = function(cityJson) {
+    LivePage.prototype.addCity = function (cityJson) {
         var cityEntity = this._CriticalService.factory.createCity(cityJson);
 
         this._cityContainer.addEntity(cityEntity);
@@ -110,7 +110,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         return cityEntity;
     };
 
-    LivePage.prototype.addRide = function(rideJson) {
+    LivePage.prototype.addRide = function (rideJson) {
         var rideEntity = this._CriticalService.factory.createLiveRide(rideJson);
 
         this._rideContainer.addEntity(rideEntity);
@@ -118,7 +118,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         return rideEntity;
     };
 
-    LivePage.prototype.addEvent = function(eventJson) {
+    LivePage.prototype.addEvent = function (eventJson) {
         var eventEntity = this._CriticalService.factory.createEvent(eventJson);
 
         this._eventContainer.addEntity(eventEntity);
@@ -126,7 +126,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         return eventEntity;
     };
 
-    LivePage.prototype.addNoLocationRide = function(title, description, latitude, longitude, location, date, time, weatherForecast) {
+    LivePage.prototype.addNoLocationRide = function (title, description, latitude, longitude, location, date, time, weatherForecast) {
         var rideEntity = new NoLocationRideEntity(title, description, latitude, longitude, location, date, time, weatherForecast);
 
         this._rideContainer.addEntity(rideEntity);
@@ -134,11 +134,11 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         return rideEntity;
     };
 
-    LivePage.prototype._startLive = function() {
+    LivePage.prototype._startLive = function () {
         this._mapPositions.start();
     };
 
-    LivePage.prototype.setFocus = function() {
+    LivePage.prototype.setFocus = function () {
         if (!location.hash) {
             if (this._rideContainer.countEntities() == 1) {
                 var ride = this._rideContainer.getEntity(0);

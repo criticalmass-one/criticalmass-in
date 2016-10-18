@@ -33,8 +33,7 @@ class StandardCityType extends AbstractType
                 EntityType::class,
                 [
                     'class' => 'CalderaBundle:Region',
-                    'query_builder' => function(\Caldera\Bundle\CalderaBundle\Repository\RegionRepository $er)
-                    {
+                    'query_builder' => function (\Caldera\Bundle\CalderaBundle\Repository\RegionRepository $er) {
                         $builder = $er->createQueryBuilder('region');
 
                         $builder->join('region.parent', 'region2');

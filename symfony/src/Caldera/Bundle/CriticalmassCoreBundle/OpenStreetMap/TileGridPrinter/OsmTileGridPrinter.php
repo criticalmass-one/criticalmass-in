@@ -15,6 +15,6 @@ class OsmTileGridPrinter
 
     public function setTileGrid(OsmTileGrid $tileGrid)
     {
-         $this->tileGrid = $tileGrid;
+        $this->tileGrid = $tileGrid;
     }
 }

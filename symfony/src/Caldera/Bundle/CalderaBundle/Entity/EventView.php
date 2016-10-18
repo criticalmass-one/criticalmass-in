@@ -12,29 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class EventView implements ViewInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="event_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="event_views")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event;
-    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     public function __construct()
     {
@@ -44,7 +40,7 @@ class EventView implements ViewInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,15 +83,15 @@ class EventView implements ViewInterface
         return $this;
     }
 
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
     public function setEvent(Event $event)
     {
         $this->event = $event;
 
         return $this;
-    }
-
-    public function getEvent()
-    {
-        return $this->event;
     }
 }

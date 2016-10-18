@@ -5,7 +5,8 @@ namespace Caldera\CriticalmassOpenweatherBundle\Tests\TemperatureConverter;
 use Caldera\CriticalmassOpenweatherBundle\Utility\TemperatureConverter\TemperatureConverter;
 use PHPUnit_Framework_TestCase;
 
-class TemperatureConverterTest extends PHPUnit_Framework_TestCase {
+class TemperatureConverterTest extends PHPUnit_Framework_TestCase
+{
 
     public function testCelsiusToFahrenheit()
     {

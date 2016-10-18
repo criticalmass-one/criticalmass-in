@@ -11,13 +11,13 @@ class TimelineController extends AbstractController
     {
         $lowerLimitDateTime = new \DateTime('2010-01-01');
 
-        $startDateTime = new \DateTime($year.'-'.$month.'-01');
+        $startDateTime = new \DateTime($year . '-' . $month . '-01');
 
         if ($startDateTime < $lowerLimitDateTime) {
             $startDateTime = new \DateTime();
         }
 
-        $endDateTime = new \DateTime($year.'-'.$month.'-'.$startDateTime->format('t'));
+        $endDateTime = new \DateTime($year . '-' . $month . '-' . $startDateTime->format('t'));
 
         /**
          * @var Timeline $timeline
@@ -51,17 +51,6 @@ class TimelineController extends AbstractController
         );
     }
 
-    public function indexAction(Request $request)
-    {
-        $dateTime = new \DateTime();
-
-        return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth',
-            [
-                'year' => $dateTime->format('Y'),
-                'month' => $dateTime->format('m')
-            ]);
-    }
-
     protected function getNextDateTime(\DateTime $dateTime)
     {
         $nextDateTime = clone $dateTime;
@@ -78,5 +67,16 @@ class TimelineController extends AbstractController
         $dateInterval = new \DateInterval('P1M');
 
         return $previousDateTime->sub($dateInterval);
+    }
+
+    public function indexAction(Request $request)
+    {
+        $dateTime = new \DateTime();
+
+        return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth',
+            [
+                'year' => $dateTime->format('Y'),
+                'month' => $dateTime->format('m')
+            ]);
     }
 }

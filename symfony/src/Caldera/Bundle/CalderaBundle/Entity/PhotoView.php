@@ -12,29 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class PhotoView implements ViewInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="Photo", inversedBy="photo_views")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
-    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     public function __construct()
     {
@@ -44,7 +40,7 @@ class PhotoView implements ViewInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,15 +81,15 @@ class PhotoView implements ViewInterface
         $this->dateTime = $dateTime;
     }
 
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
     public function setPhoto($photo)
     {
         $this->photo = $photo;
 
         return $this;
-    }
-
-    public function getPhoto()
-    {
-        return $this->photo;
     }
 }

@@ -1,77 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+<head>
+    {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-        <title>
-            criticalmass.live
-        </title>
+    <title>
+        criticalmass.live
+    </title>
 
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasslive/css/live.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasslive/css/live.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}"/>
 
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}" />
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}"/>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
-    </head>
+    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/requirejs/require.js') }}"></script>
+    <script src="{{ asset('bundles/calderacriticalmasssite/js/CriticalMass.js') }}"></script>
+</head>
 
-    <body>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" id="navigation">
-            <a class="navbar-brand" href="{{ path('caldera_criticalmass_live_frontpage') }}">
-                criticalmass.live
+<body>
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse" id="navigation">
+    <a class="navbar-brand" href="{{ path('caldera_criticalmass_live_frontpage') }}">
+        criticalmass.live
+    </a>
+
+    <ul class="nav navbar-nav pull-xs-right">
+        {#<li class="nav-item">
+            <a href="#" class="nav-link" data-toggle="modal" data-target="#commentModal">
+                <i class="fa fa-camera" aria-hidden="true"></i>
+                <span class="hidden-xs-down">
+                    Kommentar
+                </span>
             </a>
+        </li>#}
 
-            <ul class="nav navbar-nav pull-xs-right">
-                {#<li class="nav-item">
-                    <a href="#" class="nav-link" data-toggle="modal" data-target="#commentModal">
-                        <i class="fa fa-camera" aria-hidden="true"></i>
-                        <span class="hidden-xs-down">
-                            Kommentar
-                        </span>
-                    </a>
-                </li>#}
-
-                <li class="nav-item">
-                    <a href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'was-ist-critical-mass' } ) }}" class="nav-link">
-                        <i class="fa fa-info" aria-hidden="true"></i>
+        <li class="nav-item">
+            <a href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'was-ist-critical-mass' } ) }}"
+               class="nav-link">
+                <i class="fa fa-info" aria-hidden="true"></i>
                         <span class="hidden-xs-down">
                             Was ist die Masse?
                         </span>
-                    </a>
-                </li>
+            </a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-funktioniert-critical-mass-live-tracking' } ) }}">
-                        <i class="fa fa-bicycle" aria-hidden="true"></i>
+        <li class="nav-item">
+            <a class="nav-link"
+               href="{{ path('caldera_criticalmass_live_content', { contentSlug: 'so-funktioniert-critical-mass-live-tracking' } ) }}">
+                <i class="fa fa-bicycle" aria-hidden="true"></i>
                         <span class="hidden-xs-down">
                             Live Tracking?
                         </span>
-                    </a>
-                </li>
+            </a>
+        </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-toggle="modal" data-target="#legalModal">
-                        <i class="fa fa-gavel" aria-hidden="true"></i>
+        <li class="nav-item">
+            <a href="#" class="nav-link" data-toggle="modal" data-target="#legalModal">
+                <i class="fa fa-gavel" aria-hidden="true"></i>
                         <span class="hidden-xs-down">
                             Impressum?
                         </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-        {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-        {#{{ render(controller('CalderaCriticalmassSiteBundle:Post:write' )) }}#}
-        {% include('CalderaCriticalmassLiveBundle:Includes:_legalModal.html.twig') %}
+{#{{ render(controller('CalderaCriticalmassSiteBundle:Post:write' )) }}#}
+{% include('CalderaCriticalmassLiveBundle:Includes:_legalModal.html.twig') %}
 
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
 
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
+{% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
+</body>
 </html>
 

@@ -13,7 +13,7 @@ class MonthFunction extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-       return sprintf('MONTH(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('MONTH(%s)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser)

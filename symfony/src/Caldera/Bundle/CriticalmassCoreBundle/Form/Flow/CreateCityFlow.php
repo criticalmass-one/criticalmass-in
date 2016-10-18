@@ -4,9 +4,11 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Form\Flow;
 
 use Craue\FormFlowBundle\Form\FormFlow;
 
-class CreateCityFlow extends FormFlow {
+class CreateCityFlow extends FormFlow
+{
 
-    protected function loadStepsConfig() {
+    protected function loadStepsConfig()
+    {
         return array(
             array(
                 'label' => 'Stadt',
@@ -28,11 +30,12 @@ class CreateCityFlow extends FormFlow {
                 'label' => 'Technisches',
                 'form_type' => 'Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CreateCityType',
             ),
-/*            array(
-                'label' => 'Header-Grafik',
-                'form_type' => 'Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CreateCityType',
-            ),
-*/            array(
+            /*            array(
+                            'label' => 'Header-Grafik',
+                            'form_type' => 'Caldera\Bundle\CriticalmassCoreBundle\Form\Type\CreateCityType',
+                        ),
+            */
+            array(
                 'label' => 'confirmation',
             ),
         );

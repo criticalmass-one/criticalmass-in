@@ -58,11 +58,21 @@ class Participation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get dateTime
+     *
+     * @return \DateTime
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
     }
 
     /**
@@ -79,13 +89,13 @@ class Participation
     }
 
     /**
-     * Get dateTime
+     * Get goingYes
      *
-     * @return \DateTime 
+     * @return boolean
      */
-    public function getDateTime()
+    public function getGoingYes()
     {
-        return $this->dateTime;
+        return $this->goingYes;
     }
 
     /**
@@ -102,13 +112,13 @@ class Participation
     }
 
     /**
-     * Get goingYes
+     * Get goingMaybe
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getGoingYes()
+    public function getGoingMaybe()
     {
-        return $this->goingYes;
+        return $this->goingMaybe;
     }
 
     /**
@@ -125,13 +135,13 @@ class Participation
     }
 
     /**
-     * Get goingMaybe
+     * Get goingNo
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getGoingMaybe()
+    public function getGoingNo()
     {
-        return $this->goingMaybe;
+        return $this->goingNo;
     }
 
     /**
@@ -148,13 +158,13 @@ class Participation
     }
 
     /**
-     * Get goingNo
+     * Get ride
      *
-     * @return boolean 
+     * @return Ride
      */
-    public function getGoingNo()
+    public function getRide()
     {
-        return $this->goingNo;
+        return $this->ride;
     }
 
     /**
@@ -171,13 +181,13 @@ class Participation
     }
 
     /**
-     * Get ride
+     * Get user
      *
-     * @return Ride
+     * @return User
      */
-    public function getRide()
+    public function getUser()
     {
-        return $this->ride;
+        return $this->user;
     }
 
     /**
@@ -191,15 +201,5 @@ class Participation
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }

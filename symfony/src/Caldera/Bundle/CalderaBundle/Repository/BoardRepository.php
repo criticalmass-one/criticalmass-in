@@ -30,7 +30,7 @@ class BoardRepository extends EntityRepository
 
         $builder->select('board');
         $builder->where($builder->expr()->eq('board.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('board.slug', '\''.$slug.'\''));
+        $builder->andWhere($builder->expr()->eq('board.slug', '\'' . $slug . '\''));
 
         $query = $builder->getQuery();
 

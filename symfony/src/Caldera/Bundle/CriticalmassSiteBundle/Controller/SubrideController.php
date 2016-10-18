@@ -164,8 +164,7 @@ class SubrideController extends AbstractController
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->persist($archiveRide);
@@ -173,9 +172,7 @@ class SubrideController extends AbstractController
 
             // TODO: remove also this
             $hasErrors = false;
-        }
-        elseif ($form->isSubmitted())
-        {
+        } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
             $hasErrors = true;
         }
@@ -214,13 +211,12 @@ class SubrideController extends AbstractController
         /**
          * @var Subride $oldSubride
          */
-        foreach ($oldRide->getSubrides() as $oldSubride)
-        {
+        foreach ($oldRide->getSubrides() as $oldSubride) {
             $newSubride = clone $oldSubride;
             $newSubride->setUser($this->getUser());
             $newSubride->setRide($newRide);
 
-            $newSubrideDateTime = new \DateTime($newRide->getDateTime()->format('Y-m-d').' '.$oldSubride->getDateTime()->format('H:i:s'));
+            $newSubrideDateTime = new \DateTime($newRide->getDateTime()->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
             $newSubride->setDateTime($newSubrideDateTime);
 
             $em->persist($newSubride);

@@ -48,8 +48,7 @@ class ExportGlympsePositionsCommand extends ContainerAwareCommand
             ->addOption(
                 'all',
                 'a'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

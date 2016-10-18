@@ -1,4 +1,4 @@
-define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function() {
+define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function () {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -28,7 +28,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         this._addTileLayer();
     };
 
-    Map.prototype._loadStyles = function() {
+    Map.prototype._loadStyles = function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
@@ -65,13 +65,13 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
     Map.prototype._addTileLayer = function () {
 
         //L.tileLayer(this.settings.tileLayerUrl + '?access_token=' + this.settings.mapBoxAccessToken, {
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: this.settings.mapAttribution,
             detectRetina: this.settings.detectRetina
         }).addTo(this.map);
     };
 
-    Map.prototype.addLayer = function(layer) {
+    Map.prototype.addLayer = function (layer) {
         this.map.addLayer(layer);
     };
 
@@ -79,23 +79,23 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         this.map.setView(latLng, zoom);
     };
 
-    Map.prototype.getCenter = function() {
+    Map.prototype.getCenter = function () {
         return this.map.getCenter();
     };
 
-    Map.prototype.fitBounds = function(bounds, options) {
+    Map.prototype.fitBounds = function (bounds, options) {
         this.map.fitBounds(bounds, options);
     };
 
-    Map.prototype.getBounds = function() {
+    Map.prototype.getBounds = function () {
         return this.map.getBounds();
     };
 
-    Map.prototype.on = function(event, callback) {
+    Map.prototype.on = function (event, callback) {
         this.map.on(event, callback);
     };
 
-    Map.prototype.disableInteraction = function() {
+    Map.prototype.disableInteraction = function () {
         this._$mapContainer.css('cursor', 'default');
         this.map.dragging.disable();
         this.map.touchZoom.disable();
@@ -109,7 +109,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function()
         }
     };
 
-    Map.prototype.enableInteraction = function() {
+    Map.prototype.enableInteraction = function () {
         this._$mapContainer.css('cursor', 'move');
         this.map.dragging.enable();
         this.map.touchZoom.enable();

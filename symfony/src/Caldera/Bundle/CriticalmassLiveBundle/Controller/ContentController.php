@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ContentController extends AbstractController
 {
     use ViewStorageTrait;
-    
+
     public function showAction(Request $request, string $contentSlug): Response
     {
         /** @var Content $content */

@@ -5,7 +5,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-abstract class AbstractExifReader {
+abstract class AbstractExifReader
+{
     /**
      * @var Photo $photo
      */
@@ -18,14 +19,14 @@ abstract class AbstractExifReader {
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory.'/../web';
+        $this->rootDirectory = $rootDirectory . '/../web';
     }
 
     public function setPhoto(Photo $photo)
     {
         $this->photo = $photo;
 
-        $this->filename = $this->rootDirectory.$this->uploaderHelper->asset($this->photo, 'imageFile');
+        $this->filename = $this->rootDirectory . $this->uploaderHelper->asset($this->photo, 'imageFile');
 
         $this->exif = exif_read_data($this->filename, 0, true);
 

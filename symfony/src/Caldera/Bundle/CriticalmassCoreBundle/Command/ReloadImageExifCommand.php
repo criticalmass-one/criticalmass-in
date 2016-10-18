@@ -28,8 +28,7 @@ class ReloadImageExifCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:images:reloadExif')
-            ->setDescription('Regenerate LatLng Tracks')
-        ;
+            ->setDescription('Regenerate LatLng Tracks');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

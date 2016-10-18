@@ -1,20 +1,20 @@
-define(['chartjs'], function() {
-    CityStatisticPage = function(context, options) {
+define(['chartjs'], function () {
+    CityStatisticPage = function (context, options) {
     };
 
     CityStatisticPage.prototype._rideDates = [];
     CityStatisticPage.prototype._participantsData = [];
     CityStatisticPage.prototype._durationData = [];
     CityStatisticPage.prototype._distanceData = [];
-    
-    CityStatisticPage.prototype.addRideData = function(rideDate, participants, duration, distance) {
+
+    CityStatisticPage.prototype.addRideData = function (rideDate, participants, duration, distance) {
         this._rideDates.push(rideDate);
         this._participantsData.push(participants);
         this._durationData.push(duration);
         this._distanceData.push(distance);
     };
 
-    CityStatisticPage.prototype.createChart = function($element) {
+    CityStatisticPage.prototype.createChart = function ($element) {
         var datasets = [];
 
         datasets.push(this._createDataset('Teilnehmer', 'participants', 'rgba(255, 0, 0, 1)', this._participantsData));
@@ -50,7 +50,7 @@ define(['chartjs'], function() {
         });
     };
 
-    CityStatisticPage.prototype._createDataset = function(label, yAxisID, colorString, data) {
+    CityStatisticPage.prototype._createDataset = function (label, yAxisID, colorString, data) {
         return {
             label: label,
             fill: false,

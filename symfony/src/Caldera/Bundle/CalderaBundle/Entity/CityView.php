@@ -12,29 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class CityView implements ViewInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
-    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     public function __construct()
     {
@@ -44,7 +40,7 @@ class CityView implements ViewInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,15 +83,15 @@ class CityView implements ViewInterface
         return $this;
     }
 
+    public function getCity()
+    {
+        return $this->city;
+    }
+
     public function setCity(City $city)
     {
         $this->city = $city;
 
         return $this;
-    }
-
-    public function getCity()
-    {
-        return $this->city;
     }
 }

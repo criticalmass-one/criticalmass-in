@@ -46,11 +46,21 @@ class AnonymousName
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -67,13 +77,13 @@ class AnonymousName
     }
 
     /**
-     * Get name
+     * Get gender
      *
      * @return string
      */
-    public function getName()
+    public function getGender()
     {
-        return $this->name;
+        return $this->gender;
     }
 
     /**
@@ -90,13 +100,13 @@ class AnonymousName
     }
 
     /**
-     * Get gender
+     * Get locale
      *
      * @return string
      */
-    public function getGender()
+    public function getLocale()
     {
-        return $this->gender;
+        return $this->locale;
     }
 
     /**
@@ -113,13 +123,13 @@ class AnonymousName
     }
 
     /**
-     * Get locale
+     * Get enabled
      *
-     * @return string 
+     * @return boolean
      */
-    public function getLocale()
+    public function getEnabled()
     {
-        return $this->locale;
+        return $this->enabled;
     }
 
     /**
@@ -133,15 +143,5 @@ class AnonymousName
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return boolean 
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
     }
 }

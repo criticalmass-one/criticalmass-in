@@ -1,6 +1,6 @@
-define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function (CriticalService) {
 
-    RidePage = function(context, options) {
+    RidePage = function (context, options) {
         this.options = options;
 
         this._initMap();
@@ -24,11 +24,11 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
     RidePage.prototype._timelapse = null;
     RidePage.prototype._CriticalService = CriticalService;
 
-    RidePage.prototype.init = function() {
+    RidePage.prototype.init = function () {
 
     };
 
-    RidePage.prototype._initTimelapse = function() {
+    RidePage.prototype._initTimelapse = function () {
         var $trackPanel = $('#tracks');
 
         if ($trackPanel.length > 0) {
@@ -40,13 +40,13 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
 
             var that = this;
 
-            $('button#timelapse-start-button').on('click', function() {
+            $('button#timelapse-start-button').on('click', function () {
                 that._startTimelapseInit();
             });
         }
     };
 
-    RidePage.prototype._startTimelapseInit = function() {
+    RidePage.prototype._startTimelapseInit = function () {
         $('#timelapse-start').hide();
         $('#timelapse-loader').show();
         $('#timelapse-track-total').html(this._trackContainer.countEntities());
@@ -54,16 +54,16 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._timelapse.startInit();
     };
 
-    RidePage.prototype._finishTimelapseInit = function() {
+    RidePage.prototype._finishTimelapseInit = function () {
         $('#timelapse-loader').hide();
         $('#timelapse-control').show();
     };
 
-    RidePage.prototype._timelapseTrackLoadCallback = function(counter) {
+    RidePage.prototype._timelapseTrackLoadCallback = function (counter) {
         $('#timelapse-track-number').html(counter);
     };
 
-    RidePage.prototype._initLayerControl = function() {
+    RidePage.prototype._initLayerControl = function () {
         this._layers = [];
 
         this._rideContainer.addToControl(this._layers, 'Tour');
@@ -78,13 +78,13 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._layerControl.addTo(this._map);
     };
 
-    RidePage.prototype._initMap = function() {
+    RidePage.prototype._initMap = function () {
         this._map = new Map('map');
 
         this._CriticalService.setMap(this._map);
     };
 
-    RidePage.prototype._initContainers = function() {
+    RidePage.prototype._initContainers = function () {
         this._subrideContainer = new Container();
         this._trackContainer = new Container();
         this._cityContainer = new Container();
@@ -92,7 +92,7 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._photoContainer = new ClusterContainer();
     };
 
-    RidePage.prototype._initLayers = function() {
+    RidePage.prototype._initLayers = function () {
         this._subrideContainer.addToMap(this._map);
         this._trackContainer.addToMap(this._map);
         this._cityContainer.addToMap(this._map);
@@ -100,17 +100,17 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._photoContainer.addToMap(this._map);
     };
 
-    RidePage.prototype._initTrackToggleEvent = function() {
+    RidePage.prototype._initTrackToggleEvent = function () {
         var that = this;
 
-        $('.track-visibility-toggle').on('click', function() {
+        $('.track-visibility-toggle').on('click', function () {
             var trackId = $(this).data('track-id');
 
             that._toggleTrack(trackId);
         });
     };
 
-    RidePage.prototype._initPhotoViewModal = function() {
+    RidePage.prototype._initPhotoViewModal = function () {
         var options = {
             photoViewPageUrl: this.options.photoViewPageUrl,
             photoCounterUrl: this.options.photoCounterUrl
@@ -121,35 +121,35 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._photoViewModal.setMap(this._map);
     };
 
-    RidePage.prototype.addCity = function(cityJson) {
+    RidePage.prototype.addCity = function (cityJson) {
         this._city = this._CriticalService.factory.createCity(cityJson);
 
         this._city.addToContainer(this._cityContainer);
     };
 
-    RidePage.prototype.addRide = function(rideJson) {
+    RidePage.prototype.addRide = function (rideJson) {
         this._ride = this._CriticalService.factory.createRide(rideJson);
 
         this._ride.addToContainer(this._rideContainer);
     };
 
-    RidePage.prototype.addSubride = function(subrideJson) {
+    RidePage.prototype.addSubride = function (subrideJson) {
         var subride = this._CriticalService.factory.createSubride(subrideJson);
 
         subride.addToContainer(this._subrideContainer, subride.getId());
     };
 
-    RidePage.prototype._initSubrideEvents = function() {
+    RidePage.prototype._initSubrideEvents = function () {
         var that = this;
 
-        $('.subride a.subride-link').on('click', function() {
+        $('.subride a.subride-link').on('click', function () {
             var subrideId = $(this).data('subride-id');
 
             that._panMapToSubride(subrideId);
         });
     };
 
-    RidePage.prototype._panMapToSubride = function(subrideId) {
+    RidePage.prototype._panMapToSubride = function (subrideId) {
         var subride = this._subrideContainer.getEntity(subrideId);
 
         subride.openPopup();
@@ -159,17 +159,17 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._map.setView(latLng, 14);
     };
 
-    RidePage.prototype.addTrack = function(trackJson) {
+    RidePage.prototype.addTrack = function (trackJson) {
         var track = this._CriticalService.factory.createTrack(trackJson);
 
         track.addToContainer(this._trackContainer, track.getId());
     };
 
-    RidePage.prototype._toggleTrack = function(trackId) {
+    RidePage.prototype._toggleTrack = function (trackId) {
         this._trackContainer.toggleIndexEntityInLayer(trackId);
     };
 
-    RidePage.prototype.addPhoto = function(photoJson, filename) {
+    RidePage.prototype.addPhoto = function (photoJson, filename) {
         var photo = this._CriticalService.factory.createPhoto(photoJson);
 
         photo.setFilename(filename);
@@ -178,12 +178,12 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
 
         var that = this;
 
-        photo.on('click', function() {
+        photo.on('click', function () {
             that._photoViewModal.showPhoto(photo.getId());
         });
     };
 
-    RidePage.prototype.focus = function() {
+    RidePage.prototype.focus = function () {
         if (!this._trackContainer.isEmpty()) {
             var bounds = this._trackContainer.getBounds();
 

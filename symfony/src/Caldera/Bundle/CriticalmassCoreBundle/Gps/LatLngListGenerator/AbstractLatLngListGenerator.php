@@ -22,7 +22,7 @@ abstract class AbstractLatLngListGenerator
         $this->trackReader = $trackReader;
         $this->gapWidth = $gapWidth;
     }
-    
+
     public function loadTrack(Track $track)
     {
         $this->track = $track;

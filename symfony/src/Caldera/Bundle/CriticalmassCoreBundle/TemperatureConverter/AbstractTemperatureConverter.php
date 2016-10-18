@@ -2,10 +2,11 @@
 
 namespace Caldera\CriticalmassOpenweatherBundle\Utility\TemperatureConverter;
 
-abstract class AbstractTemperatureConverter {
+abstract class AbstractTemperatureConverter
+{
     protected $celsius;
     protected $fahrenheit;
-    
+
     public function getFahrenheit()
     {
         return $this->fahrenheit;
@@ -14,7 +15,7 @@ abstract class AbstractTemperatureConverter {
     public function setFahrenheit($fahrenheit)
     {
         $this->fahrenheit = $fahrenheit;
-        
+
         return $this;
     }
 
@@ -26,7 +27,7 @@ abstract class AbstractTemperatureConverter {
     public function setCelsius($celsius)
     {
         $this->celsius = $celsius;
-        
+
         return $this;
     }
 

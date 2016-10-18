@@ -39,8 +39,7 @@ class PrintRideCommand extends ContainerAwareCommand
                 'rideDate',
                 InputArgument::REQUIRED,
                 'Date of the ride'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

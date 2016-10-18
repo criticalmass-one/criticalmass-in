@@ -13,17 +13,15 @@ class TimeLatLngListGenerator extends AbstractLatLngListGenerator
 
         $counter = 0;
 
-        foreach ($this->xmlRootNode->trk->trkseg->trkpt as $point)
-        {
-            if ($counter >= $start && $counter < $end && $counter % $this->gapWidth == 0)
-            {
-                $result[] = '["'.$point->time.'",'.$point['lat'].','.$point['lon'].']';
+        foreach ($this->xmlRootNode->trk->trkseg->trkpt as $point) {
+            if ($counter >= $start && $counter < $end && $counter % $this->gapWidth == 0) {
+                $result[] = '["' . $point->time . '",' . $point['lat'] . ',' . $point['lon'] . ']';
             }
-            
+
             ++$counter;
         }
 
-        $this->list = '['.implode(',', $result).']';
+        $this->list = '[' . implode(',', $result) . ']';
 
         return $this;
     }

@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TileLayer
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
     /**
@@ -59,7 +59,7 @@ class TileLayer
     protected $standard;
 
     /**
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,6 +85,7 @@ class TileLayer
     {
         $this->description = $description;
     }
+
     public function getAddress()
     {
         return $this->address;
@@ -111,6 +112,16 @@ class TileLayer
     }
 
     /**
+     * Get plusOnly
+     *
+     * @return boolean
+     */
+    public function getPlusOnly()
+    {
+        return $this->plusOnly;
+    }
+
+    /**
      * Set plusOnly
      *
      * @param boolean $plusOnly
@@ -124,13 +135,13 @@ class TileLayer
     }
 
     /**
-     * Get plusOnly
+     * Get public
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getPlusOnly()
+    public function getPublic()
     {
-        return $this->plusOnly;
+        return $this->public;
     }
 
     /**
@@ -147,13 +158,13 @@ class TileLayer
     }
 
     /**
-     * Get public
+     * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getPublic()
+    public function getActive()
     {
-        return $this->public;
+        return $this->active;
     }
 
     /**
@@ -170,13 +181,13 @@ class TileLayer
     }
 
     /**
-     * Get active
+     * Get standard
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getActive()
+    public function getStandard()
     {
-        return $this->active;
+        return $this->standard;
     }
 
     /**
@@ -190,15 +201,5 @@ class TileLayer
         $this->standard = $standard;
 
         return $this;
-    }
-
-    /**
-     * Get standard
-     *
-     * @return boolean 
-     */
-    public function getStandard()
-    {
-        return $this->standard;
     }
 }

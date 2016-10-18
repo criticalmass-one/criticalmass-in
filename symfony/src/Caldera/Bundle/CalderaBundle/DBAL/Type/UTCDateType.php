@@ -14,7 +14,7 @@ class UTCDateType extends DateType
     {
         return new \DateTimeZone('UTC');
     }
-    
+
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if ($value instanceof \DateTime) {
@@ -36,7 +36,7 @@ class UTCDateType extends DateType
             self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC')
         );
 
-        if (! $converted) {
+        if (!$converted) {
             throw ConversionException::conversionFailedFormat(
                 $value,
                 $this->getName(),

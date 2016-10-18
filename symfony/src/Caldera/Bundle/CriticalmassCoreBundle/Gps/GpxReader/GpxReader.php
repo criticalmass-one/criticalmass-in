@@ -8,7 +8,8 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\Coord;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class GpxReader {
+class GpxReader
+{
     protected $path;
     protected $rawFileContent;
     protected $simpleXml;
@@ -21,7 +22,7 @@ class GpxReader {
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory.'/../web';
+        $this->rootDirectory = $rootDirectory . '/../web';
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
@@ -30,13 +31,13 @@ class GpxReader {
 
         return $this;
     }
-    
+
     public function loadFile($path)
     {
         $this->path = $path;
-        $this->rawFileContent = file_get_contents($this->rootDirectory.$path);
+        $this->rawFileContent = file_get_contents($this->rootDirectory . $path);
         $result = true;
-        
+
         try {
             $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
         } catch (\Exception $e) {
@@ -45,7 +46,7 @@ class GpxReader {
 
         return $result;
     }
-    
+
     public function loadString($content)
     {
         $this->rawFileContent = $content;
@@ -90,19 +91,19 @@ class GpxReader {
 
     public function getLatitudeOfPoint($n)
     {
-        return (double) $this->simpleXml->trk->trkseg->trkpt[$n]['lat'];
+        return (double)$this->simpleXml->trk->trkseg->trkpt[$n]['lat'];
     }
 
     public function getLongitudeOfPoint($n)
     {
-        return (double) $this->simpleXml->trk->trkseg->trkpt[$n]['lon'];
+        return (double)$this->simpleXml->trk->trkseg->trkpt[$n]['lon'];
     }
 
     public function getTimestampOfPoint($n)
     {
         return $this->simpleXml->trk->trkseg->trkpt[$n]->time;
     }
-    
+
     public function getDateTimeOfPoint($n)
     {
         return new \DateTime($this->getTimestampOfPoint($n));
@@ -124,14 +125,12 @@ class GpxReader {
 
         $counter = 0;
 
-        foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
-        {
-            $result[] = array('lat' => (float) $point['lat'], 'lng' => (float) $point['lon']);//'['.$point['lat'].','.$point['lon'].']';
+        foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
+            $result[] = array('lat' => (float)$point['lat'], 'lng' => (float)$point['lon']);//'['.$point['lat'].','.$point['lon'].']';
 
             ++$counter;
 
-            if ($counter > 20)
-            {
+            if ($counter > 20) {
                 break;
             }
         }
@@ -146,27 +145,23 @@ class GpxReader {
         $first = true;
         $counter = 0;
 
-        foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
-        {
+        foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
             if ($counter == $skip) {
-                if (!$first)
-                {
+                if (!$first) {
                     $result .= ', ';
                 }
-                
-                $result .= '{ "dateTime": "'.(new \DateTime($point->time))->format('U').'", "lat": "'.((float)$point['lat']).'", "lng": "'.((float)$point['lon']).'" }';
-                
+
+                $result .= '{ "dateTime": "' . (new \DateTime($point->time))->format('U') . '", "lat": "' . ((float)$point['lat']) . '", "lng": "' . ((float)$point['lon']) . '" }';
+
                 $counter = 0;
                 $first = false;
-            }
-            else
-            {
+            } else {
                 ++$counter;
             }
         }
 
         $result .= ']';
-        
+
         return $result;
     }
 
@@ -180,20 +175,19 @@ class GpxReader {
      */
     public function calculateDistance()
     {
-        $distance = (float) 0.0;
+        $distance = (float)0.0;
 
         $index = 1;
 
         $firstCoord = $this->simpleXml->trk->trkseg->trkpt[0];
 
-        while ($index < $this->countPoints())
-        {
+        while ($index < $this->countPoints()) {
             $secondCoord = $this->simpleXml->trk->trkseg->trkpt[$index];
-            
-            $dx = 71.5 * ((float) $firstCoord['lon'] - (float) $secondCoord['lon']);
-            $dy = 111.3 * ((float) $firstCoord['lat'] - (float) $secondCoord['lat']);
 
-            $way = (float) sqrt($dx * $dx + $dy * $dy);
+            $dx = 71.5 * ((float)$firstCoord['lon'] - (float)$secondCoord['lon']);
+            $dy = 111.3 * ((float)$firstCoord['lat'] - (float)$secondCoord['lat']);
+
+            $way = (float)sqrt($dx * $dx + $dy * $dy);
 
             $secondTime = new \DateTime($secondCoord->time);
             $firstTime = new \DateTime($firstCoord->time);
@@ -213,9 +207,9 @@ class GpxReader {
             ++$index;
         }
 
-        return (float) round($distance, 2);
+        return (float)round($distance, 2);
     }
-    
+
     public function findCoordNearDateTime(\DateTime $dateTime)
     {
         $gcl = new GpxCoordLoop($this);
@@ -226,7 +220,7 @@ class GpxReader {
         return [
             'latitude' => $this->getLatitudeOfPoint($result),
             'longitude' => $this->getLongitudeOfPoint($result)
-            ];
+        ];
     }
 
     public function calculateDuration()
@@ -241,7 +235,7 @@ class GpxReader {
         $diff = $this->getEndDateTime()->diff($this->getStartDateTime());
 
         $minutes = $diff->h * 60.0 + $diff->i;
-        $hours = $minutes/60.0;
+        $hours = $minutes / 60.0;
 
         if ($hours > 0) {
             return $this->calculateDistance() / $hours;
@@ -254,13 +248,12 @@ class GpxReader {
     {
         $positionArray = [];
 
-        foreach ($this->simpleXml->trk->trkseg->trkpt as $point)
-        {
+        foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
             $position = new Position();
             $dateTime = new \DateTime($point->time);
 
-            $position->setLatitude((float) $point['lat']);
-            $position->setLongitude((float) $point['lon']);
+            $position->setLatitude((float)$point['lat']);
+            $position->setLongitude((float)$point['lon']);
             $position->setTimestamp($dateTime->getTimestamp());
             $position->setCreationDateTime($dateTime);
 
@@ -269,35 +262,35 @@ class GpxReader {
 
         return $positionArray;
     }
-    
+
     public function getBoundingBoxes()
     {
         $firstCoord = $this->simpleXml->trk->trkseg->trkpt[0];
 
-        $north = (float) $firstCoord['lat'];
-        $east = (float) $firstCoord['lon'];
-        $south = (float) $firstCoord['lat'];
-        $west = (float) $firstCoord['lon'];
+        $north = (float)$firstCoord['lat'];
+        $east = (float)$firstCoord['lon'];
+        $south = (float)$firstCoord['lat'];
+        $west = (float)$firstCoord['lon'];
 
         $index = 1;
-        
+
         while ($index < $this->countPoints()) {
             $coord = $this->simpleXml->trk->trkseg->trkpt[$index];
 
-            if ($north < (float) $coord['lat']) {
-                $north = (float) $coord['lat'];
+            if ($north < (float)$coord['lat']) {
+                $north = (float)$coord['lat'];
             }
 
-            if ($west > (float) $coord['lon']) {
-                $west = (float) $coord['lon'];
+            if ($west > (float)$coord['lon']) {
+                $west = (float)$coord['lon'];
             }
 
-            if ($south > (float) $coord['lat']) {
-                $south = (float) $coord['lat'];
+            if ($south > (float)$coord['lat']) {
+                $south = (float)$coord['lat'];
             }
 
-            if ($east < (float) $coord['lon']) {
-                $east = (float) $coord['lon'];
+            if ($east < (float)$coord['lon']) {
+                $east = (float)$coord['lon'];
             }
 
             ++$index;

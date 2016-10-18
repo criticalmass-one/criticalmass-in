@@ -1,5 +1,5 @@
-define([], function() {
-    ModalButton = function() {
+define([], function () {
+    ModalButton = function () {
     };
 
     ModalButton.prototype._$button = null;
@@ -12,27 +12,27 @@ define([], function() {
 
     ModalButton.prototype._onClickEventCallback = null;
 
-    ModalButton.prototype.setCaption = function(caption) {
+    ModalButton.prototype.setCaption = function (caption) {
         this._caption = caption;
     };
 
-    ModalButton.prototype.setHref = function(href) {
+    ModalButton.prototype.setHref = function (href) {
         this._href = href;
     };
 
-    ModalButton.prototype.setClass = function(btnClass) {
+    ModalButton.prototype.setClass = function (btnClass) {
         this._class = btnClass;
     };
 
-    ModalButton.prototype.setIcon = function(icon) {
+    ModalButton.prototype.setIcon = function (icon) {
         this._icon = icon;
     };
 
-    ModalButton.prototype.setOnClickEvent = function(callback) {
+    ModalButton.prototype.setOnClickEvent = function (callback) {
         this._onClickEventCallback = callback;
     };
 
-    ModalButton.prototype.render = function() {
+    ModalButton.prototype.render = function () {
         var icon = '';
 
         if (this._icon) {

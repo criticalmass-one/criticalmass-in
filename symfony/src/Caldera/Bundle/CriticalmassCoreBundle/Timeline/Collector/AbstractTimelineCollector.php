@@ -31,6 +31,12 @@ abstract class AbstractTimelineCollector
         $this->convertGroupedEntities($groupedEntities);
     }
 
+    protected abstract function fetchEntities();
+
+    protected abstract function groupEntities(array $entities);
+
+    protected abstract function convertGroupedEntities(array $groupedEntities);
+
     public function getItems()
     {
         return $this->items;
@@ -44,10 +50,4 @@ abstract class AbstractTimelineCollector
 
         $this->items[$itemKey] = $item;
     }
-
-    protected abstract function fetchEntities();
-
-    protected abstract function groupEntities(array $entities);
-
-    protected abstract function convertGroupedEntities(array $groupedEntities);
 }

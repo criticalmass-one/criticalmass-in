@@ -1,5 +1,5 @@
-define(['MarkerEntity', 'leaflet-extramarkers'], function() {
-    PhotoEntity = function() {
+define(['MarkerEntity', 'leaflet-extramarkers'], function () {
+    PhotoEntity = function () {
     };
 
     PhotoEntity.prototype = new MarkerEntity();
@@ -9,7 +9,7 @@ define(['MarkerEntity', 'leaflet-extramarkers'], function() {
     PhotoEntity.prototype._dateTime = null;
     PhotoEntity.prototype._filename = null;
 
-    PhotoEntity.prototype._initIcon = function() {
+    PhotoEntity.prototype._initIcon = function () {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-camera',
             markerColor: 'yellow',
@@ -18,27 +18,27 @@ define(['MarkerEntity', 'leaflet-extramarkers'], function() {
         });
     };
 
-    PhotoEntity.prototype.getId = function() {
+    PhotoEntity.prototype.getId = function () {
         return this._id;
     };
 
-    PhotoEntity.prototype.setFilename = function(filename) {
+    PhotoEntity.prototype.setFilename = function (filename) {
         this._filename = filename;
     };
 
-    PhotoEntity.prototype.getFilename = function() {
+    PhotoEntity.prototype.getFilename = function () {
         return this._filename;
     };
 
-    PhotoEntity.prototype._initPopup = function() {
+    PhotoEntity.prototype._initPopup = function () {
         return null;
     };
 
-    PhotoEntity.prototype.openPopup = function() {
+    PhotoEntity.prototype.openPopup = function () {
         return null;
     };
 
-    PhotoEntity.prototype.getDateTime = function() {
+    PhotoEntity.prototype.getDateTime = function () {
         return this._dateTime;
     };
 

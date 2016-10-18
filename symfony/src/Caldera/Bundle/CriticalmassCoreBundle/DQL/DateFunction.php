@@ -13,7 +13,7 @@ class DateFunction extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-       return sprintf('DATE(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('DATE(%s)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser)

@@ -12,6 +12,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ApiCall
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\App", inversedBy="api_calls")
+     * @ORM\JoinColumn(name="app_id", referencedColumnName="id")
+     */
+    protected $app;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $referer;
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $request;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $dateTime;
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -19,34 +36,23 @@ class ApiCall
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\App", inversedBy="api_calls")
-     * @ORM\JoinColumn(name="app_id", referencedColumnName="id")
-     */
-    protected $app;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $referer;
-
-    /**
-     * @ORM\Column(type="string", length=256)
-     */
-    protected $request;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $dateTime;
-
-    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get referer
+     *
+     * @return string
+     */
+    public function getReferer()
+    {
+        return $this->referer;
     }
 
     /**
@@ -63,13 +69,13 @@ class ApiCall
     }
 
     /**
-     * Get referer
+     * Get request
      *
-     * @return string 
+     * @return string
      */
-    public function getReferer()
+    public function getRequest()
     {
-        return $this->referer;
+        return $this->request;
     }
 
     /**
@@ -86,13 +92,13 @@ class ApiCall
     }
 
     /**
-     * Get request
+     * Get dateTime
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getRequest()
+    public function getDateTime()
     {
-        return $this->request;
+        return $this->dateTime;
     }
 
     /**
@@ -109,13 +115,13 @@ class ApiCall
     }
 
     /**
-     * Get dateTime
+     * Get app
      *
-     * @return \DateTime 
+     * @return App
      */
-    public function getDateTime()
+    public function getApp()
     {
-        return $this->dateTime;
+        return $this->app;
     }
 
     /**
@@ -129,15 +135,5 @@ class ApiCall
         $this->app = $app;
 
         return $this;
-    }
-
-    /**
-     * Get app
-     *
-     * @return App
-     */
-    public function getApp()
-    {
-        return $this->app;
     }
 }

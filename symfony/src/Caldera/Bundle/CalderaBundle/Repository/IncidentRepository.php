@@ -8,14 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class IncidentRepository extends EntityRepository
 {
-    protected function findByRideFilters(QueryBuilder $builder, Ride $ride)
-    {
-        $builder->where($builder->expr()->eq('incident.city', $ride->getCity()->getId()));
-        $builder->andWhere($builder->expr()->lte('incident.visibleFrom', '\''.$ride->getDateTime()->format('Y-m-d H:i:s').'\''));
-        $builder->andWhere($builder->expr()->gte('incident.visibleTo', '\''.$ride->getDateTime()->format('Y-m-d H:i:s').'\''));
-        $builder->andWhere($builder->expr()->eq('incident.enabled', 1));
-    }
-
     public function findByRide(Ride $ride)
     {
         $builder = $this->createQueryBuilder('incident');
@@ -29,6 +21,14 @@ class IncidentRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    protected function findByRideFilters(QueryBuilder $builder, Ride $ride)
+    {
+        $builder->where($builder->expr()->eq('incident.city', $ride->getCity()->getId()));
+        $builder->andWhere($builder->expr()->lte('incident.visibleFrom', '\'' . $ride->getDateTime()->format('Y-m-d H:i:s') . '\''));
+        $builder->andWhere($builder->expr()->gte('incident.visibleTo', '\'' . $ride->getDateTime()->format('Y-m-d H:i:s') . '\''));
+        $builder->andWhere($builder->expr()->eq('incident.enabled', 1));
     }
 
     public function countByRide(Ride $ride)

@@ -4,7 +4,9 @@
 
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a></li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a>
+    </li>
 
 {% endblock %}
 
@@ -17,64 +19,66 @@
                 </h1>
 
                 <p class="lead">
-                    Du kannst die Daten einer Tour automatisch von facebook importieren lassen. Vorraussetzung ist, dass es auf der Seite <a href="{{ city.facebook }}">{{ city.title }}</a> auf facebook eine entsprechende Veranstaltung gibt.
+                    Du kannst die Daten einer Tour automatisch von facebook importieren lassen. Vorraussetzung ist, dass
+                    es auf der Seite <a href="{{ city.facebook }}">{{ city.title }}</a> auf facebook eine entsprechende
+                    Veranstaltung gibt.
                 </p>
             </div>
         </div>
 
         {% if facebookRide %}
-        <div class="row">
-            <div class="col-md-4">
-                <h2>
-                    bisherige Daten
-                </h2>
-            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>
+                        bisherige Daten
+                    </h2>
+                </div>
 
-            <div class="col-md-4">
-                <h2>
-                    zu speichernde Daten
-                </h2>
-            </div>
+                <div class="col-md-4">
+                    <h2>
+                        zu speichernde Daten
+                    </h2>
+                </div>
 
-            <div class="col-md-4">
-                <h2>
-                    importierte Daten
-                </h2>
-            </div>
-        </div>
-
-        <div class="row margin-bottom-medium">
-            <div class="col-md-4">
-                <div
-                    id="left-map"
-                    style="height: 250px;"
-                    data-map-center-latitude="{{ ride.latitude }}"
-                    data-map-center-longitude="{{ ride.longitude }}"
-                    data-map-zoomlevel="13"
-                >
-
+                <div class="col-md-4">
+                    <h2>
+                        importierte Daten
+                    </h2>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div id="center-map" style="height: 250px;">
+            <div class="row margin-bottom-medium">
+                <div class="col-md-4">
+                    <div
+                            id="left-map"
+                            style="height: 250px;"
+                            data-map-center-latitude="{{ ride.latitude }}"
+                            data-map-center-longitude="{{ ride.longitude }}"
+                            data-map-zoomlevel="13"
+                    >
 
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div id="center-map" style="height: 250px;">
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div
+                            id="right-map"
+                            style="height: 250px;"
+                            data-map-center-latitude="{{ facebookRide.latitude }}"
+                            data-map-center-longitude="{{ facebookRide.longitude }}"
+                            data-map-zoomlevel="13"
+                    >
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div
-                    id="right-map"
-                    style="height: 250px;"
-                    data-map-center-latitude="{{ facebookRide.latitude }}"
-                    data-map-center-longitude="{{ facebookRide.longitude }}"
-                    data-map-zoomlevel="13"
-                >
-                </div>
-            </div>
-        </div>
-
-        {{ form_start(form) }}
+            {{ form_start(form) }}
 
             <div class="row">
                 <div class="col-md-4">
@@ -86,7 +90,7 @@
                         <label>
                             Titel:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.title }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.title }}"/>
                     </div>
                 </div>
 
@@ -108,7 +112,8 @@
                         <label>
                             Titel:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.title }}" />
+                        <input type="text" disabled="disabled" class="form-control value"
+                               value="{{ facebookRide.title }}"/>
                     </div>
                 </div>
             </div>
@@ -164,7 +169,8 @@
                         <label class="control-label">
                             Datum:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value"
+                               value="{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}"/>
                     </div>
                 </div>
 
@@ -186,7 +192,8 @@
                         <label class="control-label">
                             Datum:
                         </label>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.dateTime|date('d.m.Y', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value"
+                               value="{{ facebookRide.dateTime|date('d.m.Y', 'Europe/Berlin') }}"/>
                     </div>
                 </div>
             </div>
@@ -203,12 +210,13 @@
                     <div class="input-group">
                         <span class="input-group-addon">
                             {% if ride.hasTime %}
-                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                                <input type="checkbox" disabled="disabled" class="form-control" checked="checked"/>
                             {% else %}
-                            <input type="checkbox" disabled="disabled" class="form-control" />
+                                <input type="checkbox" disabled="disabled" class="form-control"/>
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.dateTime|date('H:i', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value"
+                               value="{{ ride.dateTime|date('H:i', 'Europe/Berlin') }}"/>
                     </div>
                 </div>
 
@@ -235,12 +243,13 @@
                     <div class="input-group">
                         <span class="input-group-addon">
                             {% if facebookRide.hasTime %}
-                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                                <input type="checkbox" disabled="disabled" class="form-control" checked="checked"/>
                             {% else %}
-                            <input type="checkbox" disabled="disabled" class="form-control" />
+                                <input type="checkbox" disabled="disabled" class="form-control"/>
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.dateTime|date('H:i', 'Europe/Berlin') }}" />
+                        <input type="text" disabled="disabled" class="form-control value"
+                               value="{{ facebookRide.dateTime|date('H:i', 'Europe/Berlin') }}"/>
                     </div>
                 </div>
             </div>
@@ -257,12 +266,12 @@
                     <div class="input-group">
                         <span class="input-group-addon">
                             {% if ride.hasLocation %}
-                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                                <input type="checkbox" disabled="disabled" class="form-control" checked="checked"/>
                             {% else %}
-                            <input type="checkbox" disabled="disabled" class="form-control" />
+                                <input type="checkbox" disabled="disabled" class="form-control"/>
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.location }}" />
+                        <input type="text" disabled="disabled" class="form-control value" value="{{ ride.location }}"/>
                     </div>
                 </div>
 
@@ -289,12 +298,13 @@
                     <div class="input-group">
                         <span class="input-group-addon">
                             {% if facebookRide.hasLocation %}
-                            <input type="checkbox" disabled="disabled" class="form-control" checked="checked" />
+                                <input type="checkbox" disabled="disabled" class="form-control" checked="checked"/>
                             {% else %}
-                            <input type="checkbox" disabled="disabled" class="form-control" />
+                                <input type="checkbox" disabled="disabled" class="form-control"/>
                             {% endif %}
                         </span>
-                        <input type="text" disabled="disabled" class="form-control value" value="{{ facebookRide.location }}" />
+                        <input type="text" disabled="disabled" class="form-control value"
+                               value="{{ facebookRide.location }}"/>
                     </div>
                 </div>
             </div>
@@ -314,24 +324,28 @@
                     </button>
                 </div>
             </div>
-        </form>
+            </form>
         {% else %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-danger">
-                    <strong>Hoppla!</strong>
-                    Leider konnte zu dieser Tour keine entsprechende Veranstaltung auf facebook ermittelt werden. Bitte überprüfe die <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.slug }) }}">Einstellungen von {{ city.city }}</a>, ob dort die Adresse einer Seite auf facebook angegeben wurde und ob auf der Seite für {{ ride.dateTime|date('F Y') }} überhaupt schon eine Tour erstellt worden ist.
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <strong>Hoppla!</strong>
+                        Leider konnte zu dieser Tour keine entsprechende Veranstaltung auf facebook ermittelt werden.
+                        Bitte überprüfe die <a
+                                href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.slug }) }}">Einstellungen
+                            von {{ city.city }}</a>, ob dort die Adresse einer Seite auf facebook angegeben wurde und ob
+                        auf der Seite für {{ ride.dateTime|date('F Y') }} überhaupt schon eine Tour erstellt worden ist.
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a class="btn btn-default pull-right" href="{{ objectPath(ride) }}">
-                    Zurück
-                </a>
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-default pull-right" href="{{ objectPath(ride) }}">
+                        Zurück
+                    </a>
+                </div>
             </div>
-        </div>
         {% endif %}
     </div>
 

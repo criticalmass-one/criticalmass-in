@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModalButton', 'leaflet-extramarkers'], function(CriticalService) {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModalButton', 'leaflet-extramarkers'], function (CriticalService) {
     CityEntity = function () {
     };
 
@@ -11,7 +11,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
     CityEntity.prototype._slug = null;
     CityEntity.prototype._description = null;
 
-    CityEntity.prototype._initIcon = function() {
+    CityEntity.prototype._initIcon = function () {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-university',
             markerColor: 'blue',
@@ -35,7 +35,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
         centerButton.setCaption('Zentrieren');
         centerButton.setIcon('map-pin');
         centerButton.setClass('btn-success');
-        centerButton.setOnClickEvent(function() {
+        centerButton.setOnClickEvent(function () {
             that._CriticalService.getMap().setView([that._latitude, that._longitude], 13);
         });
 
@@ -43,7 +43,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
         cityButton.setCaption('Städteseite');
         cityButton.setIcon('university');
         cityButton.setClass('btn-success');
-        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', { citySlug: this._slug }));
+        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', {citySlug: this._slug}));
 
         var closeButton = new CloseModalButton;
 
@@ -56,7 +56,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
         this._modal.setButtons(buttons);
     };
 
-    CityEntity.prototype.getSlug= function() {
+    CityEntity.prototype.getSlug = function () {
         return this._slug;
     };
 

@@ -13,7 +13,7 @@ class RandFunction extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-       return 'RAND()';
+        return 'RAND()';
     }
 
     public function parse(Parser $parser)

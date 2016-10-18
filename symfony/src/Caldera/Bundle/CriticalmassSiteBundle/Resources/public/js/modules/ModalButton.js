@@ -1,5 +1,5 @@
-define([], function() {
-    ModalButton = function() {
+define([], function () {
+    ModalButton = function () {
     };
 
     ModalButton.prototype._caption = '';
@@ -8,23 +8,23 @@ define([], function() {
     ModalButton.prototype._type = '';
     ModalButton.prototype._$button = null;
 
-    ModalButton.prototype.setCaption = function(caption) {
+    ModalButton.prototype.setCaption = function (caption) {
         this._caption = caption;
     };
 
-    ModalButton.prototype.setIcon = function(icon) {
+    ModalButton.prototype.setIcon = function (icon) {
         this._icon = icon;
     };
 
-    ModalButton.prototype.setLink = function(link) {
+    ModalButton.prototype.setLink = function (link) {
         this._link = link;
     };
 
-    ModalButton.prototype.setType = function(type) {
+    ModalButton.prototype.setType = function (type) {
         this._type = type;
     };
 
-    ModalButton.prototype._build = function() {
+    ModalButton.prototype._build = function () {
         this._$button = $([
             '<div class="modal fade" tabindex="-1" role="dialog">',
             '  <div class="modal-dialog modal-' + this._size + '">',

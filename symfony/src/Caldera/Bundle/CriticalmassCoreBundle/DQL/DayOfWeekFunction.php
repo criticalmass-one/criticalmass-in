@@ -13,7 +13,7 @@ class DayOfWeekFunction extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-       return sprintf('DAYOFWEEK(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('DAYOFWEEK(%s)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser)

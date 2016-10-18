@@ -9,8 +9,8 @@ class OsmTileResolver
     public static function createTile($x, $y, $z)
     {
         $tile = new OsmTile($x, $y, $z);
-        $tile->setUrl('http://a.tile.openstreetmap.org/'.$z.'/'.$x.'/'.$y.'.png');
-        
+        $tile->setUrl('http://a.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png');
+
         return $tile;
     }
 }

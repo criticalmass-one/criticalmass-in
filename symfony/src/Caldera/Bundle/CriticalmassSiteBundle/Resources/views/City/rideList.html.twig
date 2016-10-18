@@ -32,37 +32,37 @@
                 </h1>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <table id="cityRideList" class="table">
                     <thead>
-                        <tr>
-                            <th data-sortAttribute="rideDate">
-                                Datum
-                            </th>
-                            <th>
-                                Uhrzeit
-                            </th>
-                            <th data-sortAttribute="rideTitle">
-                                Titel
-                            </th>
-                            <th data-sortAttribute="rideLocation">
-                                Treffpunkt
-                            </th>
-                            <th data-sortAttribute="rideParticipants">
-                                Teilnehmer
-                            </th>
-                            <th data-sortAttribute="rideDistance">
-                                Distanz
-                            </th>
-                            <th data-sortAttribute="rideDuration">
-                                Dauer
-                            </th>
-                        </tr>
+                    <tr>
+                        <th data-sortAttribute="rideDate">
+                            Datum
+                        </th>
+                        <th>
+                            Uhrzeit
+                        </th>
+                        <th data-sortAttribute="rideTitle">
+                            Titel
+                        </th>
+                        <th data-sortAttribute="rideLocation">
+                            Treffpunkt
+                        </th>
+                        <th data-sortAttribute="rideParticipants">
+                            Teilnehmer
+                        </th>
+                        <th data-sortAttribute="rideDistance">
+                            Distanz
+                        </th>
+                        <th data-sortAttribute="rideDuration">
+                            Dauer
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for ride in rides %}
+                    {% for ride in rides %}
                         <tr class="city"
                             data-rideDate="{{ ride.dateTime|date('Y-m-d H-i', 'Europe/Berlin') }}"
                             data-rideTitle="{{ ride.getFancyTitle() }}"
@@ -88,21 +88,21 @@
                             </td>
                             <td>
                                 {% if ride.estimatedParticipants %}
-                                {{ ride.estimatedParticipants }}
+                                    {{ ride.estimatedParticipants }}
                                 {% endif %}
                             </td>
                             <td>
                                 {% if ride.estimatedDistance %}
-                                {{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer
+                                    {{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer
                                 {% endif %}
                             </td>
                             <td>
                                 {% if ride.estimatedDuration %}
-                                {{ ride.estimatedDuration|round(2) }}&nbsp;Stunden
+                                    {{ ride.estimatedDuration|round(2) }}&nbsp;Stunden
                                 {% endif %}
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

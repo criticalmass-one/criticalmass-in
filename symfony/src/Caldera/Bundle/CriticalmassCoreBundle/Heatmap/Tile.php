@@ -3,7 +3,8 @@
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 
-class Tile {
+class Tile
+{
     protected $pixelList;
     protected $size = 256;
 
@@ -55,30 +56,9 @@ class Tile {
         return $this->osmZoom;
     }
 
-    public function getTopLatitude()
-    {
-        return OSMCoordCalculator::osmYTileToLatitude($this->osmYTile, $this->osmZoom);
-    }
-
-    public function getBottomLatitude()
-    {
-        return OSMCoordCalculator::osmYTileToLatitude($this->osmYTile + 1, $this->osmZoom);
-    }
-
-    public function getLeftLongitude()
-    {
-        return OSMCoordCalculator::osmXTileToLongitude($this->osmXTile, $this->osmZoom);
-    }
-
-    public function getRightLongitude()
-    {
-        return OSMCoordCalculator::osmXTileToLongitude($this->osmXTile + 1, $this->osmZoom);
-    }
-
     public function dropPathArray($pathArray)
     {
-        foreach ($pathArray as $path)
-        {
+        foreach ($pathArray as $path) {
             $this->dropPath($path);
         }
     }
@@ -87,34 +67,52 @@ class Tile {
     {
         $vector = array();
 
-        $vector[0] = (float) $path->getEndPosition()->getLatitude() - $path->getStartPosition()->getLatitude();
-        $vector[1] = (float) $path->getEndPosition()->getLongitude() - $path->getStartPosition()->getLongitude();
+        $vector[0] = (float)$path->getEndPosition()->getLatitude() - $path->getStartPosition()->getLatitude();
+        $vector[1] = (float)$path->getEndPosition()->getLongitude() - $path->getStartPosition()->getLongitude();
 
         $n = 25;
 
-        for ($i = 0; $i < $n; ++$i)
-        {
-            $latitude = (float) $path->getStartPosition()->getLatitude() + (float) $i * $vector[0] * (1 / $n);
-            $longitude = (float) $path->getStartPosition()->getLongitude() + (float) $i * $vector[1] * (1 / $n);
+        for ($i = 0; $i < $n; ++$i) {
+            $latitude = (float)$path->getStartPosition()->getLatitude() + (float)$i * $vector[0] * (1 / $n);
+            $longitude = (float)$path->getStartPosition()->getLongitude() + (float)$i * $vector[1] * (1 / $n);
 
-            $x = (float) $this->size / ($this->getRightLongitude() - $this->getLeftLongitude()) * ($longitude - $this->getLeftLongitude());
-            $y = (float) $this->size / ($this->getBottomLatitude() - $this->getTopLatitude()) * ($latitude - $this->getTopLatitude());
+            $x = (float)$this->size / ($this->getRightLongitude() - $this->getLeftLongitude()) * ($longitude - $this->getLeftLongitude());
+            $y = (float)$this->size / ($this->getBottomLatitude() - $this->getTopLatitude()) * ($latitude - $this->getTopLatitude());
 
-            if (($x >= 0) && ($x < $this->size) && ($y >= 0) && ($y < $this->size))
-            {
+            if (($x >= 0) && ($x < $this->size) && ($y >= 0) && ($y < $this->size)) {
                 $this->addPixel(new Pixel(floor($x), floor($y)));
             }
         }
     }
 
-    public function getSize()
+    public function getRightLongitude()
     {
-        return $this->size;
+        return OSMCoordCalculator::osmXTileToLongitude($this->osmXTile + 1, $this->osmZoom);
+    }
+
+    public function getLeftLongitude()
+    {
+        return OSMCoordCalculator::osmXTileToLongitude($this->osmXTile, $this->osmZoom);
+    }
+
+    public function getBottomLatitude()
+    {
+        return OSMCoordCalculator::osmYTileToLatitude($this->osmYTile + 1, $this->osmZoom);
+    }
+
+    public function getTopLatitude()
+    {
+        return OSMCoordCalculator::osmYTileToLatitude($this->osmYTile, $this->osmZoom);
     }
 
     public function addPixel(Pixel $pixel)
     {
         $this->pixelList[$pixel->getHash()] = $pixel;
+    }
+
+    public function getSize()
+    {
+        return $this->size;
     }
 
     public function sortPixelList()
@@ -124,21 +122,20 @@ class Tile {
 
     public function popPixel()
     {
-        if ($this->hasPixel())
-        {
+        if ($this->hasPixel()) {
             return array_pop($this->pixelList);
         }
 
         return null;
     }
 
-    public function countPixel()
-    {
-        return count($this->pixelList);
-    }
-
     public function hasPixel()
     {
         return $this->countPixel() > 0;
+    }
+
+    public function countPixel()
+    {
+        return count($this->pixelList);
     }
 }

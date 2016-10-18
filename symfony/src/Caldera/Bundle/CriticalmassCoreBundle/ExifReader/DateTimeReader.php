@@ -2,13 +2,13 @@
 
 namespace Caldera\CriticalmassGalleryBundle\Utility\ExifReader;
 
-class DateTimeReader extends AbstractExifReader {
+class DateTimeReader extends AbstractExifReader
+{
     protected $dateTime;
 
     public function execute()
     {
-        if (isset($this->exifData['IFD0']['DateTime']))
-        {
+        if (isset($this->exifData['IFD0']['DateTime'])) {
 
             $dateTime = $this->exifData['IFD0']['DateTime'];
 
@@ -17,15 +17,13 @@ class DateTimeReader extends AbstractExifReader {
             $dateTimeParts[0] = str_replace(':', '-', $dateTimeParts[0]);
 
             $dateTime = implode(' ', $dateTimeParts);
-            
+
             $this->dateTime = new \DateTime($dateTime);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
-    
+
     public function getDateTime()
     {
         return $this->dateTime;

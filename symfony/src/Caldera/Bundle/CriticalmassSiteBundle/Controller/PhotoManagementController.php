@@ -290,7 +290,7 @@ class PhotoManagementController extends AbstractController
 
             $cityList[$citySlug] = $city;
         }
-        
+
         shuffle($cityList);
 
         return $this->render(
@@ -315,12 +315,12 @@ class PhotoManagementController extends AbstractController
             $rotate = -90;
         }
 
-        $path = $this->getParameter('kernel.root_dir').'/../web';
+        $path = $this->getParameter('kernel.root_dir') . '/../web';
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
-        $image = imagecreatefromjpeg($path.$filename);
+        $image = imagecreatefromjpeg($path . $filename);
         $image = imagerotate($image, $rotate, 0);
-        imagejpeg($image, $path.$filename, 100);
+        imagejpeg($image, $path . $filename, 100);
         imagedestroy($image);
 
         $this->recachePhoto($photo);

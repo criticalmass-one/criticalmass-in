@@ -10,7 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="weather")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\WeatherRepository")
  */
-class Weather {
+class Weather
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -127,11 +128,21 @@ class Weather {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get json
+     *
+     * @return string
+     */
+    public function getJson()
+    {
+        return $this->json;
     }
 
     /**
@@ -148,13 +159,13 @@ class Weather {
     }
 
     /**
-     * Get json
+     * Get weatherDateTime
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getJson()
+    public function getWeatherDateTime()
     {
-        return $this->json;
+        return $this->weatherDateTime;
     }
 
     /**
@@ -171,13 +182,13 @@ class Weather {
     }
 
     /**
-     * Get weatherDateTime
+     * Get creationDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getWeatherDateTime()
+    public function getCreationDateTime()
     {
-        return $this->weatherDateTime;
+        return $this->creationDateTime;
     }
 
     /**
@@ -194,13 +205,13 @@ class Weather {
     }
 
     /**
-     * Get creationDateTime
+     * Get temperatureMin
      *
-     * @return \DateTime 
+     * @return float
      */
-    public function getCreationDateTime()
+    public function getTemperatureMin()
     {
-        return $this->creationDateTime;
+        return $this->temperatureMin;
     }
 
     /**
@@ -217,13 +228,13 @@ class Weather {
     }
 
     /**
-     * Get temperatureMin
+     * Get temperatureMax
      *
-     * @return float 
+     * @return float
      */
-    public function getTemperatureMin()
+    public function getTemperatureMax()
     {
-        return $this->temperatureMin;
+        return $this->temperatureMax;
     }
 
     /**
@@ -240,13 +251,13 @@ class Weather {
     }
 
     /**
-     * Get temperatureMax
+     * Get temperatureMorning
      *
-     * @return float 
+     * @return float
      */
-    public function getTemperatureMax()
+    public function getTemperatureMorning()
     {
-        return $this->temperatureMax;
+        return $this->temperatureMorning;
     }
 
     /**
@@ -263,13 +274,13 @@ class Weather {
     }
 
     /**
-     * Get temperatureMorning
+     * Get temperatureDay
      *
-     * @return float 
+     * @return float
      */
-    public function getTemperatureMorning()
+    public function getTemperatureDay()
     {
-        return $this->temperatureMorning;
+        return $this->temperatureDay;
     }
 
     /**
@@ -286,13 +297,13 @@ class Weather {
     }
 
     /**
-     * Get temperatureDay
+     * Get temperatureEvening
      *
-     * @return float 
+     * @return float
      */
-    public function getTemperatureDay()
+    public function getTemperatureEvening()
     {
-        return $this->temperatureDay;
+        return $this->temperatureEvening;
     }
 
     /**
@@ -309,13 +320,13 @@ class Weather {
     }
 
     /**
-     * Get temperatureEvening
+     * Get temperatureNight
      *
-     * @return float 
+     * @return float
      */
-    public function getTemperatureEvening()
+    public function getTemperatureNight()
     {
-        return $this->temperatureEvening;
+        return $this->temperatureNight;
     }
 
     /**
@@ -332,13 +343,13 @@ class Weather {
     }
 
     /**
-     * Get temperatureNight
+     * Get pressure
      *
-     * @return float 
+     * @return float
      */
-    public function getTemperatureNight()
+    public function getPressure()
     {
-        return $this->temperatureNight;
+        return $this->pressure;
     }
 
     /**
@@ -355,13 +366,13 @@ class Weather {
     }
 
     /**
-     * Get pressure
+     * Get humidity
      *
-     * @return float 
+     * @return float
      */
-    public function getPressure()
+    public function getHumidity()
     {
-        return $this->pressure;
+        return $this->humidity;
     }
 
     /**
@@ -378,13 +389,13 @@ class Weather {
     }
 
     /**
-     * Get humidity
+     * Get weatherCode
      *
-     * @return float 
+     * @return integer
      */
-    public function getHumidity()
+    public function getWeatherCode()
     {
-        return $this->humidity;
+        return $this->weatherCode;
     }
 
     /**
@@ -401,13 +412,13 @@ class Weather {
     }
 
     /**
-     * Get weatherCode
+     * Get weather
      *
-     * @return integer 
+     * @return string
      */
-    public function getWeatherCode()
+    public function getWeather()
     {
-        return $this->weatherCode;
+        return $this->weather;
     }
 
     /**
@@ -424,13 +435,13 @@ class Weather {
     }
 
     /**
-     * Get weather
+     * Get weatherDescription
      *
-     * @return string 
+     * @return string
      */
-    public function getWeather()
+    public function getWeatherDescription()
     {
-        return $this->weather;
+        return $this->weatherDescription;
     }
 
     /**
@@ -447,13 +458,13 @@ class Weather {
     }
 
     /**
-     * Get weatherDescription
+     * Get windSpeed
      *
-     * @return string 
+     * @return float
      */
-    public function getWeatherDescription()
+    public function getWindSpeed()
     {
-        return $this->weatherDescription;
+        return $this->windSpeed;
     }
 
     /**
@@ -470,13 +481,13 @@ class Weather {
     }
 
     /**
-     * Get windSpeed
+     * Get windDeg
      *
-     * @return float 
+     * @return integer
      */
-    public function getWindSpeed()
+    public function getWindDeg()
     {
-        return $this->windSpeed;
+        return $this->windDeg;
     }
 
     /**
@@ -493,13 +504,13 @@ class Weather {
     }
 
     /**
-     * Get windDeg
+     * Get clouds
      *
-     * @return integer 
+     * @return integer
      */
-    public function getWindDeg()
+    public function getClouds()
     {
-        return $this->windDeg;
+        return $this->clouds;
     }
 
     /**
@@ -516,13 +527,13 @@ class Weather {
     }
 
     /**
-     * Get clouds
+     * Get rain
      *
-     * @return integer 
+     * @return float
      */
-    public function getClouds()
+    public function getRain()
     {
-        return $this->clouds;
+        return $this->rain;
     }
 
     /**
@@ -539,13 +550,13 @@ class Weather {
     }
 
     /**
-     * Get rain
+     * Get ride
      *
-     * @return float 
+     * @return Ride
      */
-    public function getRain()
+    public function getRide()
     {
-        return $this->rain;
+        return $this->ride;
     }
 
     /**
@@ -562,13 +573,13 @@ class Weather {
     }
 
     /**
-     * Get ride
+     * Get weatherIcon
      *
-     * @return Ride
+     * @return string
      */
-    public function getRide()
+    public function getWeatherIcon()
     {
-        return $this->ride;
+        return $this->weatherIcon;
     }
 
     /**
@@ -582,15 +593,5 @@ class Weather {
         $this->weatherIcon = $weatherIcon;
 
         return $this;
-    }
-
-    /**
-     * Get weatherIcon
-     *
-     * @return string 
-     */
-    public function getWeatherIcon()
-    {
-        return $this->weatherIcon;
     }
 }

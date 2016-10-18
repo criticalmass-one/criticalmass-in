@@ -7,13 +7,13 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {% if app.getUser() %}
-                <h1>
-                    Hej {{ app.getUser().username }}!
-                </h1>
+                    <h1>
+                        Hej {{ app.getUser().username }}!
+                    </h1>
                 {% else %}
-                <h1>
-                    Hej!
-                </h1>
+                    <h1>
+                        Hej!
+                    </h1>
                 {% endif %}
                 <p class="lead">
                     Gerade unterwegs? Unterhalte dich mit anderen Teilnehmern deiner Masse.
@@ -25,7 +25,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <form class="" action="">
                     <div class="form-group">
-                        <input id="m" class="form-control" autocomplete="off" placeholder="Deine Nachricht…" />
+                        <input id="m" class="form-control" autocomplete="off" placeholder="Deine Nachricht…"/>
                     </div>
                 </form>
             </div>
@@ -34,66 +34,70 @@
         <div class="row">
             <div class="col-md-7 col-md-offset-1">
                 <ul id="messages" class="list-unstyled">
-                {% for post in recentMessages %}
-                    {% if post.user %}
-                        {% set username = post.user.username %}
-                        {% set gravatarUrl = gravatarUrl(post.user) %}
-                    {% else %}
-                        {% set username = post.anonymousName.name %}
-                        {% set gravatarUrl = 'http://www.gravatar.com/avatar/?d=identicon&s=64' %}
-                    {% endif %}
+                    {% for post in recentMessages %}
+                        {% if post.user %}
+                            {% set username = post.user.username %}
+                            {% set gravatarUrl = gravatarUrl(post.user) %}
+                        {% else %}
+                            {% set username = post.anonymousName.name %}
+                            {% set gravatarUrl = 'http://www.gravatar.com/avatar/?d=identicon&s=64' %}
+                        {% endif %}
 
-                    <li class="margin-bottom-medium">
-                        <div class="media">
-                            <div class="media-left">
-                                <img class="media-object img-circle" src="{{ gravatarUrl }}" alt="...">
+                        <li class="margin-bottom-medium">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="media-object img-circle" src="{{ gravatarUrl }}" alt="...">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{ username }}</h4>
+                                    {{ post.message|hashtagToCity }}
+                                    <small style="display: block;">{{ post.dateTime|date('d.m.Y H:i:s') }}&nbsp;Uhr
+                                    </small>
+                                </div>
                             </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">{{ username }}</h4>
-                                {{ post.message|hashtagToCity }}
-                                <small style="display: block;">{{ post.dateTime|date('d.m.Y H:i:s') }}&nbsp;Uhr</small>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
 
             <div class="col-md-3">
                 {% if not app.getUser() and not anonymousNameId %}
-                <div class="row" id="gender-selector">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    Mitreden?
-                                </h3>
-                            </div>
+                    <div class="row" id="gender-selector">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        Mitreden?
+                                    </h3>
+                                </div>
 
-                            <div class="panel-body">
-                                <div class="text-center">
-                                    <div id="chat-gender-buttons" class="btn-group" role="group" aria-label="...">
-                                        <button data-gender="male" class="btn btn-default" id="chat-button-male">
-                                            <i class="fa fa-mars" aria-hidden="true"></i>
-                                        </button>
+                                <div class="panel-body">
+                                    <div class="text-center">
+                                        <div id="chat-gender-buttons" class="btn-group" role="group" aria-label="...">
+                                            <button data-gender="male" class="btn btn-default" id="chat-button-male">
+                                                <i class="fa fa-mars" aria-hidden="true"></i>
+                                            </button>
 
-                                        <button data-gender="transgender" class="btn btn-default" id="chat-button-transgender">
-                                            <i class="fa fa-transgender" aria-hidden="true"></i>
-                                        </button>
+                                            <button data-gender="transgender" class="btn btn-default"
+                                                    id="chat-button-transgender">
+                                                <i class="fa fa-transgender" aria-hidden="true"></i>
+                                            </button>
 
-                                        <button data-gender="genderless" class="btn btn-default" id="chat-button-genderless">
-                                            <i class="fa fa-genderless" aria-hidden="true"></i>
-                                        </button>
+                                            <button data-gender="genderless" class="btn btn-default"
+                                                    id="chat-button-genderless">
+                                                <i class="fa fa-genderless" aria-hidden="true"></i>
+                                            </button>
 
-                                        <button data-gender="female" class="btn btn-default" id="chat-button-female">
-                                            <i class="fa fa-venus" aria-hidden="true"></i>
-                                        </button>
+                                            <button data-gender="female" class="btn btn-default"
+                                                    id="chat-button-female">
+                                                <i class="fa fa-venus" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 {% endif %}
 
                 <div class="row">
@@ -119,7 +123,7 @@
     </div>
 
     <script type="text/javascript">
-        CriticalMass.loadModule('ChatPage', null, null, function(chatPage) {
+        CriticalMass.loadModule('ChatPage', null, null, function (chatPage) {
             {% if app.getUser() %}
             chatPage.setUserToken('{{ app.getUser().token }}');
             {% endif %}

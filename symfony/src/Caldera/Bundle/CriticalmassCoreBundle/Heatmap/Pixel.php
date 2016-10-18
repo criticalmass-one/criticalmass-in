@@ -3,7 +3,8 @@
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 
-class Pixel {
+class Pixel
+{
     protected $x;
     protected $y;
     protected $value;
@@ -38,6 +39,6 @@ class Pixel {
 
     public function getHash()
     {
-        return $this->x."-".$this->y;
+        return $this->x . "-" . $this->y;
     }
 } 

@@ -3,7 +3,8 @@
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 
-class Position {
+class Position
+{
     protected $latitude;
     protected $longitude;
 

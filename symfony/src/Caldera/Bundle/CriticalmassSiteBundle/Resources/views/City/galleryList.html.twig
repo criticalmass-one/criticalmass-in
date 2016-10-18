@@ -28,29 +28,30 @@
                 </h1>
 
                 <p class="lead">
-                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos hochgeladen wurden.
+                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos
+                    hochgeladen wurden.
                 </p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <table id="cityRideList" class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Datum
-                            </th>
-                            <th>
-                                Titel
-                            </th>
-                            <th>
-                                Fotos
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Datum
+                        </th>
+                        <th>
+                            Titel
+                        </th>
+                        <th>
+                            Fotos
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for key, ride in result.rides %}
+                    {% for key, ride in result.rides %}
                         <tr class="ride">
                             <td>
                                 <a href="{{ objectPath(ride) }}">
@@ -68,7 +69,7 @@
                                 </a>
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

@@ -12,29 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class ThreadView implements ViewInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="Thread", inversedBy="thread_views")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected $thread;
-    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     public function __construct()
     {
@@ -44,7 +40,7 @@ class ThreadView implements ViewInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,15 +83,15 @@ class ThreadView implements ViewInterface
         return $this;
     }
 
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
     public function setThread($thread)
     {
         $this->thread = $thread;
 
         return $this;
-    }
-
-    public function getThread()
-    {
-        return $this->thread;
     }
 }

@@ -36,11 +36,21 @@ class OpeningTime
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId(): integer
     {
         return $this->id;
+    }
+
+    /**
+     * Get weekday
+     *
+     * @return integer
+     */
+    public function getWeekday(): integer
+    {
+        return $this->weekday;
     }
 
     /**
@@ -57,13 +67,13 @@ class OpeningTime
     }
 
     /**
-     * Get weekday
+     * Get openDateTime
      *
-     * @return integer
+     * @return \DateTime
      */
-    public function getWeekday(): integer
+    public function getOpenDateTime(): \DateTime
     {
-        return $this->weekday;
+        return $this->openDateTime;
     }
 
     /**
@@ -80,13 +90,13 @@ class OpeningTime
     }
 
     /**
-     * Get openDateTime
+     * Get closeDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getOpenDateTime(): \DateTime
+    public function getCloseDateTime(): \DateTime
     {
-        return $this->openDateTime;
+        return $this->closeDateTime;
     }
 
     /**
@@ -100,15 +110,5 @@ class OpeningTime
         $this->closeDateTime = $closeDateTime;
 
         return $this;
-    }
-
-    /**
-     * Get closeDateTime
-     *
-     * @return \DateTime 
-     */
-    public function getCloseDateTime(): \DateTime
-    {
-        return $this->closeDateTime;
     }
 }

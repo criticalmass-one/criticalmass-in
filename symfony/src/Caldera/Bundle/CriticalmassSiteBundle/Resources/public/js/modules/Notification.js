@@ -1,6 +1,6 @@
-define(['socketio'], function() {
+define(['socketio'], function () {
 
-    Notification = function(context, options) {
+    Notification = function (context, options) {
         //alert('foooo');
     };
 

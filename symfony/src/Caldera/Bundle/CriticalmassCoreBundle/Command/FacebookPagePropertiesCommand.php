@@ -22,8 +22,7 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:facebook:pageproperties')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -42,12 +41,12 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
          * @var City $city
          */
         foreach ($cities as $city) {
-            $output->writeln('Looking up '.$city->getCity());
+            $output->writeln('Looking up ' . $city->getCity());
 
             $pageId = $this->getPageId($city);
 
             if ($pageId) {
-                $output->writeln('Page ID is: '.$pageId);
+                $output->writeln('Page ID is: ' . $pageId);
 
                 $properties = $fpa->getPagePropertiesForCity($city);
 

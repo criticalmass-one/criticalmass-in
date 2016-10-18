@@ -1,5 +1,5 @@
-define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function(CriticalService) {
-    TrackDrawPage = function(context, options) {
+define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function (CriticalService) {
+    TrackDrawPage = function (context, options) {
         this._CriticalService = CriticalService;
     };
 
@@ -9,51 +9,51 @@ define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'le
     TrackDrawPage.prototype._routing = null;
     TrackDrawPage.prototype._CriticalService = null;
 
-    TrackDrawPage.prototype.init = function() {
+    TrackDrawPage.prototype.init = function () {
         this._initMap();
         this._initRouting();
         this._initEvents();
         this._initTrack();
     };
 
-    TrackDrawPage.prototype.setRide = function(rideJson) {
+    TrackDrawPage.prototype.setRide = function (rideJson) {
         this._ride = this._CriticalService.factory.createRide(rideJson);
     };
 
-    TrackDrawPage.prototype.setTrack = function(trackJson) {
+    TrackDrawPage.prototype.setTrack = function (trackJson) {
         this._track = this._CriticalService.factory.createTrack(trackJson);
     };
 
-    TrackDrawPage.prototype._initMap = function() {
+    TrackDrawPage.prototype._initMap = function () {
         this._map = new Map('map');
 
         this._map.setView([this._ride.getLatitude(), this._ride.getLongitude()], 13);
     };
 
-    TrackDrawPage.prototype._initRouting = function() {
+    TrackDrawPage.prototype._initRouting = function () {
         this._routing = new L.Routing({
             position: 'topright'
-            ,routing: {
+            , routing: {
                 router: this._router
             }
-            ,tooltips: {
+            , tooltips: {
                 waypoint: 'Waypoint. Drag to move; Click to remove.',
                 segment: 'Drag to create a new waypoint'
             }
-            ,styles: {     // see http://leafletjs.com/reference.html#polyline-options
+            , styles: {     // see http://leafletjs.com/reference.html#polyline-options
                 trailer: {}  // drawing line
-                ,track: {}   // calculated route result
-                ,nodata: {}  // line when no result (error)
+                , track: {}   // calculated route result
+                , nodata: {}  // line when no result (error)
             }
-            ,snapping: {
+            , snapping: {
                 layers: []
-                ,sensitivity: 15
-                ,vertexonly: false
+                , sensitivity: 15
+                , vertexonly: false
             }
-            ,shortcut: {
+            , shortcut: {
                 draw: {
                     enable: 68    // 'd'
-                    ,disable: 81  // 'q'
+                    , disable: 81  // 'q'
                 }
             }
         });
@@ -63,7 +63,7 @@ define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'le
         this._routing.draw();
     };
 
-    TrackDrawPage.prototype._initTrack = function() {
+    TrackDrawPage.prototype._initTrack = function () {
         if (this._track) {
             var geoJson = JSON.parse(this._track._geojson);
 
@@ -71,11 +71,11 @@ define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'le
         }
     };
 
-    TrackDrawPage.prototype._router = function(m1, m2, cb) {
+    TrackDrawPage.prototype._router = function (m1, m2, cb) {
         var proxy = '/routingproxy.php';
         var params = '?flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
 
-        $.getJSON(proxy + params, function(geojson, status) {
+        $.getJSON(proxy + params, function (geojson, status) {
             if (!geojson || !geojson.coordinates || geojson.coordinates.length === 0) {
                 if (typeof console.log === 'function') {
                     console.log('OSM router failed', geojson);
@@ -86,23 +86,23 @@ define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'le
         });
     };
 
-    TrackDrawPage.prototype._initEvents = function() {
+    TrackDrawPage.prototype._initEvents = function () {
         var that = this;
 
-        $('#save-track').on('click', function(element) {
+        $('#save-track').on('click', function (element) {
             element.preventDefault();
             that._save();
         });
     };
 
-    TrackDrawPage.prototype._save = function() {
+    TrackDrawPage.prototype._save = function () {
         this._savePolyline();
         this._saveWaypoints();
 
         $('form').submit();
     };
 
-    TrackDrawPage.prototype._savePolyline = function() {
+    TrackDrawPage.prototype._savePolyline = function () {
         var polyline = this._routing.toPolyline();
         var latLngs = polyline.getLatLngs();
 
@@ -111,7 +111,7 @@ define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'le
         $('#polyline').val(polylineString);
     };
 
-    TrackDrawPage.prototype._saveWaypoints = function() {
+    TrackDrawPage.prototype._saveWaypoints = function () {
         var geoJsonString = JSON.stringify(this._routing.toGeoJSON());
 
         $('#geojson').val(geoJsonString);

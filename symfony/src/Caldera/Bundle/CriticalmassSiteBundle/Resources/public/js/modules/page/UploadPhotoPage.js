@@ -1,10 +1,10 @@
-define(['dropzone'], function(Dropzone) {
-    UploadPhotoPage = function(context, options) {
+define(['dropzone'], function (Dropzone) {
+    UploadPhotoPage = function (context, options) {
         this._loadStyles();
     };
 
 
-    UploadPhotoPage.prototype._loadStyles = function() {
+    UploadPhotoPage.prototype._loadStyles = function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',

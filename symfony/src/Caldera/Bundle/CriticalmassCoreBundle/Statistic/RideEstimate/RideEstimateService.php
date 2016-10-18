@@ -24,7 +24,7 @@ class RideEstimateService
      * @var GpxReader $reader
      */
     protected $reader;
-    
+
     public function __construct(
         EntityManager $entityManager,
         RideEstimateCalculator $calculator,
@@ -45,17 +45,17 @@ class RideEstimateService
         $this->entityManager->persist($ride);
         $this->entityManager->flush();
     }
-    
+
     public function calculateEstimates(Ride $ride)
     {
         $estimates = $this->entityManager->getRepository('CalderaBundle:RideEstimate')->findByRide($ride->getId());
 
         $rec = new RideEstimateCalculator();
         $rec->setRide($ride);
-        
+
         $rec->setEstimates($estimates);
         $rec->calculate();
-        
+
         $ride = $rec->getRide();
 
         $this->entityManager->persist($ride);
@@ -73,20 +73,20 @@ class RideEstimateService
         $track->setRideEstimate($re);
 
         $re->setEstimatedDistance($track->getDistance());
-        
-        $durationInHours = (float) $track->getDurationInSeconds() / 3600.0;
-        
+
+        $durationInHours = (float)$track->getDurationInSeconds() / 3600.0;
+
         $re->setEstimatedDuration($durationInHours);
 
         $this->entityManager->persist($re);
         $this->entityManager->flush();
     }
-    
+
     public function refreshEstimate(RideEstimate $re)
     {
         $track = $re->getTrack();
         $this->reader->loadTrack($track);
-        
+
         $re->setEstimatedDistance($this->reader->calculateDistance());
         $re->setEstimatedDuration($this->reader->calculateDuration());
     }

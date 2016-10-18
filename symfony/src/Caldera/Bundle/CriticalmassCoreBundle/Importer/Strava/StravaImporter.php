@@ -2,10 +2,11 @@
 
 namespace \Caldera\Bundle\CriticalmassCoreBundle\Importer\Strava;
 
-class StravaImporter {
+class StravaImporter
+{
     public function __construct()
     {
-        
-        
+
+
     }
 }

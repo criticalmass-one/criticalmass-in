@@ -6,7 +6,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 
 class GpxCoordLoop
 {
-    /** @var GpxReader $gpxReader*/
+    /** @var GpxReader $gpxReader */
     protected $gpxReader;
 
     /** @var int $startIndex */
@@ -17,7 +17,7 @@ class GpxCoordLoop
 
     /** @var \DateTimeZone */
     protected $dateTimeZone = null;
-    
+
     public function __construct(GpxReader $gpxReader)
     {
         $this->gpxReader = $gpxReader;
@@ -31,13 +31,13 @@ class GpxCoordLoop
 
         return $this;
     }
-    
+
     public function execute(\DateTime $dateTime)
     {
         $found = false;
 
         while (!$found) {
-            $mid = $this->startIndex + (int) floor(($this->endIndex - $this->startIndex) / 2);
+            $mid = $this->startIndex + (int)floor(($this->endIndex - $this->startIndex) / 2);
 
             $midDateTime = $this->gpxReader->getDateTimeOfPoint($mid);
 
@@ -52,7 +52,7 @@ class GpxCoordLoop
             } else {
                 return $mid;
             }
-            
+
             if ($this->endIndex - $this->startIndex < 2) {
                 return $mid;
             }

@@ -108,7 +108,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -131,7 +131,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get dateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -154,7 +154,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -177,7 +177,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -200,7 +200,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get abstract
      *
-     * @return string 
+     * @return string
      */
     public function getAbstract()
     {
@@ -223,7 +223,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -246,7 +246,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -269,7 +269,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User
      */
     public function getUser()
     {
@@ -292,12 +292,13 @@ class BlogPost implements ViewableInterface
     /**
      * Get blog
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Blog 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Blog
      */
     public function getBlog()
     {
         return $this->blog;
     }
+
     /**
      * Constructor
      */
@@ -333,7 +334,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get cities
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCities()
     {
@@ -366,7 +367,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get rides
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRides()
     {
@@ -417,7 +418,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get showCoffeeButton
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getShowCoffeeButton()
     {
@@ -440,7 +441,7 @@ class BlogPost implements ViewableInterface
     /**
      * Get commentsEnabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCommentsEnabled()
     {

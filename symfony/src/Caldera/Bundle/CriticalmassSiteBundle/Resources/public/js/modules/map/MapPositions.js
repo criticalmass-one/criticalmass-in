@@ -1,4 +1,4 @@
-define(['leaflet', 'PositionEntity'], function(L) {
+define(['leaflet', 'PositionEntity'], function (L) {
     MapPositions = function (context, options) {
         this._options = options;
 
@@ -27,15 +27,15 @@ define(['leaflet', 'PositionEntity'], function(L) {
         }, 15000);
     };
 
-    MapPositions.prototype.setOfflineCallback = function(offlineCallback) {
+    MapPositions.prototype.setOfflineCallback = function (offlineCallback) {
         this._offlineCallback = offlineCallback;
     };
 
-    MapPositions.prototype.addToControl = function(layerArray, title) {
+    MapPositions.prototype.addToControl = function (layerArray, title) {
         this._container.addToControl(layerArray, title);
     };
 
-    MapPositions.prototype.getLayer = function() {
+    MapPositions.prototype.getLayer = function () {
         return this._container.getLayer();
     };
 
@@ -132,15 +132,15 @@ define(['leaflet', 'PositionEntity'], function(L) {
         this._container.getEntity(identifier).setColor(displayColor);
     };
 
-    MapPositions.prototype.countPositions = function() {
-	    return this._container.countEntities();
+    MapPositions.prototype.countPositions = function () {
+        return this._container.countEntities();
     };
 
-    MapPositions.prototype.getBounds = function() {
-	    return this._container.getBounds();
+    MapPositions.prototype.getBounds = function () {
+        return this._container.getBounds();
     };
 
-    MapPositions.prototype.getLatestLatLng = function() {
+    MapPositions.prototype.getLatestLatLng = function () {
         var positionList = this._container.getList();
 
         var latestPosition = positionList[0];

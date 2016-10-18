@@ -15,8 +15,7 @@ class TracksTransformCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:tracks:transform')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -28,9 +27,8 @@ class TracksTransformCommand extends ContainerAwareCommand
         /**
          * @var Track $track
          */
-        foreach ($tracks as $track)
-        {
-            $output->writeln('Track #'.$track->getId());
+        foreach ($tracks as $track) {
+            $output->writeln('Track #' . $track->getId());
 
             $array = json_decode($track->getLatLngList());
 
@@ -40,7 +38,7 @@ class TracksTransformCommand extends ContainerAwareCommand
                 $track->setPolyline($polyline);
 
                 $output->writeln($polyline);
-                
+
                 $em->persist($track);
 
             }

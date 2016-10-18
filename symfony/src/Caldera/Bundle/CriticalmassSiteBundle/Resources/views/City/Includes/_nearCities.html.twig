@@ -4,13 +4,13 @@
     </div>
     <div class="panel-body">
         <ul>
-        {% for city in nearCities %}
-            <li>
-                <a href="{{ objectPath(city) }}">
-                    {{ city.city }}
-                </a>
-            </li>
-        {% endfor %}
+            {% for city in nearCities %}
+                <li>
+                    <a href="{{ objectPath(city) }}">
+                        {{ city.city }}
+                    </a>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

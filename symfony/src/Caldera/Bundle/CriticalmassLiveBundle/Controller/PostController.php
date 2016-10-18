@@ -20,7 +20,8 @@ class PostController extends AbstractController
         Request $request,
         $cityId = null,
         $rideId = null
-    ) {
+    )
+    {
         /**
          * @var Post $post
          * @var Ride $ride
@@ -104,14 +105,15 @@ class PostController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
-        Request $request, 
-        $cityId = null, 
-        $rideId = null, 
-        $photoId = null, 
+        Request $request,
+        $cityId = null,
+        $rideId = null,
+        $photoId = null,
         $contentId = null,
         $eventId = null,
         $blogPostId = null
-    ) {
+    )
+    {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
 

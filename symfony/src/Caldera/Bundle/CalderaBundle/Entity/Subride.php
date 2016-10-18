@@ -13,17 +13,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Subride
 {
-	/**
-	 * Numerische ID der Tour.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
+    /**
+     * Numerische ID der Tour.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
-	 */
+     */
     protected $id;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @JMS\Expose
@@ -55,23 +55,23 @@ class Subride
      */
     protected $creationDateTime;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @JMS\Expose
-	 */
+     */
     protected $location;
 
-	/**
-	 * @ORM\Column(type="float")
+    /**
+     * @ORM\Column(type="float")
      * @JMS\Expose
-	 */
+     */
     protected $latitude;
 
-	/**
-	 * @ORM\Column(type="float")
+    /**
+     * @ORM\Column(type="float")
      * @JMS\Expose
-	 */
+     */
     protected $longitude;
 
     /**
@@ -141,7 +141,7 @@ class Subride
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -164,7 +164,7 @@ class Subride
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -187,7 +187,7 @@ class Subride
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -204,7 +204,7 @@ class Subride
     {
         return $this->dateTime->format('U');
     }
-    
+
     /**
      * Set dateTime
      *
@@ -221,7 +221,7 @@ class Subride
     /**
      * Get dateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateTime()
     {
@@ -244,7 +244,7 @@ class Subride
     /**
      * Get location
      *
-     * @return string 
+     * @return string
      */
     public function getLocation()
     {
@@ -267,7 +267,7 @@ class Subride
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -290,7 +290,7 @@ class Subride
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -313,7 +313,7 @@ class Subride
     /**
      * Get facebook
      *
-     * @return string 
+     * @return string
      */
     public function getFacebook()
     {
@@ -336,7 +336,7 @@ class Subride
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -359,7 +359,7 @@ class Subride
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -428,7 +428,7 @@ class Subride
     /**
      * Get creationDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreationDateTime()
     {
@@ -442,7 +442,7 @@ class Subride
 
     public function setTime(\DateTime $time)
     {
-        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d').' '.$time->format('H:i:s'));
+        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
     }
 
     /**
@@ -461,7 +461,7 @@ class Subride
     /**
      * Get isArchived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsArchived()
     {
@@ -484,7 +484,7 @@ class Subride
     /**
      * Get archiveDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getArchiveDateTime()
     {

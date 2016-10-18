@@ -33,11 +33,11 @@ class CriticalmapsUserRepository extends EntityRepository
         ));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('criticalmapsuser.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('criticalmapsuser.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('criticalmapsuser.creationDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('criticalmapsuser.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

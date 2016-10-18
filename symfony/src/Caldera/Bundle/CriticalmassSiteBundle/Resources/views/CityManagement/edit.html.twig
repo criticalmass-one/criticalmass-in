@@ -10,55 +10,55 @@
 
 {% block breadcrumb %}
     {% if city %}
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li class="active">
-        {{ title }}
-    </li>
+        <li>
+            <a href="{{ objectPath(city) }}">
+                {{ city.city }}
+            </a>
+        </li>
+        <li class="active">
+            {{ title }}
+        </li>
     {% else %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_region_world') }}">
-            Verzeichnis
-        </a>
-    </li>
-
-    {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
         <li>
-            <a href="{{ objectPath(region.parent.parent.parent) }}">
-                {{ region.parent.parent.parent.name }}
+            <a href="{{ path('caldera_criticalmass_region_world') }}">
+                Verzeichnis
             </a>
         </li>
-    {% endif %}
 
-    {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
+        {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
+            <li>
+                <a href="{{ objectPath(region.parent.parent.parent) }}">
+                    {{ region.parent.parent.parent.name }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
+            <li>
+                <a href="{{ objectPath(region.parent.parent) }}">
+                    {{ region.parent.parent.name }}
+                </a>
+            </li>
+        {% endif %}
+
+
+        {% if (region.parent and not region.parent.isWorld()) %}
+            <li>
+                <a href="{{ objectPath(region.parent) }}">
+                    {{ region.parent.name }}
+                </a>
+            </li>
+        {% endif %}
+
         <li>
-            <a href="{{ objectPath(region.parent.parent) }}">
-                {{ region.parent.parent.name }}
+            <a href="{{ objectPath(region) }}">
+                {{ region.name }}
             </a>
         </li>
-    {% endif %}
 
-
-    {% if (region.parent and not region.parent.isWorld()) %}
-        <li>
-            <a href="{{ objectPath(region.parent) }}">
-                {{ region.parent.name }}
-            </a>
+        <li class="active">
+            Stadt hinzufügen
         </li>
-    {% endif %}
-
-    <li>
-        <a href="{{ objectPath(region) }}">
-            {{ region.name }}
-        </a>
-    </li>
-
-    <li class="active">
-        Stadt hinzufügen
-    </li>
     {% endif %}
 {% endblock %}
 
@@ -67,9 +67,12 @@
     <div class="container">
         {% if hasErrors is not null %}
             {% if hasErrors == true %}
-                <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(</div>
+                <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du
+                    ungültige Werte eingegeben hast :(
+                </div>
             {% elseif hasErrors == false %}
-                <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a href="{{ objectPath(city) }}">Zurück zur Stadt?</a></div>
+                <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a
+                            href="{{ objectPath(city) }}">Zurück zur Stadt?</a></div>
             {% endif %}
         {% endif %}
 
@@ -110,7 +113,8 @@
                         <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Titel:</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass
+                                Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
                         </div>
                     </div>
                 </div>
@@ -143,7 +147,8 @@
                         <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Punchline:</label>
                             {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“ oder „Reclaim the streets“ ist ja schon fast Standard.</p>
+                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“
+                                oder „Reclaim the streets“ ist ja schon fast Standard.</p>
                         </div>
                     </div>
                 </div>
@@ -173,7 +178,8 @@
                         <div class="form-group{% if form_errors(form.facebook) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Seite auf facebook:</label>
                             {{ form_widget(form.facebook, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Wenn jemand eine Seite auf facebook für diese Critical Mass betreibt, kannst du sie hier verlinken.</p>
+                            <p class="help-block">Wenn jemand eine Seite auf facebook für diese Critical Mass betreibt,
+                                kannst du sie hier verlinken.</p>
                         </div>
                     </div>
                 </div>
@@ -193,7 +199,8 @@
                         <div class="form-group{% if form_errors(form.cityPopulation) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Einwohnerzahl:</label>
                             {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer Stadt benötigt.</p>
+                            <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer
+                                Stadt benötigt.</p>
                         </div>
                     </div>
                 </div>
@@ -203,7 +210,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Tour-Informationen</h2>
-                        <p>criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher festgelegten Treffpunkt starten.</p>
+                        <p>criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern
+                            die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher
+                            festgelegten Treffpunkt starten.</p>
                     </div>
                 </div>
 
@@ -212,7 +221,8 @@
                         <div class="form-group{% if form_errors(form.isStandardable) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Hat regelmäßige Touren:</label>
                             {{ form_widget(form.isStandardable, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Aktiviere diese Checkbox, um vordefinierte Touren für diese Stadt einzutragen.</p>
+                            <p class="help-block">Aktiviere diese Checkbox, um vordefinierte Touren für diese Stadt
+                                einzutragen.</p>
                         </div>
                     </div>
                 </div>
@@ -273,7 +283,9 @@
                                     {{ form_widget(form.standardLocation, { 'attr' : { 'class': 'form-control', 'disabled': 'disabled' } }) }}
                                 {% endif %}
                             </div>
-                            <p class="help-block">Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.</p>
+                            <p class="help-block">Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von
+                                dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf
+                                diesen Treffpunkt.</p>
                         </div>
                     </div>
                 </div>
@@ -299,7 +311,8 @@
                         <div class="form-group">
                             <label class="control-label" for="">Forum anzeigen:</label>
                             {{ form_widget(form.enableBoard, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu aktivieren.</p>
+                            <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu
+                                aktivieren.</p>
                         </div>
                     </div>
                 </div>
@@ -315,7 +328,9 @@
                         <div class="form-group">
                             <label class="control-label" for="">Datei:</label>
                             {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind Bildabmessungen von 2.280 mal 500 Pixel.</p>
+                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass
+                                    du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind
+                                Bildabmessungen von 2.280 mal 500 Pixel.</p>
                         </div>
                     </div>
                 </div>
@@ -326,13 +341,13 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     {% if city %}
-                    <a href="{{ objectPath(city) }}" class="btn btn-default">
-                        Abbrechen
-                    </a>
+                        <a href="{{ objectPath(city) }}" class="btn btn-default">
+                            Abbrechen
+                        </a>
                     {% else %}
-                    <a href="{{ objectPath(region) }}" class="btn btn-default">
-                        Abbrechen
-                    </a>
+                        <a href="{{ objectPath(region) }}" class="btn btn-default">
+                            Abbrechen
+                        </a>
                     {% endif %}
                     <button type="submit" class="btn btn-success">
                         Speichern

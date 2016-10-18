@@ -28,8 +28,7 @@ class NotifyRideLocationCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:notify:ridelocation')
-            ->setDescription('Store calls')
-        ;
+            ->setDescription('Store calls');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,10 +42,10 @@ class NotifyRideLocationCommand extends ContainerAwareCommand
 
     protected function notifyUser()
     {
-        $message             = new \MessageBird\Objects\Message();
+        $message = new \MessageBird\Objects\Message();
         $message->originator = '004915117277032';
         $message->recipients = ['004915117277032'];
-        $message->body       = 'This is a test message with a smiling emoji 😀.';
+        $message->body = 'This is a test message with a smiling emoji 😀.';
         $message->datacoding = 'unicode';
         try {
             $MessageResult = $this->messageBird->messages->create($message);

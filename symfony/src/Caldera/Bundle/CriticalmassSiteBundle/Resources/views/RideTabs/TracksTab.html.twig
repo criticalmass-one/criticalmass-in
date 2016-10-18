@@ -4,7 +4,8 @@
             {% if app.getUser() %}
                 <!-- Single button -->
                 <div class="btn-group pull-right margin-top-medium">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-map-o"></i>
                         Track hinzufügen
                         <span class="caret"></span>
@@ -17,13 +18,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('caldera_criticalmass_track_upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Track hochladen">
+                            <a href="{{ path('caldera_criticalmass_track_upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                               title="Track hochladen">
                                 <i class="fa fa-upload"></i>
                                 GPX-Datei hochladen
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" title="Track manuell zeichnen">
+                            <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                               title="Track manuell zeichnen">
                                 <i class="fa fa-map-signs"></i>
                                 Track manuell zeichnen
                             </a>
@@ -42,8 +45,8 @@
                 <table class="table">
                     <tr>
                         <th>
-                            <input type="checkbox" class="allgroups-visibility-toggle" checked="checked" />
-                       </th>
+                            <input type="checkbox" class="allgroups-visibility-toggle" checked="checked"/>
+                        </th>
                         <th>Teilnehmer</th>
                         <th>Dauer</th>
                         <th>Länge</th>
@@ -59,7 +62,7 @@
                             {% if userHeadline == false %}
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked" />
+                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked"/>
                                     </td>
                                     <td colspan="4">
                                         von criticalmass.in-Nutzern hochgeladene Tracks
@@ -69,24 +72,25 @@
                             {% endif %}
                             <tr>
                                 <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                    <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
+                                    <input type="checkbox" class="track-visibility-toggle"
+                                           data-track-id="{{ track.id }}" checked="checked"/>
                                 </td>
                                 <td>
                                     {{ track.username }}
                                 </td>
                                 <td>
                                     {% if track.getDurationInterval() %}
-                                    {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
+                                        {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if track.distance %}
-                                    {{ track.distance|round(2) }}&nbsp;Kilometer
+                                        {{ track.distance|round(2) }}&nbsp;Kilometer
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if track.getAverageVelocity() %}
-                                    {{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde
+                                        {{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde
                                     {% endif %}
                                 </td>
                             </tr>
@@ -99,7 +103,7 @@
                             {% if glympseHeadline == false %}
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked" />
+                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked"/>
                                     </td>
                                     <td colspan="4">
                                         über Glympse geteilte Tracks
@@ -109,7 +113,8 @@
                             {% endif %}
                             <tr>
                                 <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                    <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
+                                    <input type="checkbox" class="track-visibility-toggle"
+                                           data-track-id="{{ track.id }}" checked="checked"/>
                                 </td>
                                 <td>{{ track.username }}</td>
                                 <td>{{ track.getDurationInterval.format('%h:%i') }}&nbsp;Stunden</td>
@@ -125,7 +130,7 @@
                             {% if criticalmapsHeadline == false %}
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked" />
+                                        <input type="checkbox" class="trackgroup-visibility-toggle" checked="checked"/>
                                     </td>
                                     <td colspan="4">
                                         über Criticalmaps geteilte Tracks
@@ -135,7 +140,8 @@
                             {% endif %}
                             <tr>
                                 <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                    <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked" />
+                                    <input type="checkbox" class="track-visibility-toggle"
+                                           data-track-id="{{ track.id }}" checked="checked"/>
                                 </td>
                                 <td>{{ track.username }}</td>
                                 <td>{{ track.getDurationInterval.format('%h:%i') }}&nbsp;Stunden</td>
@@ -148,9 +154,15 @@
                 </table>
             {% else %}
                 {% if app.getUser() %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload" title="Track hochladen">Du kannst noch immer der Erste sein</a>.</div>
+                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine
+                        GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload"
+                                                         title="Track hochladen">Du kannst noch immer der Erste sein</a>.
+                    </div>
                 {% else %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.</div>
+                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine
+                        GPX-Datei hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter
+                            Nutzer</a> könntest du hier der Erste sein.
+                    </div>
                 {% endif %}
             {% endif %}
         </div>
@@ -165,7 +177,8 @@
                             <div class="col-md-6">
                                 <dl>
                                     <dt>Uhrzeit:</dt>
-                                    <dd><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr</dd>
+                                    <dd><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr
+                                    </dd>
                                 </dl>
                             </div>
 
@@ -184,16 +197,16 @@
                                         <button type="button" id="step-backward-button" class="btn btn-default">
                                             <i class="fa fa-backward"></i>
                                         </button>
-                                        <button type="button" id="pause-button"  class="btn btn-default">
+                                        <button type="button" id="pause-button" class="btn btn-default">
                                             <i class="fa fa-pause"></i>
                                         </button>
-                                        <button type="button" id="stop-button"  class="btn btn-default">
+                                        <button type="button" id="stop-button" class="btn btn-default">
                                             <i class="fa fa-stop"></i>
                                         </button>
                                         <button type="button" id="play-button" class="btn btn-default">
                                             <i class="fa fa-play"></i>
                                         </button>
-                                        <button type="button" id="step-forward-button"  class="btn btn-default">
+                                        <button type="button" id="step-forward-button" class="btn btn-default">
                                             <i class="fa fa-forward"></i>
                                         </button>
                                     </div>
@@ -209,7 +222,7 @@
 
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
-                                <input id="speed-slider-input" type="text" style="width: 100%;" />
+                                <input id="speed-slider-input" type="text" style="width: 100%;"/>
                             </div>
                         </div>
 
@@ -221,7 +234,7 @@
 
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
-                                <input id="time-slider-input" type="text" style="width: 100%;" />
+                                <input id="time-slider-input" type="text" style="width: 100%;"/>
                             </div>
                         </div>
                     </div>
@@ -229,19 +242,20 @@
                     <div id="timelapse-start">
                         <div class="text-center">
                             {% if tracks|length %}
-                            <button id="timelapse-start-button" class="btn btn-success">
-                                <i class="fa fa-bicycle"></i>
-                                Timelapse starten
-                            </button>
+                                <button id="timelapse-start-button" class="btn btn-success">
+                                    <i class="fa fa-bicycle"></i>
+                                    Timelapse starten
+                                </button>
                             {% else %}
-                            Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
+                                Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
                             {% endif %}
                         </div>
                     </div>
 
                     <div id="timelapse-loader" style="display: none;">
                         <div class="text-center">
-                            Lade Track <span id="timelapse-track-number">0</span> von <span id="timelapse-track-total">0</span>
+                            Lade Track <span id="timelapse-track-number">0</span> von <span
+                                    id="timelapse-track-total">0</span>
                         </div>
                     </div>
                 </div>

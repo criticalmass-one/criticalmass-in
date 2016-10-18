@@ -57,7 +57,7 @@ class PhotoGps
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory, GpsExifReader $gpsExifReader, DateTimeExifReader $dateTimeExifReader, TrackReader $trackReader)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory.'/../web';
+        $this->rootDirectory = $rootDirectory . '/../web';
         $this->gpsExifReader = $gpsExifReader;
         $this->dateTimeExifReader = $dateTimeExifReader;
         $this->trackReader = $trackReader;
@@ -89,7 +89,7 @@ class PhotoGps
 
         return $this;
     }
-    
+
     public function execute()
     {
         $this->gpsExifReader->setPhoto($this->photo);
@@ -104,7 +104,7 @@ class PhotoGps
 
         return $this;
     }
-    
+
     protected function readExifData()
     {
         $filename = $this->uploaderHelper->asset($this->photo, 'imageFile');

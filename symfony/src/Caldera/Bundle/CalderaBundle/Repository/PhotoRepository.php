@@ -30,7 +30,7 @@ class PhotoRepository extends EntityRepository
             $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
         }
 
-        $builder->andWhere($builder->expr()->lt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->lt('photo.dateTime', '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
@@ -63,7 +63,7 @@ class PhotoRepository extends EntityRepository
             $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
         }
 
-        $builder->andWhere($builder->expr()->gt('photo.dateTime', '\''.$photo->getDateTime()->format('Y-m-d H:i:s').'\''));
+        $builder->andWhere($builder->expr()->gt('photo.dateTime', '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
@@ -101,13 +101,12 @@ class PhotoRepository extends EntityRepository
         /**
          * @var Photo $photo
          */
-        foreach ($result as $row)
-        {
+        foreach ($result as $row) {
             /**
              * @var Ride $ride
              */
             $ride = $row[0]->getRide();
-            $key = $ride->getFormattedDate().'_'.$ride->getId();
+            $key = $ride->getFormattedDate() . '_' . $ride->getId();
 
             $rides[$key] = $ride;
             $counter[$key] = $row[1];
@@ -152,7 +151,7 @@ class PhotoRepository extends EntityRepository
             $ride = $row[0]->getRide();
             $counter = $row[1];
 
-            $key = $ride->getFormattedDate().'_'.$ride->getId();
+            $key = $ride->getFormattedDate() . '_' . $ride->getId();
 
             $galleryResult[$key]['ride'] = $ride;
             $galleryResult[$key]['counter'] = $counter;
@@ -198,7 +197,7 @@ class PhotoRepository extends EntityRepository
              * @var Ride $ride
              */
             $ride = $row[0]->getRide();
-            $key = $ride->getFormattedDate().'_'.$ride->getId();
+            $key = $ride->getFormattedDate() . '_' . $ride->getId();
 
             $rides[$key] = $ride;
             $counter[$key] = $row[1];
@@ -278,7 +277,7 @@ class PhotoRepository extends EntityRepository
 
     public function findPhotosByUserAndRide(User $user, Ride $ride)
     {
-        $query =  $this->buildQueryPhotosByUserAndRide($user, $ride);
+        $query = $this->buildQueryPhotosByUserAndRide($user, $ride);
 
         return $query->getResult();
     }
@@ -322,11 +321,11 @@ class PhotoRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('photo.creationDateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('photo.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('photo.creationDateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('photo.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -334,7 +333,7 @@ class PhotoRepository extends EntityRepository
         }
 
         $builder->addOrderBy('photo.creationDateTime', 'DESC');
-        
+
         $query = $builder->getQuery();
 
         return $query->getResult();

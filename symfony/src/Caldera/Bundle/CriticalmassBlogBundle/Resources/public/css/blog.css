@@ -1,5 +1,5 @@
 .blog article blockquote {
-    display:block;
+    display: block;
     background: #fff;
     padding: 0 15px 0 55px;
     position: relative;
@@ -53,8 +53,7 @@
 }
 
 .blog h3 a.anchor,
-.blog h3 a.anchor:hover
-{
+.blog h3 a.anchor:hover {
     text-decoration: none;
     color: black;
 }

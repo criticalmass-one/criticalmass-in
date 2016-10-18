@@ -1,4 +1,4 @@
-define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function() {
+define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function () {
     TrackEntity = function () {
     };
 
@@ -9,13 +9,13 @@ define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function()
     TrackEntity.prototype._color = null;
     TrackEntity.prototype._currentLatLng = null;
 
-    TrackEntity.prototype._createPolyline = function() {
+    TrackEntity.prototype._createPolyline = function () {
         this._color = 'rgb(' + this._colorRed + ',' + this._colorGreen + ',' + this._colorBlue + ')';
 
-        this._polyline = L.Polyline.fromEncoded(this._polylineString, { color: this._color });
+        this._polyline = L.Polyline.fromEncoded(this._polylineString, {color: this._color});
     };
 
-    TrackEntity.prototype.addToMap = function(map) {
+    TrackEntity.prototype.addToMap = function (map) {
         if (!this._polyline) {
             this._createPolyline();
         }
@@ -23,7 +23,7 @@ define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function()
         this._polyline.addTo(map.map);
     };
 
-    TrackEntity.prototype.addToLayer = function(trackLayer) {
+    TrackEntity.prototype.addToLayer = function (trackLayer) {
         if (!this._polyline) {
             this._createPolyline();
         }
@@ -31,7 +31,7 @@ define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function()
         trackLayer.addLayer(this._polyline);
     };
 
-    TrackEntity.prototype.setColor = function(colorRed, colorGreen, colorBlue) {
+    TrackEntity.prototype.setColor = function (colorRed, colorGreen, colorBlue) {
         this._colorRed = colorRed;
         this._colorGreen = colorGreen;
         this._colorBlue = colorBlue;
@@ -39,19 +39,19 @@ define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function()
         this._color = 'rgb(' + colorRed + ', ' + colorGreen + ', ' + colorBlue + ')';
     };
 
-    TrackEntity.prototype.getColorRed = function() {
+    TrackEntity.prototype.getColorRed = function () {
         return this._colorRed;
     };
 
-    TrackEntity.prototype.getColorGreen = function() {
+    TrackEntity.prototype.getColorGreen = function () {
         return this._colorGreen;
     };
 
-    TrackEntity.prototype.getColorBlue = function() {
+    TrackEntity.prototype.getColorBlue = function () {
         return this._colorBlue;
     };
 
-    TrackEntity.prototype.getLayer = function() {
+    TrackEntity.prototype.getLayer = function () {
         return this._polyline;
     };
 
@@ -67,11 +67,11 @@ define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function()
         return this._polyline.setLatLngs(latLngs);
     };
 
-    TrackEntity.prototype.setCurrentLatLng = function(latLng) {
+    TrackEntity.prototype.setCurrentLatLng = function (latLng) {
         this._currentLatLng = latLng;
     };
 
-    TrackEntity.prototype._createMarker = function() {
+    TrackEntity.prototype._createMarker = function () {
         if (!this._marker) {
             this._marker = new PositionMarker(this._currentLatLng, false, this._user.getUsername(), this._user.getGravatarUrl());
 

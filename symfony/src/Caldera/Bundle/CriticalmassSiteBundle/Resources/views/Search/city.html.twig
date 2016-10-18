@@ -26,31 +26,31 @@
         </div>
 
         {% if city.isStandardable %}
-        <div class="row">
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <dl>
-                    <dt>
-                        Turnus:
-                    </dt>
+            <div class="row">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <dl>
+                        <dt>
+                            Turnus:
+                        </dt>
 
-                    <dd>
-                        {{ city.getEventDateTimeString() }}
-                    </dd>
-                </dl>
+                        <dd>
+                            {{ city.getEventDateTimeString() }}
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <dl>
+                        <dt>
+                            Treffpunkt:
+                        </dt>
+
+                        <dd>
+                            {{ city.standardLocation }}
+                        </dd>
+                    </dl>
+                </div>
             </div>
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Treffpunkt:
-                    </dt>
-
-                    <dd>
-                        {{ city.standardLocation }}
-                    </dd>
-                </dl>
-            </div>
-        </div>
         {% endif %}
     </div>
 </div>

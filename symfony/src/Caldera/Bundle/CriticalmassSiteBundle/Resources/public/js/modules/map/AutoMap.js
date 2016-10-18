@@ -1,7 +1,7 @@
-define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'], function() {
+define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'], function () {
     AutoMap = function (mapId, settings) {
         this._mapId = mapId;
-        
+
         this.settings = $.extend(this._defaults, settings);
 
         this._init();
@@ -33,7 +33,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
         this._autoSettings();
     };
 
-    AutoMap.prototype._autoSettings = function() {
+    AutoMap.prototype._autoSettings = function () {
         this._autoSetView();
         this._autoSetPolyline();
         this._autoSetMarker();
@@ -41,7 +41,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
         this._setLockMap();
     };
 
-    AutoMap.prototype._autoSetView = function() {
+    AutoMap.prototype._autoSetView = function () {
         var latitude = this._$mapContainer.data('map-center-latitude');
         var longitude = this._$mapContainer.data('map-center-longitude');
         var zoomLevel = this._$mapContainer.data('map-zoomlevel');
@@ -52,12 +52,12 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
         }
     };
 
-    AutoMap.prototype._autoSetPolyline = function() {
+    AutoMap.prototype._autoSetPolyline = function () {
         var polylineString = this._$mapContainer.data('polyline');
         var polylineColorString = this._$mapContainer.data('polyline-color');
 
         if (polylineString && polylineColorString) {
-            var polyline = L.Polyline.fromEncoded(polylineString, { color: polylineColorString });
+            var polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
 
             polyline.addTo(this.map);
 
@@ -67,7 +67,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
         }
     };
 
-    AutoMap.prototype._autoSetMarker = function() {
+    AutoMap.prototype._autoSetMarker = function () {
         var latitude = this._$mapContainer.data('map-marker-latitude');
         var longitude = this._$mapContainer.data('map-marker-longitude');
 
@@ -77,19 +77,19 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
         var markerClickable = this._$mapContainer.data('map-marker-clickable') || false;
 
         if (latitude && longitude && markerColor && markerShape && markerIcon) {
-             var extraMarkerIcon = L.ExtraMarkers.icon({
+            var extraMarkerIcon = L.ExtraMarkers.icon({
                 icon: markerIcon,
                 markerColor: markerColor,
                 shape: markerShape,
                 prefix: 'fa'
             });
 
-            var marker = L.marker([latitude, longitude], { icon: extraMarkerIcon, clickable: markerClickable });
+            var marker = L.marker([latitude, longitude], {icon: extraMarkerIcon, clickable: markerClickable});
             marker.addTo(this.map);
         }
     };
 
-    AutoMap.prototype._autoSetPolylineMarker = function() {
+    AutoMap.prototype._autoSetPolylineMarker = function () {
         var polyline = this._$mapContainer.data('map-markers-polyline-list');
 
         var markerColor = this._$mapContainer.data('map-marker-color') || 'yellow';
@@ -112,7 +112,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
                     prefix: 'fa'
                 });
 
-                var marker = L.marker(latLng, { icon: extraMarkerIcon, clickable: markerClickable });
+                var marker = L.marker(latLng, {icon: extraMarkerIcon, clickable: markerClickable});
 
                 markerList.push(marker);
             }
@@ -131,7 +131,7 @@ define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'
         }
     };
 
-    AutoMap.prototype._setLockMap = function() {
+    AutoMap.prototype._setLockMap = function () {
         var lockMap = this._$mapContainer.data('lock-map');
 
         if (lockMap == true) {

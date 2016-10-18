@@ -1,5 +1,5 @@
-define(['Map', 'bootstrap-slider'], function() {
-    TrackRangePage = function(context, options) {
+define(['Map', 'bootstrap-slider'], function () {
+    TrackRangePage = function (context, options) {
 
     };
 
@@ -13,7 +13,7 @@ define(['Map', 'bootstrap-slider'], function() {
     TrackRangePage.prototype._colorGreen = null;
     TrackRangePage.prototype._colorBlue = null;
 
-    TrackRangePage.prototype._loadStyles = function() {
+    TrackRangePage.prototype._loadStyles = function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
@@ -23,29 +23,29 @@ define(['Map', 'bootstrap-slider'], function() {
         $link.appendTo('head');
     };
 
-    TrackRangePage.prototype.setStartPoint = function(startPoint) {
+    TrackRangePage.prototype.setStartPoint = function (startPoint) {
         this._startPoint = startPoint;
     };
 
-    TrackRangePage.prototype.setEndPoint = function(endPoint) {
+    TrackRangePage.prototype.setEndPoint = function (endPoint) {
         this._endPoint = endPoint;
     };
 
-    TrackRangePage.prototype.setGapWidth = function(gapWidth) {
+    TrackRangePage.prototype.setGapWidth = function (gapWidth) {
         this._gapWidth = gapWidth;
     };
 
-    TrackRangePage.prototype.setPolylineLatLngs = function(polylineLatLngs) {
+    TrackRangePage.prototype.setPolylineLatLngs = function (polylineLatLngs) {
         this._polylineLatLngs = polylineLatLngs;
     };
 
-    TrackRangePage.prototype.setColor = function(colorRed, colorGreen, colorBlue) {
+    TrackRangePage.prototype.setColor = function (colorRed, colorGreen, colorBlue) {
         this._colorRed = colorRed;
         this._colorGreen = colorGreen;
         this._colorBlue = colorBlue;
     };
 
-    TrackRangePage.prototype.init = function() {
+    TrackRangePage.prototype.init = function () {
         this._loadStyles();
         this._initMap();
         this._initControl();
@@ -55,27 +55,27 @@ define(['Map', 'bootstrap-slider'], function() {
         this._map.fitBounds(this._polyline.getBounds());
     };
 
-    TrackRangePage.prototype._initTrack = function() {
-        this._polyline = L.polyline(this._polylineLatLngs, { color: 'rgb(' + this._colorRed + ', ' + this._colorGreen + ', ' + this._colorBlue + ')' });
+    TrackRangePage.prototype._initTrack = function () {
+        this._polyline = L.polyline(this._polylineLatLngs, {color: 'rgb(' + this._colorRed + ', ' + this._colorGreen + ', ' + this._colorBlue + ')'});
 
         this._polyline.addTo(this._map.map);
     };
 
-    TrackRangePage.prototype._initMap = function() {
+    TrackRangePage.prototype._initMap = function () {
         this._map = new Map('map');
     };
 
-    TrackRangePage.prototype._initControl = function() {
+    TrackRangePage.prototype._initControl = function () {
 
     };
 
-    TrackRangePage.prototype._initSlider = function() {
+    TrackRangePage.prototype._initSlider = function () {
         var sliderOptions = {
             id: "rangeSlider",
             min: 0,
             max: this._polylineLatLngs.length,
             range: true,
-            value: [this._startPoint / this._gapWidth, this._endPoint / this._gapWidth ],
+            value: [this._startPoint / this._gapWidth, this._endPoint / this._gapWidth],
             tooltip: 'hide'
         };
 
@@ -84,7 +84,7 @@ define(['Map', 'bootstrap-slider'], function() {
 
         var that = this;
 
-        $slider.on("slide", function(slideEvt) {
+        $slider.on("slide", function (slideEvt) {
             var gapWidth = that._gapWidth;
             var endValue = slideEvt.value.pop();
             var beginValue = slideEvt.value.pop();

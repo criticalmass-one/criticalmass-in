@@ -131,11 +131,11 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->neq('post', 'thread.firstPost'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -156,16 +156,16 @@ class PostRepository extends EntityRepository
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
-        
+
         $builder->where($builder->expr()->eq('post.enabled', 1));
         $builder->andWhere($builder->expr()->isNotNull('post.content'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -191,11 +191,11 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNotNull('post.blogPost'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -221,11 +221,11 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNotNull('post.photo'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

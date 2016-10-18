@@ -5,7 +5,8 @@ namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 use Caldera\CriticalmassCoreBundle\Entity\Track;
 use Caldera\CriticalmassStatisticBundle\Entity\Heatmap;
 
-class TraceTilePrinter extends AbstractTilePrinter {
+class TraceTilePrinter extends AbstractTilePrinter
+{
     protected $ticket;
     protected $changed = false;
 
@@ -18,14 +19,10 @@ class TraceTilePrinter extends AbstractTilePrinter {
 
     public function printTile()
     {
-        if ($this->tile->hasPixel())
-        {
-            if (file_exists($this->getPath().$this->getFilename()))
-            {
-                $image = imagecreatefrompng($this->getPath().$this->getFilename());
-            }
-            else
-            {
+        if ($this->tile->hasPixel()) {
+            if (file_exists($this->getPath() . $this->getFilename())) {
+                $image = imagecreatefrompng($this->getPath() . $this->getFilename());
+            } else {
                 $image = imagecreatetruecolor($this->tile->getSize(), $this->tile->getSize());
                 $transparent = imagecolorallocatealpha($image, 0, 0, 0, 127);
                 imagefill($image, 0, 0, $transparent);
@@ -33,15 +30,11 @@ class TraceTilePrinter extends AbstractTilePrinter {
 
             $pixel = $this->tile->popPixel();
 
-            while ($pixel != null)
-            {
-                if ($this->track->getTicket())
-                {
+            while ($pixel != null) {
+                if ($this->track->getTicket()) {
                     $ticket = $this->track->getTicket();
                     $color = imagecolorallocate($image, $ticket->getColorRed(), $ticket->getColorGreen(), $ticket->getColorBlue());
-                }
-                else
-                {
+                } else {
                     $user = $this->track->getUser();
                     $color = imagecolorallocate($image, $user->getColorRed(), $user->getColorGreen(), $user->getColorBlue());
                 }
@@ -52,8 +45,7 @@ class TraceTilePrinter extends AbstractTilePrinter {
                 $this->changed = true;
             }
 
-            if ($this->changed)
-            {
+            if ($this->changed) {
                 ob_start();
                 imagealphablending($image, false);
                 imagesavealpha($image, true);
@@ -68,14 +60,13 @@ class TraceTilePrinter extends AbstractTilePrinter {
 
     public function saveTile()
     {
-        if ($this->changed)
-        {
+        if ($this->changed) {
             $pathname = $this->getPath();
             $filename = $this->getFilename();
 
             @mkdir($pathname, 0777, true);
 
-            $handle = fopen($pathname.$filename, "w");
+            $handle = fopen($pathname . $filename, "w");
             fwrite($handle, $this->imageFileContent);
             fclose($handle);
         }

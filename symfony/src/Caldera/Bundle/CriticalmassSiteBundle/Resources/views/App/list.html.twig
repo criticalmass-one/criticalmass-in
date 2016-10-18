@@ -17,8 +17,10 @@
 
         <div class="row">
             <div class="col-md-12">
-                <p class="lead">Dem Grundgedanken der Critical Mass folgend kannst du unsere Daten auch auf anderen Seiten oder in anderen Apps nutzen. Es funktioniert ganz einfach!</p>
-                <p>Du musst dir lediglich eine so genannte App registrieren — das muss nicht zwangsläufig eine „echte App“ fürs Smartphone sein, das ist eher die Bezeichnung für einen Zugang zu unserer API.</p>
+                <p class="lead">Dem Grundgedanken der Critical Mass folgend kannst du unsere Daten auch auf anderen
+                    Seiten oder in anderen Apps nutzen. Es funktioniert ganz einfach!</p>
+                <p>Du musst dir lediglich eine so genannte App registrieren — das muss nicht zwangsläufig eine „echte
+                    App“ fürs Smartphone sein, das ist eher die Bezeichnung für einen Zugang zu unserer API.</p>
             </div>
         </div>
 
@@ -26,26 +28,26 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Titel
-                            </th>
-                            <th>
-                                Erstellt
-                            </th>
-                            <th>
-                                Zugriffsschlüssel
-                            </th>
-                            <th>
-                                Aufrufe
-                            </th>
-                            <th>
-                                Status
-                            </th>
-                            <th>
-                                Optionen
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Titel
+                        </th>
+                        <th>
+                            Erstellt
+                        </th>
+                        <th>
+                            Zugriffsschlüssel
+                        </th>
+                        <th>
+                            Aufrufe
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Optionen
+                        </th>
+                    </tr>
                     </thead>
 
                     {% for app in apps %}
@@ -66,12 +68,12 @@
                             </td>
                             <td>
                                 {% if app.getApproved() %}
-                                <code class="hidden">
-                                    {{ app.getToken() }}
-                                </code>
-                                <button class="showTokenButton btn btn-xs btn-default">
-                                    anzeigen
-                                </button>
+                                    <code class="hidden">
+                                        {{ app.getToken() }}
+                                    </code>
+                                    <button class="showTokenButton btn btn-xs btn-default">
+                                        anzeigen
+                                    </button>
                                 {% endif %}
                             </td>
                             <td>
@@ -89,10 +91,12 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_api_app_edit', { 'appId': app.getId() }) }}" class="btn btn-default btn-xs">
+                                <a href="{{ path('caldera_criticalmass_api_app_edit', { 'appId': app.getId() }) }}"
+                                   class="btn btn-default btn-xs">
                                     <i class="fa fa-cogs"></i>
                                 </a>
-                                <a class="btn btn-default btn-xs appDeleteButton" title="Löschen" href="#" data-appid={{ app.getId() }}>
+                                <a class="btn btn-default btn-xs appDeleteButton" title="Löschen" href="#"
+                                   data-appid={{ app.getId() }}>
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
@@ -103,10 +107,8 @@
         </div>
 
         <script type="text/javascript">
-            window.onload = function()
-            {
-                $('.showTokenButton').on('click', function()
-                {
+            window.onload = function () {
+                $('.showTokenButton').on('click', function () {
                     $(this).prev().removeClass('hidden');
                     $(this).hide();
                 });
@@ -132,8 +134,7 @@
     </div>
 
     <script>
-        function prepareDeleteModal()
-        {
+        function prepareDeleteModal() {
             var appId = $(this).data('appid');
             $('#deleteButton').prop('href', '/app/delete/' + appId);
             $('#modalDelete').modal('show');

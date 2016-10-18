@@ -11,8 +11,7 @@ class UserPhoneNumberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('phoneNumber', TextType::class, ['required' => false])
-        ;
+            ->add('phoneNumber', TextType::class, ['required' => false]);
     }
 
     public function getName()

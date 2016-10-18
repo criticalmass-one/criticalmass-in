@@ -25,13 +25,13 @@ class Track
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
-	 */
+     */
     protected $id;
 
     /**
@@ -199,7 +199,7 @@ class Track
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -222,7 +222,7 @@ class Track
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -326,7 +326,7 @@ class Track
     /**
      * Get creationDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreationDateTime()
     {
@@ -349,7 +349,7 @@ class Track
     /**
      * Get md5Hash
      *
-     * @return string 
+     * @return string
      */
     public function getMd5Hash()
     {
@@ -372,7 +372,7 @@ class Track
     /**
      * Get startDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartDateTime()
     {
@@ -397,7 +397,7 @@ class Track
     /**
      * Get endDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEndDateTime()
     {
@@ -422,7 +422,7 @@ class Track
     /**
      * Get distance
      *
-     * @return float 
+     * @return float
      */
     public function getDistance()
     {
@@ -445,7 +445,7 @@ class Track
     /**
      * Get points
      *
-     * @return integer 
+     * @return integer
      */
     public function getPoints()
     {
@@ -489,7 +489,7 @@ class Track
 
         return $this;
     }
-    
+
     /**
      * Set rideEstimate
      *
@@ -604,21 +604,21 @@ class Track
 
     public function __toString()
     {
-        $result = $this->getUsername().'(';
+        $result = $this->getUsername() . '(';
 
         if ($this->getCreationDateTime()) {
             $result .= $this->getCreationDateTime()->format('Y-m-d');
         }
 
         if ($this->getRide()) {
-            $result .= ', '.$this->getRide()->getCity()->getCity();
+            $result .= ', ' . $this->getRide()->getCity()->getCity();
         }
 
         $result .= ')';
 
         return $result;
     }
-    
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -683,7 +683,7 @@ class Track
     /**
      * Get startPoint
      *
-     * @return integer 
+     * @return integer
      */
     public function getStartPoint()
     {
@@ -710,7 +710,7 @@ class Track
     /**
      * Get endPoint
      *
-     * @return integer 
+     * @return integer
      */
     public function getEndPoint()
     {
@@ -733,13 +733,13 @@ class Track
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
-    
+
     public function getDurationInterval()
     {
         if ($this->startDateTime && $this->endDateTime) {
@@ -748,7 +748,7 @@ class Track
 
         return null;
     }
-    
+
     public function getDurationInSeconds()
     {
         if ($this->startDateTime && $this->endDateTime) {
@@ -757,7 +757,7 @@ class Track
 
         return 0;
     }
-    
+
     public function getAverageVelocity()
     {
         if ($this->startDateTime && $this->endDateTime && $this->distance) {

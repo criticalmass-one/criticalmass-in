@@ -32,15 +32,15 @@ class StravaController extends AbstractController
 
         try {
             $oauthOptions = [
-                'clientId'     => $this->getParameter('strava.client_id'),
+                'clientId' => $this->getParameter('strava.client_id'),
                 'clientSecret' => $this->getParameter('strava.secret'),
-                'redirectUri'  => $redirectUri,
+                'redirectUri' => $redirectUri,
                 'scopes' => ['view_private']
             ];
 
             return new OAuth($oauthOptions);
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             print $e->getMessage();
         }
     }
@@ -118,8 +118,8 @@ class StravaController extends AbstractController
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        $afterDateTime = new \DateTime($ride->getFormattedDate().' 00:00:00');
-        $beforeDateTime = new \DateTime($ride->getFormattedDate().' 23:59:59');
+        $afterDateTime = new \DateTime($ride->getFormattedDate() . ' 00:00:00');
+        $beforeDateTime = new \DateTime($ride->getFormattedDate() . ' 23:59:59');
 
         $token = $this->getSession()->get('strava_token');
 

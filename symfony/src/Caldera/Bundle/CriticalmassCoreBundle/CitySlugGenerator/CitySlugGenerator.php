@@ -5,7 +5,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\CitySlugGenerator;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 
-class CitySlugGenerator {
+class CitySlugGenerator
+{
     protected $city = null;
 
     public function __construct(City $city)

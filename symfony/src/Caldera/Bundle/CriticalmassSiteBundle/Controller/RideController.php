@@ -24,7 +24,7 @@ class RideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Ride:list.html.twig', 
+            'CalderaCriticalmassSiteBundle:Ride:list.html.twig',
             array(
                 'rides' => $rides
             )
@@ -36,7 +36,7 @@ class RideController extends AbstractController
         $city = $this->getCheckedCity($citySlug);
         $rideDateTime = $this->getCheckedDateTime($rideDate);
         $ride = $this->getCheckedRide($city, $rideDateTime);
-        
+
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
 
@@ -44,7 +44,7 @@ class RideController extends AbstractController
 
         $this
             ->getMetadata()
-            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in '.$city->getCity().' am '.$ride->getDateTime()->format('d.m.Y'));
+            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
 
         /**
          * @var Weather $weather
@@ -64,9 +64,9 @@ class RideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Ride:show.html.twig', 
+            'CalderaCriticalmassSiteBundle:Ride:show.html.twig',
             array(
-                'city' => $city, 
+                'city' => $city,
                 'ride' => $ride,
                 'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
                 'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),

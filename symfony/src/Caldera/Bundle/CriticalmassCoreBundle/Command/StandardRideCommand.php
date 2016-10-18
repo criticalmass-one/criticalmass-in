@@ -26,8 +26,7 @@ class StandardRideCommand extends ContainerAwareCommand
                 'month',
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -78,12 +77,10 @@ class StandardRideCommand extends ContainerAwareCommand
 
                     $output->writeln('');
                     $output->writeln('');
-                    
+
                     $entityManager->persist($ride);
                 }
-            }
-            else
-            {
+            } else {
                 $output->writeln('Lege keine Tourdaten für diese Stadt an.');
             }
         }

@@ -1,10 +1,10 @@
-define(['TrackEntity', 'PositionMarker'], function() {
+define(['TrackEntity', 'PositionMarker'], function () {
     TimelapseTrackEntity = function (trackId, polylineString, colorRed, colorGreen, colorBlue, username, backgroundImage) {
         this._trackId = trackId;
 
         this.setColor(colorRed, colorGreen, colorBlue);
 
-        this._polyline = L.Polyline.fromEncoded(polylineString, { color: this._color });
+        this._polyline = L.Polyline.fromEncoded(polylineString, {color: this._color});
 
         this._username = username;
         this._backgroundImage = backgroundImage;
@@ -19,11 +19,11 @@ define(['TrackEntity', 'PositionMarker'], function() {
     TimelapseTrackEntity.prototype._currentLatLng = null;
 
 
-    TimelapseTrackEntity.prototype.setCurrentLatLng = function(latLng) {
+    TimelapseTrackEntity.prototype.setCurrentLatLng = function (latLng) {
         this._currentLatLng = latLng;
     };
 
-    TimelapseTrackEntity.prototype._createMarker = function() {
+    TimelapseTrackEntity.prototype._createMarker = function () {
         if (!this._marker) {
             this._marker = new PositionMarker(this._currentLatLng, false, this._username, this._backgroundImage);
 

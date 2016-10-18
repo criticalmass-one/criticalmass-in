@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function(CriticalService) {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function (CriticalService) {
     RideEntity = function () {
     };
 
@@ -12,7 +12,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
     RideEntity.prototype._location = null;
     RideEntity.prototype._timestamp = null;
 
-    RideEntity.prototype._initIcon = function() {
+    RideEntity.prototype._initIcon = function () {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-bicycle',
             markerColor: 'red',
@@ -55,14 +55,14 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         this._setupModalButtons();
     };
 
-    RideEntity.prototype._setupModalButtons = function() {
+    RideEntity.prototype._setupModalButtons = function () {
         var that = this;
 
         var centerButton = new ModalButton();
         centerButton.setCaption('Zentrieren');
         centerButton.setIcon('map-pin');
         centerButton.setClass('btn-success');
-        centerButton.setOnClickEvent(function() {
+        centerButton.setOnClickEvent(function () {
             that._CriticalService.getMap().setView([that._latitude, that._longitude], 13);
         });
 
@@ -70,13 +70,16 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         cityButton.setCaption('Städteseite');
         cityButton.setIcon('university');
         cityButton.setClass('btn-success');
-        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', { citySlug: this._city._slug }));
+        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', {citySlug: this._city._slug}));
 
         var rideButton = new ModalButton();
         rideButton.setCaption('Tourseite');
         rideButton.setIcon('bicycle');
         rideButton.setClass('btn-success');
-        rideButton.setHref(Routing.generate('caldera_criticalmass_ride_show', { citySlug: this._city._slug, rideDate: this._timestamp.format('yyyy-mm-dd') }));
+        rideButton.setHref(Routing.generate('caldera_criticalmass_ride_show', {
+            citySlug: this._city._slug,
+            rideDate: this._timestamp.format('yyyy-mm-dd')
+        }));
 
         var closeButton = new CloseModalButton;
 
@@ -90,7 +93,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         this._modal.setButtons(buttons);
     };
 
-    RideEntity.prototype.getDate = function() {
+    RideEntity.prototype.getDate = function () {
         return this._date;
     };
 

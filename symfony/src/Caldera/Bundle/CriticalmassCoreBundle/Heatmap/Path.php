@@ -3,7 +3,8 @@
 namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
 
 
-class Path {
+class Path
+{
     protected $startPosition;
     protected $endPosition;
 
@@ -25,6 +26,6 @@ class Path {
 
     public function getHash()
     {
-        return $this->startPosition->getLatitude()."-".$this->startPosition->getLongitude()."-".$this->endPosition->getLatitude()."-".$this->endPosition->getLongitude();
+        return $this->startPosition->getLatitude() . "-" . $this->startPosition->getLongitude() . "-" . $this->endPosition->getLatitude() . "-" . $this->endPosition->getLongitude();
     }
 } 

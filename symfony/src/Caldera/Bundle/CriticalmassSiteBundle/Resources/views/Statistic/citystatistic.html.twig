@@ -29,7 +29,11 @@
                 </h1>
 
                 <p class="lead">
-                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a href="{{ path('caldera_criticalmass_desktop_city_missingstats', { citySlug: city.slug }) }}">Liste von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
+                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
+                    der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von
+                    den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a
+                            href="{{ path('caldera_criticalmass_desktop_city_missingstats', { citySlug: city.slug }) }}">Liste
+                        von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
                 </p>
             </div>
         </div>
@@ -41,7 +45,8 @@
                 </h2>
 
                 <p>
-                    Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den Teilnehmern geschätzt wurden.
+                    Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den
+                    Teilnehmern geschätzt wurden.
                 </p>
             </div>
         </div>
@@ -68,60 +73,60 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Datum
-                            </th>
-                            <th>
-                                Temperatur
-                            </th>
-                            <th>
-                                Niederschlag
-                            </th>
-                            <th>
-                                Windgeschwindigkeit
-                            </th>
-                            <th>
-                                Teilnehmerzahl
-                            </th>
-                            <th>
-                                Streckenlänge
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Datum
+                        </th>
+                        <th>
+                            Temperatur
+                        </th>
+                        <th>
+                            Niederschlag
+                        </th>
+                        <th>
+                            Windgeschwindigkeit
+                        </th>
+                        <th>
+                            Teilnehmerzahl
+                        </th>
+                        <th>
+                            Streckenlänge
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for ride in rides %}
+                    {% for ride in rides %}
                         {% set weather = ride.weathers.first %}
                         {% if weather %}
-                        <tr>
-                            <td>
-                                {{ ride.dateTime | date('d.m.Y H:i') }}
-                            </td>
-                            <td>
-                                {{ weather.temperatureEvening }} °C
-                            </td>
-                            <td>
-                                {{ weather.rain }} Millimeter
-                            </td>
-                            <td>
-                                {{ weather.windSpeed }} Meter pro Sekunde
-                            </td>
-                            <td>
-                                {{ ride.estimatedParticipants | default('unbekannt') }}
-                            </td>
-                            <td>
-                                {{ ride.estimatedDistance | default('unbekannt') }}
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    {{ ride.dateTime | date('d.m.Y H:i') }}
+                                </td>
+                                <td>
+                                    {{ weather.temperatureEvening }} °C
+                                </td>
+                                <td>
+                                    {{ weather.rain }} Millimeter
+                                </td>
+                                <td>
+                                    {{ weather.windSpeed }} Meter pro Sekunde
+                                </td>
+                                <td>
+                                    {{ ride.estimatedParticipants | default('unbekannt') }}
+                                </td>
+                                <td>
+                                    {{ ride.estimatedDistance | default('unbekannt') }}
+                                </td>
+                            </tr>
                         {% endif %}
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-        CriticalMass.loadModule('CityStatisticPage', null, null, function(page) {
+        CriticalMass.loadModule('CityStatisticPage', null, null, function (page) {
             {% for ride in rides %}
             page.addRideData('{{ ride.getFormattedDate }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
             {% endfor %}

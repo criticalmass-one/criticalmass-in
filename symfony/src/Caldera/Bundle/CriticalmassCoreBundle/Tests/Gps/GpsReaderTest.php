@@ -8,13 +8,7 @@ use Caldera\CriticalmassGalleryBundle\Utility\ExifReader\GpsReader;
 class GpsReaderTest extends \PHPUnit_Framework_TestCase
 {
     protected $photo;
-    
-    protected function setup()
-    {
-        $this->photo = new TestPhoto();
-        $this->photo->setFilePath(getcwd().'/../src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg');
-    }
-    
+
     public function testPhotoGps()
     {
         $gr = new GpsReader($this->photo);
@@ -22,6 +16,12 @@ class GpsReaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(53.57, round($gr->getLatitude(), 2));
         $this->assertEquals(9.92, round($gr->getLongitude(), 2));
+    }
+
+    protected function setup()
+    {
+        $this->photo = new TestPhoto();
+        $this->photo->setFilePath(getcwd() . '/../src/Caldera/CriticalmassGalleryBundle/Resources/public/images/testphoto.jpeg');
     }
 }
 

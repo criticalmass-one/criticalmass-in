@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity'], function (CriticalService) {
     RegionPage = function () {
         this._CriticalService = CriticalService;
 
@@ -10,11 +10,11 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity'], function(CriticalS
     RegionPage.prototype._map = null;
     RegionPage.prototype._cityContainer = null;
 
-    RegionPage.prototype._initContainer = function() {
+    RegionPage.prototype._initContainer = function () {
         this._cityContainer = new Container();
     };
 
-    RegionPage.prototype._initMap = function() {
+    RegionPage.prototype._initMap = function () {
         this._map = new Map('map', []);
 
         this._cityContainer.addToMap(this._map);
@@ -22,7 +22,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity'], function(CriticalS
         this._CriticalService.setMap(this._map);
     };
 
-    RegionPage.prototype.addCity = function(cityJson) {
+    RegionPage.prototype.addCity = function (cityJson) {
         var cityEntity = this._CriticalService.factory.createCity(cityJson);
 
         this._cityContainer.addEntity(cityEntity);
@@ -30,7 +30,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity'], function(CriticalS
         return cityEntity;
     };
 
-    RegionPage.prototype.setFocus = function() {
+    RegionPage.prototype.setFocus = function () {
         var bounds = this._cityContainer.getBounds();
         this._map.fitBounds(bounds);
     };

@@ -12,28 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class BlogPostView implements ViewInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="BlogPost", inversedBy="blog_post_views")
      * @ORM\JoinColumn(name="blog_post_id", referencedColumnName="id")
      */
     protected $blogPost;
-    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     public function __construct()
     {
@@ -43,7 +40,7 @@ class BlogPostView implements ViewInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -86,15 +83,15 @@ class BlogPostView implements ViewInterface
         return $this;
     }
 
+    public function getBlogPost(): BlogPost
+    {
+        return $this->blogPost;
+    }
+
     public function setBlogPost(BlogPost $blogPost): BlogPostView
     {
         $this->blogPost = $blogPost;
 
         return $this;
-    }
-
-    public function getBlogPost(): BlogPost
-    {
-        return $this->blogPost;
     }
 }

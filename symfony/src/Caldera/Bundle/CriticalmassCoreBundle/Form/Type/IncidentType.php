@@ -23,7 +23,7 @@ class IncidentType extends AbstractType
             ->add('geometryType', HiddenType::class)
             ->add('incidentType', ChoiceType::class,
                 [
-                    'choices'  => [
+                    'choices' => [
                         0 => Incident::INCIDENT_RAGE,
                         1 => Incident::INCIDENT_DANGER,
                         2 => Incident::INCIDENT_ROADWORKS

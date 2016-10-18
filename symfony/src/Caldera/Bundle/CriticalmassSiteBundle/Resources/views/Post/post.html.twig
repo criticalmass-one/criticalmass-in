@@ -2,18 +2,21 @@
     <div class="col-md-12">
         <div class="media post">
             <span class="pull-left">
-                <img class="media-object gravatar round-media-object" src="https://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64" />
+                <img class="media-object gravatar round-media-object"
+                     src="https://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64"/>
             </span>
 
             <div class="media-body">
                 <h4 class="media-heading username">
-                {% if post.getRide() %}
-                    {{ post.getUser().getUsername() }} schreibt zu <a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:
-                {% elseif post.getCity() %}
-                    {{ post.getUser().getUsername() }} schreibt über <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
-                {% else %}
-                    {{ post.getUser().getUsername() }} schreibt:
-                {% endif %}
+                    {% if post.getRide() %}
+                        {{ post.getUser().getUsername() }} schreibt zu <a
+                            href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:
+                    {% elseif post.getCity() %}
+                        {{ post.getUser().getUsername() }} schreibt über <a
+                            href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
+                    {% else %}
+                        {{ post.getUser().getUsername() }} schreibt:
+                    {% endif %}
                 </h4>
 
                 <time>{{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr</time>

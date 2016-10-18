@@ -61,6 +61,14 @@ class Blog
     }
 
     /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * @param string $title
      * @return Blog
      */
@@ -74,9 +82,9 @@ class Blog
     /**
      * @return string
      */
-    public function getTitle()
+    public function getDescription()
     {
-        return $this->title;
+        return $this->description;
     }
 
     /**
@@ -91,11 +99,11 @@ class Blog
     }
 
     /**
-     * @return string
+     * @return boolean
      */
-    public function getDescription()
+    public function getEnabled()
     {
-        return $this->description;
+        return $this->enabled;
     }
 
     /**
@@ -110,11 +118,11 @@ class Blog
     }
 
     /**
-     * @return boolean
+     * @return string
      */
-    public function getEnabled()
+    public function getHostname()
     {
-        return $this->enabled;
+        return $this->hostname;
     }
 
     /**
@@ -126,13 +134,5 @@ class Blog
         $this->hostname = $hostname;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHostname()
-    {
-        return $this->hostname;
     }
 }

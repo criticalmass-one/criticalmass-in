@@ -74,7 +74,7 @@ class SiteTwigExtension extends \Twig_Extension
         if (!$user) {
             return 'avatar';
         }
-        
+
         return md5($user->getEmail());
     }
 
@@ -158,8 +158,8 @@ class SiteTwigExtension extends \Twig_Extension
 
             $path = $this->container->get('router')->generate('caldera_criticalmass_desktop_city_show', ['citySlug' => $citySlug]);
 
-            $link = '<a href="'.$path.'">'.$hashtag.'</a>';
-            
+            $link = '<a href="' . $path . '">' . $hashtag . '</a>';
+
             $string = str_replace($hashtag, $link, $string);
         }
 

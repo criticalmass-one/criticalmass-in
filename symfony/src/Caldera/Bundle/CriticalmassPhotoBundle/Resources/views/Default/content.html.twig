@@ -6,14 +6,15 @@
     <div class="container m-t-5">
         <div class="row">
             <div class="col-xs-10 offset-xs-1">
-            {{ content.text|markdown }}
+                {{ content.text|markdown }}
             </div>
         </div>
 
         <div class="row margin-top-large">
             <div class="col-xs-10 offset-xs-1">
                 <small>
-                    Diese Seite wurde am {{ content.lastEditionDateTime.format('d.m.Y') }} um {{ content.lastEditionDateTime.format('H:i') }} Uhr von {{ content.user.username }} geändert.
+                    Diese Seite wurde am {{ content.lastEditionDateTime.format('d.m.Y') }}
+                    um {{ content.lastEditionDateTime.format('H:i') }} Uhr von {{ content.user.username }} geändert.
                 </small>
             </div>
         </div>

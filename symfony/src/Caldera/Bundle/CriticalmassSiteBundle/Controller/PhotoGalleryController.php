@@ -23,7 +23,7 @@ class PhotoGalleryController extends AbstractController
             if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
                 throw $this->createAccessDeniedException();
             }
-            
+
             $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
         } else {
             $event = $this->getEventRepository()->findOneBySlug($eventSlug);
@@ -80,7 +80,7 @@ class PhotoGalleryController extends AbstractController
 
             $cityList[$citySlug] = $city;
         }
-        
+
         shuffle($cityList);
 
         return $this->render(

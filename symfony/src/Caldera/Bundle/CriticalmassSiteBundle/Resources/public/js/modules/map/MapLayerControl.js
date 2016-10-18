@@ -1,19 +1,19 @@
-define(['leaflet', 'leaflet-groupedlayer'], function() {
-    MapLayerControl = function() {
+define(['leaflet', 'leaflet-groupedlayer'], function () {
+    MapLayerControl = function () {
     };
 
     MapLayerControl.prototype._layers = null;
     MapLayerControl.prototype._layerControl = null;
 
-    MapLayerControl.prototype.setLayers = function(layers) {
+    MapLayerControl.prototype.setLayers = function (layers) {
         this._layers = layers;
     };
 
-    MapLayerControl.prototype.getLayers = function() {
+    MapLayerControl.prototype.getLayers = function () {
         return this._layers;
     };
 
-    MapLayerControl.prototype.init = function() {
+    MapLayerControl.prototype.init = function () {
         this._layerControl = L.control.groupedLayers({}, {
             'Critical Mass': this._layers
         }, {
@@ -21,7 +21,7 @@ define(['leaflet', 'leaflet-groupedlayer'], function() {
         });
     };
 
-    MapLayerControl.prototype.addTo = function(map) {
+    MapLayerControl.prototype.addTo = function (map) {
         this._layerControl.addTo(map.map);
     };
 

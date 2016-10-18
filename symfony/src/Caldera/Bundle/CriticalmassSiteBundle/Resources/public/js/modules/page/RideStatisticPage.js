@@ -1,5 +1,5 @@
-define(['chartjs'], function() {
-    RideStatisticPage = function(context, options) {
+define(['chartjs'], function () {
+    RideStatisticPage = function (context, options) {
     };
 
     RideStatisticPage.prototype._propertiesData = [];
@@ -7,7 +7,7 @@ define(['chartjs'], function() {
 
     RideStatisticPage.prototype._propertiesChart = null;
 
-    RideStatisticPage.prototype.addProperty = function(dateTime, numberAttending, numberMaybe, numberDeclined, numberInterested, numberNoreply) {
+    RideStatisticPage.prototype.addProperty = function (dateTime, numberAttending, numberMaybe, numberDeclined, numberInterested, numberNoreply) {
         this._propertiesData[dateTime] = {
             numberAttending: numberAttending,
             numberMaybe: numberMaybe,
@@ -19,7 +19,7 @@ define(['chartjs'], function() {
         this._dateTime.push(dateTime);
     };
 
-    RideStatisticPage.prototype.createParticipantsChart = function($element) {
+    RideStatisticPage.prototype.createParticipantsChart = function ($element) {
         var datasets = [];
 
         datasets.push(this._createDataset('ja', 'green', this._createDataList('numberAttending')));
@@ -39,7 +39,7 @@ define(['chartjs'], function() {
         });
     };
 
-    RideStatisticPage.prototype._createDataList = function(property) {
+    RideStatisticPage.prototype._createDataList = function (property) {
         var dataList = [];
 
         for (var index in this._dateTime) {
@@ -52,7 +52,7 @@ define(['chartjs'], function() {
         return dataList;
     };
 
-    RideStatisticPage.prototype._createDataset = function(label, color, data) {
+    RideStatisticPage.prototype._createDataset = function (label, color, data) {
         return {
             label: label,
             fill: false,

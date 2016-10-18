@@ -1,5 +1,5 @@
-define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function(CriticalService) {
-    IncidentEntity = function() {
+define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function (CriticalService) {
+    IncidentEntity = function () {
     };
 
     IncidentEntity.prototype = new BaseEntity();
@@ -18,10 +18,10 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity.prototype._visibleTo = null;
     IncidentEntity.prototype._layer = null;
 
-    IncidentEntity.prototype.addToLayer = function(markerLayer) {
+    IncidentEntity.prototype.addToLayer = function (markerLayer) {
         var latLngList = L.PolylineUtil.decode(this._polyline);
 
-        var polyOptions = { color: 'red' };
+        var polyOptions = {color: 'red'};
 
         if (this._geometryType == 'polygon') {
             this._layer = new L.polygon(latLngList, polyOptions);
@@ -39,7 +39,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
                 prefix: 'fa'
             });
 
-            this._layer = new L.marker(latLngList[0], { icon: icon });
+            this._layer = new L.marker(latLngList[0], {icon: icon});
         }
 
         if (this._layer) {
@@ -49,13 +49,13 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
 
             var that = this;
 
-            this._layer.on('click', function() {
+            this._layer.on('click', function () {
                 that.openPopup();
             });
         }
     };
 
-    IncidentEntity.prototype._initPopup = function() {
+    IncidentEntity.prototype._initPopup = function () {
         this._modal = new Modal();
 
         this._modal.setSize('md');
@@ -71,7 +71,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         focusButton.setClass('btn-success');
 
         var that = this;
-        focusButton.setOnClickEvent(function() {
+        focusButton.setOnClickEvent(function () {
             that._CriticalService.getMap().fitBounds(that.getBounds());
         });
 
@@ -79,11 +79,11 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
 
     };
 
-    IncidentEntity.prototype.openPopup = function() {
+    IncidentEntity.prototype.openPopup = function () {
         this._modal.show();
     };
 
-    IncidentEntity.prototype.getBounds = function() {
+    IncidentEntity.prototype.getBounds = function () {
         return this._layer.getBounds();
     };
 

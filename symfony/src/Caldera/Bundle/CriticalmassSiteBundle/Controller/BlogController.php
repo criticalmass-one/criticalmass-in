@@ -12,9 +12,8 @@ class BlogController extends AbstractController
         $articles = $this->getBlogArticleRepository()->findBy(array(), array('dateTime' => 'DESC'));
 
         $markdown = new Markdown();
-        
-        foreach ($articles as $article)
-        {
+
+        foreach ($articles as $article) {
             $article->setFormattedText($markdown->transform($article->getText()));
         }
 

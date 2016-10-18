@@ -79,11 +79,21 @@ class Heatmap
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -100,13 +110,13 @@ class Heatmap
     }
 
     /**
-     * Get title
+     * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getDescription()
     {
-        return $this->title;
+        return $this->description;
     }
 
     /**
@@ -123,13 +133,13 @@ class Heatmap
     }
 
     /**
-     * Get description
+     * Get identifier
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
+    public function getIdentifier()
     {
-        return $this->description;
+        return $this->identifier;
     }
 
     /**
@@ -146,13 +156,13 @@ class Heatmap
     }
 
     /**
-     * Get identifier
+     * Get public
      *
-     * @return string 
+     * @return boolean
      */
-    public function getIdentifier()
+    public function getPublic()
     {
-        return $this->identifier;
+        return $this->public;
     }
 
     /**
@@ -166,16 +176,6 @@ class Heatmap
         $this->public = $public;
 
         return $this;
-    }
-
-    /**
-     * Get public
-     *
-     * @return boolean 
-     */
-    public function getPublic()
-    {
-        return $this->public;
     }
 
     /**
@@ -204,7 +204,7 @@ class Heatmap
     /**
      * Get cities
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCities()
     {
@@ -237,7 +237,7 @@ class Heatmap
     /**
      * Get rides
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRides()
     {
@@ -270,7 +270,7 @@ class Heatmap
     /**
      * Get tracks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {

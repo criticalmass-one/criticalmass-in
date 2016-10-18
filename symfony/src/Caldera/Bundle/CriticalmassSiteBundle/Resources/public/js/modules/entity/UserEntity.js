@@ -1,4 +1,4 @@
-define(['BaseEntity'], function() {
+define(['BaseEntity'], function () {
     UserEntity = function () {
     };
 
@@ -12,15 +12,15 @@ define(['BaseEntity'], function() {
     UserEntity.prototype._colorBlue = null;
     UserEntity.prototype._gravatarHash = null;
 
-    UserEntity.prototype.getUsername = function() {
+    UserEntity.prototype.getUsername = function () {
         return this._username;
     };
 
-    UserEntity.prototype.getGravatarHash = function() {
+    UserEntity.prototype.getGravatarHash = function () {
         return this._gravatarHash;
     };
 
-    UserEntity.prototype.getGravatarUrl = function() {
+    UserEntity.prototype.getGravatarUrl = function () {
         return 'https://www.gravatar.com/avatar/' + this._gravatarHash;
     };
 

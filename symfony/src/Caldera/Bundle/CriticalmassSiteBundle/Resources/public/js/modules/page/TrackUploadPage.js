@@ -1,5 +1,5 @@
-define([], function() {
-    TrackUploadPage = function(context, options) {
+define([], function () {
+    TrackUploadPage = function (context, options) {
         var $uploadForm = $('form#track-upload-form');
         var $uploadButton = $('button#track-upload-button');
 

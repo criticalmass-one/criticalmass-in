@@ -19,7 +19,7 @@ class AnchorParserStep implements StepInterface
         $anchor = str_replace(' ', '-', $anchor);
         $anchor = urlencode($anchor);
 
-        $result = '<h3><a class="anchor" name="'.$anchor.'" href="#'.$anchor.'">'.$caption.'</a></h3>';
+        $result = '<h3><a class="anchor" name="' . $anchor . '" href="#' . $anchor . '">' . $caption . '</a></h3>';
 
         return $result;
     }

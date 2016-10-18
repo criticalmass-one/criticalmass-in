@@ -120,7 +120,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -143,7 +143,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -166,7 +166,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -189,7 +189,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -212,7 +212,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -235,7 +235,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -258,7 +258,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get facebook
      *
-     * @return string 
+     * @return string
      */
     public function getFacebook()
     {
@@ -281,7 +281,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -304,7 +304,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -317,10 +317,10 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     public function incViews()
     {
         ++$this->views;
-        
+
         return $this;
     }
-    
+
     /**
      * Set views
      *
@@ -337,7 +337,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get views
      *
-     * @return integer 
+     * @return integer
      */
     public function getViews()
     {
@@ -412,7 +412,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
 
     public function getPin(): string
     {
-        return $this->latitude.','.$this->longitude;
+        return $this->latitude . ',' . $this->longitude;
     }
 
     /**
@@ -431,7 +431,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -454,7 +454,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -477,7 +477,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get street
      *
-     * @return string 
+     * @return string
      */
     public function getStreet()
     {
@@ -500,7 +500,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -523,7 +523,7 @@ class BikeShop implements CoordinateInterface, FacebookInterface, TwitterInterfa
     /**
      * Get zip
      *
-     * @return string 
+     * @return string
      */
     public function getZip()
     {

@@ -3,10 +3,13 @@
         <div class="col-md-12">
             {% if app.getUser() %}
                 <div class="btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}" title="Tour bearbeiten">
+                    <a class="btn btn-success"
+                       href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
+                       title="Tour bearbeiten">
                         <i class="fa fa-cogs"></i> Tour editieren
                     </a>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>

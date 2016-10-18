@@ -39,8 +39,7 @@ class FacebookPageApi extends FacebookApi
                 ->setGeneralInfo($page->getField('general_info'))
                 ->setCheckinNumber($page->getField('were_here_count'))
                 ->setLikeNumber($page->getField('likes'))
-                ->setWebsite($page->getField('website'))
-            ;
+                ->setWebsite($page->getField('website'));
 
             return $properties;
         }
@@ -53,7 +52,7 @@ class FacebookPageApi extends FacebookApi
         $fieldString = implode(',', $fields);
 
         try {
-            $response = $this->facebook->get('/' . $pageId.'?fields='.$fieldString);
+            $response = $this->facebook->get('/' . $pageId . '?fields=' . $fieldString);
         } catch (\Exception $e) {
             return null;
         }

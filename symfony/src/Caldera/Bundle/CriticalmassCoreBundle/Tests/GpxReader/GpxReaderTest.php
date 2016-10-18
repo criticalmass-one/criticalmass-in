@@ -8,7 +8,7 @@ use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 class GpxCoordLoopTest extends \PHPUnit_Framework_TestCase
 {
     protected $gpx;
-    
+
     protected function setUp()
     {
         $this->gpx = <<<EOF

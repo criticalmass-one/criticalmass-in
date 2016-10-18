@@ -1,4 +1,4 @@
-define(['leaflet', 'MarkerEntity'], function() {
+define(['leaflet', 'MarkerEntity'], function () {
     NoLocationRideEntity = function (title, description, latitude, longitude, location, date, time, weather) {
         this._title = title;
         this._description = description;
@@ -20,7 +20,7 @@ define(['leaflet', 'MarkerEntity'], function() {
     NoLocationRideEntity.prototype._time = null;
     NoLocationRideEntity.prototype._weather = null;
 
-    NoLocationRideEntity.prototype._initIcon = function() {
+    NoLocationRideEntity.prototype._initIcon = function () {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-university',
             markerColor: 'blue-dark',

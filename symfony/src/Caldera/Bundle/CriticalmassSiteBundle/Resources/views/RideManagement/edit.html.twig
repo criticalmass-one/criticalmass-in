@@ -1,11 +1,11 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% if ride %}
-{% set title = 'Tour editieren' %}
-{% set mode = 'edit' %}
+    {% set title = 'Tour editieren' %}
+    {% set mode = 'edit' %}
 {% else %}
-{% set title = 'Tour hinzufügen' %}
-{% set mode = 'create' %}
+    {% set title = 'Tour hinzufügen' %}
+    {% set mode = 'create' %}
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -24,19 +24,19 @@
     </li>
 
     {% if ride %}
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.getFancyTitle() }}
-        </a>
-    </li>
+        <li>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.getFancyTitle() }}
+            </a>
+        </li>
 
-    <li class="active">
-        Tour editieren
-    </li>
+        <li class="active">
+            Tour editieren
+        </li>
     {% else %}
-    <li class="active">
-        Tour hinzufügen
-    </li>
+        <li class="active">
+            Tour hinzufügen
+        </li>
     {% endif %}
 {% endblock %}
 
@@ -47,7 +47,9 @@
                 <div class="col-md-12">
                     <div class="alert alert-warning" role="alert">
                         <strong>Vorsicht!</strong>
-                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.
+                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
+                        generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich
+                        bereits existiert.
                     </div>
                 </div>
             </div>
@@ -68,21 +70,22 @@
 
 
         {% if hasErrors is not null %}
-        <div class="row">
-            <div class="col-md-12">
-        {% if hasErrors == true %}
-                <div class="alert alert-danger" role="alert">
-                    Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast :(
+            <div class="row">
+                <div class="col-md-12">
+                    {% if hasErrors == true %}
+                        <div class="alert alert-danger" role="alert">
+                            Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast
+                            :(
+                        </div>
+                    {% elseif hasErrors == false %}
+                        <div class="alert alert-success" role="alert">
+                            Deine Änderungen wurden gespeichert. <a href="{{ objectPath(ride) }}">
+                                Zurück zur Tour?
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
-        {% elseif hasErrors == false %}
-                <div class="alert alert-success" role="alert">
-                    Deine Änderungen wurden gespeichert. <a href="{{ objectPath(ride) }}">
-                        Zurück zur Tour?
-                    </a>
-                </div>
-        {% endif %}
             </div>
-        </div>
         {% endif %}
 
         {{ form_start(form) }}
@@ -118,7 +121,9 @@
                             </label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="help-block">
-                                Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge, die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der Stadt genügend Platz.
+                                Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge,
+                                die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der
+                                Stadt genügend Platz.
                             </p>
                         </div>
                     </div>
@@ -130,14 +135,16 @@
                             <strong>
                                 Vorsicht!
                             </strong>
-                            Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?
+                            Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei
+                            Touren stattfinden?
                         </div>
 
                         <div class="alert alert-danger" role="alert" id="doubleDayRide" style="display: none;">
                             <strong>
                                 Achtung!
                             </strong>
-                            An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider keine zwei Touren an einem Tag verwaltet werden.
+                            An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider
+                            keine zwei Touren an einem Tag verwaltet werden.
                         </div>
 
                         <div class="form-group">
@@ -159,7 +166,8 @@
                             {{ form_widget(form.hasTime) }}
                         </div>
                         <p class="help-block">
-                            Mit der Checkbox kann die Anzeige der Uhrzeit deaktiviert werden, falls die Uhrzeit noch nicht bekannt sein sollte.
+                            Mit der Checkbox kann die Anzeige der Uhrzeit deaktiviert werden, falls die Uhrzeit noch
+                            nicht bekannt sein sollte.
                         </p>
                     </div>
                 </div>
@@ -180,7 +188,10 @@
                             {% endif %}
                         </div>
                         <p class="help-block">
-                            Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert werden, falls der noch nicht bekannt sein sollte.
+                            Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige
+                            Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne
+                            Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert
+                            werden, falls der noch nicht bekannt sein sollte.
                         </p>
                     </div>
                 </div>
@@ -225,13 +236,13 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                <a href="{{ objectPath(ride) }}" class="btn btn-default">
-                                    Abbrechen
-                                </a>
+                                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                                        Abbrechen
+                                    </a>
                                 {% else %}
-                                <a href="{{ objectPath(city) }}" class="btn btn-default">
-                                    Abbrechen
-                                </a>
+                                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                                        Abbrechen
+                                    </a>
                                 {% endif %}
                                 <button type="submit" class="btn btn-success" id="rideSubmitButton">
                                     Speichern
@@ -242,9 +253,9 @@
                 </div>
             </div>
         </div>
-            {{ form_widget(form.latitude) }}
-            {{ form_widget(form.longitude) }}
-            {{ form_widget(form._token) }}
+        {{ form_widget(form.latitude) }}
+        {{ form_widget(form.longitude) }}
+        {{ form_widget(form._token) }}
 
         </form>
     </div>
@@ -254,7 +265,7 @@
             citySlug: '{{ city.getMainSlugString() }}'
         };
 
-        CriticalMass.loadModule('EditRidePage', options, null, function(editRidePage) {
+        CriticalMass.loadModule('EditRidePage', options, null, function (editRidePage) {
             var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
 
             editRidePage.setCityLatLng(cityLatLng);

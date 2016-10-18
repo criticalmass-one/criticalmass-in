@@ -9,7 +9,7 @@ use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
 class GpxCoordLoopTest extends \PHPUnit_Framework_TestCase
 {
     protected $gpx;
-    
+
     protected function setUp()
     {
         $this->gpx = <<<EOF
@@ -99,7 +99,7 @@ class GpxCoordLoopTest extends \PHPUnit_Framework_TestCase
 EOF;
 
     }
-    
+
     public function testGpxLoop1()
     {
         $gr = new GpxReader();
@@ -112,17 +112,17 @@ EOF;
 
         $this->assertEquals(7, $result);
     }
-    
+
     public function testGpxLoop2()
     {
         $gr = new GpxReader();
         $gr->loadString($this->gpx);
-        
+
         $gcl = new GpxCoordLoop($gr);
-        
+
         $searchDateTime = new \DateTime('2015-04-01T15:14:49Z');
         $result = $gcl->execute($searchDateTime);
-        
+
         $this->assertEquals(14, $result);
     }
 }

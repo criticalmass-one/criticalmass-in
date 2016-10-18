@@ -4,7 +4,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader;
 
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 
-class TrackReader extends GpxReader {
+class TrackReader extends GpxReader
+{
     /**
      * @var Track $track
      */
@@ -14,21 +15,21 @@ class TrackReader extends GpxReader {
     {
         $this->track = $track;
         $filename = $this->uploaderHelper->asset($track, 'trackFile');
-        
+
         $this->loadFile($filename);
     }
 
     public function getStartDateTime()
     {
         $startPoint = intval($this->track->getStartPoint());
-        
+
         return new \DateTime($this->simpleXml->trk->trkseg->trkpt[$startPoint]->time);
     }
 
     public function getEndDateTime()
     {
         $endPoint = intval($this->track->getEndPoint());
-        
+
         return new \DateTime($this->simpleXml->trk->trkseg->trkpt[$endPoint]->time);
     }
 
@@ -55,7 +56,7 @@ class TrackReader extends GpxReader {
     {
         $startPoint = intval($this->track->getStartPoint());
         $endPoint = intval($this->track->getEndPoint());
-        $distance = (float) 0.0;
+        $distance = (float)0.0;
 
         $index = $startPoint + 1;
 
@@ -64,10 +65,10 @@ class TrackReader extends GpxReader {
         while ($index < $endPoint) {
             $secondCoord = $this->simpleXml->trk->trkseg->trkpt[$index];
 
-            $dx = 71.5 * ((float) $firstCoord['lon'] - (float) $secondCoord['lon']);
-            $dy = 111.3 * ((float) $firstCoord['lat'] - (float) $secondCoord['lat']);
+            $dx = 71.5 * ((float)$firstCoord['lon'] - (float)$secondCoord['lon']);
+            $dy = 111.3 * ((float)$firstCoord['lat'] - (float)$secondCoord['lat']);
 
-            $way = (float) sqrt($dx * $dx + $dy * $dy);
+            $way = (float)sqrt($dx * $dx + $dy * $dy);
 
             $secondTime = new \DateTime($secondCoord->time);
             $firstTime = new \DateTime($firstCoord->time);
@@ -87,6 +88,6 @@ class TrackReader extends GpxReader {
             ++$index;
         }
 
-        return (float) round($distance, 2);
+        return (float)round($distance, 2);
     }
 }

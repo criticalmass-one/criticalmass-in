@@ -25,7 +25,7 @@ class ThreadRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('thread.enabled', 1));
 
         $builder->orderBy('lastPost.dateTime', 'DESC');
-        
+
         $query = $builder->getQuery();
 
         return $query->getResult();
@@ -55,7 +55,7 @@ class ThreadRepository extends EntityRepository
 
         $builder->select('thread');
         $builder->where($builder->expr()->eq('thread.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('thread.slug', '\''.$slug.'\''));
+        $builder->andWhere($builder->expr()->eq('thread.slug', '\'' . $slug . '\''));
 
         $query = $builder->getQuery();
 
@@ -73,11 +73,11 @@ class ThreadRepository extends EntityRepository
         $builder->where($builder->expr()->eq('thread.enabled', 1));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('firstPost.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('firstPost.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('firstPost.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('firstPost.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -85,7 +85,7 @@ class ThreadRepository extends EntityRepository
         }
 
         $builder->addOrderBy('firstPost.dateTime', 'DESC');
-        
+
         $query = $builder->getQuery();
 
         $result = $query->getResult();

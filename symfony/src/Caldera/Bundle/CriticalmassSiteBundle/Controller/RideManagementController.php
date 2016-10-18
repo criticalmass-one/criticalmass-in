@@ -77,12 +77,12 @@ class RideManagementController extends AbstractController
             just to change the action url of the form, but we are far to stupid for this hack. */
             $form = $this->createForm(
                 RideType::class,
-                $ride, 
+                $ride,
                 [
                     'action' => $this->generateUrl(
-                        'caldera_criticalmass_desktop_ride_edit', 
+                        'caldera_criticalmass_desktop_ride_edit',
                         [
-                            'citySlug' => $city->getMainSlugString(), 
+                            'citySlug' => $city->getMainSlugString(),
                             'rideDate' => $ride->getFormattedDate()
                         ]
                     )
@@ -114,11 +114,11 @@ class RideManagementController extends AbstractController
 
         $form = $this->createForm(
             RideType::class,
-            $ride, 
+            $ride,
             array(
-                'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', 
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit',
                     array(
-                        'citySlug' => $city->getMainSlugString(), 
+                        'citySlug' => $city->getMainSlugString(),
                         'rideDate' => $ride->getDateTime()->format('Y-m-d')
                     )
                 )
@@ -148,11 +148,11 @@ class RideManagementController extends AbstractController
             )
         );
     }
-    
+
     protected function editPostAction(Request $request, Ride $ride, City $city, Form $form)
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
-        
+
         $archiveRide = clone $ride;
         $archiveRide->setArchiveUser($this->getUser());
         $archiveRide->setArchiveParent($ride);
@@ -178,10 +178,10 @@ class RideManagementController extends AbstractController
         return $this->render(
             'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
             array(
-                'ride' => $ride, 
-                'city' => $city, 
-                'form' => $form->createView(), 
-                'hasErrors' => $hasErrors, 
+                'ride' => $ride,
+                'city' => $city,
+                'form' => $form->createView(),
+                'hasErrors' => $hasErrors,
                 'dateTime' => new \DateTime(),
                 'oldRides' => $oldRides
             )

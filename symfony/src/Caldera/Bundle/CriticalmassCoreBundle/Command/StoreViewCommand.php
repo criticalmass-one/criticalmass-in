@@ -33,8 +33,7 @@ class StoreViewCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:storeviews')
-            ->setDescription('Store saved views')
-        ;
+            ->setDescription('Store saved views');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -61,11 +60,11 @@ class StoreViewCommand extends ContainerAwareCommand
 
     protected function storeView(array $viewArray)
     {
-        $viewClassName = 'Caldera\Bundle\CalderaBundle\Entity\\'.$viewArray['className'].'View';
-        $viewMethod = 'set'.$viewArray['className'];
+        $viewClassName = 'Caldera\Bundle\CalderaBundle\Entity\\' . $viewArray['className'] . 'View';
+        $viewMethod = 'set' . $viewArray['className'];
 
         /** @var ViewableInterface $entity */
-        $entity = $this->manager->getRepository('CalderaBundle:'.$viewArray['className'])->find($viewArray['entityId']);
+        $entity = $this->manager->getRepository('CalderaBundle:' . $viewArray['className'])->find($viewArray['entityId']);
 
         $viewDateTime = new \DateTime($viewArray['dateTime']);
 

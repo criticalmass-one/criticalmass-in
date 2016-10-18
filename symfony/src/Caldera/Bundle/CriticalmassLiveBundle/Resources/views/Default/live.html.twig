@@ -1,37 +1,37 @@
 {% extends 'CalderaCriticalmassLiveBundle:Template:MasterTemplate.html.twig' %}
 
 {% block content %}
-<div id="map">
-    <div id="glympse-logo-container">
-        <a href="http://www.glympse.com/">
-            <img id="glympse-logo" src="/bundles/calderacriticalmasssite/images/glympse/glympse-150.png" />
-        </a>
+    <div id="map">
+        <div id="glympse-logo-container">
+            <a href="http://www.glympse.com/">
+                <img id="glympse-logo" src="/bundles/calderacriticalmasssite/images/glympse/glympse-150.png"/>
+            </a>
+        </div>
     </div>
-</div>
 
-<script>
+    <script>
 
-    var options = {
-        apiUrl: window.location.origin + '/api/positions/{{ city.slug }}',
-        apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
-    };
+        var options = {
+            apiUrl: window.location.origin + '/api/positions/{{ city.slug }}',
+            apiAccessToken: '28fb1cc85d4b46c7e1e8f9b37aa7d7d8'
+        };
 
-    CriticalMass.loadModule('LivePage', null, options, function(livePage) {
-        {% if ride.hasLocation() and ride.latitude != 0 and ride.longitude != 0 %}
-        ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
+        CriticalMass.loadModule('LivePage', null, options, function (livePage) {
+            {% if ride.hasLocation() and ride.latitude != 0 and ride.longitude != 0 %}
+            ride = livePage.addRide('{{ ride|serialize|raw|e('js') }}');
 
-        ride.openPopup();
-        {% else %}
-        city = livePage.addCity('{{ city|serialize|raw|e('js') }}');
+            ride.openPopup();
+            {% else %}
+            city = livePage.addCity('{{ city|serialize|raw|e('js') }}');
 
-        city.openPopup();
-        {% endif %}
+            city.openPopup();
+            {% endif %}
 
-        {% for event in events %}
-         livePage.addEvent('{{ event|serialize|raw|e('js') }}');
-        {% endfor %}
+            {% for event in events %}
+            livePage.addEvent('{{ event|serialize|raw|e('js') }}');
+            {% endfor %}
 
-        livePage.setFocus();
-    });
-</script>
+            livePage.setFocus();
+        });
+    </script>
 {% endblock %}

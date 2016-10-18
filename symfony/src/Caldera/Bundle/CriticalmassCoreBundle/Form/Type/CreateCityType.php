@@ -13,14 +13,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateCityType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         switch ($options['flow_step']) {
             case 1:
                 $builder
                     ->add('city')
                     ->add('latitude', HiddenType::class)
-                    ->add('longitude', HiddenType::class)
-                ;
+                    ->add('longitude', HiddenType::class);
 
                 break;
 
@@ -30,8 +30,7 @@ class CreateCityType extends AbstractType
                     ->add('description')
                     ->add('punchLine')
                     ->add('longDescription')
-                    ->add('cityPopulation')
-                ;
+                    ->add('cityPopulation');
 
                 break;
 
@@ -39,8 +38,7 @@ class CreateCityType extends AbstractType
                 $builder
                     ->add('url')
                     ->add('facebook')
-                    ->add('twitter')
-                ;
+                    ->add('twitter');
 
                 break;
 
@@ -56,30 +54,29 @@ class CreateCityType extends AbstractType
                     ->add('isStandardableLocation', CheckboxType::class, ['required' => false])
                     ->add('standardLocation', TextType::class, ['required' => false])
                     ->add('standardLatitude', HiddenType::class, ['required' => false])
-                    ->add('standardLongitude', HiddenType::class, ['required' => false])
-                ;
+                    ->add('standardLongitude', HiddenType::class, ['required' => false]);
 
                 break;
 
             case 5:
                 $builder
                     ->add('enableBoard')
-                    ->add('timezone', TimezoneType::class)
-                ;
+                    ->add('timezone', TimezoneType::class);
 
                 break;
-/*
-            case 6:
-                $builder
-                    ->add('imageFile', 'vich_file', array('required' => false))
-                ;
-
-                break;
-*/
+            /*
+                        case 6:
+                            $builder
+                                ->add('imageFile', 'vich_file', array('required' => false))
+                            ;
+            
+                            break;
+            */
         }
     }
 
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'city';
     }
 }

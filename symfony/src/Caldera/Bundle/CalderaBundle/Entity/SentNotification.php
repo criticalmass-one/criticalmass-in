@@ -36,7 +36,7 @@ class SentNotification
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="sent_notifications")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -66,7 +66,7 @@ class SentNotification
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -89,7 +89,7 @@ class SentNotification
     /**
      * Get email
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEmail()
     {
@@ -112,7 +112,7 @@ class SentNotification
     /**
      * Get pushover
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPushover()
     {
@@ -135,7 +135,7 @@ class SentNotification
     /**
      * Get shortmessage
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getShortmessage()
     {
@@ -181,7 +181,7 @@ class SentNotification
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\City 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\City
      */
     public function getCity()
     {
@@ -204,7 +204,7 @@ class SentNotification
     /**
      * Get ride
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride
      */
     public function getRide()
     {
@@ -227,7 +227,7 @@ class SentNotification
     /**
      * Get event
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Event 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Event
      */
     public function getEvent()
     {
@@ -250,7 +250,7 @@ class SentNotification
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User
      */
     public function getUser()
     {

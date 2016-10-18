@@ -36,7 +36,7 @@ class NotificationSubscription
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="notification_subscriptions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -82,7 +82,7 @@ class NotificationSubscription
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -105,7 +105,7 @@ class NotificationSubscription
     /**
      * Get notifyByMail
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyByMail()
     {
@@ -128,7 +128,7 @@ class NotificationSubscription
     /**
      * Get notifyByPushover
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyByPushover()
     {
@@ -151,7 +151,7 @@ class NotificationSubscription
     /**
      * Get notifyByShortmessage
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyByShortmessage()
     {
@@ -174,7 +174,7 @@ class NotificationSubscription
     /**
      * Get notifyOnChange
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyOnChange()
     {
@@ -197,7 +197,7 @@ class NotificationSubscription
     /**
      * Get notifyOnCreate
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyOnCreate()
     {
@@ -220,7 +220,7 @@ class NotificationSubscription
     /**
      * Get notifyOnSpecial
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyOnSpecial()
     {
@@ -243,7 +243,7 @@ class NotificationSubscription
     /**
      * Get notifyOnActivity
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotifyOnActivity()
     {
@@ -266,7 +266,7 @@ class NotificationSubscription
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\City 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\City
      */
     public function getCity()
     {
@@ -289,7 +289,7 @@ class NotificationSubscription
     /**
      * Get ride
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride
      */
     public function getRide()
     {
@@ -312,7 +312,7 @@ class NotificationSubscription
     /**
      * Get event
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Event 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\Event
      */
     public function getEvent()
     {
@@ -335,7 +335,7 @@ class NotificationSubscription
     /**
      * Get user
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\User 
+     * @return \Caldera\Bundle\CalderaBundle\Entity\User
      */
     public function getUser()
     {

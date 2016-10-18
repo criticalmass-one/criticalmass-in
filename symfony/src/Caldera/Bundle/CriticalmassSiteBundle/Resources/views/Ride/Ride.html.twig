@@ -51,30 +51,30 @@
                     </a>
                 </li>
                 {% if pastRide %}
-                <li role="presentation">
-                    <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
-                        <i class="fa fa-camera"></i>
-                        Galerie
+                    <li role="presentation">
+                        <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+                            <i class="fa fa-camera"></i>
+                            Galerie
                         <span class="badge">
                             {{ photos|length }}
                         </span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
-                        <i class="fa fa-bicycle"></i>
-                        Tracks
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
+                            <i class="fa fa-bicycle"></i>
+                            Tracks
                         <span class="badge">
                             {{ tracks|length }}
                         </span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#music" aria-controls="profile" role="tab" data-toggle="tab">
-                        <i class="fa fa-music"></i>
-                        Musik
-                    </a>
-                </li>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#music" aria-controls="profile" role="tab" data-toggle="tab">
+                            <i class="fa fa-music"></i>
+                            Musik
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
 
@@ -84,8 +84,8 @@
                 {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderPostsTab', { 'ride': ride } )) }}
 
                 {% if pastRide %}
-                {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderTracksTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderMusicTab', { 'ride': ride } )) }}
+                    {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderTracksTab', { 'ride': ride } )) }}
+                    {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderMusicTab', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>
@@ -100,7 +100,7 @@
         rideDate: '{{ ride.getFormattedDate() }}'
     };
 
-    CriticalMass.loadModule('RidePage', null, pageOptions, function(ridePage) {
+    CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {
         {% if ride.getHasLocation() and ride.latitude != 0 and ride.getLongitude != 0 %}
         ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
         {% else %}
@@ -118,7 +118,7 @@
         {% endfor %}
 
         {% for subride in subrides %}
-        ridePage.addSubride('{{ subride|serialize|raw|e('js')}}');
+        ridePage.addSubride('{{ subride|serialize|raw|e('js') }}');
         {% endfor %}
 
         ridePage.init();

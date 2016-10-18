@@ -50,8 +50,7 @@ class FacebookEventRideApi extends FacebookEventApi
                 $properties
                     ->setLocationAddress($location->getStreet() . ', ' . $location->getZip() . ' ' . $location->getCity() . ', ' . $location->getCountry())
                     ->setLatitude($location->getLongitude())
-                    ->setLongitude($location->getLongitude())
-                ;
+                    ->setLongitude($location->getLongitude());
             }
 
             return $properties;
@@ -90,8 +89,7 @@ class FacebookEventRideApi extends FacebookEventApi
         } else {
             $ride
                 ->setHasLocation(false)
-                ->setLocation(null)
-            ;
+                ->setLocation(null);
         }
 
         if (!$event->getIsDateOnly()) {

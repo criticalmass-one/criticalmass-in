@@ -8,26 +8,26 @@
         <div class="panel-body">
             <div class="text-center">
                 <div class="btn-group-vertical" role="group" aria-label="...">
-                {% if city.url %}
-                    <a class="btn btn-default" href="{{ city.url }}">
-                        <i class="fa fa-home"></i>
-                        {{ hostname(city.url) }}
-                    </a>
-                {% endif %}
+                    {% if city.url %}
+                        <a class="btn btn-default" href="{{ city.url }}">
+                            <i class="fa fa-home"></i>
+                            {{ hostname(city.url) }}
+                        </a>
+                    {% endif %}
 
-                {% if city.facebook %}
-                    <a class="btn btn-default" href="{{ city.facebook }}">
-                        <i class="fa fa-facebook"></i>
-                        {{ facebookIdentifier(city.facebook) }}
-                    </a>
-                {% endif %}
+                    {% if city.facebook %}
+                        <a class="btn btn-default" href="{{ city.facebook }}">
+                            <i class="fa fa-facebook"></i>
+                            {{ facebookIdentifier(city.facebook) }}
+                        </a>
+                    {% endif %}
 
-                {% if city.twitter %}
-                    <a class="btn btn-default" href="{{ city.twitter }}">
-                        <i class="fa fa-twitter"></i>
-                        {{ twitterUsername(city.twitter) }}
-                    </a>
-                {% endif %}
+                    {% if city.twitter %}
+                        <a class="btn btn-default" href="{{ city.twitter }}">
+                            <i class="fa fa-twitter"></i>
+                            {{ twitterUsername(city.twitter) }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -12,29 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class ContentView implements ViewInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="Content", inversedBy="content_views")
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     protected $content;
-    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     public function __construct()
     {
@@ -44,7 +40,7 @@ class ContentView implements ViewInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,15 +83,15 @@ class ContentView implements ViewInterface
         return $this;
     }
 
+    public function getContent()
+    {
+        return $this->content;
+    }
+
     public function setContent(Content $content)
     {
         $this->content = $content;
 
         return $this;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
     }
 }

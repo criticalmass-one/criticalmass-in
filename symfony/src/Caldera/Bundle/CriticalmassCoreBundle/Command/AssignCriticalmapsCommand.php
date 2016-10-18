@@ -37,8 +37,7 @@ class AssignCriticalmapsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:assign:criticalmaps')
-        ;
+            ->setName('criticalmass:assign:criticalmaps');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -80,11 +79,11 @@ class AssignCriticalmapsCommand extends ContainerAwareCommand
             }
 
             if ($ride) {
-                $output->writeln($cmu->getId().' gefunden: '.$ride->getCity()->getCity());
+                $output->writeln($cmu->getId() . ' gefunden: ' . $ride->getCity()->getCity());
                 $cmu->setRide($ride);
                 $cmu->setCity($ride->getCity());
             } else {
-                $output->writeln($cmu->getId().': kein Treffer');
+                $output->writeln($cmu->getId() . ': kein Treffer');
             }
 
             $em->persist($cmu);

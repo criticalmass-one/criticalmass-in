@@ -12,8 +12,7 @@ class PhotoCoordType extends AbstractType
     {
         $builder
             ->add('latitude', HiddenType::class)
-            ->add('longitude', HiddenType::class)
-        ;
+            ->add('longitude', HiddenType::class);
     }
 
     public function getName()

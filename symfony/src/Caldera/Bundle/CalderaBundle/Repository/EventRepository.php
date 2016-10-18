@@ -15,7 +15,7 @@ class EventRepository extends EntityRepository
         $builder->select('event');
 
         $builder->where($builder->expr()->eq('event.city', $city->getId()));
-        $builder->andWhere($builder->expr()->eq('event.slug', '\''.$eventSlug.'\''));
+        $builder->andWhere($builder->expr()->eq('event.slug', '\'' . $eventSlug . '\''));
         $builder->andWhere($builder->expr()->eq('event.isArchived', 0));
 
         $query = $builder->getQuery();
@@ -50,7 +50,7 @@ class EventRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('event.city', $ride->getCity()->getId()));
         $builder->andWhere($builder->expr()->eq('event.isArchived', 0));
-        $builder->andWhere($builder->expr()->eq('DATE(event.dateTime)', '\''.$ride->getFormattedDate().'\''));
+        $builder->andWhere($builder->expr()->eq('DATE(event.dateTime)', '\'' . $ride->getFormattedDate() . '\''));
 
         $builder->addOrderBy('event.dateTime', 'DESC');
 

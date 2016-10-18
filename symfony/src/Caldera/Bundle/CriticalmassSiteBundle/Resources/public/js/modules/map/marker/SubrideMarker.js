@@ -1,4 +1,4 @@
-define(['Marker'], function() {
+define(['Marker'], function () {
     SubrideMarker = function (latLng, draggable) {
         this._latLng = latLng;
         this._draggable = draggable;
@@ -7,7 +7,7 @@ define(['Marker'], function() {
     SubrideMarker.prototype = new Marker();
     SubrideMarker.prototype.constructor = SubrideMarker;
 
-    SubrideMarker.prototype._initIcon = function() {
+    SubrideMarker.prototype._initIcon = function () {
         this._icon = L.icon({
             iconUrl: this._baseIconUrl + 'marker-green.png',
             iconRetinaUrl: this._baseIconUrl + 'marker-green-2x.png',
@@ -19,6 +19,6 @@ define(['Marker'], function() {
             shadowAnchor: [13, 41]
         });
     };
-    
+
     return SubrideMarker;
 });

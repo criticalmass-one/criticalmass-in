@@ -13,7 +13,8 @@
                 Dein Benutzername:
             </label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" />
+                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"
+                       required="required"/>
             </div>
         </div>
 
@@ -41,14 +42,20 @@
                 </p>
 
                 <div class="btn-group" role="group" aria-label="...">
-                    <a class="btn btn-default" style="background-color: rgb(60, 90, 150); color: white;" href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" title="Sign in with Facebook">
+                    <a class="btn btn-default" style="background-color: rgb(60, 90, 150); color: white;"
+                       href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}"
+                       title="Sign in with Facebook">
                         <i class="fa fa-facebook" aria-hidden="true"></i>
                         Facebook
                     </a>
-                    <a class="btn btn-default" style="background-color: rgb(249, 77, 31); color: white;" href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}" title="Sign in with Strava">
+                    <a class="btn btn-default" style="background-color: rgb(249, 77, 31); color: white;"
+                       href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}"
+                       title="Sign in with Strava">
                         Strava
                     </a>
-                    <a class="btn btn-default" style="background-color: rgb(57, 201, 214); color: white;" href="{{ path('hwi_oauth_service_redirect', {'service': 'runkeeper' }) }}" title="Sign in with Runkeeper">
+                    <a class="btn btn-default" style="background-color: rgb(57, 201, 214); color: white;"
+                       href="{{ path('hwi_oauth_service_redirect', {'service': 'runkeeper' }) }}"
+                       title="Sign in with Runkeeper">
                         Runkeeper
                     </a>
                 </div>

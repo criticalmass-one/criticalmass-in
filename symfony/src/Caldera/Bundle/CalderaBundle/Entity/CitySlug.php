@@ -21,36 +21,36 @@ use JMS\Serializer\Annotation as JMS;
  */
 class CitySlug
 {
-	/**
-	 * ID der Entitaet.
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
+    /**
+     * ID der Entitaet.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
-	 */
-  protected $id;
+     */
+    protected $id;
 
-	/**
-	 * Zeichenkette des eigentlichen Slugs.
-	 *
-	 * @ORM\Column(type="string", length=50)
+    /**
+     * Zeichenkette des eigentlichen Slugs.
+     *
+     * @ORM\Column(type="string", length=50)
      * @JMS\Expose
-	 */
-	protected $slug;
+     */
+    protected $slug;
 
-	/**
-	 * Verknuepfte Stadt.
-	 *
-	 * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs")
-	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-	 */
-	protected $city;
+    /**
+     * Verknuepfte Stadt.
+     *
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected $city;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -58,26 +58,13 @@ class CitySlug
     }
 
     /**
-     * Set slug
+     * Get city
      *
-     * @param string $slug
-     * @return CitySlug
+     * @return City
      */
-    public function setSlug($slug)
+    public function getCity()
     {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string 
-     */
-    public function getSlug()
-    {
-        return $this->slug;
+        return $this->city;
     }
 
     /**
@@ -93,18 +80,31 @@ class CitySlug
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
     public function __toString()
     {
         return $this->getSlug();
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return CitySlug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

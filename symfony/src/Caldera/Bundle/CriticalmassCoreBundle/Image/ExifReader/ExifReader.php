@@ -25,9 +25,13 @@ class ExifReader extends AbstractExifReader
         return $this->exifData;
     }
 
-    protected function calculateFlash()
+    protected function calculateFocalLength()
     {
-        return $this->exif['EXIF']['Flash'] != 16;
+        $focalLengthParts = explode('/', $this->exif['EXIF']['FocalLength']);
+
+        $focalLength = $focalLengthParts[0] / $focalLengthParts[1];
+
+        return $focalLength;
     }
 
     protected function calculateAperture()
@@ -41,12 +45,8 @@ class ExifReader extends AbstractExifReader
         return $aperture;
     }
 
-    protected function calculateFocalLength()
+    protected function calculateFlash()
     {
-        $focalLengthParts = explode('/', $this->exif['EXIF']['FocalLength']);
-
-        $focalLength = $focalLengthParts[0] / $focalLengthParts[1];
-
-        return $focalLength;
+        return $this->exif['EXIF']['Flash'] != 16;
     }
 }

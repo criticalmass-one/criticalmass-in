@@ -38,7 +38,7 @@ class ImageTwigExtension extends \Twig_Extension
 
             $filename = implode('.', $newFilenameParts);
         }
-        
+
         return $filename;
     }
 

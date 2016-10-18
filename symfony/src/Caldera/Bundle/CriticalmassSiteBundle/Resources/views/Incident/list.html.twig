@@ -1,9 +1,9 @@
 {% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
 
 {% if ride %}
-{% set title = 'Gefahren- und Arbeitsstellen in ' ~ city.city ~ ' am ' ~ ride.dateTime|date('d.m.Y') %}
+    {% set title = 'Gefahren- und Arbeitsstellen in ' ~ city.city ~ ' am ' ~ ride.dateTime|date('d.m.Y') %}
 {% else %}
-{% set title = 'Gefahren- und Arbeitsstellen in ' ~ city.city %}
+    {% set title = 'Gefahren- und Arbeitsstellen in ' ~ city.city %}
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -21,11 +21,11 @@
     </li>
 
     {% if ride %}
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.getFancyTitle() }}
-        </a>
-    </li>
+        <li>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.getFancyTitle() }}
+            </a>
+        </li>
     {% endif %}
 
     <li class="active">
@@ -42,7 +42,8 @@
                 </h1>
 
                 <p class="lead">
-                    Augen auf! Die folgende Karte zeigt einige Arbeitsstellen oder Gefahrenstellen in {{ city.city }}, in deren Nähe Teilnehmer der Critical Mass ganz besonders aufpassen sollten.
+                    Augen auf! Die folgende Karte zeigt einige Arbeitsstellen oder Gefahrenstellen in {{ city.city }},
+                    in deren Nähe Teilnehmer der Critical Mass ganz besonders aufpassen sollten.
                 </p>
             </div>
         </div>
@@ -58,19 +59,19 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Bezeichnung
-                            </th>
-                            <th>
-                                gültig bis
-                            </th>
-                            {% if app.getUser() %}
+                    <tr>
+                        <th>
+                            Bezeichnung
+                        </th>
+                        <th>
+                            gültig bis
+                        </th>
+                        {% if app.getUser() %}
                             <th>
                                 Optionen
                             </th>
-                            {% endif %}
-                        </tr>
+                        {% endif %}
+                    </tr>
                     </thead>
                     <tbody>
                     {% for incident in incidents %}
@@ -80,17 +81,17 @@
                             </td>
                             <td>
                                 {% if incident.expires %}
-                                {{ incident.visibleTo|date('d.m.Y', 'Europe/Berlin') }}
+                                    {{ incident.visibleTo|date('d.m.Y', 'Europe/Berlin') }}
                                 {% endif %}
                             </td>
                             {% if app.getUser() %}
-                            <td>
-                                <div class="btn-group">
-                                    <a href="" class="btn btn-default btn-xs">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-                                </div>
-                            </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="" class="btn btn-default btn-xs">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                    </div>
+                                </td>
                             {% endif %}
                         </tr>
                     {% endfor %}
@@ -101,7 +102,7 @@
     </div>
 
     <script>
-        CriticalMass.loadModule('IncidentPage', null, null, function(incidentPage) {
+        CriticalMass.loadModule('IncidentPage', null, null, function (incidentPage) {
             {% for incident in incidents %}
             incidentPage.addIncident('{{ incident|serialize|raw|e('js') }}');
             {% endfor %}

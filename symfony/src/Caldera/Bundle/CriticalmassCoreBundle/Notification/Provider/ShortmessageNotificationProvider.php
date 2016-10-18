@@ -6,6 +6,6 @@ class ShortmessageNotificationProvider extends AbstractNotificationProvider
 {
     public function send()
     {
-        
+
     }
 }

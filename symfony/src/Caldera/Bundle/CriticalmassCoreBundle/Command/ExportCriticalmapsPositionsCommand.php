@@ -49,8 +49,7 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
             ->addOption(
                 'all',
                 'a'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -87,14 +86,14 @@ class ExportCriticalmapsPositionsCommand extends ContainerAwareCommand
             } else {
                 $this->export($criticalmapsUser);
 
-                $message = 'Exported user '.$criticalmapsUser->getId();
+                $message = 'Exported user ' . $criticalmapsUser->getId();
 
                 if ($criticalmapsUser->getRide()) {
-                    $message .= ' ('.$criticalmapsUser->getRide()->getCity()->getCity().')';
+                    $message .= ' (' . $criticalmapsUser->getRide()->getCity()->getCity() . ')';
                 }
 
-                $message.= ' from '.$criticalmapsUser->getStartDateTime()->format('d.m.Y H:i:s');
-                $message.= ' to '.$criticalmapsUser->getEndDateTime()->format('d.m.Y H:i:s');
+                $message .= ' from ' . $criticalmapsUser->getStartDateTime()->format('d.m.Y H:i:s');
+                $message .= ' to ' . $criticalmapsUser->getEndDateTime()->format('d.m.Y H:i:s');
 
                 $output->writeln($message);
             }

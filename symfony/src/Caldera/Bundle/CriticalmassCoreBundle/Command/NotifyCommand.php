@@ -19,10 +19,10 @@ class NotifyCommand extends ContainerAwareCommand
 
     /** @var EntityManager $manager */
     protected $manager;
-    
+
     /** @var NotificationDispatcher $notificationDispatcher */
     protected $notificationDispatcher;
-    
+
     protected function configure()
     {
         $this
@@ -30,8 +30,7 @@ class NotifyCommand extends ContainerAwareCommand
             ->setDescription('Send notifications')
             ->addOption('city-slug', 'cs', InputOption::VALUE_REQUIRED)
             ->addOption('ride-date', 'rd', InputOption::VALUE_REQUIRED)
-            ->addOption('type', 't', InputOption::VALUE_REQUIRED)
-        ;
+            ->addOption('type', 't', InputOption::VALUE_REQUIRED);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -45,8 +44,8 @@ class NotifyCommand extends ContainerAwareCommand
 
         if ($this->input->getOption('type') == 'rideLocationPublished' &&
             $this->input->getOption('city-slug') &&
-            $this->input->getOption('ride-date'))
-        {
+            $this->input->getOption('ride-date')
+        ) {
             $this->notifiyRideLocation();
         }
     }
@@ -59,9 +58,9 @@ class NotifyCommand extends ContainerAwareCommand
         /** @var RideRepository $rideRepository */
         $rideRepository = $this->manager->getRepository('CalderaBundle:Ride');
         $ride = $rideRepository->findByCitySlugAndRideDate($citySlug, $rideDate);
-/*
-        $this->notificationDispatcher
-            ->setNotification($notificaition);*/
+        /*
+                $this->notificationDispatcher
+                    ->setNotification($notificaition);*/
         $this->output->writeln($ride->getId());
     }
 }

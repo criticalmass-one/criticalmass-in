@@ -1,4 +1,4 @@
-define(['Marker'], function() {
+define(['Marker'], function () {
     CityMarker = function (latLng, draggable) {
         this._latLng = latLng;
         this._draggable = draggable;
@@ -7,7 +7,7 @@ define(['Marker'], function() {
     CityMarker.prototype = new Marker();
     CityMarker.prototype.constructor = CityMarker;
 
-    CityMarker.prototype._initIcon = function() {
+    CityMarker.prototype._initIcon = function () {
         this._icon = L.icon({
             iconUrl: this._baseIconUrl + 'marker-red.png',
             iconRetinaUrl: this._baseIconUrl + 'marker-red-2x.png',

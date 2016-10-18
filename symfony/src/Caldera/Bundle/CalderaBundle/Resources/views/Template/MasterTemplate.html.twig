@@ -5,11 +5,12 @@
 
     <title>{% block title %}{% endblock %} — criticalmass.in</title>
 
-    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/leaflet/leaflet-0.7.7.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/leaflet/extramarkers.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/criticalmass.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap.css') }}"/>
+    <link rel="stylesheet"
+          href="{{ asset('bundles/calderacriticalmasssite/css/external/leaflet/leaflet-0.7.7.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/leaflet/extramarkers.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}"/>
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
@@ -21,21 +22,22 @@
 </head>
 
 <body class="{% block bodyClass %}{% endblock %}">
-    {% if not app.user %}
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    {{ render(controller('CalderaCriticalmassSiteBundle:Security:loginFormModal' )) }}
-                </div>
+{% if not app.user %}
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ render(controller('CalderaCriticalmassSiteBundle:Security:loginFormModal' )) }}
             </div>
         </div>
-    {% endif %}
+    </div>
+{% endif %}
 
-    {% block masterContent %}{% endblock %}
+{% block masterContent %}{% endblock %}
 
-    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap3/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap3/bootstrap.min.js') }}"></script>
 
-    {% block additionalFooterElements %}{% endblock %}
+{% block additionalFooterElements %}{% endblock %}
 </body>
 </html>

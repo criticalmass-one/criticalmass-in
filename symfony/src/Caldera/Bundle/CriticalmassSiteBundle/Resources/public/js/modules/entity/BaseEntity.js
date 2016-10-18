@@ -1,21 +1,21 @@
-define(['leaflet'], function() {
+define(['leaflet'], function () {
     BaseEntity = function () {
 
     };
 
-    BaseEntity.prototype.hasLocation = function() {
+    BaseEntity.prototype.hasLocation = function () {
         return false;
     };
 
-    BaseEntity.prototype.removeFromLayer = function(markerLayer) {
+    BaseEntity.prototype.removeFromLayer = function (markerLayer) {
         markerLayer.removeLayer(this._marker);
     };
 
-    BaseEntity.prototype.addToContainer = function(container, index) {
+    BaseEntity.prototype.addToContainer = function (container, index) {
         container.addEntity(this, index);
     };
 
-    BaseEntity.prototype.getId = function() {
+    BaseEntity.prototype.getId = function () {
         return this._id;
     };
 

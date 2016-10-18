@@ -32,7 +32,7 @@ class TrackValidator implements UploadValidatorInterface
     public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory.'/../web';
+        $this->rootDirectory = $rootDirectory . '/../web';
     }
 
     public function loadTrack(Track $track)
@@ -41,7 +41,7 @@ class TrackValidator implements UploadValidatorInterface
 
         $filename = $this->uploaderHelper->asset($track, 'trackFile');
 
-        $this->rawFileContent = file_get_contents($this->rootDirectory.$filename);
+        $this->rawFileContent = file_get_contents($this->rootDirectory . $filename);
     }
 
     protected function checkForXmlContent()

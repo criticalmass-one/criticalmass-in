@@ -20,11 +20,11 @@ class CachedTimeline extends Timeline
         $cacheKey = 'timeline-content';
 
         if ($this->startDateTime) {
-            $cacheKey .= '-start-'.$this->startDateTime->format('Y-m-d');
+            $cacheKey .= '-start-' . $this->startDateTime->format('Y-m-d');
         }
 
         if ($this->endDateTime) {
-            $cacheKey .= '-end-'.$this->endDateTime->format('Y-m-d');
+            $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
         $cachedContent = $this->memcache->get($cacheKey);

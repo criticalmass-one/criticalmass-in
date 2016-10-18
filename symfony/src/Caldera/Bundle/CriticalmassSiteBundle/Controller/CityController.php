@@ -59,8 +59,8 @@ class CityController extends AbstractController
         $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
 
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
-	    $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
-	    $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
+        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
+        $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
 
         $geoFilter = new \Elastica\Filter\GeoDistance(
             'pin',
@@ -81,15 +81,15 @@ class CityController extends AbstractController
         $query->setSort(
             [
                 '_geo_distance' =>
-                [
-                    'pin' =>
                     [
-                        $city->getLatitude(),
-                        $city->getLongitude()
-                    ],
-                'order' => 'desc',
-                'unit' => 'km'
-                ]
+                        'pin' =>
+                            [
+                                $city->getLatitude(),
+                                $city->getLongitude()
+                            ],
+                        'order' => 'desc',
+                        'unit' => 'km'
+                    ]
             ]
         );
 
@@ -116,7 +116,7 @@ class CityController extends AbstractController
     {
         $city = $this->getCityBySlug($citySlug);
 
-        $this->getMetadata()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus '.$city->getCity());
+        $this->getMetadata()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
@@ -154,9 +154,9 @@ class CityController extends AbstractController
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
 
         $this->countCityView($city);
-        
+
         $this->getMetadata()
-            ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in '.$city->getCity());
+            ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity());
 
         return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', [
             'city' => $city,
@@ -172,7 +172,7 @@ class CityController extends AbstractController
     public function liveAction(Request $request, $citySlug)
     {
         $city = $this->getCityBySlug($citySlug);
-        
+
         return $this->render('CalderaCriticalmassDesktopBundle:City:live.html.twig', array('city' => $city));
     }
 

@@ -1,9 +1,9 @@
-define([], function() {
+define([], function () {
 
     Factory = function () {
     };
 
-    Factory.prototype.createRide = function(rideJson) {
+    Factory.prototype.createRide = function (rideJson) {
         var rideEntity = new RideEntity();
 
         rideEntity = this._transferProperties(rideEntity, rideJson);
@@ -11,7 +11,7 @@ define([], function() {
         return rideEntity;
     };
 
-    Factory.prototype.createLiveRide = function(liveRideJson) {
+    Factory.prototype.createLiveRide = function (liveRideJson) {
         var liveRideEntity = new LiveRideEntity();
 
         liveRideEntity = this._transferProperties(liveRideEntity, liveRideJson);
@@ -19,7 +19,7 @@ define([], function() {
         return liveRideEntity;
     };
 
-    Factory.prototype.createEvent = function(eventJson) {
+    Factory.prototype.createEvent = function (eventJson) {
         var eventEntity = new EventEntity();
 
         eventEntity = this._transferProperties(eventEntity, eventJson);
@@ -27,7 +27,7 @@ define([], function() {
         return eventEntity;
     };
 
-    Factory.prototype.createSubride = function(subrideJson) {
+    Factory.prototype.createSubride = function (subrideJson) {
         var subrideEntity = new SubrideEntity();
 
         subrideEntity = this._transferProperties(subrideEntity, subrideJson);
@@ -35,7 +35,7 @@ define([], function() {
         return subrideEntity;
     };
 
-    Factory.prototype.createCity = function(cityJson) {
+    Factory.prototype.createCity = function (cityJson) {
         var cityEntity = new CityEntity();
 
         cityEntity = this._transferProperties(cityEntity, cityJson);
@@ -43,7 +43,7 @@ define([], function() {
         return cityEntity;
     };
 
-    Factory.prototype.createPhoto = function(photoJson) {
+    Factory.prototype.createPhoto = function (photoJson) {
         var photoEntity = new PhotoEntity();
 
         photoEntity = this._transferProperties(photoEntity, photoJson);
@@ -51,7 +51,7 @@ define([], function() {
         return photoEntity;
     };
 
-    Factory.prototype.createIncident = function(incidentJson) {
+    Factory.prototype.createIncident = function (incidentJson) {
         var incidentEntity = new IncidentEntity();
 
         incidentEntity = this._transferProperties(incidentEntity, incidentJson);
@@ -59,7 +59,7 @@ define([], function() {
         return incidentEntity;
     };
 
-    Factory.prototype.createTrack = function(trackJson) {
+    Factory.prototype.createTrack = function (trackJson) {
         var trackEntity = new TrackEntity();
 
         trackEntity = this._transferProperties(trackEntity, trackJson);
@@ -67,7 +67,7 @@ define([], function() {
         return trackEntity;
     };
 
-    Factory.prototype.createUser = function(userJson) {
+    Factory.prototype.createUser = function (userJson) {
         //alert(JSON.stringify(userJson));
         var userEntity = new UserEntity();
 
@@ -76,7 +76,7 @@ define([], function() {
         return userEntity;
     };
 
-    Factory.prototype._transferProperties = function(entity, data) {
+    Factory.prototype._transferProperties = function (entity, data) {
         var object = null;
 
         if (data !== null && typeof data === 'object') {

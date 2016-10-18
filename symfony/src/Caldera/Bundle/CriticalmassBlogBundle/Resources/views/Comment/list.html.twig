@@ -1,7 +1,7 @@
 {% if comments|length > 0 %}
-<div class="comment-list">
-    {% for comment in comments %}
-    {% include('CalderaCriticalmassBlogBundle:Comment:comment.html.twig') with { 'comment':  comment } %}
-    {% endfor %}
-</div>
+    <div class="comment-list">
+        {% for comment in comments %}
+            {% include('CalderaCriticalmassBlogBundle:Comment:comment.html.twig') with { 'comment':  comment } %}
+        {% endfor %}
+    </div>
 {% endif %}

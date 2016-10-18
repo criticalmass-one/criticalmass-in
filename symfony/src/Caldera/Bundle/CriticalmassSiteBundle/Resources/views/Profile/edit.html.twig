@@ -9,21 +9,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Handy-Nummer editieren
-                </h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                Handy-Nummer editieren
+            </h1>
         </div>
+    </div>
 
-        <div class="row">
-            {% if app.getUser().phoneNumberVerified %}
-            <div class="col-md-12">
+    <div class="row">
+        {% if app.getUser().phoneNumberVerified %}
+        <div class="col-md-12">
             {% else %}
             <div class="col-md-8">
-            {% endif %}
+                {% endif %}
                 {{ form_start(phoneNumberForm) }}
                 <div class="row">
                     <div class="col-md-12">
@@ -45,27 +45,27 @@
             </div>
 
             {% if not app.getUser().phoneNumberVerified %}
-            <div class="col-md-4">
-                {{ form_start(verificationForm) }}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Dein Verifikationscode:</label>
-                            {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control', 'maxlength': 6 } }) }}
+                <div class="col-md-4">
+                    {{ form_start(verificationForm) }}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
+                                <label class="control-label" for="">Dein Verifikationscode:</label>
+                                {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control', 'maxlength': 6 } }) }}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-success pull-right">
-                            Überprüfen
-                        </button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success pull-right">
+                                Überprüfen
+                            </button>
+                        </div>
                     </div>
+                    {{ form_end(phoneNumberForm) }}
                 </div>
-                {{ form_end(phoneNumberForm) }}
-            </div>
             {% endif %}
         </div>
     </div>
-{% endblock %}
+    {% endblock %}

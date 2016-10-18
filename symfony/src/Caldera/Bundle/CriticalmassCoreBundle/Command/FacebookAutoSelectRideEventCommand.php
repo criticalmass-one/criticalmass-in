@@ -23,8 +23,7 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:facebook:autoselectrideevent')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,10 +42,10 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
          * @var Ride $ride
          */
         foreach ($rides as $ride) {
-            $output->writeln('Looking up current ride for: '.$ride->getCity()->getCity());
+            $output->writeln('Looking up current ride for: ' . $ride->getCity()->getCity());
 
             if (!$ride->getFacebook()) {
-                $output->writeln($ride->getFancyTitle().' has no facebook details.');
+                $output->writeln($ride->getFancyTitle() . ' has no facebook details.');
 
                 /**
                  * @var GraphEvent $event
@@ -56,18 +55,18 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
                 if ($event) {
                     $eventId = $event->getId();
 
-                    $link = 'https://www.facebook.com/events/'.$eventId;
+                    $link = 'https://www.facebook.com/events/' . $eventId;
 
                     $ride->setFacebook($link);
 
                     $this->manager->persist($ride);
 
-                    $output->writeln('Saved '.$eventId.' as ride id.');
+                    $output->writeln('Saved ' . $eventId . ' as ride id.');
                 } else {
                     $output->writeln('Could not auto-detect facebook event for this ride.');
                 }
             } else {
-                $output->writeln($ride->getFancyTitle().' already has facebook details.');
+                $output->writeln($ride->getFancyTitle() . ' already has facebook details.');
             }
         }
 

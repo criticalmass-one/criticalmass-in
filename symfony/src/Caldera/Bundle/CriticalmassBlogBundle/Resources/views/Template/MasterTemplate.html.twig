@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
+<head>
+    {% include('CalderaCriticalmassSiteBundle:Template:Includes/_meta.html.twig') %}
 
-        <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
 
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassblog/css/blog.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}" />
-        
-        {% block additionalHeaderElements %}{% endblock %}
-    </head>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmassblog/css/blog.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/bootstrap4/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css') }}"/>
 
-    <body>
-        {% if not app.user %}
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    {{ render(controller('CalderaCriticalmassBlogBundle:Security:loginFormModal' )) }}
-                </div>
+    {% block additionalHeaderElements %}{% endblock %}
+</head>
+
+<body>
+{% if not app.user %}
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ render(controller('CalderaCriticalmassBlogBundle:Security:loginFormModal' )) }}
             </div>
         </div>
-        {% endif %}
+    </div>
+{% endif %}
 
-        {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-        {% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
+{% include('CalderaCriticalmassPhotoBundle:Includes:_footer.html.twig') %}
 
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js') }}"></script>
+<script src="{{ asset('bundles/calderacriticalmasssite/js/external/bootstrap4/bootstrap.min.js') }}"></script>
 
-        {% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
-    </body>
+{% include('CalderaCriticalmassSiteBundle:Template:Includes/_piwik.html.twig') %}
+</body>
 </html>
 

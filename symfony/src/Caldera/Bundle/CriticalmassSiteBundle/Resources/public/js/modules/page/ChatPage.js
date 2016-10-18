@@ -1,5 +1,5 @@
-define(['socketio', 'dateformat'], function(io) {
-    ChatPage = function() {
+define(['socketio', 'dateformat'], function (io) {
+    ChatPage = function () {
 
     };
 
@@ -8,15 +8,15 @@ define(['socketio', 'dateformat'], function(io) {
     ChatPage.prototype._anonymousName = null;
     ChatPage.prototype._socket = null;
 
-    ChatPage.prototype.setUserToken = function(userToken) {
+    ChatPage.prototype.setUserToken = function (userToken) {
         this._userToken = userToken;
     };
 
-    ChatPage.prototype.setAnonymousNameId = function(anonymousNameId) {
+    ChatPage.prototype.setAnonymousNameId = function (anonymousNameId) {
         this._anonymousNameId = anonymousNameId;
     };
 
-    ChatPage.prototype.startChat = function() {
+    ChatPage.prototype.startChat = function () {
         this._initSocket();
 
         this._initEvents();
@@ -31,12 +31,12 @@ define(['socketio', 'dateformat'], function(io) {
         }
     };
 
-    ChatPage.prototype._initEvents = function() {
+    ChatPage.prototype._initEvents = function () {
         $('form').submit(this._submitMessage.bind(this));
 
         var that = this;
 
-        $('#chat-gender-buttons button').on('click', function(button) {
+        $('#chat-gender-buttons button').on('click', function (button) {
             var gender = $(this).data('gender');
 
             that._chooseGender(gender);
@@ -44,11 +44,11 @@ define(['socketio', 'dateformat'], function(io) {
             $('#gender-selector').hide();
         });
     };
-    
-    ChatPage.prototype._chooseGender = function(gender) {
+
+    ChatPage.prototype._chooseGender = function (gender) {
         var that = this;
 
-        $.get('/app_dev.php/chat/anonymoususername?gender=' + gender, function(response) {
+        $.get('/app_dev.php/chat/anonymoususername?gender=' + gender, function (response) {
             that._anonymousNameId = response.anonymousNameId;
             that._anonymousName = response.anonymousName;
 
@@ -56,7 +56,7 @@ define(['socketio', 'dateformat'], function(io) {
         });
     };
 
-    ChatPage.prototype._initSocket = function() {
+    ChatPage.prototype._initSocket = function () {
         this._socket = io('http://criticalmass.cm:3000');
 
         this._getMemberlist();
@@ -66,11 +66,11 @@ define(['socketio', 'dateformat'], function(io) {
         }
     };
 
-    ChatPage.prototype._getMemberlist = function() {
+    ChatPage.prototype._getMemberlist = function () {
         this._socket.emit('memberlist');
     };
 
-    ChatPage.prototype._join = function() {
+    ChatPage.prototype._join = function () {
         //alert('JOAIN');
         var joinMessage = {
             userToken: this._userToken || null,
@@ -80,7 +80,7 @@ define(['socketio', 'dateformat'], function(io) {
         this._socket.emit('join', joinMessage);
     };
 
-    ChatPage.prototype._submitMessage = function(e) {
+    ChatPage.prototype._submitMessage = function (e) {
         e.preventDefault();
 
         var message = this._buildMessage();
@@ -92,7 +92,7 @@ define(['socketio', 'dateformat'], function(io) {
         return false;
     };
 
-    ChatPage.prototype._printMessage = function(message) {
+    ChatPage.prototype._printMessage = function (message) {
         var date = new Date(message.timestamp);
 
         var html = '';
@@ -102,7 +102,7 @@ define(['socketio', 'dateformat'], function(io) {
         html += '<div class="media-body">';
         html += '<h4 class="media-heading" style="color: ' + message.userColor + ';">' + message.username + '</h4>';
         html += message.message;
-        html += '<small style="display: block;">' + date.format('dd.mm.yyyy HH:MM:ss')  + '&nbsp;Uhr</small>';
+        html += '<small style="display: block;">' + date.format('dd.mm.yyyy HH:MM:ss') + '&nbsp;Uhr</small>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
@@ -111,7 +111,7 @@ define(['socketio', 'dateformat'], function(io) {
         $('#messages').prepend(html);
     };
 
-    ChatPage.prototype._memberJoined = function(joinMessage) {
+    ChatPage.prototype._memberJoined = function (joinMessage) {
         var html = '';
         html += '<li class="margin-bottom-medium" id="member-' + joinMessage.userId + '">';
         html += '<div class="media">';
@@ -126,11 +126,11 @@ define(['socketio', 'dateformat'], function(io) {
         $('#members').prepend(html);
     };
 
-    ChatPage.prototype._memberLeft = function(message) {
+    ChatPage.prototype._memberLeft = function (message) {
         $('#member-' + message.userId).remove();
     };
 
-    ChatPage.prototype._memberlist = function(memberlist) {
+    ChatPage.prototype._memberlist = function (memberlist) {
         $('#members').html('');
 
         for (var index in memberlist) {
@@ -151,12 +151,12 @@ define(['socketio', 'dateformat'], function(io) {
         }
     };
 
-    ChatPage.prototype._buildMessage = function() {
+    ChatPage.prototype._buildMessage = function () {
         return {
 
             message: $('#m').val()
         };
     };
-    
+
     return ChatPage;
 });

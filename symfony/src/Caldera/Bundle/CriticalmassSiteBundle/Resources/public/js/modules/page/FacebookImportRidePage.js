@@ -1,5 +1,5 @@
-define(['AutoMap'], function() {
-    FacebookImportRidePage = function(context, options) {
+define(['AutoMap'], function () {
+    FacebookImportRidePage = function (context, options) {
         this._options = options;
 
         this._initSideMaps();
@@ -9,15 +9,15 @@ define(['AutoMap'], function() {
     FacebookImportRidePage.prototype._leftMap = null;
     FacebookImportRidePage.prototype._rightMap = null;
 
-    FacebookImportRidePage.prototype._initSideMaps = function() {
+    FacebookImportRidePage.prototype._initSideMaps = function () {
         this._leftMap = new AutoMap('left-map');
         this._rightMap = new AutoMap('right-map');
     };
 
-    FacebookImportRidePage.prototype._initCopyButtons = function() {
+    FacebookImportRidePage.prototype._initCopyButtons = function () {
         var that = this;
 
-        $('button.copy-button').on('click', function() {
+        $('button.copy-button').on('click', function () {
             $input = $(this).parent().find('.value');
 
             $row = $(this).parents('.row');
@@ -42,11 +42,11 @@ define(['AutoMap'], function() {
         });
     };
 
-    FacebookImportRidePage.prototype._copyValue = function() {
+    FacebookImportRidePage.prototype._copyValue = function () {
 
     };
 
-    FacebookImportRidePage.prototype._copyDateValue = function($timeSelects, value) {
+    FacebookImportRidePage.prototype._copyDateValue = function ($timeSelects, value) {
         var date = value.split('.');
 
         var $day = $timeSelects.find('select:nth-child(1)');
@@ -58,7 +58,7 @@ define(['AutoMap'], function() {
         $year.val(parseInt(date[2]));
     };
 
-    FacebookImportRidePage.prototype._copyTimeValue = function($timeSelects, value) {
+    FacebookImportRidePage.prototype._copyTimeValue = function ($timeSelects, value) {
         var time = value.split(':');
 
         var $hour = $timeSelects.find('select:nth-child(1)');
@@ -67,7 +67,6 @@ define(['AutoMap'], function() {
         $hour.val(parseInt(time[0]));
         $minute.val(parseInt(time[1]));
     };
-
 
 
     return FacebookImportRidePage;

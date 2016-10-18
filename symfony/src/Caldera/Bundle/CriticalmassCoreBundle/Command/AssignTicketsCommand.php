@@ -32,8 +32,7 @@ class AssignTicketsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:assign:tickets')
-        ;
+            ->setName('criticalmass:assign:tickets');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

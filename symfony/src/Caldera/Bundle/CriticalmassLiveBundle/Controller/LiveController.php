@@ -26,9 +26,9 @@ class LiveController extends AbstractController
         if ($ride) {
             $events = $this->getEventRepository()->findEventsForRide($ride);
         }
-        
+
         $this->getMetadata()
-            ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in '.$city->getCity().' gerade befindet!');
+            ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in ' . $city->getCity() . ' gerade befindet!');
 
         return $this->render(
             'CalderaCriticalmassLiveBundle:Default:live.html.twig',

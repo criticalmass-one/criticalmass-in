@@ -1,9 +1,9 @@
 {% extends 'CalderaBundle:Template:MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-        {% include('CalderaBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
+    {% include('CalderaBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
 
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
-        {% include('CalderaBundle:Template:Includes/_piwik.html.twig') %}
+    {% include('CalderaBundle:Template:Includes/_piwik.html.twig') %}
 {% endblock %}

@@ -25,7 +25,6 @@ class IncidentController extends AbstractController
         }
 
 
-
         return $this->render(
             'CalderaCriticalmassSiteBundle:Incident:list.html.twig',
             [

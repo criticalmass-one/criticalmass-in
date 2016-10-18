@@ -5,7 +5,8 @@ namespace Caldera\CriticalmassTwitterBundle\Utility\TweetBuilder;
 
 use Caldera\CriticalmassTwitterBundle\Entity\Tweet;
 
-class TweetBuilder {
+class TweetBuilder
+{
     protected $jsonResponse;
     protected $tweets;
 
@@ -24,8 +25,7 @@ class TweetBuilder {
     {
         $parsedJson = json_decode($this->jsonResponse);
 
-        foreach ($parsedJson->statuses as $status)
-        {
+        foreach ($parsedJson->statuses as $status) {
             $tweet = new Tweet();
 
             $tweet->setText($status->text);

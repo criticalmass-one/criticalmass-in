@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function(CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
     CalderaCityMapPage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -21,13 +21,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     CalderaCityMapPage.prototype._layers = [];
     CalderaCityMapPage.prototype._offlineModal = null;
 
-    CalderaCityMapPage.prototype._initContainer = function() {
+    CalderaCityMapPage.prototype._initContainer = function () {
         this._rideContainer = new Container();
         this._eventContainer = new Container();
         this._cityContainer = new Container();
     };
 
-    CalderaCityMapPage.prototype._initMap = function() {
+    CalderaCityMapPage.prototype._initMap = function () {
         var height = $('nav#navigation').css('height');
 
         if (!height) {
@@ -49,13 +49,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._map.on('moveend', this._onMapChange.bind(this));
     };
 
-    CalderaCityMapPage.prototype._initLayers = function() {
+    CalderaCityMapPage.prototype._initLayers = function () {
         this._rideContainer.addToMap(this._map);
         this._cityContainer.addToMap(this._map);
         this._eventContainer.addToMap(this._map);
     };
 
-    CalderaCityMapPage.prototype._initLayerControl = function() {
+    CalderaCityMapPage.prototype._initLayerControl = function () {
         this._rideContainer.addToControl(this._layers, 'Tour');
 
         this._layerControl = new MapLayerControl();
@@ -64,13 +64,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         this._layerControl.addTo(this._map);
     };
 
-    CalderaCityMapPage.prototype._initLocationControl = function() {
+    CalderaCityMapPage.prototype._initLocationControl = function () {
         this._locationControl = new MapLocationControl();
         this._locationControl.init();
         this._locationControl.addTo(this._map);
     };
 
-    CalderaCityMapPage.prototype.setFocus = function() {
+    CalderaCityMapPage.prototype.setFocus = function () {
         if (!location.hash) {
             if (this._rideContainer.countEntities() == 1) {
                 var ride = this._rideContainer.getEntity(0);
@@ -85,11 +85,11 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         }
     };
 
-    CalderaCityMapPage.prototype.initIncidentSource = function() {
+    CalderaCityMapPage.prototype.initIncidentSource = function () {
 
     };
 
-    CalderaCityMapPage.prototype._onMapChange = function() {
+    CalderaCityMapPage.prototype._onMapChange = function () {
         console.log(this._map.getBounds().getNorthWest());
     };
 

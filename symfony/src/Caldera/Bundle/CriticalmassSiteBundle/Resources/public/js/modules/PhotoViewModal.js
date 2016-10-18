@@ -1,6 +1,6 @@
-define(['Container', 'PhotoEntity', 'Modal'], function() {
+define(['Container', 'PhotoEntity', 'Modal'], function () {
 
-    PhotoViewModal = function(context, options) {
+    PhotoViewModal = function (context, options) {
         this._options = options;
     };
 
@@ -9,15 +9,15 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
     PhotoViewModal.prototype._options = null;
     PhotoViewModal.prototype._modal = null;
 
-    PhotoViewModal.prototype.setPhotoContainer = function(photoContainer) {
+    PhotoViewModal.prototype.setPhotoContainer = function (photoContainer) {
         this._photoContainer = photoContainer;
     };
 
-    PhotoViewModal.prototype.setMap = function(map) {
+    PhotoViewModal.prototype.setMap = function (map) {
         this._map = map;
     };
 
-    PhotoViewModal.prototype.showPhoto = function(entityId) {
+    PhotoViewModal.prototype.showPhoto = function (entityId) {
         var photo = this._photoContainer.getEntity(entityId);
 
         // was the modal already created?
@@ -43,12 +43,12 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
         this._countView(photo);
     };
 
-    PhotoViewModal.prototype._updateModal = function(entityId, photo) {
+    PhotoViewModal.prototype._updateModal = function (entityId, photo) {
         this._modal.setTitle('Foto ' + entityId + ' anzeigen');
         this._modal.setBody('<img id="photo-' + entityId + '" src="' + photo.getFilename() + '" class="img-responsive" />');
     };
 
-    PhotoViewModal.prototype._createModal = function(entityId, photo) {
+    PhotoViewModal.prototype._createModal = function (entityId, photo) {
         this._modal = new Modal();
         this._modal.setTitle('Foto ' + entityId + ' anzeigen');
         this._modal.setBody('<img id="photo-' + entityId + '" src="' + photo.getFilename() + '" class="img-responsive" />');
@@ -56,17 +56,17 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
         this._modal.setSize('lg');
     };
 
-    PhotoViewModal.prototype._countView = function(photo) {
+    PhotoViewModal.prototype._countView = function (photo) {
         var countUrl = this._options.photoCounterUrl + '?photoId=' + photo.getId();
 
         $.get(countUrl);
     };
 
-    PhotoViewModal.prototype._panMapToPhotoLocation = function(photo) {
+    PhotoViewModal.prototype._panMapToPhotoLocation = function (photo) {
         this._map.setView([photo.getLatitude(), photo.getLongitude()], 15);
     };
 
-    PhotoViewModal.prototype._updatePhotoViewNavigation = function(entityId) {
+    PhotoViewModal.prototype._updatePhotoViewNavigation = function (entityId) {
         var $modal = this._modal.$modal;
 
         var $nextPhotoButton = $modal.find('li.next');
@@ -83,7 +83,7 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
 
         $imageLink.attr('href', photoViewPageUrl);
 
-        $('body').off('keydown').on('keydown', function(e) {
+        $('body').off('keydown').on('keydown', function (e) {
             if (nextPhotoEntityId && (e.keyCode || e.which) == 39) {
                 that.showPhoto(nextPhotoEntityId);
             }
@@ -106,7 +106,7 @@ define(['Container', 'PhotoEntity', 'Modal'], function() {
         }
 
         if (nextPhotoEntityId) {
-            $nextPhotoButton.find('a').off('click').on('click', function(element) {
+            $nextPhotoButton.find('a').off('click').on('click', function (element) {
                 element.preventDefault();
 
                 that.showPhoto(nextPhotoEntityId);

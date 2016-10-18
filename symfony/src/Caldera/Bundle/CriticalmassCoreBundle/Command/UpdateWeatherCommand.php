@@ -34,8 +34,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:weather:update')
-            ->setDescription('Create rides for a parameterized year and month automatically')
-        ;
+            ->setDescription('Create rides for a parameterized year and month automatically');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -53,7 +52,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $this->query = $this->getContainer()->get('caldera.criticalmass.weather.openweather.query');
         $this->reader = $this->getContainer()->get('caldera.criticalmass.weather.openweather.reader');
 
-        $output->writeln('Looking for rides from '.$startDateTime->format('Y-m-d').' to '.$endDateTime->format('Y-m-d'));
+        $output->writeln('Looking for rides from ' . $startDateTime->format('Y-m-d') . ' to ' . $endDateTime->format('Y-m-d'));
 
         foreach ($rides as $ride) {
             /**
@@ -64,9 +63,9 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             if (!$currentWeather || $currentWeather->getCreationDateTime() < $halfDateTime) {
                 $this->retrieveWeather($ride);
 
-                $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').'): gespeichert');
+                $output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): gespeichert');
             } else {
-                $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').'): existiert bereits');
+                $output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): existiert bereits');
             }
         }
     }

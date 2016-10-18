@@ -23,12 +23,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="btn btn-success">
+                    <a href="{{ path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                       class="btn btn-success">
                         <i class="fa fa-camera"></i>
                         Weitere Fotos hochladen
                     </a>
 
-                    <a href="{{ path('caldera_criticalmass_photo_relocate', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}" class="btn btn-success">
+                    <a href="{{ path('caldera_criticalmass_photo_relocate', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                       class="btn btn-success">
                         <i class="fa fa-map-pin"></i>
                         Fotos verschieben
                     </a>
@@ -45,83 +47,92 @@
             <div class="col-md-12">
                 <div class="row">
                     {% for photo in pagination %}
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" />
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img class="img-responsive"
+                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row margin-top-10">
-                            <div class="col-md-12">
-                                <dl>
-                                    <dt>
-                                        Aufnahmedatum
-                                    </dt>
-                                    <dd>
-                                        {{ photo.dateTime.format('d.m.Y H:i:s') }}
-                                    </dd>
+                            <div class="row margin-top-10">
+                                <div class="col-md-12">
+                                    <dl>
+                                        <dt>
+                                            Aufnahmedatum
+                                        </dt>
+                                        <dd>
+                                            {{ photo.dateTime.format('d.m.Y H:i:s') }}
+                                        </dd>
 
-                                    <dt>
-                                        Koordinaten
-                                    </dt>
-                                    <dd>
-                                        {% if photo.hasCoordinates() %}ja ({{ photo.latitude|round(6) }}, {{ photo.longitude|round(6) }}){% else %}nein{% endif %}
-                                    </dd>
-                                </dl>
+                                        <dt>
+                                            Koordinaten
+                                        </dt>
+                                        <dd>
+                                            {% if photo.hasCoordinates() %}ja ({{ photo.latitude|round(6) }}, {{ photo.longitude|round(6) }}){% else %}nein{% endif %}
+                                        </dd>
+                                    </dl>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row margin-top-10 margin-bottom-20">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                        <a href="{{ path('caldera_criticalmass_photo_delete', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
-                                            <i class="fa fa-trash-o"></i>
-                                        </a>
-
-                                        {% if photo.enabled %}
-                                            <a class="btn btn-default btn-xs" title="Deaktivieren" href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
-                                                <i class="fa fa-eye-slash"></i>
+                            <div class="row margin-top-10 margin-bottom-20">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                            <a href="{{ path('caldera_criticalmass_photo_delete', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}"
+                                               class="btn btn-default btn-xs">
+                                                <i class="fa fa-trash-o"></i>
                                             </a>
-                                        {% else %}
-                                            <a class="btn btn-default btn-xs" title="Aktivieren" href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
-                                                <i class="fa fa-eye"></i>
+
+                                            {% if photo.enabled %}
+                                                <a class="btn btn-default btn-xs" title="Deaktivieren"
+                                                   href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <i class="fa fa-eye-slash"></i>
+                                                </a>
+                                            {% else %}
+                                                <a class="btn btn-default btn-xs" title="Aktivieren"
+                                                   href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}"
+                                               class="btn btn-default btn-xs">
+                                                <i class="fa fa-location-arrow"></i>
                                             </a>
-                                        {% endif %}
-                                        <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
-                                            <i class="fa fa-location-arrow"></i>
-                                        </a>
 
-                                        <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=left" class="btn btn-default btn-xs">
-                                            <i class="fa fa-rotate-left"></i>
-                                        </a>
+                                            <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=left"
+                                               class="btn btn-default btn-xs">
+                                                <i class="fa fa-rotate-left"></i>
+                                            </a>
 
-                                        <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=right" class="btn btn-default btn-xs">
-                                            <i class="fa fa-rotate-right"></i>
-                                        </a>
+                                            <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=right"
+                                               class="btn btn-default btn-xs">
+                                                <i class="fa fa-rotate-right"></i>
+                                            </a>
 
-                                        {% if photo.ride.featuredPhoto == photo %}
-                                        <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
-                                            <i class="fa fa-flag"></i>
-                                        </a>
-                                        {% else %}
-                                        <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}" class="btn btn-default btn-xs">
-                                            <i class="fa fa-flag-o"></i>
-                                        </a>
-                                        {% endif %}
+                                            {% if photo.ride.featuredPhoto == photo %}
+                                                <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}"
+                                                   class="btn btn-default btn-xs">
+                                                    <i class="fa fa-flag"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}"
+                                                   class="btn btn-default btn-xs">
+                                                    <i class="fa fa-flag-o"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="text-center">
-                        {{ knp_pagination_render(pagination) }}
+                            {{ knp_pagination_render(pagination) }}
                         </div>
                     </div>
                 </div>

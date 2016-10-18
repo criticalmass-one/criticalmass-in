@@ -43,9 +43,9 @@ class SecurityController extends Controller
 
         return $this->renderLogin(
             [
-            'last_username' => $lastUsername,
-            'error' => $error,
-            'csrf_token' => $csrfToken
+                'last_username' => $lastUsername,
+                'error' => $error,
+                'csrf_token' => $csrfToken
             ],
             $templateMode
         );
@@ -67,7 +67,7 @@ class SecurityController extends Controller
                 break;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Security:'.$templateName, $data);
+        return $this->render('CalderaCriticalmassSiteBundle:Security:' . $templateName, $data);
     }
 
     public function loginFormModalAction(Request $request): Response

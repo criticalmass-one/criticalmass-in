@@ -15,11 +15,11 @@ class BlogPostRepository extends EntityRepository
         $builder->where($builder->expr()->eq('blogPost.enabled', 1));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('blogPost.dateTime', '\''.$startDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->gte('blogPost.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('blogPost.dateTime', '\''.$endDateTime->format('Y-m-d H:i:s').'\''));
+            $builder->andWhere($builder->expr()->lte('blogPost.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

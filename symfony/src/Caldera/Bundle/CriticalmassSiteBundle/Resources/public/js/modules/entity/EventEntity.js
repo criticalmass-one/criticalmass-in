@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function(CriticalService) {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function (CriticalService) {
     EventEntity = function () {
     };
 
@@ -13,7 +13,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
     EventEntity.prototype._location = null;
     EventEntity.prototype._timestamp = null;
 
-    EventEntity.prototype._initIcon = function() {
+    EventEntity.prototype._initIcon = function () {
         this._icon = L.ExtraMarkers.icon({
             icon: 'fa-calendar',
             markerColor: 'white',
@@ -56,14 +56,14 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         this._setupModalButtons();
     };
 
-    EventEntity.prototype._setupModalButtons = function() {
+    EventEntity.prototype._setupModalButtons = function () {
         var that = this;
 
         var centerButton = new ModalButton();
         centerButton.setCaption('Zentrieren');
         centerButton.setIcon('map-pin');
         centerButton.setClass('btn-success');
-        centerButton.setOnClickEvent(function() {
+        centerButton.setOnClickEvent(function () {
             that._CriticalService.getMap().setView([that._latitude, that._longitude], 13);
         });
 
@@ -71,7 +71,10 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         eventButton.setCaption('Eventseite');
         eventButton.setIcon('calendar');
         eventButton.setClass('btn-success');
-        eventButton.setHref(Routing.generate('caldera_criticalmass_event_show', { eventSlug: this._slug, citySlug: this._city._slug }));
+        eventButton.setHref(Routing.generate('caldera_criticalmass_event_show', {
+            eventSlug: this._slug,
+            citySlug: this._city._slug
+        }));
 
         var closeButton = new CloseModalButton;
 
@@ -84,7 +87,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         this._modal.setButtons(buttons);
     };
 
-    EventEntity.prototype.getDate = function() {
+    EventEntity.prototype.getDate = function () {
         return this._date;
     };
 

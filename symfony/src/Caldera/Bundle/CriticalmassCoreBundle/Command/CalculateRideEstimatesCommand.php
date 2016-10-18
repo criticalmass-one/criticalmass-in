@@ -15,8 +15,7 @@ class CalculateRideEstimatesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:rideestimate:recalculate')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -25,11 +24,11 @@ class CalculateRideEstimatesCommand extends ContainerAwareCommand
          * @var RideEstimateService
          */
         $res = $this->getContainer()->get('caldera.criticalmass.statistic.rideestimate');
-        
+
         $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Ride')->findEstimatedRides();
-        
+
         foreach ($rides as $ride) {
-            $output->writeln($ride->getCity()->getCity().': '.$ride->getFormattedDate());
+            $output->writeln($ride->getCity()->getCity() . ': ' . $ride->getFormattedDate());
 
             $res->flushEstimates($ride);
             $res->calculateEstimates($ride);

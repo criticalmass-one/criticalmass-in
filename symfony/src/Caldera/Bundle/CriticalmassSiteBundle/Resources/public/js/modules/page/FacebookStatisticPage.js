@@ -1,5 +1,5 @@
-define(['chartjs'], function() {
-    FacebookStatisticPage = function(context, options) {
+define(['chartjs'], function () {
+    FacebookStatisticPage = function (context, options) {
     };
 
     FacebookStatisticPage.prototype._days = [];
@@ -11,11 +11,11 @@ define(['chartjs'], function() {
     FacebookStatisticPage.prototype._facebookLikesChart = null;
 
 
-    FacebookStatisticPage.prototype.addDay = function(day) {
+    FacebookStatisticPage.prototype.addDay = function (day) {
         this._days.push(day);
     };
 
-    FacebookStatisticPage.prototype.addCity = function(cityName, citySlug, colorRed, colorGreen, colorBlue) {
+    FacebookStatisticPage.prototype.addCity = function (cityName, citySlug, colorRed, colorGreen, colorBlue) {
         this._facebookLikes[citySlug] = [];
 
         this._cities[citySlug] = [
@@ -26,11 +26,11 @@ define(['chartjs'], function() {
         ];
     };
 
-    FacebookStatisticPage.prototype.addData = function(citySlug, day, likes) {
+    FacebookStatisticPage.prototype.addData = function (citySlug, day, likes) {
         this._facebookLikes[citySlug][day] = likes;
     };
 
-    FacebookStatisticPage.prototype.createFacebookLikesChart = function($element) {
+    FacebookStatisticPage.prototype.createFacebookLikesChart = function ($element) {
         var datasets = this._createDatasets();
 
         var data = {
@@ -44,7 +44,7 @@ define(['chartjs'], function() {
         });
     };
 
-    FacebookStatisticPage.prototype._createDatasets = function() {
+    FacebookStatisticPage.prototype._createDatasets = function () {
         var datasets = [];
 
         for (var citySlug in this._cities) {

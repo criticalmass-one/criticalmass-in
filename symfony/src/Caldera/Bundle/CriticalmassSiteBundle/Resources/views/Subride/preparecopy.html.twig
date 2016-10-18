@@ -14,31 +14,35 @@
 
         <div class="row">
             <div class="col-md-12">
-                <p>Von der Tour <a href="{{ objectPath(oldRide) }}">{{ oldRide.getFancyTitle() }}</a> ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:</p>
+                <p>Von der Tour <a href="{{ objectPath(oldRide) }}">{{ oldRide.getFancyTitle() }}</a>
+                    ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:
+                </p>
             </div>
         </div>
 
         <div class="row">
-        {% for subride in oldRide.getSubrides() %}
-            <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
-                <a class="pull-left subride" href="#">
-                    <img class="media-object" src="/bundles/calderacriticalmasssite/images/marker/marker-green.png" alt="...">
-                </a>
-                <div class="media-body">
-                    <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}</h5>
-                    <p>{{ subride.description|nl2br }}</p>
+            {% for subride in oldRide.getSubrides() %}
+                <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
+                    <a class="pull-left subride" href="#">
+                        <img class="media-object" src="/bundles/calderacriticalmasssite/images/marker/marker-green.png"
+                             alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}</h5>
+                        <p>{{ subride.description|nl2br }}</p>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right" role="group" aria-label="...">
                     <a href="{{ objectPath(newRide) }}" class="btn btn-default">
                         Abbrechen
                     </a>
-                    <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.city.getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}" class="btn btn-success">
+                    <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.city.getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}"
+                       class="btn btn-success">
                         Kopieren</a>
                 </div>
             </div>

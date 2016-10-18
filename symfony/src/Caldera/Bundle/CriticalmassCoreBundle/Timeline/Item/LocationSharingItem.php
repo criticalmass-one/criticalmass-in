@@ -18,7 +18,7 @@ class LocationSharingItem extends AbstractItem
      * @var string $polyline
      */
     protected $polyline;
-    
+
     /**
      * @return array
      */
@@ -51,6 +51,13 @@ class LocationSharingItem extends AbstractItem
         $this->sharingCounter = $sharingCounter;
     }
 
+    /**
+     * @return string
+     */
+    public function getPolyline()
+    {
+        return $this->polyline;
+    }
 
     /**
      * @param string $polyline
@@ -58,13 +65,5 @@ class LocationSharingItem extends AbstractItem
     public function setPolyline($polyline)
     {
         $this->polyline = $polyline;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPolyline()
-    {
-        return $this->polyline;
     }
 }

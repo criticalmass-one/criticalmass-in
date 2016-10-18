@@ -32,7 +32,7 @@ class RideTrackCollector extends AbstractTimelineCollector
             $item->setDistance($trackEntity->getDistance());
             $item->setDuration($trackEntity->getDurationInSeconds());
             $item->setPolyline($trackEntity->getPolyline());
-            $item->setPolylineColor('rgb('.$trackEntity->getUser()->getColorRed().', '.$trackEntity->getUser()->getColorGreen().', '.$trackEntity->getUser()->getColorBlue().')');
+            $item->setPolylineColor('rgb(' . $trackEntity->getUser()->getColorRed() . ', ' . $trackEntity->getUser()->getColorGreen() . ', ' . $trackEntity->getUser()->getColorBlue() . ')');
             $item->setDateTime($trackEntity->getCreationDateTime());
 
             $this->addItem($item);

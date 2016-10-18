@@ -3,7 +3,7 @@
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-        <li class="active">Städteliste</li>
+    <li class="active">Städteliste</li>
 {% endblock %}
     
 {% block content %}
@@ -13,7 +13,7 @@
                 <h1>
                     Die nächste Masse ist ganz nah.
                 </h1>
-                
+
                 <p class="lead">
                     Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
                 </p>
@@ -23,35 +23,38 @@
                 </div>
 
                 <p>
-                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ result|length }} Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.
+                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ result|length }} Städte.
+                    Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
+                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen
+                    Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.
                 </p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <table id="cityList" class="table sortableCityRideList">
                     <thead>
-                        <tr>
-                            <th>
-                                Stadt
-                            </th>
-                            <th>
-                                aktuelle Tour
-                            </th>
-                            <th>
-                                Turnus
-                            </th>
-                            <th>
-                                Touren
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Stadt
+                        </th>
+                        <th>
+                            aktuelle Tour
+                        </th>
+                        <th>
+                            Turnus
+                        </th>
+                        <th>
+                            Touren
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for row in result %}
-                            {% set city = row.city %}
-                            {% set currentRide = row.currentRide %}
-                            {% set countRides = row.countRides %}
+                    {% for row in result %}
+                        {% set city = row.city %}
+                        {% set currentRide = row.currentRide %}
+                        {% set countRides = row.countRides %}
                         <tr class="city"
                             data-cityName="{{ city.city }}"
                             data-cityslug="{{ city.slug }}"
@@ -65,11 +68,11 @@
                                 </a>
                             </td>
                             <td>
-                            {% if currentRide %}
-                                <a href="{{ objectPath(currentRide) }}">
-                                    {{ currentRide.dateTime|date('l, d. M, H:i', 'Europe/Berlin') }}&nbsp;Uhr
-                                </a>
-                            {% endif %}
+                                {% if currentRide %}
+                                    <a href="{{ objectPath(currentRide) }}">
+                                        {{ currentRide.dateTime|date('l, d. M, H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                    </a>
+                                {% endif %}
                             </td>
                             <td>
                                 {{ city.getEventDateTimeString() }}
@@ -80,7 +83,7 @@
                                 </a>
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

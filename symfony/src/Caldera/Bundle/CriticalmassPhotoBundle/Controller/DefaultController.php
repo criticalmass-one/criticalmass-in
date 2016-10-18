@@ -25,7 +25,7 @@ class DefaultController extends AbstractController
             ]
         );
     }
-    
+
     public function listAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -40,8 +40,8 @@ class DefaultController extends AbstractController
             64
         );
 
-        $this->getMetadata()->setDescription('Foto-Galerie von der '.$ride->getCity()->getTitle().' am '.$ride->getDateTime()->format('d.m.Y'));
-        
+        $this->getMetadata()->setDescription('Foto-Galerie von der ' . $ride->getCity()->getTitle() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
+
         return $this->render(
             'CalderaCriticalmassPhotoBundle:Default:list.html.twig',
             [
@@ -68,7 +68,7 @@ class DefaultController extends AbstractController
             ->setPhoto($photo)
             ->execute();
 
-        $this->getMetadata()->setDescription('Foto von der '.$ride->getCity()->getTitle().' am '.$ride->getDateTime()->format('d.m.Y'));
+        $this->getMetadata()->setDescription('Foto von der ' . $ride->getCity()->getTitle() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
 
         /** @var Track $track */
         $track = null;
@@ -94,7 +94,7 @@ class DefaultController extends AbstractController
         $content = $this->getContentRepository()->findBySlug($contentSlug);
 
         if (!$content) {
-            throw new NotFoundHttpException('Schade, unter dem Stichwort '.$contentSlug.' wurde kein Inhalt hinterlegt.');
+            throw new NotFoundHttpException('Schade, unter dem Stichwort ' . $contentSlug . ' wurde kein Inhalt hinterlegt.');
         }
 
         return $this->render(

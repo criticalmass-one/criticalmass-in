@@ -26,8 +26,7 @@ class AppController extends Controller
 
         $hasErrors = null;
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $app->setUser($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
@@ -37,9 +36,7 @@ class AppController extends Controller
             $hasErrors = false;
 
             $form = $this->createForm(new AppType(), $app, array('action' => $this->generateUrl('caldera_criticalmass_api_app_edit', array('appId' => $app->getId()))));
-        }
-        elseif ($form->isSubmitted())
-        {
+        } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
 
@@ -56,16 +53,13 @@ class AppController extends Controller
 
         $hasErrors = null;
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($app);
             $em->flush();
 
             $hasErrors = false;
-        }
-        elseif ($form->isSubmitted())
-        {
+        } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
 
@@ -78,8 +72,7 @@ class AppController extends Controller
 
         $app = $em->find('CalderaBundle:App', $appId);
 
-        if ($app && $app->getUser()->equals($this->getUser()))
-        {
+        if ($app && $app->getUser()->equals($this->getUser())) {
             $app->setDeleted(true);
             $em->persist($app);
             $em->flush();
@@ -87,7 +80,7 @@ class AppController extends Controller
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_api_app_list'));
     }
-    
+
     public function apiAction(Request $request)
     {
         return $this->render('CalderaCriticalmassSiteBundle:App:api.html.twig');

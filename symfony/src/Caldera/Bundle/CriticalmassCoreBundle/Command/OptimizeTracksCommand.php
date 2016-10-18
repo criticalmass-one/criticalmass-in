@@ -40,8 +40,7 @@ class OptimizeTracksCommand extends ContainerAwareCommand
                 InputArgument::OPTIONAL,
                 'Id of the Track to optimize'
             )
-            ->addOption('all')
-        ;
+            ->addOption('all');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -60,15 +59,15 @@ class OptimizeTracksCommand extends ContainerAwareCommand
 
             $this->optimizeTrack($track);
 
-            $output->writeln('Optimized Track #'.$track->getId());
+            $output->writeln('Optimized Track #' . $track->getId());
         } elseif ($input->hasOption('all') && $input->getOption('all')) {
             $tracks = $repository->findAll();
 
             foreach ($tracks as $track) {
                 $this->optimizeTrack($track);
 
-                $output->writeln('Optimized Track #'.$track->getId());
-                $output->writeln('Distance: '.$track->getDistance());
+                $output->writeln('Optimized Track #' . $track->getId());
+                $output->writeln('Distance: ' . $track->getDistance());
             }
         }
     }

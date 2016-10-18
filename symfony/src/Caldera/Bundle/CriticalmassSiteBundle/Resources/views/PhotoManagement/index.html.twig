@@ -4,14 +4,13 @@
     {% stylesheets
     '@CriticalmassGalleryBundle/Resources/public/css/external/*.css'
     filter="cssrewrite" %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
 {% endblock %}
 
 {% block additionalFooterElements %}
     {% javascripts
-    '@CriticalmassGalleryBundle/Resources/public/js/external/*.js'
-    %}
+    '@CriticalmassGalleryBundle/Resources/public/js/external/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
@@ -19,8 +18,7 @@
 {% block content %}
 
     <script>
-        window.onload = function()
-        {
+        window.onload = function () {
             $(".fancybox").fancybox();
         };
     </script>
@@ -28,9 +26,11 @@
         <div class="row">
             {% for photo in photos %}
                 <div class="col-lg-1 col-md-4 col-xs-6 thumb">
-                    <a href={{ path('criticalmass_gallery_photos_show', { photoId: photo.getId() } ) }}><i class="fa fa-pencil"></i></a>
+                    <a href={{ path('criticalmass_gallery_photos_show', { photoId: photo.getId() } ) }}><i
+                                class="fa fa-pencil"></i></a>
                     <a class="thumbnail fancybox" href="{{ photo.getFilePathByDepth(2) }}">
-                        <img src=" {{ photo.toSmallPath(photo.getFilePathByDepth(2)) }} " alt="{{ photo.getDescription() }}" img="img-responsive">
+                        <img src=" {{ photo.toSmallPath(photo.getFilePathByDepth(2)) }} "
+                             alt="{{ photo.getDescription() }}" img="img-responsive">
                     </a>
                     {#<a href="http://beta.criticalmass.cm/app_dev.php/photos/edit/{{ photo.getId() }}"><i class="fa fa-wrench"></i></a>#}
                 </div>

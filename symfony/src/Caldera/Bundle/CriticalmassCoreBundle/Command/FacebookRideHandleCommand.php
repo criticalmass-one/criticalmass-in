@@ -25,8 +25,7 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:facebook:rides')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -62,7 +61,7 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
         try {
             $response = $this->facebook->get('/' . $pageId . '/events?since=' . $since . '&until=' . $until);
         } catch (\Exception $e) {
-            $output->writeln($pageId.' ist ungültig');
+            $output->writeln($pageId . ' ist ungültig');
 
             return null;
         }

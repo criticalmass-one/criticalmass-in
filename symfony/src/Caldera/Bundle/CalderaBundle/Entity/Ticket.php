@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ticket
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
     /**
@@ -29,15 +29,15 @@ class Ticket
      */
     protected $ride;
 
-	/**
-	 * @ORM\Column(type="string", length=9, nullable=false)
-	 */
-	protected $inviteId;
+    /**
+     * @ORM\Column(type="string", length=9, nullable=false)
+     */
+    protected $inviteId;
 
-	/**
-	 * @ORM\Column(type="datetime", nullable=false)
-	 */
-	protected $creationDateTime;
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $creationDateTime;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -97,11 +97,21 @@ class Ticket
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get inviteId
+     *
+     * @return string
+     */
+    public function getInviteId()
+    {
+        return $this->inviteId;
     }
 
     /**
@@ -117,60 +127,9 @@ class Ticket
         return $this;
     }
 
-    /**
-     * Get inviteId
-     *
-     * @return string 
-     */
-    public function getInviteId()
+    public function getRide()
     {
-        return $this->inviteId;
-    }
-
-    /**
-     * Set creationDateTime
-     *
-     * @param \DateTime $creationDateTime
-     * @return Ticket
-     */
-    public function setCreationDateTime(\DateTime $creationDateTime)
-    {
-        $this->creationDateTime = $creationDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get creationDateTime
-     *
-     * @return \DateTime
-     */
-    public function getCreationDateTime()
-    {
-        return $this->creationDateTime;
-    }
-
-    /**
-     * Set city
-     *
-     * @param City $city
-     * @return Ticket
-     */
-    public function setCity(City $city = null)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
-    {
-        return $this->city;
+        return $this->ride;
     }
 
     public function setRide(Ride $ride = null)
@@ -180,9 +139,14 @@ class Ticket
         return $this;
     }
 
-    public function getRide()
+    /**
+     * Get counter
+     *
+     * @return integer
+     */
+    public function getCounter()
     {
-        return $this->ride;
+        return $this->counter;
     }
 
     /**
@@ -199,13 +163,13 @@ class Ticket
     }
 
     /**
-     * Get counter
+     * Get username
      *
-     * @return integer 
+     * @return string
      */
-    public function getCounter()
+    public function getUsername()
     {
-        return $this->counter;
+        return $this->username;
     }
 
     /**
@@ -222,13 +186,13 @@ class Ticket
     }
 
     /**
-     * Get username
+     * Get colorRed
      *
-     * @return string 
+     * @return integer
      */
-    public function getUsername()
+    public function getColorRed()
     {
-        return $this->username;
+        return $this->colorRed;
     }
 
     /**
@@ -245,13 +209,13 @@ class Ticket
     }
 
     /**
-     * Get colorRed
+     * Get colorGreen
      *
-     * @return integer 
+     * @return integer
      */
-    public function getColorRed()
+    public function getColorGreen()
     {
-        return $this->colorRed;
+        return $this->colorGreen;
     }
 
     /**
@@ -268,13 +232,13 @@ class Ticket
     }
 
     /**
-     * Get colorGreen
+     * Get colorBlue
      *
-     * @return integer 
+     * @return integer
      */
-    public function getColorGreen()
+    public function getColorBlue()
     {
-        return $this->colorGreen;
+        return $this->colorBlue;
     }
 
     /**
@@ -291,13 +255,13 @@ class Ticket
     }
 
     /**
-     * Get colorBlue
+     * Get startDateTime
      *
-     * @return integer 
+     * @return \DateTime
      */
-    public function getColorBlue()
+    public function getStartDateTime()
     {
-        return $this->colorBlue;
+        return $this->startDateTime;
     }
 
     /**
@@ -314,13 +278,13 @@ class Ticket
     }
 
     /**
-     * Get startDateTime
+     * Get endDateTime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getStartDateTime()
+    public function getEndDateTime()
     {
-        return $this->startDateTime;
+        return $this->endDateTime;
     }
 
     /**
@@ -337,36 +301,13 @@ class Ticket
     }
 
     /**
-     * Get endDateTime
+     * Get active
      *
-     * @return \DateTime 
+     * @return boolean
      */
-    public function getEndDateTime()
+    public function getActive()
     {
-        return $this->endDateTime;
-    }
-
-    /**
-     * Set displayName
-     *
-     * @param string $displayName
-     * @return Ticket
-     */
-    public function setDisplayName($displayName)
-    {
-        $this->displayName = $displayName;
-
-        return $this;
-    }
-
-    /**
-     * Get displayName
-     *
-     * @return string 
-     */
-    public function getDisplayName()
-    {
-        return $this->displayName;
+        return $this->active;
     }
 
     /**
@@ -383,13 +324,13 @@ class Ticket
     }
 
     /**
-     * Get active
+     * Get message
      *
-     * @return boolean 
+     * @return string
      */
-    public function getActive()
+    public function getMessage()
     {
-        return $this->active;
+        return $this->message;
     }
 
     /**
@@ -405,19 +346,55 @@ class Ticket
         return $this;
     }
 
-    /**
-     * Get message
-     *
-     * @return string 
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
     public function __toString()
     {
-        return $this->getCity()->getCity().' '.$this->getDisplayName();
+        return $this->getCity()->getCity() . ' ' . $this->getDisplayName();
+    }
+
+    /**
+     * Get city
+     *
+     * @return City
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set city
+     *
+     * @param City $city
+     * @return Ticket
+     */
+    public function setCity(City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get displayName
+     *
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * Set displayName
+     *
+     * @param string $displayName
+     * @return Ticket
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+
+        return $this;
     }
 
     public function belongsToRide(Ride $ride)
@@ -425,9 +402,25 @@ class Ticket
         return $this->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d');
     }
 
-    public function setExported($exported)
+    /**
+     * Get creationDateTime
+     *
+     * @return \DateTime
+     */
+    public function getCreationDateTime()
     {
-        $this->exported = $exported;
+        return $this->creationDateTime;
+    }
+
+    /**
+     * Set creationDateTime
+     *
+     * @param \DateTime $creationDateTime
+     * @return Ticket
+     */
+    public function setCreationDateTime(\DateTime $creationDateTime)
+    {
+        $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
@@ -435,5 +428,12 @@ class Ticket
     public function getExported()
     {
         return $this->exported;
+    }
+
+    public function setExported($exported)
+    {
+        $this->exported = $exported;
+
+        return $this;
     }
 }

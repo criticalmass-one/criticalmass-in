@@ -62,6 +62,7 @@ class Tweet
      * @ORM\Column(type="text")
      */
     protected $rawResponse;
+
     /**
      * Constructor
      */
@@ -74,11 +75,21 @@ class Tweet
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 
     /**
@@ -95,13 +106,13 @@ class Tweet
     }
 
     /**
-     * Get text
+     * Get username
      *
-     * @return string 
+     * @return string
      */
-    public function getText()
+    public function getUsername()
     {
-        return $this->text;
+        return $this->username;
     }
 
     /**
@@ -118,13 +129,13 @@ class Tweet
     }
 
     /**
-     * Get username
+     * Get screenname
      *
-     * @return string 
+     * @return string
      */
-    public function getUsername()
+    public function getScreenname()
     {
-        return $this->username;
+        return $this->screenname;
     }
 
     /**
@@ -141,13 +152,13 @@ class Tweet
     }
 
     /**
-     * Get screenname
+     * Get profileImageUrl
      *
-     * @return string 
+     * @return string
      */
-    public function getScreenname()
+    public function getProfileImageUrl()
     {
-        return $this->screenname;
+        return $this->profileImageUrl;
     }
 
     /**
@@ -164,13 +175,13 @@ class Tweet
     }
 
     /**
-     * Get profileImageUrl
+     * Get dateTime
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getProfileImageUrl()
+    public function getDateTime()
     {
-        return $this->profileImageUrl;
+        return $this->dateTime;
     }
 
     /**
@@ -187,13 +198,13 @@ class Tweet
     }
 
     /**
-     * Get dateTime
+     * Get twitterId
      *
-     * @return \DateTime 
+     * @return string
      */
-    public function getDateTime()
+    public function getTwitterId()
     {
-        return $this->dateTime;
+        return $this->twitterId;
     }
 
     /**
@@ -210,13 +221,13 @@ class Tweet
     }
 
     /**
-     * Get twitterId
+     * Get rawResponse
      *
-     * @return string 
+     * @return string
      */
-    public function getTwitterId()
+    public function getRawResponse()
     {
-        return $this->twitterId;
+        return $this->rawResponse;
     }
 
     /**
@@ -230,16 +241,6 @@ class Tweet
         $this->rawResponse = $rawResponse;
 
         return $this;
-    }
-
-    /**
-     * Get rawResponse
-     *
-     * @return string 
-     */
-    public function getRawResponse()
-    {
-        return $this->rawResponse;
     }
 
     /**
@@ -268,7 +269,7 @@ class Tweet
     /**
      * Get city
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCity()
     {
@@ -301,7 +302,7 @@ class Tweet
     /**
      * Get ride
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRide()
     {

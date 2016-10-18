@@ -7,7 +7,8 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
  * @package Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader
  * @deprecated
  */
-class DateTimeExifReader extends AbstractExifReader {
+class DateTimeExifReader extends AbstractExifReader
+{
     /**
      * @var \DateTime $dateTime
      */
@@ -23,7 +24,7 @@ class DateTimeExifReader extends AbstractExifReader {
 
         return $this;
     }
-    
+
     public function getDateTime()
     {
         return $this->dateTime;

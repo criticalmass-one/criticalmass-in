@@ -7,9 +7,10 @@ use Caldera\CriticalmassOpenweatherBundle\Utility\Weather\OpenWeatcherQuery;
 use Caldera\CriticalmassOpenweatherBundle\Utility\Weather\OpenWeatherReader;
 use PHPUnit_Framework_TestCase;
 
-class OpenWeatherQueryTest extends PHPUnit_Framework_TestCase {
+class OpenWeatherQueryTest extends PHPUnit_Framework_TestCase
+{
     protected $testRide;
-    
+
     protected function setup()
     {
         $this->testRide = new Ride();
@@ -54,7 +55,7 @@ class OpenWeatherQueryTest extends PHPUnit_Framework_TestCase {
         $owr = new OpenWeatherReader();
         $owr->setDate(new \DateTime());
         $owr->setJson($json);
-        
+
         $entity = $owr->createEntity();
 
         $this->assertNotNull($entity);

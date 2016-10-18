@@ -1,4 +1,4 @@
-define(['CriticalService', 'RideEntity'], function(CriticalService) {
+define(['CriticalService', 'RideEntity'], function (CriticalService) {
     LiveRideEntity = function () {
     };
 
@@ -7,7 +7,7 @@ define(['CriticalService', 'RideEntity'], function(CriticalService) {
 
     LiveRideEntity.prototype._CriticalService = CriticalService;
 
-    LiveRideEntity.prototype._setupModalButtons = function() {
+    LiveRideEntity.prototype._setupModalButtons = function () {
         var that = this;
 
         var buttons = [];
@@ -16,7 +16,7 @@ define(['CriticalService', 'RideEntity'], function(CriticalService) {
         locationButton.setCaption('Treffpunkt');
         locationButton.setIcon('map-pin');
         locationButton.setClass('btn-success');
-        locationButton.setOnClickEvent(function() {
+        locationButton.setOnClickEvent(function () {
             that._CriticalService.getMap().setView([that._latitude, that._longitude], 13);
         });
 

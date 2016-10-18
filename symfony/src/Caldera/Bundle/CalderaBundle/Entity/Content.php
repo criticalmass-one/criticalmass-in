@@ -12,11 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Content implements ViewableInterface
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
     /**
@@ -59,7 +59,7 @@ class Content implements ViewableInterface
      * @ORM\Column(type="datetime")
      */
     protected $lastEditionDateTime = true;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Content", inversedBy="archive_contents")
      * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
@@ -86,11 +86,11 @@ class Content implements ViewableInterface
      * @ORM\Column(type="integer")
      */
     protected $views;
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -114,6 +114,16 @@ class Content implements ViewableInterface
     }
 
     /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set title
      *
      * @param string $title
@@ -127,13 +137,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get title
+     * Get text
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getText()
     {
-        return $this->title;
+        return $this->text;
     }
 
     /**
@@ -150,13 +160,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get text
+     * Get enabled
      *
-     * @return string 
+     * @return boolean
      */
-    public function getText()
+    public function getEnabled()
     {
-        return $this->text;
+        return $this->enabled;
     }
 
     /**
@@ -173,13 +183,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get enabled
+     * Get slug
      *
-     * @return boolean 
+     * @return string
      */
-    public function getEnabled()
+    public function getSlug()
     {
-        return $this->enabled;
+        return $this->slug;
     }
 
     /**
@@ -195,21 +205,21 @@ class Content implements ViewableInterface
         return $this;
     }
 
-    /**
-     * Get slug
-     *
-     * @return string 
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
     public function __clone()
     {
         $this->id = null;
         $this->setIsArchived(true);
         $this->setArchiveDateTime(new \DateTime());
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return boolean
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
     }
 
     /**
@@ -226,13 +236,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get isArchived
+     * Get archiveDateTime
      *
-     * @return boolean 
+     * @return \DateTime
      */
-    public function getIsArchived()
+    public function getArchiveDateTime()
     {
-        return $this->isArchived;
+        return $this->archiveDateTime;
     }
 
     /**
@@ -249,13 +259,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get archiveDateTime
+     * Get archiveParent
      *
-     * @return \DateTime 
+     * @return Content
      */
-    public function getArchiveDateTime()
+    public function getArchiveParent()
     {
-        return $this->archiveDateTime;
+        return $this->archiveParent;
     }
 
     /**
@@ -272,13 +282,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get archiveParent
+     * Get archiveUser
      *
-     * @return Content
+     * @return User
      */
-    public function getArchiveParent()
+    public function getArchiveUser()
     {
-        return $this->archiveParent;
+        return $this->archiveUser;
     }
 
     /**
@@ -295,13 +305,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get archiveUser
+     * Get isPublicEditable
      *
-     * @return User
+     * @return boolean
      */
-    public function getArchiveUser()
+    public function getIsPublicEditable()
     {
-        return $this->archiveUser;
+        return $this->isPublicEditable;
     }
 
     /**
@@ -318,13 +328,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get isPublicEditable
+     * Get lastEditionDateTime
      *
-     * @return boolean 
+     * @return \DateTime
      */
-    public function getIsPublicEditable()
+    public function getLastEditionDateTime()
     {
-        return $this->isPublicEditable;
+        return $this->lastEditionDateTime;
     }
 
     /**
@@ -341,13 +351,13 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get lastEditionDateTime
+     * Get showInfobox
      *
-     * @return \DateTime 
+     * @return boolean
      */
-    public function getLastEditionDateTime()
+    public function getShowInfobox()
     {
-        return $this->lastEditionDateTime;
+        return $this->showInfobox;
     }
 
     /**
@@ -364,16 +374,6 @@ class Content implements ViewableInterface
     }
 
     /**
-     * Get showInfobox
-     *
-     * @return boolean 
-     */
-    public function getShowInfobox()
-    {
-        return $this->showInfobox;
-    }
-
-    /**
      * @return $this
      */
     public function incViews()
@@ -382,7 +382,7 @@ class Content implements ViewableInterface
 
         return $this;
     }
-    
+
     public function getViews()
     {
         return $this->views;

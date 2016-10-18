@@ -30,8 +30,7 @@ class ApiCallsCommand extends ContainerAwareCommand
     {
         $this
             ->setName('criticalmass:api:storecalls')
-            ->setDescription('Store calls')
-        ;
+            ->setDescription('Store calls');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -46,17 +45,17 @@ class ApiCallsCommand extends ContainerAwareCommand
          * @var App $app
          */
         foreach ($apps as $app) {
-            $apiCalls = $this->memcache->get('api_app'.$app->getId().'_calls');
+            $apiCalls = $this->memcache->get('api_app' . $app->getId() . '_calls');
 
             if ($apiCalls) {
-                $output->writeln('App #'.$app->getId().': '.$apiCalls.' calls');
+                $output->writeln('App #' . $app->getId() . ': ' . $apiCalls . ' calls');
 
                 for ($i = 1; $i <= $apiCalls; ++$i) {
-                    $apiCallArray = json_decode($this->memcache->get('api_app'.$app->getId().'_call'.$i));
+                    $apiCallArray = json_decode($this->memcache->get('api_app' . $app->getId() . '_call' . $i));
 
                     $callDateTime = new \DateTime();
                     $callDateTime->setTimestamp(round($apiCallArray->timestamp / 1000));
-                    
+
                     $apiCall = new ApiCall();
                     $apiCall->setApp($app);
                     $apiCall->setReferer($apiCallArray->referer);
@@ -65,14 +64,14 @@ class ApiCallsCommand extends ContainerAwareCommand
 
                     $this->manager->persist($apiCall);
 
-                    $this->memcache->delete('api_app'.$app->getId().'_call'.$i);
+                    $this->memcache->delete('api_app' . $app->getId() . '_call' . $i);
                 }
 
                 $app->setApiCalls($app->getApiCalls() + $apiCalls);
 
                 $this->manager->merge($app);
 
-                $this->memcache->delete('api_app'.$app->getId().'_calls');
+                $this->memcache->delete('api_app' . $app->getId() . '_calls');
             }
         }
 

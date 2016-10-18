@@ -15,23 +15,23 @@
         </a>
     </li>
     {% if ride %}
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.getFancyTitle() }}
-        </a>
-    </li>
+        <li>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.getFancyTitle() }}
+            </a>
+        </li>
 
-    <li class="active">
-        Informationen zum Treffpunkt
-    </li>
+        <li class="active">
+            Informationen zum Treffpunkt
+        </li>
     {% else %}
-    <li>
-        Treffpunkte
-    </li>
+        <li>
+            Treffpunkte
+        </li>
 
-    <li class="active">
-        {{ location.title }}
-    </li>
+        <li class="active">
+            {{ location.title }}
+        </li>
     {% endif %}
 {% endblock %}
 
@@ -48,24 +48,24 @@
         <div class="row">
             <div class="col-md-8">
                 {% if location.hasCoordinates() %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="map" style="height: 250px;"
-                             data-map-center-latitude="{{ location.latitude }}"
-                             data-map-center-longitude="{{ location.longitude }}"
-                             data-map-zoomlevel="15"
-                             data-map-marker-latitude="{{ location.latitude }}"
-                             data-map-marker-longitude="{{ location.longitude }}"
-                             data-map-marker-color="red"
-                             data-map-marker-icon="fa-dot-circle-o"
-                             data-map-marker-shape="circle"
-                        ></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="map" style="height: 250px;"
+                                 data-map-center-latitude="{{ location.latitude }}"
+                                 data-map-center-longitude="{{ location.longitude }}"
+                                 data-map-zoomlevel="15"
+                                 data-map-marker-latitude="{{ location.latitude }}"
+                                 data-map-marker-longitude="{{ location.longitude }}"
+                                 data-map-marker-color="red"
+                                 data-map-marker-icon="fa-dot-circle-o"
+                                 data-map-marker-shape="circle"
+                            ></div>
+                        </div>
                     </div>
-                </div>
 
-                <script>
-                    CriticalMass.loadModule('AutoMap', 'map');
-                </script>
+                    <script>
+                        CriticalMass.loadModule('AutoMap', 'map');
+                    </script>
                 {% endif %}
 
                 <div class="row">
@@ -77,24 +77,24 @@
 
             <div class="col-md-4">
                 {% if rides %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Touren von diesem Treffpunkt
-                        </h3>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Touren von diesem Treffpunkt
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                {% for ride in rides %}
+                                    <li>
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <ul>
-                            {% for ride in rides %}
-                                <li>
-                                    <a href="{{ objectPath(ride) }}">
-                                        {{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
                 {% endif %}
                 <div class="panel panel-default">
                     <div class="panel-heading">

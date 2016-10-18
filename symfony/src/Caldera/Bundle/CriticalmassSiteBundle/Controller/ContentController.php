@@ -13,7 +13,7 @@ class ContentController extends AbstractController
         $content = $this->getContentRepository()->findBySlug($slug);
 
         if (!$content) {
-            throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
+            throw new NotFoundHttpException('Schade, unter dem Stichwort ' . $slug . ' wurde kein Inhalt hinterlegt.');
         }
 
         return $this->render(
@@ -23,13 +23,13 @@ class ContentController extends AbstractController
             ]
         );
     }
-    
+
     public function editAction(Request $request, $slug)
     {
         $content = $this->getContentRepository()->findBySlug($slug);
-        
+
         if (!$content) {
-            throw new NotFoundHttpException('Schade, unter dem Stichwort '.$slug.' wurde kein Inhalt hinterlegt.');
+            throw new NotFoundHttpException('Schade, unter dem Stichwort ' . $slug . ' wurde kein Inhalt hinterlegt.');
         }
 
         if (!$content->getIsPublicEditable()) {
@@ -59,10 +59,10 @@ class ContentController extends AbstractController
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
         $hasSaved = false;
-        
+
         if ($form->isValid()) {
             $content->setLastEditionDateTime(new \DateTime());
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->persist($archiveContent);

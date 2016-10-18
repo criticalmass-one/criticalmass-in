@@ -5,7 +5,8 @@ namespace Caldera\CriticalmassTwitterBundle\Utility\TwitterGateway;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
 
-class TwitterGateway {
+class TwitterGateway
+{
     protected $consumerKey;
     protected $consumerSecret;
     protected $accessToken;
@@ -26,7 +27,7 @@ class TwitterGateway {
     public function fetchTweetsForRide(Ride $ride)
     {
         $query = array(
-            'q' => '#'.$ride->getHashtag()
+            'q' => '#' . $ride->getHashtag()
         );
 
         $results = $this->toa->get('search/tweets', $query);
