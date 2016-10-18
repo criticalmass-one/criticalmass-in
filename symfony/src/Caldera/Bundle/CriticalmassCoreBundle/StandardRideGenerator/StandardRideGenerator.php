@@ -57,7 +57,9 @@ class StandardRideGenerator
         if ($this->city->getStandardWeekOfMonth() > 0) {
             $weekInterval = new \DateInterval('P7D');
 
-            for ($weekOfMonth = 1; $weekOfMonth < $this->city->getStandardWeekOfMonth(); ++$weekOfMonth) {
+            $standardWeekOfMonth = $this->city->getStandardWeekOfMonth();
+
+            for ($weekOfMonth = 1; $weekOfMonth < $standardWeekOfMonth; ++$weekOfMonth) {
                 $dateTime->add($weekInterval);
             }
         } else {
