@@ -2,10 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RidePhotoItem;
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RideTrackItem;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {

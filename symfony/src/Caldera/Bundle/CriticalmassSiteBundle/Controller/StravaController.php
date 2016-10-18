@@ -2,18 +2,16 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\TrackHandlingTrait;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
 use Caldera\Bundle\CalderaBundle\Entity\Position;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Polyline;
+use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\TrackHandlingTrait;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
-use Symfony\Component\HttpFoundation\Request;
 use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
 
 class StravaController extends AbstractController
 {

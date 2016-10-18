@@ -2,11 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader;
 
+use Caldera\Bundle\CalderaBundle\Entity\Position;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\BoundingBox;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\Coord;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
-use Caldera\Bundle\CalderaBundle\Entity\Position;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class GpxReader {

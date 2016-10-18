@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackChecker implements TrackCheckerInterface {

@@ -3,7 +3,6 @@
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
 use Caldera\Bundle\CalderaBundle\Entity\Region;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 /**

@@ -4,7 +4,6 @@ namespace Caldera\CriticalmassOpenweatherBundle\Tests\Weather;
 
 use Caldera\CriticalmassCoreBundle\Entity\Ride;
 use Caldera\CriticalmassOpenweatherBundle\Utility\Weather\OpenWeatcherQuery;
-
 use Caldera\CriticalmassOpenweatherBundle\Utility\Weather\OpenWeatherReader;
 use PHPUnit_Framework_TestCase;
 

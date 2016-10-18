@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 
 class TrackPolyline
 {

@@ -2,18 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Content;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Lsw\MemcacheBundle\Cache\LoggingMemcache;
 use Lsw\MemcacheBundle\Cache\LoggingMemcacheInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;

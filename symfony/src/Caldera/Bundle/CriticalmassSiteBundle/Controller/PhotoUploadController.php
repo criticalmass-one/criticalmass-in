@@ -2,15 +2,13 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Symfony\Component\Form\FormTypeInterface;
+use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
+use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotoUploadController extends AbstractController
 {

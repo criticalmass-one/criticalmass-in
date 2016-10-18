@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\AppType;
 use Caldera\Bundle\CalderaBundle\Entity\App;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\AppType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -2,9 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\AbstractTimelineCollector;
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\ItemInterface;
-
 class CachedTimeline extends Timeline
 {
     protected $memcache;

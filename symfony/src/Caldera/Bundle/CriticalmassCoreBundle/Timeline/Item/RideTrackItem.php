@@ -4,7 +4,6 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Entity\User;
 
 class RideTrackItem extends AbstractItem
 {

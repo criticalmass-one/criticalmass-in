@@ -3,7 +3,6 @@
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
 use Caldera\Bundle\CalderaBundle\Entity\Location;
 use Caldera\Bundle\CalderaBundle\Entity\Region;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;

@@ -2,17 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PhotoCoordType;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\PhotoView;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PhotoCoordType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotoManagementController extends AbstractController

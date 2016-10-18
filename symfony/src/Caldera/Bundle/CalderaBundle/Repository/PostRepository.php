@@ -5,8 +5,8 @@ namespace Caldera\Bundle\CalderaBundle\Repository;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
-use \Caldera\Bundle\CalderaBundle\Entity\Thread;
 
 class PostRepository extends EntityRepository
 {

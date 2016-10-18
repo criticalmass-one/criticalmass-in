@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 class ContentRepository extends EntityRepository

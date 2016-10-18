@@ -2,10 +2,6 @@
 
 namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\BikeShop;
-use Caldera\Bundle\CalderaBundle\Entity\Incident;
-use Elastica\Query\MatchAll;
-use Elastica\Test\Filter\GeoBoundingBoxTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

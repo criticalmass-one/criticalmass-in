@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Michelf\Markdown;
 use Symfony\Component\HttpFoundation\Request;
 

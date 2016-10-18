@@ -2,12 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Facebook;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Utils\DateTimeUtils;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\FacebookCityProperties;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Facebook\GraphNodes\GraphEdge;
-use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends FacebookApi

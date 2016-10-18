@@ -3,14 +3,13 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
-use Caldera\Bundle\CalderaBundle\Entity\Board;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Post;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

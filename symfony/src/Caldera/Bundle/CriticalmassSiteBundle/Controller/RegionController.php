@@ -3,9 +3,6 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Abraham\TwitterOAuth\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegionController extends AbstractController
 {

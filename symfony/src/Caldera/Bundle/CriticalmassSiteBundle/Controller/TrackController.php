@@ -2,12 +2,12 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\TrackHandlingTrait;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift\TrackTimeShift;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\TrackValidator;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;

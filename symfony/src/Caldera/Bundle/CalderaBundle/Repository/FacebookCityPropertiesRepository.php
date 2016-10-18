@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 

@@ -2,9 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\ThreadItem;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {

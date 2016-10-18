@@ -2,8 +2,8 @@
 
 namespace Caldera\CriticalmassCoreBundle\Tests\CitySlugGenerator;
 
-use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
 use Caldera\CriticalmassCoreBundle\Entity\City;
+use Caldera\CriticalmassCoreBundle\Utility\CitySlugGenerator\CitySlugGenerator;
 use PHPUnit_Framework_TestCase;
 
 class CitySlugGeneratorTest extends PHPUnit_Framework_TestCase

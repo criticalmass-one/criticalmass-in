@@ -3,7 +3,6 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Form\Flow;
 
 use Craue\FormFlowBundle\Form\FormFlow;
-use Craue\FormFlowBundle\Form\FormFlowInterface;
 
 class CreateCityFlow extends FormFlow {
 

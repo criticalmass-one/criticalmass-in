@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\CityEditItem;
 use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\CityEditItem;
 
 class CityEditCollector extends AbstractTimelineCollector
 {

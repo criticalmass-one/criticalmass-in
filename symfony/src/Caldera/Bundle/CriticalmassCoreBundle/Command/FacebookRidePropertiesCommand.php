@@ -2,19 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi;
-use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi;
-use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Facebook\FacebookRequest;
-use \Facebook\Facebook;
-use Facebook\FacebookResponse;
-use Facebook\GraphNodes\GraphEdge;
-use Facebook\GraphNodes\GraphEvent;
-use Facebook\GraphNodes\GraphNode;
-use Facebook\GraphNodes\GraphPage;
+use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi;
+use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

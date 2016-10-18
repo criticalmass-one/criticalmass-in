@@ -2,13 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\UserPhoneNumberType;
 use Caldera\Bundle\CalderaBundle\Entity\User;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\UserPhoneNumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhoneNumberController extends AbstractController
 {

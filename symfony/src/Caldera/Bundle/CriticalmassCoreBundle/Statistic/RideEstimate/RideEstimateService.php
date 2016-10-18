@@ -2,10 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
 use Doctrine\ORM\EntityManager;
 
 class RideEstimateService

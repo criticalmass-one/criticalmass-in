@@ -2,19 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
+use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TimelapseController extends AbstractController
 {

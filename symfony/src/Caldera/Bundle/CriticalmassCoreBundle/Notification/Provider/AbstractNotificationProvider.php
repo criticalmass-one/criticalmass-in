@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider;
 
-use Caldera\Bundle\CalderaBundle\Entity\SentNotification;
 use Caldera\Bundle\CalderaBundle\Entity\User;
 use Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification\AbstractNotification;
 

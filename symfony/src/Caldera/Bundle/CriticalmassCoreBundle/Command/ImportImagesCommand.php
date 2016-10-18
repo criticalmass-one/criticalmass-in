@@ -4,11 +4,10 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps\PhotoGps;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

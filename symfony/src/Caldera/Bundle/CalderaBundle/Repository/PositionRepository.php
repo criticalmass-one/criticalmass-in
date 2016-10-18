@@ -2,12 +2,9 @@
 
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Ticket;
 use Doctrine\ORM\EntityRepository;
-use \Caldera\Bundle\CalderaBundle\Entity\Thread;
 
 class PositionRepository extends EntityRepository
 {

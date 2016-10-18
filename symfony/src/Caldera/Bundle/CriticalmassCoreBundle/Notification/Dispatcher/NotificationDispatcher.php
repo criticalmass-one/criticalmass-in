@@ -9,7 +9,6 @@ use Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\PushoverNotifica
 use Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\ShortmessageNotificationProvider;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Validator\Constraints\Email;
 
 class NotificationDispatcher
 {

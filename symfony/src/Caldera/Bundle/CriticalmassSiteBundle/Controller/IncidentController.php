@@ -2,9 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\IncidentType;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
+use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\IncidentType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -2,9 +2,9 @@
 
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\User;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**

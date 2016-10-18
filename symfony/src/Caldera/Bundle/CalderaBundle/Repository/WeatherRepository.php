@@ -4,7 +4,6 @@ namespace Caldera\Bundle\CalderaBundle\Repository;
 
 use Application\Sonata\UserBundle\Entity\User;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\ORM\EntityRepository;
 
 /**

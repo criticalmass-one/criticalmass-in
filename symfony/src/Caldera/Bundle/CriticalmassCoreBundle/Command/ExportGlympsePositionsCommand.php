@@ -2,14 +2,14 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use Caldera\Bundle\CalderaBundle\Entity\Ticket;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Ticket;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

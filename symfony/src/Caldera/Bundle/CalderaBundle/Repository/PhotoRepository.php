@@ -8,7 +8,6 @@ use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class PhotoRepository extends EntityRepository
 {

@@ -2,7 +2,6 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator\StandardRideGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;

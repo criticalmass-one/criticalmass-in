@@ -6,10 +6,10 @@ use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb

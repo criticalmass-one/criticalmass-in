@@ -3,8 +3,8 @@
 namespace Caldera\Bundle\CalderaBundle\Repository;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class IncidentRepository extends EntityRepository
 {

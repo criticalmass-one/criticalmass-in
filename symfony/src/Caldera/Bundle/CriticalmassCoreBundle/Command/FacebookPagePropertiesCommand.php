@@ -2,9 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi;
 use Caldera\Bundle\CalderaBundle\Entity\City;
-use \Facebook\Facebook;
+use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookPageApi;
+use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

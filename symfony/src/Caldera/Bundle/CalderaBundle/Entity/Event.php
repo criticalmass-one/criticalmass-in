@@ -5,8 +5,8 @@ namespace Caldera\Bundle\CalderaBundle\Entity;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="event")

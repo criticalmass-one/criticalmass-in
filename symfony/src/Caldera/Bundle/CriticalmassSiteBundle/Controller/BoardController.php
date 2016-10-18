@@ -2,15 +2,15 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Post;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
+use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 class BoardController extends AbstractController
 {

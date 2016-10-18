@@ -2,12 +2,12 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\UploadValidator;
 
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoDateTimeException;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoLatitudeLongitudeException;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NotEnoughCoordsException;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
 use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Exception;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 

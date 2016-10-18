@@ -4,14 +4,12 @@ namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Symfony\Component\Form\FormTypeInterface;
+use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhotoController extends AbstractController
 {
