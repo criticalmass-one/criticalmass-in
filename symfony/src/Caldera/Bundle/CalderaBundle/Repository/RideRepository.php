@@ -307,18 +307,6 @@ class RideRepository extends EntityRepository
         return $this->findRidesInInterval($startDateTime, $endDateTime);
     }
 
-    public function findLatestForCitySlug($citySlug)
-    {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaBundle:Ride r JOIN CalderaBundle:City c WITH c.id = r.city JOIN CalderaBundle:CitySlug cs WITH cs.city = c.id WHERE cs.slug = \''.$citySlug.'\' GROUP BY r.city ORDER BY r.dateTime DESC');
-
-        $result = $query->setMaxResults(1)->getResult();
-
-        $result = array_pop($result);
-        $result = array_pop($result);
-
-        return $result;
-    }
-
     /**
      * @param $citySlug string
      * @param $rideDate string
@@ -374,24 +362,6 @@ class RideRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getOneOrNullResult();
-    }
-
-    public function findLatestRidesOrderByParticipants(\DateTime $startDateTime, \DateTime $endDateTime)
-    {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaBundle:Ride r WHERE r.dateTime >= \''.$startDateTime->format('Y-m-d H:i:s').'\' AND r.dateTime <= \''.$endDateTime->format('Y-m-d H:i:s').'\' ORDER BY r.estimatedParticipants DESC');
-
-        $result = array();
-
-        $tmp1 = $query->getResult();
-
-        foreach ($tmp1 as $tmp2)
-        {
-            foreach ($tmp2 as $ride)
-            {
-                $result[$ride->getCity()->getMainSlugString()] = $ride;
-            }
-        }
-        return $result;
     }
 
     /**

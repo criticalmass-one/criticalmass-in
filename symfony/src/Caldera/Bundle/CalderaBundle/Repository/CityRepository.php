@@ -13,22 +13,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class CityRepository extends EntityRepository
 {
-	/**
-	 * Findet abhängig vom übergebenen Breiten- und Längengrad die nächsten
-	 * Städte in der Reihenfolge ihrer Entfernung zum angegebenen Standort.
-	 *
-	 * @param Float $latitude: Breitengrad
-	 * @param Float $longitude: Längengrad
-	 *
-	 * @return Array: Liste der Staedte.
-	 */
-	public function findNearestedByLocation($latitude, $longitude)
-	{
-        $query = $this->getEntityManager()->createQuery("SELECT c AS city, SQRT((c.latitude - ".$latitude.") * (c.latitude - ".$latitude.") + (c.longitude - ".$longitude.") * (c.longitude - ".$longitude.")) AS distance FROM CalderaCriticalmassCoreBundle:City c ORDER BY distance ASC");
-
-        return $query->getResult();
-	}
-
     public function findCitiesWithFacebook()
     {
         $builder = $this->createQueryBuilder('city');
