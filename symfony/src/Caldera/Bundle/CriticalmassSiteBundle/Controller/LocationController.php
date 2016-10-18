@@ -76,7 +76,7 @@ class LocationController extends AbstractController
 
     protected function findRidesForLocation(Location $location)
     {
-        if (!$location->getLatitude() or !$location->getLongitude()) {
+        if (!$location->getLatitude() || !$location->getLongitude()) {
             return false;
         }
 

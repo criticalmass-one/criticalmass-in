@@ -130,7 +130,7 @@ class Position
 	 */
 	public function isEqual(Position $position)
 	{
-		if (($position->getLatitude() == $this->getLatitude()) and 
+		if (($position->getLatitude() == $this->getLatitude()) &&
 				($position->getLongitude() == $this->getLongitude()))
 		{
 			return true;

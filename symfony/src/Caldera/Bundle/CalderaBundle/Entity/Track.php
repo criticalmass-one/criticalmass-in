@@ -742,7 +742,7 @@ class Track
     
     public function getDurationInterval()
     {
-        if ($this->startDateTime and $this->endDateTime) {
+        if ($this->startDateTime && $this->endDateTime) {
             return $this->getEndDateTime()->diff($this->getStartDateTime());
         }
 
@@ -751,7 +751,7 @@ class Track
     
     public function getDurationInSeconds()
     {
-        if ($this->startDateTime and $this->endDateTime) {
+        if ($this->startDateTime && $this->endDateTime) {
             return $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
         }
 
@@ -760,7 +760,7 @@ class Track
     
     public function getAverageVelocity()
     {
-        if ($this->startDateTime and $this->endDateTime and $this->distance) {
+        if ($this->startDateTime && $this->endDateTime && $this->distance) {
             $kilometres = $this->getDistance();
             $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
 

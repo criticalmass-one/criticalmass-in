@@ -104,7 +104,7 @@ class ImportImagesCommand extends ContainerAwareCommand
 
         if ($handle = opendir($input->getArgument('path'))) {
             while (false !== ($file = readdir($handle))) {
-                if (strpos($file, '.jpg') or strpos($file, '.JPG')) {
+                if (strpos($file, '.jpg') || strpos($file, '.JPG')) {
                     array_push($imageFileList, $file);
                 }
             }

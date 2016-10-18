@@ -79,7 +79,7 @@ class Timeline
         foreach ($this->items as $key => $item) {
             ++$counter;
 
-            if ($item->getDateTime() < $lastDateTime or $counter > $maxItems) {
+            if ($item->getDateTime() < $lastDateTime || $counter > $maxItems) {
                 unset($this->items[$key]);
             }
         }

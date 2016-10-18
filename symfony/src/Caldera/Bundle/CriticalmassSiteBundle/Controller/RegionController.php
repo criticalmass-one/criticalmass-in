@@ -13,9 +13,9 @@ class RegionController extends AbstractController
     {
         $region = null;
 
-        if ($slug1 and $slug2 and $slug3) {
+        if ($slug1 && $slug2 && $slug3) {
             $region = $this->getRegionRepository()->findOneBySlug($slug3);
-        } elseif ($slug1 and $slug2) {
+        } elseif ($slug1 && $slug2) {
             $region = $this->getRegionRepository()->findOneBySlug($slug2);
         } elseif ($slug1) {
             $region = $this->getRegionRepository()->findOneBySlug($slug1);

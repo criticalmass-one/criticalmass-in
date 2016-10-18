@@ -201,6 +201,6 @@ class Location
 
     public function hasCoordinates()
     {
-        return ($this->latitude and $this->longitude);
+        return ($this->latitude && $this->longitude);
     }
 }

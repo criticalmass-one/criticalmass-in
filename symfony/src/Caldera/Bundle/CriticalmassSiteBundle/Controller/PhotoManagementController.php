@@ -185,9 +185,9 @@ class PhotoManagementController extends AbstractController
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $photo = $this->getPhotoRepository()->find($photoId);
 
-        if ($ride and
-            $photo and
-            $photo->getUser()->equals($this->getUser()) and
+        if ($ride &&
+            $photo &&
+            $photo->getUser()->equals($this->getUser()) &&
             $photo->getRide()->equals($ride)
         ) {
             return $photo;
@@ -318,7 +318,7 @@ class PhotoManagementController extends AbstractController
 
         $rotate = 90;
 
-        if ($request->query->get('rotate') and $request->query->get('rotate') == 'right') {
+        if ($request->query->get('rotate') && $request->query->get('rotate') == 'right') {
             $rotate = -90;
         }
 

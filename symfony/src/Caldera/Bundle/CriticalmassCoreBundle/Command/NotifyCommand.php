@@ -43,8 +43,8 @@ class NotifyCommand extends ContainerAwareCommand
         $this->input = $input;
         $this->output = $output;
 
-        if ($this->input->getOption('type') == 'rideLocationPublished' and
-            $this->input->getOption('city-slug') and
+        if ($this->input->getOption('type') == 'rideLocationPublished' &&
+            $this->input->getOption('city-slug') &&
             $this->input->getOption('ride-date'))
         {
             $this->notifiyRideLocation();

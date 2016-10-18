@@ -149,7 +149,7 @@ class StatisticController extends AbstractController
         foreach ($rides as $ride) {
             $citySlug = $ride->getCity()->getSlug();
 
-            if (!array_key_exists($citySlug, $cities) or $cities[$citySlug] < 18) {
+            if (!array_key_exists($citySlug, $cities) || $cities[$citySlug] < 18) {
                 $resultList[] = $ride;
             }
         }

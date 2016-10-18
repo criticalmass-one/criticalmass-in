@@ -46,7 +46,7 @@ class FacebookEventRideApi extends FacebookEventApi
             /**
              * @var GraphLocation $location
              */
-            if ($place and $location = $place->getLocation()) {
+            if ($place && $location = $place->getLocation()) {
                 $properties
                     ->setLocationAddress($location->getStreet() . ', ' . $location->getZip() . ' ' . $location->getCity() . ', ' . $location->getCountry())
                     ->setLatitude($location->getLongitude())

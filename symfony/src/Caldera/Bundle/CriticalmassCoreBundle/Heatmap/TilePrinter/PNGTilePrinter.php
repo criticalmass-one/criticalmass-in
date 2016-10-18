@@ -32,15 +32,15 @@ class PNGTilePrinter extends AbstractTilePrinter {
 
                 $step = 64;
 
-                if (($colorIndices['red'] <= 127) and ($colorIndices['green'] <= 127) && ($colorIndices['blue'] == 255))
+                if (($colorIndices['red'] <= 127) && ($colorIndices['green'] <= 127) && ($colorIndices['blue'] == 255))
                 {
                     $color = imagecolorallocate($image, $colorIndices['red'] + $step, $colorIndices['green'] + $step, $colorIndices['blue']);
                 }
-                else if (($colorIndices['red'] == 128) and ($colorIndices['green'] == 128) && ($colorIndices['blue'] >= 128))
+                else if (($colorIndices['red'] == 128) && ($colorIndices['green'] == 128) && ($colorIndices['blue'] >= 128))
                 {
                     $color = imagecolorallocate($image, $colorIndices['red'] + $step, $colorIndices['green'], $colorIndices['blue'] - $step);
                 }
-                else if (($colorIndices['red'] >= 128) and ($colorIndices['green'] == 128) && ($colorIndices['blue'] == 128))
+                else if (($colorIndices['red'] >= 128) && ($colorIndices['green'] == 128) && ($colorIndices['blue'] == 128))
                 {
                     $color = imagecolorallocate($image, $colorIndices['red'] + $step, $colorIndices['green'] - $step, $colorIndices['blue'] - $step);
                 }

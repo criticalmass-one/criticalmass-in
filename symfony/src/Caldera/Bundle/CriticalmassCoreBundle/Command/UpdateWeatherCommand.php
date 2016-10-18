@@ -61,7 +61,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
              */
             $currentWeather = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Weather')->findCurrentWeatherForRide($ride);
 
-            if (!$currentWeather or $currentWeather->getCreationDateTime() < $halfDateTime) {
+            if (!$currentWeather || $currentWeather->getCreationDateTime() < $halfDateTime) {
                 $this->retrieveWeather($ride);
 
                 $output->writeln('Ride: '.$ride->getFancyTitle().' ('.$ride->getDateTime()->format('Y-m-d H:i:s').'): gespeichert');

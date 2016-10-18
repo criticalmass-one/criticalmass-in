@@ -100,7 +100,7 @@ class Tile {
             $x = (float) $this->size / ($this->getRightLongitude() - $this->getLeftLongitude()) * ($longitude - $this->getLeftLongitude());
             $y = (float) $this->size / ($this->getBottomLatitude() - $this->getTopLatitude()) * ($latitude - $this->getTopLatitude());
 
-            if (($x >= 0) and ($x < $this->size) and ($y >= 0) and ($y < $this->size))
+            if (($x >= 0) && ($x < $this->size) && ($y >= 0) && ($y < $this->size))
             {
                 $this->addPixel(new Pixel(floor($x), floor($y)));
             }

@@ -86,7 +86,7 @@ class PhotoUploadController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
         }
 
-        if ($ride and $track) {
+        if ($ride && $track) {
             /**
              * @var PhotoGps $pgps
              */

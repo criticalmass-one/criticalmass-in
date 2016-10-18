@@ -36,7 +36,7 @@ class TracksTransformCommand extends ContainerAwareCommand
 
             $array = json_decode($track->getLatLngList());
 
-            if (is_array($array) and count($array) > 0) {
+            if (is_array($array) && count($array) > 0) {
                 $polyline = \Polyline::Encode($array);
 
                 $track->setPolyline($polyline);

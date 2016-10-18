@@ -73,7 +73,7 @@ class DefaultController extends AbstractController
         /** @var Track $track */
         $track = null;
 
-        if ($ride and $photo->getUser()) {
+        if ($ride && $photo->getUser()) {
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 

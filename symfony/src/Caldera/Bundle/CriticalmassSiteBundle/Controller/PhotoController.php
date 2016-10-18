@@ -49,7 +49,7 @@ class PhotoController extends AbstractController
 
         $this->countPhotoView($photo);
 
-        if ($ride and $photo->getUser()) {
+        if ($ride && $photo->getUser()) {
             /** @var Track $track */
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }

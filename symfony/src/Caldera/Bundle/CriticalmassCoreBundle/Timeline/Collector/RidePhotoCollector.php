@@ -24,7 +24,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
             $rideKey = $photoEntity->getRide()->getId();
             $photoKey = $photoEntity->getId();
 
-            if (!array_key_exists($userKey, $groupedEntities) or !is_array($groupedEntities[$userKey])) {
+            if (!array_key_exists($userKey, $groupedEntities) || !is_array($groupedEntities[$userKey])) {
                 $groupedEntities[$userKey] = [];
             }
 
