@@ -3,6 +3,3 @@
 parameters:
 #    parameter_name: value
 services:
-    app.router:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Router\Router
-        arguments: [ '@router.default' ]
