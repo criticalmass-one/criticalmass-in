@@ -79,9 +79,9 @@ class ApiCallsCommand extends ContainerAwareCommand
                 $this->manager->merge($app);
 
                 $this->memcache->delete('api_app'.$app->getId().'_calls');
-
-                $this->manager->flush();
             }
         }
+
+        $this->manager->flush();
     }
 }

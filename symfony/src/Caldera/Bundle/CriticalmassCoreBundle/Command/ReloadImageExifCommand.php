@@ -59,7 +59,8 @@ class ReloadImageExifCommand extends ContainerAwareCommand
             $photo->setDateTime($dateTime);
 
             $this->manager->merge($photo);
-            $this->manager->flush();
         }
+
+        $this->manager->flush();
     }
 }

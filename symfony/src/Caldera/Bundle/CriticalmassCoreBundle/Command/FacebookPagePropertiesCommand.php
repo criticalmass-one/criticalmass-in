@@ -53,13 +53,14 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
 
                 if ($properties) {
                     $this->manager->persist($properties);
-                    $this->manager->flush();
 
                     $output->writeln('Saved properties');
                     $output->writeln('');
                 }
             }
         }
+
+        $this->manager->flush();
     }
 
     protected function getPageId(City $city)

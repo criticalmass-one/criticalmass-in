@@ -36,10 +36,10 @@ class DefaultController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($weather);
-            $em->flush();
         }
 
-
+        $em->flush();
+        
         return new Response();
     }
 }
