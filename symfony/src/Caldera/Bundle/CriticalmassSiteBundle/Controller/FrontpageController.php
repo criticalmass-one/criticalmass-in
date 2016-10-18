@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,6 +45,7 @@ class FrontpageController extends AbstractController
 
         $rideList = [];
 
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $rideDate = $ride->getFormattedDate();
             $citySlug = $ride->getCity()->getSlug();
