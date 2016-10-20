@@ -39,7 +39,10 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
         $unreadMails = $this->catchUnreadMails();
 
         foreach ($unreadMails as $unreadMail) {
-            $this->grepInvitationCode($unreadMail);
+            $invitationCode = $this->grepInvitationCode($unreadMail);
+            $citySlug = $this->grepCitySlug($unreadMail);
+
+            $this->output->writeln(sprintf('Found invitation code <comment>%s</comment> for <info>%s</info>', $invitationCode, $citySlug));
         }
     }
 
@@ -78,5 +81,20 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
         }
 
         return $invitationCode;
+    }
+
+    protected function grepCitySlug(IncomingMail $mail)
+    {
+        $toString = $mail->toString;
+
+        preg_match('/([a-z0-9\-]{3,})\@criticalmass\.in/i', $toString, $matches);
+
+        $citySlug = null;
+
+        if ($matches && is_array($matches) && count($matches) == 2) {
+            $citySlug = $matches[1];
+        }
+
+        return $citySlug;
     }
 }
