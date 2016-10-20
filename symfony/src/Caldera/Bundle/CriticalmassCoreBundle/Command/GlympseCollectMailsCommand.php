@@ -69,7 +69,7 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
     {
         $plainBody = $mail->textPlain;
 
-        preg_match('/([0-9A-Z]{4,4})\-([0-9A-Z]{4,4})/', $plainBody, $matches);
+        preg_match('/([0-9A-Z]{2,4})\-([0-9A-Z]{2,4})/', $plainBody, $matches);
 
         $invitationCode = null;
 
