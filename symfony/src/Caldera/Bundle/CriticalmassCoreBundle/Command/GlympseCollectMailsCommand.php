@@ -16,6 +16,12 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
     /** @var Mailbox $mailbox */
     protected $mailbox;
 
+    /** @var InputInterface $input */
+    protected $input;
+
+    /** @var OutputInterface $output */
+    protected $output;
+
     protected function configure()
     {
         $this
@@ -25,6 +31,9 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->input = $input;
+        $this->output = $output;
+
         $this->connectMailbox();
 
         $unreadMails = $this->catchUnreadMails();
