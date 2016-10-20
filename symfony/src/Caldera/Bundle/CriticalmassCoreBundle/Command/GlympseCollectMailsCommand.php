@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,7 +29,9 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
 
         $unreadMails = $this->catchUnreadMails();
 
-        var_dump($unreadMails);
+        foreach ($unreadMails as $unreadMail) {
+            $this->grepInvitationCode($unreadMail);
+        }
     }
 
     protected function connectMailbox()
@@ -47,9 +50,24 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
         $unreadMails = [];
 
         foreach ($unreadMailIds as $unreadMailId) {
-            $unreadMails[$unreadMailId] = $this->mailbox->getMail($unreadMailId);
+            $invitationCode = $unreadMails[$unreadMailId] = $this->mailbox->getMail($unreadMailId);
         }
 
         return $unreadMails;
+    }
+
+    protected function grepInvitationCode(IncomingMail $mail)
+    {
+        $plainBody = $mail->textPlain;
+
+        preg_match('/([0-9A-Z]{4,4})\-([0-9A-Z]{4,4})/', $plainBody, $matches);
+
+        $invitationCode = null;
+
+        if ($matches && is_array($matches) && count($matches) == 3) {
+            $invitationCode = $matches[0];
+        }
+
+        return $invitationCode;
     }
 }
