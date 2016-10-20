@@ -2,7 +2,11 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
+use Caldera\Bundle\CalderaBundle\Entity\Ticket;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Doctrine\ORM\EntityManager;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -42,7 +46,12 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
             $invitationCode = $this->grepInvitationCode($unreadMail);
             $citySlug = $this->grepCitySlug($unreadMail);
 
-            $this->output->writeln(sprintf('Found invitation code <comment>%s</comment> for <info>%s</info>', $invitationCode, $citySlug));
+            if ($invitationCode && $citySlug) {
+                $this->output->writeln(sprintf('Found invitation code <comment>%s</comment> for <info>%s</info>', $invitationCode, $citySlug));
+                $this->saveInvitation($citySlug, $invitationCode);
+            } else {
+                $this->output->writeln(sprintf('Could not grep city slug and invitation code from mail <info>%d</info>', $unreadMail->id));
+            }
         }
     }
 
@@ -96,5 +105,36 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
         }
 
         return $citySlug;
+    }
+
+    protected function saveInvitation(string $citySlug, string $invitationCode)
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->getContainer()->get('doctrine')->getManager();
+
+        /** @var CitySlug $citySlug */
+        $citySlug = $manager->getRepository('CalderaBundle:CitySlug')->findOneBySlug($citySlug);
+
+        if (!$citySlug) {
+            return;
+        }
+
+        /** @var City $city */
+        $city = $citySlug->getCity();
+
+        if (!$city) {
+            return;
+        }
+
+        $ticket = new Ticket();
+
+        $ticket
+            ->setCity($city)
+            ->setColorBlue(rand(0, 255))
+            ->setColorRed(rand(0, 255))
+            ->setColorGreen(rand(0, 255))
+            ->setInviteId($invitationCode);
+
+        // more to come
     }
 }
