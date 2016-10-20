@@ -25,6 +25,10 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->connectMailbox();
+
+        $unreadMails = $this->catchUnreadMails();
+
+        var_dump($unreadMails);
     }
 
     protected function connectMailbox()
@@ -35,5 +39,17 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
         $password = $this->getContainer()->getParameter('glympse.imap.password');
 
         $this->mailbox = new Mailbox('{'.$host.':'.$port.'/novalidate-cert/imap/ssl}INBOX', $username, $password);
+    }
+
+    protected function catchUnreadMails()
+    {
+        $unreadMailIds = $this->mailbox->searchMailbox('TO "hamburg@criticalmass.in"');
+        $unreadMails = [];
+
+        foreach ($unreadMailIds as $unreadMailId) {
+            $unreadMails[$unreadMailId] = $this->mailbox->getMail($unreadMailId);
+        }
+
+        return $unreadMails;
     }
 }
