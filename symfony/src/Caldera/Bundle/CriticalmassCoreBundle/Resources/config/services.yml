@@ -14,14 +14,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    caldera_criticalmass.twig.image_extension:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\ImageTwigExtension
-        arguments:
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '%kernel.root_dir%'
-        tags:
-            - { name: twig.extension }
-
     caldera_criticalmass.twig.router_extension:
         class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\RouterTwigExtension
         arguments:
