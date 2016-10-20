@@ -59,7 +59,7 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
         $unreadMails = [];
 
         foreach ($unreadMailIds as $unreadMailId) {
-            $invitationCode = $unreadMails[$unreadMailId] = $this->mailbox->getMail($unreadMailId);
+            $unreadMails[$unreadMailId] = $this->mailbox->getMail($unreadMailId);
         }
 
         return $unreadMails;
