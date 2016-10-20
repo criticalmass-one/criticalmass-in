@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9934abfaf9ea80db2578619fef9b8ee",
+    "content-hash": "b76a9beeb19c72bd009e465208a8565c",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -1105,16 +1105,16 @@
         },
         {
             "name": "facebook/php-sdk-v4",
-            "version": "5.4.0",
+            "version": "5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-graph-sdk.git",
-                "reference": "c69c3c0bb304ec1fe9400b4bc47ab641c9002eee"
+                "reference": "a5a6b6cc493d8dc417f588c7c0bdfc6396198350"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/c69c3c0bb304ec1fe9400b4bc47ab641c9002eee",
-                "reference": "c69c3c0bb304ec1fe9400b4bc47ab641c9002eee",
+                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/a5a6b6cc493d8dc417f588c7c0bdfc6396198350",
+                "reference": "a5a6b6cc493d8dc417f588c7c0bdfc6396198350",
                 "shasum": ""
             },
             "require": {
@@ -1159,7 +1159,7 @@
                 "sdk"
             ],
             "abandoned": "facebook/graph-sdk",
-            "time": "2016-10-12 18:53:27"
+            "time": "2016-10-18 19:19:03"
         },
         {
             "name": "friendsofsymfony/elastica-bundle",
@@ -1399,16 +1399,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "4393a98891a03fb7628c546aee4e5ced699c83de"
+                "reference": "47df1eba2fadacb150b3c1cf35ff5866341a9d34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4393a98891a03fb7628c546aee4e5ced699c83de",
-                "reference": "4393a98891a03fb7628c546aee4e5ced699c83de",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/47df1eba2fadacb150b3c1cf35ff5866341a9d34",
+                "reference": "47df1eba2fadacb150b3c1cf35ff5866341a9d34",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.9 || ^7.0",
+                "php": "^5.5.9 || ^7.0",
                 "symfony/form": "^2.7 || ^3.0",
                 "symfony/framework-bundle": "^2.7 || ^3.0",
                 "symfony/security-bundle": "^2.7 || ^3.0",
@@ -1468,7 +1468,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-10-17 07:51:36"
+            "time": "2016-10-20 08:27:57"
         },
         {
             "name": "guzzle/guzzle",
@@ -2815,6 +2815,49 @@
                 "random"
             ],
             "time": "2016-10-17 15:23:22"
+        },
+        {
+            "name": "php-imap/php-imap",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barbushin/php-imap.git",
+                "reference": "cc1a49a3f68090db182183c59ffbc09055d59f5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barbushin/php-imap/zipball/cc1a49a3f68090db182183c59ffbc09055d59f5b",
+                "reference": "cc1a49a3f68090db182183c59ffbc09055d59f5b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PhpImap": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Barbushin",
+                    "email": "barbushin@gmail.com",
+                    "homepage": "http://linkedin.com/in/barbushin"
+                }
+            ],
+            "description": "PHP class to access mailbox by POP3/IMAP/NNTP using IMAP extension",
+            "homepage": "https://github.com/barbushin/php-imap",
+            "keywords": [
+                "imap",
+                "mail",
+                "php"
+            ],
+            "time": "2015-09-16 07:40:39"
         },
         {
             "name": "phpcollection/phpcollection",

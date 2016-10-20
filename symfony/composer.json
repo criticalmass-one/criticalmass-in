@@ -38,7 +38,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/rest-bundle": "2.0.0",
-        "hwi/oauth-bundle": "0.5.*"
+        "hwi/oauth-bundle": "0.5.*",
+        "php-imap/php-imap": "2.0.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
