@@ -2,7 +2,7 @@
 
 This repository contains the main application for criticalmass.in
 
-It relays on Symfony 2.8 and a bit of JavaScript.
+It relays on Symfony 3 and a bit of JavaScript.
 
 ## Installation
 
