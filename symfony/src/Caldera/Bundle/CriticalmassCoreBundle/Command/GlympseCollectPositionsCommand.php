@@ -46,12 +46,12 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
         $this->output = $output;
         $this->manager = $this->getContainer()->get('doctrine')->getManager();
 
-        $this->connectToGlympse();
+        $this->accessToken = $this->getAccessToken();
 
         $this->manager->flush();
     }
 
-    protected function connectToGlympse()
+    protected function getAccessToken()
     {
         $hostname = $this->getContainer()->getParameter('glympse.api.hostname');
         $key = $this->getContainer()->getParameter('glympse.api.key');
@@ -67,6 +67,6 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
             'password' => $password
         ]);
 
-        $this->accessToken = $curl->response['response']['access_token'];
+        return $curl->response['response']['access_token'];
     }
 }
