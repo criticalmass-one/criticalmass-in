@@ -48,6 +48,15 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
 
         $this->accessToken = $this->getAccessToken();
 
+        $tickets = $this->getTicketsToQuery();
+
+        /** @var Ticket $ticket */
+        foreach ($tickets as $ticket) {
+            $this->output->writeln(sprintf('Query ticket <info>#%d</info>', $ticket->getId()));
+
+            $this->saveNewPositions($ticket);
+        }
+        
         $this->manager->flush();
     }
 
@@ -67,6 +76,40 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
             'password' => $password
         ]);
 
-        return $curl->response['response']['access_token'];
+        return $curl->response->response->access_token;
+    }
+
+    protected function getTicketsToQuery()
+    {
+        return $this->manager->getRepository('CalderaBundle:Ticket')->findBy(
+            ['queried' => false]
+        );
+    }
+
+    protected function saveNewPositions(Ticket $ticket)
+    {
+        var_dump($this->queryTicket($ticket));
+    }
+
+    protected function queryTicket(Ticket $ticket)
+    {
+        $hostname = $this->getContainer()->getParameter('glympse.api.hostname');
+
+        $invitesUrl = $hostname . '/v2/invites/' . $ticket->getInviteId();
+
+        $curl = new Curl();
+        $curl->get($invitesUrl, [
+            'oauth_token' => $this->accessToken,
+            'properties' => true,
+            'next' => $ticket->getCounter()
+        ]);
+
+        if ($curl->response) {
+            var_dump($curl->response);
+
+            return $curl->response->response->properties;
+        }
+
+        return null;
     }
 }
