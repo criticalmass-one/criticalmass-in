@@ -135,6 +135,7 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
             ->setColorGreen(rand(0, 255))
             ->setInviteId($invitationCode);
 
-        // more to come
+        $manager->persist($ticket);
+        $manager->flush();
     }
 }
