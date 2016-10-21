@@ -6,6 +6,7 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Ticket;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Curl\Curl;
 use Doctrine\ORM\EntityManager;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
@@ -29,6 +30,9 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
     /** @var EntityManager $manager */
     protected $manager;
 
+    /** @var string $accessToken */
+    protected $accessToken;
+
     protected function configure()
     {
         $this
@@ -42,6 +46,27 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
         $this->output = $output;
         $this->manager = $this->getContainer()->get('doctrine')->getManager();
 
+        $this->connectToGlympse();
+
         $this->manager->flush();
+    }
+
+    protected function connectToGlympse()
+    {
+        $hostname = $this->getContainer()->getParameter('glympse.api.hostname');
+        $key = $this->getContainer()->getParameter('glympse.api.key');
+        $username = $this->getContainer()->getParameter('glympse.api.username');
+        $password = $this->getContainer()->getParameter('glympse.api.password');
+
+        $loginUrl = $hostname . '/account/login';
+
+        $curl = new Curl();
+        $curl->get($loginUrl, [
+            'api_key' => $key,
+            'id' => $username,
+            'password' => $password
+        ]);
+
+        $this->accessToken = $curl->response['response']['access_token'];
     }
 }
