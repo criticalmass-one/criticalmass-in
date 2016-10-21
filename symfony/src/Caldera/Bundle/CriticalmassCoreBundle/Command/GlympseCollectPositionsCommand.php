@@ -5,6 +5,10 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Ticket;
+use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseApiBrokenException;
+use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseApiErrorException;
+use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseException;
+use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseInviteUnknownException;
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Curl\Curl;
 use Doctrine\ORM\EntityManager;
@@ -54,7 +58,11 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
         foreach ($tickets as $ticket) {
             $this->output->writeln(sprintf('Query ticket <info>#%d</info>', $ticket->getId()));
 
-            $this->saveNewPositions($ticket);
+            try {
+                $this->saveNewPositions($ticket);
+            } catch (GlympseException $exception) {
+                $this->output->writeln($exception->getMessage());
+            }
         }
         
         $this->manager->flush();
@@ -70,13 +78,35 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
         $loginUrl = $hostname . '/account/login';
 
         $curl = new Curl();
-        $curl->get($loginUrl, [
-            'api_key' => $key,
-            'id' => $username,
-            'password' => $password
-        ]);
 
-        return $curl->response->response->access_token;
+        try {
+            $curl->get($loginUrl, [
+                'api_key' => $key,
+                'id' => $username,
+                'password' => $password
+            ]);
+        } catch (\Exception $exception) {
+            throw new GlympseApiBrokenException($curl->errorMessage);
+        }
+
+        $response = $curl->response;
+
+        if (!$response || isset($response->error)) {
+            throw new GlympseApiBrokenException($curl->errorMessage);
+        }
+
+        if ($response->result == 'failure') {
+            throw new GlympseApiErrorException($response->meta->error_detail);
+        }
+
+        $accessToken = null;
+
+        if ($curl->response->response->access_token) {
+            $accessToken = $curl->response->response->access_token;
+        }
+
+        return $accessToken;
+
     }
 
     protected function getTicketsToQuery()
@@ -98,18 +128,29 @@ class GlympseCollectPositionsCommand extends ContainerAwareCommand
         $invitesUrl = $hostname . '/v2/invites/' . $ticket->getInviteId();
 
         $curl = new Curl();
-        $curl->get($invitesUrl, [
-            'oauth_token' => $this->accessToken,
-            'properties' => true,
-            'next' => $ticket->getCounter()
-        ]);
 
-        if ($curl->response) {
-            var_dump($curl->response);
-
-            return $curl->response->response->properties;
+        try {
+            $curl->get($invitesUrl, [
+                'oauth_token' => $this->accessToken,
+                'properties' => true,
+                'next' => $ticket->getCounter()
+            ]);
+        } catch (\Exception $exception) {
+            throw new GlympseApiBrokenException($curl->errorMessage);
         }
 
-        return null;
+        $response = $curl->response;
+
+        if (!$response || isset($response->error)) {
+            throw new GlympseApiBrokenException($curl->errorMessage);
+        }
+
+        if ($response->result == 'failure' && $response->meta->error == 'invite_code') {
+            throw new GlympseInviteUnknownException($response->meta->error_detail);
+        } elseif ($response->result == 'failure') {
+            throw new GlympseApiErrorException($response->meta->error_detail);
+        }
+
+        return $curl->response->response->properties;
     }
 }
