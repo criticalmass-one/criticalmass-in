@@ -404,11 +404,6 @@ class Ticket
         return $this;
     }
 
-    public function belongsToRide(Ride $ride)
-    {
-        return $this->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d');
-    }
-
     /**
      * Get creationDateTime
      *
