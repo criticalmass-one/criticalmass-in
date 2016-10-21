@@ -22,7 +22,7 @@ class TicketRepository extends EntityRepository
             )
         ));
         
-        $builder->orderBy('ticket.creationDateTime', )
+        $builder->orderBy('ticket.creationDateTime', 'ASC');
     }
 
     public function findForTimelineLocationSharingCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
