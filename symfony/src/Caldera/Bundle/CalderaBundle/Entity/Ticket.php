@@ -94,6 +94,11 @@ class Ticket
      */
     protected $exported = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $queried = false;
+
     public function __construct()
     {
         $this->creationDateTime = new \DateTime();
@@ -435,6 +440,18 @@ class Ticket
     public function setExported($exported)
     {
         $this->exported = $exported;
+
+        return $this;
+    }
+
+    public function getQueried(): bool
+    {
+        return $this->queried;
+    }
+
+    public function setQueried(bool $queried)
+    {
+        $this->queried = $queried;
 
         return $this;
     }
