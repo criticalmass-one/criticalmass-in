@@ -26,6 +26,9 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
     /** @var OutputInterface $output */
     protected $output;
 
+    /** @var EntityManager $manager */
+    protected $manager;
+
     protected function configure()
     {
         $this
@@ -37,6 +40,7 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
     {
         $this->input = $input;
         $this->output = $output;
+        $this->manager = $this->getContainer()->get('doctrine')->getManager();
 
         $this->connectMailbox();
 
@@ -53,6 +57,8 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
                 $this->output->writeln(sprintf('Could not grep city slug and invitation code from mail <info>%d</info>', $unreadMail->id));
             }
         }
+
+        $this->manager->flush();
     }
 
     protected function connectMailbox()
@@ -109,11 +115,8 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
 
     protected function saveInvitation(string $citySlug, string $invitationCode)
     {
-        /** @var EntityManager $manager */
-        $manager = $this->getContainer()->get('doctrine')->getManager();
-
         /** @var CitySlug $citySlug */
-        $citySlug = $manager->getRepository('CalderaBundle:CitySlug')->findOneBySlug($citySlug);
+        $citySlug = $this->manager->getRepository('CalderaBundle:CitySlug')->findOneBySlug($citySlug);
 
         if (!$citySlug) {
             return;
@@ -135,7 +138,6 @@ class GlympseCollectMailsCommand extends ContainerAwareCommand
             ->setColorGreen(rand(0, 255))
             ->setInviteId($invitationCode);
 
-        $manager->persist($ticket);
-        $manager->flush();
+        $this->manager->persist($ticket);
     }
 }
