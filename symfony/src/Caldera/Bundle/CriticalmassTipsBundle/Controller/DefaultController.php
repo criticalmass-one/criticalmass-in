@@ -13,7 +13,7 @@ class DefaultController extends AbstractController
         /** @var ContentManager $contentManager */
         $contentManager = $this->get('caldera.manager.content_manager');
 
-        $content = $contentManager->getBySlug('tips-fuer-die-teilnahme-in-hamburg');
+        $content = $contentManager->getBySlug('tipps-fuer-die-teilnahme-in-hamburg');
         
         return $this->render('CalderaCriticalmassTipsBundle:Default:index.html.twig');
     }
