@@ -88,3 +88,8 @@ caldera_criticalmasslive:
     host: "%domain.criticalmasslive%"
     prefix:   /
 
+caldera_criticalmasstips:
+    resource: "@CalderaCriticalmassTipsBundle/Resources/config/routing.yml"
+    host: "%domain.criticalmasstips%"
+    prefix:   /
+
