@@ -15,6 +15,11 @@ class DefaultController extends AbstractController
 
         $content = $contentManager->getBySlug('tipps-fuer-die-teilnahme-in-hamburg');
         
-        return $this->render('CalderaCriticalmassTipsBundle:Default:index.html.twig');
+        return $this->render(
+            'CalderaCriticalmassTipsBundle:Default:index.html.twig',
+            [
+                'content' => $content
+            ]
+        );
     }
 }
