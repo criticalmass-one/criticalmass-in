@@ -22,3 +22,7 @@ services:
     caldera.user_provider:
         class: Caldera\Bundle\CalderaBundle\UserProvider\FOSUBUserProvider
         arguments: ["@fos_user.user_manager", {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
+
+    caldera.manager.content_manager:
+        class: Caldera\Bundle\CalderaBundle\Manager\ContentManager\ContentManager
+        arguments: ['@doctrine']
