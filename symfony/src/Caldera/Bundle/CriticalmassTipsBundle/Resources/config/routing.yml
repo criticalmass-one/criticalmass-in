@@ -1,0 +1,3 @@
+caldera_criticalmass_tips_homepage:
+    path:     /hamburg
+    defaults: { _controller: CalderaCriticalmassTipsBundle:Default:index }
