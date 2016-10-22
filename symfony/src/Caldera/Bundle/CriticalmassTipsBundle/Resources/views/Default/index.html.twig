@@ -3,5 +3,11 @@
 {% block title %}Fotos von Critical-Mass-Radfahrten{% endblock %}
 
 {% block content %}
-    {{ content.text|parse }}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                {{ content.text|parse }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
