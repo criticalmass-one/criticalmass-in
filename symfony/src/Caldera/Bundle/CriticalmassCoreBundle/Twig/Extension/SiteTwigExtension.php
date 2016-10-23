@@ -80,7 +80,7 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function gravatarUrl(User $user = null, $size = 64)
     {
-        return 'http://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
+        return 'https://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
     }
 
     public function daysSince($dateTimeString)
