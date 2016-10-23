@@ -26,3 +26,6 @@ services:
     caldera.manager.content_manager:
         class: Caldera\Bundle\CalderaBundle\Manager\ContentManager\ContentManager
         arguments: ['@doctrine']
+
+    caldera.html_metadata:
+        class: Caldera\Bundle\CalderaBundle\HtmlMeta\Metadata
