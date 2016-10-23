@@ -3,7 +3,9 @@ services:
         class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\SiteTwigExtension
         arguments:
             - '@translator'
-            - '@service_container'
+            - '@caldera.parser.multistep'
+            - '@caldera.html_metadata'
+            - '@router'
         tags:
             - { name: twig.extension }
 
