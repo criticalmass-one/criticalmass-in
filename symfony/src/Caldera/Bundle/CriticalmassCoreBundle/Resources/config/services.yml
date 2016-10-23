@@ -6,8 +6,6 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.request, method: setLocale }
 
-
-
     caldera.criticalmass.routing.object_router:
         class: Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter
         arguments:

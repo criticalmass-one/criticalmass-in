@@ -28,4 +28,4 @@ services:
         arguments: ['@doctrine']
 
     caldera.html_metadata:
-        class: Caldera\Bundle\CalderaBundle\HtmlMeta\Metadata
+        class: Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata
