@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Metadata;
+namespace Caldera\Bundle\CalderaBundle\HtmlMetadata;
 
 class Metadata
 {
