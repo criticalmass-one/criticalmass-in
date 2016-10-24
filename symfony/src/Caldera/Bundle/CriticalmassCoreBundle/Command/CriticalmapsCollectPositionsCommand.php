@@ -46,7 +46,33 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
         $this->input = $input;
         $this->output = $output;
         $this->manager = $this->getContainer()->get('doctrine')->getManager();
-        
+
+        $locations = $this->fetchLocations();
+
+        $this->savePositions($locations);
+
         $this->manager->flush();
+    }
+
+    protected function fetchLocations()
+    {
+        $curl = new Curl();
+        $curl->get('http://api.criticalmaps.net/get');
+
+        $result = json_decode($curl->response);
+
+        $locations = $result->locations;
+
+        return $locations;
+    }
+
+    protected function savePositions(array $locations)
+    {
+
+    }
+
+    protected function convertLocationToPosition()
+    {
+        
     }
 }
