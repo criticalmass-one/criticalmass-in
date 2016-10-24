@@ -73,7 +73,9 @@ class CriticalmapsUser
     public function __construct()
     {
         $this->creationDateTime = new \DateTime();
-
+        $this->startDateTime = new \DateTime();
+        $this->endDateTime = new \DateTime();
+        
         $this->colorRed = rand(0, 255);
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
