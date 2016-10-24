@@ -14,6 +14,7 @@ use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseInviteUnknown
 use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Curl\Curl;
 use Doctrine\ORM\EntityManager;
+use Elastica\Filter\BoolAnd;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -73,9 +74,15 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
         foreach ($locations as $location) {
             $position = $this->convertLocationToPosition($location);
 
+            $this->output->writeln(sprintf('Position [<info>%f</info>, <info>%f</info>] saved', $position->getLatitude(), $position->getLongitude()));
+
             $ride = $this->findRideForPosition($position);
 
-            echo $ride->getCity()->getCity();
+            if ($ride) {
+                echo $ride->getCity()->getCity();
+            } else {
+                echo "NÖ";
+            }
         }
     }
 
@@ -96,7 +103,7 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
         return $position;
     }
 
-    public function findRideForPosition(Position $position): Ride
+    protected function findRideForPosition(Position $position)
     {
         $finder = $this->getContainer()->get('fos_elastica.finder.criticalmass.ride');
 
@@ -109,7 +116,11 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
             '30km'
         );
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
+        $dateTimeFilter = new \Elastica\Filter\Term(['simpleDate' => '2016-06-24']);
+
+        $filter = new \Elastica\Filter\BoolAnd([$geoFilter, $dateTimeFilter]);
+
+        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
 
         $query = new \Elastica\Query($filteredQuery);
 
@@ -129,6 +140,7 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
             ]
         );
 
+        echo json_encode($query->toArray());
         $results = $finder->find($query);
 
         return array_pop($results);
