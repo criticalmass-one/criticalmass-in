@@ -2,150 +2,92 @@
 
 namespace Caldera\Bundle\CalderaBundle\HtmlMetadata;
 
+use Caldera\Bundle\CalderaBundle\HtmlMetadata\Html\Tag;
+
 class Metadata
 {
-    /**
-     * @var String $author
-     */
-    protected $author = null;
-
-    /**
-     * @var \DateTime $date
-     */
-    protected $date = null;
-
-    /**
-     * @var String $description
-     */
-    protected $description = null;
-
-    /**
-     * @var String $title
-     */
-    protected $title = null;
-
-    /**
-     * @var String $keywords
-     */
-    protected $keywords = null;
-
-    /**
-     * @return String
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
+    /** @var array $tags */
+    protected $tags = [];
 
     /**
      * @param String $author
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author): Metadata
     {
-        $this->author = $author;
+        $tag = new Tag('meta');
+        $tag
+            ->addAttribute('name', 'author')
+            ->addAttribute('content', $author);
+
+        array_push($this->tags, $tag);
 
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @param \DateTime $dateTime
      */
-    public function getDate()
+    public function setDate(\DateTime $dateTime): Metadata
     {
-        return $this->date;
-    }
+        $tag = new Tag('meta');
+        $tag
+            ->addAttribute('name', 'date')
+            ->addAttribute('content', $dateTime->format('Y-m-d H:i:s'));
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate(\DateTime $date)
-    {
-        $this->date = $date;
+        array_push($this->tags, $tag);
 
         return $this;
-    }
-
-    /**
-     * @return String
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
      * @param String $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): Metadata
     {
-        $this->description = $description;
+        $tag = new Tag('meta');
+        $tag
+            ->addAttribute('name', 'description')
+            ->addAttribute('content', $description);
+
+        array_push($this->tags, $tag);
 
         return $this;
-    }
-
-    /**
-     * @return String
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
      * @param String $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Metadata
     {
-        $this->title = $title;
+        $tag = new Tag('title');
+        $tag->setContent($title);
+
+        array_push($this->tags, $tag);
 
         return $this;
-    }
-
-    /**
-     * @return String
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
     }
 
     /**
      * @param String $keywords
      */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords): Metadata
     {
-        $this->keywords = $keywords;
+        $tag = new Tag('meta');
+        $tag
+            ->addAttribute('name', 'keywords')
+            ->addAttribute('content', $keywords);
+
+        array_push($this->tags, $tag);
 
         return $this;
     }
 
-    public function getAllMetaData()
+    public function getAllMetaData(): string
     {
         $metaString = '';
 
-        if ($this->author) {
-            $metaString .= '<meta name="author" content="' . $this->author . '" />';
-            $metaString .= "\n";
-        }
-
-        if ($this->date) {
-            $metaString .= '<meta name="date" content="' . $this->date->format('Y-m-d H:i:s') . '" />';
-            $metaString .= "\n";
-        }
-
-        if ($this->title) {
-            $metaString .= '<title>' . $this->title . '</title>';
-            $metaString .= "\n";
-        }
-
-        if ($this->keywords) {
-            $metaString .= '<meta name="keywords" content="' . $this->keywords . '" />';
-            $metaString .= "\n";
-        }
-
-        if ($this->description) {
-            $metaString .= '<meta name="description" content="' . $this->description . '" />';
-            $metaString .= "\n";
+        foreach ($this->tags as $tag) {
+            $metaString .= $tag;
         }
 
         return $metaString;
