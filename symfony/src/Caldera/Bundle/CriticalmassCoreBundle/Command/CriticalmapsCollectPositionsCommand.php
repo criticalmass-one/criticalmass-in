@@ -2,21 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Position;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseApiBrokenException;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseApiErrorException;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseException;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseInviteUnknownException;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
 use Curl\Curl;
 use Doctrine\ORM\EntityManager;
-use Elastica\Filter\BoolAnd;
-use PhpImap\IncomingMail;
-use PhpImap\Mailbox;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -71,12 +59,13 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
 
     protected function savePositions($locations)
     {
-        foreach ($locations as $location) {
+        foreach ($locations as $identifier => $location) {
             $position = $this->convertLocationToPosition($location);
 
             $this->output->writeln(sprintf('Position [<info>%f</info>, <info>%f</info>] saved', $position->getLatitude(), $position->getLongitude()));
 
             $ride = $this->findRideForPosition($position);
+            $criticalmapsUser = $this->findCriticalmapsUserForIdentifier($identifier);
 
             if ($ride) {
                 echo $ride->getCity()->getCity();
@@ -140,9 +129,14 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
             ]
         );
 
-        echo json_encode($query->toArray());
         $results = $finder->find($query);
 
+        echo count($results);
         return array_pop($results);
+    }
+
+    protected function findCriticalmapsUserForIdentifier(string $identifier)
+    {
+
     }
 }
