@@ -73,42 +73,42 @@ class Position
     /**
      * Vom Smartphone berechnete Genauigkeit dieser Positionsangabe.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $accuracy;
 
     /**
      * Hoehe der Positon.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $altitude;
 
     /**
      * Vom Smartphone berechnete Genauigkeit der Hoehenangabe.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $altitudeAccuracy;
 
     /**
      * Wert des eventuell eingebauten Kompasses.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $heading;
 
     /**
      * Momentane Geschwindigkeit des Geraetes.
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $speed;
 
     /**
      * Zeitpunkt, zu dem die obigen Angaben vom Smartphone ermittelt wurden.
      *
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint", nullable=true)
      */
     protected $timestamp;
 
