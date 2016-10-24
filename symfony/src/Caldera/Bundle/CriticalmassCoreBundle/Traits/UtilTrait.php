@@ -5,7 +5,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Traits;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata;
+use Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata;
 use Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -37,7 +37,7 @@ trait UtilTrait
      */
     protected function getMetadata(): Metadata
     {
-        return $this->get('caldera.criticalmass.metadata');
+        return $this->get('caldera.html_metadata');
     }
 
     protected function getCheckedCity($citySlug): City

@@ -3,20 +3,36 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\Parser\ParserInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata;
+use Caldera\Bundle\CalderaBundle\Parser\ParserInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class SiteTwigExtension extends \Twig_Extension
 {
-    private $translator;
+    /** @var TranslatorInterface $translator */
+    protected $translator;
 
-    private $container;
+    /** @var ParserInterface $parser */
+    protected $parser;
 
-    public function __construct(TranslatorInterface $translator, ContainerInterface $container)
+    /** @var Metadata $metadata */
+    protected $metadata;
+
+    /** @var RouterInterface $router */
+    protected $router;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        ParserInterface $parser,
+        Metadata $metadata,
+        RouterInterface $router
+    )
     {
         $this->translator = $translator;
-        $this->container = $container;
+        $this->parser = $parser;
+        $this->metadata = $metadata;
+        $this->router = $router;
     }
 
     public function getFilters()
@@ -80,7 +96,7 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function gravatarUrl(User $user = null, $size = 64)
     {
-        return 'http://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
+        return 'https://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
     }
 
     public function daysSince($dateTimeString)
@@ -109,7 +125,7 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function getMetadataService()
     {
-        return $this->container->get('caldera.criticalmass.metadata');
+        return $this->metadata;
     }
 
     public function twitterUsername($twitterUrl)
@@ -156,7 +172,7 @@ class SiteTwigExtension extends \Twig_Extension
 
             $citySlug = substr($lcHashtag, 1, strlen($hashtag) - 1);
 
-            $path = $this->container->get('router')->generate('caldera_criticalmass_desktop_city_show', ['citySlug' => $citySlug]);
+            $path = $this->router->generate('caldera_criticalmass_desktop_city_show', ['citySlug' => $citySlug]);
 
             $link = '<a href="' . $path . '">' . $hashtag . '</a>';
 
@@ -168,10 +184,7 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function parse(string $text): string
     {
-        /** @var ParserInterface $parser */
-        $parser = $this->container->get('caldera.parser.multistep');
-
-        return $parser->parse($text);
+        return $this->parser->parse($text);
     }
 
     public function getName()

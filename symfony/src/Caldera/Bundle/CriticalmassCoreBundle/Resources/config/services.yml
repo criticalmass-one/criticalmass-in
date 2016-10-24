@@ -6,21 +6,6 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.request, method: setLocale }
 
-    caldera_criticalmass.twig.extension:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\SiteTwigExtension
-        arguments:
-            - '@translator'
-            - '@service_container'
-        tags:
-            - { name: twig.extension }
-
-    caldera_criticalmass.twig.router_extension:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension\RouterTwigExtension
-        arguments:
-            - '@caldera.criticalmass.routing.object_router'
-        tags:
-            - { name: twig.extension }
-
     caldera.criticalmass.routing.object_router:
         class: Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter
         arguments:
@@ -117,9 +102,6 @@ services:
     fos_user.doctrine_registry:
         alias: doctrine
 
-    caldera.criticalmass.metadata:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Metadata\Metadata
-
     caldera.criticalmass.facebookapi.eventride:
         class: Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi
         arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
@@ -139,3 +121,4 @@ services:
 imports:
   - { resource: ./services/timeline.yml }
   - { resource: ./services/notification.yml }
+  - { resource: ./services/twig_extensions.yml }
