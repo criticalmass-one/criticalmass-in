@@ -70,6 +70,15 @@ class CriticalmapsUser
      */
     protected $exported = false;
 
+    public function __construct()
+    {
+        $this->creationDateTime = new \DateTime();
+
+        $this->colorRed = rand(0, 255);
+        $this->colorGreen = rand(0, 255);
+        $this->colorBlue = rand(0, 255);
+    }
+
     /**
      * Get id
      *
