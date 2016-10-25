@@ -2,7 +2,10 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
 use Caldera\Bundle\CalderaBundle\Entity\Position;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Curl\Curl;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -62,16 +65,50 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
         foreach ($locations as $identifier => $location) {
             $position = $this->convertLocationToPosition($location);
 
-            $this->output->writeln(sprintf('Position [<info>%f</info>, <info>%f</info>] saved', $position->getLatitude(), $position->getLongitude()));
-
-            $ride = $this->findRideForPosition($position);
             $criticalmapsUser = $this->findCriticalmapsUserForIdentifier($identifier);
 
-            if ($ride) {
-                echo $ride->getCity()->getCity();
-            } else {
-                echo "NÖ";
+            /** @var Ride $ride */
+            $ride = null;
+
+            if (!$criticalmapsUser) {
+                $criticalmapsUser = $this->createNewCriticalmapsUser($identifier);
+
+                $ride = $this->findRideForPosition($position);
+
+                if ($ride) {
+                    $criticalmapsUser->setRide($ride);
+                    $criticalmapsUser->setCity($ride->getCity());
+                    $position->setRide($ride);
+                }
+            } elseif ($criticalmapsUser->getRide()) {
+                $ride = $criticalmapsUser->getRide();
+
+                $position->setRide($ride);
             }
+
+            $criticalmapsUser->setEndDateTime(new \DateTime());
+            $position->setCriticalmapsUser($criticalmapsUser);
+
+            $this->manager->persist($criticalmapsUser);
+            $this->manager->persist($position);
+
+            if (!$ride) {
+                $this->output->writeln(sprintf(
+                    'Position [<info>%f</info>, <info>%f</info>] saved for <comment>%s</comment> in <comment>unknown city</comment>',
+                    $position->getLatitude(),
+                    $position->getLongitude(),
+                    $criticalmapsUser->getIdentifier()
+                ));
+            } else {
+                $this->output->writeln(sprintf(
+                    'Position [<info>%f</info>, <info>%f</info>] saved for <comment>%s</comment> in <comment>%s</comment>',
+                    $position->getLatitude(),
+                    $position->getLongitude(),
+                    $criticalmapsUser->getIdentifier(),
+                    $ride->getCity()->getCity()
+                ));
+            }
+
         }
     }
 
@@ -94,6 +131,8 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
 
     protected function findRideForPosition(Position $position)
     {
+        $dateTime = new \DateTime();
+
         $finder = $this->getContainer()->get('fos_elastica.finder.criticalmass.ride');
 
         $geoFilter = new \Elastica\Filter\GeoDistance(
@@ -105,7 +144,7 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
             '30km'
         );
 
-        $dateTimeFilter = new \Elastica\Filter\Term(['simpleDate' => '2016-06-24']);
+        $dateTimeFilter = new \Elastica\Filter\Term(['simpleDate' => $dateTime->format('Y-m-d')]);
 
         $filter = new \Elastica\Filter\BoolAnd([$geoFilter, $dateTimeFilter]);
 
@@ -131,12 +170,24 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
 
         $results = $finder->find($query);
 
-        echo count($results);
         return array_pop($results);
     }
 
     protected function findCriticalmapsUserForIdentifier(string $identifier)
     {
+        /** @var CriticalmapsUser $criticalmapsUser */
+        $criticalmapsUser = $this->manager->getRepository('CalderaBundle:CriticalmapsUser')->findOneByIdentifier($identifier);
 
+        return $criticalmapsUser;
+    }
+
+    protected function createNewCriticalmapsUser(string $identifier): CriticalmapsUser
+    {
+        $criticalmapsUser = new CriticalmapsUser();
+
+        $criticalmapsUser
+            ->setIdentifier($identifier);
+
+        return $criticalmapsUser;
     }
 }
