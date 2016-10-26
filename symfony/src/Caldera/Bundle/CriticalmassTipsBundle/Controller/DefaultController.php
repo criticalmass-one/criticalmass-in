@@ -12,7 +12,7 @@ class DefaultController extends AbstractController
 {
     use ViewStorageTrait;
 
-    public function indexAction(Request $request, string $citySlug): Response
+    public function indexAction(Request $request, string $citySlug = ''): Response
     {
         /** @var ContentManager $contentManager */
         $contentManager = $this->get('caldera.manager.content_manager');
