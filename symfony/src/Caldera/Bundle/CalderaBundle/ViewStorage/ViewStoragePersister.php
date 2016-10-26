@@ -8,6 +8,7 @@ use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
 use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\ORM\EntityManager;
 use Memcached;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStoragePersister
@@ -20,11 +21,21 @@ class ViewStoragePersister
     /** @var TokenStorageInterface $tokenStorage */
     protected $tokenStorage;
 
+    /** @var OutputInterface $output */
+    protected $output = null;
+
     public function __construct(MemcachedCache $cache, $doctrine)
     {
         $this->cache = $cache;
         $this->doctrine = $doctrine;
         $this->manager = $doctrine->getManager();
+    }
+
+    public function setOutput(OutputInterface $output): ViewStoragePersister
+    {
+        $this->output = $output;
+
+        return $this;
     }
 
     public function persistViews()
@@ -91,6 +102,17 @@ class ViewStoragePersister
         $entity = $this->manager->getRepository('CalderaBundle:' . $className)->find($entityId);
 
         return $entity;
+    }
+
+    protected function log(string $message): ViewStoragePersister
+    {
+        if ($this->output) {
+            $this->output->writeln($message);
+        } else {
+            echo $message."\n";
+        }
+
+        return $this;
     }
 }
 
