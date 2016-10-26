@@ -79,6 +79,13 @@ class ViewStoragePersister
 
         $this->manager->persist($view);
         $this->manager->persist($entity);
+
+        $this->log(sprintf(
+            'Saved view for <comment>%s</comment> <info>#%d</info> (%s)',
+            $viewArray['className'],
+            $viewArray['entityId'],
+            $dateTime->format('Y-m-d H:i:s')
+        ));
     }
 
     protected function getView(string $className): ViewInterface
