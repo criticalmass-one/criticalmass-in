@@ -42,7 +42,7 @@ class Ticket
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $counter;
+    protected $counter = 0;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -87,12 +87,24 @@ class Ticket
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $active;
+    protected $active = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
     protected $exported = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $queried = false;
+
+    public function __construct()
+    {
+        $this->creationDateTime = new \DateTime();
+        $this->startDateTime = new \DateTime();
+        $this->endDateTime = new \DateTime();
+    }
 
     /**
      * Get id
@@ -397,11 +409,6 @@ class Ticket
         return $this;
     }
 
-    public function belongsToRide(Ride $ride)
-    {
-        return $this->getCreationDateTime()->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d');
-    }
-
     /**
      * Get creationDateTime
      *
@@ -433,6 +440,18 @@ class Ticket
     public function setExported($exported)
     {
         $this->exported = $exported;
+
+        return $this;
+    }
+
+    public function getQueried(): bool
+    {
+        return $this->queried;
+    }
+
+    public function setQueried(bool $queried)
+    {
+        $this->queried = $queried;
 
         return $this;
     }

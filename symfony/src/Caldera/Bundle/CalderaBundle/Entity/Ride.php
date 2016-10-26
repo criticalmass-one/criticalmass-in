@@ -277,6 +277,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->dateTime;
     }
 
+    public function getSimpleDate()
+    {
+        return $this->dateTime->format('Y-m-d');
+    }
+    
     /**
      * Set hasTime
      *

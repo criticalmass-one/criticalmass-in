@@ -6,6 +6,25 @@ use Doctrine\ORM\EntityRepository;
 
 class TicketRepository extends EntityRepository
 {
+    public function findForQuery()
+    {
+        $dateTime = new \DateTime();
+
+        $builder = $this->createQueryBuilder('ticket');
+
+        $builder->select('ticket');
+
+        $builder->where($builder->expr()->orX(
+            $builder->expr()->eq('ticket.queried', false),
+            $builder->expr()->andX(
+                $builder->andWhere($builder->expr()->gte('ticket.creationDateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\'')),
+                $builder->andWhere($builder->expr()->lte('ticket.creationDateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''))
+            )
+        ));
+        
+        $builder->orderBy('ticket.creationDateTime', 'ASC');
+    }
+
     public function findForTimelineLocationSharingCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('ticket');
