@@ -29,3 +29,7 @@ services:
 
     caldera.html_metadata:
         class: Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata
+
+    caldera.view_storage:
+        class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorage
+        arguments: ['@doctrine.cache.memcached']

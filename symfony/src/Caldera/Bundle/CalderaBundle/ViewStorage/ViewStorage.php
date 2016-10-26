@@ -1,39 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: maltehuebner
- * Date: 26.10.16
- * Time: 15:26
- */
 
 namespace Caldera\Bundle\CalderaBundle\ViewStorage;
 
-
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
-use Lsw\MemcacheBundle\Cache\LoggingMemcache;
+use Doctrine\Common\Cache\MemcachedCache;
+use Memcached;
 
-class ViewStorage
+class ViewStorage implements ViewStorageInterface
 {
-    public function __construct( )
+    /** @var MemcachedCache $cache */
+    protected $cache;
+
+    public function __construct(MemcachedCache $cache)
     {
-    }
-
-    protected function getClassName(ViewableInterface $viewable): string
-    {
-        $namespaceClass = get_class($viewable);
-        $namespaceParts = explode('\\', $namespaceClass);
-
-        $className = array_pop($namespaceParts);
-
-        return $className;
+        $this->cache = $cache;
     }
 
     public function countView(ViewableInterface $viewable)
     {
-        /** @var LoggingMemcache $memcache */
-        $memcache = $this->get('memcache.criticalmass');
+        /** @var Memcached $cache */
+        $cache = $this->cache->getMemcached();
 
-        $viewStorage = $memcache->get('view_storage');
+        $viewStorage = $cache->get('view_storage');
 
         if (!$viewStorage) {
             $viewStorage = [];
@@ -51,6 +39,16 @@ class ViewStorage
 
         $viewStorage[] = $view;
 
-        $memcache->set('view_storage', $viewStorage);
+        $cache->set('view_storage', $viewStorage);
+    }
+
+    protected function getClassName(ViewableInterface $viewable): string
+    {
+        $namespaceClass = get_class($viewable);
+        $namespaceParts = explode('\\', $namespaceClass);
+
+        $className = array_pop($namespaceParts);
+
+        return $className;
     }
 }
