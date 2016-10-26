@@ -21,6 +21,10 @@ class DefaultController extends AbstractController
 
         $this->countView($content);
         
+        $this->getMetadata()
+            ->setDescription('Kurz und knapp in drei Minuten: Tipps und Wissenswertes zur Teilnahme an der Critical Mass.')
+            ->setKeywords('Critical Mass, Tipps, Corken');
+        
         return $this->render(
             'CalderaCriticalmassTipsBundle:Default:index.html.twig',
             [
