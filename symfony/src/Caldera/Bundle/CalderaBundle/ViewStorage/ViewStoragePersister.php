@@ -11,7 +11,7 @@ use Memcached;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class ViewStoragePersister
+class ViewStoragePersister implements ViewStoragePersisterInterface
 {
     protected $doctrine;
 
@@ -31,14 +31,14 @@ class ViewStoragePersister
         $this->manager = $doctrine->getManager();
     }
 
-    public function setOutput(OutputInterface $output): ViewStoragePersister
+    public function setOutput(OutputInterface $output): ViewStoragePersisterInterface
     {
         $this->output = $output;
 
         return $this;
     }
 
-    public function persistViews()
+    public function persistViews(): ViewStoragePersisterInterface
     {
         /** @var Memcached $cache */
         $cache = $this->cache->getMemcached();
@@ -47,7 +47,7 @@ class ViewStoragePersister
         $cache->delete('view_storage');
 
         if (!$viewStorage || !is_array($viewStorage) || !count($viewStorage)) {
-            return;
+            return $this;
         }
 
         foreach ($viewStorage as $view) {
@@ -55,6 +55,8 @@ class ViewStoragePersister
         }
 
         $this->manager->flush();
+
+        return $this;
     }
 
     protected function storeView(array $viewArray)
