@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
 use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersister;
+use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersisterInterface;
 use Doctrine\ORM\EntityManager;
 use Lsw\MemcacheBundle\Cache\LoggingMemcacheInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
