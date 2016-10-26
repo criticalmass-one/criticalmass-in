@@ -159,8 +159,8 @@ class CriticalmapsCollectPositionsCommand extends ContainerAwareCommand
                     [
                         'pin' =>
                             [
-                                $position->getLatitude(),
-                                $position->getLongitude()
+                                $position->getLongitude(),
+                                $position->getLatitude()
                             ],
                         'order' => 'asc',
                         'unit' => 'km'
