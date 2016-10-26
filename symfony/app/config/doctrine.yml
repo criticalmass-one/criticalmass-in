@@ -24,9 +24,3 @@ doctrine:
                 dayofweek: Caldera\Bundle\CriticalmassCoreBundle\DQL\DayOfWeekFunction
             numeric_functions:
                 rand: Caldera\Bundle\CriticalmassCoreBundle\DQL\RandFunction
-
-doctrine_cache:
-    providers:
-        caldera_doctrine_memcache:
-            type: memcache
-            namespace: caldera

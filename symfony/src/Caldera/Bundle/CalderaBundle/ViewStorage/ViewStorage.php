@@ -5,15 +5,20 @@ namespace Caldera\Bundle\CalderaBundle\ViewStorage;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\Common\Cache\MemcachedCache;
 use Memcached;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStorage implements ViewStorageInterface
 {
     /** @var MemcachedCache $cache */
     protected $cache;
 
-    public function __construct(MemcachedCache $cache)
+    /** @var TokenStorageInterface $tokenStorage */
+    protected $tokenStorage;
+
+    public function __construct(MemcachedCache $cache, TokenStorageInterface $tokenStorage)
     {
         $this->cache = $cache;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function countView(ViewableInterface $viewable)
@@ -28,12 +33,13 @@ class ViewStorage implements ViewStorageInterface
         }
 
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+        $user = $this->tokenStorage->getToken()->getUser();
 
         $view =
             [
                 'className' => $this->getClassName($viewable),
                 'entityId' => $viewable->getId(),
-                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
+                'userId' => $user,
                 'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
             ];
 

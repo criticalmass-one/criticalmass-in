@@ -32,4 +32,4 @@ services:
 
     caldera.view_storage:
         class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorage
-        arguments: ['@doctrine.cache.memcached']
+        arguments: ['@doctrine.cache.memcached', '@security.token_storage']

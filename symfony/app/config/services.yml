@@ -8,7 +8,7 @@ services:
         # class 'Memcache' or 'Memcached', depending on which PHP module you use
         class: Memcached
         calls:
-            - [ addServers, [ '%memcached.server%' ]]
+            - [ addServer, [ '127.0.0.1', 11211 ]]
 
     doctrine.cache.memcached:
         class: Doctrine\Common\Cache\MemcachedCache
