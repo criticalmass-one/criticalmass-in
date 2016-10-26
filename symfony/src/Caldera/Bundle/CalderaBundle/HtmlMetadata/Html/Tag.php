@@ -46,9 +46,9 @@ class Tag
         }
 
         if ($this->content) {
-            $source = '>'.$this->content.'</'.$this->tag.'>';
+            $source .= '>'.$this->content.'</'.$this->tag.'>';
         } else {
-            $source = ' />';
+            $source .= ' />';
         }
 
         return $source;

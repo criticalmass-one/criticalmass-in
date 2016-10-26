@@ -10,44 +10,16 @@ use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
-use Lsw\MemcacheBundle\Cache\LoggingMemcache;
+use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageCacheInterface;
 
 trait ViewStorageTrait
 {
-    protected function getClassName(ViewableInterface $viewable): string
-    {
-        $namespaceClass = get_class($viewable);
-        $namespaceParts = explode('\\', $namespaceClass);
-
-        $className = array_pop($namespaceParts);
-
-        return $className;
-    }
-
     protected function countView(ViewableInterface $viewable)
     {
-        /** @var LoggingMemcache $memcache */
-        $memcache = $this->get('memcache.criticalmass');
+        /** @var ViewStorageCacheInterface $viewStorage */
+        $viewStorage = $this->get('caldera.view_storage.cache');
 
-        $viewStorage = $memcache->get('view_storage');
-
-        if (!$viewStorage) {
-            $viewStorage = [];
-        }
-
-        $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
-
-        $view =
-            [
-                'className' => $this->getClassName($viewable),
-                'entityId' => $viewable->getId(),
-                'userId' => ($this->getUser() ? $this->getUser()->getId() : null),
-                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ];
-
-        $viewStorage[] = $view;
-
-        $memcache->set('view_storage', $viewStorage);
+        $viewStorage->countView($viewable);
     }
 
     /**
