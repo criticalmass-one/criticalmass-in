@@ -44,7 +44,7 @@ class ViewStoragePersister
         $cache = $this->cache->getMemcached();
 
         $viewStorage = $cache->get('view_storage');
-        //$cache->delete('view_storage');
+        $cache->delete('view_storage');
 
         if (!$viewStorage || !is_array($viewStorage) || !count($viewStorage)) {
             return;

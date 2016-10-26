@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\ViewStorage;
 
+use Caldera\Bundle\CalderaBundle\Entity\User;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\Common\Cache\MemcachedCache;
 use Memcached;
@@ -33,13 +34,19 @@ class ViewStorageCache implements ViewStorageCacheInterface
         }
 
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+
         $user = $this->tokenStorage->getToken()->getUser();
+        $userId = null;
+
+        if ($user instanceof User) {
+            $userId = $user->getId();
+        }
 
         $view =
             [
                 'className' => $this->getClassName($viewable),
                 'entityId' => $viewable->getId(),
-                'userId' => $user,
+                'userId' => $userId,
                 'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
             ];
 

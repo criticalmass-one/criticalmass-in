@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
+use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersister;
 use Doctrine\ORM\EntityManager;
 use Lsw\MemcacheBundle\Cache\LoggingMemcacheInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -38,6 +39,11 @@ class StoreViewCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getContainer()->get('caldera.view_storage.persister')->persistViews();
+        /** @var ViewStoragePersisterInterface $persister */
+        $persister = $this->getContainer()->get('caldera.view_storage.persister');
+
+        $persister
+            ->setOutput($output)
+            ->persistViews();
     }
 }
