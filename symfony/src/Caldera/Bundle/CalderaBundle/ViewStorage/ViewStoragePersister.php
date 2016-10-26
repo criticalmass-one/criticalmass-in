@@ -53,6 +53,8 @@ class ViewStoragePersister
         foreach ($viewStorage as $view) {
             $this->storeView($view);
         }
+
+        $this->manager->flush();
     }
 
     protected function storeView(array $viewArray)
