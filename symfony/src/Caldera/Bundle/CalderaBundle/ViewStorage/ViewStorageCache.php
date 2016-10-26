@@ -7,7 +7,7 @@ use Doctrine\Common\Cache\MemcachedCache;
 use Memcached;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class ViewStorage implements ViewStorageInterface
+class ViewStorageCache implements ViewStorageCacheInterface
 {
     /** @var MemcachedCache $cache */
     protected $cache;

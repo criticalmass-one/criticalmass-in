@@ -10,14 +10,14 @@ use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
-use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageInterface;
+use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageCacheInterface;
 
 trait ViewStorageTrait
 {
     protected function countView(ViewableInterface $viewable)
     {
-        /** @var ViewStorageInterface $viewStorage */
-        $viewStorage = $this->get('caldera.view_storage');
+        /** @var ViewStorageCacheInterface $viewStorage */
+        $viewStorage = $this->get('caldera.view_storage.cache');
 
         $viewStorage->countView($viewable);
     }

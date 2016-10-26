@@ -30,6 +30,6 @@ services:
     caldera.html_metadata:
         class: Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata
 
-    caldera.view_storage:
-        class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorage
+    caldera.view_storage.cache:
+        class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageCache
         arguments: ['@doctrine.cache.memcached', '@security.token_storage']

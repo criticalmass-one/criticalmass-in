@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CalderaBundle\ViewStorage;
 
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 
-interface ViewStorageInterface
+interface ViewStorageCacheInterface
 {
     public function countView(ViewableInterface $viewable);
 }
