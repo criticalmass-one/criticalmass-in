@@ -38,55 +38,6 @@ class StoreViewCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->manager = $this->getContainer()->get('doctrine')->getManager();
-        $this->memcache = $this->getContainer()->get('memcache.criticalmass');
-        $this->output = $output;
-
-        $viewStorage = $this->memcache->get('view_storage');
-        $this->memcache->delete('view_storage');
-
-        if (!$viewStorage || !is_array($viewStorage) || !count($viewStorage)) {
-            $output->writeln('Nothing to store');
-
-            return;
-        }
-
-        foreach ($viewStorage as $view) {
-            $this->storeView($view);
-        }
-
-        $this->manager->flush();
-    }
-
-    protected function storeView(array $viewArray)
-    {
-        $viewClassName = 'Caldera\Bundle\CalderaBundle\Entity\\' . $viewArray['className'] . 'View';
-        $viewMethod = 'set' . $viewArray['className'];
-
-        /** @var ViewableInterface $entity */
-        $entity = $this->manager->getRepository('CalderaBundle:' . $viewArray['className'])->find($viewArray['entityId']);
-
-        $viewDateTime = new \DateTime($viewArray['dateTime']);
-
-        $user = null;
-
-        if ($viewArray['userId']) {
-            $user = $this->manager->getRepository('CalderaBundle:User')->find($viewArray['userId']);
-        }
-
-        /** @var ViewInterface $view */
-        $view = new $viewClassName;
-        $view->$viewMethod($entity);
-        $view->setUser($user);
-        $view->setDateTime($viewDateTime);
-
-        $entity->incViews();
-
-        $this->manager->persist($view);
-        $this->manager->persist($entity);
-
-        $this->output->writeln(
-            sprintf('Stored <comment>%s</comment> <info>#%d</info> view (%s)', $viewArray['className'], $viewArray['entityId'], $viewDateTime->format('Y-m-d H:i:s'))
-        );
+        $this->getContainer()->get('caldera.view_storage.persister')->persistViews();
     }
 }
