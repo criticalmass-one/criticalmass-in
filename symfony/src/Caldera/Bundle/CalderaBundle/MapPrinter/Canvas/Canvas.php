@@ -2,8 +2,8 @@
 
 namespace Caldera\Bundle\CalderaBundle\MapPrinter\Canvas;
 
-use Caldera\Bundle\CalderaBundle\MapPrinter\Element\Marker;
-use Caldera\Bundle\CalderaBundle\MapPrinter\Element\Track;
+use Caldera\Bundle\CalderaBundle\MapPrinter\Element\MarkerInterface;
+use Caldera\Bundle\CalderaBundle\MapPrinter\Element\TrackInterface;
 
 class Canvas
 {
@@ -18,14 +18,14 @@ class Canvas
         
     }
     
-    public function addMarker(Marker $marker): Canvas
+    public function addMarker(MarkerInterface $marker): Canvas
     {
         array_push($this->markers, $marker);
 
         return $this;    
     }
 
-    public function addTrack(Track $track): Canvas
+    public function addTrack(TrackInterface $track): Canvas
     {
         array_push($this->tracks, $track);
 
