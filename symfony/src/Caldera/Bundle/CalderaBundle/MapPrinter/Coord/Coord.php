@@ -10,7 +10,7 @@ class Coord
     /** @var float $longitude */
     protected $longitude = null;
 
-    public function __construct(float $latitude = null, float $longitude = null): Coord
+    public function __construct(float $latitude = null, float $longitude = null)
     {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
