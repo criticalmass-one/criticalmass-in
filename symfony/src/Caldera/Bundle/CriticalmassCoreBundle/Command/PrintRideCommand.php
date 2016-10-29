@@ -3,7 +3,8 @@
 namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassCoreBundle\Leaflet\LeafletPrinter\LeafletPrinter;
+use Caldera\Bundle\CalderaBundle\Entity\Track;
+use Caldera\Bundle\CalderaBundle\MapPrinter\Printer\OsmMapPrinter;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -50,5 +51,10 @@ class PrintRideCommand extends ContainerAwareCommand
 
         $this->ride = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
 
+        /** @var Track $track */
+        $track = $this->doctrine->getRepository('CalderaBundle:Track')->find(59);
+
+        $printer = new OsmMapPrinter();
+        $printer->addTrack($track);
     }
 }
