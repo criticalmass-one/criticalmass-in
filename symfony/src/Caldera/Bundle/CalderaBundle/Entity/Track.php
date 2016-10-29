@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\MapPrinter\Element\TrackInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -14,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class Track
+class Track implements TrackInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
