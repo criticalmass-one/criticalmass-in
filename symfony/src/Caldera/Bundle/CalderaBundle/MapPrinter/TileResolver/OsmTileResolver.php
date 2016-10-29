@@ -24,8 +24,8 @@ class OsmTileResolver implements TileResolverInterface
 
     public function resolveByZxy(int $x, int $y, int $zoomLevel): TileInterface
     {
-        $tile = new OsmTile();
+        $tile = new OsmTile($x, $y, $zoomLevel);
         
-        return
+        return $tile;
     }
 }
