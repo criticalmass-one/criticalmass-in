@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\MapPrinter\Canvas;
 
+use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Coord\Coord;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\MapElement;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\MarkerInterface;
@@ -41,17 +42,46 @@ class Canvas
 
     public function calculateDimensions(): Canvas
     {
+        /** @var MarkerInterface $marker */
         foreach ($this->markers as $marker) {
-
+            $coord = new Coord($marker->getLatitude(), $marker->getLongitude());
+            $this->expand($coord);
         }
+        
+        /** @var TrackInterface $track */
+        foreach ($this->tracks as $track) {
+            $coordList = $this->convertTrackToCoordArray($track);
+
+            /** @var Coord $coord */
+            foreach ($coordList as $coord) {
+                $this->expand($coord);
+            }
+        }
+        
+        return $this;
     }
 
-    protected function expand(MapElement $element): Canvas
+    protected function convertTrackToCoordArray(TrackInterface $track): array
     {
-        $coord = new Coord($element->getLatitude(), $element->getLongitude());
+        $pointList = \Polyline::decode($track->getPolyline());
+        $coordList = [];
 
+        while (count($pointList) > 0) {
+            $latitude = array_shift($pointList);
+            $longitude = array_shift($pointList);
+
+            $coord = new Coord($latitude, $longitude);
+
+            array_push($coordList, $coord);
+        }
+
+        return $coordList;
+    }
+
+    protected function expand(Coord $coord): Canvas
+    {
         if (!$this->northWest) {
-            $this->northWest = $coord;
+            $this->northWest = clone $coord;
         } else {
             if ($this->northWest->southOf($coord)) {
                 $this->northWest->setLatitude($coord->getLatitude());
@@ -62,8 +92,8 @@ class Canvas
             }
         }
 
-        if ($this->southEast) {
-            $this->southEast = $coord;
+        if (!$this->southEast) {
+            $this->southEast = clone $coord;
         } else {
             if ($this->southEast->northOf($coord)) {
                 $this->southEast->setLatitude($coord->getLatitude());
@@ -74,6 +104,6 @@ class Canvas
             }
         }
 
-        
+        return $this;
     }
 }

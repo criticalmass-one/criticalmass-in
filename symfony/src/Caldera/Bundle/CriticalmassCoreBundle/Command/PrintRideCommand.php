@@ -55,6 +55,8 @@ class PrintRideCommand extends ContainerAwareCommand
         $track = $this->doctrine->getRepository('CalderaBundle:Track')->find(59);
 
         $printer = new OsmMapPrinter();
-        $printer->addTrack($track);
+        $printer
+            ->addTrack($track)
+            ->execute();
     }
 }

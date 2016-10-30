@@ -29,4 +29,9 @@ class OsmMapPrinter
 
         return $this;
     }
+
+    public function execute()
+    {
+        $this->canvas->calculateDimensions();
+    }
 }
