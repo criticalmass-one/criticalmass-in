@@ -55,4 +55,24 @@ class Coord
     {
         return $this->longitude;
     }
+
+    public function northOf(Coord $coord): bool
+    {
+        return $this->latitude > $coord->getLatitude();
+    }
+
+    public function southOf(Coord $coord): bool
+    {
+        return $this->latitude < $coord->getLatitude();
+    }
+
+    public function westOf(Coord $coord): bool
+    {
+        return $this->longitude < $coord->getLongitude();
+    }
+
+    public function eastOf(Coord $coord): bool
+    {
+        return $this->longitude > $coord->getLongitude();
+    }
 }
