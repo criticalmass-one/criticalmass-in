@@ -7,6 +7,8 @@ use Caldera\Bundle\CalderaBundle\MapPrinter\Coord\Coord;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\MapElement;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\MarkerInterface;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\TrackInterface;
+use Caldera\Bundle\CalderaBundle\MapPrinter\TileResolver\TileResolverInterface;
+use Caldera\Bundle\CalderaBundle\MapPrinter\Util\OsmZxyCalculator;
 
 class Canvas
 {
@@ -21,6 +23,13 @@ class Canvas
 
     /** @var array $tracks */
     protected $tracks = [];
+
+    protected $grid = [];
+
+    protected $canvasWidth;
+    protected $canvasHeight;
+    protected $offsetLeft;
+    protected $offsetTop;
     
     public function __construct()
     {
@@ -57,7 +66,7 @@ class Canvas
                 $this->expand($coord);
             }
         }
-        
+
         return $this;
     }
 
@@ -104,6 +113,57 @@ class Canvas
             }
         }
 
+        return $this;
+    }
+
+    public function decorateTiles(TileResolverInterface $tileResolver): Canvas
+    {
+        $zoomLevel = 15;
+
+        $topY = OsmZxyCalculator::latitudeToOSMYTile($this->northWest->getLatitude(), $zoomLevel);
+        $topX = OsmZxyCalculator::longitudeToOSMXTile($this->northWest->getLongitude(), $zoomLevel);
+
+        $bottomY = OsmZxyCalculator::latitudeToOSMYTile($this->southEast->getLatitude(), $zoomLevel);
+        $bottomX = OsmZxyCalculator::longitudeToOSMXTile($this->southEast->getLongitude(), $zoomLevel);
+
+        for ($y = $topY; $y <= $bottomY; ++$y) {
+            for ($x = $topX; $x <= $bottomX; ++$x) {
+                $this->grid[$y][$x] = $tileResolver->resolveByZxy($x, $y, $zoomLevel);
+            }
+        }
+
+        $this->canvasWidth = abs($topX - $bottomX);
+        $this->canvasHeight = abs($topY - $bottomY);
+        $this->offsetLeft = $topX;
+        $this->offsetTop = $topY;
+
+        return $this;
+    }
+
+    public function printElements(): Canvas
+    {
+        $height = $this->canvasHeight * 256;
+        $width = $this->canvasWidth * 256;
+
+        $image = imagecreate($width, $height);
+
+        $white = imagecolorallocatealpha($image, 255, 255, 0, 100);
+
+        foreach ($this->tracks as $track) {
+            $coordList = $this->convertTrackToCoordArray($track);
+
+            $coordA = array_shift($coordList);
+
+            while ($coordB = array_shift($coordList)) {
+                imageline($image, 0, 0, 100, 100, $white);
+
+                $coordA = $coordB;
+            }
+
+        }
+        imagepng($image);
+        imagedestroy($image);
+        
         return $this;
     }
 }

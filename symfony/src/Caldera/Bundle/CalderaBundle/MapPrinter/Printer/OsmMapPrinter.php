@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CalderaBundle\MapPrinter\Printer;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Canvas\Canvas;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\MarkerInterface;
 use Caldera\Bundle\CalderaBundle\MapPrinter\Element\TrackInterface;
+use Caldera\Bundle\CalderaBundle\MapPrinter\TileResolver\OsmTileResolver;
 
 class OsmMapPrinter
 {
@@ -32,6 +33,9 @@ class OsmMapPrinter
 
     public function execute()
     {
-        $this->canvas->calculateDimensions();
+        $this->canvas
+            ->calculateDimensions()
+            ->decorateTiles(new OsmTileResolver())
+            ->printElements();
     }
 }
