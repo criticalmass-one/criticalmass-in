@@ -48,21 +48,32 @@ class Canvas
 
     protected function expand(MapElement $element): Canvas
     {
+        $coord = new Coord($element->getLatitude(), $element->getLongitude());
+
         if (!$this->northWest) {
-            $this->northWest = new Coord($element->getLatitude(), $element->getLongitude());
+            $this->northWest = $coord;
         } else {
-            if ($this->northWest->getLatitude() < $element->getLatitude()) {
-                $this->northWest->setLatitude($element->getLatitude());
+            if ($this->northWest->southOf($coord)) {
+                $this->northWest->setLatitude($coord->getLatitude());
             }
 
-            if ($this->northWest->getLongitude() < $element->getLongitude()) {
-                $this->northWest->setLatitude($element->getLongitude());
+            if ($this->northWest->eastOf($coord)) {
+                $this->northWest->setLongitude($coord->getLongitude());
             }
         }
 
         if ($this->southEast) {
-            $this->southEast = new Coord($element->getLatitude(), $element->getLongitude());
-        } 
+            $this->southEast = $coord;
+        } else {
+            if ($this->southEast->northOf($coord)) {
+                $this->southEast->setLatitude($coord->getLatitude());
+            }
+
+            if ($this->southEast->westOf($coord)) {
+                $this->southEast->setLongitude($coord->getLongitude());
+            }
+        }
+
         
     }
 }
