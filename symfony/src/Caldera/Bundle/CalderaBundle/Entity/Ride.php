@@ -717,13 +717,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->getTitle();
     }
 
-    public function __clone()
-    {
-        $this->id = null;
-        $this->setIsArchived(true);
-        $this->setArchiveDateTime(new \DateTime());
-    }
-
     /**
      * Set isArchived
      *
@@ -1213,5 +1206,26 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getWeathers()
     {
         return $this->weathers;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
+    public function archive(User $user): Ride
+    {
+        $archivedRide = clone $this;
+
+        $archivedRide
+            ->setIsArchived(true)
+            ->setArchiveDateTime(new \DateTime())
+            ->setArchiveParent($this)
+            ->setArchiveUser($user)
+            ->setArchiveMessage($this->archiveMessage);
+
+        $this->archiveMessage = '';
+
+        return $archivedRide;
     }
 }

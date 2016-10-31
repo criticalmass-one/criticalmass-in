@@ -153,10 +153,6 @@ class RideManagementController extends AbstractController
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
-        $archiveRide = clone $ride;
-        $archiveRide->setArchiveUser($this->getUser());
-        $archiveRide->setArchiveParent($ride);
-
         $form->handleRequest($request);
 
         // TODO: remove this shit and test the validation in the template
@@ -164,7 +160,11 @@ class RideManagementController extends AbstractController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+
+            $ride = $form->getData();
+            $archiveRide = $ride->archive($this->getUser());
+
+            $em->persist($ride);
             $em->persist($archiveRide);
             $em->flush();
 
