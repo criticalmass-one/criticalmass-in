@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -27,7 +28,7 @@ class StandardCityType extends AbstractType
             ->add('twitter', TextType::class, array('required' => false))
             ->add('longitude', HiddenType::class)
             ->add('latitude', HiddenType::class)
-            ->add('cityPopulation', IncidentType::class, array('required' => false))
+            ->add('cityPopulation', IntegerType::class, array('required' => false))
             ->add(
                 'region',
                 EntityType::class,
