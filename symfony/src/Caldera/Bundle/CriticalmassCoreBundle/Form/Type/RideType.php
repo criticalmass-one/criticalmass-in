@@ -30,7 +30,8 @@ class RideType extends AbstractType
             ->add('url', TextType::class, array('required' => false))
             ->add('hasLocation', CheckboxType::class)
             ->add('hasTime', CheckboxType::class)
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class)
+            ->add('archiveMessage', TextType::class, array('required' => true));
     }
 
     public function getName()

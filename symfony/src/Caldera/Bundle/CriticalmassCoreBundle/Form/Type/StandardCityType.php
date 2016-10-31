@@ -63,7 +63,8 @@ class StandardCityType extends AbstractType
             ->add('standardLocation', TextType::class, array('required' => false))
             ->add('standardLatitude', HiddenType::class, array('required' => false))
             ->add('standardLongitude', HiddenType::class, array('required' => false))
-            ->add('imageFile', VichFileType::class, array('required' => false));
+            ->add('imageFile', VichFileType::class, array('required' => false))
+            ->add('archiveMessage', TextType::class, array('required' => true));
     }
 
     public function getName()

@@ -13,7 +13,8 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array('required' => true))
-            ->add('text', TextareaType::class, array('required' => true));
+            ->add('text', TextareaType::class, array('required' => true))
+            ->add('archiveMessage', TextType::class, array('required' => true));
     }
 
     public function getName()
