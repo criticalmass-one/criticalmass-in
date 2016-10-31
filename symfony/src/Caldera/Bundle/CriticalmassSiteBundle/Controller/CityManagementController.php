@@ -79,7 +79,7 @@ class CityManagementController extends AbstractController
             $hasErrors = false;
 
             $form = $this->createForm(
-                new StandardCityType(),
+                StandardCityType::class,
                 $city,
                 [
                     'action' => $this->generateUrl(
@@ -123,7 +123,18 @@ class CityManagementController extends AbstractController
     {
         $city = $this->getCityBySlug($citySlug);
 
-        $form = $this->createForm(new StandardCityType(), $city, array('action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', array('citySlug' => $city->getMainSlugString()))));
+        $form = $this->createForm(
+            StandardCityType::class,
+            $city,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_desktop_city_edit',
+                    [
+                        'citySlug' => $city->getMainSlugString()
+                    ]
+                )
+            ]
+        );
 
         if ('POST' == $request->getMethod()) {
             return $this->editPostAction($request, $city, $form);
