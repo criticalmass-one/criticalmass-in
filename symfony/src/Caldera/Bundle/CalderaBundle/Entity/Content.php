@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="content")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\ContentRepository")
  */
-class Content implements ViewableInterface
+class Content implements ViewableInterface, ArchiveableInterface
 {
     /**
      * @ORM\Id
@@ -228,7 +229,7 @@ class Content implements ViewableInterface
      * @param boolean $isArchived
      * @return Content
      */
-    public function setIsArchived($isArchived)
+    public function setIsArchived(bool $isArchived)
     {
         $this->isArchived = $isArchived;
 
@@ -251,7 +252,7 @@ class Content implements ViewableInterface
      * @param \DateTime $archiveDateTime
      * @return Content
      */
-    public function setArchiveDateTime($archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime)
     {
         $this->archiveDateTime = $archiveDateTime;
 
@@ -271,10 +272,10 @@ class Content implements ViewableInterface
     /**
      * Set archiveParent
      *
-     * @param Content $archiveParent
+     * @param ArchiveableInterface $archiveParent
      * @return Content
      */
-    public function setArchiveParent(Content $archiveParent = null)
+    public function setArchiveParent(ArchiveableInterface $archiveParent)
     {
         $this->archiveParent = $archiveParent;
 
@@ -297,7 +298,7 @@ class Content implements ViewableInterface
      * @param User $archiveUser
      * @return Content
      */
-    public function setArchiveUser(User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser)
     {
         $this->archiveUser = $archiveUser;
 

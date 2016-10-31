@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
@@ -20,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
 {
     /**
      * Numerische ID der Stadt.
@@ -1048,7 +1049,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @param boolean $isArchived
      * @return City
      */
-    public function setIsArchived($isArchived)
+    public function setIsArchived(bool $isArchived)
     {
         $this->isArchived = $isArchived;
 
@@ -1071,7 +1072,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @param \DateTime $archiveDateTime
      * @return City
      */
-    public function setArchiveDateTime($archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime)
     {
         $this->archiveDateTime = $archiveDateTime;
 
@@ -1094,7 +1095,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @param City $archiveParent
      * @return City
      */
-    public function setArchiveParent(City $archiveParent = null)
+    public function setArchiveParent(ArchiveableInterface $archiveParent)
     {
         $this->archiveParent = $archiveParent;
 
@@ -1117,7 +1118,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @param User $archiveUser
      * @return City
      */
-    public function setArchiveUser(User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser)
     {
         $this->archiveUser = $archiveUser;
 
@@ -1271,7 +1272,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
         return $this;
     }
-
 
     public function setLastThread(Thread $lastThread)
     {

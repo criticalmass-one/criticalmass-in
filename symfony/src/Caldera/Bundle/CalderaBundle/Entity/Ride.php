@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
 {
     /**
      * @ORM\Id
@@ -724,7 +725,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @param boolean $isArchived
      * @return Ride
      */
-    public function setIsArchived($isArchived)
+    public function setIsArchived(bool $isArchived)
     {
         $this->isArchived = $isArchived;
 
@@ -747,7 +748,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @param \DateTime $archiveDateTime
      * @return Ride
      */
-    public function setArchiveDateTime($archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime)
     {
         $this->archiveDateTime = $archiveDateTime;
 
@@ -770,7 +771,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @param User $archiveUser
      * @return Ride
      */
-    public function setArchiveUser(User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser)
     {
         $this->archiveUser = $archiveUser;
 
@@ -793,7 +794,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @param $archiveParent
      * @return Ride
      */
-    public function setArchiveParent(Ride $archiveParent = null)
+    public function setArchiveParent(ArchiveableInterface $archiveParent)
     {
         $this->archiveParent = $archiveParent;
 

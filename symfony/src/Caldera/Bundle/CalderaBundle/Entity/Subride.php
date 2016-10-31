@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
-class Subride
+class Subride implements ArchiveableInterface
 {
     /**
      * Numerische ID der Tour.
@@ -451,7 +452,7 @@ class Subride
      * @param boolean $isArchived
      * @return SubRide
      */
-    public function setIsArchived($isArchived)
+    public function setIsArchived(bool $isArchived)
     {
         $this->isArchived = $isArchived;
 
@@ -474,7 +475,7 @@ class Subride
      * @param \DateTime $archiveDateTime
      * @return SubRide
      */
-    public function setArchiveDateTime($archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime)
     {
         $this->archiveDateTime = $archiveDateTime;
 
@@ -497,7 +498,7 @@ class Subride
      * @param Subride $archiveParent
      * @return Subride
      */
-    public function setArchiveParent(Subride $archiveParent = null)
+    public function setArchiveParent(ArchiveableInterface $archiveParent)
     {
         $this->archiveParent = $archiveParent;
 
@@ -520,7 +521,7 @@ class Subride
      * @param User $archiveUser
      * @return Subride
      */
-    public function setArchiveUser(User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser)
     {
         $this->archiveUser = $archiveUser;
 

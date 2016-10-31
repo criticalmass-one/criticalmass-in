@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Entity;
 
+use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\EventRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Event implements ParticipateableInterface, ViewableInterface
+class Event implements ParticipateableInterface, ViewableInterface, ArchiveableInterface
 {
     /**
      * @ORM\Id
@@ -462,7 +463,7 @@ class Event implements ParticipateableInterface, ViewableInterface
      * @param boolean $isArchived
      * @return Event
      */
-    public function setIsArchived($isArchived)
+    public function setIsArchived(bool $isArchived)
     {
         $this->isArchived = $isArchived;
 
@@ -485,7 +486,7 @@ class Event implements ParticipateableInterface, ViewableInterface
      * @param \DateTime $archiveDateTime
      * @return Event
      */
-    public function setArchiveDateTime($archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime)
     {
         $this->archiveDateTime = $archiveDateTime;
 
@@ -643,10 +644,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Set archiveParent
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Event $archiveParent
+     * @param ArchiveableInterface $archiveParent
      * @return Event
      */
-    public function setArchiveParent(\Caldera\Bundle\CalderaBundle\Entity\Event $archiveParent = null)
+    public function setArchiveParent(ArchiveableInterface $archiveParent = null)
     {
         $this->archiveParent = $archiveParent;
 
@@ -666,10 +667,10 @@ class Event implements ParticipateableInterface, ViewableInterface
     /**
      * Set archiveUser
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\User $archiveUser
+     * @param User $archiveUser
      * @return Event
      */
-    public function setArchiveUser(\Caldera\Bundle\CalderaBundle\Entity\User $archiveUser = null)
+    public function setArchiveUser(User $archiveUser)
     {
         $this->archiveUser = $archiveUser;
 
