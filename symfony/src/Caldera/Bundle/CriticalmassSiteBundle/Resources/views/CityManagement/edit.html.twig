@@ -136,7 +136,7 @@
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Beschreibung:</label>
-                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
                             <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Lange Beschreibung:</label>
-                            {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control'} }) }}
+                            {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
                             <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
                         </div>
                     </div>
