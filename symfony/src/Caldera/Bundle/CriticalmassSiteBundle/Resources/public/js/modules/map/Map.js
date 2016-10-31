@@ -8,9 +8,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function (
     };
 
     Map.prototype._defaults = {
-        tileLayerUrl: 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}',
-        mapBoxAccessToken: 'pk.eyJ1IjoibWFsdGVodWVibmVyIiwiYSI6IjB5c2QtNXcifQ.I7OHZr0wtAvqE0wIY_psfg',
-        mapAttribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        tileLayerUrl: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+        mapAttribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         stylesheetAddress: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css',
         detectRetina: true,
         defaultLatitude: 51.0851708,
@@ -64,8 +63,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function (
 
     Map.prototype._addTileLayer = function () {
 
-        //L.tileLayer(this.settings.tileLayerUrl + '?access_token=' + this.settings.mapBoxAccessToken, {
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        L.tileLayer(this.settings.tileLayerUrl, {
             attribution: this.settings.mapAttribution,
             detectRetina: this.settings.detectRetina
         }).addTo(this.map);
