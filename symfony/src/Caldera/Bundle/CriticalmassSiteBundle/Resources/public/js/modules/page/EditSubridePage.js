@@ -49,7 +49,6 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
         if (this._ride.hasLocation()) {
             latLng = this._ride.getLatLng();
         } else {
-            alert(this._city.getLatLng());
             latLng = this._city.getLatLng();
         }
 
