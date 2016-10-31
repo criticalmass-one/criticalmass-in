@@ -250,6 +250,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $archiveUser;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $archiveMessage;
+
+    /**
      * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName")
      *
      * @var File
@@ -1133,6 +1138,18 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getArchiveUser()
     {
         return $this->archiveUser;
+    }
+
+    public function setArchiveMessage(string $archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
+
+        return $this;
+    }
+
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
     }
 
     public function __clone()

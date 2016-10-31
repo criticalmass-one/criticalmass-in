@@ -84,6 +84,11 @@ class Content implements ViewableInterface, ArchiveableInterface
     protected $archiveUser;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $archiveMessage;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $views;
@@ -305,6 +310,18 @@ class Content implements ViewableInterface, ArchiveableInterface
         return $this;
     }
 
+    public function setArchiveMessage(string $archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
+
+        return $this;
+    }
+
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
+    }
+    
     /**
      * Get isPublicEditable
      *

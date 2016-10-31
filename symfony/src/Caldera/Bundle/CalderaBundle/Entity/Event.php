@@ -135,6 +135,11 @@ class Event implements ParticipateableInterface, ViewableInterface, ArchiveableI
     protected $archiveUser;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $archiveMessage;
+
+    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="event")
      */
     protected $posts;
@@ -687,6 +692,18 @@ class Event implements ParticipateableInterface, ViewableInterface, ArchiveableI
         return $this->archiveUser;
     }
 
+    public function setArchiveMessage(string $archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
+
+        return $this;
+    }
+
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
+    }
+    
     /**
      * Add posts
      *

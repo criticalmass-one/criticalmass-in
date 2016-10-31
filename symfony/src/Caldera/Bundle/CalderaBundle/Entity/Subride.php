@@ -124,6 +124,11 @@ class Subride implements ArchiveableInterface
      */
     protected $archiveUser;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $archiveMessage;
+
     public function __construct()
     {
         $this->creationDateTime = new \DateTime();
@@ -536,5 +541,17 @@ class Subride implements ArchiveableInterface
     public function getArchiveUser()
     {
         return $this->archiveUser;
+    }
+
+    public function setArchiveMessage(string $archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
+
+        return $this;
+    }
+
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
     }
 }
