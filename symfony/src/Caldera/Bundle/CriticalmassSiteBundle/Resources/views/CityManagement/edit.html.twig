@@ -334,6 +334,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Zusammenfassung</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.archiveMessage) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="url">
+                                Zusammenfassung deiner Bearbeitung:
+                            </label>
+                            {{ form_widget(form.archiveMessage, { 'attr' : { 'class': 'form-control' } }) }}
+                            <p class="help-block">
+                                Hinterlasse bitte eine kurze Notiz, was du gerade geändert hast.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
