@@ -425,4 +425,14 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
 
         return '0,0';
     }
+
+    public function indexable(): bool
+    {
+        if (!$this->latitude || !$this->longitude) {
+            echo $this->latitude." ".$this->longitude."\n";
+            return false;
+        }
+
+        return true;
+    }
 }
