@@ -85,11 +85,21 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
         }
     };
 
-    CyclewaysIncidentPage.prototype.initIncidentSource = function () {
-
-    };
-
     CyclewaysIncidentPage.prototype._onMapChange = function () {
+        var url = Routing.generate('caldera_cycleways_incident_source');
+        var data = {
+
+        };
+
+        $.ajax({
+            dataType: "json",
+            url: url,
+            data: data,
+            success: function() {
+                alert('foo');
+            }
+        });
+        
         console.log(this._map.getBounds().getNorthWest());
     };
 

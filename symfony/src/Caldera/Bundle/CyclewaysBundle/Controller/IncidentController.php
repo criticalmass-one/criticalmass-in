@@ -13,7 +13,7 @@ class IncidentController extends Controller
         return $this->render('CalderaCyclewaysBundle:Incident:map.html.twig');
     }
 
-    public function loadIncidentsAction(Request $request): Response
+    public function loadAction(Request $request): Response
     {
         $finder = $this->container->get('fos_elastica.finder.criticalmass.incident');
 

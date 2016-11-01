@@ -5,6 +5,8 @@ caldera_cycleways_incident_map:
 caldera_cycleways_incident_source:
     path:     /incidents
     defaults: { _controller: CalderaCyclewaysBundle:Incident:load }
+    options:
+        expose: true
 
 caldera_cycleways_incident_map_city:
     path:     /{citySlug}
