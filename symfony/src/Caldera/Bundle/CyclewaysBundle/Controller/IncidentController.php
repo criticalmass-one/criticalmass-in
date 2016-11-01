@@ -18,13 +18,13 @@ class IncidentController extends Controller
         $finder = $this->container->get('fos_elastica.finder.criticalmass.incident');
 
         $topLeft = [
-            'lat' => $request->request->get('northWestLatitude'),
-            'lon' => $request->request->get('northWestLongitude')
+            'lat' => (float) $request->request->get('northWestLatitude'),
+            'lon' => (float) $request->request->get('northWestLongitude')
         ];
 
         $bottomRight = [
-            'lat' => $request->request->get('southEastLatitude'),
-            'lon' => $request->request->get('southEastLongitude')
+            'lat' => (float) $request->request->get('southEastLatitude'),
+            'lon' => (float) $request->request->get('southEastLongitude')
         ];
 
         $geoFilter = new \Elastica\Filter\GeoBoundingBox('pin', [$topLeft, $bottomRight]);
