@@ -87,20 +87,34 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
 
     CyclewaysIncidentPage.prototype._onMapChange = function () {
         var url = Routing.generate('caldera_cycleways_incident_source');
-        var data = {
+        var bounds = this._map.getBounds();
 
+        var northWest = bounds.getNorthWest();
+        var southEast = bounds.getSouthEast();
+
+        var data = {
+            'northWestLatitude': northWest.lat,
+            'northWestLongitude': northWest.lng,
+            'southEastLatitude': southEast.lat,
+            'southEastLongitude': southEast.lng
         };
+
+        var that = this;
 
         $.ajax({
             dataType: "json",
             url: url,
             data: data,
-            success: function() {
-                alert('foo');
+            success: function(jsonResult) {
+                that._refreshMapEntities(jsonResult);
             }
         });
-        
-        console.log(this._map.getBounds().getNorthWest());
+    };
+
+    CyclewaysIncidentPage.prototype._refreshMapEntities = function(jsonResult) {
+        for (var index = 0; index < jsonResult.length; ++index) {
+            console.log(jsonResult[index].title);
+        }
     };
 
     return CyclewaysIncidentPage;
