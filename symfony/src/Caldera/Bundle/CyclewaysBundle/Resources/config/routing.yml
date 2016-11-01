@@ -2,9 +2,9 @@ caldera_cycleways_incident_map:
     path:     /
     defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
 
-caldera_cycleways_geobound_loadincidents:
-    path:     /datasource/incidents
-    defaults: { _controller: CalderaCyclewaysBundle:GeoBound:loadIncidents }
+caldera_cycleways_incident_source:
+    path:     /incidents
+    defaults: { _controller: CalderaCyclewaysBundle:Incident:load }
 
 caldera_cycleways_incident_map_city:
     path:     /{citySlug}

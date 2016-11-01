@@ -3,11 +3,43 @@
 namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class IncidentController extends Controller
 {
     public function mapAction()
     {
         return $this->render('CalderaCyclewaysBundle:Incident:map.html.twig');
+    }
+
+    public function loadIncidentsAction(Request $request): Response
+    {
+        $finder = $this->container->get('fos_elastica.finder.criticalmass.incident');
+
+        $topLeft = [
+            'lat' => $request->request->get('northWestLatitude'),
+            'lon' => $request->request->get('northWestLongitude')
+        ];
+
+        $bottomRight = [
+            'lat' => $request->request->get('southEastLatitude'),
+            'lon' => $request->request->get('southEastLongitude')
+        ];
+
+        $geoFilter = new \Elastica\Filter\GeoBoundingBox('pin', [$topLeft, $bottomRight]);
+
+        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
+
+        $query = new \Elastica\Query($filteredQuery);
+
+        $query->setSize(15);
+
+        $results = $finder->find($query);
+
+        $serializer = $this->get('jms_serializer');
+        $serializedData = $serializer->serialize($results, 'json');
+
+        return new Response($serializedData);
     }
 }
