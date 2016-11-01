@@ -2,7 +2,6 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     CyclewaysIncidentPage = function (context, options) {
         this._CriticalService = CriticalService;
 
-        alert('foo');
         this._options = options;
 
         this._initContainer();
