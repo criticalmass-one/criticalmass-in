@@ -1,11 +1,11 @@
-caldera_frontpage:
+caldera_cycleways_incident_map:
     path:     /
-    defaults: { _controller: CalderaBundle:Frontpage:index }
+    defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
 
-caldera_caldera_geobound_loadincidents:
+caldera_cycleways_geobound_loadincidents:
     path:     /datasource/incidents
-    defaults: { _controller: CalderaBundle:GeoBound:loadIncidents }
+    defaults: { _controller: CalderaCyclewaysBundle:GeoBound:loadIncidents }
 
-caldera_caldera_city_map:
+caldera_cycleways_incident_map_city:
     path:     /{citySlug}
-    defaults: { _controller: CalderaBundle:Map:showCityMap }
+    defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
