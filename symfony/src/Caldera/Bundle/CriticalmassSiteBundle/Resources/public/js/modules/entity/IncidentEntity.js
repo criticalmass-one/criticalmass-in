@@ -20,8 +20,12 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
 
     IncidentEntity.prototype.addToLayer = function (markerLayer) {
         var latLngList = L.PolylineUtil.decode(this._polyline);
-
         var polyOptions = {color: 'red'};
+        var latLng = null;
+
+        if (this._latitude && this._longitude) {
+            latLng = L.latLng(this._latitude, this._longitude);
+        }
 
         if (this._geometryType == 'polygon') {
             this._layer = new L.polygon(latLngList, polyOptions);
@@ -39,7 +43,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
                 prefix: 'fa'
             });
 
-            this._layer = new L.marker(latLngList[0], {icon: icon});
+            this._layer = new L.marker(latLng, {icon: icon});
         }
 
         if (this._layer) {

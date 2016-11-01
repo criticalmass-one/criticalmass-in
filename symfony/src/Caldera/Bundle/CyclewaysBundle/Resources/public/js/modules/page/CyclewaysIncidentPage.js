@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
     CyclewaysIncidentPage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -15,16 +15,12 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     CyclewaysIncidentPage.prototype._options = null;
     CyclewaysIncidentPage.prototype._map = null;
     CyclewaysIncidentPage.prototype._hash = null;
-    CyclewaysIncidentPage.prototype._rideContainer = null;
-    CyclewaysIncidentPage.prototype._cityContainer = null;
-    CyclewaysIncidentPage.prototype._eventContainer = null;
+    CyclewaysIncidentPage.prototype._incidentContainer = null;
     CyclewaysIncidentPage.prototype._layers = [];
     CyclewaysIncidentPage.prototype._offlineModal = null;
 
     CyclewaysIncidentPage.prototype._initContainer = function () {
-        this._rideContainer = new Container();
-        this._eventContainer = new Container();
-        this._cityContainer = new Container();
+        this._incidentContainer = new Container();
     };
 
     CyclewaysIncidentPage.prototype._initMap = function () {
@@ -50,13 +46,11 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     };
 
     CyclewaysIncidentPage.prototype._initLayers = function () {
-        this._rideContainer.addToMap(this._map);
-        this._cityContainer.addToMap(this._map);
-        this._eventContainer.addToMap(this._map);
+        this._incidentContainer.addToMap(this._map);
     };
 
     CyclewaysIncidentPage.prototype._initLayerControl = function () {
-        this._rideContainer.addToControl(this._layers, 'Tour');
+        //this._rideContainer.addToControl(this._layers, 'Tour');
 
         this._layerControl = new MapLayerControl();
         this._layerControl.setLayers(this._layers);
@@ -71,18 +65,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
     };
 
     CyclewaysIncidentPage.prototype.setFocus = function () {
-        if (!location.hash) {
-            if (this._rideContainer.countEntities() == 1) {
-                var ride = this._rideContainer.getEntity(0);
-                this._map.setView([ride.getLatitude(), ride.getLongitude()], 12);
-            } else if (this._cityContainer.countEntities() > 0) {
-                var city = this._cityContainer.getEntity(0);
-                this._map.setView([city.getLatitude(), city.getLongitude()], 12);
-            } else {
-                var bounds = this._rideContainer.getBounds();
-                this._map.fitBounds(bounds);
-            }
-        }
+
     };
 
     CyclewaysIncidentPage.prototype._onMapChange = function () {
@@ -113,7 +96,10 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'LiveRideEntity', '
 
     CyclewaysIncidentPage.prototype._refreshMapEntities = function(jsonResult) {
         for (var index = 0; index < jsonResult.length; ++index) {
-            console.log(jsonResult[index].title);
+            var incidentJson = jsonResult[index];
+            var incident = CriticalService.factory.createIncident(incidentJson);
+
+            incident.addToContainer(this._incidentContainer);
         }
     };
 
