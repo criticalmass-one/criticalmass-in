@@ -15,6 +15,7 @@ require.config({
     paths:
     {
         "CalderaCityMapPage": "/bundles/calderacriticalmasssite/js/modules/page/CalderaCityMapPage",
+        "CyclewaysIncidentPage": "/bundles/calderacycleways/js/modules/page/CyclewaysIncidentPage",
         "CityEntity": "/bundles/calderacriticalmasssite/js/modules/entity/CityEntity",
         "WritePost": "/bundles/calderacriticalmasssite/js/modules/WritePost",
         "CriticalService": "/bundles/calderacriticalmasssite/js/modules/CriticalService",
