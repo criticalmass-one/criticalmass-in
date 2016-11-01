@@ -38,10 +38,6 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
 
         this._CriticalService.setMap(this._map);
 
-        this._map.setView([54, 10], 13);
-
-        var that = this;
-
         this._map.on('moveend', this._onMapChange.bind(this));
     };
 
@@ -64,8 +60,10 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
         this._locationControl.addTo(this._map);
     };
 
-    CyclewaysIncidentPage.prototype.setFocus = function () {
+    CyclewaysIncidentPage.prototype.setFocus = function (latitude, longitude) {
+        var latLng = L.latLng(latitude, longitude);
 
+        this._map.setView(latLng, 10);
     };
 
     CyclewaysIncidentPage.prototype._onMapChange = function () {

@@ -2,15 +2,22 @@
 
 namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IncidentController extends Controller
+class IncidentController extends AbstractController
 {
-    public function mapAction()
+    public function mapAction(Request $request, $citySlug)
     {
-        return $this->render('CalderaCyclewaysBundle:Incident:map.html.twig');
+        $city = $this->getCheckedCity($citySlug);
+
+        return $this->render(
+            'CalderaCyclewaysBundle:Incident:map.html.twig',
+            [
+                'city' => $city
+            ]
+        );
     }
 
     public function loadAction(Request $request): Response
@@ -34,7 +41,7 @@ class IncidentController extends Controller
         $query = new \Elastica\Query($filteredQuery);
 
         $query->setSize(15);
-        
+
         $results = $finder->find($query);
 
         $serializer = $this->get('jms_serializer');

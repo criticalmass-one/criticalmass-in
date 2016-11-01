@@ -28,7 +28,7 @@
         var options = {};
 
         CriticalMass.loadModule('CyclewaysIncidentPage', null, options, function (page) {
-
+            page.setFocus({{ city.latitude }}, {{ city.longitude }});
         });
     </script>
 {% endblock %}
