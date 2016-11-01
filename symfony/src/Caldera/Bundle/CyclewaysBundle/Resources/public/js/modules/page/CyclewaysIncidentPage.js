@@ -99,7 +99,9 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
             var incidentJson = jsonResult[index];
             var incident = CriticalService.factory.createIncident(incidentJson);
 
-            incident.addToContainer(this._incidentContainer);
+            if (!this._incidentContainer.hasEntity(incident.getId())) {
+                incident.addToContainer(this._incidentContainer, incident.getId());
+            }
         }
     };
 
