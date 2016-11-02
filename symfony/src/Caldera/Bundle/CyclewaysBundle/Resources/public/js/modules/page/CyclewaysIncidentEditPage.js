@@ -48,46 +48,47 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
     };
 
     CyclewaysIncidentEditPage.prototype._initDrawableStuff = function () {
-        var that = this;
-
-        this._map.map.on('draw:created', function (e) {
-            var type = e.layerType,
-                layer = e.layer;
-
-            if (type == 'polyline') {
-                var latLngList = layer.getLatLngs();
-
-                var polyline = L.PolylineUtil.encode(latLngList);
-
-                $('#incident_polyline').val(polyline);
-                $('#incident_geometryType').val('polyline');
-            }
-
-            if (type == 'polygon') {
-                var latLngList = layer.getLatLngs();
-
-                var polyline = L.PolylineUtil.encode(latLngList);
-
-                $('#incident_polyline').val(polyline);
-                $('#incident_geometryType').val('polygon');
-            }
-
-            if (type == 'marker') {
-                var latLng = layer.getLatLng();
-
-                $('#incident_latitude').val(latLng.lat);
-                $('#incident_longitude').val(latLng.lng);
-
-                $('#incident_geometryType').val('marker');
-
-                that._geocoding.searchAddressForLatLng(latLng.lat, latLng.lng, that._updateAddress);
-            }
-
-            // Do whatever else you need to. (save to db, add to map etc)
-            layer.addTo(that._drawnItems);
-        });
+        this._map.map.on('draw:created', this._onMapDrawCallback.bind(this));
+        this._map.map.on('draw:editstop', this._onMapDrawCallback.bind(this));
     };
-    
+
+    CyclewaysIncidentEditPage.prototype._onMapDrawCallback = function(e) {
+        var type = e.layerType,
+            layer = e.layer;
+
+        if (type == 'polyline') {
+            var latLngList = layer.getLatLngs();
+
+            var polyline = L.PolylineUtil.encode(latLngList);
+
+            $('#incident_polyline').val(polyline);
+            $('#incident_geometryType').val('polyline');
+        }
+
+        if (type == 'polygon') {
+            var latLngList = layer.getLatLngs();
+
+            var polyline = L.PolylineUtil.encode(latLngList);
+
+            $('#incident_polyline').val(polyline);
+            $('#incident_geometryType').val('polygon');
+        }
+
+        if (type == 'marker') {
+            var latLng = layer.getLatLng();
+
+            $('#incident_latitude').val(latLng.lat);
+            $('#incident_longitude').val(latLng.lng);
+
+            $('#incident_geometryType').val('marker');
+
+            this._geocoding.searchAddressForLatLng(latLng.lat, latLng.lng, this._updateAddress);
+        }
+
+        // Do whatever else you need to. (save to db, add to map etc)
+        layer.addTo(this._drawnItems);
+    };
+
     CyclewaysIncidentEditPage.prototype._updateAddress = function(address) {
         $('#incident_address').val(address);
     };
