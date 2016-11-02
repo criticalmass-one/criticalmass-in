@@ -25,10 +25,12 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
 
     CyclewaysIncidentEditPage.prototype._initDrawControl = function () {
         this._drawnItems = new L.FeatureGroup();
+        this._drawnItems.addTo(this._map.map);
 
         var drawControl = new L.Control.Draw({
             edit: {
-                featureGroup: this._drawnItems
+                featureGroup: this._drawnItems,
+                remove: true
             },
             draw: {
                 rectangle: false,
@@ -78,7 +80,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
             }
 
             // Do whatever else you need to. (save to db, add to map etc)
-            that._map.map.addLayer(layer);
+            layer.addTo(that._drawnItems);
         });
     };
 
