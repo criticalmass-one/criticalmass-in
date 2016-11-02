@@ -1,5 +1,7 @@
-define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
+define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], function () {
     CyclewaysIncidentEditPage = function () {
+        this._geocoding = new Geocoding();
+
         this._initMap();
         this._initMarkerIcon();
         this._initDrawControl();
@@ -9,6 +11,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
     CyclewaysIncidentEditPage.prototype._map = null;
     CyclewaysIncidentEditPage.prototype._markerIcon = null;
     CyclewaysIncidentEditPage.prototype._drawnItems = null;
+    CyclewaysIncidentEditPage.prototype._geocoding = null;
 
     CyclewaysIncidentEditPage.prototype._initMap = function () {
         this._map = new DrawMap('map');
@@ -76,6 +79,8 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
                 $('#incident_longitude').val(latLng.lng);
 
                 $('#incident_geometryType').val('marker');
+
+                that._geocoding.searchAddressForLatLng(latLng.lat, latLng.lng, that._updateAddress);
             }
 
             // Do whatever else you need to. (save to db, add to map etc)
@@ -83,6 +88,10 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
         });
     };
     
+    CyclewaysIncidentEditPage.prototype._updateAddress = function(address) {
+        $('#incident_address').val(address);
+    };
+
     CyclewaysIncidentEditPage.prototype.setView = function (centerLatLng, zoom) {
         this._map.setView(centerLatLng, zoom);
     };

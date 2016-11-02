@@ -49,6 +49,18 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.address) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Adresse:</label>
+                            {{ form_widget(form.address, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Adresse der Gefahrenstelle.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.incidentType) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Art der Gefahrenstelle:</label>
                             {{ form_widget(form.incidentType, { 'attr' : { 'class': 'form-control'} }) }}

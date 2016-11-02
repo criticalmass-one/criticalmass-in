@@ -33,6 +33,7 @@ class IncidentType extends AbstractType
             ->add('visibleFrom', DateType::class)
             ->add('visibleTo', DateType::class)
             ->add('expires', CheckboxType::class)
+            ->add('address', TextType::class)
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class);
     }
