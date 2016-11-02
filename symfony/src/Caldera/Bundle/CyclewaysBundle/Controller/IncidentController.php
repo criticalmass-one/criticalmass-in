@@ -4,8 +4,8 @@ namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\IncidentType;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
+use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
