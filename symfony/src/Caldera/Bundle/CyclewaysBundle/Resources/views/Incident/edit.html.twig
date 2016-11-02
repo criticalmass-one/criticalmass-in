@@ -1,0 +1,121 @@
+{% extends 'CalderaCyclewaysBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Gefahrenstellen in {{ city.city }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Gefahrenstellen in {{ city.city }} ergänzen
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 400px;">
+
+                </div>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+        <div class="row margin-top-medium">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Titel:</label>
+                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Worum geht es bei dieser Gefahrenstelle?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Beschreibung:</label>
+                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Bitte beschreibe diese Gefahrenstelle.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.incidentType) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Art der Gefahrenstelle:</label>
+                            {{ form_widget(form.incidentType, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Um welche Art von Gehfahrenstelle handelt es sich?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.expires) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Gefahrenstelle ist zeitlich begrenzt:</label>
+                            {{ form_widget(form.expires, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.visibleFrom) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Beginn:</label>
+                            {{ form_widget(form.visibleFrom, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Ab wann gilt diese Gefahrenstelle?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.visibleTo) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Ende:</label>
+                            {{ form_widget(form.visibleTo, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Bis wann gilt diese Gefahrenstelle?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right">
+                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        CriticalMass.loadModule('IncidentEditPage', null, null, function (incidentPage) {
+            incidentPage.setView([{{ city.latitude }}, {{ city.longitude }}], 10);
+        });
+    </script>
+{% endblock %}
