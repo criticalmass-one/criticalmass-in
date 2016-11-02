@@ -21,6 +21,10 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     const INCIDENT_ACCIDENT = 'Unfall';
     const INCIDENT_DEADLY_ACCIDENT = 'Tödlicher Unfall';
 
+    const DANGER_LEVEL_LOW = 'niedrig';
+    const DANGER_LEVEL_NORMAL = 'normal';
+    const DANGER_LEVEL_HIGH = 'hoch';
+
     const GEOMETRY_POLYLINE = 'Polyline';
     const GEOMETRY_MARKER = 'Marker';
 
@@ -70,7 +74,19 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     protected $incidentType;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $dangerLevel;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     */
+    protected $address;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
     protected $polyline;
@@ -252,6 +268,30 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     public function getPolyline()
     {
         return $this->polyline;
+    }
+
+    public function setAddress(string $address): Incident
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    public function setDangerLevel(string $dangerLevel): Incident
+    {
+        $this->dangerLevel = $dangerLevel;
+
+        return $this;
+    }
+
+    public function getDangerLevel()
+    {
+        return $this->dangerLevel;
     }
 
     /**
