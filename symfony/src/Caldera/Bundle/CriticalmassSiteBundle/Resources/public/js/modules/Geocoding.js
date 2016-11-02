@@ -35,6 +35,27 @@ define([], function () {
         });
     };
 
+    Geocoding.prototype._reverseQuery = function (query, successCallback) {
+        var baseUrl = 'https://nominatim.openstreetmap.org/reverse?';
+
+        var defaultOptions = {
+            format: 'json'
+        };
+
+        var jsonQuery = $.extend(query, defaultOptions);
+        var params = jQuery.param(jsonQuery);
+
+        var url = baseUrl + params;
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: url,
+            cache: false,
+            success: successCallback
+        });
+    };
+
     Geocoding.prototype.searchState = function (stateName, returnCallback) {
         var query = {
             state: stateName,
@@ -124,6 +145,19 @@ define([], function () {
         };
 
         this._query(query, successCallback);
+    };
+
+    Geocoding.prototype.searchAddressForLatLng = function (latitude, longitude, returnCallback) {
+        var query = {
+            lat: latitude,
+            lon: longitude
+        };
+        
+        var successCallback = function (data) {
+            returnCallback(data.display_name);
+        };
+
+        this._reverseQuery(query, successCallback);
     };
 
     return Geocoding;
