@@ -72,10 +72,9 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
             if (type == 'marker') {
                 var latLng = layer.getLatLng();
 
-                var polyline = L.PolylineUtil.encode([latLng]);
+                $('#incident_latitude').val(latLng.lat);
+                $('#incident_longitude').val(latLng.lng);
 
-                //alert(polyline);
-                $('#incident_polyline').val(polyline);
                 $('#incident_geometryType').val('marker');
             }
 
@@ -83,7 +82,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'], function () {
             layer.addTo(that._drawnItems);
         });
     };
-
+    
     CyclewaysIncidentEditPage.prototype.setView = function (centerLatLng, zoom) {
         this._map.setView(centerLatLng, zoom);
     };
