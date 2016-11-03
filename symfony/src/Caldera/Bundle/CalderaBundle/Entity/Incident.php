@@ -92,6 +92,36 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     protected $address;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     * @JMS\Expose
+     */
+    protected $houseNumber;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     * @JMS\Expose
+     */
+    protected $zipCode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $suburb;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $district;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
@@ -195,7 +225,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     {
         return $this->slug;
     }
-    
+
     /**
      * Set description
      *
@@ -492,5 +522,95 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * @param mixed $street
+     */
+    public function setStreet(string $street): Incident
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHouseNumber()
+    {
+        return $this->houseNumber;
+    }
+
+    /**
+     * @param mixed $houseNumber
+     */
+    public function setHouseNumber($houseNumber): Incident
+    {
+        $this->houseNumber = $houseNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    /**
+     * @param mixed $zipCode
+     */
+    public function setZipCode($zipCode): Incident
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSuburb()
+    {
+        return $this->suburb;
+    }
+
+    /**
+     * @param mixed $suburb
+     */
+    public function setSuburb($suburb): Incident
+    {
+        $this->suburb = $suburb;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDistrict()
+    {
+        return $this->district;
+    }
+
+    /**
+     * @param mixed $district
+     */
+    public function setDistrict($district): Incident
+    {
+        $this->district = $district;
+
+        return $this;
     }
 }
