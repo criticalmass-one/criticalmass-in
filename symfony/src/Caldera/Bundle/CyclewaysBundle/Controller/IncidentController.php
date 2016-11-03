@@ -123,7 +123,7 @@ class IncidentController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Incident:edit.html.twig',
+            'CalderaCyclewaysBundle:Incident:edit.html.twig',
             array(
                 'incident' => $incident,
                 'form' => $form->createView(),
