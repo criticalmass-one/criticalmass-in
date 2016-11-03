@@ -15,20 +15,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Incident implements CoordinateInterface, ElasticSearchPinInterface
 {
-    const INCIDENT_RAGE = 'Road Rage';
-    const INCIDENT_ROADWORKS = 'Arbeitsstelle';
-    const INCIDENT_DANGER = 'Gefahrenstelle';
-    const INCIDENT_POLICE = 'Polizeikontrolle';
-    const INCIDENT_ACCIDENT = 'Unfall';
-    const INCIDENT_DEADLY_ACCIDENT = 'Tödlicher Unfall';
+    const INCIDENT_RAGE = 'rage';
+    const INCIDENT_ROADWORKS = 'roadworks';
+    const INCIDENT_DANGER = 'danger';
+    const INCIDENT_POLICE = 'police';
+    const INCIDENT_ACCIDENT = 'accident';
+    const INCIDENT_DEADLY_ACCIDENT = 'deadly_accident';
 
-    const DANGER_LEVEL_NONE = 'ungefährlich';
-    const DANGER_LEVEL_LOW = 'niedrig';
+    const DANGER_LEVEL_NONE = 'none';
+    const DANGER_LEVEL_LOW = 'low';
     const DANGER_LEVEL_NORMAL = 'normal';
-    const DANGER_LEVEL_HIGH = 'hoch';
+    const DANGER_LEVEL_HIGH = 'high';
 
-    const GEOMETRY_POLYLINE = 'Polyline';
-    const GEOMETRY_MARKER = 'Marker';
+    const GEOMETRY_POLYLINE = 'polyline';
+    const GEOMETRY_MARKER = 'marker';
 
     /**
      * @ORM\Id
