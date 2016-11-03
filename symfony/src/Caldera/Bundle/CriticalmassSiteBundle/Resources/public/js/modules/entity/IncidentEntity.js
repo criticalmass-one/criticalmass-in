@@ -19,12 +19,16 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity.prototype._layer = null;
 
     IncidentEntity.prototype.addToLayer = function (markerLayer) {
-        var latLngList = L.PolylineUtil.decode(this._polyline);
+        var latLngList = null;
         var polyOptions = {color: 'red'};
         var latLng = null;
 
         if (this._latitude && this._longitude) {
             latLng = L.latLng(this._latitude, this._longitude);
+        }
+
+        if (this._polyline) {
+            latLngList = L.PolylineUtil.decode(this._polyline);
         }
 
         if (this._geometryType == 'polygon') {
