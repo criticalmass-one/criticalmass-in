@@ -50,6 +50,12 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     protected $city;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $slug;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @JMS\Expose
      */
@@ -178,6 +184,18 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
         return $this->title;
     }
 
+    public function setSlug(string $slug): Incident
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    
     /**
      * Set description
      *
