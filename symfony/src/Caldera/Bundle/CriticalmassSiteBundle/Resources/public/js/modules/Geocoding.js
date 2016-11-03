@@ -152,7 +152,20 @@ define([], function () {
             lat: latitude,
             lon: longitude
         };
-        
+
+        var successCallback = function (data) {
+            returnCallback(data.address);
+        };
+
+        this._reverseQuery(query, successCallback);
+    };
+
+    Geocoding.prototype.searchNameForLatLng = function (latitude, longitude, returnCallback) {
+        var query = {
+            lat: latitude,
+            lon: longitude
+        };
+
         var successCallback = function (data) {
             returnCallback(data.display_name);
         };
