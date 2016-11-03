@@ -96,6 +96,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.dangerLevel) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Höhe der Gefahr:</label>
+                            {{ form_widget(form.dangerLevel, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">
+                                Wie gefährlich ist es hier?
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-6">

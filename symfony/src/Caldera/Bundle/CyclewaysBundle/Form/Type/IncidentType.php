@@ -33,6 +33,16 @@ class IncidentType extends AbstractType
                     ]
                 ]
             )
+            ->add('dangerLevel', ChoiceType::class,
+                [
+                    'choices' => [
+                        'ungefährlich' => Incident::DANGER_LEVEL_NONE,
+                        'niedrig' => Incident::DANGER_LEVEL_LOW,
+                        'normal' => Incident::DANGER_LEVEL_NORMAL,
+                        'hoch' => Incident::DANGER_LEVEL_HIGH
+                    ]
+                ]
+            )
             ->add('visibleFrom', DateType::class)
             ->add('visibleTo', DateType::class)
             ->add('expires', CheckboxType::class)
