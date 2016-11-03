@@ -36,7 +36,11 @@ class IncidentType extends AbstractType
             ->add('visibleFrom', DateType::class)
             ->add('visibleTo', DateType::class)
             ->add('expires', CheckboxType::class)
-            ->add('address', TextType::class)
+            ->add('street', TextType::class)
+            ->add('houseNumber', TextType::class)
+            ->add('suburb', TextType::class)
+            ->add('district', TextType::class)
+            ->add('zipCode', HiddenType::class)
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class);
     }

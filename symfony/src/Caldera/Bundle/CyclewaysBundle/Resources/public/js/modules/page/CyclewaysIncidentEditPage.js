@@ -90,7 +90,12 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
     };
 
     CyclewaysIncidentEditPage.prototype._updateAddress = function(address) {
-        $('#incident_address').val(address);
+        $('#incident_street').val(address.road);
+        $('#incident_houseNumber').val(address.house_number);
+        $('#incident_suburb').val(address.suburb);
+        $('#incident_district').val(address.city_district);
+        $('#incident_zipCode').val(address.postcode);
+
     };
 
     CyclewaysIncidentEditPage.prototype.setView = function (centerLatLng, zoom) {
