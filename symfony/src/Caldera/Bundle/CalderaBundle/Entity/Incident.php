@@ -22,6 +22,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     const INCIDENT_ACCIDENT = 'Unfall';
     const INCIDENT_DEADLY_ACCIDENT = 'Tödlicher Unfall';
 
+    const DANGER_LEVEL_NONE = 'ungefährlich';
     const DANGER_LEVEL_LOW = 'niedrig';
     const DANGER_LEVEL_NORMAL = 'normal';
     const DANGER_LEVEL_HIGH = 'hoch';
