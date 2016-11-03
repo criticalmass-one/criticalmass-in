@@ -6,6 +6,7 @@ use Caldera\Bundle\CalderaBundle\EntityInterface\CoordinateInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\IncidentRepository")
@@ -57,12 +58,14 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      * @JMS\Expose
      */
     protected $description;
