@@ -6,6 +6,7 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
+use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -100,7 +101,11 @@ class IncidentController extends AbstractController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            
+            $slug = new Slug($incident->getTitle().'-'.$incident->getAddress());
+            $incident->setSlug($slug);
+
+            $em->persist($incident);
             $em->flush();
 
             $form = $this->createForm(
