@@ -1,6 +1,7 @@
-define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], function () {
+define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'IncidentMarkerIcon'], function () {
     CyclewaysIncidentEditPage = function () {
         this._geocoding = new Geocoding();
+        this._incidentMarkerIcon = new IncidentMarkerIcon();
 
         this._initMap();
         this._initDrawControl();
@@ -11,6 +12,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
     CyclewaysIncidentEditPage.prototype._markerIcon = null;
     CyclewaysIncidentEditPage.prototype._drawnItems = null;
     CyclewaysIncidentEditPage.prototype._geocoding = null;
+    CyclewaysIncidentEditPage.prototype._incidentMarkerIcon = null;
 
     CyclewaysIncidentEditPage.prototype._initMap = function () {
         this._map = new DrawMap('map');
@@ -92,51 +94,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
     };
 
     CyclewaysIncidentEditPage.prototype._createIcon = function () {
-        var markerColor = 'blue';
-        var markerIcon = 'fa-bomb';
-        var markerIconColor = 'white';
-        var dangerLevel = this._getCurrentDangerLevel();
-        var incidentType = this._getCurrentIncidentType();
-
-        switch (dangerLevel) {
-            case 'low':
-                markerColor = 'yellow';
-                markerIcon = 'fa-exclamation';
-                break;
-            case 'normal':
-                markerColor = 'orange';
-                markerIcon = 'fa-exclamation';
-                break;
-            case 'high':
-                markerColor = 'red';
-                markerIcon = 'fa-exclamation';
-                break;
-        }
-
-        switch (incidentType) {
-            case 'accident':
-                markerColor = 'white';
-                markerIconColor = 'black';
-                markerIcon = 'fa-ambulance';
-                break;
-            case 'deadly_accident':
-                markerColor = 'black';
-                markerIcon = 'fa-ambulance';
-                break;
-            case 'high':
-                markerColor = 'red';
-                break;
-        }
-
-        console.log(dangerLevel, incidentType);
-
-        this._markerIcon = L.ExtraMarkers.icon({
-            icon: markerIcon,
-            markerColor: markerColor,
-            iconColor: markerIconColor,
-            shape: 'square',
-            prefix: 'fa'
-        });
+        this._markerIcon = this._incidentMarkerIcon.createMarkerIcon(this._getCurrentIncidentType(), this._getCurrentDangerLevel());
     };
 
     CyclewaysIncidentEditPage.prototype._getCurrentDangerLevel = function () {
