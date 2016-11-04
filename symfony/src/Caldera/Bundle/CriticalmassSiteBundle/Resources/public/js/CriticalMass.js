@@ -80,6 +80,7 @@ require.config({
         "PositionMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/PositionMarker",
         "SubrideMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SubrideMarker",
         "SnapablePhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SnapablePhotoMarker",
+        "IncidentMarkerIcon": "/bundles/calderacriticalmasssite/js/modules/map/icon/IncidentMarkerIcon",
         "Search": "/bundles/calderacriticalmasssite/js/modules/Search",
         "leaflet": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/calderacriticalmasssite/js/external/leaflet/L.activearea",
