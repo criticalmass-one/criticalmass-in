@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton'], function (CriticalService) {
+define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton', 'IncidentMarker'], function (CriticalService) {
     IncidentEntity = function () {
     };
 
@@ -47,11 +47,12 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
                 prefix: 'fa'
             });
 
-            this._layer = new L.marker(latLng, {icon: icon});
+            this._layer = new IncidentMarker(latLng);
         }
 
         if (this._layer) {
-            markerLayer.addLayer(this._layer);
+            this._layer.addToLayer(markerLayer);
+            //markerLayer.addLayer(this._layer);
 
             this._initPopup();
 

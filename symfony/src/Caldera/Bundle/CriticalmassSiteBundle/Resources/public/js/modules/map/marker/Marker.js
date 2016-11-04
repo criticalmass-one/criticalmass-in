@@ -7,6 +7,7 @@ define(['leaflet'], function () {
     Marker.prototype._latLng = null;
     Marker.prototype._draggable = false;
     Marker.prototype._map = false;
+    Marker.prototype._layer = false;
     Marker.prototype._icon = null;
     Marker.prototype._baseIconUrl = '/bundles/calderacriticalmasssite/images/marker/';
     Marker.prototype._isMapped = false;
@@ -29,6 +30,10 @@ define(['leaflet'], function () {
         }
     };
 
+    Marker.prototype.addTo = function (layer) {
+
+    };
+
     Marker.prototype.addToMap = function (map) {
         this._initIcon();
 
@@ -40,6 +45,20 @@ define(['leaflet'], function () {
 
         this._map = map;
         this._marker.addTo(this._map.map);
+
+        this._isMapped = true;
+    };
+
+    Marker.prototype.addToLayer = function (layer) {
+        this._initIcon();
+
+        this._marker = L.marker(this._latLng,
+            {
+                icon: this._icon,
+                draggable: this._draggable
+            });
+
+        this._marker.addTo(layer);
 
         this._isMapped = true;
     };
