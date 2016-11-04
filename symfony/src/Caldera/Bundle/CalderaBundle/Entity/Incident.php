@@ -180,6 +180,12 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
      */
     protected $creationDateTime;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $permalink;
+
     public function __construct()
     {
         $dateInterval = new \DateInterval('P3M');
@@ -634,6 +640,18 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     {
         $this->district = $district;
 
+        return $this;
+    }
+    
+    public function getPermalink()
+    {
+        return $this->permalink;
+    }
+    
+    public function setPermalink(string $permalink): Incident
+    {
+        $this->permalink = $permalink;
+        
         return $this;
     }
 }
