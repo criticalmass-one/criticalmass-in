@@ -20,11 +20,13 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
         this._map.map.on('draw:created', this._onMapDrawCallback.bind(this));
         this._map.map.on('draw:editstop', this._onMapDrawCallback.bind(this));
         $('#incident_dangerLevel').on('change', this._updateMarkerIcon.bind(this));
+        $('#incident_incidentType').on('change', this._updateMarkerIcon.bind(this));
     };
 
     CyclewaysIncidentEditPage.prototype._initDrawControl = function () {
         this._drawnItems = new L.FeatureGroup();
         this._drawnItems.addTo(this._map.map);
+        this._createIcon();
 
         var drawControl = new L.Control.Draw({
             edit: {
@@ -37,7 +39,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
                 polyline: false,
                 polygon: false,
                 marker: {
-                    icon: this._createIcon()
+                    icon: this._markerIcon
                 }
             }
         });
@@ -73,40 +75,65 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
     };
 
     CyclewaysIncidentEditPage.prototype._updateMarkerIcon = function(element) {
-        this._drawnItems.clearLayers();
+        this._createIcon();
 
         var latitude = $('#incident_latitude').val();
         var longitude = $('#incident_longitude').val();
 
-        var marker = L.marker([latitude, longitude], {
-            icon: this._createIcon()
-        });
+        if (latitude && longitude) {
+            this._drawnItems.clearLayers();
 
-        marker.addTo(this._drawnItems);
+            var marker = L.marker([latitude, longitude], {
+                icon: this._markerIcon
+            });
+
+            marker.addTo(this._drawnItems);
+        }
     };
 
     CyclewaysIncidentEditPage.prototype._createIcon = function () {
         var markerColor = 'blue';
+        var markerIcon = 'fa-bomb';
+        var markerIconColor = 'white';
         var dangerLevel = this._getCurrentDangerLevel();
+        var incidentType = this._getCurrentIncidentType();
 
         switch (dangerLevel) {
             case 'low':
                 markerColor = 'yellow';
+                markerIcon = 'fa-exclamation';
                 break;
             case 'normal':
                 markerColor = 'orange';
+                markerIcon = 'fa-exclamation';
+                break;
+            case 'high':
+                markerColor = 'red';
+                markerIcon = 'fa-exclamation';
+                break;
+        }
+
+        switch (incidentType) {
+            case 'accident':
+                markerColor = 'white';
+                markerIconColor = 'black';
+                markerIcon = 'fa-ambulance';
+                break;
+            case 'deadly_accident':
+                markerColor = 'black';
+                markerIcon = 'fa-ambulance';
                 break;
             case 'high':
                 markerColor = 'red';
                 break;
-            default:
-                markerColor = 'blue';
-                break;
         }
 
-        return L.ExtraMarkers.icon({
-            icon: 'fa-bomb',
+        console.log(dangerLevel, incidentType);
+
+        this._markerIcon = L.ExtraMarkers.icon({
+            icon: markerIcon,
             markerColor: markerColor,
+            iconColor: markerIconColor,
             shape: 'square',
             prefix: 'fa'
         });
@@ -114,6 +141,10 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
 
     CyclewaysIncidentEditPage.prototype._getCurrentDangerLevel = function () {
         return $('#incident_dangerLevel').val();
+    };
+
+    CyclewaysIncidentEditPage.prototype._getCurrentIncidentType = function () {
+        return $('#incident_incidentType').val();
     };
 
     CyclewaysIncidentEditPage.prototype.setView = function (centerLatLng, zoom) {
