@@ -3,9 +3,8 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
         this._geocoding = new Geocoding();
 
         this._initMap();
-        this._initMarkerIcon();
         this._initDrawControl();
-        this._initDrawableStuff();
+        this._initEventListeners();
     };
 
     CyclewaysIncidentEditPage.prototype._map = null;
@@ -17,13 +16,10 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
         this._map = new DrawMap('map');
     };
 
-    CyclewaysIncidentEditPage.prototype._initMarkerIcon = function () {
-        this._markerIcon = L.ExtraMarkers.icon({
-            icon: 'fa-bomb',
-            markerColor: 'red',
-            shape: 'round',
-            prefix: 'fa'
-        });
+    CyclewaysIncidentEditPage.prototype._initEventListeners = function () {
+        this._map.map.on('draw:created', this._onMapDrawCallback.bind(this));
+        this._map.map.on('draw:editstop', this._onMapDrawCallback.bind(this));
+        $('#incident_dangerLevel').on('change', this._updateMarkerIcon.bind(this));
     };
 
     CyclewaysIncidentEditPage.prototype._initDrawControl = function () {
@@ -39,17 +35,12 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
                 rectangle: false,
                 circle: false,
                 marker: {
-                    icon: this._markerIcon
+                    icon: this._createIcon()
                 }
             }
         });
 
         this._map.map.addControl(drawControl);
-    };
-
-    CyclewaysIncidentEditPage.prototype._initDrawableStuff = function () {
-        this._map.map.on('draw:created', this._onMapDrawCallback.bind(this));
-        this._map.map.on('draw:editstop', this._onMapDrawCallback.bind(this));
     };
 
     CyclewaysIncidentEditPage.prototype._onMapDrawCallback = function(e) {
@@ -95,13 +86,55 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
         $('#incident_suburb').val(address.suburb);
         $('#incident_district').val(address.city_district);
         $('#incident_zipCode').val(address.postcode);
+    };
 
+    CyclewaysIncidentEditPage.prototype._updateMarkerIcon = function(element) {
+        this._drawnItems.clearLayers();
+
+        var latitude = $('#incident_latitude').val();
+        var longitude = $('#incident_longitude').val();
+
+        var marker = L.marker([latitude, longitude], {
+            icon: this._createIcon()
+        });
+
+        marker.addTo(this._drawnItems);
+    };
+
+    CyclewaysIncidentEditPage.prototype._createIcon = function () {
+        var markerColor = 'blue';
+        var dangerLevel = this._getCurrentDangerLevel();
+
+        switch (dangerLevel) {
+            case 'low':
+                markerColor = 'yellow';
+                break;
+            case 'normal':
+                markerColor = 'orange';
+                break;
+            case 'high':
+                markerColor = 'red';
+                break;
+            default:
+                markerColor = 'blue';
+                break;
+        }
+
+        return L.ExtraMarkers.icon({
+            icon: 'fa-bomb',
+            markerColor: markerColor,
+            shape: 'square',
+            prefix: 'fa'
+        });
+    };
+
+    CyclewaysIncidentEditPage.prototype._getCurrentDangerLevel = function () {
+        return $('#incident_dangerLevel').val();
     };
 
     CyclewaysIncidentEditPage.prototype.setView = function (centerLatLng, zoom) {
         this._map.setView(centerLatLng, zoom);
     };
-
 
     return CyclewaysIncidentEditPage;
 });
