@@ -18,6 +18,15 @@
                 <a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
                     Cycleways
                 </a>
+
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{ path('caldera_cycleways_incident_add', { citySlug: 'hamburg' }) }}">
+                            <i class="fa fa-plus"></i>
+                            Eintrag hinzufügen
+                        </a>
+                    </li>
+                </ul>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
