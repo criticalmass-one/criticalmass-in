@@ -98,7 +98,6 @@ define([], function () {
                 } else {
                     entity['_' + entityProperty] = object[property];
                 }
-
             }
         }
 

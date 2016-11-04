@@ -12,6 +12,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity.prototype._description = null;
     IncidentEntity.prototype._geometryType = null;
     IncidentEntity.prototype._incidentType = null;
+    IncidentEntity.prototype._dangerLevel = null;
     IncidentEntity.prototype._polyline = null;
     IncidentEntity.prototype._expires = null;
     IncidentEntity.prototype._visibleFrom = null;
@@ -40,7 +41,11 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         }
 
         if (this._geometryType == 'marker') {
-            this._layer = new IncidentMarker(latLng);
+            this._layer = new IncidentMarker(
+                latLng,
+                this._incidentType,
+                this._dangerLevel
+            );
         }
 
         if (this._layer) {
