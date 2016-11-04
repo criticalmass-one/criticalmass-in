@@ -6,6 +6,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -44,6 +45,7 @@ class IncidentType extends AbstractType
                     ]
                 ]
             )
+            ->add('dateTime', DateTimeType::class)
             ->add('visibleFrom', DateType::class)
             ->add('visibleTo', DateType::class)
             ->add('expires', CheckboxType::class)
