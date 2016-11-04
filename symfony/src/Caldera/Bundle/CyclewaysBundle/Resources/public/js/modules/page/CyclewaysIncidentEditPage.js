@@ -20,7 +20,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
 
     CyclewaysIncidentEditPage.prototype._initEventListeners = function () {
         this._map.map.on('draw:created', this._onMapDrawCallback.bind(this));
-        this._map.map.on('draw:editstop', this._onMapDrawCallback.bind(this));
+        this._map.map.on('draw:editstop', this._onMapEditCallback.bind(this));
         $('#incident_dangerLevel').on('change', this._updateMarkerIcon.bind(this));
         $('#incident_incidentType').on('change', this._updateMarkerIcon.bind(this));
     };
@@ -66,6 +66,16 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
 
         // Do whatever else you need to. (save to db, add to map etc)
         layer.addTo(this._drawnItems);
+    };
+
+    CyclewaysIncidentEditPage.prototype._onMapEditCallback = function(e) {
+        var element = this._drawnItems.getLayers().pop();
+        var latLng = element.getLatLng();
+
+        $('#incident_latitude').val(latLng.lat);
+        $('#incident_longitude').val(latLng.lng);
+
+        this._geocoding.searchAddressForLatLng(latLng.lat, latLng.lng, this._updateAddress);
     };
 
     CyclewaysIncidentEditPage.prototype._updateAddress = function(address) {
