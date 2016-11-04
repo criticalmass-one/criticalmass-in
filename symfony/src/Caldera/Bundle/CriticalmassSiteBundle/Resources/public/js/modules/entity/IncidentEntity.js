@@ -40,13 +40,6 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         }
 
         if (this._geometryType == 'marker') {
-            var icon = markerIcon = L.ExtraMarkers.icon({
-                icon: 'fa-exclamation',
-                markerColor: 'red',
-                shape: 'round',
-                prefix: 'fa'
-            });
-
             this._layer = new IncidentMarker(latLng);
         }
 
