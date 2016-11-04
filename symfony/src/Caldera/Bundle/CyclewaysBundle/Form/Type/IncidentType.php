@@ -29,7 +29,8 @@ class IncidentType extends AbstractType
                         'Arbeitsstelle' => Incident::INCIDENT_ROADWORKS,
                         'Unfall' => Incident::INCIDENT_ACCIDENT,
                         'Tödlicher Unfall' => Incident::INCIDENT_DEADLY_ACCIDENT,
-                        'Polizeikontrolle' => Incident::INCIDENT_POLICE
+                        'Polizeikontrolle' => Incident::INCIDENT_POLICE,
+                        'schlechte Infrastruktur' => Incident::INCIDENT_INFRASTRUCTURE
                     ]
                 ]
             )
