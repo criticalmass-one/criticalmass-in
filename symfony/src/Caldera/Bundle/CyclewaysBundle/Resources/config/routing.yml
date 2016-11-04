@@ -20,3 +20,8 @@ caldera_cycleways_incident_add:
     path:     /{citySlug}/addincident
     defaults: { _controller: CalderaCyclewaysBundle:Incident:add }
 
+caldera_cycleways_incident_show:
+    path:     /{slug}
+    defaults: { _controller: CalderaCyclewaysBundle:Incident:show }
+    options:
+        expose: true

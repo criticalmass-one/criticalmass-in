@@ -72,8 +72,11 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         this._modal.resetButtons();
         this._modal.addButton(new CloseModalButton());
 
+        var url = Routing.generate('caldera_cycleways_incident_show', { slug: this._slug });
+        
         var focusButton = new ModalButton();
         focusButton.setCaption('Anzeigen');
+        focusButton.setHref(url);
         focusButton.setClass('btn-success');
 
         var that = this;
