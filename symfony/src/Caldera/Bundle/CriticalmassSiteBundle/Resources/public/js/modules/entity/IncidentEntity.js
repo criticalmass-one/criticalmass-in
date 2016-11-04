@@ -52,7 +52,6 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
 
         if (this._layer) {
             this._layer.addToLayer(markerLayer);
-            //markerLayer.addLayer(this._layer);
 
             this._initPopup();
 
