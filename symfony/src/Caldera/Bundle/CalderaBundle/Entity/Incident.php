@@ -145,6 +145,12 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     protected $longitude = null;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     */
+    protected $dateTime;
+
+    /**
      * @ORM\Column(type="boolean")
      * @JMS\Expose
      */
@@ -345,6 +351,18 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     public function getDangerLevel()
     {
         return $this->dangerLevel;
+    }
+
+    public function setDateTime(\DateTime $dateTime): Incident
+    {
+        $this->dateTime = $dateTime;
+
+        return $this;
+    }
+
+    public function getDateTime()
+    {
+        return $this->dateTime;
     }
 
     /**
