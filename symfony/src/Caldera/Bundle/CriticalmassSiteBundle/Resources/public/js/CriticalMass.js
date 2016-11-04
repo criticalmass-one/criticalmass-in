@@ -17,6 +17,7 @@ require.config({
         "CalderaCityMapPage": "/bundles/calderacriticalmasssite/js/modules/page/CalderaCityMapPage",
         "CyclewaysIncidentPage": "/bundles/calderacycleways/js/modules/page/CyclewaysIncidentPage",
         "CyclewaysIncidentEditPage": "/bundles/calderacycleways/js/modules/page/CyclewaysIncidentEditPage",
+        "CyclewaysIncidentShowPage": "/bundles/calderacycleways/js/modules/page/CyclewaysIncidentShowPage",
         "CityEntity": "/bundles/calderacriticalmasssite/js/modules/entity/CityEntity",
         "WritePost": "/bundles/calderacriticalmasssite/js/modules/WritePost",
         "CriticalService": "/bundles/calderacriticalmasssite/js/modules/CriticalService",
