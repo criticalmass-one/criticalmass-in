@@ -34,6 +34,8 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
             draw: {
                 rectangle: false,
                 circle: false,
+                polyline: false,
+                polygon: false,
                 marker: {
                     icon: this._createIcon()
                 }
@@ -46,24 +48,6 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding'], fun
     CyclewaysIncidentEditPage.prototype._onMapDrawCallback = function(e) {
         var type = e.layerType,
             layer = e.layer;
-
-        if (type == 'polyline') {
-            var latLngList = layer.getLatLngs();
-
-            var polyline = L.PolylineUtil.encode(latLngList);
-
-            $('#incident_polyline').val(polyline);
-            $('#incident_geometryType').val('polyline');
-        }
-
-        if (type == 'polygon') {
-            var latLngList = layer.getLatLngs();
-
-            var polyline = L.PolylineUtil.encode(latLngList);
-
-            $('#incident_polyline').val(polyline);
-            $('#incident_geometryType').val('polygon');
-        }
 
         if (type == 'marker') {
             var latLng = layer.getLatLng();
