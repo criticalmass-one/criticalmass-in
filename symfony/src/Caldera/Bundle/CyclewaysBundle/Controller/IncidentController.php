@@ -6,10 +6,12 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
+use Curl\Curl;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class IncidentController extends AbstractController
 {
@@ -112,6 +114,8 @@ class IncidentController extends AbstractController
             $slug = new Slug($incident->getTitle().' '.$incident->getStreet().' '.$incident->getDistrict().' '.$incident->getCity()->getCity().' '.$incident->getId());
             $incident->setSlug($slug);
 
+            $this->createPermalink($incident);
+
             // now save incident with slugged id
             $em->persist($incident);
             $em->flush();
@@ -138,5 +142,37 @@ class IncidentController extends AbstractController
                 'city' => $city
             )
         );
+    }
+
+    protected function createPermalink(Incident $incident)
+    {
+        $url = $this->generateUrl(
+            'caldera_cycleways_incident_show',
+            [
+                'slug' => $incident->getSlug()
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        $apiUrl =  $this->getParameter('sqibe.api_url');
+
+        $data = [
+            'url' => $url,
+            'title' => $incident->getTitle(),
+            'format'   => 'json',
+            'action'   => 'shorturl',
+            'username' => $this->getParameter('sqibe.api_username'),
+            'password' => $this->getParameter('sqibe.api_password')
+        ];
+
+        $curl = new Curl();
+        $curl->post(
+            $apiUrl,
+            $data
+        );
+
+        $permalink = $curl->response->shorturl;
+
+        $incident->setPermalink($permalink);
     }
 }
