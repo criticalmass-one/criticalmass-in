@@ -12,6 +12,10 @@ caldera_cycleways_incident_map_city:
     path:     /{citySlug}
     defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
 
+caldera_cycleways_incident_list_city:
+    path:     /{citySlug}/list
+    defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
+
 caldera_cycleways_incident_add:
     path:     /{citySlug}/addincident
     defaults: { _controller: CalderaCyclewaysBundle:Incident:add }
