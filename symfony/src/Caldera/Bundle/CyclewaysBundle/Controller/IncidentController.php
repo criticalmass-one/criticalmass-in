@@ -101,10 +101,18 @@ class IncidentController extends AbstractController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $incident->setCity($city);
             
-            $slug = new Slug($incident->getTitle().'-'.$incident->getAddress());
+            // first persist incident to create an id
+            $em->persist($incident);
+            $em->flush();
+
+            // now use id
+            $slug = new Slug($incident->getTitle().' '.$incident->getStreet().' '.$incident->getDistrict().' '.$incident->getCity()->getCity().' '.$incident->getId());
             $incident->setSlug($slug);
 
+            // now save incident with slugged id
             $em->persist($incident);
             $em->flush();
 
