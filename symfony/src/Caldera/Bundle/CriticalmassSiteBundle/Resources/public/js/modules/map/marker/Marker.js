@@ -31,25 +31,6 @@ define(['leaflet'], function () {
     };
 
     Marker.prototype.addTo = function (layer) {
-
-    };
-
-    Marker.prototype.addToMap = function (map) {
-        this._initIcon();
-
-        this._marker = L.marker(this._latLng,
-            {
-                icon: this._icon,
-                draggable: this._draggable
-            });
-
-        this._map = map;
-        this._marker.addTo(this._map.map);
-
-        this._isMapped = true;
-    };
-
-    Marker.prototype.addToLayer = function (layer) {
         this._initIcon();
 
         this._marker = L.marker(this._latLng,
@@ -59,8 +40,20 @@ define(['leaflet'], function () {
             });
 
         this._marker.addTo(layer);
+    };
 
+    Marker.prototype.addToMap = function (map) {
+        this._map = map;
         this._isMapped = true;
+
+        this.addTo(map.map);
+    };
+
+    Marker.prototype.addToLayer = function (layer) {
+        this._layer = layer;
+        this._isMapped = true;
+
+        this.addTo(layer);
     };
 
     Marker.prototype.removeFromMap = function (map) {
