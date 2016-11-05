@@ -31,7 +31,21 @@
                         Details
                     </div>
                     <div class="panel-body">
-                        Panel content
+                        <dl>
+                            <dt>
+                                Adresse
+                            </dt>
+                            <dd>
+                                {{ incident.street }}, {{ incident.city.city }}
+                            </dd>
+
+                            <dt>
+                                Zeitpunkt der Meldung
+                            </dt>
+                            <dd>
+                                {{ incident.creationDateTime|date('d.m.Y H:i') }} Uhr
+                            </dd>
+                        </dl>
                     </div>
                 </div>
             </div>
