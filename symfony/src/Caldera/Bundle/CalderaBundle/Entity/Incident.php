@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CalderaBundle\Entity;
 
 use Caldera\Bundle\CalderaBundle\EntityInterface\CoordinateInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
+use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="incident")
  * @JMS\ExclusionPolicy("all")
  */
-class Incident implements CoordinateInterface, ElasticSearchPinInterface
+class Incident implements CoordinateInterface, ElasticSearchPinInterface, ViewableInterface
 {
     const INCIDENT_RAGE = 'rage';
     const INCIDENT_ROADWORKS = 'roadworks';
@@ -208,6 +209,11 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
      * @JMS\Expose
      */
     protected $permalink;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 0;
 
     public function __construct()
     {
@@ -676,5 +682,22 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
         $this->permalink = $permalink;
         
         return $this;
+    }
+
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    public function incViews()
+    {
+        ++$this->views;
     }
 }
