@@ -47,7 +47,7 @@ class IncidentController extends AbstractController
 
         $query = new \Elastica\Query($filteredQuery);
 
-        $query->setSize(15);
+        $query->setSize(500);
 
         $results = $finder->find($query);
 
