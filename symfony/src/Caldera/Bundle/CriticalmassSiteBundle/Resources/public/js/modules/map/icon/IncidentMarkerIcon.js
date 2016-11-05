@@ -23,6 +23,19 @@ define(['leaflet', 'leaflet-extramarkers'], function () {
         }
 
         switch (incidentType) {
+            case 'infrastructure':
+                markerIcon = 'fa-bicycle';
+                break;
+            case 'danger':
+                markerIcon = 'fa-exclamation';
+                break;
+            case 'rage':
+                markerIcon = 'fa-bolt';
+                break;
+            case 'roadworks':
+                markerColor = 'green';
+                markerIcon = 'fa-wrench';
+                break;
             case 'accident':
                 markerColor = 'white';
                 markerIconColor = 'black';
@@ -32,8 +45,9 @@ define(['leaflet', 'leaflet-extramarkers'], function () {
                 markerColor = 'black';
                 markerIcon = 'fa-ambulance';
                 break;
-            case 'high':
-                markerColor = 'red';
+            case 'police':
+                markerColor = 'blue';
+                markerIcon = 'fa-cab';
                 break;
         }
 
