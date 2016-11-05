@@ -146,11 +146,16 @@ class IncidentController extends AbstractController
 
     public function showAction(Request $request, string $slug)
     {
+        /** @var Incident $incident */
         $incident = $this->getIncidentRepository()->findOneBySlug($slug);
 
         if (!$incident) {
             return $this->createNotFoundException();
         }
+
+        $this->getMetadata()
+            ->setTitle($this->generatePageTitle($incident))
+            ->setDescription($incident->getDescription());
 
         return $this->render(
             'CalderaCyclewaysBundle:Incident:show.html.twig',
@@ -158,6 +163,15 @@ class IncidentController extends AbstractController
                 'incident' => $incident
             ]
         );
+    }
+
+    protected function generatePageTitle(Incident $incident): string
+    {
+        $title = $incident->getTitle();
+        $title .= ' &mdash; ' . $incident->getStreet() . ', ' . $incident->getCity()->getCity();
+        $title .= ' &mdash; Cycleways.info';
+
+        return $title;
     }
 
     protected function createPermalink(Incident $incident)
