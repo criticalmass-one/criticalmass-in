@@ -7,6 +7,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
 use Curl\Curl;
+use JMS\Serializer\SerializationContext;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +53,8 @@ class IncidentController extends AbstractController
         $results = $finder->find($query);
 
         $serializer = $this->get('jms_serializer');
-        $serializedData = $serializer->serialize($results, 'json');
+        $context = SerializationContext::create()->setGroups(['cycleways']);
+        $serializedData = $serializer->serialize($results, 'json', $context);
 
         return new Response($serializedData);
     }
