@@ -35,6 +35,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $id;
@@ -54,6 +55,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $slug;
@@ -61,6 +63,7 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $title;
@@ -68,120 +71,140 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $geometryType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $incidentType;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $dangerLevel;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $address;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $street;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $houseNumber;
 
     /**
      * @ORM\Column(type="string", length=5, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $zipCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $suburb;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $district;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $polyline;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $longitude = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $dateTime;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $expires;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $visibleFrom;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $visibleTo;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"cycleways"})
      * @JMS\Expose
      */
     protected $permalink;
