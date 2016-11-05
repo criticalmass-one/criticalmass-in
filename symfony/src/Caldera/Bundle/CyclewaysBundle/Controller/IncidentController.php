@@ -144,6 +144,22 @@ class IncidentController extends AbstractController
         );
     }
 
+    public function showAction(Request $request, string $slug)
+    {
+        $incident = $this->getIncidentRepository()->findOneBySlug($slug);
+
+        if (!$incident) {
+            return $this->createNotFoundException();
+        }
+
+        return $this->render(
+            'CalderaCyclewaysBundle:Incident:show.html.twig',
+            [
+                'incident' => $incident
+            ]
+        );
+    }
+
     protected function createPermalink(Incident $incident)
     {
         $url = $this->generateUrl(
