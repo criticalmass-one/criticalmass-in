@@ -2,7 +2,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity = function () {
     };
 
-    IncidentEntity.prototype = new BaseEntity();
+    IncidentEntity.prototype = new MarkerEntity();
     IncidentEntity.prototype.constructor = IncidentEntity;
 
     IncidentEntity.prototype._CriticalService = CriticalService;
@@ -19,7 +19,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity.prototype._visibleTo = null;
     IncidentEntity.prototype._layer = null;
 
-    IncidentEntity.prototype.addToLayer = function (markerLayer) {
+    IncidentEntity.prototype.addTo = function (layer) {
         var latLngList = null;
         var polyOptions = {color: 'red'};
         var latLng = null;
@@ -49,7 +49,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         }
 
         if (this._layer) {
-            this._layer.addToLayer(markerLayer);
+            this._layer.addToLayer(layer);
 
             this._initPopup();
 
@@ -59,6 +59,14 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
                 that.openPopup();
             });
         }
+    };
+
+    IncidentEntity.prototype.addToMap = function (map) {
+        this.addTo(map.map);
+    };
+
+    IncidentEntity.prototype.addToLayer = function (markerLayer) {
+        this.addTo(markerLayer);
     };
 
     IncidentEntity.prototype._initPopup = function () {
