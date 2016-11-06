@@ -155,6 +155,8 @@ class IncidentController extends AbstractController
             return $this->createNotFoundException();
         }
 
+        $this->storeView($incident);
+
         $this->getMetadata()
             ->setTitle($this->generatePageTitle($incident))
             ->setDescription($incident->getDescription());
@@ -206,5 +208,12 @@ class IncidentController extends AbstractController
         $permalink = $curl->response->shorturl;
 
         $incident->setPermalink($permalink);
+    }
+
+    protected function storeView(Incident $incident)
+    {
+        $viewStorage = $this->get('caldera.view_storage.cache');
+
+        $viewStorage->countView($incident);
     }
 }
