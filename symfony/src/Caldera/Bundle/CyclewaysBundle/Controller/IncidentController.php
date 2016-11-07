@@ -220,7 +220,7 @@ class IncidentController extends AbstractController
     
     public function googleMapsCoordAction(Request $request)
     {
-        $googleLocation = $request->query->get('url');
+        $googleLocation = $request->query->get('googleUrl');
 
         if (!$googleLocation) {
             return new JsonResponse([]);
