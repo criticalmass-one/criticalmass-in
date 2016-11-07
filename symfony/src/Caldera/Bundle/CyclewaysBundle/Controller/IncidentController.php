@@ -10,6 +10,7 @@ use Curl\Curl;
 use JMS\Serializer\SerializationContext;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -215,5 +216,32 @@ class IncidentController extends AbstractController
         $viewStorage = $this->get('caldera.view_storage.cache');
 
         $viewStorage->countView($incident);
+    }
+    
+    public function googleMapsCoordAction(Request $request)
+    {
+        $googleLocation = $request->query->get('url');
+
+        if (!$googleLocation) {
+            return new JsonResponse([]);
+        }
+
+        $curl = new Curl();
+        $curl->get($googleLocation);
+
+        if ($curl->responseHeaders['location'] && $curl->responseHeaders['status-line'] == 'HTTP/1.1 301 Moved Permanently') {
+            $googleLocation = $curl->responseHeaders['location'];
+        }
+
+        $regex = '/@([0-9]{1,2}\.[0-9]*),([0-9]{1,2}\.[0-9]*)/';
+
+        preg_match($regex, $googleLocation, $matches);
+
+        $resultArray = [
+            'latitude' => $matches[1],
+            'longitude' => $matches[2]
+        ];
+
+        return new JsonResponse($resultArray);
     }
 }
