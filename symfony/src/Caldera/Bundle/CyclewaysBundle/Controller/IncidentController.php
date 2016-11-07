@@ -123,6 +123,8 @@ class IncidentController extends AbstractController
             $em->persist($incident);
             $em->flush();
 
+            return $this->redirectToRoute('caldera_cycleways_incident_show', ['slug' => $slug]);
+            /*
             $form = $this->createForm(
                 IncidentType::class,
                 $incident,
@@ -134,7 +136,7 @@ class IncidentController extends AbstractController
                         ]
                     )
                 ]
-            );
+            );*/
         }
 
         return $this->render(
