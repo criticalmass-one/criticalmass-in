@@ -40,10 +40,13 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
             draw: {
                 rectangle: false,
                 circle: false,
-                polyline: false,
+                polyline: {
+                    repeatMode: false
+                },
                 polygon: false,
                 marker: {
-                    icon: this._markerIcon
+                    icon: this._markerIcon,
+                    repeatMode: false
                 }
             }
         });
@@ -53,20 +56,39 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
 
     CyclewaysIncidentEditPage.prototype._onMapDrawCallback = function(e) {
         var type = e.layerType,
-            layer = e.layer;
+            layer = e.layer,
+            latLng;
 
+        if (type == 'polyline') {
+            var latLngList = layer.getLatLngs();
+            var polyline = L.PolylineUtil.encode(latLngList);
+            latLng = latLngList[0];
+
+            $('#incident_polyline').val(polyline);
+            $('#incident_geometryType').val('polyline');
+            $('#incident_latitude').val(latLng.lat);
+            $('#incident_longitude').val(latLng.lng);
+
+            this._createIcon();
+
+            var marker = L.marker(latLng, {
+                icon: this._markerIcon
+            });
+
+            marker.addTo(this._drawnItems);
+        }
+        
         if (type == 'marker') {
-            var latLng = layer.getLatLng();
+            latLng = layer.getLatLng();
 
             $('#incident_latitude').val(latLng.lat);
             $('#incident_longitude').val(latLng.lng);
 
             $('#incident_geometryType').val('marker');
-
-            this._geocoding.searchAddressForLatLng(latLng.lat, latLng.lng, this._updateAddress);
         }
 
-        // Do whatever else you need to. (save to db, add to map etc)
+        this._geocoding.searchAddressForLatLng(latLng.lat, latLng.lng, this._updateAddress);
+
         layer.addTo(this._drawnItems);
     };
 
@@ -101,17 +123,15 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
     CyclewaysIncidentEditPage.prototype._updateMarkerIcon = function(element) {
         this._createIcon();
 
-        var latitude = $('#incident_latitude').val();
-        var longitude = $('#incident_longitude').val();
+        for (var index = 0; index < this._drawnItems.getLayers().length; ++index) {
+            var layer = this._drawnItems.getLayers()[index];
 
-        if (latitude && longitude) {
-            this._drawnItems.clearLayers();
-
-            var marker = L.marker([latitude, longitude], {
-                icon: this._markerIcon
-            });
-
-            marker.addTo(this._drawnItems);
+            // evil: Only marker will return a latLng instead undefined
+            if (layer.getLatLng()) {
+                layer.setIcon(this._markerIcon);
+                //layer.update();
+                break;
+            }
         }
     };
 
