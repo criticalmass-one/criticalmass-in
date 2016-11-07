@@ -159,7 +159,8 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
         var latLng = L.latLng(latitude, longitude);
         $('#incident_latitude').val(latLng.lat);
         $('#incident_longitude').val(latLng.lng);
-
+        $('#incident_geometryType').val('marker');
+        
         this._createIcon();
 
         this._drawnItems.clearLayers();
