@@ -157,6 +157,8 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
         var latitude = jsonResult.latitude;
         var longitude = jsonResult.longitude;
         var latLng = L.latLng(latitude, longitude);
+        $('#incident_latitude').val(latLng.lat);
+        $('#incident_longitude').val(latLng.lng);
 
         this._createIcon();
 
