@@ -78,6 +78,12 @@ class Post
     protected $blogPost;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Incident", inversedBy="posts")
+     * @ORM\JoinColumn(name="incident_id", referencedColumnName="id")
+     */
+    protected $inicident;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -483,6 +489,18 @@ class Post
     public function setEvent(Event $event = null)
     {
         $this->event = $event;
+
+        return $this;
+    }
+
+    public function getIncident()
+    {
+        return $this->incident;
+    }
+
+    public function setIncident(Incident $incident): Post
+    {
+        $this->incident = $incident;
 
         return $this;
     }
