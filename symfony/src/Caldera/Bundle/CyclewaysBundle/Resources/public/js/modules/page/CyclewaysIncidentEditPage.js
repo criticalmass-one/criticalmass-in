@@ -24,6 +24,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
         this._map.map.on('draw:deletestop', this._onMapDeleteCallback.bind(this));
         $('#incident_dangerLevel').on('change', this._updateMarkerIcon.bind(this));
         $('#incident_incidentType').on('change', this._updateMarkerIcon.bind(this));
+        $('#incident_streetviewLink').on('change', this._resolveGoogleMapsLink.bind(this));
     };
 
     CyclewaysIncidentEditPage.prototype._initDrawControl = function () {
@@ -128,6 +129,48 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
 
     CyclewaysIncidentEditPage.prototype.setView = function (centerLatLng, zoom) {
         this._map.setView(centerLatLng, zoom);
+    };
+
+    CyclewaysIncidentEditPage.prototype._resolveGoogleMapsLink = function () {
+        var url = Routing.generate('caldera_cycleways_incident_streetview_check');
+
+        var googleUrl = $('#incident_streetviewLink').val();
+
+        var data = {
+            googleUrl: googleUrl
+        };
+
+        $.ajax({
+            dataType: 'json',
+            url: url,
+            data: data,
+            success: this._setMapMarkerFromGoogleMaps.bind(this)
+        });
+
+    };
+
+    CyclewaysIncidentEditPage.prototype._setMapMarkerFromGoogleMaps = function (jsonResult) {
+        if (!jsonResult) {
+            return;
+        }
+
+        var latitude = jsonResult.latitude;
+        var longitude = jsonResult.longitude;
+        var latLng = L.latLng(latitude, longitude);
+
+        this._createIcon();
+
+        this._drawnItems.clearLayers();
+
+        var marker = L.marker(latLng, {
+            icon: this._markerIcon
+        });
+
+        marker.addTo(this._drawnItems);
+
+        this._geocoding.searchAddressForLatLng(latitude, longitude, this._updateAddress.bind(this));
+
+        this._map.setView(latLng, 15);
     };
 
     return CyclewaysIncidentEditPage;
