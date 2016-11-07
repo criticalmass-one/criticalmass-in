@@ -215,6 +215,13 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface, Viewab
      */
     protected $views = 0;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"cycleways"})
+     * @JMS\Expose
+     */
+    protected $streetviewLink;
+
     public function __construct()
     {
         $dateInterval = new \DateInterval('P3M');
@@ -699,5 +706,17 @@ class Incident implements CoordinateInterface, ElasticSearchPinInterface, Viewab
     public function incViews()
     {
         ++$this->views;
+    }
+
+    public function getStreetviewLink()
+    {
+        return $this->streetviewLink;
+    }
+
+    public function setStreetviewLink(string $streetviewLink): Incident
+    {
+        $this->streetviewLink = $streetviewLink;
+
+        return $this;
     }
 }
