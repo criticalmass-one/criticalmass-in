@@ -2,15 +2,14 @@
 
 namespace Caldera\Bundle\CalderaBundle\Manager\ContentManager;
 
-use Caldera\Bundle\CalderaBundle\Entity\Content;
+use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CalderaBundle\Manager\AbstractManager;
-use Caldera\Bundle\CalderaBundle\Manager\ContentManager\Exception\ContentNotFoundException;
 use Caldera\Bundle\CalderaBundle\Repository\PostRepository;
 
 class PostManager extends AbstractManager
 {
     /** @var PostRepository $postRepository */
-    protected $contentRepository = null;
+    protected $postRepository = null;
 
     public function __construct($doctrine)
     {
@@ -19,8 +18,8 @@ class PostManager extends AbstractManager
         $this->postRepository = $this->doctrine->getRepository('CalderaBundle:Post');
     }
 
-    public function getPostsForIncident()
+    public function getPostsForIncident(Incident $incident): array
     {
-        
+        return $this->postRepository->getPostsForIncident($incident);
     }
 }
