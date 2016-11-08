@@ -90,6 +90,8 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
                 that._refreshMapEntities(jsonResult);
             }
         });
+
+        this._refreshNavigationLinks();
     };
 
     CyclewaysIncidentPage.prototype._refreshMapEntities = function(jsonResult) {
@@ -100,6 +102,21 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
             if (!this._incidentContainer.hasEntity(incident.getId())) {
                 incident.addToContainer(this._incidentContainer, incident.getId());
             }
+        }
+    };
+
+    CyclewaysIncidentPage.prototype._refreshNavigationLinks = function() {
+        var hash = window.location.hash;
+
+        if (hash) {
+            var oldHref = $('#navigation-add-incident').attr('href');
+            var oldHrefWoHash = oldHref.split('#')[0];
+
+            var newHref = oldHrefWoHash + hash;
+
+            $('#navigation-add-incident').attr('href', newHref);
+
+            console.log(newHref);
         }
     };
 
