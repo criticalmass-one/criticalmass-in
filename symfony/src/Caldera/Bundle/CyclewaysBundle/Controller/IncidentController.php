@@ -6,6 +6,8 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CalderaBundle\Manager\IncidentManager\IncidentManager;
 use Caldera\Bundle\CalderaBundle\Manager\PostManager\PostManager;
+use Caldera\Bundle\CalderaBundle\Manager\Util\Bounds;
+use Caldera\Bundle\CalderaBundle\Manager\Util\Coord;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
 use Curl\Curl;
@@ -43,27 +45,19 @@ class IncidentController extends AbstractController
 
     public function loadAction(Request $request): Response
     {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.incident');
-
-        $topLeft = [
-            'lat' => (float) $request->query->get('northWestLatitude'),
-            'lon' => (float) $request->query->get('northWestLongitude')
-        ];
-
-        $bottomRight = [
-            'lat' => (float) $request->query->get('southEastLatitude'),
-            'lon' => (float) $request->query->get('southEastLongitude')
-        ];
-
-        $geoFilter = new \Elastica\Filter\GeoBoundingBox('pin', [$topLeft, $bottomRight]);
-
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
-
-        $query = new \Elastica\Query($filteredQuery);
-
-        $query->setSize(500);
-
-        $results = $finder->find($query);
+        $northWest = new Coord(
+            $request->query->get('northWestLatitude'), 
+            $request->query->get('northWestLongitude')
+        );
+        
+        $southEast = new Coord(
+            $request->query->get('southEastLatitude'),
+            $request->query->get('southEastLongitude')
+        );
+        
+        $bounds = new Bounds($northWest, $southEast);
+        
+        $results = $this->getIncidentManager()->getIncidentsInBounds($bounds);
 
         $serializer = $this->get('jms_serializer');
         $context = SerializationContext::create()->setGroups(['cycleways']);
@@ -195,6 +189,7 @@ class IncidentController extends AbstractController
 
     protected function createPermalink(Incident $incident)
     {
+        return;
         $url = $this->generateUrl(
             'caldera_cycleways_incident_show',
             [
