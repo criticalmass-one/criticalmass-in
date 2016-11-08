@@ -1,4 +1,4 @@
-define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'IncidentMarkerIcon'], function () {
+define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'leaflet-hash', 'Geocoding', 'IncidentMarkerIcon'], function () {
     CyclewaysIncidentEditPage = function () {
         this._geocoding = new Geocoding();
         this._incidentMarkerIcon = new IncidentMarkerIcon();
@@ -16,6 +16,8 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'Geocoding', 'Inc
 
     CyclewaysIncidentEditPage.prototype._initMap = function () {
         this._map = new DrawMap('map');
+
+        this._hash = new L.Hash(this._map.map);
     };
 
     CyclewaysIncidentEditPage.prototype._initEventListeners = function () {
