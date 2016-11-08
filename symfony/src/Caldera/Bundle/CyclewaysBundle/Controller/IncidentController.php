@@ -4,6 +4,8 @@ namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
+use Caldera\Bundle\CalderaBundle\Manager\ContentManager\IncidentManager;
+use Caldera\Bundle\CalderaBundle\Manager\PostManager\PostManager;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
 use Curl\Curl;
@@ -17,6 +19,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class IncidentController extends AbstractController
 {
+    protected function getPostManager(): PostManager
+    {
+        return $this->get('caldera.manager.post_manager');
+    }
+
+    protected function getIncidentManager(): IncidentManager
+    {
+        return $this->get('caldera.manager.incident_manager');
+    }
+
     public function mapAction(Request $request, $citySlug)
     {
         $city = $this->getCheckedCity($citySlug);
