@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CyclewaysBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
-use Caldera\Bundle\CalderaBundle\Manager\ContentManager\IncidentManager;
+use Caldera\Bundle\CalderaBundle\Manager\IncidentManager\IncidentManager;
 use Caldera\Bundle\CalderaBundle\Manager\PostManager\PostManager;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
