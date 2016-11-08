@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Manager\ContentManager;
+namespace Caldera\Bundle\CalderaBundle\Manager\PostManager;
 
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CalderaBundle\Manager\AbstractManager;
