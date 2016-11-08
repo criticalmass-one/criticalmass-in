@@ -27,6 +27,10 @@ services:
         class: Caldera\Bundle\CalderaBundle\Manager\ContentManager\ContentManager
         arguments: ['@doctrine']
 
+    caldera.manager.incident_manager:
+        class: Caldera\Bundle\CalderaBundle\Manager\IncidentManager\IncidentManager
+        arguments: ['@doctrine']
+
     caldera.html_metadata:
         class: Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata
 
