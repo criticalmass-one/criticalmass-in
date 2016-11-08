@@ -15,4 +15,9 @@ class Bounds
         $this->northWest = $northWest;
         $this->southEast = $southEast;
     }
+
+    public function toLatLonArray()
+    {
+        return [$this->northWest->toLatLonArray(), $this->southEast->toLatLonArray()];
+    }
 }

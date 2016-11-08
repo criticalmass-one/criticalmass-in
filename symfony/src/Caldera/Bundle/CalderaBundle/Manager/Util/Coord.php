@@ -32,4 +32,20 @@ class Coord
     {
         return $this->longitude;
     }
+
+    public function toArray(): array
+    {
+        return [
+            $this->latitude,
+            $this->longitude
+        ];
+    }
+
+    public function toLatLonArray(): array
+    {
+        return [
+            'lat' => $this->latitude,
+            'lon' => $this->longitude
+        ];
+    }
 }
