@@ -191,7 +191,7 @@
 
     <script>
         CriticalMass.loadModule('CyclewaysIncidentEditPage', null, null, function (incidentPage) {
-            incidentPage.setView([{{ city.latitude }}, {{ city.longitude }}], 10);
+            incidentPage.setFous([{{ city.latitude }}, {{ city.longitude }}], 10);
         });
     </script>
 {% endblock %}

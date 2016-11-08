@@ -153,6 +153,12 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'leaflet-hash', '
         this._map.setView(centerLatLng, zoom);
     };
 
+    CyclewaysIncidentEditPage.prototype.setFous = function (centerLatLng, zoom) {
+        if (!window.location.hash) {
+            this._map.setView(centerLatLng, zoom);
+        }
+    };
+
     CyclewaysIncidentEditPage.prototype._resolveGoogleMapsLink = function () {
         var url = Routing.generate('caldera_cycleways_incident_streetview_check');
 
