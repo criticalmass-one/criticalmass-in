@@ -2,6 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Manager\IncidentManager;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CalderaBundle\Manager\AbstractElasticManager;
 use Caldera\Bundle\CalderaBundle\Manager\AbstractManager;
@@ -34,5 +35,10 @@ class IncidentManager extends AbstractElasticManager
         $result = $this->elasticManager->getRepository('CalderaBundle:Incident')->find($query);
 
         return $result;
+    }
+
+    public function getIncidentsForCity(City $city): array
+    {
+        return $this->incidentRepository->findAll();
     }
 }

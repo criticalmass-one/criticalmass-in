@@ -177,6 +177,21 @@ class IncidentController extends AbstractController
             ]
         );
     }
+    
+    public function listAction(Request $request, $citySlug): Response
+    {
+        $city = $this->getCheckedCity($citySlug);
+
+        $incidents = $this->getIncidentManager()->getIncidentsForCity($city);
+
+        return $this->render(
+            'CalderaCyclewaysBundle:Incident:list.html.twig',
+            [
+                'incidents' => $incidents,
+                'city' => $city
+            ]
+        );
+    }
 
     protected function generatePageTitle(Incident $incident): string
     {
