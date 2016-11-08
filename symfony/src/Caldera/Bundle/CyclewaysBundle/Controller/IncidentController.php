@@ -189,7 +189,6 @@ class IncidentController extends AbstractController
 
     protected function createPermalink(Incident $incident)
     {
-        return;
         $url = $this->generateUrl(
             'caldera_cycleways_incident_show',
             [
