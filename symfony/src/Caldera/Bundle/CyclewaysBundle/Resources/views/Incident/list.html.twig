@@ -11,5 +11,34 @@
                 </h1>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Bezeichnung
+                            </th>
+                            <th>
+                                Erstellungsdatum
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for incident in incidents %}
+                        <tr>
+                            <td>
+                                {{ incident.title }}
+                            </td>
+                            <td>
+                                {{ incident.creationDateTime|date('d.m.Y') }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}
