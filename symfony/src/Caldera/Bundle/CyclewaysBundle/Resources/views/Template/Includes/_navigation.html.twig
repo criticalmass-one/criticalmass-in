@@ -44,9 +44,14 @@
                                placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}"
                                name="query"/>
                     </div>
-                    <button type="submit" class="btn btn-success">
-                        {% trans %}criticalmass.navigation.search.search{% endtrans %}
-                    </button>
+                    <div class="btn-group">
+                        <button type="button" id="search-location" class="btn btn-default">
+                            <i class="fa fa-map-signs" aria-hidden="true"></i>
+                        </button>
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -54,4 +59,5 @@
 
 <script type="text/javascript">
     //CriticalMass.loadModule('Search', '#search-input');
+    CriticalMass.loadModule('CyclewaysLocationSearch');
 </script>
