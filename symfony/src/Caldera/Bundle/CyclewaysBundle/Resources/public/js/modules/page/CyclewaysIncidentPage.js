@@ -109,12 +109,13 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
         var hash = window.location.hash;
 
         if (hash) {
-            var oldHref = $('#navigation-add-incident').attr('href');
+            $nav = $('#navigation-add-incident');
+            var oldHref = $nav.attr('href');
             var oldHrefWoHash = oldHref.split('#')[0];
 
             var newHref = oldHrefWoHash + hash;
 
-            $('#navigation-add-incident').attr('href', newHref);
+            $nav.attr('href', newHref);
         }
     };
 
