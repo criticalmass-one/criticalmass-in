@@ -27,7 +27,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         if (this._latitude && this._longitude) {
             latLng = L.latLng(this._latitude, this._longitude);
         }
-
+        /*
         if (this._polyline) {
             latLngList = L.PolylineUtil.decode(this._polyline);
         }
@@ -38,7 +38,7 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
 
         if (this._geometryType == 'polyline') {
             this._layer = new L.polyline(latLngList, polyOptions)
-        }
+        }*/
 
         if (this._geometryType == 'marker') {
             this._layer = new IncidentMarker(
