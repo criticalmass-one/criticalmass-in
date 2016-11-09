@@ -25,6 +25,10 @@ define(['CriticalService', 'Map', 'IncidentEntity', 'CityEntity'], function (Cri
         this._incident = this._CriticalService.factory.createIncident(incidentJson);
 
         this._incident.addToMap(this._map);
+
+        if (this._incident.hasPolyline()) {
+            this._incident.addPolylineToMap(this._map);
+        }
     };
 
     return CyclewaysIncidentShowPage;

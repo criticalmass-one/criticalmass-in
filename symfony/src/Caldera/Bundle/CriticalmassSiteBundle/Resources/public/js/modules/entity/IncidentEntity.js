@@ -14,33 +14,37 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
     IncidentEntity.prototype._incidentType = null;
     IncidentEntity.prototype._dangerLevel = null;
     IncidentEntity.prototype._polyline = null;
+    IncidentEntity.prototype._polyLayer = null;
     IncidentEntity.prototype._expires = null;
     IncidentEntity.prototype._visibleFrom = null;
     IncidentEntity.prototype._visibleTo = null;
     IncidentEntity.prototype._layer = null;
 
-    IncidentEntity.prototype.addTo = function (layer) {
+    IncidentEntity.prototype.addPolylineToMap = function (map) {
         var latLngList = null;
         var polyOptions = {color: 'red'};
-        var latLng = null;
 
-        if (this._latitude && this._longitude) {
-            latLng = L.latLng(this._latitude, this._longitude);
-        }
-        /*
         if (this._polyline) {
             latLngList = L.PolylineUtil.decode(this._polyline);
         }
 
         if (this._geometryType == 'polygon') {
-            this._layer = new L.polygon(latLngList, polyOptions);
+            this._polyLayer = new L.polygon(latLngList, polyOptions);
         }
 
         if (this._geometryType == 'polyline') {
-            this._layer = new L.polyline(latLngList, polyOptions)
-        }*/
+            this._polyLayer = new L.polyline(latLngList, polyOptions)
+        }
 
-        if (this._geometryType == 'marker') {
+        this._polyLayer.addTo(map.map);
+    };
+
+    IncidentEntity.prototype.addTo = function (layer) {
+        var latLng = null;
+
+        if (this._latitude && this._longitude) {
+            latLng = L.latLng(this._latitude, this._longitude);
+
             this._layer = new IncidentMarker(
                 latLng,
                 this._incidentType,
@@ -69,6 +73,10 @@ define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet
         this.addTo(markerLayer);
     };
 
+    IncidentEntity.prototype.hasPolyline = function () {
+        return this._polyline != null;
+    };
+    
     IncidentEntity.prototype._initPopup = function () {
         this._modal = new Modal();
 
