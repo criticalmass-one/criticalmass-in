@@ -15,9 +15,9 @@ define(['CriticalService', 'Geocoding'], function (CriticalService) {
     };
 
     CyclewaysLocationSearch.prototype._searchLocation = function () {
-        var placeName = $('#search-input').val();
+        var location = $('#search-input').val();
 
-        this._geocoding.searchPlace(placeName, 'Hamburg', this._searchResult.bind(this));
+        this._geocoding.searchPhrase(location, this._searchResult.bind(this));
     };
 
     CyclewaysLocationSearch.prototype._searchResult = function (result) {

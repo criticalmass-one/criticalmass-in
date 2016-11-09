@@ -147,6 +147,28 @@ define([], function () {
         this._query(query, successCallback);
     };
 
+    Geocoding.prototype.searchPhrase = function (phrase, returnCallback) {
+        var query = {
+            q: phrase
+        };
+
+        var successCallback = function (data) {
+            var importanceScore = 0.0;
+            var bestData = null;
+
+            for (var index in data) {
+                if (importanceScore < data[index].importance || !bestData) {
+                    importanceScore = data[index].importance;
+                    bestData = data[index];
+                }
+            }
+
+            returnCallback(bestData);
+        };
+
+        this._query(query, successCallback);
+    };
+
     Geocoding.prototype.searchAddressForLatLng = function (latitude, longitude, returnCallback) {
         var query = {
             lat: latitude,
