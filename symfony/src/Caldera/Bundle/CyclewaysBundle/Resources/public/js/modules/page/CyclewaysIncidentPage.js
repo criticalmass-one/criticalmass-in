@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'IncidentContainer', 'CityEntity', 'IncidentEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
+define(['CriticalService', 'Map', 'IncidentContainer', 'CityEntity', 'IncidentEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
     CyclewaysIncidentPage = function (context, options) {
         this._CriticalService = CriticalService;
 
