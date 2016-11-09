@@ -115,8 +115,6 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
             var newHref = oldHrefWoHash + hash;
 
             $('#navigation-add-incident').attr('href', newHref);
-
-            console.log(newHref);
         }
     };
 
