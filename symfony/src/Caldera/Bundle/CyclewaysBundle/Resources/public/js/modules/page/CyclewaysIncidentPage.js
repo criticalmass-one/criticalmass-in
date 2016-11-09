@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
+define(['CriticalService', 'Map', 'IncidentContainer', 'CityEntity', 'IncidentEntity', 'NoLocationRideEntity', 'EventEntity', 'MapLayerControl', 'MapLocationControl', 'leaflet-hash', 'Modal', 'CloseModalButton'], function (CriticalService) {
     CyclewaysIncidentPage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -20,7 +20,7 @@ define(['CriticalService', 'Map', 'Container', 'CityEntity', 'IncidentEntity', '
     CyclewaysIncidentPage.prototype._offlineModal = null;
 
     CyclewaysIncidentPage.prototype._initContainer = function () {
-        this._incidentContainer = new Container();
+        this._incidentContainer = new IncidentContainer();
     };
 
     CyclewaysIncidentPage.prototype._initMap = function () {
