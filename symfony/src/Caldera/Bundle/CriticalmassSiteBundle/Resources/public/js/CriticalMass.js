@@ -38,6 +38,7 @@ require.config({
         "PhotoEntity": "/bundles/calderacriticalmasssite/js/modules/entity/PhotoEntity",
         "Container": "/bundles/calderacriticalmasssite/js/modules/entity/Container",
         "ClusterContainer": "/bundles/calderacriticalmasssite/js/modules/entity/ClusterContainer",
+        "IncidentContainer": "/bundles/calderacriticalmasssite/js/modules/entity/IncidentContainer",
         "EditCityPage": "/bundles/calderacriticalmasssite/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/calderacriticalmasssite/js/modules/page/EditRidePage",
         "LivePage": "/bundles/calderacriticalmasssite/js/modules/page/LivePage",
