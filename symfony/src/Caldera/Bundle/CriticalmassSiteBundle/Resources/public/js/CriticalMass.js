@@ -85,6 +85,7 @@ require.config({
         "SnapablePhotoMarker": "/bundles/calderacriticalmasssite/js/modules/map/marker/SnapablePhotoMarker",
         "IncidentMarkerIcon": "/bundles/calderacriticalmasssite/js/modules/map/icon/IncidentMarkerIcon",
         "Search": "/bundles/calderacriticalmasssite/js/modules/Search",
+        "localforage": "/bundles/calderacriticalmasssite/js/external/localforage/localforage-1.4.3",
         "leaflet": "/bundles/calderacriticalmasssite/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/calderacriticalmasssite/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/calderacriticalmasssite/js/external/leaflet/L.Control.Locate",
