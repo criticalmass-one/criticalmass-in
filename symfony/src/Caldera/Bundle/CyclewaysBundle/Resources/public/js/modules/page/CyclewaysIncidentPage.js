@@ -61,9 +61,11 @@ define(['CriticalService', 'Map', 'IncidentContainer', 'CityEntity', 'IncidentEn
     };
 
     CyclewaysIncidentPage.prototype.setFocus = function (latitude, longitude) {
-        var latLng = L.latLng(latitude, longitude);
+        if (!window.location.hash) {
+            var latLng = L.latLng(latitude, longitude);
 
-        this._map.setView(latLng, 10);
+            this._map.setView(latLng, 10);
+        }
     };
 
     CyclewaysIncidentPage.prototype._onMapChange = function () {
