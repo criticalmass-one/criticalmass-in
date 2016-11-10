@@ -21,6 +21,8 @@ define(['leaflet'], function () {
      */
     Container.prototype._list = null;
 
+    Container.prototype._indexList = [];
+
     /**
      * This is a leaflet feature group and will contain the "visible results" of the entities of this container. As the
      * _list will hold our javascript objects for city, ride or track entities, the layer will contain those markers or
@@ -51,6 +53,8 @@ define(['leaflet'], function () {
             this._list.push(entity);
         } else {
             this._list[index] = entity;
+
+            this._indexList.push(index);
         }
 
         entity.addToLayer(this._layer);
@@ -62,6 +66,9 @@ define(['leaflet'], function () {
     Container.prototype.removeEntity = function (index) {
         this._list[index].removeFromLayer(this._layer);
         delete this._list[index];
+
+        var indexListIndex = this._indexList.indexOf(index);
+        this._indexList.splice(indexListIndex, 1);
 
         --this._counter;
     };
@@ -180,6 +187,10 @@ define(['leaflet'], function () {
 
     Container.prototype.getList = function () {
         return this._list;
+    };
+
+    Container.prototype.getIndexList = function () {
+        return this._indexList;
     };
 
     Container.prototype.snapTo = function (map, polyline) {
