@@ -1,4 +1,4 @@
-define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers'], function () {
+define(['leaflet', 'leaflet-markercluster', 'LocalContainer', 'leaflet-extramarkers'], function () {
     IncidentContainer = function () {
         this._list = [];
         this._layer = L.markerClusterGroup({
@@ -9,7 +9,7 @@ define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers']
         });
     };
 
-    IncidentContainer.prototype = new Container();
+    IncidentContainer.prototype = new LocalContainer();
     IncidentContainer.prototype.constructor = IncidentContainer;
 
     return IncidentContainer;
