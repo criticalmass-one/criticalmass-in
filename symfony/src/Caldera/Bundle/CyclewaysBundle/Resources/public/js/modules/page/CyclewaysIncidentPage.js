@@ -75,39 +75,38 @@ define(['CriticalService', 'Map', 'IncidentContainer', 'CityEntity', 'IncidentEn
         var northWest = bounds.getNorthWest();
         var southEast = bounds.getSouthEast();
 
-        var knownIndizes = this._incidentContainer.getIndexList();
+        this._incidentContainer.getIndexList(function (knownIndizes) {
+            var that = this;
 
-        var data = {
-            'northWestLatitude': northWest.lat,
-            'northWestLongitude': northWest.lng,
-            'southEastLatitude': southEast.lat,
-            'southEastLongitude': southEast.lng,
-            'knownIndizes': knownIndizes
-        };
+            var data = {
+                'northWestLatitude': northWest.lat,
+                'northWestLongitude': northWest.lng,
+                'southEastLatitude': southEast.lat,
+                'southEastLongitude': southEast.lng,
+                'knownIndizes': knownIndizes
+            };
 
-        var that = this;
-
-        $.ajax({
-            dataType: 'json',
-            url: url,
-            data: data,
-            method: 'post',
-            success: function(jsonResult) {
-                that._refreshMapEntities(jsonResult);
-            }
-        });
+            $.ajax({
+                dataType: 'json',
+                url: url,
+                data: data,
+                method: 'post',
+                success: function(jsonResult) {
+                    that._refreshMapEntities(jsonResult);
+                }
+            });
+        }.bind(this));
 
         this._refreshNavigationLinks();
     };
 
     CyclewaysIncidentPage.prototype._refreshMapEntities = function(jsonResult) {
+        var that = this;
+
         for (var index = 0; index < jsonResult.length; ++index) {
             var incidentJson = jsonResult[index];
             var incident = CriticalService.factory.createIncident(incidentJson);
-
-            if (!this._incidentContainer.hasEntity(incident.getId())) {
-                incident.addToContainer(this._incidentContainer, incident.getId());
-            }
+            incident.addToContainer(this._incidentContainer, incident.getId());
         }
     };
 
