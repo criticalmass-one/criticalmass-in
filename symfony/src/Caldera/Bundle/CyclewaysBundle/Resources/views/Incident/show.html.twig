@@ -49,6 +49,24 @@
                     </div>
                 </div>
 
+                {% if incident.streetviewLink %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Google Street View
+                        </div>
+                        <div class="panel-body text-center">
+                            <p>
+                                Schau dir diese Straßenstelle direkt auf Google Street View an:
+                            </p>
+
+                            <a class="btn btn-default" target="_blank" href="{{ incident.streetviewLink }}">
+                                <i class="fa fa-google" aria-hidden="true"></i>
+                                Street View
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if incident.permalink %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
