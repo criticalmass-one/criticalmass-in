@@ -75,19 +75,23 @@ define(['CriticalService', 'Map', 'IncidentContainer', 'CityEntity', 'IncidentEn
         var northWest = bounds.getNorthWest();
         var southEast = bounds.getSouthEast();
 
+        var knownIndizes = this._incidentContainer.getIndexList();
+
         var data = {
             'northWestLatitude': northWest.lat,
             'northWestLongitude': northWest.lng,
             'southEastLatitude': southEast.lat,
-            'southEastLongitude': southEast.lng
+            'southEastLongitude': southEast.lng,
+            'knownIndizes': knownIndizes
         };
 
         var that = this;
 
         $.ajax({
-            dataType: "json",
+            dataType: 'json',
             url: url,
             data: data,
+            method: 'post',
             success: function(jsonResult) {
                 that._refreshMapEntities(jsonResult);
             }

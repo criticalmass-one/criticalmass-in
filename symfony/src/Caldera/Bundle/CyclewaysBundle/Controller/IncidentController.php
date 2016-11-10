@@ -46,18 +46,24 @@ class IncidentController extends AbstractController
     public function loadAction(Request $request): Response
     {
         $northWest = new Coord(
-            $request->query->get('northWestLatitude'), 
-            $request->query->get('northWestLongitude')
+            $request->request->get('northWestLatitude'),
+            $request->request->get('northWestLongitude')
         );
         
         $southEast = new Coord(
-            $request->query->get('southEastLatitude'),
-            $request->query->get('southEastLongitude')
+            $request->request->get('southEastLatitude'),
+            $request->request->get('southEastLongitude')
         );
+
+        if ($request->request->get('knownIndizes') && is_array($request->request->get('knownIndizes'))) {
+            $knownIndizes = $request->request->get('knownIndizes');
+        } else {
+            $knownIndizes = [];
+        }
         
         $bounds = new Bounds($northWest, $southEast);
         
-        $results = $this->getIncidentManager()->getIncidentsInBounds($bounds);
+        $results = $this->getIncidentManager()->getIncidentsInBounds($bounds, $knownIndizes);
 
         $serializer = $this->get('jms_serializer');
         $context = SerializationContext::create()->setGroups(['cycleways']);
