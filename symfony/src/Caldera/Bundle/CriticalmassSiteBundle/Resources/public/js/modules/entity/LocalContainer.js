@@ -1,11 +1,16 @@
-define(['Container', 'localforage'], function () {
+define(['localforage', 'Container'], function (localforage) {
     LocalContainer = function () {
-        this._list = [];
+        this._storage = localforage.createInstance({
+            name: "incidents"
+        });
+
         this._layer = L.featureGroup();
     };
 
     LocalContainer.prototype = new Container();
     LocalContainer.prototype.constructor = LocalContainer;
+
+    LocalContainer.prototype._storage = null;
 
 
     /**
