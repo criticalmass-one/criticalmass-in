@@ -48,6 +48,17 @@
                         </dl>
                     </div>
                 </div>
+
+                {% if incident.permalink %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Permalink
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" class="form-control" value="{{ incident.permalink }}" />
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
