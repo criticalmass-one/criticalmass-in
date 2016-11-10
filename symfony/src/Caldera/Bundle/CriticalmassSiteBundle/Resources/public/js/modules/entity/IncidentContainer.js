@@ -3,13 +3,8 @@ define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet-extramarkers']
         this._list = [];
         this._layer = L.markerClusterGroup({
             showCoverageOnHover: false,
-            iconCreateFunction: function (cluster) {
-                return L.ExtraMarkers.icon({
-                    icon: 'fa-camera',
-                    markerColor: 'yellow',
-                    shape: 'square',
-                    prefix: 'fa'
-                });
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({ className: 'cluster-counter-outer', html: '<div class="cluster-counter-inner">' + cluster.getChildCount() + '</div>' });
             }
         });
     };
