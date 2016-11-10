@@ -22,11 +22,25 @@ class IncidentManager extends AbstractElasticManager
         $this->incidentRepository = $this->doctrine->getRepository('CalderaBundle:Incident');
     }
 
-    public function getIncidentsInBounds(Bounds $bounds): array
+    public function getIncidentsInBounds(Bounds $bounds, array $knownIndizes = []): array
     {
-        $geoFilter = new \Elastica\Filter\GeoBoundingBox('pin', $bounds->toLatLonArray());
+        $filterList = [];
+        $filterList[] = new \Elastica\Filter\GeoBoundingBox('pin', $bounds->toLatLonArray());
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
+        $knownIndexFilters = [];
+
+        foreach ($knownIndizes as $knownIndex) {
+            $knownIndexFilters[] = new \Elastica\Filter\Term(['id' => $knownIndex]);
+        }
+
+        if (count($knownIndexFilters)) {
+            $filterList[] = new \Elastica\Filter\BoolNot(new \Elastica\Filter\BoolOr($knownIndexFilters));
+
+        }
+
+        $andFilter = new \Elastica\Filter\BoolAnd($filterList);
+
+        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $andFilter);
 
         $query = new \Elastica\Query($filteredQuery);
 
