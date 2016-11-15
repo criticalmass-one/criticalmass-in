@@ -692,7 +692,7 @@ class Event implements ParticipateableInterface, ViewableInterface, ArchiveableI
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage(string $archiveMessage)
+    public function setArchiveMessage($archiveMessage)
     {
         $this->archiveMessage = $archiveMessage;
 

@@ -310,7 +310,7 @@ class Content implements ViewableInterface, ArchiveableInterface
         return $this;
     }
 
-    public function setArchiveMessage(string $archiveMessage)
+    public function setArchiveMessage($archiveMessage)
     {
         $this->archiveMessage = $archiveMessage;
 

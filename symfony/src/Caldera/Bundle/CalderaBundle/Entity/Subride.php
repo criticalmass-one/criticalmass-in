@@ -543,7 +543,7 @@ class Subride implements ArchiveableInterface
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage(string $archiveMessage)
+    public function setArchiveMessage($archiveMessage)
     {
         $this->archiveMessage = $archiveMessage;
 

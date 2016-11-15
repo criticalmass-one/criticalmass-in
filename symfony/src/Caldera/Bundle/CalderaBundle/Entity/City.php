@@ -1140,7 +1140,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage(string $archiveMessage)
+    public function setArchiveMessage($archiveMessage)
     {
         $this->archiveMessage = $archiveMessage;
 

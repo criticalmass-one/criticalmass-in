@@ -14,6 +14,6 @@ interface ArchiveableInterface
     public function getArchiveDateTime();
     public function setIsArchived(bool $isArchived);
     public function getIsArchived();
-    public function setArchiveMessage(string $archiveMessage);
+    public function setArchiveMessage($archiveMessage);
     public function getArchiveMessage();
 }

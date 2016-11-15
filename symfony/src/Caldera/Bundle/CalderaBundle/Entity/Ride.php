@@ -786,7 +786,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage(string $archiveMessage)
+    public function setArchiveMessage($archiveMessage)
     {
         $this->archiveMessage = $archiveMessage;
 
