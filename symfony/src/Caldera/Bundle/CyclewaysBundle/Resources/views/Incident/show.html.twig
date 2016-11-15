@@ -56,9 +56,11 @@
                     <div class="panel-body text-center">
                         <div class="btn-group-vertical" role="group" aria-label="...">
                             <a class="btn btn-default" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z">
+                                <i class="fa fa-map-o" aria-hidden="true"></i>
                                 Kartenansicht
                             </a>
                             <a class="btn btn-default" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z/data=!3m1!1e3">
+                                <i class="fa fa-camera" aria-hidden="true"></i>
                                 Satellitenansicht
                             </a>
                             {% if incident.streetviewLink %}
