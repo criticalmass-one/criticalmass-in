@@ -1214,7 +1214,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->id = null;
     }
 
-    public function archive(User $user): Ride
+    public function archive(User $user): ArchiveableInterface
     {
         $archivedRide = clone $this;
 

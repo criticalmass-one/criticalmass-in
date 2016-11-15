@@ -555,4 +555,20 @@ class Subride implements ArchiveableInterface
     {
         return $this->archiveMessage;
     }
+
+    public function archive(User $user): ArchiveableInterface
+    {
+        $archivedSubride = clone $this;
+
+        $archivedSubride
+            ->setIsArchived(true)
+            ->setArchiveDateTime(new \DateTime())
+            ->setArchiveParent($this)
+            ->setArchiveUser($user)
+            ->setArchiveMessage($this->archiveMessage);
+
+        $this->archiveMessage = '';
+
+        return $archivedSubride;
+    }
 }

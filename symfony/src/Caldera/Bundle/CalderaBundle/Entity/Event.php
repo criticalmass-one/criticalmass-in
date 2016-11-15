@@ -808,4 +808,20 @@ class Event implements ParticipateableInterface, ViewableInterface, ArchiveableI
     {
         ++$this->views;
     }
+    
+    public function archive(User $user): ArchiveableInterface
+    {
+        $archivedEvent = clone $this;
+
+        $archivedEvent
+            ->setIsArchived(true)
+            ->setArchiveDateTime(new \DateTime())
+            ->setArchiveParent($this)
+            ->setArchiveUser($user)
+            ->setArchiveMessage($this->archiveMessage);
+
+        $this->archiveMessage = '';
+
+        return $archivedEvent;
+    }
 }

@@ -412,4 +412,20 @@ class Content implements ViewableInterface, ArchiveableInterface
     {
         $this->views = $views;
     }
+
+    public function archive(User $user): ArchiveableInterface
+    {
+        $archivedContent = clone $this;
+
+        $archivedContent
+            ->setIsArchived(true)
+            ->setArchiveDateTime(new \DateTime())
+            ->setArchiveParent($this)
+            ->setArchiveUser($user)
+            ->setArchiveMessage($this->archiveMessage);
+
+        $this->archiveMessage = '';
+
+        return $archivedContent;
+    }
 }

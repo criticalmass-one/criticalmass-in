@@ -16,4 +16,5 @@ interface ArchiveableInterface
     public function getIsArchived();
     public function setArchiveMessage($archiveMessage);
     public function getArchiveMessage();
+    public function archive(User $user): ArchiveableInterface;
 }

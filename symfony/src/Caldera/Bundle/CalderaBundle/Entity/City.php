@@ -1480,4 +1480,20 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     {
         return null;
     }
+
+    public function archive(User $user): ArchiveableInterface
+    {
+        $archivedCity = clone $this;
+
+        $archivedCity
+            ->setIsArchived(true)
+            ->setArchiveDateTime(new \DateTime())
+            ->setArchiveParent($this)
+            ->setArchiveUser($user)
+            ->setArchiveMessage($this->archiveMessage);
+
+        $this->archiveMessage = '';
+
+        return $archivedCity;
+    }
 }
