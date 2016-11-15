@@ -1,13 +1,15 @@
-define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'leaflet-hash', 'Geocoding', 'IncidentMarkerIcon'], function () {
+define(['CriticalService', 'DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'leaflet-hash', 'Geocoding', 'IncidentMarkerIcon'], function (CriticalService) {
     CyclewaysIncidentEditPage = function () {
         this._geocoding = new Geocoding();
         this._incidentMarkerIcon = new IncidentMarkerIcon();
+        this._CriticalService = CriticalService;
 
         this._initMap();
         this._initDrawControl();
         this._initEventListeners();
     };
 
+    CyclewaysIncidentEditPage.prototype._CriticalService = null;
     CyclewaysIncidentEditPage.prototype._map = null;
     CyclewaysIncidentEditPage.prototype._markerIcon = null;
     CyclewaysIncidentEditPage.prototype._drawnItems = null;
@@ -16,7 +18,7 @@ define(['DrawMap', 'leaflet-polyline', 'leaflet-extramarkers', 'leaflet-hash', '
 
     CyclewaysIncidentEditPage.prototype._initMap = function () {
         this._map = new DrawMap('map');
-
+        this._CriticalService.setMap(this._map);
         this._hash = new L.Hash(this._map.map);
     };
 
