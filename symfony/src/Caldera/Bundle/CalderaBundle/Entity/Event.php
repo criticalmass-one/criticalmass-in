@@ -136,6 +136,7 @@ class Event implements ParticipateableInterface, ViewableInterface, ArchiveableI
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $archiveMessage;
 

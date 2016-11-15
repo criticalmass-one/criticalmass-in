@@ -126,6 +126,7 @@ class Subride implements ArchiveableInterface
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $archiveMessage;
 

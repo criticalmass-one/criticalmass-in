@@ -163,6 +163,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $archiveMessage;
 

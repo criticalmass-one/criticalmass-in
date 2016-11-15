@@ -5,6 +5,7 @@ namespace Caldera\Bundle\CalderaBundle\Entity;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -85,6 +86,7 @@ class Content implements ViewableInterface, ArchiveableInterface
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $archiveMessage;
 
