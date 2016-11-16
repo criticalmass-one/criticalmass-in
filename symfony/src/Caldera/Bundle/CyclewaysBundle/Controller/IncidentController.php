@@ -10,6 +10,7 @@ use Caldera\Bundle\CalderaBundle\Manager\Util\Bounds;
 use Caldera\Bundle\CalderaBundle\Manager\Util\Coord;
 use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
 use Caldera\Bundle\CyclewaysBundle\Form\Type\IncidentType;
+use Caldera\Bundle\CyclewaysBundle\SlugGenerator\SlugGenerator;
 use Curl\Curl;
 use JMS\Serializer\SerializationContext;
 use Malenki\Slug;
@@ -126,8 +127,8 @@ class IncidentController extends AbstractController
             $em->flush();
 
             // now use id
-            $slug = new Slug($incident->getTitle().' '.$incident->getStreet().' '.$incident->getDistrict().' '.$incident->getCity()->getCity().' '.$incident->getId());
-            $incident->setSlug($slug);
+            $slugGenerator = new SlugGenerator();
+            $slug = $slugGenerator->generateSlug($incident);
 
             $this->get('caldera.cycleways.permalink_manager.sqibe')->createPermalink($incident);
 
