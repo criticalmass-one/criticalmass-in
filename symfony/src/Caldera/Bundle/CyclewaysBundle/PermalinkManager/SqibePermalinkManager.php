@@ -59,6 +59,8 @@ class SqibePermalinkManager
         $permalink = $curl->response->shorturl;
 
         $incident->setPermalink($permalink);
+
+        return $permalink;
     }
 
     public function getUrl(Incident $incident): string
