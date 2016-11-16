@@ -39,14 +39,18 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $incidents = $this->doctrine->getRepository('CalderaBundle:Incident')->findAll();
 
         foreach ($incidents as $incident) {
-            $this->refreshPermalink($incident);
+            $this->process($incident);
         }
 
         $this->manager->flush();
     }
 
-    protected function refreshPermalink(Incident $incident)
+    protected function process(Incident $incident)
     {
+        if (!$incident->getSlug()) {
+            return;
+        }
+
         $this->output->writeln(
             sprintf(
                 'Incident <info>#%d</info> <comment>%s</comment>',
@@ -59,6 +63,8 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
             $this->output->writeln(
                 'There is currently no permalink'
             );
+
+            $this->createPermalink($incident);
         } else {
             $this->output->writeln(
                 sprintf(
@@ -76,5 +82,17 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
                 )
             );
         }
+    }
+
+    protected function createPermalink(Incident $incident)
+    {
+        $permalink = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe')->createPermalink($incident);
+
+        $this->output->writeln(sprintf(
+            'Created permalink: %s',
+            $permalink
+        ));
+
+        $this->manager->persist($incident);
     }
 }
