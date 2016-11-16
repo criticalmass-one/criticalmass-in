@@ -117,9 +117,8 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         if ($generatedUrl != $longUrl) {
             $this->output->writeln(
                 sprintf(
-                    'Url mismatch. Generated: %s, Found: %s',
-                    $generatedUrl,
-                    $longUrl
+                    'Url mismatch. Generated: %s',
+                    $generatedUrl
                 )
             );
 
