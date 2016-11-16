@@ -107,7 +107,7 @@ class SqibePermalinkManager
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
-        $url = str_replace('http', 'https', $url);
+        $url = str_replace('http://', 'https://', $url);
 
         return $url;
     }
