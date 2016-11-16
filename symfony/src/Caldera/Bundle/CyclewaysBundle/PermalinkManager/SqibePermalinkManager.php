@@ -69,6 +69,26 @@ class SqibePermalinkManager
         return $longUrl;
     }
 
+    public function updatePermalink(Incident $incident): bool
+    {
+        $url = $this->generateUrl($incident);
+
+        $data = [
+            'url' => $url,
+            'shorturl' => $this->getKeyword($incident),
+            'format'   => 'json',
+            'action'   => 'update'
+        ];
+
+        $response = $this->postCurl($data);
+
+        if (isset($response->statusCode) && $response->statusCode == 200) {
+            return true;
+        }
+
+        return false;
+    }
+
     protected function getKeyword(Incident $incident): string
     {
         $permalinkParts = explode('/', $incident->getPermalink());
@@ -86,6 +106,8 @@ class SqibePermalinkManager
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
+
+        $url = str_replace('http', 'https', $url);
 
         return $url;
     }

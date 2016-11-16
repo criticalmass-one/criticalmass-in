@@ -60,6 +60,8 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
 
     protected function process(Incident $incident)
     {
+        $this->output->writeln('');
+
         if (!$incident->getSlug()) {
             return;
         }
@@ -118,6 +120,8 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
                     $longUrl
                 )
             );
+
+            $this->updatePermalink($incident);
         }
     }
 
@@ -141,6 +145,18 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
 
         $this->output->writeln(sprintf(
             'Created permalink: %s',
+            $permalink
+        ));
+
+        $this->manager->persist($incident);
+    }
+
+    protected function updatePermalink(Incident $incident)
+    {
+        $permalink = $this->permalinkManager->updatePermalink($incident);
+
+        $this->output->writeln(sprintf(
+            'Updated permalink: %s',
             $permalink
         ));
 
