@@ -1,6 +1,4 @@
-parameters:
-
 services:
     caldera.cycleways.permalink_manager.sqibe:
-        class: Caldera\Bundle\CyclewaysBundle\Permalinkmanager\SqibePermalinkManager
+        class: Caldera\Bundle\CyclewaysBundle\PermalinkManager\SqibePermalinkManager
         arguments: [ '@router', '%sqibe.api_url', '%sqibe.api_username', '%sqibe.api_password' ]

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CyclewaysBundle\Permalinkmanager;
+namespace Caldera\Bundle\CyclewaysBundle\PermalinkManager;
 
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Curl\Curl;
