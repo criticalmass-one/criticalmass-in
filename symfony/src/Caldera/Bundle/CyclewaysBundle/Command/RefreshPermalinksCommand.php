@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CyclewaysBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
+use Caldera\Bundle\CyclewaysBundle\PermalinkManager\SqibePermalinkManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -22,6 +23,9 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
     /** @var OutputInterface $output */
     protected $output;
 
+    /** @var SqibePermalinkManager $permalinkManager */
+    protected $permalinkManager;
+
     protected function configure()
     {
         $this
@@ -35,6 +39,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
+        $this->permalinkManager = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe');
 
         $incidents = $this->doctrine->getRepository('CalderaBundle:Incident')->findAll();
 
@@ -73,20 +78,29 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
                 )
             );
 
-            $longUrl = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe')->getUrl($incident);
+            $longUrl = $this->permalinkManager->getUrl($incident);
 
-            $this->output->writeln(
-                sprintf(
-                    'Current url is: %s',
-                    $longUrl
-                )
-            );
+            if ($longUrl) {
+                $this->output->writeln(
+                    sprintf(
+                        'Current url is: %s',
+                        $longUrl
+                    )
+                );
+            } else {
+                $this->output->writeln(
+                    'Long url could not be found'
+                );
+
+                $this->createPermalink($incident);
+            }
+
         }
     }
 
     protected function createPermalink(Incident $incident)
     {
-        $permalink = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe')->createPermalink($incident);
+        $permalink = $this->permalinkManager->createPermalink($incident);
 
         $this->output->writeln(sprintf(
             'Created permalink: %s',
