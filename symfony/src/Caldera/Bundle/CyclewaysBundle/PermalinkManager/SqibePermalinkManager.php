@@ -33,16 +33,8 @@ class SqibePermalinkManager
 
     public function createPermalink(Incident $incident): string
     {
-        $url = $this->router->generate(
-            'caldera_cycleways_incident_show',
-            [
-                'slug' => $incident->getSlug()
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-
         $data = [
-            'url' => $url,
+            'url' => $this->generateUrl($incident),
             'title' => $incident->getTitle(),
             'format'   => 'json',
             'action'   => 'shorturl',
@@ -99,5 +91,18 @@ class SqibePermalinkManager
         $keyword = array_pop($permalinkParts);
 
         return $keyword;
+    }
+
+    protected function generateUrl(Incident $incident): string
+    {
+        $url = $this->router->generate(
+            'caldera_cycleways_incident_show',
+            [
+                'slug' => $incident->getSlug()
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        return $url;
     }
 }
