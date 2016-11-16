@@ -101,6 +101,8 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
             );
 
             $this->createPermalink($incident);
+
+            return;
         }
 
         $this->output->writeln(
