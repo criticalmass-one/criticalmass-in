@@ -32,7 +32,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
     {
         $this
             ->setName('cycleways:permalink:refresh')
-            ->setDescription('Refresh slugs');
+            ->setDescription('Refresh permalinks');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
