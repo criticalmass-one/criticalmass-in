@@ -69,7 +69,7 @@ class SqibePermalinkManager
         $shortUrl = array_pop($permalinkParts);
 
         $data = [
-            'shorturl' => $shortUrl,
+            'shorturl' => $this->getKeyword($incident),
             'format'   => 'json',
             'action'   => 'expand',
             'username' => $this->apiUsername,
@@ -91,5 +91,13 @@ class SqibePermalinkManager
         $longUrl = $curl->response->longurl;
 
         return $longUrl;
+    }
+
+    protected function getKeyword(Incident $incident): string
+    {
+        $permalinkParts = explode('/', $incident->getPermalink());
+        $keyword = array_pop($permalinkParts);
+
+        return $keyword;
     }
 }
