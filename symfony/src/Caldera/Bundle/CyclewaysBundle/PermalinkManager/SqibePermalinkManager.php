@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CyclewaysBundle\PermalinkManager;
 
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Curl\Curl;
+use stdClass;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -37,18 +38,12 @@ class SqibePermalinkManager
             'url' => $this->generateUrl($incident),
             'title' => $incident->getTitle(),
             'format'   => 'json',
-            'action'   => 'shorturl',
-            'username' => $this->apiUsername,
-            'password' => $this->apiPassword
+            'action'   => 'shorturl'
         ];
 
-        $curl = new Curl();
-        $curl->post(
-            $this->apiUrl,
-            $data
-        );
+        $response = $this->postCurl($data);
 
-        $permalink = $curl->response->shorturl;
+        $permalink = $response->shorturl;
 
         $incident->setPermalink($permalink);
 
@@ -57,30 +52,19 @@ class SqibePermalinkManager
 
     public function getUrl(Incident $incident): string
     {
-        $permalinkParts = explode('/', $incident->getPermalink());
-        $shortUrl = array_pop($permalinkParts);
-
         $data = [
             'shorturl' => $this->getKeyword($incident),
             'format'   => 'json',
-            'action'   => 'expand',
-            'username' => $this->apiUsername,
-            'password' => $this->apiPassword
+            'action'   => 'expand'
         ];
 
-        $curl = new Curl();
-        $curl->post(
-            $this->apiUrl,
-            $data
-        );
-
-        $response = $curl->response;
+        $response = $this->postCurl($data);
 
         if (isset($response->errorCode) && $response->errorCode == 404) {
             return '';
         }
 
-        $longUrl = $curl->response->longurl;
+        $longUrl = $response->longurl;
 
         return $longUrl;
     }
@@ -104,5 +88,23 @@ class SqibePermalinkManager
         );
 
         return $url;
+    }
+
+    protected function postCurl(array $data): stdClass
+    {
+        $loginArray = [
+            'username' => $this->apiUsername,
+            'password' => $this->apiPassword
+        ];
+
+        $data = array_merge($data, $loginArray);
+
+        $curl = new Curl();
+        $curl->post(
+            $this->apiUrl,
+            $data
+        );
+
+        return $curl->response;
     }
 }
