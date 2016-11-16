@@ -4,18 +4,36 @@ namespace Caldera\Bundle\CyclewaysBundle\Permalinkmanager;
 
 use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Curl\Curl;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class SqibePermalinkManager
 {
-    public function __construct()
-    {
+    /** @var Router $router */
+    private $router;
 
+    /** @var string $apiUrl */
+    private $apiUrl;
+
+    /** @var string $apiUsername */
+    private $apiUsername;
+
+    /** @var string $apiPassword */
+    private $apiPassword;
+
+    public function __construct(Router $router, string $apiUrl, string $apiUsername, string $apiPassword)
+    {
+        $this->router = $router;
+
+        $this->apiUrl = $apiUrl;
+        $this->apiUsername = $apiUsername;
+        $this->apiPassword = $apiPassword;
     }
 
     protected function createPermalink(Incident $incident)
     {
-        $url = $this->generateUrl(
+        $url = $this->router->generate(
             'caldera_cycleways_incident_show',
             [
                 'slug' => $incident->getSlug()
@@ -23,20 +41,18 @@ class SqibePermalinkManager
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
-        $apiUrl =  $this->getParameter('sqibe.api_url');
-
         $data = [
             'url' => $url,
             'title' => $incident->getTitle(),
             'format'   => 'json',
             'action'   => 'shorturl',
-            'username' => $this->getParameter('sqibe.api_username'),
-            'password' => $this->getParameter('sqibe.api_password')
+            'username' => $this->apiUsername,
+            'password' => $this->apiPassword
         ];
 
         $curl = new Curl();
         $curl->post(
-            $apiUrl,
+            $this->apiUrl,
             $data
         );
 
