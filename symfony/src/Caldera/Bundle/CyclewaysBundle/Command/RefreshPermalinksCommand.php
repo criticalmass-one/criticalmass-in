@@ -45,7 +45,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
 
         /** @var RequestContext $context */
         $context = $this->getContainer()->get('router')->getContext();
-        $context->setHost('cycleways.cw');
+        $context->setHost($this->getContainer()->getParameter('domain.cycleways'));
         $context->setScheme('https');
         $context->setBaseUrl('');
 
