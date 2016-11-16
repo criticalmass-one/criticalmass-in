@@ -31,7 +31,7 @@ class SqibePermalinkManager
         $this->apiPassword = $apiPassword;
     }
 
-    public function createPermalink(Incident $incident)
+    public function createPermalink(Incident $incident): string
     {
         $url = $this->router->generate(
             'caldera_cycleways_incident_show',
@@ -59,5 +59,35 @@ class SqibePermalinkManager
         $permalink = $curl->response->shorturl;
 
         $incident->setPermalink($permalink);
+    }
+
+    public function getUrl(Incident $incident): string
+    {
+        $permalinkParts = explode('/', $incident->getPermalink());
+        $shortUrl = array_pop($permalinkParts);
+
+        $data = [
+            'shorturl' => $shortUrl,
+            'format'   => 'json',
+            'action'   => 'expand',
+            'username' => $this->apiUsername,
+            'password' => $this->apiPassword
+        ];
+
+        $curl = new Curl();
+        $curl->post(
+            $this->apiUrl,
+            $data
+        );
+
+        $response = $curl->response;
+
+        if (isset($response->errorCode) && $response->errorCode == 404) {
+            return '';
+        }
+
+        $longUrl = $curl->response->longurl;
+
+        return $longUrl;
     }
 }

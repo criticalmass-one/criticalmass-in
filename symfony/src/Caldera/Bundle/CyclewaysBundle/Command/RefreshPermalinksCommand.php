@@ -59,6 +59,22 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
             $this->output->writeln(
                 'There is currently no permalink'
             );
+        } else {
+            $this->output->writeln(
+                sprintf(
+                    'Current permalink is: %s',
+                    $incident->getPermalink()
+                )
+            );
+
+            $longUrl = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe')->getUrl($incident);
+
+            $this->output->writeln(
+                sprintf(
+                    'Current url is: %s',
+                    $longUrl
+                )
+            );
         }
     }
 }
