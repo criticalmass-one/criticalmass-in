@@ -154,13 +154,18 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
 
     protected function updatePermalink(Incident $incident)
     {
-        $permalink = $this->permalinkManager->updatePermalink($incident);
+        $success = $this->permalinkManager->updatePermalink($incident);
 
-        $this->output->writeln(sprintf(
-            'Updated permalink: %s',
-            $permalink
-        ));
+        if ($success) {
+            $this->output->writeln(
+                'Updated permalink'
+            );
 
-        $this->manager->persist($incident);
+            $this->manager->persist($incident);
+        } else {
+            $this->output->writeln(
+                'Could not update permalink'
+            );
+        }
     }
 }
