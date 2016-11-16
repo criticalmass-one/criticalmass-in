@@ -31,7 +31,7 @@ class SqibePermalinkManager
         $this->apiPassword = $apiPassword;
     }
 
-    protected function createPermalink(Incident $incident)
+    public function createPermalink(Incident $incident)
     {
         $url = $this->router->generate(
             'caldera_cycleways_incident_show',

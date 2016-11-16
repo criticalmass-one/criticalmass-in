@@ -129,7 +129,7 @@ class IncidentController extends AbstractController
             $slug = new Slug($incident->getTitle().' '.$incident->getStreet().' '.$incident->getDistrict().' '.$incident->getCity()->getCity().' '.$incident->getId());
             $incident->setSlug($slug);
 
-            $this->createPermalink($incident);
+            $this->get('caldera.cycleways.permalink_manager.sqibe')->createPermalink($incident);
 
             // now save incident with slugged id
             $em->persist($incident);
