@@ -40,7 +40,6 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $this->output = $output;
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
-        $this->memcache = $this->getContainer()->get('memcache.criticalmass');
         $this->permalinkManager = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe');
 
         /** @var RequestContext $context */
