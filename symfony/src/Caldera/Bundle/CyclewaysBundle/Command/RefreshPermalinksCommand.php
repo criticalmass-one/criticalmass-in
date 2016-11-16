@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RequestContext;
 
 class RefreshPermalinksCommand extends ContainerAwareCommand
 {
@@ -41,6 +43,12 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $this->memcache = $this->getContainer()->get('memcache.criticalmass');
         $this->permalinkManager = $this->getContainer()->get('caldera.cycleways.permalink_manager.sqibe');
 
+        /** @var RequestContext $context */
+        $context = $this->getContainer()->get('router')->getContext();
+        $context->setHost('cycleways.cw');
+        $context->setScheme('https');
+        $context->setBaseUrl('/');
+
         $incidents = $this->doctrine->getRepository('CalderaBundle:Incident')->findAll();
 
         foreach ($incidents as $incident) {
@@ -70,33 +78,62 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
             );
 
             $this->createPermalink($incident);
-        } else {
+
+            return;
+        }
+
+
+        $this->output->writeln(
+            sprintf(
+                'Current permalink is: %s',
+                $incident->getPermalink()
+            )
+        );
+
+        $longUrl = $this->permalinkManager->getUrl($incident);
+
+
+        if (!$longUrl) {
             $this->output->writeln(
-                sprintf(
-                    'Current permalink is: %s',
-                    $incident->getPermalink()
-                )
+                'Long url could not be found'
             );
 
-            $longUrl = $this->permalinkManager->getUrl($incident);
+            $this->createPermalink($incident);
+        }
 
-            if ($longUrl) {
-                $this->output->writeln(
-                    sprintf(
-                        'Current url is: %s',
-                        $longUrl
-                    )
-                );
-            } else {
-                $this->output->writeln(
-                    'Long url could not be found'
-                );
+        $this->output->writeln(
+            sprintf(
+                'Current url is: %s',
+                $longUrl
+            )
+        );
 
-                $this->createPermalink($incident);
-            }
+        $generatedUrl = $this->generateUrl($incident);
 
+        if ($generatedUrl != $longUrl) {
+            $this->output->writeln(
+                sprintf(
+                    'Url mismatch. Generated: %s, Found: %s',
+                    $generatedUrl,
+                    $longUrl
+                )
+            );
         }
     }
+
+    protected function generateUrl(Incident $incident): string
+    {
+        $url = $this->getContainer()->get('router')->generate(
+            'caldera_cycleways_incident_show',
+            [
+                'slug' => $incident->getSlug()
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        return $url;
+    }
+
 
     protected function createPermalink(Incident $incident)
     {
