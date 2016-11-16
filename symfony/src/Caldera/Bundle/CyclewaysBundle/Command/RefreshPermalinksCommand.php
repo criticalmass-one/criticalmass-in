@@ -47,7 +47,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $context = $this->getContainer()->get('router')->getContext();
         $context->setHost('cycleways.cw');
         $context->setScheme('https');
-        $context->setBaseUrl('/');
+        $context->setBaseUrl('');
 
         $incidents = $this->doctrine->getRepository('CalderaBundle:Incident')->findAll();
 
