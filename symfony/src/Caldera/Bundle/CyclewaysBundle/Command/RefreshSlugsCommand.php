@@ -62,7 +62,7 @@ class RefreshSlugsCommand extends ContainerAwareCommand
     {
         $slug = $this->slugGenerator->generateSlug($incident);
 
-        $this->output->writeln(
+        $this->debug(
             sprintf(
                 'Incident <info>#%d</info> <comment>%s</comment> slug is: %s',
                 $incident->getId(),
@@ -72,5 +72,12 @@ class RefreshSlugsCommand extends ContainerAwareCommand
         );
 
         $this->manager->persist($incident);
+    }
+
+    protected function debug(string $message)
+    {
+        if ($this->output->isVerbose()) {
+            $this->output->writeln($message);
+        }
     }
 }
