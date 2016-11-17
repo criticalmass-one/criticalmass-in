@@ -7,6 +7,7 @@ use Caldera\Bundle\CyclewaysBundle\PermalinkManager\SqibePermalinkManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -50,22 +51,27 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
 
         $incidents = $this->doctrine->getRepository('CalderaBundle:Incident')->findAll();
 
+        $progress = new ProgressBar($output, count($incidents));
+
         foreach ($incidents as $incident) {
             $this->process($incident);
+
+            $progress->advance();
         }
 
         $this->manager->flush();
+        $progress->finish();
     }
 
     protected function process(Incident $incident)
     {
-        $this->output->writeln('');
+        $this->debug('');
 
         if (!$incident->getSlug()) {
             return;
         }
 
-        $this->output->writeln(
+        $this->debug(
             sprintf(
                 'Incident <info>#%d</info> <comment>%s</comment>',
                 $incident->getId(),
@@ -74,7 +80,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         );
 
         if (!$incident->getPermalink()) {
-            $this->output->writeln(
+            $this->debug(
                 'There is currently no permalink'
             );
 
@@ -83,8 +89,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
             return;
         }
 
-
-        $this->output->writeln(
+        $this->debug(
             sprintf(
                 'Current permalink is: %s',
                 $incident->getPermalink()
@@ -95,7 +100,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
 
 
         if (!$longUrl) {
-            $this->output->writeln(
+            $this->debug(
                 'Long url could not be found'
             );
 
@@ -104,7 +109,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
             return;
         }
 
-        $this->output->writeln(
+        $this->debug(
             sprintf(
                 'Current url is: %s',
                 $longUrl
@@ -114,7 +119,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $generatedUrl = $this->generateUrl($incident);
 
         if ($generatedUrl != $longUrl) {
-            $this->output->writeln(
+            $this->debug(
                 sprintf(
                     'Url mismatch. Generated: %s',
                     $generatedUrl
@@ -143,7 +148,7 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
     {
         $permalink = $this->permalinkManager->createPermalink($incident);
 
-        $this->output->writeln(sprintf(
+        $this->debug(sprintf(
             'Created permalink: %s',
             $permalink
         ));
@@ -156,15 +161,18 @@ class RefreshPermalinksCommand extends ContainerAwareCommand
         $success = $this->permalinkManager->updatePermalink($incident);
 
         if ($success) {
-            $this->output->writeln(
-                'Updated permalink'
-            );
+            $this->debug('Updated permalink');
 
             $this->manager->persist($incident);
         } else {
-            $this->output->writeln(
-                'Could not update permalink'
-            );
+            $this->debug('Could not update permalink');
+        }
+    }
+
+    protected function debug(string $message)
+    {
+        if ($this->output->isVerbose()) {
+            $this->output->writeln($message);
         }
     }
 }
