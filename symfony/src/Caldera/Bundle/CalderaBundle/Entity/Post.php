@@ -81,7 +81,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="Incident", inversedBy="posts")
      * @ORM\JoinColumn(name="incident_id", referencedColumnName="id")
      */
-    protected $inicident;
+    protected $incident;
 
     /**
      * @ORM\Column(type="float", nullable=true)
