@@ -8,6 +8,7 @@ use Caldera\Bundle\CyclewaysBundle\SlugGenerator\SlugGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -45,18 +46,23 @@ class RefreshSlugsCommand extends ContainerAwareCommand
 
         $incidents = $this->doctrine->getRepository('CalderaBundle:Incident')->findAll();
 
+        $progress = new ProgressBar($output, count($incidents));
+
         foreach ($incidents as $incident) {
             $this->process($incident);
+
+            $progress->advance();
         }
 
         $this->manager->flush();
+        $progress->finish();
     }
 
     protected function process(Incident $incident)
     {
         $slug = $this->slugGenerator->generateSlug($incident);
 
-        $this->output->writeln(
+        $this->debug(
             sprintf(
                 'Incident <info>#%d</info> <comment>%s</comment> slug is: %s',
                 $incident->getId(),
@@ -66,5 +72,12 @@ class RefreshSlugsCommand extends ContainerAwareCommand
         );
 
         $this->manager->persist($incident);
+    }
+
+    protected function debug(string $message)
+    {
+        if ($this->output->isVerbose()) {
+            $this->output->writeln($message);
+        }
     }
 }
