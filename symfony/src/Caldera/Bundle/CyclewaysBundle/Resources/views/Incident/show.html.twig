@@ -23,6 +23,20 @@
                         {{ incident.description|parse }}
                     </div>
                 </div>
+
+                <div class="row m-t-1">
+                    <div class="col-md-12">
+                        <h3>
+                            Kommentare zu dieser Gefahrenstelle
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ render(controller('CalderaCyclewaysBundle:Post:write', { incident: incident })) }}
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-4">

@@ -32,3 +32,6 @@ caldera_cycleways_incident_add:
     path:     /{citySlug}/addincident
     defaults: { _controller: CalderaCyclewaysBundle:Incident:add }
 
+caldera_cycleways_incident_comment_add:
+    path:     /{slug}/addcomment
+    defaults: { _controller: CalderaCyclewaysBundle:Post:write }
