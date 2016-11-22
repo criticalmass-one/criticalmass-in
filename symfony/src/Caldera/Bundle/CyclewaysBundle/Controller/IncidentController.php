@@ -171,6 +171,8 @@ class IncidentController extends AbstractController
             return $this->createNotFoundException();
         }
 
+        $posts = $this->getPostManager()->getPostsForIncident($incident);
+
         $this->storeView($incident);
 
         $this->getMetadata()
@@ -180,7 +182,9 @@ class IncidentController extends AbstractController
         return $this->render(
             'CalderaCyclewaysBundle:Incident:show.html.twig',
             [
-                'incident' => $incident
+                'incident' => $incident,
+                'posts' => $posts
+
             ]
         );
     }
