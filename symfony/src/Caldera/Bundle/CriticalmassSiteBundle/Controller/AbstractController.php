@@ -13,6 +13,8 @@ abstract class AbstractController extends Controller
 
     protected function isLoggedIn(): bool
     {
-        return $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY');
+        return $this
+            ->get('security.authorization_checker')
+            ->isGranted('IS_AUTHENTICATED_FULLY');
     }
 }
