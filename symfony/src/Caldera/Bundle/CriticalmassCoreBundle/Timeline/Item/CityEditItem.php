@@ -22,6 +22,11 @@ class CityEditItem extends AbstractItem
     protected $cityName;
 
     /**
+     * @var string $archiveMessage
+     */
+    protected $archiveMessage;
+
+    /**
      * @return string
      */
     public function getUsername()
@@ -67,5 +72,21 @@ class CityEditItem extends AbstractItem
     public function setCityName($cityName)
     {
         $this->cityName = $cityName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
+    }
+
+    /**
+     * @param string $archiveMessage
+     */
+    public function setArchiveMessage($archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
     }
 }

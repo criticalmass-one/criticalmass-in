@@ -22,6 +22,11 @@ class RideEditItem extends AbstractItem
     protected $rideTitle;
 
     /**
+     * @var string $archiveMessage
+     */
+    protected $archiveMessage;
+
+    /**
      * @return string
      */
     public function getUsername()
@@ -67,5 +72,21 @@ class RideEditItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
+    }
+
+    /**
+     * @param string $archiveMessage
+     */
+    public function setArchiveMessage($archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
     }
 }

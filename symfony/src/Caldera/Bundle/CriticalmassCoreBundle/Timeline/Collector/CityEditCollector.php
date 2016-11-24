@@ -30,7 +30,7 @@ class CityEditCollector extends AbstractTimelineCollector
                 $item->setCityName($city->getCity());
                 $item->setCity($city);
                 $item->setDateTime($city->getArchiveDateTime());
-
+                $item->setArchiveMessage($city->getArchiveMessage());
                 $this->addItem($item);
             }
         }
