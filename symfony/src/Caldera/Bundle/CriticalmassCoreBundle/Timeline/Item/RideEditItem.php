@@ -7,7 +7,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 class RideEditItem extends AbstractItem
 {
     /**
-     * @var title $username
+     * @var string $username
      */
     protected $username;
 

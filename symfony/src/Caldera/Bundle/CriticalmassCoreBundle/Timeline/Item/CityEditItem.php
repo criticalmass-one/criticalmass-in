@@ -7,7 +7,7 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 class CityEditItem extends AbstractItem
 {
     /**
-     * @var title $username
+     * @var string $username
      */
     protected $username;
 

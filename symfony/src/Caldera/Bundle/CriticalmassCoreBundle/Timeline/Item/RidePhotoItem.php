@@ -8,7 +8,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 class RidePhotoItem extends AbstractItem
 {
     /**
-     * @var title $username
+     * @var string $username
      */
     protected $username;
 
