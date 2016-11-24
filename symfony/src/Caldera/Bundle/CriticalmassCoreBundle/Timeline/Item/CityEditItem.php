@@ -40,6 +40,8 @@ class CityEditItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -56,6 +58,8 @@ class CityEditItem extends AbstractItem
     public function setCity(City $city)
     {
         $this->city = $city;
+
+        return $this;
     }
 
     /**
@@ -72,6 +76,8 @@ class CityEditItem extends AbstractItem
     public function setCityName($cityName)
     {
         $this->cityName = $cityName;
+
+        return $this;
     }
 
     /**
@@ -88,5 +94,7 @@ class CityEditItem extends AbstractItem
     public function setArchiveMessage($archiveMessage)
     {
         $this->archiveMessage = $archiveMessage;
+
+        return $this;
     }
 }

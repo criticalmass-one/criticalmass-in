@@ -40,6 +40,8 @@ class PhotoCommentItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -56,6 +58,8 @@ class PhotoCommentItem extends AbstractItem
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+
+        return $this;
     }
 
     /**
@@ -72,6 +76,8 @@ class PhotoCommentItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+
+        return $this;
     }
 
     /**
@@ -88,5 +94,7 @@ class PhotoCommentItem extends AbstractItem
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 }

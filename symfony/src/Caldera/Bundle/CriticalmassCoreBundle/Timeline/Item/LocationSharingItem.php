@@ -33,6 +33,8 @@ class LocationSharingItem extends AbstractItem
     public function setCityList(array $cityList)
     {
         $this->cityList = $cityList;
+
+        return $this;
     }
 
     /**
@@ -49,6 +51,8 @@ class LocationSharingItem extends AbstractItem
     public function setSharingCounter($sharingCounter)
     {
         $this->sharingCounter = $sharingCounter;
+
+        return $this;
     }
 
     /**
@@ -65,5 +69,7 @@ class LocationSharingItem extends AbstractItem
     public function setPolyline($polyline)
     {
         $this->polyline = $polyline;
+
+        return $this;
     }
 }

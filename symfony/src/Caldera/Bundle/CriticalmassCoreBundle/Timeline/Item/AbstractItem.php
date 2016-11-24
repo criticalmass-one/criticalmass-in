@@ -33,6 +33,8 @@ abstract class AbstractItem implements ItemInterface
     public function setDateTime(\DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
+
+        return $this;
     }
 
     public function getUniqId()

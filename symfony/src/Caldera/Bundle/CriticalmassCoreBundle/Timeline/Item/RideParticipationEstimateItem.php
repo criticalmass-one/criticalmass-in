@@ -40,6 +40,8 @@ class RideParticipationEstimateItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -56,6 +58,8 @@ class RideParticipationEstimateItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+
+        return $this;
     }
 
     /**
@@ -72,6 +76,8 @@ class RideParticipationEstimateItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+
+        return $this;
     }
 
     /**
@@ -88,5 +94,7 @@ class RideParticipationEstimateItem extends AbstractItem
     public function setEstimatedParticipants($estimatedParticipants)
     {
         $this->estimatedParticipants = $estimatedParticipants;
+
+        return $this;
     }
 }
