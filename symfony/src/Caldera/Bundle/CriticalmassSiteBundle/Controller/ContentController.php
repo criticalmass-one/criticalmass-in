@@ -39,7 +39,7 @@ class ContentController extends AbstractController
         $content->setUser($this->getUser());
 
         $form = $this->createForm(
-            new ContentType(),
+            ContentType::class,
             $content,
             [
                 'action' => $this->generateUrl(
