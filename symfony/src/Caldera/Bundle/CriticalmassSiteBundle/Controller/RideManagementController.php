@@ -160,8 +160,7 @@ class RideManagementController extends AbstractController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
-            $ride = $form->getData();
+            
             $archiveRide = $ride->archive($this->getUser());
 
             $em->persist($ride);

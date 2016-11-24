@@ -38,9 +38,6 @@ class ContentController extends AbstractController
 
         $content->setUser($this->getUser());
 
-        $archiveContent = clone $content;
-        $archiveContent->setArchiveParent($content);
-
         $form = $this->createForm(
             new ContentType(),
             $content,
@@ -63,8 +60,10 @@ class ContentController extends AbstractController
         if ($form->isValid()) {
             $content->setLastEditionDateTime(new \DateTime());
 
+            $archiveContent = $content->archive($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            $em->persist($content);
             $em->persist($archiveContent);
             $em->flush();
 

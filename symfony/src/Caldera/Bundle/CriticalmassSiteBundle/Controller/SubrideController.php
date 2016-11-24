@@ -155,18 +155,14 @@ class SubrideController extends AbstractController
     {
         $form->handleRequest($request);
 
-        $archiveRide = clone $subride;
-        $archiveRide->setArchiveUser($this->getUser());
-        $archiveRide->setArchiveParent($subride);
-        $archiveRide->setIsArchived(true);
-        $archiveRide->setArchiveDateTime(new \DateTime());
-
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
 
         if ($form->isValid()) {
+            $archiveRide = $subride->archive($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            $em->persist($subride);
             $em->persist($archiveRide);
             $em->flush();
 
