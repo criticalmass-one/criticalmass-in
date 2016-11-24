@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
+
 class ThreadPostItem extends AbstractItem
 {
     /**

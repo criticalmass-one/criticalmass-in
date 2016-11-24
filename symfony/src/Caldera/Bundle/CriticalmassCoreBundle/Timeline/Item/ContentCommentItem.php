@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
+use Caldera\Bundle\CalderaBundle\Entity\Content;
+
 class ContentCommentItem extends AbstractItem
 {
     /**
