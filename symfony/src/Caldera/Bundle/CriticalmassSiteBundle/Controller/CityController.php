@@ -136,6 +136,8 @@ class CityController extends AbstractController
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
         }
 
+        $this->countCityView($city);
+
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
         if ($blocked) {
@@ -161,8 +163,6 @@ class CityController extends AbstractController
         $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
-
-        $this->countCityView($city);
 
         $this->getMetadata()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity());
