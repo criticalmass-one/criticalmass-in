@@ -7,7 +7,7 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 class CityEditItem extends AbstractItem
 {
     /**
-     * @var title $username
+     * @var string $username
      */
     protected $username;
 
@@ -20,6 +20,11 @@ class CityEditItem extends AbstractItem
      * @var string $cityName
      */
     protected $cityName;
+
+    /**
+     * @var string $archiveMessage
+     */
+    protected $archiveMessage;
 
     /**
      * @return string
@@ -35,6 +40,8 @@ class CityEditItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -51,6 +58,8 @@ class CityEditItem extends AbstractItem
     public function setCity(City $city)
     {
         $this->city = $city;
+
+        return $this;
     }
 
     /**
@@ -67,5 +76,25 @@ class CityEditItem extends AbstractItem
     public function setCityName($cityName)
     {
         $this->cityName = $cityName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
+    }
+
+    /**
+     * @param string $archiveMessage
+     */
+    public function setArchiveMessage($archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
+
+        return $this;
     }
 }

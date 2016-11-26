@@ -2,6 +2,9 @@
 
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\Content;
+use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Elastica\Query;
 use Elastica\ResultSet;
 use Symfony\Component\HttpFoundation\Request;
@@ -137,10 +140,11 @@ class SearchController extends AbstractController
 
         $rides = $this->getRideRepository()->findCurrentRides();
 
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $result[] = [
                 'type' => 'ride',
-                'url' => $this->generateUrl($ride),
+                'url' => $this->generateObjectUrl($ride),
                 'value' => $ride->getFancyTitle(),
                 'meta' => [
                     'dateTime' => $ride->getDateTime()->format('Y-m-d\TH:i:s'),
@@ -151,20 +155,22 @@ class SearchController extends AbstractController
 
         $cities = $this->getCityRepository()->findEnabledCities();
 
+        /** @var City $city */
         foreach ($cities as $city) {
             $result[] = [
                 'type' => 'city',
-                'url' => $this->generateUrl($city),
+                'url' => $this->generateObjectUrl($city),
                 'value' => $city->getCity()
             ];
         }
 
         $contents = $this->getContentRepository()->findEnabledContent();
 
+        /** @var Content $content */
         foreach ($contents as $content) {
             $result[] = [
                 'type' => 'content',
-                'url' => $this->generateUrl($content),
+                'url' => $this->generateObjectUrl($content),
                 'value' => $content->getTitle()
             ];
         }

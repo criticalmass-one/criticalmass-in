@@ -61,6 +61,8 @@ class RideTrackItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -77,6 +79,8 @@ class RideTrackItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+
+        return $this;
     }
 
     /**
@@ -93,6 +97,8 @@ class RideTrackItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+
+        return $this;
     }
 
     /**
@@ -109,6 +115,8 @@ class RideTrackItem extends AbstractItem
     public function setTrack(Track $track)
     {
         $this->track = $track;
+
+        return $this;
     }
 
     /**
@@ -125,6 +133,8 @@ class RideTrackItem extends AbstractItem
     public function setDistance($distance)
     {
         $this->distance = $distance;
+
+        return $this;
     }
 
     /**
@@ -141,6 +151,8 @@ class RideTrackItem extends AbstractItem
     public function setDuration($duration)
     {
         $this->duration = $duration;
+
+        return $this;
     }
 
     /**
@@ -157,6 +169,8 @@ class RideTrackItem extends AbstractItem
     public function setPolyline($polyline)
     {
         $this->polyline = $polyline;
+
+        return $this;
     }
 
     /**
@@ -173,5 +187,7 @@ class RideTrackItem extends AbstractItem
     public function setPolylineColor($polylineColor)
     {
         $this->polylineColor = $polylineColor;
+
+        return $this;
     }
 }

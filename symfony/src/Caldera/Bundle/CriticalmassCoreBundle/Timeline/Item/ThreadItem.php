@@ -2,6 +2,8 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
+use Caldera\Bundle\CalderaBundle\Entity\Thread;
+
 class ThreadItem extends AbstractItem
 {
     /**
@@ -38,6 +40,8 @@ class ThreadItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -54,6 +58,8 @@ class ThreadItem extends AbstractItem
     public function setThread($thread)
     {
         $this->thread = $thread;
+
+        return $this;
     }
 
     /**
@@ -70,6 +76,8 @@ class ThreadItem extends AbstractItem
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -86,6 +94,8 @@ class ThreadItem extends AbstractItem
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 
 }

@@ -160,15 +160,13 @@ class CityManagementController extends AbstractController
 
     protected function editPostAction(Request $request, City $city, Form $form)
     {
-        $archiveCity = clone $city;
-        $archiveCity->setArchiveUser($this->getUser());
-        $archiveCity->setArchiveParent($city);
-
         $form->handleRequest($request);
 
         $hasErrors = null;
 
         if ($form->isValid()) {
+            $archiveCity = $city->archive($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($city);
             $em->persist($archiveCity);

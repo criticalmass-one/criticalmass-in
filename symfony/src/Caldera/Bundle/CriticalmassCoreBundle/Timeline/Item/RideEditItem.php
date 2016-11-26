@@ -7,7 +7,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 class RideEditItem extends AbstractItem
 {
     /**
-     * @var title $username
+     * @var string $username
      */
     protected $username;
 
@@ -20,6 +20,11 @@ class RideEditItem extends AbstractItem
      * @var string $rideTitle
      */
     protected $rideTitle;
+
+    /**
+     * @var string $archiveMessage
+     */
+    protected $archiveMessage;
 
     /**
      * @return string
@@ -35,6 +40,8 @@ class RideEditItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -51,6 +58,8 @@ class RideEditItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+
+        return $this;
     }
 
     /**
@@ -67,5 +76,25 @@ class RideEditItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArchiveMessage()
+    {
+        return $this->archiveMessage;
+    }
+
+    /**
+     * @param string $archiveMessage
+     */
+    public function setArchiveMessage($archiveMessage)
+    {
+        $this->archiveMessage = $archiveMessage;
+
+        return $this;
     }
 }

@@ -40,6 +40,8 @@ class BlogPostCommentItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -56,6 +58,8 @@ class BlogPostCommentItem extends AbstractItem
     public function setBlogPost($blogPost)
     {
         $this->blogPost = $blogPost;
+
+        return $this;
     }
 
     /**
@@ -72,6 +76,8 @@ class BlogPostCommentItem extends AbstractItem
     public function setBlogPostTitle($blogPostTitle)
     {
         $this->blogPostTitle = $blogPostTitle;
+
+        return $this;
     }
 
     /**
@@ -88,6 +94,8 @@ class BlogPostCommentItem extends AbstractItem
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 
 }

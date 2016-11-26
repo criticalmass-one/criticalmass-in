@@ -40,6 +40,8 @@ class RideCommentItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -56,6 +58,8 @@ class RideCommentItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+
+        return $this;
     }
 
     /**
@@ -72,6 +76,8 @@ class RideCommentItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+
+        return $this;
     }
 
     public function getText()

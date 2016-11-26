@@ -2,13 +2,14 @@
 
 namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
 
+use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {
     /**
-     * @var title $username
+     * @var string $username
      */
     protected $username;
 
@@ -51,6 +52,8 @@ class RidePhotoItem extends AbstractItem
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -67,6 +70,8 @@ class RidePhotoItem extends AbstractItem
     public function setRide($ride)
     {
         $this->ride = $ride;
+
+        return $this;
     }
 
     /**
@@ -83,6 +88,8 @@ class RidePhotoItem extends AbstractItem
     public function setCity($city)
     {
         $this->city = $city;
+
+        return $this;
     }
 
     /**
@@ -99,6 +106,8 @@ class RidePhotoItem extends AbstractItem
     public function setRideTitle($rideTitle)
     {
         $this->rideTitle = $rideTitle;
+
+        return $this;
     }
 
     /**
@@ -115,6 +124,8 @@ class RidePhotoItem extends AbstractItem
     public function setCounter($counter)
     {
         $this->counter = $counter;
+
+        return $this;
     }
 
     /**
@@ -123,6 +134,8 @@ class RidePhotoItem extends AbstractItem
     public function setPreviewPhoto(Photo $previewPhoto)
     {
         $this->previewPhoto = $previewPhoto;
+
+        return $this;
     }
 
     /**
