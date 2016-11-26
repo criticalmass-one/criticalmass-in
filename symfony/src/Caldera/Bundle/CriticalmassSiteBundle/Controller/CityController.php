@@ -136,6 +136,15 @@ class CityController extends AbstractController
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
         }
 
+        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
+
+        if ($blocked) {
+            return $this->render('CalderaCriticalmassSiteBundle:City:blocked.html.twig', [
+                'city' => $city,
+                'blocked' => $blocked
+            ]);
+        }
+
         $nearCities = $this->findNearCities($city);
 
         $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);

@@ -3,6 +3,7 @@
 namespace Caldera\Bundle\CalderaBundle\Traits;
 
 use Caldera\Bundle\CalderaBundle\Repository\AnonymousNameRepository;
+use Caldera\Bundle\CalderaBundle\Repository\BlockedCityRepository;
 use Caldera\Bundle\CalderaBundle\Repository\BlogPostRepository;
 use Caldera\Bundle\CalderaBundle\Repository\BoardRepository;
 use Caldera\Bundle\CalderaBundle\Repository\CityRepository;
@@ -38,6 +39,15 @@ trait RepositoryTrait
     protected function getBlogRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaBundle:Blog');
+    }
+
+
+    /**
+     * @return BlockedCityRepository
+     */
+    protected function getBlockedCityRepository()
+    {
+        return $this->getDoctrine()->getRepository('CalderaBundle:BlockedCity');
     }
 
     /**
