@@ -17,7 +17,7 @@ class BlockedCityRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 
 }
