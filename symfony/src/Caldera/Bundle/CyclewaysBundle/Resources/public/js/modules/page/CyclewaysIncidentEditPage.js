@@ -184,6 +184,12 @@ define(['CriticalService', 'DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'
             return;
         }
 
+        this._geocoding.searchAddressForLatLng(latitude, longitude, this._updateAddress.bind(this));
+
+        if ($('#incident_latitude').val() || $('#incident_longitude').val()) {
+            return;
+        }
+
         var latitude = jsonResult.latitude;
         var longitude = jsonResult.longitude;
         var latLng = L.latLng(latitude, longitude);
@@ -200,8 +206,6 @@ define(['CriticalService', 'DrawMap', 'leaflet-polyline', 'leaflet-extramarkers'
         });
 
         marker.addTo(this._drawnItems);
-
-        this._geocoding.searchAddressForLatLng(latitude, longitude, this._updateAddress.bind(this));
 
         this._map.setView(latLng, 15);
     };
