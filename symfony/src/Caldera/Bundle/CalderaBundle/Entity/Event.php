@@ -135,7 +135,7 @@ class Event implements ParticipateableInterface, ViewableInterface, ArchiveableI
     protected $archiveUser;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $archiveMessage;
