@@ -1,6 +1,6 @@
-caldera_cycleways_incident_map:
+caldera_cycleways_frontpage:
     path:     /
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
+    defaults: { _controller: CalderaCyclewaysBundle:Frontpage:index }
 
 caldera_cycleways_incident_streetview_check:
     path:     /streetviewcheck
