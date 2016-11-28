@@ -250,7 +250,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $archiveUser;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $archiveMessage;
