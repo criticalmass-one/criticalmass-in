@@ -41,7 +41,8 @@
         "hwi/oauth-bundle": "0.5.*",
         "php-imap/php-imap": "2.0.*",
         "php-curl-class/php-curl-class": "^7.0",
-        "malenki/slug": "1.0.0"
+        "malenki/slug": "1.0.0",
+        "cmfcmf/openweathermap-php-api": "^2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

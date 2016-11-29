@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "51e30a37aa3eb6d080d5d485eee2b9d0",
-    "content-hash": "4c4fddfd4d9b9b11d4ab2a7ddcbd8e9f",
+    "hash": "bc10fea3974291b55ef6d64c7d436ac8",
+    "content-hash": "62423df746f2580cee1d1fcb1d9aeee8",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -50,6 +50,50 @@
                 "strava"
             ],
             "time": "2015-02-23 08:57:10"
+        },
+        {
+            "name": "cmfcmf/openweathermap-php-api",
+            "version": "v2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cmfcmf/OpenWeatherMap-PHP-Api.git",
+                "reference": "31465dc48b46d5273cb3ca1e559c1eb801665011"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cmfcmf/OpenWeatherMap-PHP-Api/zipball/31465dc48b46d5273cb3ca1e559c1eb801665011",
+                "reference": "31465dc48b46d5273cb3ca1e559c1eb801665011",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cmfcmf\\": "Cmfcmf"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Flach (cmfcmf)",
+                    "email": "cmfcmf.flach@gmail.com",
+                    "homepage": "http://cmfcmf.github.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A php api to parse weather data from OpenWeatherMap.org. This api tries to normalise and abstract the data and remove inconsistencies.",
+            "homepage": "https://github.com/cmfcmf/OpenWeatherMap-PHP-Api",
+            "keywords": [
+                "OpenWeatherMap",
+                "weather",
+                "weather api"
+            ],
+            "time": "2016-10-17 10:03:11"
         },
         {
             "name": "craue/formflow-bundle",
