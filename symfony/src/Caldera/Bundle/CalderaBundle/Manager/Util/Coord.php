@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: maltehuebner
- * Date: 08.11.16
- * Time: 20:09
- */
 
 namespace Caldera\Bundle\CalderaBundle\Manager\Util;
 
-
+/**
+ * Class Coord
+ * @package Caldera\Bundle\CalderaBundle\Manager\Util
+ * @deprecated
+ */
 class Coord
 {
     /** @var float $latitude */

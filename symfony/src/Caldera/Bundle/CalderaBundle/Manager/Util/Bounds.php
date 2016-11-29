@@ -2,6 +2,11 @@
 
 namespace Caldera\Bundle\CalderaBundle\Manager\Util;
 
+/**
+ * Class Bounds
+ * @package Caldera\Bundle\CalderaBundle\Manager\Util
+ * @deprecated 
+ */
 class Bounds
 {
     /** @var Coord $northWest */
