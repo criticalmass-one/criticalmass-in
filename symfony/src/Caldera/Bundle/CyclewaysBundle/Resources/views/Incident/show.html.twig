@@ -34,6 +34,14 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        {% for post in posts %}
+                            {% include('CalderaCyclewaysBundle:Post:post.html.twig') with { 'post':  post } %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
                         {{ render(controller('CalderaCyclewaysBundle:Post:write', { incident: incident })) }}
                     </div>
                 </div>
