@@ -42,7 +42,14 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        {% if app.getUser() %}
                         {{ render(controller('CalderaCyclewaysBundle:Post:write', { incident: incident })) }}
+                        {% else %}
+                        <div class="alert alert-info">
+                            <strong>Schade!</strong>
+                            Als angemeldeter Nutzer könntest du hier einen Kommentar hinterlassen.
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
