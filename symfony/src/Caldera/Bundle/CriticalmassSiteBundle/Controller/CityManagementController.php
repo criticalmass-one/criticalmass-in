@@ -3,9 +3,10 @@
 namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
+use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Region;
-use Caldera\Bundle\CriticalmassCoreBundle\CitySlugGenerator\CitySlugGenerator;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\StandardCityType;
+use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -68,8 +69,7 @@ class CityManagementController extends AbstractController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $csg = new CitySlugGenerator($city);
-            $citySlug = $csg->execute();
+            $citySlug = $this->createCitySlug($city);
             $city->addSlug($citySlug);
 
             $em->persist($citySlug);
@@ -218,8 +218,7 @@ class CityManagementController extends AbstractController
             } else {
                 $em = $this->getDoctrine()->getManager();
 
-                $csg = new CitySlugGenerator($city);
-                $citySlug = $csg->execute();
+                $citySlug = $this->createCitySlug($city);
                 $city->addSlug($citySlug);
 
                 $em->persist($citySlug);
@@ -240,5 +239,18 @@ class CityManagementController extends AbstractController
             'state' => $region->getName(),
             'region' => $region
         ));
+    }
+
+    protected function createCitySlug(City $city): CitySlug
+    {
+        $slugString = new Slug($city->getCity());
+
+        $citySlug = new CitySlug();
+        $citySlug
+            ->setCity($city)
+            ->setSlug($slugString)
+        ;
+
+        return $citySlug;
     }
 }
