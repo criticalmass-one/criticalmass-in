@@ -74,8 +74,6 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 
                 $this->output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): gespeichert');
             } else {
-                $this->retrieveWeather($ride);
-
                 $this->output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): existiert bereits');
             }
         }
