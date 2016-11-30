@@ -61,7 +61,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
         $this->em = $this->getContainer()->get('doctrine')->getManager();
 
-        $output->writeln('Looking for rides from ' . $startDateTime->format('Y-m-d') . ' to ' . $endDateTime->format('Y-m-d'));
+        $this->output->writeln('Looking for rides from ' . $startDateTime->format('Y-m-d') . ' to ' . $endDateTime->format('Y-m-d'));
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
