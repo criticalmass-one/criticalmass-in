@@ -85,14 +85,9 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 
     protected function retrieveWeather(Ride $ride)
     {
-        $coord = [
-            'lat' => $ride->getLatitude(),
-            'lon' => $ride->getLongitude()
-        ];
-
         try {
             /** @var WeatherForecast $owmWeatherForecast */
-            $owmWeatherForecast = $this->owm->getWeatherForecast($coord, 'metric', 'de', null, 7);
+            $owmWeatherForecast = $this->owm->getWeatherForecast($this->getLatLng($ride), 'metric', 'de', null, 7);
 
             /** @var Forecast $owmWeather */
             while ($owmWeather = $owmWeatherForecast->current()) {
@@ -108,9 +103,9 @@ class UpdateWeatherCommand extends ContainerAwareCommand
                 $this->em->persist($weather);
             }
 
-        } catch(OWMException $e) {
+        } catch (OWMException $e) {
             echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
         }
     }
@@ -124,29 +119,38 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             ->setCreationDateTime(new \DateTime())
             ->setWeatherDateTime($owmWeather->time->from)
             ->setJson(null)
-
             ->setTemperatureMin($owmWeather->temperature->min->getValue())
             ->setTemperatureMax($owmWeather->temperature->max->getValue())
             ->setTemperatureMorning($owmWeather->temperature->morning->getValue())
             ->setTemperatureDay($owmWeather->temperature->day->getValue())
             ->setTemperatureEvening($owmWeather->temperature->evening->getValue())
             ->setTemperatureNight($owmWeather->temperature->night->getValue())
-
             ->setWeather(null)
             ->setWeatherDescription($owmWeather->weather->description)
             ->setWeatherCode($owmWeather->weather->id)
             ->setWeatherIcon($owmWeather->weather->icon)
-
             ->setPressure($owmWeather->pressure->getValue())
             ->setHumidity($owmWeather->humidity->getValue())
-
             ->setWindSpeed($owmWeather->wind->speed->getValue())
             ->setWindDeg($owmWeather->wind->direction->getValue())
-
             ->setClouds($owmWeather->clouds->getValue())
-            ->setRain($owmWeather->precipitation->getValue())
-        ;
+            ->setRain($owmWeather->precipitation->getValue());
 
         return $weather;
+    }
+
+    protected function getLatLng(Ride $ride)
+    {
+        if ($ride->getHasLocation() && $ride->getLatitude() && $ride->getLongitude()) {
+            return [
+                'lat' => $ride->getLatitude(),
+                'lon' => $ride->getLongitude()
+            ];
+        }
+
+        return [
+            'lat' => $ride->getCity()->getLatitude(),
+            'lon' => $ride->getCity()->getLongitude()
+        ];
     }
 }
