@@ -78,6 +78,8 @@ class UpdateWeatherCommand extends ContainerAwareCommand
                 $this->output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): existiert bereits');
             }
         }
+
+        $this->em->flush();
     }
 
     protected function retrieveWeather(Ride $ride)
@@ -111,7 +113,6 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             $entity->setRide($ride);
 
             $this->em->persist($entity);
-            $this->em->flush();
         }*/
     }
 
