@@ -8,6 +8,8 @@ use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery;
 use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader;
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\CurrentWeather;
+use Cmfcmf\OpenWeatherMap\Forecast;
+use Cmfcmf\OpenWeatherMap\WeatherForecast;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -47,7 +49,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
     {
         $this->input = $input;
         $this->output = $output;
-
+        $this->em = $this->getContainer()->get('doctrine')->getManager();
         $this->owm = new OpenWeatherMap($this->getContainer()->getParameter('openweather.appid'));
 
         $startDateTime = new \DateTime();
@@ -59,7 +61,6 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $halfDateTime->sub($halfDayInterval);
 
         $rides = $this->getContainer()->get('doctrine')->getRepository('CalderaBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
-        $this->em = $this->getContainer()->get('doctrine')->getManager();
 
         $this->output->writeln('Looking for rides from ' . $startDateTime->format('Y-m-d') . ' to ' . $endDateTime->format('Y-m-d'));
 
@@ -90,40 +91,39 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         ];
 
         try {
-            /** @var CurrentWeather $owmWeather */
-            $owmWeather = $this->owm->getWeather($coord, 'metric', 'de');
+            /** @var WeatherForecast $owmWeatherForecast */
+            $owmWeatherForecast = $this->owm->getWeatherForecast($coord, 'metric', 'de', null, 7);
 
-            $weather = $this->createWeatherEntity($ride, $owmWeather);
+            /** @var Forecast $owmWeather */
+            while ($owmWeather = $owmWeatherForecast->current()) {
+                if ($owmWeather->time->from->format('Y-m-d') == $ride->getDateTime()->format('Y-m-d')) {
+                    break;
+                }
+
+                $owmWeatherForecast->next();
+            }
+
+            if ($owmWeather) {
+                $weather = $this->createWeatherEntity($ride, $owmWeather);
+                $this->em->persist($weather);
+            }
+
         } catch(OWMException $e) {
             echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
         } catch(\Exception $e) {
             echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
         }
-
-
-        /*
-        $result = $this->query->setRide($ride)->execute();
-
-        $this->reader->setJson($result);
-        $this->reader->setDate($ride->getDateTime());
-
-        $entity = $this->reader->createEntity();
-
-        if ($entity) {
-            $entity->setRide($ride);
-
-            $this->em->persist($entity);
-        }*/
     }
 
-    protected function createWeatherEntity(Ride $ride, CurrentWeather $owmWeather): Weather
+    protected function createWeatherEntity(Ride $ride, Forecast $owmWeather): Weather
     {
         $weather = new Weather();
 
         $weather
             ->setRide($ride)
             ->setCreationDateTime(new \DateTime())
-            ->setJson($owmWeather)
+            ->setWeatherDateTime($owmWeather->time->from)
+            ->setJson(null)
 
             ->setTemperatureMin($owmWeather->temperature->min->getValue())
             ->setTemperatureMax($owmWeather->temperature->max->getValue())
@@ -132,7 +132,7 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             ->setTemperatureEvening($owmWeather->temperature->evening->getValue())
             ->setTemperatureNight($owmWeather->temperature->night->getValue())
 
-            ->setWeather($owmWeather->weather->)
+            ->setWeather(null)
             ->setWeatherDescription($owmWeather->weather->description)
             ->setWeatherCode($owmWeather->weather->id)
             ->setWeatherIcon($owmWeather->weather->icon)
