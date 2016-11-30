@@ -4,10 +4,7 @@ namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Weather;
-use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherQuery;
-use Caldera\Bundle\CriticalmassCoreBundle\Weather\OpenWeather\OpenWeatherReader;
 use Cmfcmf\OpenWeatherMap;
-use Cmfcmf\OpenWeatherMap\CurrentWeather;
 use Cmfcmf\OpenWeatherMap\Forecast;
 use Cmfcmf\OpenWeatherMap\WeatherForecast;
 use Doctrine\ORM\EntityManager;
@@ -22,12 +19,6 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 {
     /** @var EntityManager $em */
     protected $em;
-
-    /** @var OpenWeatherReader $reader */
-    protected $reader;
-
-    /** @var OpenWeatherQuery $query */
-    protected $query;
 
     /** @var OpenWeatherMap $owm */
     protected $owm;
