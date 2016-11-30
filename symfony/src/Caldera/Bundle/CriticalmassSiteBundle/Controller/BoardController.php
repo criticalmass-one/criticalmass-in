@@ -7,6 +7,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Post;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
+use Malenki\Slug;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
@@ -153,8 +154,7 @@ class BoardController extends AbstractController
             $thread = new Thread();
             $post = new Post();
 
-            $slugGenerator = $this->get('caldera.criticalmass.sluggenerator');
-            $slug = $slugGenerator->generate($data['title']);
+            $slug = new Slug($data['title']);
 
             /* Okay, this is _really_ ugly */
             if ($board instanceof City) {
