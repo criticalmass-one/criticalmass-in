@@ -18,23 +18,23 @@ use Cmfcmf\OpenWeatherMap\Exception as OWMException;
 
 class UpdateWeatherCommand extends ContainerAwareCommand
 {
-    /**
-     * @var EntityManager $em
-     */
+    /** @var EntityManager $em */
     protected $em;
 
-    /**
-     * @var OpenWeatherReader $reader
-     */
+    /** @var OpenWeatherReader $reader */
     protected $reader;
 
-    /**
-     * @var OpenWeatherQuery $query
-     */
+    /** @var OpenWeatherQuery $query */
     protected $query;
 
     /** @var OpenWeatherMap $owm */
     protected $owm;
+
+    /** @var OutputInterface $output */
+    protected $output;
+
+    /** @var InputInterface $input */
+    protected $input;
 
     protected function configure()
     {
@@ -45,6 +45,9 @@ class UpdateWeatherCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->input = $input;
+        $this->output = $output;
+
         $this->owm = new OpenWeatherMap($this->getContainer()->getParameter('openweather.appid'));
 
         $startDateTime = new \DateTime();
@@ -68,11 +71,11 @@ class UpdateWeatherCommand extends ContainerAwareCommand
             if (!$currentWeather || $currentWeather->getCreationDateTime() < $halfDateTime) {
                 $this->retrieveWeather($ride);
 
-                $output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): gespeichert');
+                $this->output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): gespeichert');
             } else {
                 $this->retrieveWeather($ride);
 
-                $output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): existiert bereits');
+                $this->output->writeln('Ride: ' . $ride->getFancyTitle() . ' (' . $ride->getDateTime()->format('Y-m-d H:i:s') . '): existiert bereits');
             }
         }
     }
