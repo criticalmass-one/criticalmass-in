@@ -172,6 +172,7 @@ class IncidentController extends AbstractController
         }
 
         $posts = $this->getPostManager()->getPostsForIncident($incident);
+        $photos = $this->getPhotoRepository()->findByIncident($incident);
 
         $this->storeView($incident);
 
@@ -183,7 +184,8 @@ class IncidentController extends AbstractController
             'CalderaCyclewaysBundle:Incident:show.html.twig',
             [
                 'incident' => $incident,
-                'posts' => $posts
+                'posts' => $posts,
+                'photos' => $photos
 
             ]
         );

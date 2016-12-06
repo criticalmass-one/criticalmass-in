@@ -45,9 +45,17 @@
                         <h3>
                             Fotos
                         </h3>
-
-
                     </div>
+                </div>
+
+                <div class="row m-t-1">
+                    {% for photo in photos %}
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                        <div class="photo-thumb margin-bottom-medium text-center">
+                            <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
 
                 <div class="row m-t-1">
