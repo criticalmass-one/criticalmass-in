@@ -1,37 +1,8 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
-
-{% if event %}
-    {% set city = event.city %}
-{% else %}
-    {% set city = ride.city %}
-{% endif %}
+{% extends 'CalderaCyclewaysBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}Fotos hochladen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.title }}
-        </a>
-    </li>
-
-    <li>
-        {% if ride %}
-            <a href="{{ objectPath(ride) }}">
-                {{ ride.getFancyTitle() }}
-            </a>
-        {% else %}
-            <a href="{{ objectPath(event) }}">
-                {{ event.title }}
-            </a>
-        {% endif %}
-    </li>
 
     <li class="active">
         Fotos hochladen
@@ -53,10 +24,7 @@
                 <p>
                     Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen.
                 </p>
-                <p>
-                    Noch ein Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten
-                    enthalten, werden deine Fotos automatisch auf der Karte verortet.
-                </p>
+
                 <p>
                     <strong>
                         Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
@@ -69,12 +37,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    {% if ride %}
-                        {% set uploadAction = path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) %}
-                    {% else %}
-                        {% set uploadAction = path('caldera_criticalmass_photo_upload_event', { 'citySlug': city.slug, 'eventSlug': event.slug }) %}
-                    {% endif %}
-                    <form action="{{ uploadAction }}" class="dropzone" id="photo-dropzone">
+                    <form action="{{ path('caldera_cycleways_incident_photo_upload', { 'slug': incident.slug }) }}" class="dropzone" id="photo-dropzone">
                     </form>
                 </div>
             </div>
