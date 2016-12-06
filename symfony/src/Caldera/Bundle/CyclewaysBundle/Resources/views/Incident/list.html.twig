@@ -29,7 +29,9 @@
                         {% for incident in incidents %}
                         <tr>
                             <td>
-                                {{ incident.title }}
+                                <a href="{{ path('caldera_cycleways_incident_show', { slug: incident.slug }) }}">
+                                    {{ incident.title }}
+                                </a>
                             </td>
                             <td>
                                 {{ incident.creationDateTime|date('d.m.Y') }}
