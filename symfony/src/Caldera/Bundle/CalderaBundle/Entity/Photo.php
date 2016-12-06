@@ -50,6 +50,12 @@ class Photo implements ViewableInterface
     protected $event;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Incident", inversedBy="photos")
+     * @ORM\JoinColumn(name="incident_id", referencedColumnName="id")
+     */
+    protected $incident;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
@@ -405,5 +411,17 @@ class Photo implements ViewableInterface
     public function getEvent()
     {
         return $this->event;
+    }
+
+    public function setIncident(Incident $incident): Photo
+    {
+        $this->incident = $incident;
+
+        return $this;
+    }
+
+    public function getIncident()
+    {
+        return $this->incident;
     }
 }
