@@ -117,16 +117,16 @@
                     </h4>
                     <div class="text-center">
                         <div class="btn-group-vertical" role="group" aria-label="...">
-                            <a class="btn btn-default" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z">
+                            <a class="btn btn-secondary" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z">
                                 <i class="fa fa-map-o" aria-hidden="true"></i>
                                 Kartenansicht
                             </a>
-                            <a class="btn btn-default" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z/data=!3m1!1e3">
+                            <a class="btn btn-secondary" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z/data=!3m1!1e3">
                                 <i class="fa fa-camera" aria-hidden="true"></i>
                                 Satellitenansicht
                             </a>
                             {% if incident.streetviewLink %}
-                                <a class="btn btn-default" target="_blank" href="{{ incident.streetviewLink }}">
+                                <a class="btn btn-secondary" target="_blank" href="{{ incident.streetviewLink }}">
                                     <i class="fa fa-google" aria-hidden="true"></i>
                                     Street View
                                 </a>
