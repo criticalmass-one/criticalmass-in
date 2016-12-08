@@ -89,34 +89,33 @@
             </div>
 
             <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card card-block">
+                    <h4 class="card-title">
                         Details
-                    </div>
-                    <div class="panel-body">
-                        <dl>
-                            <dt>
-                                Adresse
-                            </dt>
-                            <dd>
-                                {{ incident.street }}, {{ incident.city.city }}
-                            </dd>
+                    </h4>
 
-                            <dt>
-                                Zeitpunkt der Meldung
-                            </dt>
-                            <dd>
-                                {{ incident.creationDateTime|date('d.m.Y H:i') }} Uhr
-                            </dd>
-                        </dl>
-                    </div>
+                    <dl>
+                        <dt>
+                            Adresse
+                        </dt>
+                        <dd>
+                            {{ incident.street }}, {{ incident.city.city }}
+                        </dd>
+
+                        <dt>
+                            Zeitpunkt der Meldung
+                        </dt>
+                        <dd>
+                            {{ incident.creationDateTime|date('d.m.Y H:i') }} Uhr
+                        </dd>
+                    </dl>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card card-block">
+                    <h4 class="card-title">
                         Google Maps
-                    </div>
-                    <div class="panel-body text-center">
+                    </h4>
+                    <div class="text-center">
                         <div class="btn-group-vertical" role="group" aria-label="...">
                             <a class="btn btn-default" target="_blank" href="https://www.google.de/maps/@{{ incident.latitude }},{{ incident.longitude }},18z">
                                 <i class="fa fa-map-o" aria-hidden="true"></i>
@@ -137,13 +136,11 @@
                 </div>
 
                 {% if incident.permalink %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card card-block">
+                    <h4 class="card-title">
                         Permalink
-                    </div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" value="{{ incident.permalink }}" />
-                    </div>
+                    </h4>
+                    <input type="text" class="form-control" value="{{ incident.permalink }}" />
                 </div>
                 {% endif %}
             </div>
