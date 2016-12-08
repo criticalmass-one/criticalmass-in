@@ -1,12 +1,12 @@
 {% extends 'CalderaCyclewaysBundle:Template:StandardTemplate.html.twig' %}
 
 {% block breadcrumb %}
-<li>
+<li class="breadcrumb-item">
     <a href="{{ path('caldera_cycleways_incident_list_city', { citySlug: incident.city.mainSlugString }) }}">
         {{ incident.city.city }}
     </a>
 </li>
-<li class="active">
+<li class="breadcrumb-item active">
     {{ incident.title }}
 </li>
 {% endblock %}
