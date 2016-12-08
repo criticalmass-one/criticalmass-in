@@ -1,27 +1,19 @@
-<div class="row post margin-bottom-medium">
-    <div class="col-md-12">
-        <div class="media post">
-            <span class="pull-left">
-                <img class="media-object gravatar round-media-object"
-                     src="https://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64"/>
-            </span>
+<div class="row mb-1">
+    <div class="col-xs-2">
+        <img class="img-circle pull-xs-right" src="https://www.gravatar.com/avatar/{{ post.getUser().getGravatarHash() }}&s=64"/>
+    </div>
 
-            <div class="media-body">
-                <h4 class="media-heading username">
-                    {% if post.getRide() %}
-                        {{ post.getUser().getUsername() }} schreibt zu <a
-                            href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.getRide().getFancyTitle() }}</a>:
-                    {% elseif post.getCity() %}
-                        {{ post.getUser().getUsername() }} schreibt über <a
-                            href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
-                    {% else %}
-                        {{ post.getUser().getUsername() }} schreibt:
-                    {% endif %}
-                </h4>
+    <div class="col-xs-10">
+        <strong>
+            {{ post.getUser().getUsername() }}
+        </strong>
 
-                <time>{{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr</time>
-                {{ post.message|parse }}
-            </div>
+        <div>
+        {{ post.message|parse }}
         </div>
+
+        <time class="small pull-xs-right">
+            {{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+        </time>
     </div>
 </div>
