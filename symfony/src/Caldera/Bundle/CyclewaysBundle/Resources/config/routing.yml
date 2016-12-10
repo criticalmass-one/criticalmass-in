@@ -39,3 +39,7 @@ caldera_cycleways_incident_comment_add:
 caldera_cycleways_incident_photo_upload:
     path:     /{slug}/photoupload
     defaults: { _controller: CalderaCyclewaysBundle:Photo:upload }
+
+caldera_cycleways_incident_photo_show:
+    path:     /{slug}/photo/{photoId}
+    defaults: { _controller: CalderaCyclewaysBundle:Photo:show }
