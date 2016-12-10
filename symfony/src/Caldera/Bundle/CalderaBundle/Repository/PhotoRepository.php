@@ -26,8 +26,10 @@ class PhotoRepository extends EntityRepository
 
         if ($photo->getRide()) {
             $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
-        } else {
+        } elseif ($photo->getEvent()) {
             $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
+        } elseif ($photo->getIncident()) {
+            $builder->where($builder->expr()->eq('photo.incident', $photo->getIncident()->getId()));
         }
 
         $builder->andWhere($builder->expr()->lt('photo.dateTime', '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
@@ -59,8 +61,10 @@ class PhotoRepository extends EntityRepository
 
         if ($photo->getRide()) {
             $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
-        } else {
+        } elseif ($photo->getEvent()) {
             $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
+        } elseif ($photo->getIncident()) {
+            $builder->where($builder->expr()->eq('photo.incident', $photo->getIncident()->getId()));
         }
 
         $builder->andWhere($builder->expr()->gt('photo.dateTime', '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
