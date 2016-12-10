@@ -56,28 +56,12 @@ class PhotoController extends AbstractController
         return new Response('foo');
     }
 
-    public function showAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null, $photoId)
+    public function showAction(Request $request, string $slug, int $photoId): Response
     {
-        /** @var City $city */
-        $city = $this->getCheckedCity($citySlug);
+        $incident = $this->getIncidentRepository()->findOneBySlug($slug);
 
-        /** @var Ride $ride */
-        $ride = null;
-
-        /** @var Event $event */
-        $event = null;
-
-        /** @var Track $track */
-        $track = null;
-
-        if ($rideDate) {
-            $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-        } else {
-            $event = $this->getEventRepository()->findOneBySlug($eventSlug);
-        }
-
-        if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
-            throw $this->createAccessDeniedException();
+        if (!$incident) {
+            throw $this->createNotFoundException();
         }
 
         /** @var Photo $photo */
@@ -88,20 +72,12 @@ class PhotoController extends AbstractController
 
         $this->countPhotoView($photo);
 
-        if ($ride && $photo->getUser()) {
-            /** @var Track $track */
-            $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
-        }
-
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
+        return $this->render('CalderaCyclewaysBundle:Photo:show.html.twig',
             [
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,
                 'previousPhoto' => $previousPhoto,
-                'city' => $city,
-                'ride' => $ride,
-                'event' => $event,
-                'track' => $track
+                'incident' => $incident
             ]
         );
     }
