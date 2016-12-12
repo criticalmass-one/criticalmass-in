@@ -31,70 +31,92 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ incident.description|parse }}
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-md-12">
-                        {% if app.getUser() %}
-                        <a href="{{ path('caldera_cycleways_incident_photo_upload', { slug: incident.slug }) }}" class="btn btn-primary pull-right">
-                            <i class="fa fa-camera" aria-hidden="true"></i>
-                            Fotos hinzufügen
-                        </a>
-                        {% endif %}
-
-                        <h3>
-                            Fotos
-                        </h3>
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    {% if photos|length == 0 and not app.getUser() %}
-                    <div class="col-md-12">
-                        <div class="alert alert-info">
-                            <strong>Alles im Blick?</strong>
-                            Mit einem Cycleways-Benutzerkonto könntest du hier Fotos von der Verkehrssituation hinzufügen.
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% for photo in photos %}
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                        <a href="{{ path('caldera_cycleways_incident_photo_show', { slug: incident.slug, photoId: photo.id }) }}">
-                            <img class="img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-md-12">
-                        <h3>
-                            Kommentare zu dieser Gefahrenstelle
-                        </h3>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#description" role="tab">
+                                    Beschreibung
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#discussion" role="tab">
+                                    Diskussion
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#photos" role="tab">
+                                    Fotos
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {% for post in posts %}
-                            {% include('CalderaCyclewaysBundle:Post:post.html.twig') with { 'post':  post } %}
-                        {% endfor %}
-                    </div>
-                </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="description" role="tabpanel">
+                                {{ incident.description|parse }}
+                            </div>
 
-                <div class="row mt-1">
-                    <div class="col-md-12">
-                        {% if app.getUser() %}
-                        {{ render(controller('CalderaCyclewaysBundle:Post:write', { incident: incident })) }}
-                        {% else %}
-                        <div class="alert alert-info">
-                            <strong>Schade!</strong>
-                            Als angemeldeter Nutzer könntest du hier einen Kommentar hinterlassen.
+                            <div class="tab-pane" id="discussion" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {% for post in posts %}
+                                            {% include('CalderaCyclewaysBundle:Post:post.html.twig') with { 'post':  post } %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="row mt-1">
+                                    <div class="col-md-12">
+                                        {% if app.getUser() %}
+                                            {{ render(controller('CalderaCyclewaysBundle:Post:write', { incident: incident })) }}
+                                        {% else %}
+                                            <div class="alert alert-info">
+                                                <strong>Schade!</strong>
+                                                Als angemeldeter Nutzer könntest du hier einen Kommentar hinterlassen.
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="photos" role="tabpanel">
+                                <div class="row mt-1">
+                                    <div class="col-md-12">
+                                        {% if app.getUser() %}
+                                            <a href="{{ path('caldera_cycleways_incident_photo_upload', { slug: incident.slug }) }}" class="btn btn-primary pull-right">
+                                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                                Fotos hinzufügen
+                                            </a>
+                                        {% endif %}
+
+                                        <h3>
+                                            Fotos
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-1">
+                                    {% if photos|length == 0 and not app.getUser() %}
+                                        <div class="col-md-12">
+                                            <div class="alert alert-info">
+                                                <strong>Alles im Blick?</strong>
+                                                Mit einem Cycleways-Benutzerkonto könntest du hier Fotos von der Verkehrssituation hinzufügen.
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% for photo in photos %}
+                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                            <a href="{{ path('caldera_cycleways_incident_photo_show', { slug: incident.slug, photoId: photo.id }) }}">
+                                                <img class="img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
