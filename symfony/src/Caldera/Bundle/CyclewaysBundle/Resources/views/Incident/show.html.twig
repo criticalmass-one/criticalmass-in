@@ -55,10 +55,15 @@
                     <div class="col-md-12">
                         <div class="tab-content">
                             <div class="tab-pane active" id="description" role="tabpanel">
-                                {{ incident.description|parse }}
+                                <div class="row mt-1">
+                                    <div class="col-md-12">
+                                        {{ incident.description|parse }}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane" id="discussion" role="tabpanel">
+                                {% if posts|length > 0 %}
                                 <div class="row">
                                     <div class="col-md-12">
                                         {% for post in posts %}
@@ -66,6 +71,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                {% endif %}
 
                                 <div class="row mt-1">
                                     <div class="col-md-12">
@@ -82,6 +88,18 @@
                             </div>
 
                             <div class="tab-pane" id="photos" role="tabpanel">
+                                {% if photos|length > 0 %}
+                                <div class="row mt-1">
+                                    {% for photo in photos %}
+                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                            <a href="{{ path('caldera_cycleways_incident_photo_show', { slug: incident.slug, photoId: photo.id }) }}">
+                                                <img class="img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+
                                 <div class="row mt-1">
                                     {% if photos|length == 0 and not app.getUser() %}
                                         <div class="col-md-12">
@@ -91,14 +109,6 @@
                                             </div>
                                         </div>
                                     {% endif %}
-
-                                    {% for photo in photos %}
-                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                            <a href="{{ path('caldera_cycleways_incident_photo_show', { slug: incident.slug, photoId: photo.id }) }}">
-                                                <img class="img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
-                                            </a>
-                                        </div>
-                                    {% endfor %}
                                 </div>
 
                                 {% if app.getUser() %}
