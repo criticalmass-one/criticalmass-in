@@ -1,57 +1,11 @@
-caldera_cycleways_frontpage:
-    path:     /
-    defaults: { _controller: CalderaCyclewaysBundle:Frontpage:index }
+caldera_cycleways_city:
+    resource: "@CalderaCyclewaysBundle/Resources/config/routing/city.yml"
+    prefix: /
 
-caldera_cycleways_incident_streetview_check:
-    path:     /streetviewcheck
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:googleMapsCoord }
-    options:
-        expose: true
+caldera_cycleways_incident:
+    resource: "@CalderaCyclewaysBundle/Resources/config/routing/incident.yml"
+    prefix: /
 
-caldera_cycleways_incident_show:
-    path:     /{slug}
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:show }
-    requirements:
-        slug: '(.*)\-([0-9]{1,6})'
-    options:
-        expose: true
-        
-caldera_cycleways_incident_source:
-    path:     /incidents
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:load }
-    options:
-        expose: true
-
-caldera_cycleways_incident_list_city:
-    path:     /{citySlug}/list
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:list }
-
-caldera_cycleways_incident_map_city:
-    path:     /{citySlug}
-    requirements:
-        citySlug: '([a-zA-Z-]*)'
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:map }
-
-caldera_cycleways_incident_add:
-    path:     /{citySlug}/addincident
-    requirements:
-        citySlug: '([a-zA-Z-]*)'
-    defaults: { _controller: CalderaCyclewaysBundle:Incident:add }
-
-caldera_cycleways_incident_comment_add:
-    path:     /{slug}/addcomment
-    requirements:
-        citySlug: '([a-zA-Z-]*)'
-    defaults: { _controller: CalderaCyclewaysBundle:Post:write }
-
-caldera_cycleways_incident_photo_upload:
-    path:     /{slug}/photoupload
-    requirements:
-        slug: '(.*)\-([0-9]{1,6})'
-    defaults: { _controller: CalderaCyclewaysBundle:Photo:upload }
-
-caldera_cycleways_incident_photo_show:
-    path:     /{slug}/photo/{photoId}
-    requirements:
-        slug: '(.*)\-([0-9]{1,6})'
-    defaults: { _controller: CalderaCyclewaysBundle:Photo:show }
+caldera_cycleways_interal:
+    resource: "@CalderaCyclewaysBundle/Resources/config/routing/internal.yml"
+    prefix: /
