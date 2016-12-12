@@ -40,11 +40,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#discussion" role="tab">
                                     Diskussion
+                                    <span class="tag tag-pill tag-default">
+                                        {{ posts|length }}
+                                    </span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#photos" role="tab">
                                     Fotos
+                                    <span class="tag tag-pill tag-default">
+                                        {{ photos|length }}
+                                    </span>
                                 </a>
                             </li>
                         </ul>
