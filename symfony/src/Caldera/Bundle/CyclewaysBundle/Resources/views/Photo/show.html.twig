@@ -22,7 +22,7 @@
     <div class="row mt-1 mb-1">
         <div class="col-md-12">
             {% if previousPhoto %}
-                <a href="{{ objectPath(previousPhoto) }}" class="btn btn-secondary pull-left">
+                <a href="{{ path('caldera_cycleways_incident_photo_show', { slug: incident.slug, photoId: previousPhoto.id }) }}" class="btn btn-secondary pull-left">
                     Voriges Foto
                 </a>
             {% else %}
@@ -32,7 +32,7 @@
             {% endif %}
 
             {% if nextPhoto %}
-                <a href="{{ objectPath(nextPhoto) }}" class="btn btn-secondary pull-right">
+                <a href="{{ path('caldera_cycleways_incident_photo_show', { slug: incident.slug, photoId: nextPhoto.id }) }}" class="btn btn-secondary pull-right">
                     Nächstes Foto
                 </a>
             {% else %}
@@ -53,7 +53,6 @@
             <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
         </div>
     </div>
-
 
         {{ block('navigation') }}
     </div>
