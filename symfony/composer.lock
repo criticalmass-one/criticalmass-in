@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f861fd0edfb57e1049cc32f6b5e1beab",
-    "content-hash": "655fd7c0b23acf7edd3373e8761f9b92",
+    "hash": "f450e7cefa5addd48777904e39b0e52c",
+    "content-hash": "b5da58961d66498910723c05755c75df",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
