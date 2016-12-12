@@ -1,37 +1,39 @@
 <nav class="navbar navbar-light bg-faded">
-    <a class="navbar-brand" href="{{ path('caldera_cycleways_incident_map_city', { citySlug: 'hamburg' }) }}">
-        Cycleways<sup>beta</sup>
-    </a>
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('caldera_cycleways_incident_map_city', { citySlug: 'hamburg' }) }}">
+            Cycleways<sup>beta</sup>
+        </a>
 
-    <ul class="nav navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('caldera_cycleways_incident_add', { citySlug: 'hamburg' }) }}" id="navigation-add-incident">
-                <i class="fa fa-plus"></i>
-                Eintrag hinzufügen
-            </a>
-        </li>
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('caldera_cycleways_incident_add', { citySlug: 'hamburg' }) }}" id="navigation-add-incident">
+                    <i class="fa fa-plus"></i>
+                    Eintrag hinzufügen
+                </a>
+            </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('caldera_cycleways_incident_list_city', { citySlug: 'hamburg' }) }}">
-                <i class="fa fa-list"></i>
-                Einträge auflisten
-            </a>
-        </li>
-    </ul>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('caldera_cycleways_incident_list_city', { citySlug: 'hamburg' }) }}">
+                    <i class="fa fa-list"></i>
+                    Einträge auflisten
+                </a>
+            </li>
+        </ul>
 
-    <form class="form-inline float-xs-right" role="search" action="{{ path('caldera_criticalmass_search_query') }}">
-        <input id="search-input" type="text" class="form-control" placeholder="Suche" name="query" />
+        <form class="form-inline float-xs-right" role="search" action="{{ path('caldera_criticalmass_search_query') }}">
+            <input id="search-input" type="text" class="form-control" placeholder="Suche" name="query" />
 
-        <div class="btn-group">
-            <button type="button" id="search-location" class="btn btn-secondary">
-                <i class="fa fa-map-signs" aria-hidden="true"></i>
-            </button>
+            <div class="btn-group">
+                <button type="button" id="search-location" class="btn btn-secondary">
+                    <i class="fa fa-map-signs" aria-hidden="true"></i>
+                </button>
 
-            <button type="submit" class="btn btn-secondary">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-        </div>
-    </form>
+                <button type="submit" class="btn btn-secondary">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </form>
+    </div>
 </nav>
 
 <script type="text/javascript">
