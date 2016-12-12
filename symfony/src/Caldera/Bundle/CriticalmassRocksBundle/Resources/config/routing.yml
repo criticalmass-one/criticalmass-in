@@ -1,4 +1,0 @@
-caldera_criticalmass_rocks_homepage:
-    path:     /{citySlug}/{rideDate}
-    defaults: { _controller: CalderaCriticalmassRocksBundle:Default:index }
-

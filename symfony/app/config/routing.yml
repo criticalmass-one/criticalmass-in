@@ -68,11 +68,6 @@ caldera:
     host: "%domain.caldera%"
     prefix:   /
 
-caldera_criticalmassrocks:
-    resource: "@CalderaCriticalmassRocksBundle/Resources/config/routing.yml"
-    host: "%domain.criticalmassrocks%"
-    prefix:   /
-
 caldera_criticalmassphoto:
     resource: "@CalderaCriticalmassPhotoBundle/Resources/config/routing.yml"
     host: "%domain.criticalmassphoto%"
