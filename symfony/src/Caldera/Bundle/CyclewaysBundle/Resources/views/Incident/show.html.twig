@@ -83,21 +83,6 @@
 
                             <div class="tab-pane" id="photos" role="tabpanel">
                                 <div class="row mt-1">
-                                    <div class="col-md-12">
-                                        {% if app.getUser() %}
-                                            <a href="{{ path('caldera_cycleways_incident_photo_upload', { slug: incident.slug }) }}" class="btn btn-primary pull-right">
-                                                <i class="fa fa-camera" aria-hidden="true"></i>
-                                                Fotos hinzufügen
-                                            </a>
-                                        {% endif %}
-
-                                        <h3>
-                                            Fotos
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-1">
                                     {% if photos|length == 0 and not app.getUser() %}
                                         <div class="col-md-12">
                                             <div class="alert alert-info">
@@ -115,6 +100,17 @@
                                         </div>
                                     {% endfor %}
                                 </div>
+
+                                {% if app.getUser() %}
+                                    <div class="row mt-1">
+                                        <div class="col-md-12 text-xs-center">
+                                            <a href="{{ path('caldera_cycleways_incident_photo_upload', { slug: incident.slug }) }}" class="btn btn-primary">
+                                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                                Fotos hinzufügen
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
