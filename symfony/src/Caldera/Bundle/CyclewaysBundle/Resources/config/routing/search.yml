@@ -1,0 +1,3 @@
+caldera_cycleways_search:
+    path:     /search
+    defaults: { _controller: CalderaCyclewaysBundle:Search:search }

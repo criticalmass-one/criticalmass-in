@@ -1,11 +1,15 @@
-caldera_cycleways_city:
-    resource: "@CalderaCyclewaysBundle/Resources/config/routing/city.yml"
+caldera_cycleways_search:
+    resource: "@CalderaCyclewaysBundle/Resources/config/routing/search.yml"
     prefix: /
 
 caldera_cycleways_incident:
     resource: "@CalderaCyclewaysBundle/Resources/config/routing/incident.yml"
     prefix: /
 
-caldera_cycleways_interal:
+caldera_cycleways_internal:
     resource: "@CalderaCyclewaysBundle/Resources/config/routing/internal.yml"
+    prefix: /
+
+caldera_cycleways_city:
+    resource: "@CalderaCyclewaysBundle/Resources/config/routing/city.yml"
     prefix: /
