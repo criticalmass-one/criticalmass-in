@@ -30,7 +30,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new Caldera\Bundle\CriticalmassPhotoBundle\CalderaCriticalmassPhotoBundle(),
-            new Caldera\Bundle\CriticalmassBlogBundle\CalderaCriticalmassBlogBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Caldera\Bundle\CriticalmassLiveBundle\CalderaCriticalmassLiveBundle(),
             new Caldera\Bundle\CriticalmassRestBundle\CalderaCriticalmassRestBundle(),
