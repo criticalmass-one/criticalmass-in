@@ -72,12 +72,6 @@ class Post
     protected $event;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BlogPost", inversedBy="posts")
-     * @ORM\JoinColumn(name="blog_post_id", referencedColumnName="id")
-     */
-    protected $blogPost;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Incident", inversedBy="posts")
      * @ORM\JoinColumn(name="incident_id", referencedColumnName="id")
      */
@@ -336,18 +330,6 @@ class Post
     public function setCity(City $city = null)
     {
         $this->city = $city;
-
-        return $this;
-    }
-
-    public function getBlogPost()
-    {
-        return $this->blogPost;
-    }
-
-    public function setBlogPost(BlogPost $blogPost)
-    {
-        $this->blogPost = $blogPost;
 
         return $this;
     }
