@@ -132,13 +132,13 @@ class StandardCityType extends AbstractType
                 [
                     'label' => 'Wochentag',
                     'choices' => [
-                        1 => 'Montag',
-                        2 => 'Dienstag',
-                        3 => 'Mittwoch',
-                        4 => 'Donnerstag',
-                        5 => 'Freitag',
-                        6 => 'Sonnabend',
-                        0 => 'Sonntag'
+                        'Montag' => 1,
+                        'Dienstag' => 2,
+                        'Mittwoch' => 3,
+                        'Donnerstag' => 4,
+                        'Freitag' => 5,
+                        'Sonnabend' => 6,
+                        'Sonntag' => 0
                     ],
                     'required' => true
                 ]
