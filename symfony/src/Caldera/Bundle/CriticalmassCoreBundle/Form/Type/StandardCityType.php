@@ -149,11 +149,11 @@ class StandardCityType extends AbstractType
                 [
                     'label' => 'Woche im Monat',
                     'choices' => [
-                        1 => 'Erste Woche im Monat',
-                        2 => 'Zweite Woche im Monat',
-                        3 => 'Dritte Woche im Monat',
-                        4 => 'Vierte Woche im Monat',
-                        0 => 'Letzte Woche im Monat'
+                        'Erste Woche im Monat' => 1,
+                        'Zweite Woche im Monat' => 2,
+                        'Dritte Woche im Monat' => 3,
+                        'Vierte Woche im Monat' => 4,
+                        'Letzte Woche im Monat' => 0
                     ],
                     'required' => true
                 ]
