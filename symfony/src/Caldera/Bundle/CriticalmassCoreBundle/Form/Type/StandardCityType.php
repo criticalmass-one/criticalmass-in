@@ -20,15 +20,63 @@ class StandardCityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', TextType::class, array('required' => false))
-            ->add('title', TextType::class, array('required' => false))
-            ->add('description', TextareaType::class, array('required' => false))
-            ->add('url', TextType::class, array('required' => false))
-            ->add('facebook', TextType::class, array('required' => false))
-            ->add('twitter', TextType::class, array('required' => false))
-            ->add('longitude', HiddenType::class)
-            ->add('latitude', HiddenType::class)
-            ->add('cityPopulation', IntegerType::class, array('required' => false))
+            ->add(
+                'city',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'title',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'description',
+                TextareaType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'url',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'facebook',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'twitter',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'longitude',
+                HiddenType::class
+            )
+            ->add(
+                'latitude',
+                HiddenType::class
+            )
+            ->add(
+                'cityPopulation',
+                IntegerType::class,
+                [
+                    'required' => false
+                ]
+            )
             ->add(
                 'region',
                 EntityType::class,
@@ -50,21 +98,122 @@ class StandardCityType extends AbstractType
                     'group_by' => 'parent'
                 ]
             )
-            ->add('punchLine', TextType::class, array('required' => false))
-            ->add('longDescription', TextareaType::class, array('required' => false))
-            ->add('enableBoard', CheckboxType::class)
-            ->add('timezone', TimezoneType::class)
-            ->add('isStandardable', CheckboxType::class, array('required' => false))
-            ->add('standardDayOfWeek', ChoiceType::class, array('label' => 'Wochentag', 'choices' => array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag'), 'required' => true))
-            ->add('standardWeekOfMonth', ChoiceType::class, array('label' => 'Woche im Monat', 'choices' => array(1 => 'Erste Woche im Monat', 2 => 'Zweite Woche im Monat', 3 => 'Dritte Woche im Monat', 4 => 'Vierte Woche im Monat', 0 => 'Letzte Woche im Monat'), 'required' => true))
-            ->add('isStandardableTime', CheckboxType::class, array('required' => false))
-            ->add('standardTime', TimeType::class, array('required' => false))
-            ->add('isStandardableLocation', CheckboxType::class, array('required' => false))
-            ->add('standardLocation', TextType::class, array('required' => false))
-            ->add('standardLatitude', HiddenType::class, array('required' => false))
-            ->add('standardLongitude', HiddenType::class, array('required' => false))
-            ->add('imageFile', VichFileType::class, array('required' => false))
-            ->add('archiveMessage', TextType::class, array('required' => true));
+            ->add(
+                'punchLine',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'longDescription',
+                TextareaType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'enableBoard', CheckboxType::class
+            )
+            ->add(
+                'timezone',
+                TimezoneType::class
+            )
+            ->add(
+                'isStandardable',
+                CheckboxType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'standardDayOfWeek',
+                ChoiceType::class,
+                [
+                    'label' => 'Wochentag',
+                    'choices' => [
+                        1 => 'Montag',
+                        2 => 'Dienstag',
+                        3 => 'Mittwoch',
+                        4 => 'Donnerstag',
+                        5 => 'Freitag',
+                        6 => 'Sonnabend',
+                        0 => 'Sonntag'
+                    ],
+                    'required' => true
+                ]
+            )
+            ->add(
+                'standardWeekOfMonth',
+                ChoiceType::class,
+                [
+                    'label' => 'Woche im Monat',
+                    'choices' => [
+                        1 => 'Erste Woche im Monat',
+                        2 => 'Zweite Woche im Monat',
+                        3 => 'Dritte Woche im Monat',
+                        4 => 'Vierte Woche im Monat',
+                        0 => 'Letzte Woche im Monat'
+                    ],
+                    'required' => true
+                ]
+            )
+            ->add(
+                'isStandardableTime',
+                CheckboxType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'standardTime',
+                TimeType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'isStandardableLocation',
+                CheckboxType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'standardLocation',
+                TextType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'standardLatitude',
+                HiddenType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'standardLongitude',
+                HiddenType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'imageFile',
+                VichFileType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'archiveMessage',
+                TextType::class,
+                [
+                    'required' => true
+                ]
+            );
     }
 
     public function getName()
