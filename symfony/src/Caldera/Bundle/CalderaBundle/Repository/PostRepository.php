@@ -4,7 +4,6 @@ namespace Caldera\Bundle\CalderaBundle\Repository;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Incident;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
@@ -26,22 +25,6 @@ class PostRepository extends EntityRepository
 
         $builder->select('post');
         $builder->where($builder->expr()->eq('post.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('post.enabled', true));
-        $builder->addOrderBy('post.dateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    public function getPostsForIncident(Incident $incident)
-    {
-        $builder = $this->createQueryBuilder('post');
-
-        $builder->select('post');
-        $builder->where($builder->expr()->eq('post.incident', $incident->getId()));
         $builder->andWhere($builder->expr()->eq('post.enabled', true));
         $builder->addOrderBy('post.dateTime', 'ASC');
 

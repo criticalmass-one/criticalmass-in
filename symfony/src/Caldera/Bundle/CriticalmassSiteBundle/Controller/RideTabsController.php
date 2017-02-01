@@ -121,7 +121,6 @@ class RideTabsController extends AbstractController
                 'estimateForm' => $estimateForm->createView(),
                 'weatherForecast' => $weatherForecast,
                 'location' => $location,
-                'incidentCounter' => $this->getIncidentRepository()->countByRide($ride)
             ]
         );
     }

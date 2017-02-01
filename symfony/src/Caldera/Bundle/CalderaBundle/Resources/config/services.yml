@@ -27,10 +27,6 @@ services:
         class: Caldera\Bundle\CalderaBundle\Manager\ContentManager\ContentManager
         arguments: ['@doctrine']
 
-    caldera.manager.incident_manager:
-        class: Caldera\Bundle\CalderaBundle\Manager\IncidentManager\IncidentManager
-        arguments: ['@doctrine', '@fos_elastica.manager']
-
     caldera.manager.post_manager:
         class: Caldera\Bundle\CalderaBundle\Manager\PostManager\PostManager
         arguments: ['@doctrine']

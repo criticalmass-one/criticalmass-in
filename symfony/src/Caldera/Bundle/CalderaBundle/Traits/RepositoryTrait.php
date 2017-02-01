@@ -10,7 +10,6 @@ use Caldera\Bundle\CalderaBundle\Repository\CityRepository;
 use Caldera\Bundle\CalderaBundle\Repository\ContentRepository;
 use Caldera\Bundle\CalderaBundle\Repository\EventRepository;
 use Caldera\Bundle\CalderaBundle\Repository\FacebookRidePropertiesRepository;
-use Caldera\Bundle\CalderaBundle\Repository\IncidentRepository;
 use Caldera\Bundle\CalderaBundle\Repository\LocationRepository;
 use Caldera\Bundle\CalderaBundle\Repository\ParticipationRepository;
 use Caldera\Bundle\CalderaBundle\Repository\PhotoRepository;
@@ -120,14 +119,6 @@ trait RepositoryTrait
     protected function getFacebookRidePropertiesRepository()
     {
         return $this->getDoctrine()->getRepository('CalderaBundle:FacebookRideProperties');
-    }
-
-    /**
-     * @return IncidentRepository
-     */
-    protected function getIncidentRepository()
-    {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Incident');
     }
 
     /**
