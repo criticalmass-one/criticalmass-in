@@ -35,7 +35,13 @@ class StandardRideGenerator
             return null;
         }
 
-        $this->ride->setDateTime(new \DateTime($this->year . '-' . $this->month . '-01 00:00:00'));
+        if ($this->city->getTimezone()) {
+            $timezone = new \DateTimeZone($this->city->getTimezone());
+        } else {
+            $timezone = new \DateTimeZone('Europe/Berlin');
+        }
+
+        $this->ride->setDateTime(new \DateTime($this->year . '-' . $this->month . '-01 00:00:00', $timezone));
 
         $this->calculateDate();
         $this->calculateTime();
