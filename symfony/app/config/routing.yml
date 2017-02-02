@@ -49,7 +49,7 @@ hwi_oauth_login:
     prefix:   /login
 
 caldera_criticalmass:
-    resource: "@CalderaCriticalmassSiteBundle/Resources/config/routing.yml"
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
     host: "%domain.criticalmass%"
     prefix:   /
 

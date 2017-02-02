@@ -10,7 +10,7 @@ use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
-use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
+use Caldera\Bundle\CriticalmassCoreBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CalderaBundle\Controller;
 
-use Caldera\Bundle\CriticalmassSiteBundle\Controller\AbstractController;
+use Caldera\Bundle\CriticalmassCoreBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class MapController extends AbstractController
