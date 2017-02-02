@@ -1,11 +1,11 @@
 caldera_criticalmass_desktop_ride_add:
     path:  /{citySlug}/add
-    defaults: { _controller: CalderaCriticalmassCoreBundle:RideManagement:add }
+    defaults: { _controller: CalderaBundle:RideManagement:add }
 
 caldera_criticalmass_desktop_ride_edit:
     path:  /{citySlug}/{rideDate}/edit
-    defaults: { _controller: CalderaCriticalmassCoreBundle:RideManagement:edit }
+    defaults: { _controller: CalderaBundle:RideManagement:edit }
 
 caldera_criticalmass_ride_facebookupdate:
     path:  /{citySlug}/{rideDate}/facebookupdate
-    defaults: { _controller: CalderaCriticalmassCoreBundle:RideManagement:facebookUpdate }
+    defaults: { _controller: CalderaBundle:RideManagement:facebookUpdate }

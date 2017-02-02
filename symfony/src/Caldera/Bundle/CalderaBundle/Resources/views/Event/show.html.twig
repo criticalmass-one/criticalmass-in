@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassCoreBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'CalderaBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ event.title }}{% endblock %}
 
@@ -101,10 +101,10 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{ render(controller('CalderaCriticalmassCoreBundle:Post:list', { 'eventId': event.id })) }}
+                                    {{ render(controller('CalderaBundle:Post:list', { 'eventId': event.id })) }}
 
                                     {% if app.getUser() %}
-                                        {{ render(controller('CalderaCriticalmassCoreBundle:Post:write', { 'eventId': event.id, 'noButton': true })) }}
+                                        {{ render(controller('CalderaBundle:Post:write', { 'eventId': event.id, 'noButton': true })) }}
                                     {% endif %}
                                 </div>
                             </div>

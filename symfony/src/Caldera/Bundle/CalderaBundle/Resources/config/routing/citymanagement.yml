@@ -1,7 +1,7 @@
 caldera_criticalmass_desktop_city_add:
     path:  /world/{slug1}/{slug2}/{slug3}/addcity
-    defaults: { _controller: CalderaCriticalmassCoreBundle:CityManagement:createCityFlow }
+    defaults: { _controller: CalderaBundle:CityManagement:createCityFlow }
 
 caldera_criticalmass_desktop_city_edit:
     path:  /{citySlug}/edit
-    defaults: { _controller: CalderaCriticalmassCoreBundle:CityManagement:edit }
+    defaults: { _controller: CalderaBundle:CityManagement:edit }

@@ -20,7 +20,7 @@ class LiveController extends AbstractController
             ->setDescription('Live dabei: Verfolge verschiedene Critical-Mass-Touren weltweit!');
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Live:index.html.twig',
+            'CalderaBundle:Live:index.html.twig',
             array(
                 'rides' => $rides,
                 'events' => []
@@ -46,7 +46,7 @@ class LiveController extends AbstractController
             ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in ' . $city->getCity() . ' gerade befindet!');
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Live:index.html.twig',
+            'CalderaBundle:Live:index.html.twig',
             array(
                 'rides' => [$ride],
                 'events' => $events

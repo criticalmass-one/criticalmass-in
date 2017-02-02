@@ -1,3 +1,3 @@
 caldera_criticalmass_phonenumber_edit:
     path: /phonenumber/edit
-    defaults: { _controller: CalderaCriticalmassCoreBundle:PhoneNumber:edit }
+    defaults: { _controller: CalderaBundle:PhoneNumber:edit }

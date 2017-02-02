@@ -40,7 +40,7 @@ class TimelineController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Timeline:yearmonth.html.twig',
+            'CalderaBundle:Timeline:yearmonth.html.twig',
             [
                 'timelineContent' => $timelineContent,
                 'startDateTime' => $startDateTime,

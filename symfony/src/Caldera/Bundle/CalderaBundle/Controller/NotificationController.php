@@ -23,7 +23,7 @@ class NotificationController extends AbstractController
         $notifications = $this->getNotificationSubscriptionRepository()->findAll();
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:NotificationSubscription:list.html.twig',
+            'CalderaBundle:NotificationSubscription:list.html.twig',
             [
                 'notifications' => $notifications
             ]

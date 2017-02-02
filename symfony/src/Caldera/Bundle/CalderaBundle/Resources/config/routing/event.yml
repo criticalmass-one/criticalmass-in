@@ -1,5 +1,5 @@
 caldera_criticalmass_event_show:
     path:  /{citySlug}/{eventSlug}
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Event:show }
+    defaults: { _controller: CalderaBundle:Event:show }
     options:
         expose: true

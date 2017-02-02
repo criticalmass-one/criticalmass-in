@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include('CalderaCriticalmassCoreBundle:Template:Includes/_meta.html.twig') %}
+    {% include('CalderaBundle:Template:Includes/_meta.html.twig') %}
 
     <title>{% block title %}{% endblock %} — criticalmass.in</title>
 
@@ -27,7 +27,7 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                {{ render(controller('CalderaCriticalmassCoreBundle:Security:loginFormModal' )) }}
+                {{ render(controller('CalderaBundle:Security:loginFormModal' )) }}
             </div>
         </div>
     </div>

@@ -52,7 +52,7 @@ class PhotoController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 
-        return $this->render('CalderaCriticalmassCoreBundle:Photo:show.html.twig',
+        return $this->render('CalderaBundle:Photo:show.html.twig',
             [
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,

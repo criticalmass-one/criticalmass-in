@@ -48,7 +48,7 @@ class CityManagementController extends AbstractController
     protected function addGetAction(Request $request, City $city, Region $region, Form $form)
     {
         return $this->render(
-            'CalderaCriticalmassCoreBundle:CityManagement:edit.html.twig',
+            'CalderaBundle:CityManagement:edit.html.twig',
             [
                 'city' => null,
                 'form' => $form->createView(),
@@ -92,7 +92,7 @@ class CityManagementController extends AbstractController
             );
 
             return $this->render(
-                'CalderaCriticalmassCoreBundle:CityManagement:edit.html.twig',
+                'CalderaBundle:CityManagement:edit.html.twig',
                 [
                     'city' => $city,
                     'form' => $form->createView(),
@@ -107,7 +107,7 @@ class CityManagementController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:CityManagement:edit.html.twig',
+            'CalderaBundle:CityManagement:edit.html.twig',
             [
                 'city' => null,
                 'form' => $form->createView(),
@@ -146,7 +146,7 @@ class CityManagementController extends AbstractController
     protected function editGetAction(Request $request, City $city, Form $form)
     {
         return $this->render(
-            'CalderaCriticalmassCoreBundle:CityManagement:edit.html.twig',
+            'CalderaBundle:CityManagement:edit.html.twig',
             [
                 'city' => $city,
                 'form' => $form->createView(),
@@ -178,7 +178,7 @@ class CityManagementController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:CityManagement:edit.html.twig',
+            'CalderaBundle:CityManagement:edit.html.twig',
             [
                 'city' => $city,
                 'form' => $form->createView(),
@@ -231,7 +231,7 @@ class CityManagementController extends AbstractController
             }
         }
 
-        return $this->render('CalderaCriticalmassCoreBundle:CityManagement:create.html.twig', array(
+        return $this->render('CalderaBundle:CityManagement:create.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
             'city' => $city,

@@ -16,7 +16,7 @@ class TimelapseController extends AbstractController
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Timelapse:show.html.twig',
+            'CalderaBundle:Timelapse:show.html.twig',
             array(
                 'ride' => $ride,
                 'tracks' => $tracks

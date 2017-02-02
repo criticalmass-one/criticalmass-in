@@ -26,7 +26,7 @@ class EventController extends AbstractController
         $postCounter = $this->getPostRepository()->countPostsForEvent($event);
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Event:show.html.twig',
+            'CalderaBundle:Event:show.html.twig',
             [
                 'city' => $city,
                 'event' => $event,

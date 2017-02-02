@@ -15,7 +15,7 @@ class RideTabsController extends AbstractController
         $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:GalleryTab.html.twig',
+            'CalderaBundle:RideTabs:GalleryTab.html.twig',
             [
                 'ride' => $ride,
                 'photos' => $photos,
@@ -29,7 +29,7 @@ class RideTabsController extends AbstractController
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:TracksTab.html.twig',
+            'CalderaBundle:RideTabs:TracksTab.html.twig',
             [
                 'ride' => $ride,
                 'tracks' => $tracks,
@@ -41,7 +41,7 @@ class RideTabsController extends AbstractController
     public function renderPostsTabAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:PostsTab.html.twig',
+            'CalderaBundle:RideTabs:PostsTab.html.twig',
             [
                 'ride' => $ride,
             ]
@@ -53,7 +53,7 @@ class RideTabsController extends AbstractController
         $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:SubridesTab.html.twig',
+            'CalderaBundle:RideTabs:SubridesTab.html.twig',
             [
                 'ride' => $ride,
                 'subrides' => $subrides,
@@ -65,7 +65,7 @@ class RideTabsController extends AbstractController
     public function renderStatisticTabAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:StatisticTab.html.twig',
+            'CalderaBundle:RideTabs:StatisticTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime()
@@ -76,7 +76,7 @@ class RideTabsController extends AbstractController
     public function renderMusicTabAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:MusicTab.html.twig',
+            'CalderaBundle:RideTabs:MusicTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime()
@@ -114,7 +114,7 @@ class RideTabsController extends AbstractController
         $location = $this->getLocationRepository()->findLocationForRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:RideTabs:DetailsTab.html.twig',
+            'CalderaBundle:RideTabs:DetailsTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime(),

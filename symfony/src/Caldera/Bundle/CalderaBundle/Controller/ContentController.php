@@ -17,7 +17,7 @@ class ContentController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Content:show.html.twig',
+            'CalderaBundle:Content:show.html.twig',
             [
                 'content' => $content
             ]
@@ -77,7 +77,7 @@ class ContentController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Content:edit.html.twig',
+            'CalderaBundle:Content:edit.html.twig',
             [
                 'content' => $content,
                 'form' => $form->createView(),

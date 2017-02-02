@@ -33,7 +33,7 @@ class PhoneNumberController extends AbstractController
 
     protected function editGetAction(Request $request, Form $numberForm, Form $verificationForm)
     {
-        return $this->render('CalderaCriticalmassCoreBundle:Profile:edit.html.twig',
+        return $this->render('CalderaBundle:Profile:edit.html.twig',
             [
                 'phoneNumberForm' => $numberForm->createView(),
                 'verificationForm' => $verificationForm->createView()

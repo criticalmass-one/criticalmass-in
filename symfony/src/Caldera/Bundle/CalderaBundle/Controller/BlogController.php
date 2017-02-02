@@ -17,6 +17,6 @@ class BlogController extends AbstractController
             $article->setFormattedText($markdown->transform($article->getText()));
         }
 
-        return $this->render('CalderaCriticalmassCoreBundle:Blog:list.html.twig', array('articles' => $articles));
+        return $this->render('CalderaBundle:Blog:list.html.twig', array('articles' => $articles));
     }
 }

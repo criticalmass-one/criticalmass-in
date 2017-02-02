@@ -1,7 +1,7 @@
 caldera_criticalmass_live:
     path:  /live
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Live:index }
+    defaults: { _controller: CalderaBundle:Live:index }
 
 caldera_criticalmass_live_city:
     path:  /{citySlug}/live
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Live:city }
+    defaults: { _controller: CalderaBundle:Live:city }

@@ -23,7 +23,7 @@ class CalendarController extends AbstractController
             ->setDate(new \DateTime());
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Calendar:index.html.twig',
+            'CalderaBundle:Calendar:index.html.twig',
             [
                 'days' => $days
             ]

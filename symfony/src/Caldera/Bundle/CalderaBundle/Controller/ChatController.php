@@ -20,7 +20,7 @@ class ChatController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassCoreBundle:Chat:index.html.twig',
+            'CalderaBundle:Chat:index.html.twig',
             [
                 'recentMessages' => $recentMessages,
                 'anonymousName' => $anonymousName ? $anonymousName->getName() : null,

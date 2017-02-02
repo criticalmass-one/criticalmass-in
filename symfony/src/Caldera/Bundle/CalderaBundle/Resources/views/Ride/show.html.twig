@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassCoreBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'CalderaBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ ride.getFancyTitle() }}{% endblock %}
 
@@ -45,13 +45,13 @@
 {% block content %}
     <div class="container">
         {% if ride.date is today %}
-            {% include('CalderaCriticalmassCoreBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
+            {% include('CalderaBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
         {% else %}
-            {% include('CalderaCriticalmassCoreBundle:Ride:Includes/_registrationHint.html.twig') %}
+            {% include('CalderaBundle:Ride:Includes/_registrationHint.html.twig') %}
         {% endif %}
 
-        {% include('CalderaCriticalmassCoreBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
+        {% include('CalderaBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 
-        {% include('CalderaCriticalmassCoreBundle:Ride:Includes/_pagination.html.twig') with { 'previousRide': previousRide, 'nextRide': nextRide } %}
+        {% include('CalderaBundle:Ride:Includes/_pagination.html.twig') with { 'previousRide': previousRide, 'nextRide': nextRide } %}
     </div>
 {% endblock %}
