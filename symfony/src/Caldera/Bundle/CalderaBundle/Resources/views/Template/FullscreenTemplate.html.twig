@@ -1,9 +1,9 @@
-{% extends 'CalderaBundle:Template:MasterTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassCoreBundle:Template:MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-    {% include('CalderaBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
+    {% include('CalderaCriticalmassCoreBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
 
     {% block content %}{% endblock %}
 
-    {% include('CalderaBundle:Template:Includes/_piwik.html.twig') %}
+    {% include('CalderaCriticalmassCoreBundle:Template:Includes/_piwik.html.twig') %}
 {% endblock %}
