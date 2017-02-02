@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
@@ -44,7 +44,7 @@ class RideManagementController extends AbstractController
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
+            'CalderaCriticalmassCoreBundle:RideManagement:edit.html.twig',
             [
                 'hasErrors' => null,
                 'ride' => null,
@@ -94,7 +94,7 @@ class RideManagementController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
+            'CalderaCriticalmassCoreBundle:RideManagement:edit.html.twig',
             array(
                 'hasErrors' => $hasErrors,
                 'ride' => $ride,
@@ -137,7 +137,7 @@ class RideManagementController extends AbstractController
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
+            'CalderaCriticalmassCoreBundle:RideManagement:edit.html.twig',
             array(
                 'ride' => $ride,
                 'city' => $city,
@@ -175,7 +175,7 @@ class RideManagementController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:RideManagement:edit.html.twig',
+            'CalderaCriticalmassCoreBundle:RideManagement:edit.html.twig',
             array(
                 'ride' => $ride,
                 'city' => $city,
@@ -212,7 +212,7 @@ class RideManagementController extends AbstractController
         );
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:RideManagement:facebookUpdate.html.twig',
+            'CalderaCriticalmassCoreBundle:RideManagement:facebookUpdate.html.twig',
             [
                 'city' => $ride->getCity(),
                 'ride' => $ride,

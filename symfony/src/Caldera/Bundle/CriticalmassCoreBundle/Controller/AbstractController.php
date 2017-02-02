@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
 use Caldera\Bundle\CriticalmassCoreBundle\Traits\UtilTrait;

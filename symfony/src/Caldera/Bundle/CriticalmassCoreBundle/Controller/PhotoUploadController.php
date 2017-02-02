@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
@@ -33,7 +33,7 @@ class PhotoUploadController extends AbstractController
     protected function uploadGetAction(Request $request, Ride $ride = null, Event $event = null)
     {
         return $this->render(
-            'CalderaCriticalmassSiteBundle:PhotoUpload:upload.html.twig',
+            'CalderaCriticalmassCoreBundle:PhotoUpload:upload.html.twig',
             [
                 'ride' => $ride,
                 'event' => $event

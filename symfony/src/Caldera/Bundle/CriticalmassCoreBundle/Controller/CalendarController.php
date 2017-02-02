@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +23,7 @@ class CalendarController extends AbstractController
             ->setDate(new \DateTime());
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Calendar:index.html.twig',
+            'CalderaCriticalmassCoreBundle:Calendar:index.html.twig',
             [
                 'days' => $days
             ]

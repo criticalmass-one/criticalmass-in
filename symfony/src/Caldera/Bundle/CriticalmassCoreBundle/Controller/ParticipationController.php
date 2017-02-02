@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Participation;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;

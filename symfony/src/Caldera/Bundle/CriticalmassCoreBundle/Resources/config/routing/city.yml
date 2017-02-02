@@ -1,37 +1,37 @@
 caldera_criticalmass_desktop_city_show_seo:
     path:  /critical-mass-in-{citySlug}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:show }
 
 caldera_criticalmass_desktop_city_show_seo2:
     path:  /critical-mass-{citySlug}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:show }
 
 caldera_criticalmass_desktop_city_show:
     path:  /{citySlug}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:show }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:show }
     options:
         expose: true
         
 caldera_criticalmass_desktop_city_list:
     path:  /city/list
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:list }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:list }
 
 caldera_criticalmass_desktop_city_listrides:
     path:  /{citySlug}/list
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:listRides }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:listRides }
 
 caldera_criticalmass_desktop_city_missingstats:
     path:  /{citySlug}/missingstats
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:missingStats }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:missingStats }
 
 caldera_criticalmass_desktop_city_listgalleries:
     path:  /{citySlug}/galleries
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:listGalleries }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:listGalleries }
 
 caldera_criticalmass_desktop_city_live:
     path:  /{citySlug}/live
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:live }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:live }
 
 caldera_criticalmass_city_locations:
     path:  /{citySlug}/locations
-    defaults: { _controller: CalderaCriticalmassSiteBundle:City:getlocations }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:City:getlocations }

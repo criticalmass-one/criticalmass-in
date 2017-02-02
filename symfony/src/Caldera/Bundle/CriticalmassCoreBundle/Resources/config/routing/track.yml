@@ -1,45 +1,45 @@
 caldera_criticalmass_track_delete:
     path:  /track/delete/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:delete }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:delete }
     options:
         expose: true
 
 caldera_criticalmass_track_toggle:
     path:  /track/toggle/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:toggle }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:toggle }
 
 caldera_criticalmass_track_download:
     path:  /track/download/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:download }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:download }
 
 caldera_criticalmass_track_gpxgenerate:
     path:  /track/generate/{rideId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:gpxgenerate }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:gpxgenerate }
 
 caldera_criticalmass_track_list:
     path:  /track/list
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:list }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:list }
 
 caldera_criticalmass_track_upload:
     path:  /{citySlug}/{rideDate}/addtrack
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:upload }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:upload }
 
 caldera_criticalmass_track_view:
     path:  /track/view/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:view }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:view }
 
 caldera_criticalmass_track_range:
     path:  /track/range/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:range }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:range }
 
 caldera_criticalmass_track_time:
     path:  /track/time/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:time }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:time }
 
 caldera_criticalmass_track_draw:
     path:  /{citySlug}/{rideDate}/drawtrack
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:draw }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:draw }
 
 caldera_criticalmass_track_edit:
     path:  /track/edit/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Track:edit }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Track:edit }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\City;
@@ -123,10 +123,10 @@ class PostController extends AbstractController
                redirected there again. */
             return new RedirectResponse($redirectUrl);
         } elseif ($form->isSubmitted()) {
-            return $this->render('CalderaCriticalmassSiteBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
+            return $this->render('CalderaCriticalmassCoreBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Post:write.html.twig', array('form' => $form->createView()));
+        return $this->render('CalderaCriticalmassCoreBundle:Post:write.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -185,6 +185,6 @@ class PostController extends AbstractController
         $posts = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
 
         /* And render our shit. */
-        return $this->render('CalderaCriticalmassSiteBundle:Post:list.html.twig', array('posts' => $posts));
+        return $this->render('CalderaCriticalmassCoreBundle:Post:list.html.twig', array('posts' => $posts));
     }
 }

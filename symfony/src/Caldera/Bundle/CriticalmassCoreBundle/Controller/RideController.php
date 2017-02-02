@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Weather;
@@ -24,7 +24,7 @@ class RideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Ride:list.html.twig',
+            'CalderaCriticalmassCoreBundle:Ride:list.html.twig',
             array(
                 'rides' => $rides
             )
@@ -64,7 +64,7 @@ class RideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Ride:show.html.twig',
+            'CalderaCriticalmassCoreBundle:Ride:show.html.twig',
             array(
                 'city' => $city,
                 'ride' => $ride,

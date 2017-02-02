@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\App;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\AppType;
@@ -13,7 +13,7 @@ class AppController extends Controller
     {
         $apps = $this->getDoctrine()->getRepository('CalderaBundle:App')->findBy(array('user' => $this->getUser()->getId(), 'deleted' => 0));
 
-        return $this->render('CalderaCriticalmassSiteBundle:App:list.html.twig', array('apps' => $apps));
+        return $this->render('CalderaCriticalmassCoreBundle:App:list.html.twig', array('apps' => $apps));
     }
 
     public function addAction(Request $request)
@@ -40,7 +40,7 @@ class AppController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null, 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassCoreBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => null, 'hasErrors' => $hasErrors));
     }
 
     public function editAction(Request $request, $appId)
@@ -63,7 +63,7 @@ class AppController extends Controller
             $hasErrors = true;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app, 'hasErrors' => $hasErrors));
+        return $this->render('CalderaCriticalmassCoreBundle:App:edit.html.twig', array('form' => $form->createView(), 'app2' => $app, 'hasErrors' => $hasErrors));
     }
 
     public function deleteAction(Request $request, $appId)
@@ -83,6 +83,6 @@ class AppController extends Controller
 
     public function apiAction(Request $request)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:App:api.html.twig');
+        return $this->render('CalderaCriticalmassCoreBundle:App:api.html.twig');
     }
 }

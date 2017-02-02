@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\ContentType;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ class ContentController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Content:show.html.twig',
+            'CalderaCriticalmassCoreBundle:Content:show.html.twig',
             [
                 'content' => $content
             ]
@@ -77,7 +77,7 @@ class ContentController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Content:edit.html.twig',
+            'CalderaCriticalmassCoreBundle:Content:edit.html.twig',
             [
                 'content' => $content,
                 'form' => $form->createView(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +40,7 @@ class TimelineController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Timeline:yearmonth.html.twig',
+            'CalderaCriticalmassCoreBundle:Timeline:yearmonth.html.twig',
             [
                 'timelineContent' => $timelineContent,
                 'startDateTime' => $startDateTime,

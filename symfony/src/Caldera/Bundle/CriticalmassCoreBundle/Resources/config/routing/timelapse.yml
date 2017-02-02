@@ -1,9 +1,9 @@
 caldera_criticalmass_timelapse_homepage:
     path:     /{citySlug}/{rideDate}/timelapse
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Timelapse:show }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Timelapse:show }
 
 caldera_criticalmass_timelapse_load:
     path:     /{citySlug}/{rideDate}/timelapse/load/{trackId}
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Timelapse:loadtrack }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Timelapse:loadtrack }
     options:
         expose: true

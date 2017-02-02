@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
@@ -32,7 +32,7 @@ class CityController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:City:cityList.html.twig',
+            'CalderaCriticalmassCoreBundle:City:cityList.html.twig',
             [
                 'result' => $result
             ]
@@ -46,7 +46,7 @@ class CityController extends AbstractController
         $rides = $this->getRideRepository()->findRidesWithoutStatisticsForCity($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:City:missingStats.html.twig',
+            'CalderaCriticalmassCoreBundle:City:missingStats.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -104,7 +104,7 @@ class CityController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render('CalderaCriticalmassSiteBundle:City:rideList.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:City:rideList.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -120,7 +120,7 @@ class CityController extends AbstractController
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
-        return $this->render('CalderaCriticalmassSiteBundle:City:galleryList.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:City:galleryList.html.twig',
             [
                 'city' => $city,
                 'result' => $result
@@ -141,7 +141,7 @@ class CityController extends AbstractController
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
         if ($blocked) {
-            return $this->render('CalderaCriticalmassSiteBundle:City:blocked.html.twig', [
+            return $this->render('CalderaCriticalmassCoreBundle:City:blocked.html.twig', [
                 'city' => $city,
                 'blocked' => $blocked
             ]);
@@ -167,7 +167,7 @@ class CityController extends AbstractController
         $this->getMetadata()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity());
 
-        return $this->render('CalderaCriticalmassSiteBundle:City:show.html.twig', [
+        return $this->render('CalderaCriticalmassCoreBundle:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
             'dateTime' => $dateTime,

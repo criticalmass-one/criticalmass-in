@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassCoreBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ content.title }}{% endblock %}
 
@@ -37,10 +37,10 @@
                 {% endif %}
 
                 <h3>Kommentare zu dieser Seite</h3>
-                {{ render(controller('CalderaCriticalmassSiteBundle:Post:list', { 'contentId': content.id })) }}
+                {{ render(controller('CalderaCriticalmassCoreBundle:Post:list', { 'contentId': content.id })) }}
 
                 {% if app.getUser() %}
-                    {{ render(controller('CalderaCriticalmassSiteBundle:Post:write', { 'contentId': content.id })) }}
+                    {{ render(controller('CalderaCriticalmassCoreBundle:Post:write', { 'contentId': content.id })) }}
                 {% endif %}
             </div>
         </div>

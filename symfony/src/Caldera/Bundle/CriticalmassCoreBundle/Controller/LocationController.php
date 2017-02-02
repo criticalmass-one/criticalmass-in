@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Location;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +37,7 @@ class LocationController extends AbstractController
         $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Location:show.html.twig',
+            'CalderaCriticalmassCoreBundle:Location:show.html.twig',
             [
                 'location' => $location,
                 'locations' => $locations,
@@ -62,7 +62,7 @@ class LocationController extends AbstractController
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Location:show.html.twig',
+            'CalderaCriticalmassCoreBundle:Location:show.html.twig',
             [
                 'location' => $location,
                 'locations' => $locations,

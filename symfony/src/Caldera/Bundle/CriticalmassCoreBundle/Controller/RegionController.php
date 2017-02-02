@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Abraham\TwitterOAuth\Request;
 
@@ -32,7 +32,7 @@ class RegionController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Region:index.html.twig',
+            'CalderaCriticalmassCoreBundle:Region:index.html.twig',
             [
                 'region' => $region,
                 'regions' => $regions,

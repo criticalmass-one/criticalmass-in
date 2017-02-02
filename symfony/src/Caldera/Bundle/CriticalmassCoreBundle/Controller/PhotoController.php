@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
@@ -52,7 +52,7 @@ class PhotoController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:show.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Photo:show.html.twig',
             [
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,

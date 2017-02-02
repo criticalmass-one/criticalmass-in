@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Position;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
@@ -59,7 +59,7 @@ class StravaController extends AbstractController
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Strava:auth.html.twig',
+            'CalderaCriticalmassCoreBundle:Strava:auth.html.twig',
             [
                 'authorizationUrl' => $authorizationUrl,
                 'ride' => $ride
@@ -131,7 +131,7 @@ class StravaController extends AbstractController
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Strava:list.html.twig',
+            'CalderaCriticalmassCoreBundle:Strava:list.html.twig',
             [
                 'activities' => $activities,
                 'ride' => $ride

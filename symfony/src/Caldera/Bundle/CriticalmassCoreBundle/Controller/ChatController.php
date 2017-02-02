@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\AnonymousName;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,7 +20,7 @@ class ChatController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Chat:index.html.twig',
+            'CalderaCriticalmassCoreBundle:Chat:index.html.twig',
             [
                 'recentMessages' => $recentMessages,
                 'anonymousName' => $anonymousName ? $anonymousName->getName() : null,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\FacebookCityProperties;
 use Caldera\Bundle\CalderaBundle\Entity\Region;
@@ -18,7 +18,7 @@ class StatisticController extends AbstractController
         $this->getMetadata()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Statistic:citystatistic.html.twig',
+            'CalderaCriticalmassCoreBundle:Statistic:citystatistic.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -33,7 +33,7 @@ class StatisticController extends AbstractController
         $frp = $this->getFacebookRidePropertiesRepository()->findByRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Statistic:ridestatistic.html.twig',
+            'CalderaCriticalmassCoreBundle:Statistic:ridestatistic.html.twig',
             [
                 'ride' => $ride,
                 'frp' => $frp
@@ -63,7 +63,7 @@ class StatisticController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Statistic:facebookstatistic.html.twig',
+            'CalderaCriticalmassCoreBundle:Statistic:facebookstatistic.html.twig',
             [
                 'cities' => $cityList,
                 'filteredProperties' => $filteredProperties,
@@ -108,7 +108,7 @@ class StatisticController extends AbstractController
         $this->getMetadata()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Statistic:overview.html.twig',
+            'CalderaCriticalmassCoreBundle:Statistic:overview.html.twig',
             [
                 'cities' => $cities,
                 'rides' => $rides,

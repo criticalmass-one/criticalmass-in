@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline;
@@ -31,7 +31,7 @@ class FrontpageController extends AbstractController
             ->getTimelineContent();
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Frontpage:index.html.twig',
+            'CalderaCriticalmassCoreBundle:Frontpage:index.html.twig',
             [
                 'timelineContent' => $timelineContent,
                 'rideList' => $rideList

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class EventController extends AbstractController
         $postCounter = $this->getPostRepository()->countPostsForEvent($event);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Event:show.html.twig',
+            'CalderaCriticalmassCoreBundle:Event:show.html.twig',
             [
                 'city' => $city,
                 'event' => $event,

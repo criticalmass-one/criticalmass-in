@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
@@ -40,7 +40,7 @@ class PhotoGalleryController extends AbstractController
         );
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:PhotoGallery:gallerylist.html.twig',
+            'CalderaCriticalmassCoreBundle:PhotoGallery:gallerylist.html.twig',
             [
                 'ride' => $ride,
                 'event' => $event,
@@ -58,7 +58,7 @@ class PhotoGalleryController extends AbstractController
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
 
-        return $this->render('CalderaCriticalmassSiteBundle:Photo:userlist.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Photo:userlist.html.twig',
             [
                 'result' => $result
             ]
@@ -84,7 +84,7 @@ class PhotoGalleryController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:PhotoGallery:examplegallery.html.twig',
+            'CalderaCriticalmassCoreBundle:PhotoGallery:examplegallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList

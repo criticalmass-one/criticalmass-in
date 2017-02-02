@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        {% include('CalderaCriticalmassSiteBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
+        {% include('CalderaCriticalmassCoreBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1>
             {{ ride.getFancyTitle() }}
         </h1>
@@ -79,13 +79,13 @@
             </ul>
 
             <div class="tab-content">
-                {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderDetailsTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderSubridesTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderPostsTab', { 'ride': ride } )) }}
+                {{ render(controller('CalderaCriticalmassCoreBundle:RideTabs:renderDetailsTab', { 'ride': ride } )) }}
+                {{ render(controller('CalderaCriticalmassCoreBundle:RideTabs:renderSubridesTab', { 'ride': ride } )) }}
+                {{ render(controller('CalderaCriticalmassCoreBundle:RideTabs:renderPostsTab', { 'ride': ride } )) }}
 
                 {% if pastRide %}
-                    {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderTracksTab', { 'ride': ride } )) }}
-                    {{ render(controller('CalderaCriticalmassSiteBundle:RideTabs:renderMusicTab', { 'ride': ride } )) }}
+                    {{ render(controller('CalderaCriticalmassCoreBundle:RideTabs:renderTracksTab', { 'ride': ride } )) }}
+                    {{ render(controller('CalderaCriticalmassCoreBundle:RideTabs:renderMusicTab', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>

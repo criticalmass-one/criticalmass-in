@@ -1,3 +1,124 @@
-caldera_criticalmass_core_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: CalderaCriticalmassCoreBundle:Default:index }
+caldera_criticalmass_live:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/live.yml"
+    prefix: /
+
+caldera_criticalmass_calendar:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/calendar.yml"
+    prefix: /
+
+caldera_criticalmass_post:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/post.yml"
+    prefix: /post
+
+caldera_criticalmass_track:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/track.yml"
+    prefix: /
+
+caldera_criticalmass_trackimport:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/trackimport.yml"
+    prefix: /
+
+caldera_criticalmass_blog:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/blog.yml"
+    prefix: /
+
+caldera_criticalmass_frontpage:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/frontpage.yml"
+    prefix: /
+
+caldera_criticalmass_content:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/content.yml"
+    prefix: /content
+
+caldera_criticalmass_search:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/search.yml"
+    prefix: /
+
+caldera_criticalmass_board:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/board.yml"
+    prefix:   /
+
+caldera_criticalmass_profile:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile
+
+caldera_criticalmass_photo:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/photo.yml"
+    prefix:   /
+
+caldera_criticalmass_photogallery:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/photogallery.yml"
+    prefix:   /
+
+caldera_criticalmass_photoupload:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/photoupload.yml"
+    prefix:   /
+
+caldera_criticalmass_photomanagement:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/photomanagement.yml"
+    prefix:   /
+
+caldera_criticalmass_region:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/region.yml"
+    prefix:   /
+
+caldera_criticalmass_api:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/api.yml"
+    prefix: /
+
+caldera_criticalmass_statistic:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/statistic.yml"
+    prefix: /
+
+caldera_criticalmass_location:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/location.yml"
+    prefix: /
+
+caldera_criticalmass_timelapse:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/timelapse.yml"
+    prefix:   /
+
+caldera_criticalmass_participation:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/participation.yml"
+    prefix:   /
+
+caldera_criticalmass_strava:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/strava.yml"
+    prefix: /
+
+caldera_criticalmass_timeline:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/timeline.yml"
+    prefix: /
+
+caldera_criticalmass_chat:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/chat.yml"
+    prefix: /
+
+caldera_criticalmass_notification:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/notification.yml"
+    prefix: /
+
+caldera_criticalmass_city:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/city.yml"
+    prefix: /
+
+caldera_criticalmass_citymanagement:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/citymanagement.yml"
+    prefix: /
+
+caldera_criticalmass_ride:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/ride.yml"
+    prefix: /
+
+caldera_criticalmass_ridemanagement:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/ridemanagement.yml"
+    prefix: /
+
+caldera_criticalmass_sudride:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/subride.yml"
+    prefix: /
+
+# last route to match is always event!
+caldera_criticalmass_event:
+    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing/event.yml"
+    prefix: /

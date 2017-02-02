@@ -1,35 +1,35 @@
 caldera_criticalmass_photo_user_list:
     path: /photos/list
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:list }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:list }
 
 caldera_criticalmass_photo_manage:
     path: /{citySlug}/{rideDate}/managephotos
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:manage }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:manage }
 
 caldera_criticalmass_photo_place_single:
     path: /{citySlug}/{rideDate}/managephotos/{photoId}/place
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:placeSingle }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:placeSingle }
 
 caldera_criticalmass_photo_rotate:
     path: /{citySlug}/{rideDate}/managephotos/{photoId}/rotate
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:rotate }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:rotate }
 
 caldera_criticalmass_photo_toggle:
     path: /{citySlug}/{rideDate}/photo/{photoId}/toggle
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:toggle }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:toggle }
 
 caldera_criticalmass_photo_featured:
     path: /{citySlug}/{rideDate}/photo/{photoId}/featured
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:featuredPhoto }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:featuredPhoto }
 
 caldera_criticalmass_photo_delete:
     path: /{citySlug}/{rideDate}/managephotos/{photoId}/delete
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:delete }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:delete }
 
 caldera_criticalmass_photo_relocate:
     path: /{citySlug}/{rideDate}/relocatephotos
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:relocate }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:relocate }
 
 caldera_criticalmass_gallery_photos_rearrange:
     path: /{citySlug}/{rideDate}/gallery/rearrange
-    defaults: { _controller: CalderaCriticalmassSiteBundle:PhotoManagement:rearrange }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:PhotoManagement:rearrange }

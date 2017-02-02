@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +67,7 @@ class SecurityController extends Controller
                 break;
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Security:' . $templateName, $data);
+        return $this->render('CalderaCriticalmassCoreBundle:Security:' . $templateName, $data);
     }
 
     public function loginFormModalAction(Request $request): Response

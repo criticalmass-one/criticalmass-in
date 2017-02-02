@@ -1,15 +1,15 @@
 caldera_criticalmass_statistic_city:
     path: /{citySlug}/statistic
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:citystatistic }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Statistic:citystatistic }
 
 caldera_criticalmass_statistic_ride:
     path: /{citySlug}/{rideDate}/statistic
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:ridestatistic }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Statistic:ridestatistic }
 
 caldera_criticalmass_statistic_facebook:
     path: /facebookstatistic
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:facebookstatistic }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Statistic:facebookstatistic }
 
 caldera_criticalmass_statistic_overview:
     path: /statistic
-    defaults: { _controller: CalderaCriticalmassSiteBundle:Statistic:overview }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:Statistic:overview }

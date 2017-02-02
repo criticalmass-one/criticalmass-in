@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassCoreBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}Foto {{ photo.id }} aus {{ photo.city.city }}{% endblock %}
 
@@ -110,10 +110,10 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ render(controller('CalderaCriticalmassSiteBundle:Post:list', { 'photoId': photo.id })) }}
+                        {{ render(controller('CalderaCriticalmassCoreBundle:Post:list', { 'photoId': photo.id })) }}
 
                         {% if app.getUser() %}
-                            {{ render(controller('CalderaCriticalmassSiteBundle:Post:write', { 'photoId': photo.id, 'noButton': true })) }}
+                            {{ render(controller('CalderaCriticalmassCoreBundle:Post:write', { 'photoId': photo.id, 'noButton': true })) }}
                         {% endif %}
                     </div>
                 </div>

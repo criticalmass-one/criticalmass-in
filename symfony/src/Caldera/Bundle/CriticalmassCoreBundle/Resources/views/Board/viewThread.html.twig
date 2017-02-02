@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassCoreBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ thread.title }}{% endblock %}
 
@@ -28,7 +28,7 @@
                     <i class="fa fa-comment"></i>
                     Antwort hinzufügen
                 </button>
-                {{ render(controller('CalderaCriticalmassSiteBundle:Post:write', { 'threadId': thread.id, 'noButton': true })) }}
+                {{ render(controller('CalderaCriticalmassCoreBundle:Post:write', { 'threadId': thread.id, 'noButton': true })) }}
             {% endif %}
             <h2>
                 {{ thread.title }}
@@ -40,7 +40,7 @@
         <div class="col-md-12">
             <div class="post-list">
                 {% for post in posts %}
-                    {% include('CalderaCriticalmassSiteBundle:Post:post.html.twig') with { 'post':  post } %}
+                    {% include('CalderaCriticalmassCoreBundle:Post:post.html.twig') with { 'post':  post } %}
                 {% endfor %}
             </div>
         </div>

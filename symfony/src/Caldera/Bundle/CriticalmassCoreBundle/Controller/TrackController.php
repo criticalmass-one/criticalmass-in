@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
@@ -36,7 +36,7 @@ class TrackController extends AbstractController
             ]
         );
 
-        return $this->render('CalderaCriticalmassSiteBundle:Track:list.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Track:list.html.twig',
             array(
                 'tracks' => $tracks
             )
@@ -66,7 +66,7 @@ class TrackController extends AbstractController
 
     protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:Track:upload.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Track:upload.html.twig',
             [
                 'form' => $form->createView(),
                 'ride' => $ride,
@@ -99,7 +99,7 @@ class TrackController extends AbstractController
                 $trackValidator->validate();
             } catch (TrackValidatorException $e) {
                 return $this->render(
-                    'CalderaCriticalmassSiteBundle:Track:upload.html.twig',
+                    'CalderaCriticalmassCoreBundle:Track:upload.html.twig',
                     [
                         'form' => $form->createView(),
                         'ride' => $ride,
@@ -125,7 +125,7 @@ class TrackController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Track:upload.html.twig',
+            'CalderaCriticalmassCoreBundle:Track:upload.html.twig',
             [
                 'form' => $form->createView(),
                 'ride' => $ride,
@@ -140,7 +140,7 @@ class TrackController extends AbstractController
 
         if ($track && $track->getUser()->equals($this->getUser())) {
             return $this->render(
-                'CalderaCriticalmassSiteBundle:Track:view.html.twig',
+                'CalderaCriticalmassCoreBundle:Track:view.html.twig',
                 [
                     'track' => $track,
                     'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
@@ -251,7 +251,7 @@ class TrackController extends AbstractController
         $llag->loadTrack($track);
         $llag->execute();
 
-        return $this->render('CalderaCriticalmassSiteBundle:Track:range.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Track:range.html.twig',
             [
                 'form' => $form->createView(),
                 'track' => $track,
@@ -304,7 +304,7 @@ class TrackController extends AbstractController
 
     protected function timeGetAction(Request $request, Track $track, Form $form)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:Track:time.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Track:time.html.twig',
             [
                 'form' => $form->createView(),
                 'track' => $track,
@@ -355,7 +355,7 @@ class TrackController extends AbstractController
     protected function drawGetAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Track:draw.html.twig',
+            'CalderaCriticalmassCoreBundle:Track:draw.html.twig',
             [
                 'ride' => $ride
             ]
@@ -405,7 +405,7 @@ class TrackController extends AbstractController
     protected function editGetAction(Request $request, Ride $ride, Track $track)
     {
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Track:draw.html.twig',
+            'CalderaCriticalmassCoreBundle:Track:draw.html.twig',
             [
                 'ride' => $ride,
                 'track' => $track

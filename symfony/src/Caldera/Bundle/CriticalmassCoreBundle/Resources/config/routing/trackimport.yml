@@ -1,3 +1,3 @@
 caldera_criticalmass_trackimport_index:
     path:  /trackimport/strava
-    defaults: { _controller: CalderaCriticalmassSiteBundle:TrackImport:strava }
+    defaults: { _controller: CalderaCriticalmassCoreBundle:TrackImport:strava }

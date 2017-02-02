@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
@@ -20,7 +20,7 @@ class LiveController extends AbstractController
             ->setDescription('Live dabei: Verfolge verschiedene Critical-Mass-Touren weltweit!');
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Live:index.html.twig',
+            'CalderaCriticalmassCoreBundle:Live:index.html.twig',
             array(
                 'rides' => $rides,
                 'events' => []
@@ -46,7 +46,7 @@ class LiveController extends AbstractController
             ->setDescription('Live dabei: Schau dir an, wo sich die Critical Mass in ' . $city->getCity() . ' gerade befindet!');
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Live:index.html.twig',
+            'CalderaCriticalmassCoreBundle:Live:index.html.twig',
             array(
                 'rides' => [$ride],
                 'events' => $events

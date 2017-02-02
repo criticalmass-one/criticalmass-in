@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Michelf\Markdown;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +17,6 @@ class BlogController extends AbstractController
             $article->setFormattedText($markdown->transform($article->getText()));
         }
 
-        return $this->render('CalderaCriticalmassSiteBundle:Blog:list.html.twig', array('articles' => $articles));
+        return $this->render('CalderaCriticalmassCoreBundle:Blog:list.html.twig', array('articles' => $articles));
     }
 }

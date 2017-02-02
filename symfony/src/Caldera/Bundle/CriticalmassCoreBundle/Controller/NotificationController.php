@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ class NotificationController extends AbstractController
         $notifications = $this->getNotificationSubscriptionRepository()->findAll();
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:NotificationSubscription:list.html.twig',
+            'CalderaCriticalmassCoreBundle:NotificationSubscription:list.html.twig',
             [
                 'notifications' => $notifications
             ]

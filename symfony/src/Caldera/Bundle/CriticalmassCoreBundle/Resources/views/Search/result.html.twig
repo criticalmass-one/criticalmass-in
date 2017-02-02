@@ -1,4 +1,4 @@
-{% extends 'CalderaCriticalmassSiteBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'CalderaCriticalmassCoreBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}Suchergebnisse{% endblock %}
 
@@ -54,9 +54,9 @@
                 <div class="col-md-9">
                     {% for result in results %}
                         {% if result.standardLocation is defined %}
-                            {% include 'CalderaCriticalmassSiteBundle:Search:city.html.twig' with { city: result } %}
+                            {% include 'CalderaCriticalmassCoreBundle:Search:city.html.twig' with { city: result } %}
                         {% else %}
-                            {% include 'CalderaCriticalmassSiteBundle:Search:ride.html.twig' with { ride: result } %}
+                            {% include 'CalderaCriticalmassCoreBundle:Search:ride.html.twig' with { ride: result } %}
                         {% endif %}
 
                     {% endfor %}

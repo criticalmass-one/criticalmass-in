@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator;
@@ -16,7 +16,7 @@ class TimelapseController extends AbstractController
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Timelapse:show.html.twig',
+            'CalderaCriticalmassCoreBundle:Timelapse:show.html.twig',
             array(
                 'ride' => $ride,
                 'tracks' => $tracks

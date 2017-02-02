@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
 use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\UserPhoneNumberType;
@@ -33,7 +33,7 @@ class PhoneNumberController extends AbstractController
 
     protected function editGetAction(Request $request, Form $numberForm, Form $verificationForm)
     {
-        return $this->render('CalderaCriticalmassSiteBundle:Profile:edit.html.twig',
+        return $this->render('CalderaCriticalmassCoreBundle:Profile:edit.html.twig',
             [
                 'phoneNumberForm' => $numberForm->createView(),
                 'verificationForm' => $verificationForm->createView()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassSiteBundle\Controller;
+namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Post;
@@ -24,7 +24,7 @@ class BoardController extends AbstractController
         $cities = $this->getCityRepository()->findCitiesWithBoard();
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:overview.html.twig',
+            'CalderaCriticalmassCoreBundle:Board:overview.html.twig',
             [
                 'boards' => $boards,
                 'cities' => $cities
@@ -66,7 +66,7 @@ class BoardController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:listThreads.html.twig',
+            'CalderaCriticalmassCoreBundle:Board:listThreads.html.twig',
             [
                 'threads' => $threads,
                 'board' => ($board ? $board : $city),
@@ -96,7 +96,7 @@ class BoardController extends AbstractController
         $this->countThreadView($thread);
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:viewThread.html.twig',
+            'CalderaCriticalmassCoreBundle:Board:viewThread.html.twig',
             [
                 'board' => $board,
                 'thread' => $thread,
@@ -136,7 +136,7 @@ class BoardController extends AbstractController
     protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form)
     {
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:addThread.html.twig',
+            'CalderaCriticalmassCoreBundle:Board:addThread.html.twig',
             [
                 'board' => $board,
                 'form' => $form->createView()
@@ -189,7 +189,7 @@ class BoardController extends AbstractController
         }
 
         return $this->render(
-            'CalderaCriticalmassSiteBundle:Board:addThread.html.twig',
+            'CalderaCriticalmassCoreBundle:Board:addThread.html.twig',
             [
                 'board' => $board,
                 'form' => $form->createView()
