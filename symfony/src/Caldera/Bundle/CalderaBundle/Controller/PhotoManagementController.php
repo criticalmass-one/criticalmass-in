@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PhotoCoordType;
+use Caldera\Bundle\CalderaBundle\Form\Type\PhotoCoordType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -1,16 +1,16 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CalderaBundle\Repository\CriticalmapsUserRepository;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\Bundle\CalderaBundle\Gps\GpxExporter\GpxExporter;
+use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

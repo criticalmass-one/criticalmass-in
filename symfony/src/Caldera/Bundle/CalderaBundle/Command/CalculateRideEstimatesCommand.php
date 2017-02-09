@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

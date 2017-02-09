@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\UserPhoneNumberType;
+use Caldera\Bundle\CalderaBundle\Form\Type\UserPhoneNumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

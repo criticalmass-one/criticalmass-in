@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider;
+namespace Caldera\Bundle\CalderaBundle\Notification\Provider;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
 

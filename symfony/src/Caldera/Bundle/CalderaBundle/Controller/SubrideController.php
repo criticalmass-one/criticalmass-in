@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Subride;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\SubrideType;
+use Caldera\Bundle\CalderaBundle\Form\Type\SubrideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -1,15 +1,15 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\BaseTrait;
+namespace Caldera\Bundle\CalderaBundle\BaseTrait;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackPolyline\TrackPolyline;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\Bundle\CalderaBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
+use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Caldera\Bundle\CalderaBundle\Gps\TrackPolyline\TrackPolyline;
+use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 
 trait TrackHandlingTrait
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
+namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
 
 use Caldera\Bundle\CalderaBundle\Entity\Post;
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\PhotoCommentItem;
+use Caldera\Bundle\CalderaBundle\Timeline\Item\PhotoCommentItem;
 
 class PhotoCommentCollector extends AbstractTimelineCollector
 {

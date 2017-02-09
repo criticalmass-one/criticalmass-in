@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassCoreBundle\Facebook\FacebookEventRideApi;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideType;
+use Caldera\Bundle\CalderaBundle\Facebook\FacebookEventRideApi;
+use Caldera\Bundle\CalderaBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 

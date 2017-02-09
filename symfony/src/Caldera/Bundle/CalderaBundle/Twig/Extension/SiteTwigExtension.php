@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Twig\Extension;
+namespace Caldera\Bundle\CalderaBundle\Twig\Extension;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
 use Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata;

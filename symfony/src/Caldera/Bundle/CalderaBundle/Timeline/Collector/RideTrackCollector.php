@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
+namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
 
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\RideTrackItem;
+use Caldera\Bundle\CalderaBundle\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {

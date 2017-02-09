@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Facebook;
+namespace Caldera\Bundle\CalderaBundle\Facebook;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassCoreBundle\Utils\DateTimeUtils;
+use Caldera\Bundle\CalderaBundle\Utils\DateTimeUtils;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 

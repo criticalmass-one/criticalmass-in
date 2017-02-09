@@ -1,6 +1,6 @@
 services:
     caldera.criticalmass.timeline.cached:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\CachedTimeline
+        class: Caldera\Bundle\CalderaBundle\Timeline\CachedTimeline
         arguments: [ '@doctrine', '@templating', '@memcache.criticalmass', '%timeline.ttl%' ]
         calls:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
@@ -16,7 +16,7 @@ services:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.photocomment']]
 
     caldera.criticalmass.timeline:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline
+        class: Caldera\Bundle\CalderaBundle\Timeline\Timeline
         arguments: [ '@doctrine', '@templating' ]
         calls:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
@@ -32,45 +32,45 @@ services:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.photocomment']]
 
     caldera.criticalmass.timeline.collector.ridephoto:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RidePhotoCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\RidePhotoCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.ridetrack:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideTrackCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\RideTrackCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.rideparticipationestimate:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideParticipationEstimateCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\RideParticipationEstimateCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.thread:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ThreadCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\ThreadCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.threadpost:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ThreadPostCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\ThreadPostCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.rideedit:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideEditCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\RideEditCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.ridecomment:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\RideCommentCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\RideCommentCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.cityedit:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\CityEditCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\CityEditCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.contentcomment:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\ContentCommentCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\ContentCommentCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.locationsharing:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\LocationSharingCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\LocationSharingCollector
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.timeline.collector.photocomment:
-        class: Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\PhotoCommentCollector
+        class: Caldera\Bundle\CalderaBundle\Timeline\Collector\PhotoCommentCollector
         arguments: [ '@doctrine' ]

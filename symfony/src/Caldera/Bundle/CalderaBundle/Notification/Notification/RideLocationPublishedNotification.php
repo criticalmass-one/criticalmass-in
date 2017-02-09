@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification;
+namespace Caldera\Bundle\CalderaBundle\Notification\Notification;
 
 class RideLocationPublishedNotification extends AbstractNotification
 {

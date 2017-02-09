@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter;
+namespace Caldera\Bundle\CalderaBundle\Gps\GpxExporter;
 
 
 use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;

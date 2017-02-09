@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification;
+use Caldera\Bundle\CalderaBundle\Notification\Notification;
 use Symfony\Component\HttpFoundation\Request;
 
 class NotificationController extends AbstractController

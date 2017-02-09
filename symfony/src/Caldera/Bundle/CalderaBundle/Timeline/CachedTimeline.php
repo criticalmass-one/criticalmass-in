@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline;
+namespace Caldera\Bundle\CalderaBundle\Timeline;
 
 class CachedTimeline extends Timeline
 {

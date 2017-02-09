@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\ContentType;
+use Caldera\Bundle\CalderaBundle\Form\Type\ContentType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

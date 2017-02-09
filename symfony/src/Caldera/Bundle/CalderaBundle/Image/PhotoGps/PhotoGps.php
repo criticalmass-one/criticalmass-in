@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Image\PhotoGps;
+namespace Caldera\Bundle\CalderaBundle\Image\PhotoGps;
 
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\GpsExifReader;
+use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CalderaBundle\Image\ExifReader\DateTimeExifReader;
+use Caldera\Bundle\CalderaBundle\Image\ExifReader\GpsExifReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class PhotoGps

@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CriticalmassCoreBundle\StandardRideGenerator\StandardRideGenerator;
+use Caldera\Bundle\CalderaBundle\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

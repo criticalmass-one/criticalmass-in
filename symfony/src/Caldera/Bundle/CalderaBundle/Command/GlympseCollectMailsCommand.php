@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 use Doctrine\ORM\EntityManager;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;

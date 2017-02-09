@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector;
+namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\LocationSharingItem;
+use Caldera\Bundle\CalderaBundle\Timeline\Item\LocationSharingItem;
 
 class LocationSharingCollector extends AbstractTimelineCollector
 {

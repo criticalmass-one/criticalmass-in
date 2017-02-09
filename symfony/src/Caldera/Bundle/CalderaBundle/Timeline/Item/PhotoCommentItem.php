@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item;
+namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
 
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 

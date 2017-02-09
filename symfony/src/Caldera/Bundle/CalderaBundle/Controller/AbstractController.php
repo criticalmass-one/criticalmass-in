@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
-use Caldera\Bundle\CriticalmassCoreBundle\Traits\UtilTrait;
+use Caldera\Bundle\CalderaBundle\Traits\UtilTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractController extends Controller

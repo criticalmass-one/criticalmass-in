@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException;
+namespace Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException;
 
 use Exception;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Utils;
+namespace Caldera\Bundle\CalderaBundle\Utils;
 
 class DateTimeUtils
 {

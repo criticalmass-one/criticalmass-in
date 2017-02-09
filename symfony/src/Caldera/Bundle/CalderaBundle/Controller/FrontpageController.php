@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Timeline;
+use Caldera\Bundle\CalderaBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 
 class FrontpageController extends AbstractController

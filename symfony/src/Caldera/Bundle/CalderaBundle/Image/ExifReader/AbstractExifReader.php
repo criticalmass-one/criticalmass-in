@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
+namespace Caldera\Bundle\CalderaBundle\Image\ExifReader;
 
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;

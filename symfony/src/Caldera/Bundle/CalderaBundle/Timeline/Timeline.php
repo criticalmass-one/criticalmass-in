@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Timeline;
+namespace Caldera\Bundle\CalderaBundle\Timeline;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Collector\AbstractTimelineCollector;
-use Caldera\Bundle\CriticalmassCoreBundle\Timeline\Item\ItemInterface;
+use Caldera\Bundle\CalderaBundle\Timeline\Collector\AbstractTimelineCollector;
+use Caldera\Bundle\CalderaBundle\Timeline\Item\ItemInterface;
 
 class Timeline
 {

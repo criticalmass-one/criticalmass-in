@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackChecker;
+namespace Caldera\Bundle\CalderaBundle\Gps\TrackChecker;
 
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 

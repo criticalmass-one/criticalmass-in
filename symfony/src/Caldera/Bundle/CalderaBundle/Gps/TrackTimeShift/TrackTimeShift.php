@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\TrackTimeShift;
+namespace Caldera\Bundle\CalderaBundle\Gps\TrackTimeShift;
 
 use Caldera\Bundle\CalderaBundle\Entity\Position;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxExporter\GpxExporter;
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\TrackReader;
+use Caldera\Bundle\CalderaBundle\Gps\GpxExporter\GpxExporter;
+use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
 
 class TrackTimeShift
 {

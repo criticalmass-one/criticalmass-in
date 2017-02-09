@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Notification\Dispatcher;
+namespace Caldera\Bundle\CalderaBundle\Notification\Dispatcher;
 
 use Caldera\Bundle\CalderaBundle\Entity\NotificationSubscription;
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Notification\AbstractNotification;
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\EmailNotificationProvider;
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\PushoverNotificationProvider;
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Provider\ShortmessageNotificationProvider;
+use Caldera\Bundle\CalderaBundle\Notification\Notification\AbstractNotification;
+use Caldera\Bundle\CalderaBundle\Notification\Provider\EmailNotificationProvider;
+use Caldera\Bundle\CalderaBundle\Notification\Provider\PushoverNotificationProvider;
+use Caldera\Bundle\CalderaBundle\Notification\Provider\ShortmessageNotificationProvider;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 

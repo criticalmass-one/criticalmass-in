@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\DistanceCalculator;
+namespace Caldera\Bundle\CalderaBundle\Gps\DistanceCalculator;
 
 abstract class BaseDistanceCalculator
 {

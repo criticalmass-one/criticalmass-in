@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader;
+namespace Caldera\Bundle\CalderaBundle\Image\ExifReader;
 
 class ExifReader extends AbstractExifReader
 {

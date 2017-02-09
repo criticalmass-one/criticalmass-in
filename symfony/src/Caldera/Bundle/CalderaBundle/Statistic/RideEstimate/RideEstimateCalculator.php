@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate;
+namespace Caldera\Bundle\CalderaBundle\Statistic\RideEstimate;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;

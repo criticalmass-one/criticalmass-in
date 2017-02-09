@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\UploadValidator;
+namespace Caldera\Bundle\CalderaBundle\UploadValidator;
 
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoDateTimeException;
-use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoLatitudeLongitudeException;
-use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NotEnoughCoordsException;
-use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
-use Caldera\Bundle\CriticalmassCoreBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
+use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoDateTimeException;
+use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoLatitudeLongitudeException;
+use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NotEnoughCoordsException;
+use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
+use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
 use Exception;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 

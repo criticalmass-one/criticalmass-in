@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Repository\RideRepository;
-use Caldera\Bundle\CriticalmassCoreBundle\Notification\Dispatcher\NotificationDispatcher;
+use Caldera\Bundle\CalderaBundle\Notification\Dispatcher\NotificationDispatcher;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

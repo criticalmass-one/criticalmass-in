@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Weather;
-use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\Bundle\CalderaBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CalderaBundle\Form\Type\RideEstimateType;
+use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
 
 class RideController extends AbstractController

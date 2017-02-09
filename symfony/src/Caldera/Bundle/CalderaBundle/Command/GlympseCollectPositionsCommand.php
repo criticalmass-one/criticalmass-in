@@ -1,15 +1,15 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Ticket;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseApiBrokenException;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseApiErrorException;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseException;
-use Caldera\Bundle\CriticalmassCoreBundle\Glympse\Exception\GlympseInviteUnknownException;
-use Caldera\Bundle\CriticalmassCoreBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\Bundle\CalderaBundle\Glympse\Exception\GlympseApiBrokenException;
+use Caldera\Bundle\CalderaBundle\Glympse\Exception\GlympseApiErrorException;
+use Caldera\Bundle\CalderaBundle\Glympse\Exception\GlympseException;
+use Caldera\Bundle\CalderaBundle\Glympse\Exception\GlympseInviteUnknownException;
+use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 use Curl\Curl;
 use Doctrine\ORM\EntityManager;
 use PhpImap\IncomingMail;

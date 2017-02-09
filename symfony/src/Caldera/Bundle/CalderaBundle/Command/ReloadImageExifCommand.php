@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Command;
+namespace Caldera\Bundle\CalderaBundle\Command;
 
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CriticalmassCoreBundle\Image\ExifReader\DateTimeExifReader;
+use Caldera\Bundle\CalderaBundle\Image\ExifReader\DateTimeExifReader;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

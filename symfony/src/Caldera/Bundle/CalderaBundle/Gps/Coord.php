@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps;
+namespace Caldera\Bundle\CalderaBundle\Gps;
 
 class Coord
 {

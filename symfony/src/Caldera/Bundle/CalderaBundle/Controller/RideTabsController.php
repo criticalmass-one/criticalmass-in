@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Weather;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\RideEstimateType;
+use Caldera\Bundle\CalderaBundle\Form\Type\RideEstimateType;
 use Symfony\Component\HttpFoundation\Request;
 
 class RideTabsController extends AbstractController

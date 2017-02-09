@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\CriticalmassCoreBundle\Utility\GeoJsonUtility;
+namespace Caldera\CalderaBundle\Utility\GeoJsonUtility;
 
 
-use Caldera\CriticalmassCoreBundle\Entity\Track;
-use Caldera\CriticalmassCoreBundle\Utility\GpxReader\GpxReader;
+use Caldera\CalderaBundle\Entity\Track;
+use Caldera\CalderaBundle\Utility\GpxReader\GpxReader;
 
 class GeoJsonUtility
 {

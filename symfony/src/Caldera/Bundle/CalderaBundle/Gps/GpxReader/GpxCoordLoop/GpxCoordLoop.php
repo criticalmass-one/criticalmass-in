@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxCoordLoop;
+namespace Caldera\Bundle\CalderaBundle\Gps\GpxReader\GpxCoordLoop;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Gps\GpxReader\GpxReader;
+use Caldera\Bundle\CalderaBundle\Gps\GpxReader\GpxReader;
 
 class GpxCoordLoop
 {

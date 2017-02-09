@@ -6,7 +6,7 @@
  * Time: 23:01
  */
 
-namespace Caldera\Bundle\CriticalmassCoreBundle\Gps;
+namespace Caldera\Bundle\CalderaBundle\Gps;
 
 
 class BoundingBox
