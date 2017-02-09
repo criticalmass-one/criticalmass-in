@@ -42,7 +42,7 @@ services:
         class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersister
         arguments: ['@doctrine.cache.memcached', '@doctrine']
 
-caldera.criticalmass.routing.object_router:
+    caldera.criticalmass.routing.object_router:
         class: Caldera\Bundle\CriticalmassCoreBundle\Router\ObjectRouter
         arguments:
             - '@router.default'
