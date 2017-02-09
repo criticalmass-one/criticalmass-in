@@ -39,4 +39,17 @@ class RideController extends BaseController
 
         return $this->handleView($view);
     }
+
+    public function listAction(): Response
+    {
+        $rideList = $this->getRideRepository()->findCurrentRides();
+
+        $view = View::create();
+        $view
+            ->setData($rideList)
+            ->setFormat('json')
+            ->setStatusCode(200);
+
+        return $this->handleView($view);
+    }
 }

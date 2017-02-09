@@ -25,7 +25,8 @@ fos_js_routing:
 
 caldera_criticalmass_rest:
     resource: "@CalderaCriticalmassRestBundle/Resources/config/routing.yml"
-    prefix:   /rest
+    host: "%domain.criticalmass%"
+    prefix:   /api
 
 facebook_login:
     path: /login/check-facebook
