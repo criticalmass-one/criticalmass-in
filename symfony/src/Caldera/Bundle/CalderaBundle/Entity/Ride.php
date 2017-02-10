@@ -22,6 +22,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $id;
 
@@ -34,6 +35,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $city;
@@ -50,48 +52,56 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $dateTime;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $hasTime;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $hasLocation;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $location;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $latitude;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $longitude;
@@ -117,6 +127,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $facebook;
@@ -124,6 +135,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $twitter;
@@ -131,6 +143,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $url;
