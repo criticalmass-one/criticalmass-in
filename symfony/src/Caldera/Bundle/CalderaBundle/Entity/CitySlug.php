@@ -28,6 +28,7 @@ class CitySlug
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $id;
 
@@ -36,6 +37,7 @@ class CitySlug
      *
      * @ORM\Column(type="string", length=50)
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $slug;
 
