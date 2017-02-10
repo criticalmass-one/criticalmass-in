@@ -50,6 +50,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
      */
     protected $title;
 

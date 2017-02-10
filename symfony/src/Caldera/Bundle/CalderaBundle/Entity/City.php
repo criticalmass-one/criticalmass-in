@@ -151,6 +151,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
     /**
      * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
+     * @JMS\Expose
      */
     protected $slugs;
 
