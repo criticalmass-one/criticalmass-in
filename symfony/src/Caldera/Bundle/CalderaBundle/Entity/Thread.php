@@ -26,12 +26,6 @@ class Thread implements ViewableInterface
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
-     * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
-     */
-    protected $board;
-
-    /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
@@ -173,18 +167,6 @@ class Thread implements ViewableInterface
     public function getCity()
     {
         return $this->city;
-    }
-
-    public function setBoard(Board $board = null)
-    {
-        $this->board = $board;
-
-        return $this;
-    }
-
-    public function getBoard()
-    {
-        return $this->board;
     }
 
     public function setFirstPost(Post $firstPost)

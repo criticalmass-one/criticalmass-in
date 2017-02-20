@@ -56,18 +56,6 @@ class Track
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="tracks")
-     * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
-     */
-    protected $ticket;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CriticalmapsUser", inversedBy="tracks")
-     * @ORM\JoinColumn(name="criticalmapsuser_id", referencedColumnName="id")
-     */
-    protected $criticalmapsUser;
-
-    /**
      * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
      */
     protected $rideEstimate;
@@ -273,41 +261,6 @@ class Track
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Set ticket
-     *
-     * @param Ticket $ticket
-     * @return Track
-     */
-    public function setTicket(Ticket $ticket = null)
-    {
-        $this->ticket = $ticket;
-
-        return $this;
-    }
-
-    /**
-     * Get ticket
-     *
-     * @return Ticket
-     */
-    public function getTicket()
-    {
-        return $this->ticket;
-    }
-
-    public function setCriticalmapsUser(CriticalmapsUser $criticalmapsUser = null)
-    {
-        $this->criticalmapsUser = $criticalmapsUser;
-
-        return $this;
-    }
-
-    public function getCriticalmapsUser()
-    {
-        return $this->criticalmapsUser;
     }
 
     /**

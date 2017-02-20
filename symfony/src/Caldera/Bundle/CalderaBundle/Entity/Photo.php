@@ -44,12 +44,6 @@ class Photo implements ViewableInterface
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="photos")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
-     */
-    protected $event;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
@@ -382,28 +376,5 @@ class Photo implements ViewableInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set event
-     *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Event $event
-     * @return Photo
-     */
-    public function setEvent(\Caldera\Bundle\CalderaBundle\Entity\Event $event = null)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Event
-     */
-    public function getEvent()
-    {
-        return $this->event;
     }
 }

@@ -60,18 +60,6 @@ class Post
     protected $photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Content", inversedBy="posts")
-     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
-     */
-    protected $content;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="posts")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
-     */
-    protected $event;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
@@ -87,12 +75,6 @@ class Post
     protected $dateTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AnonymousName", inversedBy="posts")
-     * @ORM\JoinColumn(name="anonymous_name_id", referencedColumnName="id")
-     */
-    protected $anonymousName;
-
-    /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
@@ -102,32 +84,6 @@ class Post
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $chat = false;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $colorRed = 0;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $colorGreen = 0;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $colorBlue = 0;
-
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $obfuscated = 0;
 
     public function __construct()
     {
@@ -401,29 +357,6 @@ class Post
     }
 
     /**
-     * Get content
-     *
-     * @return Content
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Set content
-     *
-     * @param Content $content
-     * @return Post
-     */
-    public function setContent(Content $content = null)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
      * Get thread
      *
      * @return Thread
@@ -442,167 +375,6 @@ class Post
     public function setThread(Thread $thread = null)
     {
         $this->thread = $thread;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return Event
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-    /**
-     * Set event
-     *
-     * @param Event $event
-     * @return Post
-     */
-    public function setEvent(Event $event = null)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get chat
-     *
-     * @return boolean
-     */
-    public function getChat()
-    {
-        return $this->chat;
-    }
-
-    /**
-     * Set chat
-     *
-     * @param boolean $chat
-     * @return Post
-     */
-    public function setChat($chat)
-    {
-        $this->chat = $chat;
-
-        return $this;
-    }
-
-    /**
-     * Get anonymousName
-     *
-     * @return AnonymousName
-     */
-    public function getAnonymousName()
-    {
-        return $this->anonymousName;
-    }
-
-    /**
-     * Set anonymousName
-     *
-     * @param AnonymousName $anonymousName
-     * @return Post
-     */
-    public function setAnonymousName($anonymousName)
-    {
-        $this->anonymousName = $anonymousName;
-
-        return $this;
-    }
-
-    /**
-     * Get colorRed
-     *
-     * @return integer
-     */
-    public function getColorRed()
-    {
-        return $this->colorRed;
-    }
-
-    /**
-     * Set colorRed
-     *
-     * @param integer $colorRed
-     * @return City
-     */
-    public function setColorRed($colorRed)
-    {
-        $this->colorRed = $colorRed;
-
-        return $this;
-    }
-
-    /**
-     * Get colorGreen
-     *
-     * @return integer
-     */
-    public function getColorGreen()
-    {
-        return $this->colorGreen;
-    }
-
-    /**
-     * Set colorGreen
-     *
-     * @param integer $colorGreen
-     * @return City
-     */
-    public function setColorGreen($colorGreen)
-    {
-        $this->colorGreen = $colorGreen;
-
-        return $this;
-    }
-
-    /**
-     * Get colorBlue
-     *
-     * @return integer
-     */
-    public function getColorBlue()
-    {
-        return $this->colorBlue;
-    }
-
-    /**
-     * Set colorBlue
-     *
-     * @param integer $colorBlue
-     * @return City
-     */
-    public function setColorBlue($colorBlue)
-    {
-        $this->colorBlue = $colorBlue;
-
-        return $this;
-    }
-
-    /**
-     * Get obfuscated
-     *
-     * @return boolean
-     */
-    public function getObfuscated()
-    {
-        return $this->obfuscated;
-    }
-
-    /**
-     * Set obfuscated
-     *
-     * @param boolean $obfuscated
-     * @return Post
-     */
-    public function setObfuscated($obfuscated)
-    {
-        $this->obfuscated = $obfuscated;
 
         return $this;
     }
