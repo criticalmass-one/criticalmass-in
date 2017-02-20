@@ -2,7 +2,7 @@
 
 namespace Caldera\Bundle\CriticalmassLiveBundle\Controller;
 
-use Caldera\Bundle\CriticalmassCoreBundle\Controller\AbstractController;
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController

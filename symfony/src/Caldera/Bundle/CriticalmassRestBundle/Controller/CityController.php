@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassRestBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
-use Caldera\Bundle\CriticalmassCoreBundle\Traits\UtilTrait;
+use Caldera\Bundle\CalderaBundle\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 

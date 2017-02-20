@@ -9,8 +9,8 @@ use Caldera\Bundle\CalderaBundle\Entity\Post;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
-use Caldera\Bundle\CriticalmassCoreBundle\Form\Type\PostType;
-use Caldera\Bundle\CriticalmassCoreBundle\Controller\AbstractController;
+use Caldera\Bundle\CalderaBundle\Form\Type\PostType;
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

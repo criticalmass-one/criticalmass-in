@@ -3,8 +3,8 @@
 namespace Caldera\Bundle\CriticalmassLiveBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Content;
-use Caldera\Bundle\CriticalmassCoreBundle\BaseTrait\ViewStorageTrait;
-use Caldera\Bundle\CriticalmassCoreBundle\Controller\AbstractController;
+use Caldera\Bundle\CalderaBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
