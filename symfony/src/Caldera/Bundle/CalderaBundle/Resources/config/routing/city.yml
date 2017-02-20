@@ -1,20 +1,12 @@
-caldera_criticalmass_desktop_city_show_seo:
-    path:  /critical-mass-in-{citySlug}
-    defaults: { _controller: CalderaBundle:City:show }
-
-caldera_criticalmass_desktop_city_show_seo2:
-    path:  /critical-mass-{citySlug}
-    defaults: { _controller: CalderaBundle:City:show }
+caldera_criticalmass_desktop_city_list:
+    path:  /citylist
+    defaults: { _controller: CalderaBundle:City:list }
 
 caldera_criticalmass_desktop_city_show:
     path:  /{citySlug}
     defaults: { _controller: CalderaBundle:City:show }
     options:
         expose: true
-        
-caldera_criticalmass_desktop_city_list:
-    path:  /city/list
-    defaults: { _controller: CalderaBundle:City:list }
 
 caldera_criticalmass_desktop_city_listrides:
     path:  /{citySlug}/list
