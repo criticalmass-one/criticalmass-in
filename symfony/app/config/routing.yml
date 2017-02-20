@@ -57,8 +57,3 @@ caldera_criticalmassphoto:
     resource: "@CalderaCriticalmassPhotoBundle/Resources/config/routing.yml"
     host: "%domain.criticalmassphoto%"
     prefix:   /
-
-caldera_criticalmasslive:
-    resource: "@CalderaCriticalmassLiveBundle/Resources/config/routing.yml"
-    host: "%domain.criticalmasslive%"
-    prefix:   /

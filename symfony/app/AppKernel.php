@@ -29,7 +29,6 @@ class AppKernel extends Kernel
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new Caldera\Bundle\CriticalmassPhotoBundle\CalderaCriticalmassPhotoBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-            new Caldera\Bundle\CriticalmassLiveBundle\CalderaCriticalmassLiveBundle(),
             new Caldera\Bundle\CriticalmassRestBundle\CalderaCriticalmassRestBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
