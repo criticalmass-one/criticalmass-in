@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

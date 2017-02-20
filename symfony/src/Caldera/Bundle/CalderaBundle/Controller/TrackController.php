@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\BaseTrait\TrackHandlingTrait;
+use Caldera\Bundle\CalderaBundle\Traits\TrackHandlingTrait;
 use Caldera\Bundle\CalderaBundle\Gps\TrackTimeShift\TrackTimeShift;
 use Caldera\Bundle\CalderaBundle\UploadValidator\TrackValidator;
 use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;

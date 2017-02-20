@@ -6,7 +6,7 @@ use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\Post;
 use Caldera\Bundle\CalderaBundle\Entity\Thread;
 use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
-use Caldera\Bundle\CalderaBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;
 use Malenki\Slug;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

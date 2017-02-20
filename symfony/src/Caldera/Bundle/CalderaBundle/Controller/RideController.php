@@ -4,7 +4,7 @@ namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Weather;
-use Caldera\Bundle\CalderaBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;
 use Caldera\Bundle\CalderaBundle\Form\Type\RideEstimateType;
 use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;

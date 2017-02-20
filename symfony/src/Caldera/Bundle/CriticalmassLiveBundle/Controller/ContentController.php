@@ -3,7 +3,7 @@
 namespace Caldera\Bundle\CriticalmassLiveBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\Content;
-use Caldera\Bundle\CalderaBundle\BaseTrait\ViewStorageTrait;
+use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;
 use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

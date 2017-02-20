@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\BaseTrait;
+namespace Caldera\Bundle\CalderaBundle\Traits;
 
 use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
 use Caldera\Bundle\CalderaBundle\Entity\City;
