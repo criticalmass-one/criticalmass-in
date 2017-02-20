@@ -49,14 +49,8 @@ hwi_oauth_login:
     resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
     prefix:   /login
 
-caldera_criticalmass:
-    resource: "@CalderaCriticalmassCoreBundle/Resources/config/routing.yml"
-    host: "%domain.criticalmass%"
-    prefix:   /
-
 caldera:
     resource: "@CalderaBundle/Resources/config/routing.yml"
-    host: "%domain.caldera%"
     prefix:   /
 
 caldera_criticalmassphoto:
