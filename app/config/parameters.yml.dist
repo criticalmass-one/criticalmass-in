@@ -1,0 +1,61 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: 1025
+    locale: de
+    kernel.secret: ThisTokenIsNotSoSecretChangeIt
+    secret: ThisTokenIsNotSoSecretChangeIt
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: criticalmass
+    database_user: root
+    database_password: root
+
+    domain.cycleways: cycleways.info
+    domain.caldera: caldera.cc
+    domain.criticalmass: criticalmass.in
+    domain.criticalmassrocks: criticalmass.rocks
+    domain.criticalmassphoto: criticalmass.photos
+    domain.criticalmassone: criticalmass.one
+    domain.criticalmassblog: fahrradterroristen.de
+    domain.criticalmasslive: criticalmass.live
+    domain.radverkehrspolitik: radverkehrspolitik.cm
+    domain.criticalmasstips: criticaltips.cm
+
+    glympse.imap.hostname: mail.caldera.cc
+    glympse.imap.port: 993
+    glympse.imap.username: trhrth
+    glympse.imap.password: rdj6e56u
+
+    glympse.api.hostname: api.glympse.com
+    glympse.api.username: erhesrhe5z5eshea
+    glympse.api.password: pasergesrhsword
+    glympse.api.key: 3erhrthrthsterhw45zerh
+
+    track.gap_width: 10
+
+    openweather.appid: e4z5bshtdrgsewaretsrjzt
+
+    strava.client_id: 35435
+    strava.token: ejklvhrsmgkerlhgjfog
+    strava.secret: areghre465rght6
+
+    runkeeper.client_id: 235345
+    runkeeper.token: ergwfawdefrtzt
+    runkeeper.secret: wertezrurew
+
+    facebook.app_id: wefrregerg
+    facebook.app_secret: efwrgthzjujthgrefdw
+    facebook.default_token: 'wdqertzuijzgrfe|qwretzdujthrgefdw'
+
+    timeline.ttl: '33
+
+    sqibe.api_url: https://sqi.be/yourls-api.php
+    sqibe.api_username: 32o9i0owtrezuio
+    sqibe.api_password: ewrtzuiloi
