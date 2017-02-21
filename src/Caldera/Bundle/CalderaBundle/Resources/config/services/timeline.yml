@@ -1,7 +1,7 @@
 services:
     caldera.criticalmass.timeline.cached:
         class: Caldera\Bundle\CalderaBundle\Timeline\CachedTimeline
-        arguments: [ '@doctrine', '@templating', '@memcache.criticalmass', '%timeline.ttl%' ]
+        arguments: [ '@doctrine', '@templating', '%timeline.ttl%' ]
         calls:
             - [addCollector, ['@caldera.criticalmass.timeline.collector.ridephoto']]
             - [addCollector, ['@caldera.criticalmass.timeline.collector.ridetrack']]

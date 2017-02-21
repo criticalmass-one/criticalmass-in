@@ -2,20 +2,22 @@
 
 namespace Caldera\Bundle\CalderaBundle\Timeline;
 
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Templating\EngineInterface;
+
 class CachedTimeline extends Timeline
 {
-    protected $memcache;
     protected $ttl;
 
-    public function __construct($doctrine, $templating, $memcache, $ttl)
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, int $ttl = 300)
     {
+        parent::__construct($doctrine, $templating);
         $this->doctrine = $doctrine;
         $this->templating = $templating;
-        $this->memcache = $memcache;
         $this->ttl = $ttl;
     }
-
-    public function execute()
+    public function execute(): Timeline
     {
         $cacheKey = 'timeline-content';
 
@@ -27,17 +29,23 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $cachedContent = $this->memcache->get($cacheKey);
+        $cache = new FilesystemAdapter();
 
-        if ($cachedContent) {
-            $this->content = $cachedContent;
-        } else {
+        $timeline = $cache->getItem($cacheKey);
+
+        if (!$timeline->isHit()) {
             $this->process();
 
-            $this->memcache->set($cacheKey, $this->content, 0, $this->ttl);
+            $timeline
+                ->set($this->content)
+                ->expiresAfter($this->ttl)
+            ;
+
+            $cache->save($timeline);
+        } else {
+            $this->content = $timeline->get();
         }
 
         return $this;
     }
 }
-

@@ -54,7 +54,7 @@ parameters:
     facebook.app_secret: efwrgthzjujthgrefdw
     facebook.default_token: 'wdqertzuijzgrfe|qwretzdujthrgefdw'
 
-    timeline.ttl: '33
+    timeline.ttl: 60
 
     sqibe.api_url: https://sqi.be/yourls-api.php
     sqibe.api_username: 32o9i0owtrezuio
