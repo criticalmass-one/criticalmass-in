@@ -4,33 +4,31 @@ namespace Caldera\Bundle\CalderaBundle\ViewStorage;
 
 use Caldera\Bundle\CalderaBundle\Entity\User;
 use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
-use Doctrine\Common\Cache\MemcachedCache;
-use Memcached;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
-    /** @var MemcachedCache $cache */
+    /** @var FilesystemAdapter $cache */
     protected $cache;
 
     /** @var TokenStorageInterface $tokenStorage */
     protected $tokenStorage;
 
-    public function __construct(MemcachedCache $cache, TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->cache = $cache;
+        $this->cache = new FilesystemAdapter();
         $this->tokenStorage = $tokenStorage;
     }
 
     public function countView(ViewableInterface $viewable)
     {
-        /** @var Memcached $cache */
-        $cache = $this->cache->getMemcached();
+        $viewStorageItem = $this->cache->getItem('view_storage');
 
-        $viewStorage = $cache->get('view_storage');
-
-        if (!$viewStorage) {
+        if (!$viewStorageItem->isHit()) {
             $viewStorage = [];
+        } else {
+            $viewStorage = $viewStorageItem->get();
         }
 
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -51,8 +49,9 @@ class ViewStorageCache implements ViewStorageCacheInterface
             ];
 
         $viewStorage[] = $view;
+        $viewStorageItem->set($viewStorage);
 
-        $cache->set('view_storage', $viewStorage);
+        $this->cache->save($viewStorageItem);
     }
 
     protected function getClassName(ViewableInterface $viewable): string
