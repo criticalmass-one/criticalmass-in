@@ -1,7 +1,0 @@
-caldera_criticalmass_chat_index:
-    path:  /chat
-    defaults: { _controller: CalderaBundle:Chat:index }
-
-caldera_criticalmass_chat_anonymoususername:
-    path: /chat/anonymoususername
-    defaults: { _controller: CalderaBundle:Chat:createAnonymousName }

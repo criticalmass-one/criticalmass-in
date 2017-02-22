@@ -1,7 +1,0 @@
-caldera_criticalmass_blog_list:
-    path:     /blog/list
-    defaults: { _controller: CalderaBundle:Blog:list }
-
-caldera_criticalmass_blog_show:
-    path:     /blog/{slug}
-    defaults: { _controller: CalderaBundle:Blog:list }

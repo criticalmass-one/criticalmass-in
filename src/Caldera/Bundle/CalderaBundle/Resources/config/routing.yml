@@ -1,7 +1,3 @@
-caldera_criticalmass_live:
-    resource: "@CalderaBundle/Resources/config/routing/live.yml"
-    prefix: /
-
 caldera_criticalmass_calendar:
     resource: "@CalderaBundle/Resources/config/routing/calendar.yml"
     prefix: /
@@ -18,17 +14,9 @@ caldera_criticalmass_trackimport:
     resource: "@CalderaBundle/Resources/config/routing/trackimport.yml"
     prefix: /
 
-caldera_criticalmass_blog:
-    resource: "@CalderaBundle/Resources/config/routing/blog.yml"
-    prefix: /
-
 caldera_criticalmass_frontpage:
     resource: "@CalderaBundle/Resources/config/routing/frontpage.yml"
     prefix: /
-
-caldera_criticalmass_content:
-    resource: "@CalderaBundle/Resources/config/routing/content.yml"
-    prefix: /content
 
 caldera_criticalmass_search:
     resource: "@CalderaBundle/Resources/config/routing/search.yml"
@@ -62,10 +50,6 @@ caldera_criticalmass_region:
     resource: "@CalderaBundle/Resources/config/routing/region.yml"
     prefix:   /
 
-caldera_criticalmass_api:
-    resource: "@CalderaBundle/Resources/config/routing/api.yml"
-    prefix: /
-
 caldera_criticalmass_statistic:
     resource: "@CalderaBundle/Resources/config/routing/statistic.yml"
     prefix: /
@@ -90,14 +74,6 @@ caldera_criticalmass_timeline:
     resource: "@CalderaBundle/Resources/config/routing/timeline.yml"
     prefix: /
 
-caldera_criticalmass_chat:
-    resource: "@CalderaBundle/Resources/config/routing/chat.yml"
-    prefix: /
-
-caldera_criticalmass_notification:
-    resource: "@CalderaBundle/Resources/config/routing/notification.yml"
-    prefix: /
-
 caldera_criticalmass_city:
     resource: "@CalderaBundle/Resources/config/routing/city.yml"
     prefix: /
@@ -116,9 +92,4 @@ caldera_criticalmass_ridemanagement:
 
 caldera_criticalmass_sudride:
     resource: "@CalderaBundle/Resources/config/routing/subride.yml"
-    prefix: /
-
-# last route to match is always event!
-caldera_criticalmass_event:
-    resource: "@CalderaBundle/Resources/config/routing/event.yml"
     prefix: /
