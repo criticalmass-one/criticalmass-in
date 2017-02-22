@@ -4,6 +4,7 @@ namespace Caldera\Bundle\CriticalmassRestBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
 use Caldera\Bundle\CalderaBundle\Traits\UtilTrait;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,11 +45,17 @@ class RideController extends BaseController
     {
         $rideList = $this->getRideRepository()->findCurrentRides();
 
+        $context = new Context();
+        $context
+            ->addGroup('ride-list');
+
         $view = View::create();
         $view
             ->setData($rideList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(200)
+            ->setContext($context)
+        ;
 
         return $this->handleView($view);
     }

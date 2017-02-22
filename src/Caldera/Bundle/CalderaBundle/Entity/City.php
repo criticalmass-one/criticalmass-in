@@ -30,6 +30,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $id;
 
@@ -49,6 +50,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
      * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $mainSlug;
 
@@ -59,6 +61,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\SerializedName("name")
+     * @JMS\Groups({"ride-list"})
      */
     protected $city;
 
@@ -69,6 +72,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $title;
 
@@ -77,6 +81,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      *
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $description;
 
@@ -86,6 +91,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $url;
 
@@ -95,6 +101,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $facebook;
 
@@ -104,6 +111,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $twitter;
 
@@ -112,6 +120,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      *
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $latitude = 0;
 
@@ -120,6 +129,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      *
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $longitude = 0;
 
@@ -151,6 +161,8 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
     /**
      * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $slugs;
 
@@ -293,6 +305,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      *
      * @var string
      * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $timezone;
 

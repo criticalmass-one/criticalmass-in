@@ -43,3 +43,5 @@
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
+criticalmass.iml
+.idea
