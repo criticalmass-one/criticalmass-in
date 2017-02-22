@@ -8,4 +8,4 @@ caldera_criticalmass_ride_show:
 
 caldera_criticalmass_ride_addestimate:
     path:  /{citySlug}/{rideDate}/addestimate
-    defaults: { _controller: CalderaBundle:Ride:addestimate }
+    defaults: { _controller: CalderaBundle:Ride/Ride:addestimate }
