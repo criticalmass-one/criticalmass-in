@@ -32,7 +32,6 @@ class Version20170220232304 extends AbstractMigration
         $this->addSql('ALTER TABLE blog_post_city DROP FOREIGN KEY FK_41708D70A77FBEAF');
         $this->addSql('ALTER TABLE blog_post_ride DROP FOREIGN KEY FK_F716F394A77FBEAF');
         $this->addSql('ALTER TABLE blog_post_view DROP FOREIGN KEY FK_92D624CAA77FBEAF');
-        $this->addSql('ALTER TABLE thread DROP FOREIGN KEY FK_31204C83E7EC5785');
         $this->addSql('ALTER TABLE caldera_bikeshop_openingtime DROP FOREIGN KEY FK_2754ACCAD88A1BAA');
         $this->addSql('ALTER TABLE caldera_bikeshop_tags DROP FOREIGN KEY FK_F6893CB8D88A1BAA');
         $this->addSql('ALTER TABLE tag_bikeshop DROP FOREIGN KEY FK_613C9E58D88A1BAA');
@@ -72,7 +71,6 @@ class Version20170220232304 extends AbstractMigration
         $this->addSql('DROP TABLE blog_post_city');
         $this->addSql('DROP TABLE blog_post_ride');
         $this->addSql('DROP TABLE blog_post_view');
-        $this->addSql('DROP TABLE board');
         $this->addSql('DROP TABLE caldera_baselocationentity');
         $this->addSql('DROP TABLE caldera_bikeshop');
         $this->addSql('DROP TABLE caldera_bikeshop_openingtime');
@@ -114,8 +112,6 @@ class Version20170220232304 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_D6E3F8A6700047D2 ON track');
         $this->addSql('DROP INDEX IDX_D6E3F8A6B0BC316C ON track');
         $this->addSql('ALTER TABLE track DROP criticalmapsuser_id, DROP ticket_id, CHANGE source source ENUM(\'TRACK_SOURCE_GPX\', \'TRACK_SOURCE_STRAVA\', \'TRACK_SOURCE_RUNKEEPER\', \'TRACK_SOURCE_RUNTASTIC\', \'TRACK_SOURCE_DRAW\', \'TRACK_SOURCE_GLYMPSE\', \'TRACK_SOURCE_CRITICALMAPS\', \'TRACK_SOURCE_UNKNOWN\')');
-        $this->addSql('DROP INDEX IDX_31204C83E7EC5785 ON thread');
-        $this->addSql('ALTER TABLE thread DROP board_id');
         $this->addSql('ALTER TABLE post DROP FOREIGN KEY FK_5A8A6C8D84A0A3ED');
         $this->addSql('DROP INDEX IDX_5A8A6C8D84A0A3ED ON post');
         $this->addSql('DROP INDEX IDX_5A8A6C8D71F7E88B ON post');
@@ -146,7 +142,6 @@ class Version20170220232304 extends AbstractMigration
         $this->addSql('CREATE TABLE blog_post_city (blog_post_id INT NOT NULL, city_id INT NOT NULL, INDEX IDX_41708D70A77FBEAF (blog_post_id), INDEX IDX_41708D708BAC62AF (city_id), PRIMARY KEY(blog_post_id, city_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE blog_post_ride (blog_post_id INT NOT NULL, ride_id INT NOT NULL, INDEX IDX_F716F394A77FBEAF (blog_post_id), INDEX IDX_F716F394302A8A70 (ride_id), PRIMARY KEY(blog_post_id, ride_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE blog_post_view (id INT AUTO_INCREMENT NOT NULL, blog_post_id INT DEFAULT NULL, user_id INT DEFAULT NULL, dateTime DATETIME NOT NULL COMMENT \'(DC2Type:datetime)\', INDEX IDX_92D624CAA76ED395 (user_id), INDEX IDX_92D624CAA77FBEAF (blog_post_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE board (id INT AUTO_INCREMENT NOT NULL, lastthread_id INT DEFAULT NULL, title LONGTEXT NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, threadNumber INT NOT NULL, postNumber INT NOT NULL, position INT NOT NULL, enabled TINYINT(1) NOT NULL, slug VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, UNIQUE INDEX UNIQ_58562B47B43140E7 (lastthread_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE caldera_baselocationentity (id INT AUTO_INCREMENT NOT NULL, city_id INT DEFAULT NULL, slug VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, latitude DOUBLE PRECISION DEFAULT NULL, longitude DOUBLE PRECISION DEFAULT NULL, title VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, type VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, INDEX IDX_FC1533A68BAC62AF (city_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE caldera_bikeshop (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, phone VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, email VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, enabled TINYINT(1) NOT NULL, latitude DOUBLE PRECISION NOT NULL, longitude DOUBLE PRECISION NOT NULL, facebook VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, twitter VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, url VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, views INT NOT NULL, street VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, city VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, zip VARCHAR(5) DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE caldera_bikeshop_openingtime (bikeshop_id INT NOT NULL, openingtime_id INT NOT NULL, UNIQUE INDEX UNIQ_2754ACCAA3AE46D1 (openingtime_id), INDEX IDX_2754ACCAD88A1BAA (bikeshop_id), PRIMARY KEY(bikeshop_id, openingtime_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -197,7 +192,6 @@ class Version20170220232304 extends AbstractMigration
         $this->addSql('ALTER TABLE blog_post_city ADD CONSTRAINT FK_41708D70A77FBEAF FOREIGN KEY (blog_post_id) REFERENCES blog_post (id)');
         $this->addSql('ALTER TABLE blog_post_ride ADD CONSTRAINT FK_F716F394A77FBEAF FOREIGN KEY (blog_post_id) REFERENCES blog_post (id)');
         $this->addSql('ALTER TABLE blog_post_view ADD CONSTRAINT FK_92D624CAA77FBEAF FOREIGN KEY (blog_post_id) REFERENCES blog_post (id)');
-        $this->addSql('ALTER TABLE board ADD CONSTRAINT FK_58562B47B43140E7 FOREIGN KEY (lastthread_id) REFERENCES thread (id)');
         $this->addSql('ALTER TABLE caldera_bikeshop_openingtime ADD CONSTRAINT FK_2754ACCAA3AE46D1 FOREIGN KEY (openingtime_id) REFERENCES opening_time (id)');
         $this->addSql('ALTER TABLE caldera_bikeshop_openingtime ADD CONSTRAINT FK_2754ACCAD88A1BAA FOREIGN KEY (bikeshop_id) REFERENCES caldera_bikeshop (id)');
         $this->addSql('ALTER TABLE caldera_bikeshop_tags ADD CONSTRAINT FK_F6893CB8BAD26311 FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE CASCADE');
@@ -250,9 +244,6 @@ class Version20170220232304 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_5A8A6C8D84A0A3ED ON post (content_id)');
         $this->addSql('CREATE INDEX IDX_5A8A6C8D71F7E88B ON post (event_id)');
         $this->addSql('CREATE INDEX IDX_5A8A6C8D841C2071 ON post (anonymous_name_id)');
-        $this->addSql('ALTER TABLE thread ADD board_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE thread ADD CONSTRAINT FK_31204C83E7EC5785 FOREIGN KEY (board_id) REFERENCES board (id)');
-        $this->addSql('CREATE INDEX IDX_31204C83E7EC5785 ON thread (board_id)');
         $this->addSql('ALTER TABLE track ADD criticalmapsuser_id INT DEFAULT NULL, ADD ticket_id INT DEFAULT NULL, CHANGE source source VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
         $this->addSql('ALTER TABLE track ADD CONSTRAINT FK_D6E3F8A6B0BC316C FOREIGN KEY (criticalmapsuser_id) REFERENCES criticalmaps_user (id)');
         $this->addSql('ALTER TABLE track ADD CONSTRAINT FK_D6E3F8A6700047D2 FOREIGN KEY (ticket_id) REFERENCES glympse_ticket (id)');
