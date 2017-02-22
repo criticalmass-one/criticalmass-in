@@ -3,9 +3,7 @@
 namespace Caldera\Bundle\CalderaBundle\Controller;
 
 use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Content;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Elastica\Query;
 use Elastica\ResultSet;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -161,17 +159,6 @@ class SearchController extends AbstractController
                 'type' => 'city',
                 'url' => $this->generateObjectUrl($city),
                 'value' => $city->getCity()
-            ];
-        }
-
-        $contents = $this->getContentRepository()->findEnabledContent();
-
-        /** @var Content $content */
-        foreach ($contents as $content) {
-            $result[] = [
-                'type' => 'content',
-                'url' => $this->generateObjectUrl($content),
-                'value' => $content->getTitle()
             ];
         }
 
