@@ -27,7 +27,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-            new Caldera\Bundle\CriticalmassRestBundle\CalderaCriticalmassRestBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         ];
