@@ -1,7 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller\City;
 
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Caldera\Bundle\CalderaBundle\Entity\City;
 use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
 use Caldera\Bundle\CalderaBundle\Entity\Region;

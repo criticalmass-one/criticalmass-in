@@ -1,7 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller\Photo;
 
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Caldera\Bundle\CalderaBundle\Entity\Event;
 use Caldera\Bundle\CalderaBundle\Entity\Photo;
 use Caldera\Bundle\CalderaBundle\Entity\Ride;

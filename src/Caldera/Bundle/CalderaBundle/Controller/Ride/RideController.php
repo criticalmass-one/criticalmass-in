@@ -1,7 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
 
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
 use Caldera\Bundle\CalderaBundle\Entity\Weather;
 use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;

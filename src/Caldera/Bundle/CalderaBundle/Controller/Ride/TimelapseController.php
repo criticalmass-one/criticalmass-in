@@ -1,7 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
 
+use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
 use Caldera\Bundle\CalderaBundle\Entity\Track;
 use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator;
 use Symfony\Component\HttpFoundation\Request;
