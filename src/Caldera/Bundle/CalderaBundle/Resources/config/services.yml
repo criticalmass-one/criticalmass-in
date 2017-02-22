@@ -36,11 +36,11 @@ services:
 
     caldera.view_storage.cache:
         class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageCache
-        arguments: ['@doctrine.cache.memcached', '@security.token_storage']
+        arguments: ['@security.token_storage']
 
     caldera.view_storage.persister:
         class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersister
-        arguments: ['@doctrine.cache.memcached', '@doctrine']
+        arguments: ['@doctrine']
 
     caldera.criticalmass.routing.object_router:
         class: Caldera\Bundle\CalderaBundle\Router\ObjectRouter
