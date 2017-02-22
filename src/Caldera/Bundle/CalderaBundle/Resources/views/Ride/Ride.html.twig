@@ -79,13 +79,13 @@
             </ul>
 
             <div class="tab-content">
-                {{ render(controller('CalderaBundle:RideTabs:renderDetailsTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaBundle:RideTabs:renderSubridesTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaBundle:RideTabs:renderPostsTab', { 'ride': ride } )) }}
+                {{ render(controller('CalderaBundle:Ride/RideTabs:renderDetailsTab', { 'ride': ride } )) }}
+                {{ render(controller('CalderaBundle:Ride/RideTabs:renderSubridesTab', { 'ride': ride } )) }}
+                {{ render(controller('CalderaBundle:Ride/RideTabs:renderPostsTab', { 'ride': ride } )) }}
 
                 {% if pastRide %}
-                    {{ render(controller('CalderaBundle:RideTabs:renderTracksTab', { 'ride': ride } )) }}
-                    {{ render(controller('CalderaBundle:RideTabs:renderMusicTab', { 'ride': ride } )) }}
+                    {{ render(controller('CalderaBundle:Ride/RideTabs:renderTracksTab', { 'ride': ride } )) }}
+                    {{ render(controller('CalderaBundle:Ride/RideTabs:renderMusicTab', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>
