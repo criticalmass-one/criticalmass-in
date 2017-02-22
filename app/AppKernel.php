@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
-            new Caldera\Bundle\CriticalmassPhotoBundle\CalderaCriticalmassPhotoBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Caldera\Bundle\CriticalmassRestBundle\CalderaCriticalmassRestBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
