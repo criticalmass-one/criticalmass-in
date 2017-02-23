@@ -22,11 +22,11 @@ class PhotoController extends BaseController
      */
     public function galleryAction(): Response
     {
-        $gallery = $this->getPhotoRepository()->findRidesForGallery();
+        $photoRides = $this->getPhotoRepository()->findRidesForGallery();
 
         $view = View::create();
         $view
-            ->setData($gallery)
+            ->setData($photoRides)
             ->setFormat('json')
             ->setStatusCode(200);
 
