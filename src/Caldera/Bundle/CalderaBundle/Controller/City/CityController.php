@@ -159,8 +159,6 @@ class CityController extends AbstractController
             $dateTime->setTimezone(new \DateTimeZone($city->getTimezone()));
         }
 
-        $events = $this->getEventRepository()->findEventsByCity($city);
-
         $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
@@ -173,7 +171,6 @@ class CityController extends AbstractController
             'currentRide' => $currentRide,
             'dateTime' => $dateTime,
             'nearCities' => $nearCities,
-            'events' => $events,
             'locations' => $locations,
             'photos' => $photos
         ]);
