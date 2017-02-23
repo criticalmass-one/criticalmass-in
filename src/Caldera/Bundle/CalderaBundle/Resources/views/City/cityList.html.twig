@@ -70,7 +70,7 @@
                             <td>
                                 {% if currentRide %}
                                     <a href="{{ objectPath(currentRide) }}">
-                                        {{ currentRide.dateTime|date('l, d. M, H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                        {{ currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}&nbsp;Uhr
                                     </a>
                                 {% endif %}
                             </td>
