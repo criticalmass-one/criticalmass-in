@@ -14,10 +14,6 @@ caldera_criticalmass_track:
     resource: "@CalderaBundle/Resources/config/routing/track.yml"
     prefix: /
 
-caldera_criticalmass_trackimport:
-    resource: "@CalderaBundle/Resources/config/routing/trackimport.yml"
-    prefix: /
-
 caldera_criticalmass_frontpage:
     resource: "@CalderaBundle/Resources/config/routing/frontpage.yml"
     prefix: /
