@@ -18,6 +18,9 @@ fos_user:
             from_email:
                 address:        malte@criticalmass.in
                 sender_name:    Malte Hübner, criticalmass.in
+    from_email:
+        address: mail@criticalmass.in
+        sender_name: criticalmass.in
 
 fos_rest:
     view:
