@@ -44,7 +44,7 @@
 
 {% block content %}
     <div class="container">
-        {% if ride.date is today %}
+        {% if today(ride.date) %}
             {% include('CalderaBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
         {% else %}
             {% include('CalderaBundle:Ride:Includes/_registrationHint.html.twig') %}
