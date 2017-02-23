@@ -1,5 +1,0 @@
-sonata_intl:
-    timezone:
-        detectors:
-            - sonata.intl.timezone_detector.user
-            - sonata.intl.timezone_detector.locale
