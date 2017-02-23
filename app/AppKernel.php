@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

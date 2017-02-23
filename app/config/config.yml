@@ -6,7 +6,7 @@ imports:
     - { resource: doctrine.yml }
     - { resource: fos.yml }
     - { resource: framework.yml }
-#    - { resource: sonata.yml }
+    - { resource: sonata.yml }
     - { resource: jms.yml }
     - { resource: swiftmailer.yml }
     - { resource: twig.yml }
