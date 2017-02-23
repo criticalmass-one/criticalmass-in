@@ -1,16 +1,16 @@
 caldera_criticalmass_rest_ride_list:
     path:     /ride/list
-    defaults: { _controller: CalderaCriticalmassRestBundle:Ride:list }
+    defaults: { _controller: CalderaBundle:Api/Ride:list }
 
 caldera_criticalmass_rest_city_show:
     path:     /{citySlug}
-    defaults: { _controller: CalderaCriticalmassRestBundle:City:show }
+    defaults: { _controller: CalderaBundle:Api/City:show }
 
 caldera_criticalmass_rest_ride_show:
     path:     /{citySlug}/current
-    defaults: { _controller: CalderaCriticalmassRestBundle:Ride:showCurrent }
+    defaults: { _controller: CalderaBundle:Api/Ride:showCurrent }
 
 caldera_criticalmass_rest_ride_show:
     path:     /{citySlug}/{rideDate}
-    defaults: { _controller: CalderaCriticalmassRestBundle:Ride:show }
+    defaults: { _controller: CalderaBundle:Api/Ride:show }
 

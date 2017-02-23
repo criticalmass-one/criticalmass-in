@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CriticalmassRestBundle\Controller;
+namespace Caldera\Bundle\CalderaBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\FOSRestController;
 
