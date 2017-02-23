@@ -43,3 +43,5 @@ hwi_oauth:
             type:                runkeeper
             client_id:           %runkeeper.client_id%
             client_secret:       %runkeeper.secret%
+
+nelmio_api_doc: ~

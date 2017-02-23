@@ -42,7 +42,8 @@
         "php-curl-class/php-curl-class": "^7.0",
         "malenki/slug": "1.0.0",
         "cmfcmf/openweathermap-php-api": "^2.1",
-        "sonata-project/intl-bundle": "^2.3"
+        "sonata-project/intl-bundle": "^2.3",
+        "nelmio/api-doc-bundle": "^2.13"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
