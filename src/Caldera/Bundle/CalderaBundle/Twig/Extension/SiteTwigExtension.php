@@ -80,8 +80,8 @@ class SiteTwigExtension extends \Twig_Extension
     public function getTests()
     {
         return [
-            'instanceof' => new \Twig_Function_Method($this, 'isInstanceof'),
-            'today' => new \Twig_Function_Method($this, 'today')
+            'instanceof' => new \Twig_SimpleFunction('isInstanceof', [$this, 'isInstanceof']),
+            'today' => new \Twig_SimpleFunction('today', [$this, 'today'])
         ];
     }
 
