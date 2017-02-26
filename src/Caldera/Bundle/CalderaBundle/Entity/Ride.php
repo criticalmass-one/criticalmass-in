@@ -68,6 +68,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="datetime")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @JMS\Type("DateTime")
      */
     protected $dateTime;
 
@@ -75,6 +76,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="boolean")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @JMS\Type("boolean")
      */
     protected $hasTime;
 
@@ -82,6 +84,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="boolean")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @JMS\Type("boolean")
      */
     protected $hasLocation;
 
