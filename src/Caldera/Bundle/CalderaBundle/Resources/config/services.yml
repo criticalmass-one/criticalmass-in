@@ -150,6 +150,12 @@ services:
         class: Caldera\Bundle\CalderaBundle\Leaflet\LeafletPrinter\LeafletPrinter
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
+    caldera.criticalmass.validator.single_ride_day:
+        class: Caldera\Bundle\CalderaBundle\Validator\SingleRideForDayValidator
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: validator.constraint_validator }
+
 imports:
   - { resource: ./services/timeline.yml }
   - { resource: ./services/twig_extensions.yml }

@@ -9,11 +9,13 @@ use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use Caldera\Bundle\CalderaBundle\Validator\Constraint as CriticalAssert;
 
 /**
  * @ORM\Table(name="ride")
  * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
+ * @CriticalAssert\SingleRideForDay
  */
 class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
 {
