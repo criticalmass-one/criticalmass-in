@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        {% include('CalderaBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
+        {% include('AppBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1>
             {{ ride.getFancyTitle() }}
         </h1>
@@ -79,13 +79,13 @@
             </ul>
 
             <div class="tab-content">
-                {{ render(controller('CalderaBundle:Ride/RideTabs:renderDetailsTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaBundle:Ride/RideTabs:renderSubridesTab', { 'ride': ride } )) }}
-                {{ render(controller('CalderaBundle:Ride/RideTabs:renderPostsTab', { 'ride': ride } )) }}
+                {{ render(controller('AppBundle:Ride/RideTabs:renderDetailsTab', { 'ride': ride } )) }}
+                {{ render(controller('AppBundle:Ride/RideTabs:renderSubridesTab', { 'ride': ride } )) }}
+                {{ render(controller('AppBundle:Ride/RideTabs:renderPostsTab', { 'ride': ride } )) }}
 
                 {% if pastRide %}
-                    {{ render(controller('CalderaBundle:Ride/RideTabs:renderTracksTab', { 'ride': ride } )) }}
-                    {{ render(controller('CalderaBundle:Ride/RideTabs:renderMusicTab', { 'ride': ride } )) }}
+                    {{ render(controller('AppBundle:Ride/RideTabs:renderTracksTab', { 'ride': ride } )) }}
+                    {{ render(controller('AppBundle:Ride/RideTabs:renderMusicTab', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>

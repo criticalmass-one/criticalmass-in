@@ -14,10 +14,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            {{ render(controller('CalderaBundle:Post:list', { 'rideId': ride.getId() })) }}
+            {{ render(controller('AppBundle:Post:list', { 'rideId': ride.getId() })) }}
 
             {% if app.getUser() %}
-                {{ render(controller('CalderaBundle:Post:write', { 'rideId': ride.getId(), 'noButton': true })) }}
+                {{ render(controller('AppBundle:Post:write', { 'rideId': ride.getId(), 'noButton': true })) }}
             {% endif %}
         </div>
     </div>

@@ -1,4 +1,4 @@
-{% extends 'CalderaBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ city.title }}{% endblock %}
 
@@ -142,13 +142,13 @@
             </div>
 
             <div class="col-md-3">
-                {% include 'CalderaBundle:City:Includes/_live.html.twig' with { 'city': city } %}
-                {% include 'CalderaBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
-                {% include 'CalderaBundle:City:Includes/_currentTime.html.twig' with { 'city': city, 'dateTime': dateTime } %}
-                {% include 'CalderaBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
-                {% include 'CalderaBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
-                {% include 'CalderaBundle:City:Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
-                {% include 'CalderaBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
+                {% include 'AppBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
+                {% include 'AppBundle:City:Includes/_currentTime.html.twig' with { 'city': city, 'dateTime': dateTime } %}
+                {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
+                {% include 'AppBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
+                {% include 'AppBundle:City:Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
+                {% include 'AppBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
             </div>
         </div>
     </div>

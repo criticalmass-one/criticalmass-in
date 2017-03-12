@@ -1,7 +1,7 @@
-{% extends 'CalderaBundle:Template:MasterTemplate.html.twig' %}
+{% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-    {% include('CalderaBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': 'false' } %}
+    {% include('AppBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': 'false' } %}
 
     {% block breadcrumbContainer %}
         <div class="container">
@@ -16,11 +16,11 @@
 
     {% block content %}{% endblock %}
 
-    {% include('CalderaBundle:Template:Includes/_adserver.html.twig') %}
+    {% include('AppBundle:Template:Includes/_adserver.html.twig') %}
 
-    {% include('CalderaBundle:Template:Includes/_footer.html.twig') %}
+    {% include('AppBundle:Template:Includes/_footer.html.twig') %}
 
-    {% include('CalderaBundle:Template:Includes/_piwik.html.twig') %}
+    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
 
     <script>
         CriticalMass.loadModule('Notification');

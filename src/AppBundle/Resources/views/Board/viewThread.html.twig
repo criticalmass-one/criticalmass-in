@@ -1,4 +1,4 @@
-{% extends 'CalderaBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
 {% block title %}{{ thread.title }}{% endblock %}
 
@@ -28,7 +28,7 @@
                     <i class="fa fa-comment"></i>
                     Antwort hinzufügen
                 </button>
-                {{ render(controller('CalderaBundle:Post:write', { 'threadId': thread.id, 'noButton': true })) }}
+                {{ render(controller('AppBundle:Post:write', { 'threadId': thread.id, 'noButton': true })) }}
             {% endif %}
             <h2>
                 {{ thread.title }}
@@ -40,7 +40,7 @@
         <div class="col-md-12">
             <div class="post-list">
                 {% for post in posts %}
-                    {% include('CalderaBundle:Post:post.html.twig') with { 'post':  post } %}
+                    {% include('AppBundle:Post:post.html.twig') with { 'post':  post } %}
                 {% endfor %}
             </div>
         </div>

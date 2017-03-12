@@ -35,7 +35,7 @@
             <th>Teilnehmer</th>
             <td>{{ ride.getEstimatedParticipants()|round }}</td>
             <td>
-                {% include('CalderaBundle:Common/Ride:RideParticipants.html.twig') with { 'ride': ride } %}
+                {% include('AppBundle:Common/Ride:RideParticipants.html.twig') with { 'ride': ride } %}
             </td>
             <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
                                          title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
@@ -44,7 +44,7 @@
             <th>Distanz</th>
             <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
             <td>
-                {% include('CalderaBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
+                {% include('AppBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
             </td>
             <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
                                          title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
@@ -53,7 +53,7 @@
             <th>Dauer</th>
             <td>{{ (ride.getEstimatedDuration() * 60)|round }} Minuten</td>
             <td>
-                {% include('CalderaBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
+                {% include('AppBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
             </td>
             <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
                                          title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>

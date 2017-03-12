@@ -1,95 +1,95 @@
 caldera_criticalmass_api:
-    resource: "@CalderaBundle/Resources/config/routing/api.yml"
+    resource: "@AppBundle/Resources/config/routing/api.yml"
     prefix: /api
 
 caldera_criticalmass_calendar:
-    resource: "@CalderaBundle/Resources/config/routing/calendar.yml"
+    resource: "@AppBundle/Resources/config/routing/calendar.yml"
     prefix: /
 
 caldera_criticalmass_post:
-    resource: "@CalderaBundle/Resources/config/routing/post.yml"
+    resource: "@AppBundle/Resources/config/routing/post.yml"
     prefix: /post
 
 caldera_criticalmass_track:
-    resource: "@CalderaBundle/Resources/config/routing/track.yml"
+    resource: "@AppBundle/Resources/config/routing/track.yml"
     prefix: /
 
 caldera_criticalmass_frontpage:
-    resource: "@CalderaBundle/Resources/config/routing/frontpage.yml"
+    resource: "@AppBundle/Resources/config/routing/frontpage.yml"
     prefix: /
 
 caldera_criticalmass_search:
-    resource: "@CalderaBundle/Resources/config/routing/search.yml"
+    resource: "@AppBundle/Resources/config/routing/search.yml"
     prefix: /
 
 caldera_criticalmass_board:
-    resource: "@CalderaBundle/Resources/config/routing/board.yml"
+    resource: "@AppBundle/Resources/config/routing/board.yml"
     prefix:   /
 
 caldera_criticalmass_profile:
-    resource: "@CalderaBundle/Resources/config/routing/profile.yml"
+    resource: "@AppBundle/Resources/config/routing/profile.yml"
     prefix:   /profile
 
 caldera_criticalmass_photo:
-    resource: "@CalderaBundle/Resources/config/routing/photo.yml"
+    resource: "@AppBundle/Resources/config/routing/photo.yml"
     prefix:   /
 
 caldera_criticalmass_photogallery:
-    resource: "@CalderaBundle/Resources/config/routing/photogallery.yml"
+    resource: "@AppBundle/Resources/config/routing/photogallery.yml"
     prefix:   /
 
 caldera_criticalmass_photoupload:
-    resource: "@CalderaBundle/Resources/config/routing/photoupload.yml"
+    resource: "@AppBundle/Resources/config/routing/photoupload.yml"
     prefix:   /
 
 caldera_criticalmass_photomanagement:
-    resource: "@CalderaBundle/Resources/config/routing/photomanagement.yml"
+    resource: "@AppBundle/Resources/config/routing/photomanagement.yml"
     prefix:   /
 
 caldera_criticalmass_region:
-    resource: "@CalderaBundle/Resources/config/routing/region.yml"
+    resource: "@AppBundle/Resources/config/routing/region.yml"
     prefix:   /
 
 caldera_criticalmass_statistic:
-    resource: "@CalderaBundle/Resources/config/routing/statistic.yml"
+    resource: "@AppBundle/Resources/config/routing/statistic.yml"
     prefix: /
 
 caldera_criticalmass_location:
-    resource: "@CalderaBundle/Resources/config/routing/location.yml"
+    resource: "@AppBundle/Resources/config/routing/location.yml"
     prefix: /
 
 caldera_criticalmass_timelapse:
-    resource: "@CalderaBundle/Resources/config/routing/timelapse.yml"
+    resource: "@AppBundle/Resources/config/routing/timelapse.yml"
     prefix:   /
 
 caldera_criticalmass_participation:
-    resource: "@CalderaBundle/Resources/config/routing/participation.yml"
+    resource: "@AppBundle/Resources/config/routing/participation.yml"
     prefix:   /
 
 caldera_criticalmass_strava:
-    resource: "@CalderaBundle/Resources/config/routing/strava.yml"
+    resource: "@AppBundle/Resources/config/routing/strava.yml"
     prefix: /
 
 caldera_criticalmass_timeline:
-    resource: "@CalderaBundle/Resources/config/routing/timeline.yml"
+    resource: "@AppBundle/Resources/config/routing/timeline.yml"
     prefix: /
 
 caldera_criticalmass_city:
-    resource: "@CalderaBundle/Resources/config/routing/city.yml"
+    resource: "@AppBundle/Resources/config/routing/city.yml"
     prefix: /
 
 caldera_criticalmass_citymanagement:
-    resource: "@CalderaBundle/Resources/config/routing/citymanagement.yml"
+    resource: "@AppBundle/Resources/config/routing/citymanagement.yml"
     prefix: /
 
 caldera_criticalmass_ride:
-    resource: "@CalderaBundle/Resources/config/routing/ride.yml"
+    resource: "@AppBundle/Resources/config/routing/ride.yml"
     prefix: /
 
 caldera_criticalmass_ridemanagement:
-    resource: "@CalderaBundle/Resources/config/routing/ridemanagement.yml"
+    resource: "@AppBundle/Resources/config/routing/ridemanagement.yml"
     prefix: /
 
 caldera_criticalmass_sudride:
-    resource: "@CalderaBundle/Resources/config/routing/subride.yml"
+    resource: "@AppBundle/Resources/config/routing/subride.yml"
     prefix: /

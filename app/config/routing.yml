@@ -49,5 +49,5 @@ NelmioApiDocBundle:
     prefix:   /api/doc
 
 caldera:
-    resource: "@CalderaBundle/Resources/config/routing.yml"
+    resource: "@AppBundle/Resources/config/routing.yml"
     prefix:   /
