@@ -23,10 +23,6 @@ services:
         class: AppBundle\UserProvider\FOSUBUserProvider
         arguments: ['@fos_user.user_manager', {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
 
-    caldera.manager.content_manager:
-        class: AppBundle\Manager\ContentManager\ContentManager
-        arguments: ['@doctrine']
-
     caldera.manager.post_manager:
         class: AppBundle\Manager\PostManager\PostManager
         arguments: ['@doctrine']
@@ -123,14 +119,6 @@ services:
         class: AppBundle\Gps\TrackTimeShift\TrackTimeShift
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader', '@caldera.criticalmass.gps.gpxexporter' ]
 
-    caldera.criticalmass.weather.openweather.query:
-        class: AppBundle\Weather\OpenWeather\OpenWeatherQuery
-        arguments: [ '%openweather.appid%' ]
-
-    caldera.criticalmass.weather.openweather.reader:
-        class: AppBundle\Weather\OpenWeather\OpenWeatherReader
-        arguments: []
-
     fos_user.doctrine_registry:
         alias: doctrine
 
@@ -145,10 +133,6 @@ services:
     caldera.criticalmass.flow.create_city:
         class: AppBundle\Form\Flow\CreateCityFlow
         parent: craue.form.flow
-
-    caldera.criticalmass.leaflet.printer:
-        class: AppBundle\Leaflet\LeafletPrinter\LeafletPrinter
-        arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.validator.single_ride_day:
         class: AppBundle\Validator\SingleRideForDayValidator
