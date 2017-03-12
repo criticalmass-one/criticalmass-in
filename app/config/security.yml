@@ -25,18 +25,6 @@ security:
             logout:
                 invalidate_session: false
             anonymous:          true
-        #main:
-        #    pattern: ^/
-        #    ajax_form_login:
-        #        provider: fos_userbundle
-        #    logout:
-        #        invalidate_session: false
-        #    anonymous:    true
-        #    remember_me:
-        #        key:      aSecretKey
-        #        lifetime: 7200
-        #        path:     /
-        #        domain:   ~
             oauth:
                 resource_owners:
                     facebook:  "/login/check-facebook"
@@ -45,7 +33,6 @@ security:
                 login_path:        /login
                 use_forward:       false
                 failure_path:      /login
-
                 oauth_user_provider:
                     service: caldera.user_provider
 
