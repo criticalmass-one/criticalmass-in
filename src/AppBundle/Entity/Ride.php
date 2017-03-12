@@ -1,19 +1,19 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
-use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ParticipateableInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\ElasticSearchPinInterface;
+use AppBundle\EntityInterface\ParticipateableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
-use Caldera\Bundle\CalderaBundle\Validator\Constraint as CriticalAssert;
+use AppBundle\Validator\Constraint as CriticalAssert;
 
 /**
  * @ORM\Table(name="ride")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RideRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
  */
