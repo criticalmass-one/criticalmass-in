@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\AppBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Caldera\Bundle\AppBundle\Controller\AbstractController;
-use Caldera\Bundle\AppBundle\Entity\City;
-use Caldera\Bundle\AppBundle\Entity\Ride;
-use Caldera\Bundle\AppBundle\Facebook\FacebookEventRideApi;
-use Caldera\Bundle\AppBundle\Form\Type\RideType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
+use AppBundle\Facebook\FacebookEventRideApi;
+use AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 

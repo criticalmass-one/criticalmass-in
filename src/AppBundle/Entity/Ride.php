@@ -1099,10 +1099,10 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Add archiveRides
      *
-     * @param \Caldera\Bundle\AppBundle\Entity\Ride $archiveRides
+     * @param Ride $archiveRides
      * @return Ride
      */
-    public function addArchiveRide(\Caldera\Bundle\AppBundle\Entity\Ride $archiveRides)
+    public function addArchiveRide(Ride $archiveRides)
     {
         $this->archiveRides[] = $archiveRides;
 
@@ -1112,9 +1112,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Remove archiveRides
      *
-     * @param \Caldera\Bundle\AppBundle\Entity\Ride $archiveRides
+     * @param Ride $archiveRides
      */
-    public function removeArchiveRide(\Caldera\Bundle\AppBundle\Entity\Ride $archiveRides)
+    public function removeArchiveRide(Ride $archiveRides)
     {
         $this->archiveRides->removeElement($archiveRides);
     }
@@ -1132,10 +1132,10 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * Add participations
      *
-     * @param \Caldera\Bundle\AppBundle\Entity\Participation $participations
+     * @param Participation $participations
      * @return Ride
      */
-    public function addParticipation(\Caldera\Bundle\AppBundle\Entity\Participation $participations)
+    public function addParticipation(Participation $participations)
     {
         $this->participations[] = $participations;
 
@@ -1147,7 +1147,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      *
      * @param \Caldera\Bundle\AppBundle\Entity\Participation $participations
      */
-    public function removeParticipation(\Caldera\Bundle\AppBundle\Entity\Participation $participations)
+    public function removeParticipation(Participation $participations)
     {
         $this->participations->removeElement($participations);
     }
@@ -1168,7 +1168,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @param \Caldera\Bundle\AppBundle\Entity\RideEstimate $estimates
      * @return Ride
      */
-    public function addEstimate(\Caldera\Bundle\AppBundle\Entity\RideEstimate $estimates)
+    public function addEstimate(RideEstimate $estimates)
     {
         $this->estimates[] = $estimates;
 
@@ -1180,7 +1180,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      *
      * @param \Caldera\Bundle\AppBundle\Entity\RideEstimate $estimates
      */
-    public function removeEstimate(\Caldera\Bundle\AppBundle\Entity\RideEstimate $estimates)
+    public function removeEstimate(RideEstimate $estimates)
     {
         $this->estimates->removeElement($estimates);
     }
@@ -1201,7 +1201,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @param \Caldera\Bundle\AppBundle\Entity\Weather $weathers
      * @return Ride
      */
-    public function addWeather(\Caldera\Bundle\AppBundle\Entity\Weather $weathers)
+    public function addWeather(Weather $weathers)
     {
         $this->weathers[] = $weathers;
 
@@ -1213,7 +1213,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      *
      * @param \Caldera\Bundle\AppBundle\Entity\Weather $weathers
      */
-    public function removeWeather(\Caldera\Bundle\AppBundle\Entity\Weather $weathers)
+    public function removeWeather(Weather $weathers)
     {
         $this->weathers->removeElement($weathers);
     }
