@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Manager\ContentManager;
+namespace AppBundle\Manager\ContentManager;
 
-use Caldera\Bundle\CalderaBundle\Entity\Content;
-use Caldera\Bundle\CalderaBundle\Manager\AbstractManager;
-use Caldera\Bundle\CalderaBundle\Manager\ContentManager\Exception\ContentNotFoundException;
-use Caldera\Bundle\CalderaBundle\Repository\ContentRepository;
+use AppBundle\Entity\Content;
+use AppBundle\Manager\AbstractManager;
+use AppBundle\Manager\ContentManager\Exception\ContentNotFoundException;
+use AppBundle\Repository\ContentRepository;
 
 class ContentManager extends AbstractManager
 {

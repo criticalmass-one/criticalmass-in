@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Utils;
+namespace AppBundle\Utils;
 
 class DateTimeUtils
 {

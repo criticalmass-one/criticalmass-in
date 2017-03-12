@@ -1,25 +1,25 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Traits;
+namespace AppBundle\Traits;
 
-use Caldera\Bundle\CalderaBundle\Repository\AnonymousNameRepository;
-use Caldera\Bundle\CalderaBundle\Repository\BlockedCityRepository;
-use Caldera\Bundle\CalderaBundle\Repository\BlogPostRepository;
-use Caldera\Bundle\CalderaBundle\Repository\BoardRepository;
-use Caldera\Bundle\CalderaBundle\Repository\CityRepository;
-use Caldera\Bundle\CalderaBundle\Repository\ContentRepository;
-use Caldera\Bundle\CalderaBundle\Repository\EventRepository;
-use Caldera\Bundle\CalderaBundle\Repository\FacebookRidePropertiesRepository;
-use Caldera\Bundle\CalderaBundle\Repository\LocationRepository;
-use Caldera\Bundle\CalderaBundle\Repository\ParticipationRepository;
-use Caldera\Bundle\CalderaBundle\Repository\PhotoRepository;
-use Caldera\Bundle\CalderaBundle\Repository\PostRepository;
-use Caldera\Bundle\CalderaBundle\Repository\RegionRepository;
-use Caldera\Bundle\CalderaBundle\Repository\RideRepository;
-use Caldera\Bundle\CalderaBundle\Repository\SubrideRepository;
-use Caldera\Bundle\CalderaBundle\Repository\ThreadRepository;
-use Caldera\Bundle\CalderaBundle\Repository\TrackRepository;
-use Caldera\Bundle\CalderaBundle\Repository\WeatherRepository;
+use AppBundle\Repository\AnonymousNameRepository;
+use AppBundle\Repository\BlockedCityRepository;
+use AppBundle\Repository\BlogPostRepository;
+use AppBundle\Repository\BoardRepository;
+use AppBundle\Repository\CityRepository;
+use AppBundle\Repository\ContentRepository;
+use AppBundle\Repository\EventRepository;
+use AppBundle\Repository\FacebookRidePropertiesRepository;
+use AppBundle\Repository\LocationRepository;
+use AppBundle\Repository\ParticipationRepository;
+use AppBundle\Repository\PhotoRepository;
+use AppBundle\Repository\PostRepository;
+use AppBundle\Repository\RegionRepository;
+use AppBundle\Repository\RideRepository;
+use AppBundle\Repository\SubrideRepository;
+use AppBundle\Repository\ThreadRepository;
+use AppBundle\Repository\TrackRepository;
+use AppBundle\Repository\WeatherRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 
 trait RepositoryTrait

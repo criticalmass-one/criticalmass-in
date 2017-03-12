@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Statistic\RideEstimate;
+namespace AppBundle\Statistic\RideEstimate;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Gps\GpxReader\GpxReader;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
+use AppBundle\Entity\Track;
+use AppBundle\Gps\GpxReader\GpxReader;
 use Doctrine\ORM\EntityManager;
 
 class RideEstimateService

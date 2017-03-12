@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\Location;
+use AppBundle\Entity\Location;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

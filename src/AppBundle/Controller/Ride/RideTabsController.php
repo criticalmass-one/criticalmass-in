@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
-use Caldera\Bundle\CalderaBundle\Entity\Weather;
-use Caldera\Bundle\CalderaBundle\Form\Type\RideEstimateType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
+use AppBundle\Entity\Weather;
+use AppBundle\Form\Type\RideEstimateType;
 use Symfony\Component\HttpFoundation\Request;
 
 class RideTabsController extends AbstractController

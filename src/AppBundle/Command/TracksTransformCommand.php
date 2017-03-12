@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Command;
+namespace AppBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
+use AppBundle\Entity\Track;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

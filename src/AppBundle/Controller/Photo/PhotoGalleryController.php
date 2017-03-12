@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Photo;
+namespace AppBundle\Controller\Photo;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class PhotoGalleryController extends AbstractController

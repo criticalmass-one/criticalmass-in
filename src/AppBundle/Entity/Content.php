@@ -1,15 +1,15 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
-use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="content")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\ContentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentRepository")
  */
 class Content implements ViewableInterface, ArchiveableInterface
 {

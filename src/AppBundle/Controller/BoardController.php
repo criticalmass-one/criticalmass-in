@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Post;
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
-use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
-use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Thread;
+use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\Traits\ViewStorageTrait;
 use Malenki\Slug;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

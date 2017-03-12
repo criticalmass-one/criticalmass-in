@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps;
+namespace AppBundle\Gps;
 
 class GpsConverter
 {

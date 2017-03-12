@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\TrackChecker;
+namespace AppBundle\Gps\TrackChecker;
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
+use AppBundle\Entity\Track;
 
 interface TrackCheckerInterface
 {

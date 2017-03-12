@@ -1,16 +1,16 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Traits;
+namespace AppBundle\Traits;
 
-use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Content;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
-use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageCacheInterface;
+use AppBundle\Entity\BlogPost;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Content;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
+use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\ViewStorage\ViewStorageCacheInterface;
 
 trait ViewStorageTrait
 {

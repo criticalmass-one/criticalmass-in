@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
+namespace AppBundle\Timeline\Collector;
 
-use Caldera\Bundle\CalderaBundle\Timeline\Item\ThreadPostItem;
+use AppBundle\Timeline\Item\ThreadPostItem;
 
 class ThreadPostCollector extends AbstractTimelineCollector
 {

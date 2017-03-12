@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
+namespace AppBundle\Timeline\Item;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
 
 class RideTrackItem extends AbstractItem
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Photo;
+namespace AppBundle\Controller\Photo;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Form\Type\PhotoCoordType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Photo;
+use AppBundle\Form\Type\PhotoCoordType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

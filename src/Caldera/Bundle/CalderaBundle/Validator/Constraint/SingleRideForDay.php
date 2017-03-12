@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Validator\Constraint;
+namespace AppBundle\Validator\Constraint;
 
-use Caldera\Bundle\CalderaBundle\Validator\SingleRideForDayValidator;
+use AppBundle\Validator\SingleRideForDayValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

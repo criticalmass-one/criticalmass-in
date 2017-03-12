@@ -1,18 +1,18 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Router;
+namespace AppBundle\Router;
 
-use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
-use Caldera\Bundle\CalderaBundle\Entity\Board;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Content;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Location;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Region;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
+use AppBundle\Entity\BlogPost;
+use AppBundle\Entity\Board;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Content;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
+use AppBundle\Entity\Track;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 

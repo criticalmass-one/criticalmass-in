@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
 
 class PostRepository extends EntityRepository

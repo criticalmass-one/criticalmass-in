@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
+namespace AppBundle\Timeline\Collector;
 
-use Caldera\Bundle\CalderaBundle\Timeline\Item\ItemInterface;
+use AppBundle\Timeline\Item\ItemInterface;
 
 abstract class AbstractTimelineCollector
 {

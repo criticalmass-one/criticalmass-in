@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Validator;
+namespace AppBundle\Validator;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

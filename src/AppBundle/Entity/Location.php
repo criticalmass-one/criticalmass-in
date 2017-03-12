@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -8,7 +8,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\LocationRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LocationRepository")
  */
 class Location
 {
@@ -132,10 +132,10 @@ class Location
     /**
      * Set city
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\City $city
+     * @param \AppBundle\Entity\City $city
      * @return Location
      */
-    public function setCity(\Caldera\Bundle\CalderaBundle\Entity\City $city = null)
+    public function setCity(\AppBundle\Entity\City $city = null)
     {
         $this->city = $city;
 
@@ -145,7 +145,7 @@ class Location
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\City
+     * @return \AppBundle\Entity\City
      */
     public function getCity()
     {

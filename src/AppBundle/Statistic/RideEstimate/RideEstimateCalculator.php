@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Statistic\RideEstimate;
+namespace AppBundle\Statistic\RideEstimate;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
 
 class RideEstimateCalculator
 {

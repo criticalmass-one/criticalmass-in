@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\GpxReader;
+namespace AppBundle\Gps\GpxReader;
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
+use AppBundle\Entity\Track;
 
 class TrackReader extends GpxReader
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
-use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ElasticSearchPinInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\EntityInterface\ElasticSearchPinInterface;
+use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -16,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
  * derer einzelne Critical-Mass-Touren stattfinden.
  *
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\CityRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
@@ -1445,10 +1445,10 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Add photos
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Photo $photos
+     * @param \AppBundle\Entity\Photo $photos
      * @return City
      */
-    public function addPhoto(\Caldera\Bundle\CalderaBundle\Entity\Photo $photos)
+    public function addPhoto(\AppBundle\Entity\Photo $photos)
     {
         $this->photos[] = $photos;
 
@@ -1458,9 +1458,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * Remove photos
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Photo $photos
+     * @param \AppBundle\Entity\Photo $photos
      */
-    public function removePhoto(\Caldera\Bundle\CalderaBundle\Entity\Photo $photos)
+    public function removePhoto(\AppBundle\Entity\Photo $photos)
     {
         $this->photos->removeElement($photos);
     }

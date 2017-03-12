@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Exception;
+namespace AppBundle\Exception;
 
 class CalderaException extends \Exception
 {

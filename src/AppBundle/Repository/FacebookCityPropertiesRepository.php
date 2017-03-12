@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class FacebookCityPropertiesRepository extends EntityRepository

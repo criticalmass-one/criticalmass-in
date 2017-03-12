@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\FOSRestController;
 

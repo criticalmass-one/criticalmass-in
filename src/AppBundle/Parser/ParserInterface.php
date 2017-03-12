@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Parser;
+namespace AppBundle\Parser;
 
 interface ParserInterface
 {

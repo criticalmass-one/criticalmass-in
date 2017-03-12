@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator;
+namespace AppBundle\Gps\LatLngListGenerator;
 
 class RangeLatLngListGenerator extends AbstractLatLngListGenerator
 {

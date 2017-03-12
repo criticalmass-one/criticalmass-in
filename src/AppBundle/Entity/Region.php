@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="region")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RegionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
  */
 class Region
 {

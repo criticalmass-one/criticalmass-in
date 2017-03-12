@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\Subride;
-use Caldera\Bundle\CalderaBundle\Form\Type\SubrideType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Subride;
+use AppBundle\Form\Type\SubrideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

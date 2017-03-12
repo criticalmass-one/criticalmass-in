@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
+namespace AppBundle\Timeline\Item;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 
 class RideParticipationEstimateItem extends AbstractItem
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata;
-use Caldera\Bundle\CalderaBundle\Parser\ParserInterface;
+use AppBundle\Entity\User;
+use AppBundle\HtmlMetadata\Metadata;
+use AppBundle\Parser\ParserInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\FacebookCityProperties;
-use Caldera\Bundle\CalderaBundle\Entity\Region;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\FacebookCityProperties;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class StatisticController extends AbstractController

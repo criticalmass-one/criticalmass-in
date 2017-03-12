@@ -1,14 +1,14 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
-use Caldera\Bundle\CalderaBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\ArchiveableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\SubrideRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SubrideRepository")
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */

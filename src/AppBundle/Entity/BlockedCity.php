@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\BlockedCityRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlockedCityRepository")
  * @ORM\Table(name="city_blocked")
  */
 class BlockedCity
@@ -270,11 +270,11 @@ class BlockedCity
     /**
      * Set city
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\City $city
+     * @param \AppBundle\Entity\City $city
      *
      * @return BlockedCity
      */
-    public function setCity(\Caldera\Bundle\CalderaBundle\Entity\City $city = null)
+    public function setCity(\AppBundle\Entity\City $city = null)
     {
         $this->city = $city;
 
@@ -284,7 +284,7 @@ class BlockedCity
     /**
      * Get city
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\City
+     * @return \AppBundle\Entity\City
      */
     public function getCity()
     {

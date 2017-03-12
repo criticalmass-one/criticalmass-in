@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException;
+namespace AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException;
 
 class NoDateTimeException extends TrackValidatorException
 {

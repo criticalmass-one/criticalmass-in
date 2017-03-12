@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Command;
+namespace AppBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use AppBundle\Entity\Track;
+use AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
+use AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

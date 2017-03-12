@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\City;
+namespace AppBundle\Controller\City;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
-use Caldera\Bundle\CalderaBundle\Entity\Region;
-use Caldera\Bundle\CalderaBundle\Form\Type\StandardCityType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Entity\Region;
+use AppBundle\Form\Type\StandardCityType;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

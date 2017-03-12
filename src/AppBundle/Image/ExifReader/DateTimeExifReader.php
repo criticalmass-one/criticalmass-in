@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Image\ExifReader;
+namespace AppBundle\Image\ExifReader;
 
 /**
  * Class DateTimeExifReader
- * @package Caldera\Bundle\CalderaBundle\Image\ExifReader
+ * @package AppBundle\Image\ExifReader
  * @deprecated
  */
 class DateTimeExifReader extends AbstractExifReader

@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\EntityInterface;
+namespace AppBundle\EntityInterface;
 
-use Caldera\Bundle\CalderaBundle\Entity\User;
+use AppBundle\Entity\User;
 
 interface ArchiveableInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\DistanceCalculator;
+namespace AppBundle\Gps\DistanceCalculator;
 
 abstract class BaseDistanceCalculator
 {

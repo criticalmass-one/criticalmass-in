@@ -1,14 +1,14 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="thread")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\ThreadRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
  */
 class Thread implements ViewableInterface
 {

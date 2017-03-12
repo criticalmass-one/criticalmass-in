@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
 use Application\Sonata\UserBundle\Entity\User;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @package Caldera\Bundle\CalderaBundle\Repository
+ * @package AppBundle\Repository
  * @author maltehuebner
  * @since 2016-02-16
  */

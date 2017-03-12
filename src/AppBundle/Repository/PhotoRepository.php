@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\User;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class PhotoRepository extends EntityRepository

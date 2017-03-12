@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
+namespace AppBundle\Timeline\Item;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {

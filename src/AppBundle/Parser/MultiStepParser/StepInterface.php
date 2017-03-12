@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Parser\MultiStepParser;
+namespace AppBundle\Parser\MultiStepParser;
 
 interface StepInterface
 {

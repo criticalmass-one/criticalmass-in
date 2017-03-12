@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Command;
+namespace AppBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Weather;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Weather;
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Forecast;
 use Cmfcmf\OpenWeatherMap\WeatherForecast;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\Position;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Traits\TrackHandlingTrait;
-use Caldera\Bundle\CalderaBundle\Gps\GpxExporter\GpxExporter;
+use AppBundle\Entity\Position;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Traits\TrackHandlingTrait;
+use AppBundle\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;

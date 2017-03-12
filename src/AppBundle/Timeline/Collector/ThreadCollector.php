@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
+namespace AppBundle\Timeline\Collector;
 
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
-use Caldera\Bundle\CalderaBundle\Timeline\Item\ThreadItem;
+use AppBundle\Entity\Thread;
+use AppBundle\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {

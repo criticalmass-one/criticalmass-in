@@ -1,14 +1,14 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
-use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
+use AppBundle\EntityInterface\BoardInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="board")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\BoardRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BoardRepository")
  */
 class Board implements BoardInterface
 {

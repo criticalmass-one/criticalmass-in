@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @package Caldera\Bundle\CalderaBundle\Repository
+ * @package AppBundle\Repository
  * @author maltehuebner
  * @since 2016-02-26
  */

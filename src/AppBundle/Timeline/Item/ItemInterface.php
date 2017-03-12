@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
+namespace AppBundle\Timeline\Item;
 
 interface ItemInterface
 {

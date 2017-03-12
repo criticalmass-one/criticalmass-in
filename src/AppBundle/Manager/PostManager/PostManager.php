@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Manager\PostManager;
+namespace AppBundle\Manager\PostManager;
 
-use Caldera\Bundle\CalderaBundle\Manager\AbstractManager;
-use Caldera\Bundle\CalderaBundle\Repository\PostRepository;
+use AppBundle\Manager\AbstractManager;
+use AppBundle\Repository\PostRepository;
 
 class PostManager extends AbstractManager
 {

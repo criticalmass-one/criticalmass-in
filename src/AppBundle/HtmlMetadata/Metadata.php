@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\HtmlMetadata;
+namespace AppBundle\HtmlMetadata;
 
-use Caldera\Bundle\CalderaBundle\HtmlMetadata\Html\Tag;
+use AppBundle\HtmlMetadata\Html\Tag;
 
 class Metadata
 {

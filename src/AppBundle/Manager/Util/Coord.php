@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Manager\Util;
+namespace AppBundle\Manager\Util;
 
 /**
  * Class Coord
- * @package Caldera\Bundle\CalderaBundle\Manager\Util
+ * @package AppBundle\Manager\Util
  * @deprecated
  */
 class Coord

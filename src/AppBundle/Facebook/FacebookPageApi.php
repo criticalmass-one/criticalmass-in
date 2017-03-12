@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Facebook;
+namespace AppBundle\Facebook;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\FacebookCityProperties;
+use AppBundle\Entity\City;
+use AppBundle\Entity\FacebookCityProperties;
 use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends FacebookApi

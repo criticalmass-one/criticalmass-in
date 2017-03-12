@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\EntityInterface;
+namespace AppBundle\EntityInterface;
 
 
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use AppBundle\Entity\Thread;
 
 interface BoardInterface
 {

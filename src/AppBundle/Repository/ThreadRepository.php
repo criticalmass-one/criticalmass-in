@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\Board;
-use Caldera\Bundle\CalderaBundle\Entity\City;
+use AppBundle\Entity\Board;
+use AppBundle\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @package Caldera\Bundle\CalderaBundle\Repository
+ * @package AppBundle\Repository
  * @author maltehuebner
  * @since 2016-02-13
  */

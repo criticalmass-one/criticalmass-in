@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Image\ExifReader;
+namespace AppBundle\Image\ExifReader;
 
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use AppBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractExifReader

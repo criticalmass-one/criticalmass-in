@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\Participation;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Participation;
+use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class ParticipationController extends AbstractController

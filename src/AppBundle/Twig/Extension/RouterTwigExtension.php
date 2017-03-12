@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Caldera\Bundle\CalderaBundle\Router\ObjectRouter;
+use AppBundle\Router\ObjectRouter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RouterTwigExtension extends \Twig_Extension

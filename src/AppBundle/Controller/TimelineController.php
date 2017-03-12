@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Timeline\Timeline;
+use AppBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 
 class TimelineController extends AbstractController

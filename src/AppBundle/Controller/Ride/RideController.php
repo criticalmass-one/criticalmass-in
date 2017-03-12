@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
-use Caldera\Bundle\CalderaBundle\Entity\Weather;
-use Caldera\Bundle\CalderaBundle\Traits\ViewStorageTrait;
-use Caldera\Bundle\CalderaBundle\Form\Type\RideEstimateType;
-use Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\RideEstimate;
+use AppBundle\Entity\Weather;
+use AppBundle\Traits\ViewStorageTrait;
+use AppBundle\Form\Type\RideEstimateType;
+use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
 
 class RideController extends AbstractController

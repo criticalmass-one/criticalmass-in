@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
+namespace AppBundle\Timeline\Item;
 
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
+use AppBundle\Entity\Thread;
 
 class ThreadPostItem extends AbstractItem
 {

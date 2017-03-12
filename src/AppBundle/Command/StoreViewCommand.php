@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Command;
+namespace AppBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersisterInterface;
+use AppBundle\ViewStorage\ViewStoragePersisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

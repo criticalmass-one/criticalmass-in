@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -43,7 +43,7 @@ class User extends BaseUser
     /**
      * Vom Benutzer momentan ausgewaehlte Stadt.
      *
-     * @ORM\ManyToOne(targetEntity="Caldera\Bundle\CalderaBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $currentCity;
@@ -475,10 +475,10 @@ class User extends BaseUser
     /**
      * Add archiveRides
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides
+     * @param \AppBundle\Entity\Ride $archiveRides
      * @return User
      */
-    public function addArchiveRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides)
+    public function addArchiveRide(\AppBundle\Entity\Ride $archiveRides)
     {
         $this->archiveRides[] = $archiveRides;
 
@@ -488,9 +488,9 @@ class User extends BaseUser
     /**
      * Remove archiveRides
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides
+     * @param \AppBundle\Entity\Ride $archiveRides
      */
-    public function removeArchiveRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $archiveRides)
+    public function removeArchiveRide(\AppBundle\Entity\Ride $archiveRides)
     {
         $this->archiveRides->removeElement($archiveRides);
     }
@@ -508,10 +508,10 @@ class User extends BaseUser
     /**
      * Add participations
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Participation $participations
+     * @param \AppBundle\Entity\Participation $participations
      * @return User
      */
-    public function addParticipation(\Caldera\Bundle\CalderaBundle\Entity\Participation $participations)
+    public function addParticipation(\AppBundle\Entity\Participation $participations)
     {
         $this->participations[] = $participations;
 
@@ -521,9 +521,9 @@ class User extends BaseUser
     /**
      * Remove participations
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Participation $participations
+     * @param \AppBundle\Entity\Participation $participations
      */
-    public function removeParticipation(\Caldera\Bundle\CalderaBundle\Entity\Participation $participations)
+    public function removeParticipation(\AppBundle\Entity\Participation $participations)
     {
         $this->participations->removeElement($participations);
     }

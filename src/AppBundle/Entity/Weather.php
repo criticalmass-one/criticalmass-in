@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="weather")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\WeatherRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\WeatherRepository")
  */
 class Weather
 {

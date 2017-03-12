@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Entity\User;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * Reposity for Track entites.
  *
- * @package Caldera\Bundle\CalderaBundle\Repository
+ * @package AppBundle\Repository
  * @author maltehuebner
  * @since 2015-09-18
  */

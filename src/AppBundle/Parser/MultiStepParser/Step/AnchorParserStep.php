@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step;
+namespace AppBundle\Parser\MultiStepParser\Step;
 
-use Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\StepInterface;
+use AppBundle\Parser\MultiStepParser\StepInterface;
 
 class AnchorParserStep implements StepInterface
 {

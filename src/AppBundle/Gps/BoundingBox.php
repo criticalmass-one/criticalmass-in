@@ -6,7 +6,7 @@
  * Time: 23:01
  */
 
-namespace Caldera\Bundle\CalderaBundle\Gps;
+namespace AppBundle\Gps;
 
 
 class BoundingBox

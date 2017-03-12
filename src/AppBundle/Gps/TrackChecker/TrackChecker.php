@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\TrackChecker;
+namespace AppBundle\Gps\TrackChecker;
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
+use AppBundle\Entity\Track;
+use AppBundle\Gps\GpxReader\TrackReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackChecker implements TrackCheckerInterface

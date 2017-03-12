@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\HtmlMetadata\Html;
+namespace AppBundle\HtmlMetadata\Html;
 
 class Tag
 {

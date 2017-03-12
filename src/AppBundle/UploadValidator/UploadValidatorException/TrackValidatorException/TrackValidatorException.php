@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException;
+namespace AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException;
 
-use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\UploadValidatorException;
+use AppBundle\UploadValidator\UploadValidatorException\UploadValidatorException;
 
 abstract class TrackValidatorException extends UploadValidatorException
 {

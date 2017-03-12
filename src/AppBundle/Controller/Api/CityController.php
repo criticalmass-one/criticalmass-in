@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
-use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
-use Caldera\Bundle\CalderaBundle\Traits\UtilTrait;
+use AppBundle\Traits\RepositoryTrait;
+use AppBundle\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;

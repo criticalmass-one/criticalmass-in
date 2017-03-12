@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Image\ExifReader;
+namespace AppBundle\Image\ExifReader;
 
-use Caldera\Bundle\CalderaBundle\Gps\GpsConverter;
+use AppBundle\Gps\GpsConverter;
 
 /**
  * Class GpsExifReader
- * @package Caldera\Bundle\CalderaBundle\Image\ExifReader
+ * @package AppBundle\Image\ExifReader
  * @deprecated
  */
 class GpsExifReader extends AbstractExifReader

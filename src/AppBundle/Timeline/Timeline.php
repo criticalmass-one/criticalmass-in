@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline;
+namespace AppBundle\Timeline;
 
-use Caldera\Bundle\CalderaBundle\Timeline\Collector\AbstractTimelineCollector;
-use Caldera\Bundle\CalderaBundle\Timeline\Item\ItemInterface;
+use AppBundle\Timeline\Collector\AbstractTimelineCollector;
+use AppBundle\Timeline\Item\ItemInterface;
 
 class Timeline
 {

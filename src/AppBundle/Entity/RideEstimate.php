@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\RideEstimateRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RideEstimateRepository")
  * @ORM\Table(name="ride_estimate")
  */
 class RideEstimate

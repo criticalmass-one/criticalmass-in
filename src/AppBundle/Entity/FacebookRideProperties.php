@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\FacebookRidePropertiesRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FacebookRidePropertiesRepository")
  * @ORM\Table(name="facebook_ride_properties")
  */
 class FacebookRideProperties
@@ -369,7 +369,7 @@ class FacebookRideProperties
     /**
      * Get ride
      *
-     * @return \Caldera\Bundle\CalderaBundle\Entity\Ride
+     * @return \AppBundle\Entity\Ride
      */
     public function getRide()
     {
@@ -379,10 +379,10 @@ class FacebookRideProperties
     /**
      * Set ride
      *
-     * @param \Caldera\Bundle\CalderaBundle\Entity\Ride $ride
+     * @param \AppBundle\Entity\Ride $ride
      * @return FacebookRideProperties
      */
-    public function setRide(\Caldera\Bundle\CalderaBundle\Entity\Ride $ride = null)
+    public function setRide(\AppBundle\Entity\Ride $ride = null)
     {
         $this->ride = $ride;
 

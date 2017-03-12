@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\TrackPolyline;
+namespace AppBundle\Gps\TrackPolyline;
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
+use AppBundle\Entity\Track;
+use AppBundle\Gps\GpxReader\TrackReader;
 
 class TrackPolyline
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Traits\TrackHandlingTrait;
-use Caldera\Bundle\CalderaBundle\Gps\TrackTimeShift\TrackTimeShift;
-use Caldera\Bundle\CalderaBundle\UploadValidator\TrackValidator;
-use Caldera\Bundle\CalderaBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Traits\TrackHandlingTrait;
+use AppBundle\Gps\TrackTimeShift\TrackTimeShift;
+use AppBundle\UploadValidator\TrackValidator;
+use AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;

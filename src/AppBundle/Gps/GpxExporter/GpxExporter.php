@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\GpxExporter;
+namespace AppBundle\Gps\GpxExporter;
 
 
-use Caldera\Bundle\CalderaBundle\Entity\CriticalmapsUser;
-use Caldera\Bundle\CalderaBundle\Entity\Position;
-use Caldera\Bundle\CalderaBundle\Entity\Ticket;
+use AppBundle\Entity\CriticalmapsUser;
+use AppBundle\Entity\Position;
+use AppBundle\Entity\Ticket;
 
 class GpxExporter
 {

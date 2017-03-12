@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Facebook;
+namespace AppBundle\Facebook;
 
-use Caldera\Bundle\CalderaBundle\Entity\FacebookRideProperties;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\FacebookRideProperties;
+use AppBundle\Entity\Ride;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;
 use Facebook\GraphNodes\GraphPage;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Command;
+namespace AppBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\CalderaBundle\Image\PhotoGps\PhotoGps;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Entity\User;
+use AppBundle\Image\PhotoGps\PhotoGps;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

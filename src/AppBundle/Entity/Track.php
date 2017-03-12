@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="Caldera\Bundle\CalderaBundle\Repository\TrackRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TrackRepository")
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */

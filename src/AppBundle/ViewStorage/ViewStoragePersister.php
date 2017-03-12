@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\ViewStorage;
+namespace AppBundle\ViewStorage;
 
-use Caldera\Bundle\CalderaBundle\Entity\User;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewableInterface;
-use Caldera\Bundle\CalderaBundle\EntityInterface\ViewInterface;
+use AppBundle\Entity\User;
+use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\ORM\EntityManager;
 use Memcached;
@@ -94,7 +94,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getView(string $className): ViewInterface
     {
-        $viewClassName = 'Caldera\Bundle\CalderaBundle\Entity\\' . $className . 'View';
+        $viewClassName = 'AppBundle\Entity\\' . $className . 'View';
 
         $view = new $viewClassName;
 

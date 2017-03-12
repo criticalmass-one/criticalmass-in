@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\DistanceCalculator;
+namespace AppBundle\Gps\DistanceCalculator;
 
 
-use Caldera\Bundle\CalderaBundle\Entity\Track;
-use Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader;
+use AppBundle\Entity\Track;
+use AppBundle\Gps\GpxReader\TrackReader;
 
 class TrackDistanceCalculator extends BaseDistanceCalculator
 {

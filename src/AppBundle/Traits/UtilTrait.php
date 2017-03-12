@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Traits;
+namespace AppBundle\Traits;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\CitySlug;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata;
-use Caldera\Bundle\CalderaBundle\Router\ObjectRouter;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Entity\Ride;
+use AppBundle\HtmlMetadata\Metadata;
+use AppBundle\Router\ObjectRouter;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

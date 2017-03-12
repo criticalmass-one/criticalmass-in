@@ -8,9 +8,9 @@ doctrine:
         password: %database_password%
         charset:  UTF8
         types:
-            datetime: Caldera\Bundle\CalderaBundle\DBAL\Type\UTCDateTimeType
-            date: Caldera\Bundle\CalderaBundle\DBAL\Type\UTCDateType
-            time: Caldera\Bundle\CalderaBundle\DBAL\Type\UTCTimeType
+            datetime: AppBundle\DBAL\Type\UTCDateTimeType
+            date: AppBundle\DBAL\Type\UTCDateType
+            time: AppBundle\DBAL\Type\UTCTimeType
         mapping_types:
             enum: string
     orm:
@@ -18,9 +18,9 @@ doctrine:
         auto_mapping: true
         dql:
             datetime_functions:
-                date: Caldera\Bundle\CalderaBundle\DQL\DateFunction
-                month: Caldera\Bundle\CalderaBundle\DQL\MonthFunction
-                year: Caldera\Bundle\CalderaBundle\DQL\YearFunction
-                dayofweek: Caldera\Bundle\CalderaBundle\DQL\DayOfWeekFunction
+                date: AppBundle\DQL\DateFunction
+                month: AppBundle\DQL\MonthFunction
+                year: AppBundle\DQL\YearFunction
+                dayofweek: AppBundle\DQL\DayOfWeekFunction
             numeric_functions:
-                rand: Caldera\Bundle\CalderaBundle\DQL\RandFunction
+                rand: AppBundle\DQL\RandFunction

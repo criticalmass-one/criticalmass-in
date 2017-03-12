@@ -1,13 +1,13 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Photo;
+namespace AppBundle\Controller\Photo;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Image\ExifReader\DateTimeExifReader;
-use Caldera\Bundle\CalderaBundle\Image\PhotoGps\PhotoGps;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Image\ExifReader\DateTimeExifReader;
+use AppBundle\Image\PhotoGps\PhotoGps;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

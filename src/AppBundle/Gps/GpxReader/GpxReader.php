@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Gps\GpxReader;
+namespace AppBundle\Gps\GpxReader;
 
-use Caldera\Bundle\CalderaBundle\Entity\Position;
-use Caldera\Bundle\CalderaBundle\Gps\BoundingBox;
-use Caldera\Bundle\CalderaBundle\Gps\Coord;
-use Caldera\Bundle\CalderaBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
+use AppBundle\Entity\Position;
+use AppBundle\Gps\BoundingBox;
+use AppBundle\Gps\Coord;
+use AppBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class GpxReader

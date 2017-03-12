@@ -1,157 +1,157 @@
 parameters:
-#    caldera.example.class: Caldera\Bundle\CalderaBundle\Example
+#    caldera.example.class: AppBundle\Example
 
 services:
     caldera.parser.multistep:
-        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\MultiStepParser
+        class: AppBundle\Parser\MultiStepParser\MultiStepParser
         calls:
             - [ addStep, [ '@caldera.parser.multistep.link' ]]
             - [ addStep, [ '@caldera.parser.multistep.markdown' ]]
             - [ addStep, [ '@caldera.parser.multistep.anchor' ]]
 
     caldera.parser.multistep.markdown:
-        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\MarkdownParserStep
+        class: AppBundle\Parser\MultiStepParser\Step\MarkdownParserStep
         arguments: [ '@markdown.parser' ]
 
     caldera.parser.multistep.link:
-        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\LinkParserStep
+        class: AppBundle\Parser\MultiStepParser\Step\LinkParserStep
 
     caldera.parser.multistep.anchor:
-        class: Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step\AnchorParserStep
+        class: AppBundle\Parser\MultiStepParser\Step\AnchorParserStep
 
     caldera.user_provider:
-        class: Caldera\Bundle\CalderaBundle\UserProvider\FOSUBUserProvider
-        arguments: ["@fos_user.user_manager", {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
+        class: AppBundle\UserProvider\FOSUBUserProvider
+        arguments: ['@fos_user.user_manager', {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
 
     caldera.manager.content_manager:
-        class: Caldera\Bundle\CalderaBundle\Manager\ContentManager\ContentManager
+        class: AppBundle\Manager\ContentManager\ContentManager
         arguments: ['@doctrine']
 
     caldera.manager.post_manager:
-        class: Caldera\Bundle\CalderaBundle\Manager\PostManager\PostManager
+        class: AppBundle\Manager\PostManager\PostManager
         arguments: ['@doctrine']
 
     caldera.html_metadata:
-        class: Caldera\Bundle\CalderaBundle\HtmlMetadata\Metadata
+        class: AppBundle\HtmlMetadata\Metadata
 
     caldera.view_storage.cache:
-        class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStorageCache
+        class: AppBundle\ViewStorage\ViewStorageCache
         arguments: ['@security.token_storage']
 
     caldera.view_storage.persister:
-        class: Caldera\Bundle\CalderaBundle\ViewStorage\ViewStoragePersister
+        class: AppBundle\ViewStorage\ViewStoragePersister
         arguments: ['@doctrine']
 
     caldera.criticalmass.routing.object_router:
-        class: Caldera\Bundle\CalderaBundle\Router\ObjectRouter
+        class: AppBundle\Router\ObjectRouter
         arguments:
             - '@router.default'
 
     caldera.criticalmass.gps.gpxexporter:
-        class: Caldera\Bundle\CalderaBundle\Gps\GpxExporter\GpxExporter
+        class: AppBundle\Gps\GpxExporter\GpxExporter
         arguments: [ '@doctrine.orm.entity_manager', '@doctrine' ]
 
     caldera.criticalmass.gps.gpxreader:
-        class: Caldera\Bundle\CalderaBundle\Gps\GpxReader\GpxReader
+        class: AppBundle\Gps\GpxReader\GpxReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.gps.trackreader:
-        class: Caldera\Bundle\CalderaBundle\Gps\GpxReader\TrackReader
+        class: AppBundle\Gps\GpxReader\TrackReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.simple:
-        class: Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
+        class: AppBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.range:
-        class: Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
+        class: AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.time:
-        class: Caldera\Bundle\CalderaBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
+        class: AppBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.polyline.track:
-        class: Caldera\Bundle\CalderaBundle\Gps\TrackPolyline\TrackPolyline
+        class: AppBundle\Gps\TrackPolyline\TrackPolyline
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.uploadvalidator.track:
-        class: Caldera\Bundle\CalderaBundle\UploadValidator\TrackValidator
+        class: AppBundle\UploadValidator\TrackValidator
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.statistic.rideestimatecalculator:
-        class: Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateCalculator
+        class: AppBundle\Statistic\RideEstimate\RideEstimateCalculator
         arguments: []
 
     caldera.criticalmass.statistic.rideestimate:
-        class: Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService
+        class: AppBundle\Statistic\RideEstimate\RideEstimateService
         arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.statistic.rideestimate.track:
-        class: Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService
+        class: AppBundle\Statistic\RideEstimate\RideEstimateService
         arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.statistic.rideestimate.gpx:
-        class: Caldera\Bundle\CalderaBundle\Statistic\RideEstimate\RideEstimateService
+        class: AppBundle\Statistic\RideEstimate\RideEstimateService
         arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.gpxreader' ]
 
     caldera.criticalmass.image.photogps:
-        class: Caldera\Bundle\CalderaBundle\Image\PhotoGps\PhotoGps
+        class: AppBundle\Image\PhotoGps\PhotoGps
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.image.exifreader.gps:
-        class: Caldera\Bundle\CalderaBundle\Image\ExifReader\GpsExifReader
+        class: AppBundle\Image\ExifReader\GpsExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader.datetime:
-        class: Caldera\Bundle\CalderaBundle\Image\ExifReader\DateTimeExifReader
+        class: AppBundle\Image\ExifReader\DateTimeExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader:
-        class: Caldera\Bundle\CalderaBundle\Image\ExifReader\ExifReader
+        class: AppBundle\Image\ExifReader\ExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.board.builder.boardbuilder:
-        class: Caldera\Bundle\CalderaBundle\Board\Builder\BoardBuilder
+        class: AppBundle\Board\Builder\BoardBuilder
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.gps.distancecalculator.track:
-        class: Caldera\Bundle\CalderaBundle\Gps\DistanceCalculator\TrackDistanceCalculator
+        class: AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.gps.timeshift.track:
-        class: Caldera\Bundle\CalderaBundle\Gps\TrackTimeShift\TrackTimeShift
+        class: AppBundle\Gps\TrackTimeShift\TrackTimeShift
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader', '@caldera.criticalmass.gps.gpxexporter' ]
 
     caldera.criticalmass.weather.openweather.query:
-        class: Caldera\Bundle\CalderaBundle\Weather\OpenWeather\OpenWeatherQuery
+        class: AppBundle\Weather\OpenWeather\OpenWeatherQuery
         arguments: [ '%openweather.appid%' ]
 
     caldera.criticalmass.weather.openweather.reader:
-        class: Caldera\Bundle\CalderaBundle\Weather\OpenWeather\OpenWeatherReader
+        class: AppBundle\Weather\OpenWeather\OpenWeatherReader
         arguments: []
 
     fos_user.doctrine_registry:
         alias: doctrine
 
     caldera.criticalmass.facebookapi.eventride:
-        class: Caldera\Bundle\CalderaBundle\Facebook\FacebookEventRideApi
+        class: AppBundle\Facebook\FacebookEventRideApi
         arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
 
     caldera.criticalmass.facebookapi.citypageproperties:
-        class: Caldera\Bundle\CalderaBundle\Facebook\FacebookPageApi
+        class: AppBundle\Facebook\FacebookPageApi
         arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
 
     caldera.criticalmass.flow.create_city:
-        class: Caldera\Bundle\CalderaBundle\Form\Flow\CreateCityFlow
+        class: AppBundle\Form\Flow\CreateCityFlow
         parent: craue.form.flow
 
     caldera.criticalmass.leaflet.printer:
-        class: Caldera\Bundle\CalderaBundle\Leaflet\LeafletPrinter\LeafletPrinter
+        class: AppBundle\Leaflet\LeafletPrinter\LeafletPrinter
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.validator.single_ride_day:
-        class: Caldera\Bundle\CalderaBundle\Validator\SingleRideForDayValidator
+        class: AppBundle\Validator\SingleRideForDayValidator
         arguments: [ '@doctrine.orm.entity_manager' ]
         tags:
             - { name: validator.constraint_validator }

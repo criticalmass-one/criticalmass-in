@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\EntityInterface;
+namespace AppBundle\EntityInterface;
 
 interface TwitterInterface
 {

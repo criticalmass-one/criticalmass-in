@@ -1,15 +1,15 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step;
+namespace AppBundle\Parser\MultiStepParser\Step;
 
-use Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\StepInterface;
+use AppBundle\Parser\MultiStepParser\StepInterface;
 
 /**
  * Class LinkParserStep
  *
  * Regex stolen from: http://zenverse.net/php-function-to-auto-convert-url-into-hyperlink/
  *
- * @package Caldera\Bundle\CalderaBundle\Parser\MultiStepParser\Step
+ * @package AppBundle\Parser\MultiStepParser\Step
  */
 class LinkParserStep implements StepInterface
 {

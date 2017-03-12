@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Collector;
+namespace AppBundle\Timeline\Collector;
 
-use Caldera\Bundle\CalderaBundle\Entity\RideEstimate;
-use Caldera\Bundle\CalderaBundle\Timeline\Item\RideParticipationEstimateItem;
+use AppBundle\Entity\RideEstimate;
+use AppBundle\Timeline\Item\RideParticipationEstimateItem;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {

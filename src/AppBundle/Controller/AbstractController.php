@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Traits\RepositoryTrait;
-use Caldera\Bundle\CalderaBundle\Traits\UtilTrait;
+use AppBundle\Traits\RepositoryTrait;
+use AppBundle\Traits\UtilTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Serializer\JMSSerializer\Naming;
+namespace AppBundle\Serializer\JMSSerializer\Naming;
 
 use JMS\Serializer\Metadata\PropertyMetadata;
 use JMS\Serializer\Naming\PropertyNamingStrategyInterface;

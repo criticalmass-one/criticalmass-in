@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\UploadValidator;
+namespace AppBundle\UploadValidator;
 
 interface UploadValidatorInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Timeline\Item;
+namespace AppBundle\Timeline\Item;
 
-use Caldera\Bundle\CalderaBundle\Entity\Photo;
+use AppBundle\Entity\Photo;
 
 class PhotoCommentItem extends AbstractItem
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Glympse\Exception;
+namespace AppBundle\Glympse\Exception;
 
 class GlympseException extends \Exception
 {

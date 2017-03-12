@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Manager\ContentManager\Exception;
+namespace AppBundle\Manager\ContentManager\Exception;
 
 class ContentNotFoundException extends ContentManagerException
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\Region;
+use AppBundle\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
 /**

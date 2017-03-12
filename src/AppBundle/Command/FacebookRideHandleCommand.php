@@ -1,9 +1,9 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Command;
+namespace AppBundle\Command;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphEdge;

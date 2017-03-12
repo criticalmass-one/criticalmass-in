@@ -1,15 +1,15 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller;
+namespace AppBundle\Controller;
 
-use Caldera\Bundle\CalderaBundle\Entity\BlogPost;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Event;
-use Caldera\Bundle\CalderaBundle\Entity\Post;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Entity\Thread;
-use Caldera\Bundle\CalderaBundle\EntityInterface\BoardInterface;
-use Caldera\Bundle\CalderaBundle\Form\Type\PostType;
+use AppBundle\Entity\BlogPost;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
+use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\Form\Type\PostType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

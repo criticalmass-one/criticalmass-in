@@ -1,11 +1,11 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Repository;
+namespace AppBundle\Repository;
 
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Location;
-use Caldera\Bundle\CalderaBundle\Entity\Region;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
