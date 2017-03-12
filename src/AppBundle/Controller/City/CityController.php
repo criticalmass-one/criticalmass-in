@@ -33,7 +33,7 @@ class CityController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:City:cityList.html.twig',
+            'AppBundle:City:cityList.html.twig',
             [
                 'result' => $result
             ]
@@ -47,7 +47,7 @@ class CityController extends AbstractController
         $rides = $this->getRideRepository()->findRidesWithoutStatisticsForCity($city);
 
         return $this->render(
-            'CalderaBundle:City:missingStats.html.twig',
+            'AppBundle:City:missingStats.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -105,7 +105,7 @@ class CityController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render('CalderaBundle:City:rideList.html.twig',
+        return $this->render('AppBundle:City:rideList.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -121,7 +121,7 @@ class CityController extends AbstractController
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
-        return $this->render('CalderaBundle:City:galleryList.html.twig',
+        return $this->render('AppBundle:City:galleryList.html.twig',
             [
                 'city' => $city,
                 'result' => $result
@@ -142,7 +142,7 @@ class CityController extends AbstractController
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
         if ($blocked) {
-            return $this->render('CalderaBundle:City:blocked.html.twig', [
+            return $this->render('AppBundle:City:blocked.html.twig', [
                 'city' => $city,
                 'blocked' => $blocked
             ]);
@@ -166,7 +166,7 @@ class CityController extends AbstractController
         $this->getMetadata()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity());
 
-        return $this->render('CalderaBundle:City:show.html.twig', [
+        return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
             'dateTime' => $dateTime,

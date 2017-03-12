@@ -48,7 +48,7 @@ class OptimizeTracksCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        $repository = $this->doctrine->getRepository('CalderaBundle:Track');
+        $repository = $this->doctrine->getRepository('AppBundle:Track');
 
         /**
          * @var Track $track

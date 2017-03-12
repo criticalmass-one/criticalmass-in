@@ -123,10 +123,10 @@ class PostController extends AbstractController
                redirected there again. */
             return new RedirectResponse($redirectUrl);
         } elseif ($form->isSubmitted()) {
-            return $this->render('CalderaBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
+            return $this->render('AppBundle:Post:writefailed.html.twig', array('form' => $form->createView(), 'ride' => $ride, 'city' => $city));
         }
 
-        return $this->render('CalderaBundle:Post:write.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:Post:write.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -185,6 +185,6 @@ class PostController extends AbstractController
         $posts = $this->getPostRepository()->findBy($criteria, array('dateTime' => 'DESC'));
 
         /* And render our shit. */
-        return $this->render('CalderaBundle:Post:list.html.twig', array('posts' => $posts));
+        return $this->render('AppBundle:Post:list.html.twig', array('posts' => $posts));
     }
 }

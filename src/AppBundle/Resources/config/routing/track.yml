@@ -1,45 +1,45 @@
 caldera_criticalmass_track_delete:
     path:  /track/delete/{trackId}
-    defaults: { _controller: CalderaBundle:Track:delete }
+    defaults: { _controller: AppBundle:Track:delete }
     options:
         expose: true
 
 caldera_criticalmass_track_toggle:
     path:  /track/toggle/{trackId}
-    defaults: { _controller: CalderaBundle:Track:toggle }
+    defaults: { _controller: AppBundle:Track:toggle }
 
 caldera_criticalmass_track_download:
     path:  /track/download/{trackId}
-    defaults: { _controller: CalderaBundle:Track:download }
+    defaults: { _controller: AppBundle:Track:download }
 
 caldera_criticalmass_track_gpxgenerate:
     path:  /track/generate/{rideId}
-    defaults: { _controller: CalderaBundle:Track:gpxgenerate }
+    defaults: { _controller: AppBundle:Track:gpxgenerate }
 
 caldera_criticalmass_track_list:
     path:  /track/list
-    defaults: { _controller: CalderaBundle:Track:list }
+    defaults: { _controller: AppBundle:Track:list }
 
 caldera_criticalmass_track_upload:
     path:  /{citySlug}/{rideDate}/addtrack
-    defaults: { _controller: CalderaBundle:Track:upload }
+    defaults: { _controller: AppBundle:Track:upload }
 
 caldera_criticalmass_track_view:
     path:  /track/view/{trackId}
-    defaults: { _controller: CalderaBundle:Track:view }
+    defaults: { _controller: AppBundle:Track:view }
 
 caldera_criticalmass_track_range:
     path:  /track/range/{trackId}
-    defaults: { _controller: CalderaBundle:Track:range }
+    defaults: { _controller: AppBundle:Track:range }
 
 caldera_criticalmass_track_time:
     path:  /track/time/{trackId}
-    defaults: { _controller: CalderaBundle:Track:time }
+    defaults: { _controller: AppBundle:Track:time }
 
 caldera_criticalmass_track_draw:
     path:  /{citySlug}/{rideDate}/drawtrack
-    defaults: { _controller: CalderaBundle:Track:draw }
+    defaults: { _controller: AppBundle:Track:draw }
 
 caldera_criticalmass_track_edit:
     path:  /track/edit/{trackId}
-    defaults: { _controller: CalderaBundle:Track:edit }
+    defaults: { _controller: AppBundle:Track:edit }

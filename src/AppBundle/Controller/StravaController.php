@@ -59,7 +59,7 @@ class StravaController extends AbstractController
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
 
         return $this->render(
-            'CalderaBundle:Strava:auth.html.twig',
+            'AppBundle:Strava:auth.html.twig',
             [
                 'authorizationUrl' => $authorizationUrl,
                 'ride' => $ride
@@ -131,7 +131,7 @@ class StravaController extends AbstractController
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
 
         return $this->render(
-            'CalderaBundle:Strava:list.html.twig',
+            'AppBundle:Strava:list.html.twig',
             [
                 'activities' => $activities,
                 'ride' => $ride

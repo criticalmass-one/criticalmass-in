@@ -16,7 +16,7 @@ class ContentManager extends AbstractManager
     {
         parent::__construct($doctrine);
 
-        $this->contentRepository = $this->doctrine->getRepository('CalderaBundle:Content');
+        $this->contentRepository = $this->doctrine->getRepository('AppBundle:Content');
     }
 
     public function getBySlug(string $slug): Content

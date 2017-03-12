@@ -31,7 +31,7 @@ class FrontpageController extends AbstractController
             ->getTimelineContent();
 
         return $this->render(
-            'CalderaBundle:Frontpage:index.html.twig',
+            'AppBundle:Frontpage:index.html.twig',
             [
                 'timelineContent' => $timelineContent,
                 'rideList' => $rideList

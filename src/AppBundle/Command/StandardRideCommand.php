@@ -40,7 +40,7 @@ class StandardRideCommand extends ContainerAwareCommand
         $doctrine = $this->getContainer()->get('doctrine');
         $entityManager = $doctrine->getManager();
 
-        $cities = $doctrine->getRepository('CalderaBundle:City')->findBy(
+        $cities = $doctrine->getRepository('AppBundle:City')->findBy(
             [
                 'isArchived' => false,
                 'enabled' => true

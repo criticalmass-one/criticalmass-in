@@ -14,6 +14,6 @@ class PostManager extends AbstractManager
     {
         parent::__construct($doctrine);
 
-        $this->postRepository = $this->doctrine->getRepository('CalderaBundle:Post');
+        $this->postRepository = $this->doctrine->getRepository('AppBundle:Post');
     }
 }

@@ -37,7 +37,7 @@ class LocationController extends AbstractController
         $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
         return $this->render(
-            'CalderaBundle:Location:show.html.twig',
+            'AppBundle:Location:show.html.twig',
             [
                 'location' => $location,
                 'locations' => $locations,
@@ -62,7 +62,7 @@ class LocationController extends AbstractController
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
         return $this->render(
-            'CalderaBundle:Location:show.html.twig',
+            'AppBundle:Location:show.html.twig',
             [
                 'location' => $location,
                 'locations' => $locations,

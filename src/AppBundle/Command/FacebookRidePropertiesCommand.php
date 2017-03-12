@@ -35,7 +35,7 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
          */
         $fera = $this->getContainer()->get('caldera.criticalmass.facebookapi.eventride');
 
-        $rides = $this->doctrine->getRepository('CalderaBundle:Ride')->findRidesWithFacebookInInterval();
+        $rides = $this->doctrine->getRepository('AppBundle:Ride')->findRidesWithFacebookInInterval();
 
         /**
          * @var Ride $ride

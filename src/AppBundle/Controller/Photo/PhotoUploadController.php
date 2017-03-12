@@ -34,7 +34,7 @@ class PhotoUploadController extends AbstractController
     protected function uploadGetAction(Request $request, Ride $ride = null, Event $event = null)
     {
         return $this->render(
-            'CalderaBundle:PhotoUpload:upload.html.twig',
+            'AppBundle:PhotoUpload:upload.html.twig',
             [
                 'ride' => $ride,
                 'event' => $event

@@ -24,7 +24,7 @@ class BoardController extends AbstractController
         $cities = $this->getCityRepository()->findCitiesWithBoard();
 
         return $this->render(
-            'CalderaBundle:Board:overview.html.twig',
+            'AppBundle:Board:overview.html.twig',
             [
                 'boards' => $boards,
                 'cities' => $cities
@@ -66,7 +66,7 @@ class BoardController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Board:listThreads.html.twig',
+            'AppBundle:Board:listThreads.html.twig',
             [
                 'threads' => $threads,
                 'board' => ($board ? $board : $city),
@@ -96,7 +96,7 @@ class BoardController extends AbstractController
         $this->countThreadView($thread);
 
         return $this->render(
-            'CalderaBundle:Board:viewThread.html.twig',
+            'AppBundle:Board:viewThread.html.twig',
             [
                 'board' => $board,
                 'thread' => $thread,
@@ -136,7 +136,7 @@ class BoardController extends AbstractController
     protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form)
     {
         return $this->render(
-            'CalderaBundle:Board:addThread.html.twig',
+            'AppBundle:Board:addThread.html.twig',
             [
                 'board' => $board,
                 'form' => $form->createView()
@@ -189,7 +189,7 @@ class BoardController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Board:addThread.html.twig',
+            'AppBundle:Board:addThread.html.twig',
             [
                 'board' => $board,
                 'form' => $form->createView()

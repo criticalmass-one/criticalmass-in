@@ -35,7 +35,7 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
 
         $this->initFacebook();
 
-        $cities = $this->doctrine->getRepository('CalderaBundle:City')->findCitiesWithFacebook();
+        $cities = $this->doctrine->getRepository('AppBundle:City')->findCitiesWithFacebook();
 
         /**
          * @var City $city
@@ -79,7 +79,7 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
             return null;
         }
 
-        $rides = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCityAndMonth($city, $month);
+        $rides = $this->doctrine->getRepository('AppBundle:Ride')->findByCityAndMonth($city, $month);
 
         if (count($rides) > 1) {
             $output->writeln('Zu viele Rides für diesen Monat');

@@ -93,7 +93,7 @@ class Timeline
             $templateName = $this->templateNameForItem($item);
 
             $this->content .= $this->templating->render(
-                'CalderaBundle:Timeline/Items:' . $templateName . '.html.twig',
+                'AppBundle:Timeline/Items:' . $templateName . '.html.twig',
                 [
                     'item' => $item
                 ]

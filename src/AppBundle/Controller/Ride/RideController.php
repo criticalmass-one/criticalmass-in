@@ -25,7 +25,7 @@ class RideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Ride:list.html.twig',
+            'AppBundle:Ride:list.html.twig',
             array(
                 'rides' => $rides
             )
@@ -65,7 +65,7 @@ class RideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Ride:show.html.twig',
+            'AppBundle:Ride:show.html.twig',
             array(
                 'city' => $city,
                 'ride' => $ride,

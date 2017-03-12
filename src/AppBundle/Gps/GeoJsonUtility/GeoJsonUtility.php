@@ -1,10 +1,10 @@
 <?php
 
-namespace Caldera\CalderaBundle\Utility\GeoJsonUtility;
+namespace Caldera\AppBundle\Utility\GeoJsonUtility;
 
 
-use Caldera\CalderaBundle\Entity\Track;
-use Caldera\CalderaBundle\Utility\GpxReader\GpxReader;
+use Caldera\AppBundle\Entity\Track;
+use Caldera\AppBundle\Utility\GpxReader\GpxReader;
 
 class GeoJsonUtility
 {

@@ -94,7 +94,7 @@ class RideRepository extends EntityRepository
 
     public function findRideByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
     {
-        $queryString = 'SELECT r AS ride, SQRT((r.latitude - ' . $latitude . ') * (r.latitude - ' . $latitude . ') + (r.longitude - ' . $longitude . ') * (r.longitude - ' . $longitude . ')) AS distance FROM CalderaBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' ORDER BY distance ASC';
+        $queryString = 'SELECT r AS ride, SQRT((r.latitude - ' . $latitude . ') * (r.latitude - ' . $latitude . ') + (r.longitude - ' . $longitude . ') * (r.longitude - ' . $longitude . ')) AS distance FROM AppBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' ORDER BY distance ASC';
 
         $query = $this->getEntityManager()->createQuery($queryString);
         $query->setMaxResults(1);
@@ -109,7 +109,7 @@ class RideRepository extends EntityRepository
 
     public function findCityRideByDate(City $city, \DateTime $dateTime)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM CalderaBundle:Ride r WHERE DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' AND r.city = ' . $city->getId())->setMaxResults(1);
+        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM AppBundle:Ride r WHERE DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' AND r.city = ' . $city->getId())->setMaxResults(1);
 
         $result = $query->getResult();
 

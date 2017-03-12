@@ -29,7 +29,7 @@ trait RepositoryTrait
      */
     protected function getAnonymousNameRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:AnonymousName');
+        return $this->getDoctrine()->getRepository('AppBundle:AnonymousName');
     }
 
     /**
@@ -37,7 +37,7 @@ trait RepositoryTrait
      */
     protected function getBlogRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Blog');
+        return $this->getDoctrine()->getRepository('AppBundle:Blog');
     }
 
 
@@ -46,7 +46,7 @@ trait RepositoryTrait
      */
     protected function getBlockedCityRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:BlockedCity');
+        return $this->getDoctrine()->getRepository('AppBundle:BlockedCity');
     }
 
     /**
@@ -54,7 +54,7 @@ trait RepositoryTrait
      */
     protected function getBlogPostRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:BlogPost');
+        return $this->getDoctrine()->getRepository('AppBundle:BlogPost');
     }
 
     /**
@@ -62,7 +62,7 @@ trait RepositoryTrait
      */
     protected function getBoardRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Board');
+        return $this->getDoctrine()->getRepository('AppBundle:Board');
     }
 
     /**
@@ -70,7 +70,7 @@ trait RepositoryTrait
      */
     protected function getContentRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Content');
+        return $this->getDoctrine()->getRepository('AppBundle:Content');
     }
 
     /**
@@ -78,7 +78,7 @@ trait RepositoryTrait
      */
     protected function getEventRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Event');
+        return $this->getDoctrine()->getRepository('AppBundle:Event');
     }
 
     /**
@@ -86,7 +86,7 @@ trait RepositoryTrait
      */
     protected function getRideRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Ride');
+        return $this->getDoctrine()->getRepository('AppBundle:Ride');
     }
 
     /**
@@ -94,7 +94,7 @@ trait RepositoryTrait
      */
     protected function getCitySlugRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:CitySlug');
+        return $this->getDoctrine()->getRepository('AppBundle:CitySlug');
     }
 
     /**
@@ -102,7 +102,7 @@ trait RepositoryTrait
      */
     protected function getCityRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:City');
+        return $this->getDoctrine()->getRepository('AppBundle:City');
     }
 
     /**
@@ -110,7 +110,7 @@ trait RepositoryTrait
      */
     protected function getFacebookCityPropertiesRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:FacebookCityProperties');
+        return $this->getDoctrine()->getRepository('AppBundle:FacebookCityProperties');
     }
 
     /**
@@ -118,7 +118,7 @@ trait RepositoryTrait
      */
     protected function getFacebookRidePropertiesRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:FacebookRideProperties');
+        return $this->getDoctrine()->getRepository('AppBundle:FacebookRideProperties');
     }
 
     /**
@@ -126,7 +126,7 @@ trait RepositoryTrait
      */
     protected function getLocationRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Location');
+        return $this->getDoctrine()->getRepository('AppBundle:Location');
     }
 
     /**
@@ -134,7 +134,7 @@ trait RepositoryTrait
      */
     protected function getNotificationSubscriptionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:NotificationSubscription');
+        return $this->getDoctrine()->getRepository('AppBundle:NotificationSubscription');
     }
 
     /**
@@ -142,7 +142,7 @@ trait RepositoryTrait
      */
     protected function getRegionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Region');
+        return $this->getDoctrine()->getRepository('AppBundle:Region');
     }
 
     /**
@@ -150,7 +150,7 @@ trait RepositoryTrait
      */
     protected function getPhotoRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Photo');
+        return $this->getDoctrine()->getRepository('AppBundle:Photo');
     }
 
     /**
@@ -158,7 +158,7 @@ trait RepositoryTrait
      */
     protected function getPostRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Post');
+        return $this->getDoctrine()->getRepository('AppBundle:Post');
     }
 
     /**
@@ -166,7 +166,7 @@ trait RepositoryTrait
      */
     protected function getTrackRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Track');
+        return $this->getDoctrine()->getRepository('AppBundle:Track');
     }
 
     /**
@@ -174,7 +174,7 @@ trait RepositoryTrait
      */
     protected function getThreadRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Thread');
+        return $this->getDoctrine()->getRepository('AppBundle:Thread');
     }
 
     /**
@@ -182,7 +182,7 @@ trait RepositoryTrait
      */
     protected function getParticipationRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Participation');
+        return $this->getDoctrine()->getRepository('AppBundle:Participation');
     }
 
     /**
@@ -190,7 +190,7 @@ trait RepositoryTrait
      */
     protected function getPositionRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Position');
+        return $this->getDoctrine()->getRepository('AppBundle:Position');
     }
 
     /**
@@ -198,7 +198,7 @@ trait RepositoryTrait
      */
     protected function getSubrideRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Subride');
+        return $this->getDoctrine()->getRepository('AppBundle:Subride');
     }
 
     /**
@@ -206,7 +206,7 @@ trait RepositoryTrait
      */
     protected function getGlympseTicketRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Ticket');
+        return $this->getDoctrine()->getRepository('AppBundle:Ticket');
     }
 
     /**
@@ -214,6 +214,6 @@ trait RepositoryTrait
      */
     protected function getWeatherRepository()
     {
-        return $this->getDoctrine()->getRepository('CalderaBundle:Weather');
+        return $this->getDoctrine()->getRepository('AppBundle:Weather');
     }
 }

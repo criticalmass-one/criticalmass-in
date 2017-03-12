@@ -51,14 +51,14 @@ class UpdateWeatherCommand extends ContainerAwareCommand
         $halfDateTime = new \DateTime();
         $halfDateTime->sub($halfDayInterval);
 
-        $rides = $this->em->getRepository('CalderaBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
+        $rides = $this->em->getRepository('AppBundle:Ride')->findRidesInInterval($startDateTime, $endDateTime);
 
         $this->output->writeln('Looking for rides from ' . $startDateTime->format('Y-m-d') . ' to ' . $endDateTime->format('Y-m-d'));
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
             /** @var Weather $currentWeather */
-            $currentWeather = $this->em->getRepository('CalderaBundle:Weather')->findCurrentWeatherForRide($ride);
+            $currentWeather = $this->em->getRepository('AppBundle:Weather')->findCurrentWeatherForRide($ride);
 
             if (!$currentWeather || $currentWeather->getCreationDateTime() < $halfDateTime) {
                 $this->retrieveWeather($ride);

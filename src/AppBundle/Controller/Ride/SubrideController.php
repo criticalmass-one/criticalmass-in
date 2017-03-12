@@ -44,7 +44,7 @@ class SubrideController extends AbstractController
     protected function addGetAction(Request $request, Subride $subride, Form $form)
     {
         return $this->render(
-            'CalderaBundle:Subride:edit.html.twig',
+            'AppBundle:Subride:edit.html.twig',
             [
                 'hasErrors' => null,
                 'subride' => null,
@@ -95,7 +95,7 @@ class SubrideController extends AbstractController
         );
         // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
         return $this->render(
-            'CalderaBundle:Subride:edit.html.twig',
+            'AppBundle:Subride:edit.html.twig',
             [
                 'hasErrors' => $hasErrors,
                 'subride' => $subride,
@@ -141,7 +141,7 @@ class SubrideController extends AbstractController
     protected function editGetAction(Request $request, Subride $subride, Form $form)
     {
         return $this->render(
-            'CalderaBundle:Subride:edit.html.twig',
+            'AppBundle:Subride:edit.html.twig',
             [
                 'hasErrors' => null,
                 'subride' => null,
@@ -175,7 +175,7 @@ class SubrideController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Subride:edit.html.twig',
+            'AppBundle:Subride:edit.html.twig',
             [
                 'ride' => $subride->getRide(),
                 'city' => $subride->getRide()->getCity(),
@@ -193,7 +193,7 @@ class SubrideController extends AbstractController
 
         $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($newRide);
 
-        return $this->render('CalderaBundle:Subride:preparecopy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
+        return $this->render('AppBundle:Subride:preparecopy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
 
     public function copyAction(Request $request, $citySlug, $oldDate, $newDate)

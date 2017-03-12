@@ -36,7 +36,7 @@ class ReloadImageExifCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        $photos = $this->doctrine->getRepository('CalderaBundle:Photo')->findAll();
+        $photos = $this->doctrine->getRepository('AppBundle:Photo')->findAll();
 
         /**
          * @var DateTimeExifReader $dter

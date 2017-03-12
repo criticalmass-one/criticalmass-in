@@ -15,7 +15,7 @@ class PhotoManagementController extends AbstractController
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
 
-        return $this->render('CalderaBundle:PhotoManagement:userlist.html.twig',
+        return $this->render('AppBundle:PhotoManagement:userlist.html.twig',
             [
                 'result' => $result
             ]
@@ -44,7 +44,7 @@ class PhotoManagementController extends AbstractController
         );
 
         return $this->render(
-            'CalderaBundle:PhotoManagement:ridelist.html.twig',
+            'AppBundle:PhotoManagement:ridelist.html.twig',
             [
                 'ride' => $ride,
                 'pagination' => $pagination
@@ -67,7 +67,7 @@ class PhotoManagementController extends AbstractController
 
         $this->countView($photo);
 
-        return $this->render('CalderaBundle:PhotoManagement:show.html.twig',
+        return $this->render('AppBundle:PhotoManagement:show.html.twig',
             [
                 'photo' => $photo,
                 'nextPhoto' => $nextPhoto,
@@ -116,7 +116,7 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render('CalderaBundle:PhotoManagement:manage.html.twig',
+        return $this->render('AppBundle:PhotoManagement:manage.html.twig',
             [
                 'ride' => $ride,
                 'pagination' => $pagination
@@ -229,7 +229,7 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
 
-        return $this->render('CalderaBundle:PhotoManagement:place.html.twig',
+        return $this->render('AppBundle:PhotoManagement:place.html.twig',
             [
                 'photo' => $photo,
                 'previousPhoto' => $previousPhoto,
@@ -267,7 +267,7 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
 
-        return $this->render('CalderaBundle:PhotoManagement:relocate.html.twig',
+        return $this->render('AppBundle:PhotoManagement:relocate.html.twig',
             [
                 'ride' => $ride,
                 'photos' => $photos,
@@ -295,7 +295,7 @@ class PhotoManagementController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'CalderaBundle:PhotoManagement:citygallery.html.twig',
+            'AppBundle:PhotoManagement:citygallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList

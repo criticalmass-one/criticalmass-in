@@ -1,27 +1,27 @@
 caldera_criticalmass_timeline_post_write:
     path:     /write
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }
 
 caldera_criticalmass_timeline_post_write_ride:
     path:     /write/ride/{rideId}
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }
 
 caldera_criticalmass_timeline_post_write_city:
     path:     /write/city/{cityId}
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }
 
 caldera_criticalmass_timeline_post_write_photo:
     path:     /write/photo/{photoId}
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }
 
 caldera_criticalmass_timeline_post_write_content:
     path:     /write/content/{contentId}
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }
 
 caldera_criticalmass_timeline_post_write_thread:
     path:     /write/thread/{threadId}
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }
 
 caldera_criticalmass_timeline_post_write_event:
     path:     /write/event/{eventId}
-    defaults: { _controller: CalderaBundle:Post:write }
+    defaults: { _controller: AppBundle:Post:write }

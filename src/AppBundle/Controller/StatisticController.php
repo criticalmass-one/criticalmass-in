@@ -18,7 +18,7 @@ class StatisticController extends AbstractController
         $this->getMetadata()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
-            'CalderaBundle:Statistic:citystatistic.html.twig',
+            'AppBundle:Statistic:citystatistic.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -33,7 +33,7 @@ class StatisticController extends AbstractController
         $frp = $this->getFacebookRidePropertiesRepository()->findByRide($ride);
 
         return $this->render(
-            'CalderaBundle:Statistic:ridestatistic.html.twig',
+            'AppBundle:Statistic:ridestatistic.html.twig',
             [
                 'ride' => $ride,
                 'frp' => $frp
@@ -63,7 +63,7 @@ class StatisticController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Statistic:facebookstatistic.html.twig',
+            'AppBundle:Statistic:facebookstatistic.html.twig',
             [
                 'cities' => $cityList,
                 'filteredProperties' => $filteredProperties,
@@ -108,7 +108,7 @@ class StatisticController extends AbstractController
         $this->getMetadata()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
-            'CalderaBundle:Statistic:overview.html.twig',
+            'AppBundle:Statistic:overview.html.twig',
             [
                 'cities' => $cities,
                 'rides' => $rides,

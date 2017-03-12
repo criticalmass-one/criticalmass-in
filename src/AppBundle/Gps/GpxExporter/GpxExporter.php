@@ -40,11 +40,11 @@ class GpxExporter
     protected function findPositions()
     {
         if ($this->ticket) {
-            $this->positionArray = $this->doctrine->getRepository('CalderaBundle:Position')->findPositionsForTicket($this->ticket);
+            $this->positionArray = $this->doctrine->getRepository('AppBundle:Position')->findPositionsForTicket($this->ticket);
         }
 
         if ($this->criticalmapsUser) {
-            $this->positionArray = $this->doctrine->getRepository('CalderaBundle:Position')->findPositionsForCriticalmapsUser($this->criticalmapsUser);
+            $this->positionArray = $this->doctrine->getRepository('AppBundle:Position')->findPositionsForCriticalmapsUser($this->criticalmapsUser);
         }
     }
 

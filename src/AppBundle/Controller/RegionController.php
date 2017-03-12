@@ -32,7 +32,7 @@ class RegionController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:Region:index.html.twig',
+            'AppBundle:Region:index.html.twig',
             [
                 'region' => $region,
                 'regions' => $regions,

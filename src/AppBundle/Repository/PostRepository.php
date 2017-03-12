@@ -14,7 +14,7 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(post.id)');
-        $qb->from('CalderaBundle:Post', 'post');
+        $qb->from('AppBundle:Post', 'post');
 
         return $qb->getQuery()->getSingleScalarResult();
     }

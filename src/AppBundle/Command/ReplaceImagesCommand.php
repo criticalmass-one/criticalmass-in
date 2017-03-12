@@ -69,15 +69,15 @@ class ReplaceImagesCommand extends ContainerAwareCommand
         }
 
         /** @var Ride $ride */
-        $ride = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->doctrine->getRepository('AppBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
 
         /** @var User $user */
-        $user = $this->doctrine->getRepository('CalderaBundle:User')->findOneByUsername($input->getArgument('username'));
+        $user = $this->doctrine->getRepository('AppBundle:User')->findOneByUsername($input->getArgument('username'));
 
         /** @var Track $track */
-        $track = $this->doctrine->getRepository('CalderaBundle:Track')->findByUserAndRide($ride, $user);
+        $track = $this->doctrine->getRepository('AppBundle:Track')->findByUserAndRide($ride, $user);
 
-        $photos = $this->doctrine->getRepository('CalderaBundle:Photo')->findPhotosByRide($ride);
+        $photos = $this->doctrine->getRepository('AppBundle:Photo')->findPhotosByRide($ride);
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {

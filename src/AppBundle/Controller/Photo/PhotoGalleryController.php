@@ -41,7 +41,7 @@ class PhotoGalleryController extends AbstractController
         );
 
         return $this->render(
-            'CalderaBundle:PhotoGallery:gallerylist.html.twig',
+            'AppBundle:PhotoGallery:gallerylist.html.twig',
             [
                 'ride' => $ride,
                 'event' => $event,
@@ -59,7 +59,7 @@ class PhotoGalleryController extends AbstractController
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
 
-        return $this->render('CalderaBundle:Photo:userlist.html.twig',
+        return $this->render('AppBundle:Photo:userlist.html.twig',
             [
                 'result' => $result
             ]
@@ -85,7 +85,7 @@ class PhotoGalleryController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'CalderaBundle:PhotoGallery:examplegallery.html.twig',
+            'AppBundle:PhotoGallery:examplegallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList

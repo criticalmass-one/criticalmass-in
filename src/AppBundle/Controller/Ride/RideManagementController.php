@@ -1,12 +1,12 @@
 <?php
 
-namespace Caldera\Bundle\CalderaBundle\Controller\Ride;
+namespace Caldera\Bundle\AppBundle\Controller\Ride;
 
-use Caldera\Bundle\CalderaBundle\Controller\AbstractController;
-use Caldera\Bundle\CalderaBundle\Entity\City;
-use Caldera\Bundle\CalderaBundle\Entity\Ride;
-use Caldera\Bundle\CalderaBundle\Facebook\FacebookEventRideApi;
-use Caldera\Bundle\CalderaBundle\Form\Type\RideType;
+use Caldera\Bundle\AppBundle\Controller\AbstractController;
+use Caldera\Bundle\AppBundle\Entity\City;
+use Caldera\Bundle\AppBundle\Entity\Ride;
+use Caldera\Bundle\AppBundle\Facebook\FacebookEventRideApi;
+use Caldera\Bundle\AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,7 +45,7 @@ class RideManagementController extends AbstractController
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render(
-            'CalderaBundle:RideManagement:edit.html.twig',
+            'AppBundle:RideManagement:edit.html.twig',
             [
                 'hasErrors' => null,
                 'ride' => null,
@@ -95,7 +95,7 @@ class RideManagementController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:RideManagement:edit.html.twig',
+            'AppBundle:RideManagement:edit.html.twig',
             array(
                 'hasErrors' => $hasErrors,
                 'ride' => $ride,
@@ -138,7 +138,7 @@ class RideManagementController extends AbstractController
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render(
-            'CalderaBundle:RideManagement:edit.html.twig',
+            'AppBundle:RideManagement:edit.html.twig',
             array(
                 'ride' => $ride,
                 'city' => $city,
@@ -176,7 +176,7 @@ class RideManagementController extends AbstractController
         }
 
         return $this->render(
-            'CalderaBundle:RideManagement:edit.html.twig',
+            'AppBundle:RideManagement:edit.html.twig',
             array(
                 'ride' => $ride,
                 'city' => $city,
@@ -213,7 +213,7 @@ class RideManagementController extends AbstractController
         );
 
         return $this->render(
-            'CalderaBundle:RideManagement:facebookUpdate.html.twig',
+            'AppBundle:RideManagement:facebookUpdate.html.twig',
             [
                 'city' => $ride->getCity(),
                 'ride' => $ride,

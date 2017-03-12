@@ -16,7 +16,7 @@ class RideTabsController extends AbstractController
         $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
 
         return $this->render(
-            'CalderaBundle:RideTabs:GalleryTab.html.twig',
+            'AppBundle:RideTabs:GalleryTab.html.twig',
             [
                 'ride' => $ride,
                 'photos' => $photos,
@@ -30,7 +30,7 @@ class RideTabsController extends AbstractController
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
         return $this->render(
-            'CalderaBundle:RideTabs:TracksTab.html.twig',
+            'AppBundle:RideTabs:TracksTab.html.twig',
             [
                 'ride' => $ride,
                 'tracks' => $tracks,
@@ -42,7 +42,7 @@ class RideTabsController extends AbstractController
     public function renderPostsTabAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaBundle:RideTabs:PostsTab.html.twig',
+            'AppBundle:RideTabs:PostsTab.html.twig',
             [
                 'ride' => $ride,
             ]
@@ -54,7 +54,7 @@ class RideTabsController extends AbstractController
         $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
 
         return $this->render(
-            'CalderaBundle:RideTabs:SubridesTab.html.twig',
+            'AppBundle:RideTabs:SubridesTab.html.twig',
             [
                 'ride' => $ride,
                 'subrides' => $subrides,
@@ -66,7 +66,7 @@ class RideTabsController extends AbstractController
     public function renderStatisticTabAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaBundle:RideTabs:StatisticTab.html.twig',
+            'AppBundle:RideTabs:StatisticTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime()
@@ -77,7 +77,7 @@ class RideTabsController extends AbstractController
     public function renderMusicTabAction(Request $request, Ride $ride)
     {
         return $this->render(
-            'CalderaBundle:RideTabs:MusicTab.html.twig',
+            'AppBundle:RideTabs:MusicTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime()
@@ -115,7 +115,7 @@ class RideTabsController extends AbstractController
         $location = $this->getLocationRepository()->findLocationForRide($ride);
 
         return $this->render(
-            'CalderaBundle:RideTabs:DetailsTab.html.twig',
+            'AppBundle:RideTabs:DetailsTab.html.twig',
             [
                 'ride' => $ride,
                 'dateTime' => new \DateTime(),

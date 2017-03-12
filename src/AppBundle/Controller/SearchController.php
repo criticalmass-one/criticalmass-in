@@ -122,7 +122,7 @@ class SearchController extends AbstractController
 
         $results = $transformer->transform($resultSet->getResults());
 
-        return $this->render('CalderaBundle:Search:result.html.twig',
+        return $this->render('AppBundle:Search:result.html.twig',
             [
                 'results' => $results,
                 'resultSet' => $resultSet,

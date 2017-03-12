@@ -103,14 +103,14 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getUser(int $userId): User
     {
-        $user = $this->manager->getRepository('CalderaBundle:User')->find($userId);
+        $user = $this->manager->getRepository('AppBundle:User')->find($userId);
 
         return $user;
     }
 
     protected function getEntity(string $className, int $entityId): ViewableInterface
     {
-        $entity = $this->manager->getRepository('CalderaBundle:' . $className)->find($entityId);
+        $entity = $this->manager->getRepository('AppBundle:' . $className)->find($entityId);
 
         return $entity;
     }

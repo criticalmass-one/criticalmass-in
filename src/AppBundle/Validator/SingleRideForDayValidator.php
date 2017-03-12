@@ -23,7 +23,7 @@ class SingleRideForDayValidator extends ConstraintValidator
     {
         $city = $ride->getCity();
 
-        $rideList = $this->manager->getRepository('CalderaBundle:Ride')->findRidesForCity($city);
+        $rideList = $this->manager->getRepository('AppBundle:Ride')->findRidesForCity($city);
 
         /** @var Ride $oldRide */
         foreach ($rideList as $oldRide) {

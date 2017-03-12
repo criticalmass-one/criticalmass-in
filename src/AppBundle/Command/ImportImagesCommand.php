@@ -75,13 +75,13 @@ class ImportImagesCommand extends ContainerAwareCommand
 
         $this->manager = $this->doctrine->getManager();
 
-        $this->ride = $this->doctrine->getRepository('CalderaBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
-        $this->user = $this->doctrine->getRepository('CalderaBundle:User')->findOneByUsername($input->getArgument('username'));
+        $this->ride = $this->doctrine->getRepository('AppBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $this->user = $this->doctrine->getRepository('AppBundle:User')->findOneByUsername($input->getArgument('username'));
 
         $this->dter = $this->getContainer()->get('caldera.criticalmass.image.exifreader.datetime');
         $this->pgps = $this->getContainer()->get('caldera.criticalmass.image.photogps');
 
-        $this->track = $this->doctrine->getRepository('CalderaBundle:Track')->findByUserAndRide($this->ride, $this->user);
+        $this->track = $this->doctrine->getRepository('AppBundle:Track')->findByUserAndRide($this->ride, $this->user);
 
         $fileList = $this->getImageFileList($input);
 

@@ -67,7 +67,7 @@ class SecurityController extends Controller
                 break;
         }
 
-        return $this->render('CalderaBundle:Security:' . $templateName, $data);
+        return $this->render('AppBundle:Security:' . $templateName, $data);
     }
 
     public function loginFormModalAction(Request $request): Response

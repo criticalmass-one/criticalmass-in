@@ -9,7 +9,7 @@ class RideCommentCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities()
     {
-        return $this->doctrine->getRepository('CalderaBundle:Post')->findForTimelineRideCommentCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository('AppBundle:Post')->findForTimelineRideCommentCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $entities)
