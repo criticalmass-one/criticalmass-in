@@ -10,13 +10,15 @@ define(['typeahead', 'bloodhound', 'dateformat'], function () {
     Search.prototype._bloodhound = null;
 
     Search.prototype._initBloodhound = function () {
+        var url = Routing.generate('caldera_criticalmass_search_prefetch', true);
+
         this._bloodhound = new Bloodhound({
             datumTokenizer: function (data) {
                 return Bloodhound.tokenizers.whitespace(data.value);
             },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: {
-                url: '/app_dev.php/search/prefetch',
+                url: url,
                 cache: true,
                 ttl: 3600
             }

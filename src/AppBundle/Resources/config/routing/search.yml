@@ -5,3 +5,5 @@ caldera_criticalmass_search_query:
 caldera_criticalmass_search_prefetch:
     path:  /search/prefetch
     defaults: { _controller: AppBundle:Search:prefetch }
+    options:
+        expose: true
