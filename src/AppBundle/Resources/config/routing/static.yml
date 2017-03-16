@@ -1,0 +1,3 @@
+caldera_criticalmass_static_display:
+    path: /content/{slug}
+    defaults: { _controller: AppBundle:Static:displayStaticContent }
