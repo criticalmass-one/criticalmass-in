@@ -8,6 +8,7 @@ use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\ORM\EntityManager;
 use Memcached;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -24,9 +25,11 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
     /** @var OutputInterface $output */
     protected $output = null;
 
-    public function __construct(MemcachedCache $cache, $doctrine)
+    protected $cache = null;
+
+    public function __construct($doctrine)
     {
-        $this->cache = $cache;
+        $this->cache = new FilesystemAdapter();
         $this->doctrine = $doctrine;
         $this->manager = $doctrine->getManager();
     }
@@ -40,19 +43,17 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     public function persistViews(): ViewStoragePersisterInterface
     {
-        /** @var Memcached $cache */
-        $cache = $this->cache->getMemcached();
+        $viewStorageItem = $this->cache->getItem('view_storage');
 
-        $viewStorage = $cache->get('view_storage');
-        $cache->delete('view_storage');
+        if ($viewStorageItem->isHit()) {
+            $viewArrayList = $viewStorageItem->get();
 
-        if (!$viewStorage || !is_array($viewStorage) || !count($viewStorage)) {
-            return $this;
+            foreach ($viewArrayList as $viewArray) {
+                $this->storeView($viewArray);
+            }
         }
 
-        foreach ($viewStorage as $view) {
-            $this->storeView($view);
-        }
+        $this->cache->deleteItem('view_storage');
 
         $this->manager->flush();
 
