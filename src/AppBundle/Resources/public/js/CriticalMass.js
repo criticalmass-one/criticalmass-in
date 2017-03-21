@@ -14,7 +14,7 @@ require.config({
     baseUrl: '/bundles/app/',
     paths:
     {
-        "CityEntity": "/bundles//js/modules/entity/CityEntity",
+        "CityEntity": "/bundles/app/js/modules/entity/CityEntity",
         "WritePost": "/bundles/app/js/modules/WritePost",
         "CriticalService": "/bundles/app/js/modules/CriticalService",
         "RideEntity": "/bundles/app/js/modules/entity/RideEntity",
