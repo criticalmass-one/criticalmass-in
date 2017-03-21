@@ -5,12 +5,10 @@ namespace AppBundle\ViewStorage;
 use AppBundle\Entity\User;
 use AppBundle\EntityInterface\ViewableInterface;
 use AppBundle\EntityInterface\ViewInterface;
-use Doctrine\Common\Cache\MemcachedCache;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Memcached;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStoragePersister implements ViewStoragePersisterInterface
 {
@@ -19,15 +17,13 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
     /** @var EntityManager $manager */
     protected $manager;
 
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
     /** @var OutputInterface $output */
     protected $output = null;
 
+    /** @var FilesystemAdapter $cache */
     protected $cache = null;
 
-    public function __construct($doctrine)
+    public function __construct(Registry $doctrine)
     {
         $this->cache = new FilesystemAdapter();
         $this->doctrine = $doctrine;
