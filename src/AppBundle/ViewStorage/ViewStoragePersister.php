@@ -8,6 +8,7 @@ use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ViewStoragePersister implements ViewStoragePersisterInterface
@@ -25,7 +26,14 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     public function __construct(Registry $doctrine)
     {
-        $this->cache = new FilesystemAdapter();
+        $redisConnection = RedisAdapter::createConnection('redis://localhost');
+
+        $this->cache = new RedisAdapter(
+            $redisConnection,
+            $namespace = '',
+            $defaultLifetime = 0
+        );
+
         $this->doctrine = $doctrine;
         $this->manager = $doctrine->getManager();
     }
