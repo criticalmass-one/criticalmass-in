@@ -95,7 +95,8 @@ require.config({
         "bloodhound": "/bundles/app/js/external/typeahead/bloodhound",
         "jquery": "/bundles/app/js/external/jquery/jquery-2.1.4.min",
         "dateformat": "/bundles/app/js/external/dateformat/dateformat",
-        "chartjs": "/bundles/app/js/external/chartjs/chartjs"
+        "chartjs": "/bundles/app/js/external/chartjs/chartjs",
+        "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min"
     },
     shim: {
         'leaflet-locate': {
