@@ -7,7 +7,7 @@ use AppBundle\EntityInterface\ViewableInterface;
 use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,7 +21,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
     /** @var OutputInterface $output */
     protected $output = null;
 
-    /** @var FilesystemAdapter $cache */
+    /** @var AbstractAdapter $cache */
     protected $cache = null;
 
     public function __construct(Registry $doctrine)

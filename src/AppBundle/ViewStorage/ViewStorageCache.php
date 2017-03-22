@@ -4,13 +4,13 @@ namespace AppBundle\ViewStorage;
 
 use AppBundle\Entity\User;
 use AppBundle\EntityInterface\ViewableInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
-    /** @var FilesystemAdapter $cache */
+    /** @var AbstractAdapter $cache */
     protected $cache;
 
     /** @var TokenStorageInterface $tokenStorage */
