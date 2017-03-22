@@ -1,4 +1,4 @@
-define(['Marker'], function () {
+define(['Marker', 'leaflet-extramarkers'], function () {
     CityMarker = function (latLng, draggable) {
         this._latLng = latLng;
         this._draggable = draggable;
@@ -8,15 +8,12 @@ define(['Marker'], function () {
     CityMarker.prototype.constructor = CityMarker;
 
     CityMarker.prototype._initIcon = function () {
-        this._icon = L.icon({
-            iconUrl: this._baseIconUrl + 'marker-red.png',
-            iconRetinaUrl: this._baseIconUrl + 'marker-red-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [13, 41],
-            popupAnchor: [0, -36],
-            shadowUrl: this._baseIconUrl + 'defaultshadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [13, 41]
+        this._icon = L.ExtraMarkers.icon({
+            icon: 'fa-university',
+            markerColor: 'red',
+            iconColor: 'white',
+            shape: 'circle',
+            prefix: 'fa'
         });
     };
 
