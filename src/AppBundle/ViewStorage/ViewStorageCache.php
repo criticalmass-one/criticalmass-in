@@ -31,7 +31,7 @@ class ViewStorageCache implements ViewStorageCacheInterface
 
     public function countView(ViewableInterface $viewable)
     {
-        $viewStorageItem = $this->cache->getItem('view_storage');
+        $viewStorageItem = $this->cache->getItem('criticalmass-view_storage');
 
         if (!$viewStorageItem->isHit()) {
             $viewStorage = [];

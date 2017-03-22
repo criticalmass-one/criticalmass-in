@@ -19,7 +19,7 @@ class CachedTimeline extends Timeline
     }
     public function execute(): Timeline
     {
-        $cacheKey = 'timeline-content';
+        $cacheKey = 'criticalmass-timeline-content';
 
         if ($this->startDateTime) {
             $cacheKey .= '-start-' . $this->startDateTime->format('Y-m-d');

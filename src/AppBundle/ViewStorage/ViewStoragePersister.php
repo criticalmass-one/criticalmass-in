@@ -47,7 +47,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     public function persistViews(): ViewStoragePersisterInterface
     {
-        $viewStorageItem = $this->cache->getItem('view_storage');
+        $viewStorageItem = $this->cache->getItem('criticalmass-view_storage');
 
         if ($viewStorageItem->isHit()) {
             $viewArrayList = $viewStorageItem->get();
@@ -57,7 +57,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
             }
         }
 
-        $this->cache->deleteItem('view_storage');
+        $this->cache->deleteItem('criticalmass-view_storage');
 
         $this->manager->flush();
 
