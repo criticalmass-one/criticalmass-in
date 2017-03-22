@@ -21,13 +21,27 @@ class SingleRideForDayValidator extends ConstraintValidator
      */
     public function validate($ride, Constraint $constraint): void
     {
+        if (!$ride->getId()) {
+            // ride is created, there may not be any rides at this date
+            $maxRidesPerDay = 0;
+        } else {
+            // ride is edited, there may be the previous saved entity
+            $maxRidesPerDay = 1;
+        }
+
         $city = $ride->getCity();
 
         $rideList = $this->manager->getRepository('AppBundle:Ride')->findRidesForCity($city);
 
+        $foundRidesForSameDay = 0;
+
         /** @var Ride $oldRide */
         foreach ($rideList as $oldRide) {
             if ($oldRide->getDateTime()->format('Y-m-d') === $ride->getDateTime()->format('Y-m-d')) {
+                ++$foundRidesForSameDay;
+            }
+
+            if ($foundRidesForSameDay > $maxRidesPerDay) {
                 $this
                     ->context
                     ->buildViolation($constraint->message)
