@@ -6,3 +6,11 @@
 @import "criticalmass/_navigation.scss";
 @import "criticalmass/_transit.scss";
 @import "external/leaflet/_extramarkers.scss";
+
+.form-control.datepicker {
+  padding: 0.5rem 0.75rem !important;
+}
+
+.input-daterange input {
+  text-align: left !important;
+}
