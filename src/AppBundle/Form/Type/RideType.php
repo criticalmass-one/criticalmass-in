@@ -20,7 +20,11 @@ class RideType extends AbstractType
             ->add('description', TextareaType::class, array('required' => false))
             ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
-                'view_timezone' => 'Europe/Berlin'
+                'view_timezone' => 'Europe/Berlin',
+                'date_widget' => 'single_text',
+                'date_format' => 'dd.MM.yyyy', //here
+                'time_widget' => 'single_text',
+                'compound' => true
             ])
             ->add('location', TextType::class, array('required' => false))
             ->add('latitude', HiddenType::class)

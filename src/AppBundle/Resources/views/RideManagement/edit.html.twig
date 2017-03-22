@@ -151,12 +151,15 @@
                             <label class="control-label" for="dateTime">
                                 Datum und Uhrzeit:
                             </label>
-                            {% if form_errors(form.dateTime) %}
-                                <div class="alert alert-danger">
-                                {{ form_errors(form.dateTime) }}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control datepicker' } }) }}
                                 </div>
-                            {% endif %}
-                            {{ form_widget(form.dateTime, { 'attr' : { 'class': 'form-control' } }) }}
+
+                                <div class="col-md-6">
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
