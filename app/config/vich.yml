@@ -16,3 +16,8 @@ vich_uploader:
             uri_prefix:         /cities
             upload_destination: %kernel.root_dir%/../web/cities
             namer:              vich_uploader.namer_uniqid
+
+        ride_photo:
+            uri_prefix:         /rides
+            upload_destination: %kernel.root_dir%/../web/rides
+            namer:              vich_uploader.namer_uniqid
