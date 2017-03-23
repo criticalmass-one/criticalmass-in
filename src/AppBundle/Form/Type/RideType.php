@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RideType extends AbstractType
 {
@@ -35,7 +36,13 @@ class RideType extends AbstractType
             ->add('hasLocation', CheckboxType::class)
             ->add('hasTime', CheckboxType::class)
             ->add('save', SubmitType::class)
-            ->add('archiveMessage', TextType::class, array('required' => true));
+            ->add('archiveMessage', TextType::class, array('required' => true))
+            ->add('imageFile',
+                VichFileType::class,
+                [
+                    'required' => false
+                ])
+        ;
     }
 
     public function getName()
