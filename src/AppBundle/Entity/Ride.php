@@ -8,14 +8,17 @@ use AppBundle\EntityInterface\ParticipateableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as CriticalAssert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="ride")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
+ * @Vich\Uploadable
  */
 class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
 {
@@ -251,6 +254,20 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\OrderBy({"creationDateTime" = "DESC"})
      */
     protected $weathers;
+
+    /**
+     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName")
+     *
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $imageName;
 
     /**
      * Get id
@@ -1247,5 +1264,41 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->archiveMessage = '';
 
         return $archivedRide;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }
