@@ -896,6 +896,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->standardLongitude;
     }
 
+    /**
+     * @deprecated
+     */
     public function getEventDateTimeLocationString()
     {
         $result = $this->getEventDateTimeString();
@@ -907,6 +910,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $result;
     }
 
+    /**
+     * @deprecated
+     */
     public function getEventDateTimeString()
     {
         $weekDays = array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag');
@@ -995,11 +1001,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->longDescription;
     }
 
+    /**
+     * @deprecated
+     */
     public function countRides()
     {
         return count($this->getActiveRides());
     }
 
+    /**
+     * @deprecated
+     */
     public function getActiveRides()
     {
         $result = array();
@@ -1013,6 +1025,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $result;
     }
 
+    /**
+     * @deprecated
+     */
     public function getCurrentRide()
     {
         $currentRide = null;
