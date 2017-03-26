@@ -18,12 +18,10 @@
     </li>
 {% endblock %}
 
-{% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
-
 {% block additionalHeaderElements %}
     <meta property="og:title" content="{{ ride.fancyTitle }}" />
     <meta property="og:type" content="Website" />
-    <meta property="og:url" content="{{ currentPath }}" />
+    <meta property="og:url" content="{{ url('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="criticalmass.in" />
     <meta name="twitter:card" content="summary_large_image" />
