@@ -19,6 +19,7 @@ class RideType extends AbstractType
         $builder
             ->add('title', TextType::class, array('required' => false))
             ->add('description', TextareaType::class, array('required' => false))
+            ->add('socialDescription', TextareaType::class, ['required' => false])
             ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'Europe/Berlin',

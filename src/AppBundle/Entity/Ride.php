@@ -70,6 +70,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $description;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $socialDescription;
+
+    /**
      * @ORM\Column(type="datetime")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
@@ -268,6 +273,19 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @var string
      */
     private $imageName;
+
+
+    public function __construct()
+    {
+        $this->dateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->visibleSince = new \DateTime();
+        $this->visibleUntil = new \DateTime();
+        $this->expectedStartDateTime = new \DateTime();
+        $this->archiveDateTime = new \DateTime();
+        $this->latitude = 0.0;
+        $this->longitude = 0.0;
+    }
 
     /**
      * Get id
@@ -487,6 +505,18 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->description;
     }
 
+    public function setSocialDescription(string $socialDescription): Ride
+    {
+        $this->socialDescription = $socialDescription;
+
+        return $this;
+    }
+
+    public function getSocialDescription(): ?string
+    {
+        return $this->socialDescription;
+    }
+
     public function isEqual(Ride $ride)
     {
         return $ride->getId() == $this->getId();
@@ -511,17 +541,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         }
     }
 
-    public function __construct()
-    {
-        $this->dateTime = new \DateTime();
-        $this->createdAt = new \DateTime();
-        $this->visibleSince = new \DateTime();
-        $this->visibleUntil = new \DateTime();
-        $this->expectedStartDateTime = new \DateTime();
-        $this->archiveDateTime = new \DateTime();
-        $this->latitude = 0.0;
-        $this->longitude = 0.0;
-    }
 
     /**
      * Set estimatedParticipants

@@ -268,6 +268,20 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="socialDescription">
+                                Social-Beschreibung:
+                            </label>
+                            {{ form_widget(form.socialDescription, { 'attr' : { 'class': 'form-control' } }) }}
+                            <p class="help-block">
+                                Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken wie facebook und twitter angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.archiveMessage) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="url">
                                 Zusammenfassung deiner Bearbeitung:
