@@ -37,7 +37,7 @@
         <meta property="og:description" content="{{ ride.description }}" />
     {% endif %}
 
-    {% if ride.imageFile %}
+    {% if ride.imageName %}
         <meta property="og:image" content="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
         <meta name="twitter:image" content="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
     {% elseif ride.featuredPhoto %}
