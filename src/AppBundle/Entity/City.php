@@ -1518,7 +1518,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
             ->setArchiveDateTime(new \DateTime())
             ->setArchiveParent($this)
             ->setArchiveUser($user)
-            ->setArchiveMessage($this->archiveMessage);
+            ->setArchiveMessage($this->archiveMessage)
+            ->setImageFile(null)
+        ;
 
         $this->archiveMessage = '';
 
