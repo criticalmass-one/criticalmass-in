@@ -43,7 +43,8 @@
         "cmfcmf/openweathermap-php-api": "^2.1",
         "sonata-project/intl-bundle": "^2.3",
         "nelmio/api-doc-bundle": "^2.13",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "miljar/php-exif": "^0.6.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
