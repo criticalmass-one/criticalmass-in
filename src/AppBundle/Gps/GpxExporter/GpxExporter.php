@@ -89,15 +89,8 @@ class GpxExporter
 
             $writer->startElement('time');
 
-            /* Well, only positions provided by Glympse or external tools provide the timestamp of a position.
-             * Critical Maps only provides latitude and longitude, so we need to generate the timestamp ourself.
-             */
-            if ($position->getCriticalmapsUser()) {
-                $dateTime = $position->getCreationDateTime();
-            } else {
-                $dateTime = new \DateTime();
-                $dateTime->setTimestamp($position->getTimestamp());
-            }
+            $dateTime = new \DateTime();
+            $dateTime->setTimestamp($position->getTimestamp());
 
             $writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
 
