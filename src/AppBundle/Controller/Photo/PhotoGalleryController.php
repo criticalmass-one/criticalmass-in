@@ -3,34 +3,25 @@
 namespace AppBundle\Controller\Photo;
 
 use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Event;
+use AppBundle\Entity\City;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoGalleryController extends AbstractController
 {
-    public function galleryAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null)
+    public function galleryAction(Request $request, string $citySlug, string $rideDate): Response
     {
         /** @var Ride $ride */
-        $ride = null;
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
-        /** @var Event $event */
-        $event = null;
-
-        if ($rideDate) {
-            $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
-            if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
-                throw $this->createAccessDeniedException();
-            }
-
-            $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
-        } else {
-            $event = $this->getEventRepository()->findOneBySlug($eventSlug);
-
-            $query = $this->getPhotoRepository()->buildQueryPhotosByEvent($event);
+        if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
+            throw $this->createAccessDeniedException();
         }
+
+        $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
 
         $paginator = $this->get('knp_paginator');
 
@@ -44,38 +35,32 @@ class PhotoGalleryController extends AbstractController
             'AppBundle:PhotoGallery:gallerylist.html.twig',
             [
                 'ride' => $ride,
-                'event' => $event,
-                'pagination' => $pagination
+                'pagination' => $pagination,
             ]
         );
     }
 
-    public function ridegallerylistAction(Request $request)
+    public function userlistAction(Request $request, UserInterface $user): Response
     {
+        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
-    }
-
-    public function userlistAction(Request $request)
-    {
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
-
-        return $this->render('AppBundle:Photo:userlist.html.twig',
+        return $this->render(
+            'AppBundle:Photo:userlist.html.twig',
             [
-                'result' => $result
+                'result' => $result,
             ]
         );
     }
 
-    public function examplegalleryAction(Request $request)
+    public function examplegalleryAction(Request $request): Response
     {
         $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
         $cityList = [];
 
-        /**
-         * @var Photo $photo
-         */
+        /** @var Photo $photo */
         foreach ($photos as $photo) {
+            /** @var City $city */
             $city = $photo->getRide()->getCity();
             $citySlug = $city->getSlug();
 
@@ -88,7 +73,7 @@ class PhotoGalleryController extends AbstractController
             'AppBundle:PhotoGallery:examplegallery.html.twig',
             [
                 'photos' => $photos,
-                'cities' => $cityList
+                'cities' => $cityList,
             ]
         );
     }
