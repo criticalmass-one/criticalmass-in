@@ -3,12 +3,11 @@ define(['dropzone'], function (Dropzone) {
         this._loadStyles();
     };
 
-
     UploadPhotoPage.prototype._loadStyles = function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
-            href: '/bundles/calderacriticalmasssite/css/external/dropzone.basic.css'
+            href: '/bundles/app/css/external/dropzone.basic.css'
         });
 
         $link.appendTo('head');

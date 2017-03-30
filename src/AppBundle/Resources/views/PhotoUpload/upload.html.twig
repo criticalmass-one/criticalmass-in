@@ -1,10 +1,6 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% if event %}
-    {% set city = event.city %}
-{% else %}
-    {% set city = ride.city %}
-{% endif %}
+{% set city = ride.city %}
 
 {% block title %}Fotos hochladen{% endblock %}
 
@@ -22,15 +18,9 @@
     </li>
 
     <li>
-        {% if ride %}
-            <a href="{{ objectPath(ride) }}">
-                {{ ride.getFancyTitle() }}
-            </a>
-        {% else %}
-            <a href="{{ objectPath(event) }}">
-                {{ event.title }}
-            </a>
-        {% endif %}
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
     </li>
 
     <li class="active">

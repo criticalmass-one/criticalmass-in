@@ -84,6 +84,6 @@ class PhotoUploadController extends AbstractController
             $em->flush();
         }
 
-        return new Response('foo');
+        return new Response('');
     }
 }
