@@ -3,7 +3,6 @@
 namespace AppBundle\Controller\Photo;
 
 use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Event;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
 use AppBundle\Image\ExifReader\DateTimeExifReader;
@@ -13,36 +12,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PhotoUploadController extends AbstractController
 {
-    public function uploadAction(Request $request, $citySlug, $rideDate = null, $eventSlug = null)
+    public function uploadAction(Request $request, $citySlug, $rideDate): Response
     {
-        $ride = null;
-        $event = null;
-
-        if ($rideDate) {
-            $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-        } else {
-            $event = $this->getEventRepository()->findOneBySlug($eventSlug);
-        }
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         if ($request->getMethod() == 'POST') {
-            return $this->uploadPostAction($request, $ride, $event);
+            return $this->uploadPostAction($request, $ride);
         } else {
-            return $this->uploadGetAction($request, $ride, $event);
+            return $this->uploadGetAction($request, $ride);
         }
     }
 
-    protected function uploadGetAction(Request $request, Ride $ride = null, Event $event = null)
+    protected function uploadGetAction(Request $request, Ride $ride): Response
     {
         return $this->render(
             'AppBundle:PhotoUpload:upload.html.twig',
             [
                 'ride' => $ride,
-                'event' => $event
             ]
         );
     }
 
-    protected function uploadPostAction(Request $request, Ride $ride = null, Event $event = null)
+    protected function uploadPostAction(Request $request, Ride $ride): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -51,15 +42,8 @@ class PhotoUploadController extends AbstractController
         $photo->setImageFile($request->files->get('file'));
         $photo->setUser($this->getUser());
 
-        if ($ride) {
-            $photo->setRide($ride);
-            $photo->setCity($ride->getCity());
-        }
-
-        if ($event) {
-            $photo->setEvent($event);
-            $photo->setCity($event->getCity());
-        }
+        $photo->setRide($ride);
+        $photo->setCity($ride->getCity());
 
         $em->persist($photo);
         $em->flush();
