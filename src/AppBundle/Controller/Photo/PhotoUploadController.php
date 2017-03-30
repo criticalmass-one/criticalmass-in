@@ -5,7 +5,6 @@ namespace AppBundle\Controller\Photo;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
-use AppBundle\Image\ExifReader\DateTimeExifReader;
 use AppBundle\Image\PhotoGps\PhotoGps;
 use PHPExif\Reader\Reader;
 use Symfony\Component\HttpFoundation\Request;
