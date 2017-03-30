@@ -7,6 +7,7 @@ use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
 use AppBundle\Image\ExifReader\DateTimeExifReader;
 use AppBundle\Image\PhotoGps\PhotoGps;
+use PHPExif\Reader\Reader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -60,17 +61,18 @@ class PhotoUploadController extends AbstractController
     protected function findDateTime(Photo $photo): bool
     {
         try {
-            /**
-             * @var DateTimeExifReader $dter
-             */
-            $dter = $this->get('caldera.criticalmass.image.exifreader.datetime');
+            $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+            $path = $this->getParameter('kernel.root_dir').'/../web/'.$helper->asset($photo, 'imageFile');
 
-            $dateTime = $dter
-                ->setPhoto($photo)
-                ->execute()
-                ->getDateTime();
+            $reader = Reader::factory(Reader::TYPE_NATIVE);
 
-            $photo->setDateTime($dateTime);
+            $exif = $reader->getExifFromFile($path);
+
+            if ($dateTime = $exif->getCreationDate()) {
+                $photo->setDateTime($dateTime);
+            } else {
+                return false;
+            }
         } catch (\Exception $e) {
             return false;
         }
