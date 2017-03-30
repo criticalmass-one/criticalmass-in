@@ -8,14 +8,16 @@ use AppBundle\Form\Type\PhotoCoordType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoManagementController extends AbstractController
 {
-    public function listAction(Request $request)
+    public function listAction(Request $request, UserInterface $user)
     {
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($this->getUser());
+        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
-        return $this->render('AppBundle:PhotoManagement:userlist.html.twig',
+        return $this->render(
+            'AppBundle:PhotoManagement:userlist.html.twig',
             [
                 'result' => $result
             ]

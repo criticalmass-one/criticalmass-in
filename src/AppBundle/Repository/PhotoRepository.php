@@ -78,19 +78,19 @@ class PhotoRepository extends EntityRepository
     }
 
 
-    public function findRidesWithPhotoCounterByUser(User $user)
+    public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');
 
-        $builder->select('photo');
-        $builder->addSelect('COUNT(photo)');
-
-        $builder->where($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->groupBy('photo.ride');
-
-        $builder->join('photo.ride', 'ride');
-        $builder->orderBy('ride.dateTime', 'desc');
+        $builder
+            ->select('photo')
+            ->addSelect('COUNT(photo)')
+            ->where($builder->expr()->eq('photo.deleted', 0))
+            ->andWhere($builder->expr()->eq('photo.user', $user->getId()))
+            ->groupBy('photo.ride')
+            ->join('photo.ride', 'ride')
+            ->orderBy('ride.dateTime', 'desc')
+        ;
 
         $query = $builder->getQuery();
         $result = $query->getResult();
