@@ -97,3 +97,7 @@ caldera_criticalmass_sudride:
 caldera_criticalmass_static:
     resource: "@AppBundle/Resources/config/routing/static.yml"
     prefix: /
+
+caldera_criticalmass_redirecting:
+    resource: "@AppBundle/Resources/config/routing/redirecting.yml"
+    prefix: /
