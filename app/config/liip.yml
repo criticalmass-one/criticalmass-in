@@ -14,7 +14,7 @@ liip_imagine:
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
                 watermark:
-                    image: ../src/Caldera/Bundle/CalderaBundle/Resources/public/images/watermark/criticalmass.png
+                    image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
         gallery_photo_large:
@@ -22,7 +22,7 @@ liip_imagine:
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
                 watermark:
-                    image: ../src/Caldera/Bundle/CalderaBundle/Resources/public/images/watermark/criticalmass.png
+                    image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
         city_image_wide:
