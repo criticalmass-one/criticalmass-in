@@ -198,15 +198,26 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findEstimatedRides()
+    public function findEstimatedRides(int $year = null, int $month = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder
+            ->select('ride')
+            ->addSelect('city')
+            ->join('ride.estimates', 'estimates')
+            ->join('ride.city', 'city')
+            ->orderBy('ride.dateTime', 'ASC')
+            ->addOrderBy('city.city', 'ASC')
+            ->where($builder->expr()->eq('ride.isArchived', 0))
+        ;
 
-        $builder->join('ride.estimates', 'estimates');
-
-        $builder->orderBy('ride.dateTime', 'DESC');
+        if ($year && $month) {
+            $builder
+                ->andWhere($builder->expr()->eq('MONTH(ride.dateTime)', $month))
+                ->andWhere($builder->expr()->eq('YEAR(ride.dateTime)', $year))
+            ;
+        }
 
         $query = $builder->getQuery();
 

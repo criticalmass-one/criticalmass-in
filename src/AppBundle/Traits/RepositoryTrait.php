@@ -2,19 +2,16 @@
 
 namespace AppBundle\Traits;
 
-use AppBundle\Repository\AnonymousNameRepository;
 use AppBundle\Repository\BlockedCityRepository;
-use AppBundle\Repository\BlogPostRepository;
 use AppBundle\Repository\BoardRepository;
 use AppBundle\Repository\CityRepository;
-use AppBundle\Repository\ContentRepository;
-use AppBundle\Repository\EventRepository;
 use AppBundle\Repository\FacebookRidePropertiesRepository;
 use AppBundle\Repository\LocationRepository;
 use AppBundle\Repository\ParticipationRepository;
 use AppBundle\Repository\PhotoRepository;
 use AppBundle\Repository\PostRepository;
 use AppBundle\Repository\RegionRepository;
+use AppBundle\Repository\RideEstimateRepository;
 use AppBundle\Repository\RideRepository;
 use AppBundle\Repository\SubrideRepository;
 use AppBundle\Repository\ThreadRepository;
@@ -24,196 +21,88 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 trait RepositoryTrait
 {
-    /**
-     * @return AnonymousNameRepository
-     */
-    protected function getAnonymousNameRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:AnonymousName');
-    }
-
-    /**
-     * @return ObjectRepository
-     */
-    protected function getBlogRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:Blog');
-    }
-
-
-    /**
-     * @return BlockedCityRepository
-     */
-    protected function getBlockedCityRepository()
+    protected function getBlockedCityRepository(): BlockedCityRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:BlockedCity');
     }
 
-    /**
-     * @return BlogPostRepository
-     */
-    protected function getBlogPostRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:BlogPost');
-    }
-
-    /**
-     * @return BoardRepository
-     */
-    protected function getBoardRepository()
+    protected function getBoardRepository(): BoardRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Board');
     }
 
-    /**
-     * @return ContentRepository
-     */
-    protected function getContentRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:Content');
-    }
-
-    /**
-     * @return EventRepository
-     */
-    protected function getEventRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:Event');
-    }
-
-    /**
-     * @return RideRepository
-     */
-    protected function getRideRepository()
+    protected function getRideRepository(): RideRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Ride');
     }
 
-    /**
-     * @return ObjectRepository
-     */
-    protected function getCitySlugRepository()
+    protected function getCitySlugRepository(): ObjectRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:CitySlug');
     }
 
-    /**
-     * @return CityRepository
-     */
-    protected function getCityRepository()
+    protected function getCityRepository(): CityRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:City');
     }
 
-    /**
-     * @return ObjectRepository
-     */
-    protected function getFacebookCityPropertiesRepository()
+    protected function getFacebookCityPropertiesRepository(): ObjectRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:FacebookCityProperties');
     }
 
-    /**
-     * @return FacebookRidePropertiesRepository
-     */
-    protected function getFacebookRidePropertiesRepository()
+    protected function getFacebookRidePropertiesRepository(): FacebookRidePropertiesRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:FacebookRideProperties');
     }
 
-    /**
-     * @return LocationRepository
-     */
-    protected function getLocationRepository()
+    protected function getLocationRepository(): LocationRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Location');
     }
 
-    /**
-     * @return LocationRepository
-     */
-    protected function getNotificationSubscriptionRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:NotificationSubscription');
-    }
-
-    /**
-     * @return RegionRepository
-     */
-    protected function getRegionRepository()
+    protected function getRegionRepository(): RegionRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Region');
     }
 
-    /**
-     * @return PhotoRepository
-     */
-    protected function getPhotoRepository()
+    protected function getPhotoRepository(): PhotoRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Photo');
     }
 
-    /**
-     * @return PostRepository
-     */
-    protected function getPostRepository()
+    protected function getPostRepository(): PostRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Post');
     }
 
-    /**
-     * @return TrackRepository
-     */
-    protected function getTrackRepository()
+    protected function getTrackRepository(): TrackRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Track');
     }
 
-    /**
-     * @return ThreadRepository
-     */
-    protected function getThreadRepository()
+    protected function getThreadRepository(): ThreadRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Thread');
     }
 
-    /**
-     * @return ParticipationRepository
-     */
-    protected function getParticipationRepository()
+    protected function getParticipationRepository(): ParticipationRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Participation');
     }
 
-    /**
-     * @return ObjectRepository
-     */
-    protected function getPositionRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:Position');
-    }
-
-    /**
-     * @return SubrideRepository
-     */
-    protected function getSubrideRepository()
+    protected function getSubrideRepository(): SubrideRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Subride');
     }
 
-    /**
-     * @return ObjectRepository
-     */
-    protected function getGlympseTicketRepository()
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:Ticket');
-    }
-
-    /**
-     * @return WeatherRepository
-     */
-    protected function getWeatherRepository()
+    protected function getWeatherRepository(): WeatherRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Weather');
+    }
+
+    protected function getRideEstimationRepository(): RideEstimateRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:RideEstimate');
     }
 }

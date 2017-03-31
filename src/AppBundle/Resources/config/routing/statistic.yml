@@ -13,3 +13,7 @@ caldera_criticalmass_statistic_facebook:
 caldera_criticalmass_statistic_overview:
     path: /statistic
     defaults: { _controller: AppBundle:Statistic:overview }
+
+caldera_criticalmass_statistic_participation_list:
+    path: /statistic/{year}/{month}
+    defaults: { _controller: AppBundle:Statistic:listRides }

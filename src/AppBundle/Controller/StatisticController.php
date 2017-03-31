@@ -6,6 +6,7 @@ use AppBundle\Entity\FacebookCityProperties;
 use AppBundle\Entity\Region;
 use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
 {
@@ -113,6 +114,18 @@ class StatisticController extends AbstractController
                 'cities' => $cities,
                 'rides' => $rides,
                 'rideMonths' => $rideMonths
+            ]
+        );
+    }
+
+    public function listRidesAction(Request $request, int $year, int $month): Response
+    {
+        $rides = $this->getRideRepository()->findEstimatedRides($year, $month);
+
+        return $this->render(
+            'AppBundle:Statistic:listRides.html.twig',
+            [
+                'rides' => $rides,
             ]
         );
     }
