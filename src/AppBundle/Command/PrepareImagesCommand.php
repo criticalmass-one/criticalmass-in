@@ -25,7 +25,7 @@ class PrepareImagesCommand extends ContainerAwareCommand
     /** @var ImagineController $imagineController */
     protected $imagineController = null;
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('criticalmass:images:prepare')
@@ -43,14 +43,8 @@ class PrepareImagesCommand extends ContainerAwareCommand
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $filterList = [
-            'gallery_photo_thumb',
-            'gallery_photo_standard',
-            'gallery_photo_large',
-        ];
-
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->uploaderHelper = $this->getContainer()->get('vich_uploader.templating.helper.uploader_helper');
         $this->imagineController = $this->getContainer()->get('liip_imagine.controller');
@@ -62,7 +56,7 @@ class PrepareImagesCommand extends ContainerAwareCommand
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            foreach ($filterList as $filter) {
+            foreach ($this->getFilterList() as $filter) {
                 $this->applyFilter($photo, $filter);
 
                 $output->writeln(sprintf(
@@ -83,6 +77,16 @@ class PrepareImagesCommand extends ContainerAwareCommand
                 new Request(),
                 $filename,
                 $filter
-            );
+            )
+        ;
+    }
+
+    protected function getFilterList(): array
+    {
+        return [
+            'gallery_photo_thumb',
+            'gallery_photo_standard',
+            'gallery_photo_large',
+        ];
     }
 }
