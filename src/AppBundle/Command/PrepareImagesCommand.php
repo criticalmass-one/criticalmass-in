@@ -98,6 +98,7 @@ class PrepareImagesCommand extends ContainerAwareCommand
             'gallery_photo_thumb',
             'gallery_photo_standard',
             'gallery_photo_large',
+            'gallery_photo_blurred',
         ];
     }
 }
