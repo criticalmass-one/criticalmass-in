@@ -82,8 +82,42 @@
 
     <div class="row">
         <div class="col-md-12">
-            <img id="photo" class="img-responsive"
-                 src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
+            {% if not app.user and photo.user.blurGalleries %}
+                <div class="row" style="position: absolute; z-index: 100; width: 100%; height: 100%; top: 100px;">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="panel panel-danger">
+                            <div class="panel-body">
+                                <h4 class="text-center">
+                                    Bitte logge dich ein
+                                </h4>
+
+                                <p>
+                                    Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert keine fünf Sekunden:
+                                </p>
+
+                                <p class="text-center">
+                                    <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-primary">
+                                        Login
+                                    </a>
+                                </p>
+
+                                <h6 class="text-center">
+                                    Warum wird mir das angezeigt?
+                                </h6>
+
+                                <p>
+                                    <small>
+                                        criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichtung zur Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider regelmäßig an die Belastungsgrenze. Indem bestimmte Fotos nur für angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich) besser verteilen.
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}" style="width: 100%;" />
+            {% else %}
+                <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+            {% endif %}
         </div>
     </div>
 
