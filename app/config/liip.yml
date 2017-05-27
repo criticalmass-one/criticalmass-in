@@ -2,6 +2,7 @@ liip_imagine:
     resolvers:
        default:
           web_path: ~
+    driver: imagick
 
     filter_sets:
         cache: ~
