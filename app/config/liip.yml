@@ -18,6 +18,11 @@ liip_imagine:
                     image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
+        gallery_photo_blurred:
+            quality: 30
+            filters:
+                thumbnail: { size: [800, 800], mode: inset }
+                blur_filter: ~
         gallery_photo_large:
             quality: 60
             filters:
