@@ -111,6 +111,11 @@ class User extends BaseUser
     protected $pushoverToken;
 
     /**
+     * @ORM\Column(type="boolean", options={"default" = 0})
+     */
+    protected $blurGalleries;
+
+    /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
     protected $participations;
@@ -608,5 +613,17 @@ class User extends BaseUser
     public function getRunkeeperAccessToken()
     {
         return $this->runkeeperAccessToken;
+    }
+
+    public function setBlurGalleries(bool $blurGalleries): User
+    {
+        $this->blurGalleries = $blurGalleries;
+
+        return $this;
+    }
+
+    public function getBlurGalleries(): bool
+    {
+        return $this->blurGalleries;
     }
 }
