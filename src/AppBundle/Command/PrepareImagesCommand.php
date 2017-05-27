@@ -45,6 +45,12 @@ class PrepareImagesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $filterList = [
+            'gallery_photo_thumb',
+            'gallery_photo_standard',
+            'gallery_photo_large',
+        ];
+
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->uploaderHelper = $this->getContainer()->get('vich_uploader.templating.helper.uploader_helper');
         $this->imagineController = $this->getContainer()->get('liip_imagine.controller');
@@ -56,16 +62,19 @@ class PrepareImagesCommand extends ContainerAwareCommand
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $this->filter($photo);
+            foreach ($filterList as $filter) {
+                $this->applyFilter($photo, $filter);
 
-            $output->writeln(sprintf(
-                'Filtered photo <comment>#%d</comment>',
-                $photo->getId()
-            ));
+                $output->writeln(sprintf(
+                    'Applied filter <comment>%s</comment> to photo <info>#%d</info>',
+                    $filter,
+                        $photo->getId()
+                ));
+            }
         }
     }
 
-    protected function filter(Photo $photo)
+    protected function applyFilter(Photo $photo, string $filter): void
     {
         $filename = $this->uploaderHelper->asset($photo, 'imageFile');
 
@@ -73,7 +82,7 @@ class PrepareImagesCommand extends ContainerAwareCommand
             ->filterAction(
                 new Request(),
                 $filename,
-                'gallery_photo_thumb'
+                $filter
             );
     }
 }
