@@ -8,8 +8,8 @@ caldera_criticalmass_photo_show_ride:
     requirements:
         rideDate: '^([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})$'
 
-caldera_criticalmass_photo_show_event:
-    path: /{citySlug}/{eventSlug}/photo/{photoId}
+caldera_criticalmass_photo_show:
+    path: /photo/{photoId}
     defaults: { _controller: AppBundle:Photo/Photo:show }
-    requirements:
-        eventSlug: '^([a-zA-Z0-9\-]*)$'
+    options:
+        expose: true
