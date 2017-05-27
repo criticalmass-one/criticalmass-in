@@ -17,7 +17,7 @@
         "doctrine/doctrine-bundle": "^1.6",
         "twig/extensions": "^1.4",
         "vich/uploader-bundle": "1.3.*",
-        "liip/imagine-bundle": "^1.3",
+        "liip/imagine-bundle": "^1.8",
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "3.2.*",
         "basvandorst/StravaPHP": "1.0.1",
