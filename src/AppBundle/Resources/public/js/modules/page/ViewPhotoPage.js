@@ -1,7 +1,6 @@
-define(['CriticalService', 'AutoMap', 'PhotoEntity', 'hammerjs'], function (CriticalService) {
+define(['CriticalService', 'AutoMap', 'PhotoEntity'], function (CriticalService) {
     ViewPhotoPage = function () {
         this._installNavigation();
-        this._installSwipe();
 
         this._CriticalService = CriticalService;
     };
@@ -28,37 +27,6 @@ define(['CriticalService', 'AutoMap', 'PhotoEntity', 'hammerjs'], function (Crit
 
             if ((e.keyCode || e.which) == 39) {
                 that._navigateForwards();
-            }
-        });
-    };
-
-    ViewPhotoPage.prototype._installSwipe = function () {
-        var $photo = $('img#photo');
-        var mc = new Hammer(document.getElementById('photo'), {velocity: 50});
-        var that = this;
-        var triggerWidth = $photo.width() * 0.3;
-
-        mc.on('panleft', function (ev) {
-            if (that._nextPhotoUrl) {
-                $photo.css({
-                    'margin-left': ev.deltaX + "px"
-                });
-
-                if (ev.deltaX < -triggerWidth) {
-                    that._navigateForwards();
-                }
-            }
-        });
-
-        mc.on('panright', function (ev) {
-            if (that._previousPhotoUrl) {
-                $photo.css({
-                    'margin-left': ev.deltaX + "px"
-                });
-
-                if (ev.deltaX > triggerWidth) {
-                    that._navigateBackwards();
-                }
             }
         });
     };
