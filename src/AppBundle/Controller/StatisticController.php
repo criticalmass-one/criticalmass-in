@@ -19,7 +19,7 @@ class StatisticController extends AbstractController
         $this->getMetadata()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
-            'AppBundle:Statistic:citystatistic.html.twig',
+            'AppBundle:Statistic:city_statistic.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -34,7 +34,7 @@ class StatisticController extends AbstractController
         $frp = $this->getFacebookRidePropertiesRepository()->findByRide($ride);
 
         return $this->render(
-            'AppBundle:Statistic:ridestatistic.html.twig',
+            'AppBundle:Statistic:ride_statistic.html.twig',
             [
                 'ride' => $ride,
                 'frp' => $frp
@@ -64,7 +64,7 @@ class StatisticController extends AbstractController
         }
 
         return $this->render(
-            'AppBundle:Statistic:facebookstatistic.html.twig',
+            'AppBundle:Statistic:facebook_statistic.html.twig',
             [
                 'cities' => $cityList,
                 'filteredProperties' => $filteredProperties,
@@ -123,7 +123,7 @@ class StatisticController extends AbstractController
         $rides = $this->getRideRepository()->findEstimatedRides($year, $month);
 
         return $this->render(
-            'AppBundle:Statistic:listRides.html.twig',
+            'AppBundle:Statistic:list_rides.html.twig',
             [
                 'rides' => $rides,
             ]
