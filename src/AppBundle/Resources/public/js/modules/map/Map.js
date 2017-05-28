@@ -25,11 +25,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate', 'leaflet-sl
         this._loadStyles();
         this._initMap();
         this._addTileLayer();
-        this._initSleep();
-    };
-
-    Map.prototype._initSleep = function () {
-
     };
 
     Map.prototype._loadStyles = function () {
@@ -47,7 +42,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate', 'leaflet-sl
 
         this.map = L.map(this._mapId,
             {
-                zoomControl: false
+                zoomControl: false,
+                sleepNote: false
             }
         );
 
