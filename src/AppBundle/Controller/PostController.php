@@ -10,19 +10,19 @@ use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\Form\Type\PostType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends AbstractController
 {
     public function writeAction(
         Request $request,
-        $cityId = null,
-        $rideId = null,
-        $photoId = null,
-        $threadId = null
-    )
+        int $cityId = null,
+        int $rideId = null,
+        int $photoId = null,
+        int $threadId = null
+    ): Response
     {
         /**
-         * @var Post $post
          * @var Ride $ride
          * @var City $city
          * @var Thread $thread
@@ -121,10 +121,10 @@ class PostController extends AbstractController
      */
     public function listAction(
         Request $request,
-        $cityId = null,
-        $rideId = null,
-        $photoId = null
-    )
+        int $cityId = null,
+        int $rideId = null,
+        int $photoId = null
+    ): Response
     {
         /* We do not want disabled posts. */
         $criteria = array('enabled' => true);
