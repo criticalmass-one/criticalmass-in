@@ -33,7 +33,7 @@ class CityController extends AbstractController
         }
 
         return $this->render(
-            'AppBundle:City:cityList.html.twig',
+            'AppBundle:City:city_list.html.twig',
             [
                 'result' => $result
             ]
@@ -47,7 +47,7 @@ class CityController extends AbstractController
         $rides = $this->getRideRepository()->findRidesWithoutStatisticsForCity($city);
 
         return $this->render(
-            'AppBundle:City:missingStats.html.twig',
+            'AppBundle:City:missing_stats.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -105,7 +105,7 @@ class CityController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render('AppBundle:City:rideList.html.twig',
+        return $this->render('AppBundle:City:ride_list.html.twig',
             [
                 'city' => $city,
                 'rides' => $rides
@@ -121,7 +121,7 @@ class CityController extends AbstractController
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
-        return $this->render('AppBundle:City:galleryList.html.twig',
+        return $this->render('AppBundle:City:gallery_list.html.twig',
             [
                 'city' => $city,
                 'result' => $result
