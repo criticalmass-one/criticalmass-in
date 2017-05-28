@@ -66,7 +66,7 @@ class BoardController extends AbstractController
         }
 
         return $this->render(
-            'AppBundle:Board:listThreads.html.twig',
+            'AppBundle:Board:list_threads.html.twig',
             [
                 'threads' => $threads,
                 'board' => ($board ? $board : $city),
@@ -96,7 +96,7 @@ class BoardController extends AbstractController
         $this->countThreadView($thread);
 
         return $this->render(
-            'AppBundle:Board:viewThread.html.twig',
+            'AppBundle:Board:view_thread.html.twig',
             [
                 'board' => $board,
                 'thread' => $thread,
@@ -136,7 +136,7 @@ class BoardController extends AbstractController
     protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form)
     {
         return $this->render(
-            'AppBundle:Board:addThread.html.twig',
+            'AppBundle:Board:add_thread.html.twig',
             [
                 'board' => $board,
                 'form' => $form->createView()
@@ -189,7 +189,7 @@ class BoardController extends AbstractController
         }
 
         return $this->render(
-            'AppBundle:Board:addThread.html.twig',
+            'AppBundle:Board:add_thread.html.twig',
             [
                 'board' => $board,
                 'form' => $form->createView()
