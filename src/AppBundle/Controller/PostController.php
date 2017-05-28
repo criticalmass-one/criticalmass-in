@@ -2,9 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\BlogPost;
 use AppBundle\Entity\City;
-use AppBundle\Entity\Event;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Thread;
@@ -20,10 +18,7 @@ class PostController extends AbstractController
         $cityId = null,
         $rideId = null,
         $photoId = null,
-        $contentId = null,
-        $threadId = null,
-        $eventId = null,
-        $blogPostId = null
+        $threadId = null
     )
     {
         /**
@@ -31,15 +26,11 @@ class PostController extends AbstractController
          * @var Ride $ride
          * @var City $city
          * @var Thread $thread
-         * @var Event $event
-         * @var BlogPost $blogPost
          */
         $post = new Post();
         $ride = null;
         $city = null;
         $thread = null;
-        $event = null;
-        $blogPost = null;
 
         if ($cityId) {
             $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', array('cityId' => $cityId))));
@@ -61,12 +52,6 @@ class PostController extends AbstractController
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateObjectUrl($photo);
-        } elseif ($contentId) {
-            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_content', array('contentId' => $contentId))));
-            $content = $this->getContentRepository()->find($contentId);
-            $post->setContent($content);
-
-            $redirectUrl = $this->generateUrl('caldera_criticalmass_content_display', array('slug' => $content->getSlug()));
         } elseif ($threadId) {
             $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread', array('threadId' => $threadId))));
 
@@ -74,14 +59,6 @@ class PostController extends AbstractController
             $post->setThread($thread);
 
             $redirectUrl = $this->generateObjectUrl($thread);
-        } elseif ($eventId) {
-            $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_event', array('eventId' => $eventId))));
-
-            $event = $this->getEventRepository()->find($eventId);
-            $post->setEvent($event);
-
-            $redirectUrl = $this->generateObjectUrl($event);
-        } elseif ($blogPostId) {
         } else {
             $form = $this->createForm(PostType::class, $post, array('action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')));
 
@@ -146,10 +123,7 @@ class PostController extends AbstractController
         Request $request,
         $cityId = null,
         $rideId = null,
-        $photoId = null,
-        $contentId = null,
-        $eventId = null,
-        $blogPostId = null
+        $photoId = null
     )
     {
         /* We do not want disabled posts. */
@@ -167,18 +141,6 @@ class PostController extends AbstractController
 
         if ($photoId) {
             $criteria['photo'] = $photoId;
-        }
-
-        if ($contentId) {
-            $criteria['content'] = $contentId;
-        }
-
-        if ($eventId) {
-            $criteria['event'] = $eventId;
-        }
-
-        if ($blogPostId) {
-            $criteria['blogPost'] = $blogPostId;
         }
 
         /* Now fetch all posts with matching criteria. */
