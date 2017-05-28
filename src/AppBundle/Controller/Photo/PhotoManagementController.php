@@ -17,7 +17,7 @@ class PhotoManagementController extends AbstractController
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
         return $this->render(
-            'AppBundle:PhotoManagement:userlist.html.twig',
+            'AppBundle:PhotoManagement:user_list.html.twig',
             [
                 'result' => $result
             ]
@@ -46,7 +46,7 @@ class PhotoManagementController extends AbstractController
         );
 
         return $this->render(
-            'AppBundle:PhotoManagement:ridelist.html.twig',
+            'AppBundle:PhotoManagement:ride_list.html.twig',
             [
                 'ride' => $ride,
                 'pagination' => $pagination
@@ -297,7 +297,7 @@ class PhotoManagementController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'AppBundle:PhotoManagement:citygallery.html.twig',
+            'AppBundle:PhotoManagement:city_gallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList
