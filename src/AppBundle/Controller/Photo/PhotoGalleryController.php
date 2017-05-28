@@ -32,7 +32,7 @@ class PhotoGalleryController extends AbstractController
         );
 
         return $this->render(
-            'AppBundle:PhotoGallery:gallerylist.html.twig',
+            'AppBundle:PhotoGallery:gallery_list.html.twig',
             [
                 'ride' => $ride,
                 'pagination' => $pagination,
@@ -45,7 +45,7 @@ class PhotoGalleryController extends AbstractController
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
         return $this->render(
-            'AppBundle:Photo:userlist.html.twig',
+            'AppBundle:PhotoGallery:user_list.html.twig',
             [
                 'result' => $result,
             ]
@@ -70,7 +70,7 @@ class PhotoGalleryController extends AbstractController
         shuffle($cityList);
 
         return $this->render(
-            'AppBundle:PhotoGallery:examplegallery.html.twig',
+            'AppBundle:PhotoGallery:example_gallery.html.twig',
             [
                 'photos' => $photos,
                 'cities' => $cityList,
