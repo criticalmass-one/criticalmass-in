@@ -1,4 +1,4 @@
-define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function () {
+define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate', 'leaflet-sleep'], function () {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -25,6 +25,11 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function (
         this._loadStyles();
         this._initMap();
         this._addTileLayer();
+        this._initSleep();
+    };
+
+    Map.prototype._initSleep = function () {
+
     };
 
     Map.prototype._loadStyles = function () {
