@@ -169,7 +169,7 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._trackContainer.toggleIndexEntityInLayer(trackId);
     };
 
-    RidePage.prototype.addPhoto = function (photoJson, filename) {
+    RidePage.prototype.addPhoto = function (photoJson, filename, blurred) {
         var photo = this._CriticalService.factory.createPhoto(photoJson);
 
         photo.setFilename(filename);
@@ -179,7 +179,12 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         var that = this;
 
         photo.on('click', function () {
-            that._photoViewModal.showPhoto(photo.getId());
+            if (!blurred) {
+                that._photoViewModal.showPhoto(photo.getId());
+            } else {
+                var url = Routing.generate('caldera_criticalmass_photo_show', { photoId: photo.getId() });
+                window.location.href = url;
+            }
         });
     };
 

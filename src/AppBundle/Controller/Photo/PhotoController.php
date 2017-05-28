@@ -15,23 +15,21 @@ class PhotoController extends AbstractController
 {
     use ViewStorageTrait;
 
-    public function showAction(Request $request, string $citySlug, string $rideDate , int $photoId): Response
+    public function showAction(Request $request, int $photoId): Response
     {
-        /** @var City $city */
-        $city = $this->getCheckedCity($citySlug);
+        /** @var Photo $photo */
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        $city = $photo->getCity();
+
+        $ride = $photo->getRide();
 
         /** @var Track $track */
         $track = null;
 
-        /** @var Ride $ride */
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
             throw $this->createAccessDeniedException();
         }
-
-        /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
 
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
