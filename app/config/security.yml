@@ -18,10 +18,9 @@ security:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 login_path:     /login
-                use_forward:    false
                 check_path:     /login_check
-                failure_path:   null
-                require_previous_session: false
+                always_use_default_target_path: false
+                use_referer:                    true
             logout:
                 invalidate_session: false
             anonymous:          true
