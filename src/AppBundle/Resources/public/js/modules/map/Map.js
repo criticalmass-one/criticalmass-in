@@ -1,4 +1,4 @@
-define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function () {
+define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate', 'leaflet-sleep'], function () {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -42,7 +42,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate'], function (
 
         this.map = L.map(this._mapId,
             {
-                zoomControl: false
+                zoomControl: false,
+                sleepNote: false
             }
         );
 

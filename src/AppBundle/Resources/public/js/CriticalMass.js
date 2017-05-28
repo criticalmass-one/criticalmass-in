@@ -78,6 +78,7 @@ require.config({
         "leaflet-groupedlayer": "/bundles/app/js/external/leaflet/leaflet.groupedlayercontrol",
         "leaflet-snap": "/bundles/app/js/external/leaflet/leaflet.snap",
         "leaflet-hash": "/bundles/app/js/external/leaflet/leaflet-hash",
+        "leaflet-sleep": "/bundles/app/js/external/leaflet/leaflet.sleep",
         "leaflet-polyline": "/bundles/app/js/external/leaflet/leaflet-polyline",
         "leaflet-extramarkers": "/bundles/app/js/external/leaflet/ExtraMarkers",
         "leaflet-markercluster": "/bundles/app/js/external/leaflet/leaflet-markercluster",
@@ -114,6 +115,10 @@ require.config({
         'leaflet-hash': {
             deps: ['leaflet'],
             exports: 'L.Hash'
+        },
+        'leaflet-sleep': {
+            deps: ['leaflet'],
+            exports: 'L.Map.Sleep'
         },
         'leaflet-polyline': {
             deps: ['leaflet'],
