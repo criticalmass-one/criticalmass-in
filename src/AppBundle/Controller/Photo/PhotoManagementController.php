@@ -354,9 +354,13 @@ class PhotoManagementController extends AbstractController
 
             $image = $imagine->open($this->getPhotoFilename($photo));
 
+            $size = $image->getSize();
+
+            $factor = $size->getWidth() / 940;
+
             foreach ($areaDataList as $areaData) {
-                $topLeftPoint = new Point($areaData->x, $areaData->y);
-                $dimension = new Box($areaData->width, $areaData->height);
+                $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
+                $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
 
                 $this->applyBlurArea($image, $topLeftPoint, $dimension);
             }
@@ -380,8 +384,8 @@ class PhotoManagementController extends AbstractController
 
         $blurImage
             ->crop($topLeftPoint, $dimension)
-            ->effects()->blur(5)
-            ->negative()
+            ->effects()->blur(25)
+            //->negative()
         ;
 
         $image->paste($blurImage, $topLeftPoint);

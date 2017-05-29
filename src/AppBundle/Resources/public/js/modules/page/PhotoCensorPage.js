@@ -9,14 +9,11 @@ define(['CriticalService', 'jquery-areaselect'], function (CriticalService) {
 
     PhotoCensorPage.prototype._initPhoto = function () {
         $('#photo').selectAreas({
-            minSize: [30, 30],    // Minimum size of a selection
-            maxSize: [400, 300],  // Maximum size of a selection
-            onChanged: $.noop,    // fired when a selection is released
-            onChanging: $.noop    // fired during the modification of a selection
+            width: 940
         });
 
         $('#save').click(function() {
-            var areaData = $('#photo').selectAreas('areas');
+            var areaData = $('#photo').selectAreas('relativeAreas');
 
             console.log(areaData);
 
