@@ -5,6 +5,11 @@ namespace AppBundle\Controller\Photo;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Form\Type\PhotoCoordType;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -343,7 +348,22 @@ class PhotoManagementController extends AbstractController
         $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return new JsonResponse($request->getContent(), 200, [], false);
+            $areaDataList = json_decode($request->getContent());
+
+            $imagine = new Imagine();
+
+            $image = $imagine->open($this->getPhotoFilename($photo));
+
+            foreach ($areaDataList as $areaData) {
+                $topLeftPoint = new Point($areaData->x, $areaData->y);
+                $dimension = new Box($areaData->width, $areaData->height);
+
+                $this->applyBlurArea($image, $topLeftPoint, $dimension);
+            }
+
+            $image->save($this->getPhotoFilename($photo).'.2');
+
+            return new JsonResponse($areaDataList, 200, [], false);
         }
 
         return $this->render(
@@ -354,12 +374,25 @@ class PhotoManagementController extends AbstractController
         );
     }
 
+    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
+    {
+        $blurImage = $image->copy();
+
+        $blurImage
+            ->crop($topLeftPoint, $dimension)
+            ->effects()->blur(5)
+            ->negative()
+        ;
+
+        $image->paste($blurImage, $topLeftPoint);
+    }
+
     protected function getPhotoFilename(Photo $photo): string
     {
         $path = $this->getParameter('kernel.root_dir') . '/../web';
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
-        return $filename;
+        return $path.$filename;
     }
 
     protected function recachePhoto(Photo $photo)
