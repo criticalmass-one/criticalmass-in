@@ -336,6 +336,18 @@ class PhotoManagementController extends AbstractController
         ));
     }
 
+    public function censorAction(Request $request, UserInterface $user, string $citySlug, string $rideDate, int $photoId)
+    {
+        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+
+        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
+            [
+                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
+                'rideDate' => $photo->getRide()->getFormattedDate()
+            ]
+        ));
+    }
+
     protected function recachePhoto(Photo $photo)
     {
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
