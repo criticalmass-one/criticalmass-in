@@ -318,12 +318,11 @@ class PhotoManagementController extends AbstractController
             $rotate = -90;
         }
 
-        $path = $this->getParameter('kernel.root_dir') . '/../web';
-        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+        $filename = $this->getPhotoFilename($photo);
 
-        $image = imagecreatefromjpeg($path . $filename);
+        $image = imagecreatefromjpeg($filename);
         $image = imagerotate($image, $rotate, 0);
-        imagejpeg($image, $path . $filename, 100);
+        imagejpeg($image, $filename, 100);
         imagedestroy($image);
 
         $this->recachePhoto($photo);
@@ -346,6 +345,14 @@ class PhotoManagementController extends AbstractController
                 'rideDate' => $photo->getRide()->getFormattedDate()
             ]
         ));
+    }
+
+    protected function getPhotoFilename(Photo $photo): string
+    {
+        $path = $this->getParameter('kernel.root_dir') . '/../web';
+        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+
+        return $filename;
     }
 
     protected function recachePhoto(Photo $photo)
