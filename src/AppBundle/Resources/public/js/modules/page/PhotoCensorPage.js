@@ -16,7 +16,15 @@ define(['CriticalService', 'jquery-areaselect'], function (CriticalService) {
         });
 
         $('#save').click(function() {
-            console.log($('#photo').selectAreas('areas'));
+            var areaData = $('#photo').selectAreas('areas');
+
+            console.log(areaData);
+
+            $.post('http://criticalmass.cm/app_dev.php/hamburg/2016-10-28/photo/21281/censor',
+                JSON.stringify(areaData)
+            ).done(function(data) {
+                console.log(data);
+            });
         });
     };
 

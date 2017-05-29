@@ -7,7 +7,9 @@ use AppBundle\Entity\Photo;
 use AppBundle\Form\Type\PhotoCoordType;
 use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -339,6 +341,10 @@ class PhotoManagementController extends AbstractController
     public function censorAction(Request $request, UserInterface $user, string $citySlug, string $rideDate, int $photoId)
     {
         $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return new JsonResponse($request->getContent(), 200, [], false);
+        }
 
         return $this->render(
             'AppBundle:PhotoManagement:censor.html.twig',
