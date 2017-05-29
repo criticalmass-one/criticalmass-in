@@ -11,11 +11,8 @@
     </div>
 
     <script>
-        CriticalMass.loadModule('ViewPhotoPage', null, null, function (page) {
-            {% if photo.hasCoordinates() %}
-            page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-            page.initMap();
-            {% endif %}
+        CriticalMass.loadModule('PhotoCensorPage', null, null, function (page) {
+
         });
     </script>
 
