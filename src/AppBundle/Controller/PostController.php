@@ -89,9 +89,6 @@ class PostController extends AbstractController
 
                 $board->incPostNumber();
                 $board->setLastThread($thread);
-
-                $em->persist($thread);
-                $em->persist($board);
             }
 
             $em->flush();
