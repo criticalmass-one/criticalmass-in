@@ -37,7 +37,7 @@ class PostController extends AbstractController
             $city = $this->getCityRepository()->find($cityId);
             $post->setCity($city);
 
-            $redirectUrl = $this->generateUrl('caldera_criticalmass_desktop_city_show', ['citySlug' => $city->getMainSlugString()]);
+            $redirectUrl = $this->generateObjectUrl($city);
         } elseif ($rideId) {
             $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', ['rideId' => $rideId])]);
             $ride = $this->getRideRepository()->find($rideId);
@@ -45,7 +45,7 @@ class PostController extends AbstractController
             $post->setCity($city);
             $post->setRide($ride);
 
-            $redirectUrl = $this->generateUrl('caldera_criticalmass_ride_show', ['citySlug' => $ride->getCity()->getMainSlugString(), 'rideDate' => $ride->getFormattedDate()]);
+            $redirectUrl = $this->generateObjectUrl($ride);
         } elseif ($photoId) {
             $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', ['photoId' => $photoId])]);
             $photo = $this->getPhotoRepository()->find($photoId);
@@ -62,7 +62,7 @@ class PostController extends AbstractController
         } else {
             $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')]);
 
-            $redirectUrl = $this->generateUrl('caldera_criticalmass_timeline_list');
+            $redirectUrl = $this->generateUrl('caldera_criticalmass_frontpage');
         }
 
         $form->handleRequest($request);
