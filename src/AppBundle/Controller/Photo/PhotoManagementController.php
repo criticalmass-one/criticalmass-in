@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Photo;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Form\Type\PhotoCoordType;
+use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -339,12 +340,12 @@ class PhotoManagementController extends AbstractController
     {
         $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
+        return $this->render(
+            'AppBundle:PhotoManagement:censor.html.twig',
             [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
+                'photo' => $photo,
             ]
-        ));
+        );
     }
 
     protected function getPhotoFilename(Photo $photo): string
