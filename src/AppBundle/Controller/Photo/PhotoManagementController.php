@@ -348,6 +348,14 @@ class PhotoManagementController extends AbstractController
         /** @var Photo $photo */
         $photo = $this->getPhotoRepository()->find($photoId);
 
+        if (!$photo) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($user !== $photo->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($request->isMethod(Request::METHOD_POST)) {
             $areaDataList = json_decode($request->getContent());
 
