@@ -368,9 +368,9 @@ class PhotoManagementController extends AbstractController
                 $this->applyBlurArea($image, $topLeftPoint, $dimension);
             }
 
-            $image->save($this->getPhotoFilename($photo).'.2');
+            $newFilename = $this->saveManipulatedImage($image, $photo);
 
-            return new JsonResponse($areaDataList, 200, [], false);
+            return new Response($newFilename);
         }
 
         return $this->render(
@@ -379,6 +379,26 @@ class PhotoManagementController extends AbstractController
                 'photo' => $photo,
             ]
         );
+    }
+
+    protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
+    {
+        if (!$photo->getBackupName()) {
+            $newFilename = uniqid().'.JPG';
+
+            $photo->setBackupName($photo->getImageName());
+
+            $photo->setImageName($newFilename);
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        $filename = $this->getPhotoFilename($photo);
+        $image->save($filename);
+
+        $this->recachePhoto($photo);
+
+        return $filename;
     }
 
     protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
