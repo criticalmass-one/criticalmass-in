@@ -1,8 +1,12 @@
-{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
 
 {% block title %}criticalmass.in{% endblock %}
 
-{% block content %}
+{% block masterContent %}
+    <div class="navbar-wrapper">
+    {% include('AppBundle:Template/Navigation:_navigation.html.twig') %}
+    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -66,4 +70,10 @@
             </div>
         </div>
     </div>
+
+    {% include('AppBundle:Template:Includes/_adserver.html.twig') %}
+
+    {% include('AppBundle:Template:Includes/_footer.html.twig') %}
+
+    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-    {% include('AppBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': 'false' } %}
+    {% include('AppBundle:Template/Navigation:_full_navigation.html.twig') %}
 
     {% block breadcrumbContainer %}
         {% if block('breadcrumb') %}
