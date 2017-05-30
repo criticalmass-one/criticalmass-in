@@ -50,7 +50,7 @@
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <img class="img-responsive"
+                                    <img class="img-responsive img-thumbnail"
                                          src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                 </div>
                             </div>
@@ -62,6 +62,15 @@
                                             Bearbeiten <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
+                                            <li class="disabled">
+                                                <a href="#">
+                                                    Aufnahmedatum: <br />
+                                                    {{ photo.dateTime.format('d.m.Y H:i:s') }}
+                                                </a>
+                                            </li>
+
+                                            <li role="separator" class="divider"></li>
+
                                             <li>
                                                 <a href="{{ path('caldera_criticalmass_photo_delete', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
                                                     <i class="fa fa-trash-o"></i>
@@ -128,22 +137,6 @@
                                             {% endif %}
                                         </ul>
                                     </div>
-
-                                    <dl>
-                                        <dt>
-                                            Aufnahmedatum
-                                        </dt>
-                                        <dd>
-                                            {{ photo.dateTime.format('d.m.Y H:i:s') }}
-                                        </dd>
-
-                                        <dt>
-                                            Koordinaten
-                                        </dt>
-                                        <dd>
-                                            {% if photo.hasCoordinates() %}ja ({{ photo.latitude|round(6) }}, {{ photo.longitude|round(6) }}){% else %}nein{% endif %}
-                                        </dd>
-                                    </dl>
                                 </div>
                             </div>
                         </div>
