@@ -343,9 +343,10 @@ class PhotoManagementController extends AbstractController
         ));
     }
 
-    public function censorAction(Request $request, UserInterface $user, string $citySlug, string $rideDate, int $photoId)
+    public function censorAction(Request $request, UserInterface $user, int $photoId)
     {
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        /** @var Photo $photo */
+        $photo = $this->getPhotoRepository()->find($photoId);
 
         if ($request->isMethod(Request::METHOD_POST)) {
             $areaDataList = json_decode($request->getContent());

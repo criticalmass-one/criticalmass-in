@@ -37,3 +37,9 @@ caldera_criticalmass_gallery_photos_rearrange:
 caldera_criticalmass_photo_censor:
     path: /{citySlug}/{rideDate}/photo/{photoId}/censor
     defaults: { _controller: AppBundle:Photo/PhotoManagement:censor }
+
+caldera_criticalmass_photo_censor_short:
+    path: /photo/{photoId}/censor
+    defaults: { _controller: AppBundle:Photo/PhotoManagement:censor }
+    options:
+        expose: true
