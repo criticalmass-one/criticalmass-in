@@ -20,7 +20,8 @@ class CreateCityType extends AbstractType
                 $builder
                     ->add('city')
                     ->add('latitude', HiddenType::class)
-                    ->add('longitude', HiddenType::class);
+                    ->add('longitude', HiddenType::class)
+                ;
 
                 break;
 
@@ -30,7 +31,8 @@ class CreateCityType extends AbstractType
                     ->add('description')
                     ->add('punchLine')
                     ->add('longDescription')
-                    ->add('cityPopulation');
+                    ->add('cityPopulation')
+                ;
 
                 break;
 
@@ -46,7 +48,13 @@ class CreateCityType extends AbstractType
                 $builder
                     ->add('latitude', HiddenType::class)
                     ->add('longitude', HiddenType::class)
-                    ->add('isStandardable', CheckboxType::class, ['required' => false])
+                    ->add(
+                        'isStandardable',
+                        CheckboxType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
                     ->add(
                         'standardDayOfWeek',
                         ChoiceType::class,
@@ -79,12 +87,49 @@ class CreateCityType extends AbstractType
                             'required' => true
                         ]
                     )
-                    ->add('isStandardableTime', CheckboxType::class, ['required' => false])
-                    ->add('standardTime', TimeType::class, ['required' => false])
-                    ->add('isStandardableLocation', CheckboxType::class, ['required' => false])
-                    ->add('standardLocation', TextType::class, ['required' => false])
-                    ->add('standardLatitude', HiddenType::class, ['required' => false])
-                    ->add('standardLongitude', HiddenType::class, ['required' => false]);
+                    ->add(
+                        'isStandardableTime',
+                        CheckboxType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
+                    ->add(
+                        'standardTime',
+                        TimeType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
+                    ->add(
+                        'isStandardableLocation',
+                        CheckboxType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
+                    ->add(
+                        'standardLocation',
+                        TextType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
+                    ->add(
+                        'standardLatitude',
+                        HiddenType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
+                    ->add(
+                        'standardLongitude',
+                        HiddenType::class,
+                        [
+                            'required' => false
+                        ]
+                    )
+                ;
 
                 break;
 
