@@ -351,13 +351,15 @@ class PhotoManagementController extends AbstractController
         if ($request->isMethod(Request::METHOD_POST)) {
             $areaDataList = json_decode($request->getContent());
 
+            $displayWidth = $request->query->get('width');
+
             $imagine = new Imagine();
 
             $image = $imagine->open($this->getPhotoFilename($photo));
 
             $size = $image->getSize();
 
-            $factor = $size->getWidth() / 940;
+            $factor = $size->getWidth() / $displayWidth;
 
             foreach ($areaDataList as $areaData) {
                 $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);

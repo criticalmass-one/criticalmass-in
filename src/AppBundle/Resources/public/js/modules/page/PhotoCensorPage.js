@@ -1,28 +1,37 @@
-define(['CriticalService', 'jquery-areaselect'], function (CriticalService) {
+define(['CriticalService', 'PhotoEntity', 'jquery-areaselect'], function (CriticalService) {
     PhotoCensorPage = function () {
-        this._initPhoto();
-
         this._CriticalService = CriticalService;
     };
 
     PhotoCensorPage.prototype._CriticalService = null;
+    PhotoCensorPage.prototype._photo = null;
 
-    PhotoCensorPage.prototype._initPhoto = function () {
-        $('#photo').selectAreas({
-            width: 940
+    PhotoCensorPage.prototype.init = function () {
+        var that = this;
+        var $photo = $('#photo');
+
+        var photoWidth = $photo.width();
+
+        $photo.selectAreas({
+            width: photoWidth
         });
 
         $('#save').click(function() {
             var areaData = $('#photo').selectAreas('relativeAreas');
 
-            console.log(areaData);
+            var url = Routing.generate('caldera_criticalmass_photo_censor_short', { photoId: that._photo.getId() }, true);
 
-            $.post('http://criticalmass.cm/app_dev.php/hamburg/2016-10-28/photo/21281/censor',
+            $.post(url + '?width=' + photoWidth,
                 JSON.stringify(areaData)
             ).done(function(data) {
                 console.log(data);
             });
         });
+    };
+
+    PhotoCensorPage.prototype.setPhoto = function (photoJson, filename) {
+        this._photo = this._CriticalService.factory.createPhoto(photoJson);
+        this._photo.setFilename(filename);
     };
 
     return PhotoCensorPage;
