@@ -11,13 +11,25 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+            <h1>
+                Foto zensieren
+            </h1>
+
+            <p class="lead">
+                Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
+            </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="btn-group" role="group">
+            <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+        </div>
+    </div>
+
+    <div class="row margin-top-medium">
+        <div class="col-md-12">
+            <div class="btn-group pull-right" role="group">
                 <a href="#" class="btn btn-default">
                     Abbrechen
                 </a>
