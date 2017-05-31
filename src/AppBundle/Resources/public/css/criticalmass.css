@@ -6429,6 +6429,8 @@ body
   .carousel .item {
     height: 500px;
     background-position: center; }
+    .carousel .item .carousel-caption {
+      text-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.9); }
 
 .navbar-wrapper .navbar {
   margin-bottom: 0; }
