@@ -6432,23 +6432,25 @@ button.close {
   margin-left: -15px;
   margin-right: -15px;
   text-align: center; }
+  .carousel .item {
+    height: 500px;
+    background-position: center; }
 
-.item {
-  height: 500px;
-  background-position: center; }
+.navbar-wrapper .navbar {
+  margin-bottom: 0; }
 
-@media (max-width: 768px) {
-  .navbar-wrapper {
-    position: relative; }
+@media (max-width: 1199px) {
   body {
-    background-color: red !important; } }
+    background-color: red !important; }
+  .navbar-wrapper .container {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0; } }
 
-@media (min-width: 767px) {
+@media (min-width: 1199px) {
   .navbar-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
-    margin-top: 20px;
-    margin-bottom: -90px; } }
+    margin-top: 20px; } }
