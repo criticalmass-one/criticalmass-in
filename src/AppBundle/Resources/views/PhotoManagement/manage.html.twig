@@ -77,6 +77,13 @@
                                                 </a>
                                             </li>
 
+                                            <li>
+                                                <a href="{{ path('caldera_criticalmass_photo_censor', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <i class="fa fa-eraser"></i>
+                                                    Zensieren
+                                                </a>
+                                            </li>
+
                                             {% if photo.enabled %}
                                                 <li>
                                                     <a href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
