@@ -12,7 +12,6 @@ use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -55,12 +54,9 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function deleteAction(Request $request, $citySlug, $rideDate, $photoId = 0): Response
+    public function deleteAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         if ($photo) {
             $em = $this->getDoctrine()->getManager();
@@ -96,12 +92,9 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function toggleAction(Request $request, $citySlug, $rideDate, $photoId): Response
+    public function toggleAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         if ($photo) {
             $em = $this->getDoctrine()->getManager();
@@ -115,12 +108,9 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-    public function featuredPhotoAction(Request $request, $citySlug, $rideDate, $photoId): Response
+    public function featuredPhotoAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         $photo->getRide()->setFeaturedPhoto($photo);
 
@@ -132,33 +122,27 @@ class PhotoManagementController extends AbstractController
     }
 
 
-    protected function getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId): Response
+    protected function getCredentialsCheckedPhoto(UserInterface $user, int $photoId): Photo
     {
         /**
          * @var Photo $photo
          */
         $photo = $this->getPhotoRepository()->find($photoId);
 
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        if ($ride &&
-            $photo &&
-            $photo->getUser()->equals($this->getUser()) &&
-            $photo->getRide()->equals($ride)
-        ) {
-            return $photo;
+        if (!$photo) {
+            throw $this->createNotFoundException();
         }
 
-        return null;
+        if ($photo->getUser() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $photo;
     }
 
-    public function placeSingleAction(Request $request, $citySlug, $rideDate, $photoId): Response
+    public function placeSingleAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         if ($photo) {
             $form = $this->createForm(
@@ -233,12 +217,9 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function rotateAction(Request $request, $citySlug, $rideDate, $photoId): Response
+    public function rotateAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         $angle = 90;
 
