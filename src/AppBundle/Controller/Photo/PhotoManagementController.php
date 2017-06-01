@@ -25,13 +25,6 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function indexAction()
-    {
-        $criteria = array('enabled' => true);
-        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
-        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
-    }
-
     public function ridelistAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -51,32 +44,6 @@ class PhotoManagementController extends AbstractController
             [
                 'ride' => $ride,
                 'pagination' => $pagination
-            ]
-        );
-    }
-
-    public function showAction(Request $request, $citySlug, $rideDate, $photoId): Response
-    {
-        $city = $this->getCheckedCity($citySlug);
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
-        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
-
-        $this->countView($photo);
-
-        return $this->render('AppBundle:PhotoManagement:show.html.twig',
-            [
-                'photo' => $photo,
-                'nextPhoto' => $nextPhoto,
-                'previousPhoto' => $previousPhoto,
-                'city' => $city,
-                'ride' => $ride
             ]
         );
     }
@@ -255,33 +222,6 @@ class PhotoManagementController extends AbstractController
                 'ride' => $ride,
                 'photos' => $photos,
                 'track' => $track
-            ]
-        );
-    }
-
-    public function citygalleryAction(Request $request): Response
-    {
-        $photos = $this->getPhotoRepository()->findSomePhotos(32);
-
-        $cityList = [];
-
-        /**
-         * @var Photo $photo
-         */
-        foreach ($photos as $photo) {
-            $city = $photo->getRide()->getCity();
-            $citySlug = $city->getSlug();
-
-            $cityList[$citySlug] = $city;
-        }
-
-        shuffle($cityList);
-
-        return $this->render(
-            'AppBundle:PhotoManagement:citygallery.html.twig',
-            [
-                'photos' => $photos,
-                'cities' => $cityList
             ]
         );
     }
