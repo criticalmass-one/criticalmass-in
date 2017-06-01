@@ -240,37 +240,21 @@ class PhotoManagementController extends AbstractController
          */
         $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
 
-        $rotate = 90;
+        $angle = 90;
 
         if ($request->query->get('rotate') && $request->query->get('rotate') == 'right') {
-            $rotate = -90;
+            $angle = -90;
         }
 
-        $filename = $this->getPhotoFilename($photo);
+        $imagine = new Imagine();
 
-        $image = imagecreatefromjpeg($filename);
-        $image = imagerotate($image, $rotate, 0);
-        imagejpeg($image, $filename, 100);
-        imagedestroy($image);
+        $image = $imagine->open($this->getPhotoFilename($photo));
 
-        $this->recachePhoto($photo);
+        $image->rotate($angle);
+
+        $this->saveManipulatedImage($image, $photo);
 
         return $this->redirect($this->getRedirectManagementPageUrl($request));
-    }
-
-    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
-    {
-        $blurImage = $image->copy();
-
-        $pixelateDimension = $dimension->scale(0.01);
-
-        $blurImage
-            ->crop($topLeftPoint, $dimension)
-            ->resize($pixelateDimension, ImageInterface::FILTER_QUADRATIC)
-            ->resize($dimension, ImageInterface::FILTER_QUADRATIC)
-        ;
-
-        $image->paste($blurImage, $topLeftPoint);
     }
 
     protected function getPhotoFilename(Photo $photo): string
@@ -280,7 +264,6 @@ class PhotoManagementController extends AbstractController
 
         return $path.$filename;
     }
-
 
     public function censorAction(Request $request, UserInterface $user, int $photoId)
     {
@@ -326,6 +309,21 @@ class PhotoManagementController extends AbstractController
                 'photo' => $photo,
             ]
         );
+    }
+
+    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
+    {
+        $blurImage = $image->copy();
+
+        $pixelateDimension = $dimension->scale(0.01);
+
+        $blurImage
+            ->crop($topLeftPoint, $dimension)
+            ->resize($pixelateDimension, ImageInterface::FILTER_QUADRATIC)
+            ->resize($dimension, ImageInterface::FILTER_QUADRATIC)
+        ;
+
+        $image->paste($blurImage, $topLeftPoint);
     }
 
     protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
