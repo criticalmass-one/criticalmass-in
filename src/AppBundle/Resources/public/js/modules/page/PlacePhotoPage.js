@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'TrackEntity', 'SnapablePhotoMarker'], function (CriticalService) {
+define(['CriticalService', 'Map', 'TrackEntity', 'PhotoEntity', 'SnapablePhotoMarker'], function (CriticalService) {
     PlacePhotoPage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -39,9 +39,7 @@ define(['CriticalService', 'Map', 'TrackEntity', 'SnapablePhotoMarker'], functio
     };
 
     PlacePhotoPage.prototype._initMarker = function () {
-        var coord = this._options.photoCoord;
-
-        this._marker = new SnapablePhotoMarker([coord.latitude, coord.longitude]);
+        this._marker = new SnapablePhotoMarker(this._photo.getLatLng());
 
         this._marker.addToMap(this._map);
         this._marker.snapToTrack(this._track);
@@ -49,6 +47,8 @@ define(['CriticalService', 'Map', 'TrackEntity', 'SnapablePhotoMarker'], functio
 
     PlacePhotoPage.prototype.addTrack = function (trackJson) {
         this._track = this._CriticalService.factory.createTrack(trackJson);
+
+        this._track.addToMap(this._map);
 
         this._map.fitBounds(this._track.getBounds());
     };
