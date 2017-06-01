@@ -7,12 +7,13 @@ use AppBundle\Entity\Photo;
 use AppBundle\Form\Type\PhotoCoordType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoManagementController extends AbstractController
 {
-    public function listAction(Request $request, UserInterface $user)
+    public function listAction(Request $request, UserInterface $user): Response
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
@@ -31,7 +32,7 @@ class PhotoManagementController extends AbstractController
         return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
     }
 
-    public function ridelistAction(Request $request, $citySlug, $rideDate)
+    public function ridelistAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -54,7 +55,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function showAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function showAction(Request $request, $citySlug, $rideDate, $photoId): Response
     {
         $city = $this->getCheckedCity($citySlug);
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -80,7 +81,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function deleteAction(Request $request, $citySlug, $rideDate, $photoId = 0)
+    public function deleteAction(Request $request, $citySlug, $rideDate, $photoId = 0): Response
     {
         /**
          * @var Photo $photo
@@ -99,7 +100,7 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-    public function manageAction(Request $request, $citySlug, $rideDate)
+    public function manageAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -121,7 +122,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function toggleAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function toggleAction(Request $request, $citySlug, $rideDate, $photoId): Response
     {
         /**
          * @var Photo $photo
@@ -140,7 +141,7 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-    public function featuredPhotoAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function featuredPhotoAction(Request $request, $citySlug, $rideDate, $photoId): Response
     {
         /**
          * @var Photo $photo
@@ -157,7 +158,7 @@ class PhotoManagementController extends AbstractController
     }
 
 
-    protected function getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId)
+    protected function getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId): Response
     {
         /**
          * @var Photo $photo
@@ -178,7 +179,7 @@ class PhotoManagementController extends AbstractController
         return null;
     }
 
-    public function placeSingleAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function placeSingleAction(Request $request, $citySlug, $rideDate, $photoId): Response
     {
         /**
          * @var Photo $photo
@@ -210,7 +211,7 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, Form $form)
+    protected function placeSingleGetAction(Request $request, Photo $photo, Form $form): Response
     {
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
@@ -228,7 +229,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    protected function placeSinglePostAction(Request $request, Photo $photo, Form $form)
+    protected function placeSinglePostAction(Request $request, Photo $photo, Form $form): Response
     {
         $form->handleRequest($request);
 
@@ -241,7 +242,7 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-    public function relocateAction(Request $request, $citySlug, $rideDate)
+    public function relocateAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -258,7 +259,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function citygalleryAction(Request $request)
+    public function citygalleryAction(Request $request): Response
     {
         $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
@@ -285,7 +286,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function rotateAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function rotateAction(Request $request, $citySlug, $rideDate, $photoId): Response
     {
         /**
          * @var Photo $photo
@@ -311,7 +312,7 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-    protected function recachePhoto(Photo $photo)
+    protected function recachePhoto(Photo $photo): void
     {
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
