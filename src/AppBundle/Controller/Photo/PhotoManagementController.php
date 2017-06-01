@@ -156,13 +156,13 @@ class PhotoManagementController extends AbstractController
                 ]
             );
 
-            if ('POST' == $request->getMethod()) {
+            if ($request->isMethod(Request::METHOD_POST)) {
                 return $this->placeSinglePostAction($request, $photo, $form);
             } else {
                 return $this->placeSingleGetAction($request, $photo, $form);
             }
         } else {
-            throw new NotFoundHttpException();
+            throw $this->createNotFoundException();
         }
     }
 
@@ -189,8 +189,12 @@ class PhotoManagementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $photo = $form->getData();
+
+            var_dump($photo);
+            echo 'WEFWEFWEF';$photo->getLatitude();
+            die;
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
             $em->flush();
         }
 
