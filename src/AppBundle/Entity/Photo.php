@@ -103,6 +103,13 @@ class Photo implements ViewableInterface
     protected $imageName;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    protected $backupName;
+
+    /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
@@ -376,5 +383,17 @@ class Photo implements ViewableInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function setBackupName(string $backupName): Photo
+    {
+        $this->backupName = $backupName;
+
+        return $this;
+    }
+
+    public function getBackupName(): string
+    {
+        return $this->backupName;
     }
 }

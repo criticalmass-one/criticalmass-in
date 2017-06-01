@@ -47,6 +47,7 @@ require.config({
         "TrackDrawPage": "/bundles/app/js/modules/page/TrackDrawPage",
         "ViewPhotoPage": "/bundles/app/js/modules/page/ViewPhotoPage",
         "UploadPhotoPage": "/bundles/app/js/modules/page/UploadPhotoPage",
+        "PhotoCensorPage": "/bundles/app/js/modules/page/PhotoCensorPage",
         "CityStatisticPage": "/bundles/app/js/modules/page/CityStatisticPage",
         "EditSubridePage": "/bundles/app/js/modules/page/EditSubridePage",
         "FacebookStatisticPage": "/bundles/app/js/modules/page/FacebookStatisticPage",
@@ -95,6 +96,7 @@ require.config({
         "typeahead": "/bundles/app/js/external/typeahead/typeahead",
         "bloodhound": "/bundles/app/js/external/typeahead/bloodhound",
         "jquery": "/bundles/app/js/external/jquery/jquery-2.1.4.min",
+        "jquery-areaselect": "/bundles/app/js/external/jquery/jquery.areaselect.min",
         "dateformat": "/bundles/app/js/external/dateformat/dateformat",
         "chartjs": "/bundles/app/js/external/chartjs/chartjs",
         "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min"
