@@ -71,14 +71,14 @@
                                             <li role="separator" class="divider"></li>
 
                                             <li>
-                                                <a href="{{ path('caldera_criticalmass_photo_delete', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                <a href="{{ path('caldera_criticalmass_photo_delete', { 'photoId': photo.id }) }}">
                                                     <i class="fa fa-trash-o"></i>
                                                     Löschen
                                                 </a>
                                             </li>
 
                                             <li>
-                                                <a href="{{ path('caldera_criticalmass_photo_censor', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                <a href="{{ path('caldera_criticalmass_photo_censor', { 'photoId': photo.id }) }}">
                                                     <i class="fa fa-eraser"></i>
                                                     Zensieren
                                                 </a>
@@ -86,14 +86,14 @@
 
                                             {% if photo.enabled %}
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <a href="{{ path('caldera_criticalmass_photo_toggle', { 'photoId': photo.id }) }}">
                                                         <i class="fa fa-eye-slash"></i>
                                                         Deaktivieren
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_photo_toggle', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <a href="{{ path('caldera_criticalmass_photo_toggle', { 'photoId': photo.id }) }}">
                                                         <i class="fa fa-eye"></i>
                                                         Aktivieren
                                                     </a>
@@ -103,7 +103,7 @@
                                             <li role="separator" class="divider"></li>
 
                                             <li>
-                                                <a href="{{ path('caldera_criticalmass_photo_place_single', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                <a href="{{ path('caldera_criticalmass_photo_place_single', { 'photoId': photo.id }) }}">
                                                     <i class="fa fa-location-arrow"></i>
                                                     verorten
                                                 </a>
@@ -112,13 +112,13 @@
                                             <li role="separator" class="divider"></li>
 
                                             <li>
-                                                <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=left">
+                                                <a href="{{ path('caldera_criticalmass_photo_rotate', { 'photoId': photo.id }) }}?direction=left">
                                                     <i class="fa fa-rotate-left"></i>
                                                     links rotieren
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ path('caldera_criticalmass_photo_rotate', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}?direction=right">
+                                                <a href="{{ path('caldera_criticalmass_photo_rotate', { 'photoId': photo.id }) }}?direction=right">
                                                     <i class="fa fa-rotate-right"></i>
                                                     rechts rotieren
                                                 </a>
@@ -128,14 +128,14 @@
 
                                             {% if photo.ride.featuredPhoto == photo %}
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <a href="{{ path('caldera_criticalmass_photo_featured', { 'photoId': photo.id }) }}">
                                                         <i class="fa fa-flag"></i>
                                                         Hauptbild lösen
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_photo_featured', { 'citySlug': photo.ride.city.getMainSlugString(), 'rideDate': photo.ride.getFormattedDate(), 'photoId': photo.id }) }}">
+                                                    <a href="{{ path('caldera_criticalmass_photo_featured', { 'photoId': photo.id }) }}">
                                                         <i class="fa fa-flag-o"></i>
                                                         Hauptbild festlegen
                                                     </a>

@@ -121,7 +121,6 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-
     protected function getCredentialsCheckedPhoto(UserInterface $user, int $photoId): Photo
     {
         /**
@@ -151,9 +150,7 @@ class PhotoManagementController extends AbstractController
                 [
                     'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
                         [
-                            'citySlug' => $citySlug,
-                            'rideDate' => $rideDate,
-                            'photoId' => $photoId
+                            'photoId' => $photoId,
                         ]
                     )
                 ]
@@ -238,14 +235,6 @@ class PhotoManagementController extends AbstractController
         return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
-    protected function getPhotoFilename(Photo $photo): string
-    {
-        $path = $this->getParameter('kernel.root_dir') . '/../web';
-        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
-
-        return $path.$filename;
-    }
-
     public function censorAction(Request $request, UserInterface $user, int $photoId)
     {
         /** @var Photo $photo */
@@ -305,6 +294,14 @@ class PhotoManagementController extends AbstractController
         ;
 
         $image->paste($blurImage, $topLeftPoint);
+    }
+
+    protected function getPhotoFilename(Photo $photo): string
+    {
+        $path = $this->getParameter('kernel.root_dir') . '/../web';
+        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+
+        return $path.$filename;
     }
 
     protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
