@@ -113,6 +113,8 @@
             placePage.addTrack('{{ track|serialize('json')|raw|e('js') }}');
             {% endif %}
 
+            placePage.addRide('{{ photo.ride|serialize|raw|e('js') }}');
+
             placePage.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
 
             placePage.init();

@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'TrackEntity', 'PhotoEntity', 'SnapablePhotoMarker'], function (CriticalService) {
+define(['CriticalService', 'Map', 'RideEntity', 'TrackEntity', 'PhotoEntity', 'RideEntity', 'CityEntity', 'SnapablePhotoMarker'], function (CriticalService) {
     PlacePhotoPage = function (context, options) {
         this._CriticalService = CriticalService;
 
@@ -10,9 +10,17 @@ define(['CriticalService', 'Map', 'TrackEntity', 'PhotoEntity', 'SnapablePhotoMa
     PlacePhotoPage.prototype._CriticalService = null;
     PlacePhotoPage.prototype._photo = null;
     PlacePhotoPage.prototype._track = null;
+    PlacePhotoPage.prototype._ride = null;
 
     PlacePhotoPage.prototype.init = function () {
-        this._initMarker();
+        var latLng = this._photo.getLatLng();
+
+        if (!latLng) {
+            latLng = this._ride.getLatLng();
+        }
+
+        this._initMarker(latLng);
+
         this._initMarkerEvent();
     };
 
@@ -38,8 +46,8 @@ define(['CriticalService', 'Map', 'TrackEntity', 'PhotoEntity', 'SnapablePhotoMa
         this._map.setView([coord.latitude, coord.longitude], 13);
     };
 
-    PlacePhotoPage.prototype._initMarker = function () {
-        this._marker = new SnapablePhotoMarker(this._photo.getLatLng());
+    PlacePhotoPage.prototype._initMarker = function (latLng) {
+        this._marker = new SnapablePhotoMarker(latLng);
 
         this._marker.addToMap(this._map);
         this._marker.snapToTrack(this._track);
@@ -57,6 +65,10 @@ define(['CriticalService', 'Map', 'TrackEntity', 'PhotoEntity', 'SnapablePhotoMa
         this._photo = this._CriticalService.factory.createPhoto(photoJson);
 
         this._photo.setFilename(filename);
+    };
+
+    PlacePhotoPage.prototype.addRide = function (rideJson) {
+        this._ride = this._CriticalService.factory.createRide(rideJson);
     };
 
     return PlacePhotoPage;
