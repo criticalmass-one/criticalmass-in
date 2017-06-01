@@ -6280,12 +6280,6 @@ button.close {
 .extra-marker .fa-number:before {
   content: attr(number); }
 
-body .photo-list .photo-thumb img {
-  border: 1px grey solid;
-  padding: 2px;
-  background: white;
-  height: 160px; }
-
 body #city-jumbotron {
   height: 250px; }
   body #city-jumbotron h1,
