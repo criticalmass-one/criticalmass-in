@@ -102,10 +102,6 @@
                 latitude: {{ photo.ride.latitude }},
                 longitude: {{ photo.ride.longitude }}
             },
-            photoCoord: {
-                latitude: {{ photo.latitude }},
-                longitude: {{ photo.longitude }}
-            },
             inputFields: {
                 latitude: '#photos_latitude',
                 longitude: '#photos_longitude'
@@ -114,11 +110,12 @@
 
         CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function (placePage) {
             {% if track %}
-            placePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
+            placePage.addTrack('{{ track|serialize('json')|raw|e('js') }}');
             {% endif %}
 
-            placePage.init();
+            placePage.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
 
+            placePage.init();
         });
     </script>
 {% endblock %}

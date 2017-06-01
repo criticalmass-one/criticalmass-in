@@ -1,10 +1,14 @@
-define(['Map', 'TrackEntity', 'SnapablePhotoMarker'], function () {
+define(['CriticalService', 'Map', 'TrackEntity', 'SnapablePhotoMarker'], function (CriticalService) {
     PlacePhotoPage = function (context, options) {
+        this._CriticalService = CriticalService;
+
         this._options = options;
 
         this._initMap();
     };
 
+    PlacePhotoPage.prototype._CriticalService = null;
+    PlacePhotoPage.prototype._photo = null;
     PlacePhotoPage.prototype._track = null;
 
     PlacePhotoPage.prototype.init = function () {
@@ -43,12 +47,16 @@ define(['Map', 'TrackEntity', 'SnapablePhotoMarker'], function () {
         this._marker.snapToTrack(this._track);
     };
 
-    PlacePhotoPage.prototype.setTrack = function (polylineLatLngs, colorRed, colorGreen, colorBlue) {
-        this._track = new TrackEntity();
-        this._track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
-        this._track.addToMap(this._map);
+    PlacePhotoPage.prototype.addTrack = function (trackJson) {
+        this._track = this._CriticalService.factory.createTrack(trackJson);
 
         this._map.fitBounds(this._track.getBounds());
+    };
+
+    PlacePhotoPage.prototype.setPhoto = function (photoJson, filename) {
+        this._photo = this._CriticalService.factory.createPhoto(photoJson);
+
+        this._photo.setFilename(filename);
     };
 
     return PlacePhotoPage;
