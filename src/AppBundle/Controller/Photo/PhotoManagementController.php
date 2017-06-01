@@ -96,12 +96,7 @@ class PhotoManagementController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]
-        ));
+        return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
     public function manageAction(Request $request, $citySlug, $rideDate)
@@ -142,11 +137,7 @@ class PhotoManagementController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]);
+        return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
     public function featuredPhotoAction(Request $request, $citySlug, $rideDate, $photoId)
@@ -162,12 +153,7 @@ class PhotoManagementController extends AbstractController
         $em->persist($photo->getRide());
         $em->flush();
 
-
-        return $this->redirectToRoute('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]);
+        return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
 
@@ -252,13 +238,7 @@ class PhotoManagementController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute(
-            'caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]
-        );
+        return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
     public function relocateAction(Request $request, $citySlug, $rideDate)
@@ -328,12 +308,7 @@ class PhotoManagementController extends AbstractController
 
         $this->recachePhoto($photo);
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]
-        ));
+        return $this->redirect($this->getRedirectManagementPageUrl($request));
     }
 
     protected function recachePhoto(Photo $photo)
@@ -348,5 +323,12 @@ class PhotoManagementController extends AbstractController
         $imagineController->filterAction(new Request(), $filename, 'gallery_photo_standard');
         $imagineController->filterAction(new Request(), $filename, 'gallery_photo_large');
         $imagineController->filterAction(new Request(), $filename, 'city_image_wide');
+    }
+
+    protected function getRedirectManagementPageUrl(Request $request): string
+    {
+        $referer = $request->headers->get('referer');
+
+        return $referer;
     }
 }
