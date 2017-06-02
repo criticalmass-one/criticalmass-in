@@ -274,8 +274,8 @@ class PhotoManagementController extends AbstractController
 
         $blurImage
             ->crop($topLeftPoint, $dimension)
-            ->resize($pixelateDimension, ImageInterface::FILTER_QUADRATIC)
-            ->resize($dimension, ImageInterface::FILTER_QUADRATIC)
+            ->resize($pixelateDimension, ImageInterface::FILTER_CUBIC)
+            ->resize($dimension, ImageInterface::FILTER_CUBIC)
         ;
 
         $image->paste($blurImage, $topLeftPoint);
