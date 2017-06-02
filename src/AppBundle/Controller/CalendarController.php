@@ -20,6 +20,8 @@ class CalendarController extends AbstractController
             $dayList[$ride->getDateTime()->format('Y-m-d')][$ride->getId()] = $ride;
         }
 
+        $dayList = $this->sortDayList($dayList);
+
         $this->getMetadata()
             ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
             ->setDate(new \DateTime());
@@ -45,6 +47,20 @@ class CalendarController extends AbstractController
             $dayList[$day->format('Y-m-d')] = [];
 
             $day->add($dayInterval);
+        }
+
+        return $dayList;
+    }
+
+    protected function sortDayList(array $dayList): array
+    {
+        foreach ($dayList as $day => $list) {
+            usort($list, function(Ride $a, Ride $b): int
+            {
+                return strcmp($a->getCity()->getCity(), $b->getCity()->getCity());
+            });
+
+            $dayList[$day] = $list;
         }
 
         return $dayList;

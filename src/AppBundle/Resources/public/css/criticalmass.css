@@ -6456,17 +6456,24 @@ body
 .calendar {
   width: 100%;
 }
-.calendar .day {
+.calendar .day,
+.calendar .none-day {
   border: 1px grey solid;
   vertical-align: top;
 }
 
-.calendar .day .day-number {
-  background: red;
+.calendar .day .day-number,
+.calendar .none-day .day-number {
+  background-color: red;
   text-align: right;
   padding: 3px;
   color: white;
   font-weight: bold;
+  height: 25px;
+}
+
+.calendar .none-day .day-number {
+  background-color: maroon;;
 }
 
 .calendar .day ul {
