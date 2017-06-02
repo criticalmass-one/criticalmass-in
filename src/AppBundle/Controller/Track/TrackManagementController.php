@@ -112,7 +112,7 @@ class TrackManagementController extends AbstractController
         }
     }
 
-    protected function rangeGetAction(Request $request, Track $track, FormInterface $form)
+    protected function rangeGetAction(Request $request, Track $track, FormInterface $form): Response
     {
         $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
         $llag
@@ -130,7 +130,7 @@ class TrackManagementController extends AbstractController
         );
     }
 
-    protected function rangePostAction(Request $request, Track $track, FormInterface $form)
+    protected function rangePostAction(Request $request, Track $track, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
