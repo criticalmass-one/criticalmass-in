@@ -231,16 +231,7 @@ class PhotoManagementController extends AbstractController
 
     public function censorAction(Request $request, UserInterface $user, int $photoId)
     {
-        /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        if (!$photo) {
-            throw $this->createNotFoundException();
-        }
-
-        if ($user !== $photo->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         if ($request->isMethod(Request::METHOD_POST)) {
             $areaDataList = json_decode($request->getContent());
