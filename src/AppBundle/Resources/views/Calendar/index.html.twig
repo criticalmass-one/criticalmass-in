@@ -16,100 +16,58 @@
             </div>
         </div>
 
-        <table>
-            <thead>
-            <tr>
-                <th colspan="7" class="center">
-                    {{ time|date('F') }}
-                </th>
-            </tr>
-            <tr>
-                <th width="12%">Sunday</th>
-                <th width="15%">Monday</th>
-                <th width="15%">Tuesday</th>
-                <th width="16%">Wednesday</th>
-                <th width="15%">Thursday</th>
-                <th width="15%">Friday</th>
-                <th width="12%">Saturday</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% set daysInMonth = time|date('t') %}
-                {% set startDow = time|date('F 1\\s\\t Y')|date('w') %}
-                {% set dow = startDow %}
-                {% for day in range(1,daysInMonth) %}
-                {% if loop.first and startDow != 0 %}
-                    <td colspan="{{ startDow }}"></td>
-                {% endif %}
-                <td>
-                    <div>
-                        <div>{{ day }}</div>
-                        <div>
-
-                        </div>
-                    </div>
-                </td>
-                {% if loop.last and dow != 6 %}
-                    <td colspan="{{ 6 - dow }}">&nbsp;</td>
-                {% endif %}
-                {% if dow == 6 %}
-                {% set dow = 0 %}
-            </tr>
-            <tr>
-                {% else %}
-                    {% set dow = dow + 1 %}
-                {% endif %}
-                {% endfor %}
-            </tr>
-            </tbody>
-        </table>
-
         <div class="row">
             <div class="col-md-12">
-                {% for day, rides in days %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>
-                                {{ day|date('l, d. F Y') }}
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        {% for ride in rides %}
-                            <div class="col-xs-6 col-sm-4 col-md-3">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="text-center">
-                                            <h4>
-                                                <a href="{{ objectPath(ride) }}">
-                                                    {{ ride.city.title }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <dl>
-                                            <dt>Datum:</dt>
-                                            <dd>{{ ride.dateTime.format('d.m.Y') }}</dd>
-                                        </dl>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <dl>
-                                            <dt>Uhrzeit:</dt>
-                                            <dd>{{ ride.dateTime.format('H:i') }}&nbsp;Uhr</dd>
-                                        </dl>
-                                    </div>
+                <table style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th colspan="7" class="center">
+                            {{ time|date('F') }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th width="12%">Sunday</th>
+                        <th width="15%">Monday</th>
+                        <th width="15%">Tuesday</th>
+                        <th width="16%">Wednesday</th>
+                        <th width="15%">Thursday</th>
+                        <th width="15%">Friday</th>
+                        <th width="12%">Saturday</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% set daysInMonth = time|date('t') %}
+                        {% set startDow = time|date('F 1\\s\\t Y')|date('w') %}
+                        {% set dow = startDow %}
+                        {% for day,rideList in dayList %}
+                        {% if loop.first and startDow != 0 %}
+                            <td colspan="{{ startDow }}"></td>
+                        {% endif %}
+                        <td>
+                            <div>
+                                <div>{{ day }}</div>
+                                <div>
+                                    {% for ride in rideList %}
+                                        {{ ride.fancyTitle }}
+                                    {% endfor %}
                                 </div>
                             </div>
+                        </td>
+                        {% if loop.last and dow != 6 %}
+                            <td colspan="{{ 6 - dow }}">&nbsp;</td>
+                        {% endif %}
+                        {% if dow == 6 %}
+                        {% set dow = 0 %}
+                    </tr>
+                    <tr>
+                        {% else %}
+                            {% set dow = dow + 1 %}
+                        {% endif %}
                         {% endfor %}
-                    </div>
-                {% endfor %}
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

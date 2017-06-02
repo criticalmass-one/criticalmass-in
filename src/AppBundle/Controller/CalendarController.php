@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class CalendarController extends AbstractController
@@ -12,10 +13,11 @@ class CalendarController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesByDateTimeMonth($dateTime);
 
-        $days = $this->createDaysList($dateTime);
+        $dayList = $this->createDaysList($dateTime);
 
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $days[$ride->getFormattedDate()][] = $ride;
+            $dayList[$ride->getDateTime()->format('Y-m-d')][$ride->getId()] = $ride;
         }
 
         $this->getMetadata()
@@ -25,7 +27,7 @@ class CalendarController extends AbstractController
         return $this->render(
             'AppBundle:Calendar:index.html.twig',
             [
-                'days' => $days,
+                'dayList' => $dayList,
                 'time' => new \DateTime()
             ]
         );
