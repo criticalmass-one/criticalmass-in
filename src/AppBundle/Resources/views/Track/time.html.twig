@@ -58,6 +58,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="">Zeitzone:</label>
+                                    <input class="form-control" type="text" disabled="disabled" value="{{ track.ride.city.timezone }}" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,6 +91,15 @@
                                 <div class="form-group{% if form_errors(form.startTime) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Uhrzeit:</label>
                                     {{ form_widget(form.startTime, { 'attr' : { 'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="">Zeitzone:</label>
+                                    <input class="form-control" type="text" disabled="disabled" value="{{ track.ride.city.timezone }}" />
                                 </div>
                             </div>
                         </div>
