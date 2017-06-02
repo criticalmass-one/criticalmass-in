@@ -63,28 +63,15 @@ class TrackManagementController extends AbstractController
         return $response;
     }
 
-    /**
-     * Activate or deactivate the user’s track. Deactivating a track will hide it from public ride overviews.
-     *
-     * @param Request $request
-     * @param $trackId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @author swahlen
-     */
-    public function toggleAction(Request $request, $trackId)
+    public function toggleAction(Request $request, UserInterface $user, int $trackId): Response
     {
-        $track = $this->getTrackRepository()->find($trackId);
-        $ride = $track->getRide();
+        $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
-        if ($track && $track->getUser()->equals($this->getUser())) {
-            $em = $this->getDoctrine()->getManager();
-            $track->setEnabled(!$track->getEnabled());
-            $em->merge($track);
-            $em->flush();
+        $track->setEnabled(!$track->getEnabled());
 
-            $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($ride);
-        }
+        $this->getManager()->flush();
+
+        $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($track->getRide());
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
