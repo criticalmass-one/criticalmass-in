@@ -191,9 +191,6 @@ class PhotoManagementController extends AbstractController
         if ($form->isValid()) {
             $photo = $form->getData();
 
-            var_dump($photo);
-            echo 'WEFWEFWEF';$photo->getLatitude();
-            die;
             $em = $this->getDoctrine()->getManager();
             $em->flush();
         }

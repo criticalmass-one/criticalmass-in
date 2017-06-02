@@ -15,7 +15,6 @@ define(['CriticalService', 'Map', 'RideEntity', 'TrackEntity', 'PhotoEntity', 'R
     PlacePhotoPage.prototype.init = function () {
         var latLng = this._photo.getLatLng();
 
-        alert(latLng);
         if (!latLng) {
             latLng = this._ride.getLatLng();
         }
