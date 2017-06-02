@@ -26,13 +26,33 @@
                         </th>
                     </tr>
                     <tr>
-                        <th width="14%">Monday</th>
-                        <th width="14%">Tuesday</th>
-                        <th width="14%">Wednesday</th>
-                        <th width="14%">Thursday</th>
-                        <th width="14%">Friday</th>
-                        <th width="14%">Saturday</th>
-                        <th width="14%">Sunday</th>
+                        <th width="14%">
+                            Montag
+                        </th>
+
+                        <th width="14%">
+                            Dienstag
+                        </th>
+
+                        <th width="14%">
+                            Mittwoch
+                        </th>
+
+                        <th width="14%">
+                            Donnerstag
+                        </th>
+
+                        <th width="14%">
+                            Freitag
+                        </th>
+
+                        <th width="14%">
+                            Sonnabend
+                        </th>
+
+                        <th width="14%">
+                            Sonntag
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,7 +69,7 @@
                                 {{ day|date('d') }}
                             </div>
 
-                            <ul>
+                            <ul class="list-unstyled">
                                 {% for ride in rideList %}
                                 <li>
                                     <a href="{{ objectPath(ride) }}">
