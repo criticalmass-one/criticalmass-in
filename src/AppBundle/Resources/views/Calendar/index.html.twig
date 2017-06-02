@@ -18,7 +18,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="calendar">
+                <table id="calendar" class="calendar">
                     <thead>
                     <tr>
                         <th colspan="7" class="center">
@@ -111,4 +111,9 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('CalendarPage', '#calendar');
+    </script>
+
 {% endblock %}
