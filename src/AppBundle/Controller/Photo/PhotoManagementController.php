@@ -5,8 +5,16 @@ namespace AppBundle\Controller\Photo;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Form\Type\PhotoCoordType;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
+use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -318,12 +326,11 @@ class PhotoManagementController extends AbstractController
             $rotate = -90;
         }
 
-        $path = $this->getParameter('kernel.root_dir') . '/../web';
-        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+        $filename = $this->getPhotoFilename($photo);
 
-        $image = imagecreatefromjpeg($path . $filename);
+        $image = imagecreatefromjpeg($filename);
         $image = imagerotate($image, $rotate, 0);
-        imagejpeg($image, $path . $filename, 100);
+        imagejpeg($image, $filename, 100);
         imagedestroy($image);
 
         $this->recachePhoto($photo);
@@ -334,6 +341,95 @@ class PhotoManagementController extends AbstractController
                 'rideDate' => $photo->getRide()->getFormattedDate()
             ]
         ));
+    }
+
+    public function censorAction(Request $request, UserInterface $user, int $photoId)
+    {
+        /** @var Photo $photo */
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        if (!$photo) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($user !== $photo->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $areaDataList = json_decode($request->getContent());
+
+            $displayWidth = $request->query->get('width');
+
+            $imagine = new Imagine();
+
+            $image = $imagine->open($this->getPhotoFilename($photo));
+
+            $size = $image->getSize();
+
+            $factor = $size->getWidth() / $displayWidth;
+
+            foreach ($areaDataList as $areaData) {
+                $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
+                $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
+
+                $this->applyBlurArea($image, $topLeftPoint, $dimension);
+            }
+
+            $newFilename = $this->saveManipulatedImage($image, $photo);
+
+            return new Response($newFilename);
+        }
+
+        return $this->render(
+            'AppBundle:PhotoManagement:censor.html.twig',
+            [
+                'photo' => $photo,
+            ]
+        );
+    }
+
+    protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
+    {
+        if (!$photo->getBackupName()) {
+            $newFilename = uniqid().'.JPG';
+
+            $photo->setBackupName($photo->getImageName());
+
+            $photo->setImageName($newFilename);
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        $filename = $this->getPhotoFilename($photo);
+        $image->save($filename);
+
+        $this->recachePhoto($photo);
+
+        return $filename;
+    }
+
+    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
+    {
+        $blurImage = $image->copy();
+
+        $pixelateDimension = $dimension->scale(0.01);
+
+        $blurImage
+            ->crop($topLeftPoint, $dimension)
+            ->resize($pixelateDimension, ImageInterface::FILTER_QUADRATIC)
+            ->resize($dimension, ImageInterface::FILTER_QUADRATIC)
+        ;
+
+        $image->paste($blurImage, $topLeftPoint);
+    }
+
+    protected function getPhotoFilename(Photo $photo): string
+    {
+        $path = $this->getParameter('kernel.root_dir') . '/../web';
+        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+
+        return $path.$filename;
     }
 
     protected function recachePhoto(Photo $photo)
