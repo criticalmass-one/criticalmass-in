@@ -1,8 +1,15 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "calderacc/criticalmass",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Much critical mass stuff",
+    "authors": [
+        {
+            "name": "Malte Hübner",
+            "email": "malte@caldera.cc",
+            "homepage": "https://www.maltehuebner.de/",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-4": { "": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
