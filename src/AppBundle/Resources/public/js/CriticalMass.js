@@ -39,6 +39,7 @@ require.config({
         "FacebookImportRidePage": "/bundles/app/js/modules/page/FacebookImportRidePage",
         "RidePage": "/bundles/app/js/modules/page/RidePage",
         "RideStatisticPage": "/bundles/app/js/modules/page/RideStatisticPage",
+        "PlacePhotoPage": "/bundles/app/js/modules/page/PlacePhotoPage",
         "PhotoViewModal": "/bundles/app/js/modules/PhotoViewModal",
         "Timelapse": "/bundles/app/js/modules/map/Timelapse",
         "TrackRangePage": "/bundles/app/js/modules/page/TrackRangePage",

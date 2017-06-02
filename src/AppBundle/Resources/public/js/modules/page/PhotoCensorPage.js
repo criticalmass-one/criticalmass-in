@@ -17,6 +17,8 @@ define(['CriticalService', 'PhotoEntity', 'jquery-areaselect'], function (Critic
         });
 
         $('#save').click(function() {
+            $(this).prop('disabled', true);
+
             var areaData = $('#photo').selectAreas('relativeAreas');
 
             var url = Routing.generate('caldera_criticalmass_photo_censor_short', { photoId: that._photo.getId() }, true);
@@ -24,7 +26,7 @@ define(['CriticalService', 'PhotoEntity', 'jquery-areaselect'], function (Critic
             $.post(url + '?width=' + photoWidth,
                 JSON.stringify(areaData)
             ).done(function(data) {
-                console.log(data);
+                window.location=document.referrer;
             });
         });
     };

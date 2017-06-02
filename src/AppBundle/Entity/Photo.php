@@ -103,7 +103,7 @@ class Photo implements ViewableInterface
     protected $imageName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */

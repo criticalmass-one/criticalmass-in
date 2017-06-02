@@ -12,15 +12,13 @@ use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoManagementController extends AbstractController
 {
-    public function listAction(Request $request, UserInterface $user)
+    public function listAction(Request $request, UserInterface $user): Response
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
@@ -32,14 +30,7 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function indexAction()
-    {
-        $criteria = array('enabled' => true);
-        $photos = $this->getDoctrine()->getRepository('CalderaCriticalmassGalleryBundle:Photo')->findBy($criteria, array('dateTime' => 'DESC'));
-        return $this->render('CalderaCriticalmassGalleryBundle:Default:list.html.twig', array('photos' => $photos));
-    }
-
-    public function ridelistAction(Request $request, $citySlug, $rideDate)
+    public function ridelistAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -62,57 +53,20 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function showAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function deleteAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $this->saveReferer($request);
 
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoRepository()->find($photoId);
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
-        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
-        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
+        $photo->setDeleted(true);
 
-        $this->countView($photo);
+        $this->getManager()->flush();
 
-        return $this->render('AppBundle:PhotoManagement:show.html.twig',
-            [
-                'photo' => $photo,
-                'nextPhoto' => $nextPhoto,
-                'previousPhoto' => $previousPhoto,
-                'city' => $city,
-                'ride' => $ride
-            ]
-        );
+        return $this->createRedirectResponseForSavedReferer();
     }
 
-    public function deleteAction(Request $request, $citySlug, $rideDate, $photoId = 0)
-    {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
-
-        if ($photo) {
-            $em = $this->getDoctrine()->getManager();
-
-            $photo->setDeleted(true);
-
-            $em->persist($photo);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]
-        ));
-    }
-
-    public function manageAction(Request $request, $citySlug, $rideDate)
+    public function manageAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -134,106 +88,78 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function toggleAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function toggleAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $this->saveReferer($request);
 
-        if ($photo) {
-            $em = $this->getDoctrine()->getManager();
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
-            $photo->setEnabled(!$photo->getEnabled());
+        $photo->setEnabled(!$photo->getEnabled());
 
-            $em->persist($photo);
-            $em->flush();
-        }
+        $this->getManager()->flush();
 
-        return $this->redirectToRoute('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]);
+
+        return $this->createRedirectResponseForSavedReferer();
     }
 
-    public function featuredPhotoAction(Request $request, $citySlug, $rideDate, $photoId)
+    public function featuredPhotoAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
+        $this->saveReferer($request);
+
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         $photo->getRide()->setFeaturedPhoto($photo);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($photo->getRide());
-        $em->flush();
+        $this->getManager()->flush();
 
+        return $this->createRedirectResponseForSavedReferer();
+    }
 
-        return $this->redirectToRoute('caldera_criticalmass_photo_manage',
+    protected function getCredentialsCheckedPhoto(UserInterface $user, int $photoId): Photo
+    {
+        /**
+         * @var Photo $photo
+         */
+        $photo = $this->getPhotoRepository()->find($photoId);
+
+        if (!$photo) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($photo->getUser() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $photo;
+    }
+
+    public function placeSingleAction(Request $request, UserInterface $user, int $photoId): Response
+    {
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+
+        $form = $this->createForm(
+            PhotoCoordType::class,
+            $photo,
             [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]);
-    }
+                'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
+                    [
+                        'photoId' => $photoId,
+                    ]
+                )
+            ]
+        );
 
-
-    protected function getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId)
-    {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        if ($ride &&
-            $photo &&
-            $photo->getUser()->equals($this->getUser()) &&
-            $photo->getRide()->equals($ride)
-        ) {
-            return $photo;
-        }
-
-        return null;
-    }
-
-    public function placeSingleAction(Request $request, $citySlug, $rideDate, $photoId)
-    {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
-
-        if ($photo) {
-            $form = $this->createForm(
-                PhotoCoordType::class,
-                $photo,
-                [
-                    'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
-                        [
-                            'citySlug' => $citySlug,
-                            'rideDate' => $rideDate,
-                            'photoId' => $photoId
-                        ]
-                    )
-                ]
-            );
-
-            if ('POST' == $request->getMethod()) {
-                return $this->placeSinglePostAction($request, $photo, $form);
-            } else {
-                return $this->placeSingleGetAction($request, $photo, $form);
-            }
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->placeSinglePostAction($request, $photo, $form);
         } else {
-            throw new NotFoundHttpException();
+            return $this->placeSingleGetAction($request, $photo, $form);
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, Form $form)
+    protected function placeSingleGetAction(Request $request, Photo $photo, Form $form): Response
     {
+        $this->saveReferer($request);
+
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
 
@@ -250,26 +176,20 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    protected function placeSinglePostAction(Request $request, Photo $photo, Form $form)
+    protected function placeSinglePostAction(Request $request, Photo $photo, Form $form): Response
     {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
-            $em->flush();
+            $photo = $form->getData();
+
+            $this->getManager()->flush();
         }
 
-        return $this->redirectToRoute(
-            'caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]
-        );
+        return $this->createRedirectResponseForSavedReferer();
     }
 
-    public function relocateAction(Request $request, $citySlug, $rideDate)
+    public function relocateAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -286,107 +206,101 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function citygalleryAction(Request $request)
+    public function rotateAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        $photos = $this->getPhotoRepository()->findSomePhotos(32);
+        $this->saveReferer($request);
 
-        $cityList = [];
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
-        /**
-         * @var Photo $photo
-         */
-        foreach ($photos as $photo) {
-            $city = $photo->getRide()->getCity();
-            $citySlug = $city->getSlug();
-
-            $cityList[$citySlug] = $city;
-        }
-
-        shuffle($cityList);
-
-        return $this->render(
-            'AppBundle:PhotoManagement:citygallery.html.twig',
-            [
-                'photos' => $photos,
-                'cities' => $cityList
-            ]
-        );
-    }
-
-    public function rotateAction(Request $request, $citySlug, $rideDate, $photoId)
-    {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoByIdCitySlugRideDate($citySlug, $rideDate, $photoId);
-
-        $rotate = 90;
+        $angle = 90;
 
         if ($request->query->get('rotate') && $request->query->get('rotate') == 'right') {
-            $rotate = -90;
+            $angle = -90;
         }
 
-        $filename = $this->getPhotoFilename($photo);
+        $imagine = new Imagine();
 
-        $image = imagecreatefromjpeg($filename);
-        $image = imagerotate($image, $rotate, 0);
-        imagejpeg($image, $filename, 100);
-        imagedestroy($image);
+        $image = $imagine->open($this->getPhotoFilename($photo));
 
-        $this->recachePhoto($photo);
+        $image->rotate($angle);
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_photo_manage',
-            [
-                'citySlug' => $photo->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $photo->getRide()->getFormattedDate()
-            ]
-        ));
+        $this->saveManipulatedImage($image, $photo);
+
+        return $this->createRedirectResponseForSavedReferer();
     }
 
-    public function censorAction(Request $request, UserInterface $user, int $photoId)
+    public function censorAction(Request $request, UserInterface $user, int $photoId): Response
     {
-        /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        if (!$photo) {
-            throw $this->createNotFoundException();
-        }
-
-        if ($user !== $photo->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
+        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            $areaDataList = json_decode($request->getContent());
-
-            $displayWidth = $request->query->get('width');
-
-            $imagine = new Imagine();
-
-            $image = $imagine->open($this->getPhotoFilename($photo));
-
-            $size = $image->getSize();
-
-            $factor = $size->getWidth() / $displayWidth;
-
-            foreach ($areaDataList as $areaData) {
-                $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
-                $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
-
-                $this->applyBlurArea($image, $topLeftPoint, $dimension);
-            }
-
-            $newFilename = $this->saveManipulatedImage($image, $photo);
-
-            return new Response($newFilename);
+            return $this->censorPostAction($request, $user, $photo);
+        } else {
+            return $this->censorGetAction($request, $user, $photo);
         }
+    }
 
+    public function censorGetAction(Request $request, UserInterface $user, Photo $photo): Response
+    {
         return $this->render(
             'AppBundle:PhotoManagement:censor.html.twig',
             [
                 'photo' => $photo,
             ]
         );
+    }
+
+    public function censorPostAction(Request $request, UserInterface $user, Photo $photo): Response
+    {
+        $areaDataList = json_decode($request->getContent());
+
+        if (0 === count($areaDataList)) {
+            return new Response(null);
+        }
+
+        $displayWidth = $request->query->get('width');
+
+        $imagine = new Imagine();
+
+        $image = $imagine->open($this->getPhotoFilename($photo));
+
+        $size = $image->getSize();
+
+        $factor = $size->getWidth() / $displayWidth;
+
+        foreach ($areaDataList as $areaData) {
+            $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
+            $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
+
+            $this->applyBlurArea($image, $topLeftPoint, $dimension);
+        }
+
+        $newFilename = $this->saveManipulatedImage($image, $photo);
+
+        return new Response($newFilename);
+    }
+
+    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
+    {
+        $blurImage = $image->copy();
+
+        $pixelateDimension = $dimension->scale(0.01);
+
+        $blurImage
+            ->crop($topLeftPoint, $dimension)
+            ->resize($pixelateDimension, ImageInterface::FILTER_CUBIC)
+            ->resize($dimension, ImageInterface::FILTER_CUBIC)
+        ;
+
+        $image->paste($blurImage, $topLeftPoint);
+    }
+
+    protected function getPhotoFilename(Photo $photo): string
+    {
+        $path = $this->getParameter('kernel.root_dir') . '/../web';
+        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
+
+        return $path.$filename;
     }
 
     protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
@@ -409,30 +323,7 @@ class PhotoManagementController extends AbstractController
         return $filename;
     }
 
-    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
-    {
-        $blurImage = $image->copy();
-
-        $pixelateDimension = $dimension->scale(0.01);
-
-        $blurImage
-            ->crop($topLeftPoint, $dimension)
-            ->resize($pixelateDimension, ImageInterface::FILTER_QUADRATIC)
-            ->resize($dimension, ImageInterface::FILTER_QUADRATIC)
-        ;
-
-        $image->paste($blurImage, $topLeftPoint);
-    }
-
-    protected function getPhotoFilename(Photo $photo): string
-    {
-        $path = $this->getParameter('kernel.root_dir') . '/../web';
-        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
-
-        return $path.$filename;
-    }
-
-    protected function recachePhoto(Photo $photo)
+    protected function recachePhoto(Photo $photo): void
     {
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
