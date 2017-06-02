@@ -14,7 +14,6 @@ use Imagine\Imagick\Imagine;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoManagementController extends AbstractController
@@ -143,26 +142,22 @@ class PhotoManagementController extends AbstractController
     {
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
-        if ($photo) {
-            $form = $this->createForm(
-                PhotoCoordType::class,
-                $photo,
-                [
-                    'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
-                        [
-                            'photoId' => $photoId,
-                        ]
-                    )
-                ]
-            );
+        $form = $this->createForm(
+            PhotoCoordType::class,
+            $photo,
+            [
+                'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
+                    [
+                        'photoId' => $photoId,
+                    ]
+                )
+            ]
+        );
 
-            if ($request->isMethod(Request::METHOD_POST)) {
-                return $this->placeSinglePostAction($request, $photo, $form);
-            } else {
-                return $this->placeSingleGetAction($request, $photo, $form);
-            }
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->placeSinglePostAction($request, $photo, $form);
         } else {
-            throw $this->createNotFoundException();
+            return $this->placeSingleGetAction($request, $photo, $form);
         }
     }
 
@@ -336,12 +331,5 @@ class PhotoManagementController extends AbstractController
         $imagineController->filterAction(new Request(), $filename, 'gallery_photo_standard');
         $imagineController->filterAction(new Request(), $filename, 'gallery_photo_large');
         $imagineController->filterAction(new Request(), $filename, 'city_image_wide');
-    }
-
-    protected function getRedirectManagementPageUrl(Request $request): string
-    {
-        $referer = $request->headers->get('referer');
-
-        return $referer;
     }
 }
