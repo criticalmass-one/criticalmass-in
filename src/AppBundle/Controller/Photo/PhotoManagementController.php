@@ -254,6 +254,10 @@ class PhotoManagementController extends AbstractController
     {
         $areaDataList = json_decode($request->getContent());
 
+        if (0 === count($areaDataList)) {
+            return new Response(null);
+        }
+
         $displayWidth = $request->query->get('width');
 
         $imagine = new Imagine();
