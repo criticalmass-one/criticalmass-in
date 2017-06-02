@@ -229,41 +229,51 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer();
     }
 
-    public function censorAction(Request $request, UserInterface $user, int $photoId)
+    public function censorAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            $areaDataList = json_decode($request->getContent());
-
-            $displayWidth = $request->query->get('width');
-
-            $imagine = new Imagine();
-
-            $image = $imagine->open($this->getPhotoFilename($photo));
-
-            $size = $image->getSize();
-
-            $factor = $size->getWidth() / $displayWidth;
-
-            foreach ($areaDataList as $areaData) {
-                $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
-                $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
-
-                $this->applyBlurArea($image, $topLeftPoint, $dimension);
-            }
-
-            $newFilename = $this->saveManipulatedImage($image, $photo);
-
-            return new Response($newFilename);
+            return $this->censorPostAction($request, $user, $photo);
+        } else {
+            return $this->censorGetAction($request, $user, $photo);
         }
+    }
 
+    public function censorGetAction(Request $request, UserInterface $user, Photo $photo): Response
+    {
         return $this->render(
             'AppBundle:PhotoManagement:censor.html.twig',
             [
                 'photo' => $photo,
             ]
         );
+    }
+
+    public function censorPostAction(Request $request, UserInterface $user, Photo $photo): Response
+    {
+        $areaDataList = json_decode($request->getContent());
+
+        $displayWidth = $request->query->get('width');
+
+        $imagine = new Imagine();
+
+        $image = $imagine->open($this->getPhotoFilename($photo));
+
+        $size = $image->getSize();
+
+        $factor = $size->getWidth() / $displayWidth;
+
+        foreach ($areaDataList as $areaData) {
+            $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
+            $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
+
+            $this->applyBlurArea($image, $topLeftPoint, $dimension);
+        }
+
+        $newFilename = $this->saveManipulatedImage($image, $photo);
+
+        return new Response($newFilename);
     }
 
     protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
