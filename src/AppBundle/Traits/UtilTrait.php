@@ -7,6 +7,7 @@ use AppBundle\Entity\CitySlug;
 use AppBundle\Entity\Ride;
 use AppBundle\HtmlMetadata\Metadata;
 use AppBundle\Router\ObjectRouter;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -45,7 +46,9 @@ trait UtilTrait
         $city = $this->getCityBySlug($citySlug);
 
         if (!$city) {
-            throw new NotFoundHttpException('Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.');
+            throw new NotFoundHttpException(
+                'Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.'
+            );
         }
 
         return $city;
@@ -65,7 +68,9 @@ trait UtilTrait
         $ride = $this->getRideRepository()->findCityRideByDate($city, $rideDateTime);
 
         if (!$ride) {
-            throw new NotFoundHttpException('Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.');
+            throw new NotFoundHttpException(
+                'Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.'
+            );
         }
 
         return $ride;
@@ -76,7 +81,9 @@ trait UtilTrait
         try {
             $dateTime = new \DateTime($dateTime);
         } catch (\Exception $e) {
-            throw new NotFoundHttpException('Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.');
+            throw new NotFoundHttpException(
+                'Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.'
+            );
         }
 
         return $dateTime;
@@ -118,5 +125,10 @@ trait UtilTrait
         $url = $this->generateObjectUrl($object, $referenceType);
 
         return $this->redirect($url);
+    }
+
+    protected function getManager(): EntityManagerInterface
+    {
+        return $this->getDoctrine()->getManager();
     }
 }

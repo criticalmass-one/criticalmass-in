@@ -191,8 +191,7 @@ class PhotoManagementController extends AbstractController
         if ($form->isValid()) {
             $photo = $form->getData();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+            $this->getManager()->flush();
         }
 
         return $this->redirect($this->getRedirectManagementPageUrl($request));
