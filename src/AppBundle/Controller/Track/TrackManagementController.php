@@ -146,9 +146,9 @@ class TrackManagementController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
-    public function timeAction(Request $request, $trackId)
+    public function timeAction(Request $request, UserInterface $user, int $trackId): Response
     {
-        $track = $this->getTrackRepository()->findOneById($trackId);
+        $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl(
@@ -159,16 +159,17 @@ class TrackManagementController extends AbstractController
             ))
             ->add('startDate', DateType::class)
             ->add('startTime', TimeType::class)
-            ->getForm();
+            ->getForm()
+        ;
 
-        if ('POST' == $request->getMethod()) {
+        if ($request->isMethod(Request::METHOD_POST)) {
             return $this->timePostAction($request, $track, $form);
         } else {
             return $this->timeGetAction($request, $track, $form);
         }
     }
 
-    protected function timeGetAction(Request $request, Track $track, Form $form)
+    protected function timeGetAction(Request $request, Track $track, FormInterface $form): Response
     {
         return $this->render('AppBundle:Track:time.html.twig',
             [
@@ -178,7 +179,7 @@ class TrackManagementController extends AbstractController
         );
     }
 
-    protected function timePostAction(Request $request, Track $track, Form $form)
+    protected function timePostAction(Request $request, Track $track, FormInterface $form): Response
     {
         // catch the old dateTime before it is overridden by the form submit
         $oldDateTime = $track->getStartDateTime();
@@ -186,7 +187,7 @@ class TrackManagementController extends AbstractController
         // now get the new values
         $form->handleRequest($request);
 
-        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser())) {
+        if ($form->isValid()) {
             /**
              * @var Track $newTrack
              */
@@ -198,8 +199,11 @@ class TrackManagementController extends AbstractController
              * @var TrackTimeShift $tts
              */
             $tts = $this->get('caldera.criticalmass.gps.timeshift.track');
-
-            $tts->loadTrack($newTrack)->shift($interval)->saveTrack();
+            $tts
+                ->loadTrack($newTrack)
+                ->shift($interval)
+                ->saveTrack()
+            ;
 
             $this->updateTrackProperties($track);
         }
