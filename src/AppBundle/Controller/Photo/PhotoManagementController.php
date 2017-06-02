@@ -104,15 +104,15 @@ class PhotoManagementController extends AbstractController
 
     public function featuredPhotoAction(Request $request, UserInterface $user, int $photoId): Response
     {
+        $this->saveReferer($request);
+
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         $photo->getRide()->setFeaturedPhoto($photo);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($photo->getRide());
-        $em->flush();
+        $this->getManager()->flush();
 
-        return $this->redirect($this->getRedirectManagementPageUrl($request));
+        return $this->createRedirectResponseForSavedReferer();
     }
 
     protected function getCredentialsCheckedPhoto(UserInterface $user, int $photoId): Photo
