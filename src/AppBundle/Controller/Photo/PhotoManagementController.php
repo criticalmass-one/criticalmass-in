@@ -208,6 +208,8 @@ class PhotoManagementController extends AbstractController
 
     public function rotateAction(Request $request, UserInterface $user, int $photoId): Response
     {
+        $this->saveReferer($request);
+
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
         $angle = 90;
@@ -224,7 +226,7 @@ class PhotoManagementController extends AbstractController
 
         $this->saveManipulatedImage($image, $photo);
 
-        return $this->redirect($this->getRedirectManagementPageUrl($request));
+        return $this->createRedirectResponseForSavedReferer();
     }
 
     public function censorAction(Request $request, UserInterface $user, int $photoId)
