@@ -163,6 +163,8 @@ class PhotoManagementController extends AbstractController
 
     protected function placeSingleGetAction(Request $request, Photo $photo, Form $form): Response
     {
+        $this->saveReferer($request);
+
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
 
@@ -189,7 +191,7 @@ class PhotoManagementController extends AbstractController
             $this->getManager()->flush();
         }
 
-        return $this->redirect($this->getRedirectManagementPageUrl($request));
+        return $this->createRedirectResponseForSavedReferer();
     }
 
     public function relocateAction(Request $request, $citySlug, $rideDate): Response
