@@ -55,18 +55,15 @@ class PhotoManagementController extends AbstractController
 
     public function deleteAction(Request $request, UserInterface $user, int $photoId): Response
     {
+        $this->saveReferer($request);
+
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
 
-        if ($photo) {
-            $em = $this->getDoctrine()->getManager();
+        $photo->setDeleted(true);
 
-            $photo->setDeleted(true);
+        $this->getManager()->flush();
 
-            $em->persist($photo);
-            $em->flush();
-        }
-
-        return $this->redirect($this->getRedirectManagementPageUrl($request));
+        return $this->createRedirectResponseForSavedReferer();
     }
 
     public function manageAction(Request $request, $citySlug, $rideDate): Response
