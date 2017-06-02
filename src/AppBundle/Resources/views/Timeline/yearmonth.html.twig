@@ -10,7 +10,7 @@
     </li>
 
     <li class="active">
-        {{ startDateTime|date('F Y') }}
+        {{ startDateTime|format_date('MMMM YYYY') }}
     </li>
 {% endblock %}
 
@@ -19,11 +19,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Die Critical Mass im {{ startDateTime|date('F Y') }}
+                    Die Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}
                 </h1>
 
                 <p class="lead">
-                    Schau dir an, was im {{ startDateTime|date('F Y') }} bei der Critical Mass passiert ist.
+                    Schau dir an, was im {{ startDateTime|format_date('MMMM YYYY') }} bei der Critical Mass passiert ist.
                 </p>
             </div>
         </div>
