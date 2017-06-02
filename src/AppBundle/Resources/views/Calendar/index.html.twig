@@ -69,15 +69,17 @@
                                 {{ day|date('d') }}
                             </div>
 
-                            <ul class="list-unstyled">
+                            {% if rideList|length %}
+                            <ul class="ride-list list-unstyled">
                                 {% for ride in rideList %}
                                 <li>
                                     <a href="{{ objectPath(ride) }}">
-                                        {{ ride.fancyTitle }}
+                                        {{ ride.city.city }}
                                     </a>
                                 </li>
                                 {% endfor %}
                             </ul>
+                            {% endif %}
                         </td>
                         {% if loop.last and dow != 6 %}
                             <td colspan="{{ 6 - dow }}">&nbsp;</td>
