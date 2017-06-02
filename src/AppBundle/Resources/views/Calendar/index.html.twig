@@ -18,7 +18,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table style="width: 100%;">
+                <table class="calendar">
                     <thead>
                     <tr>
                         <th colspan="7" class="center">
@@ -26,33 +26,38 @@
                         </th>
                     </tr>
                     <tr>
-                        <th width="12%">Sunday</th>
-                        <th width="15%">Monday</th>
-                        <th width="15%">Tuesday</th>
-                        <th width="16%">Wednesday</th>
-                        <th width="15%">Thursday</th>
-                        <th width="15%">Friday</th>
-                        <th width="12%">Saturday</th>
+                        <th width="14%">Monday</th>
+                        <th width="14%">Tuesday</th>
+                        <th width="14%">Wednesday</th>
+                        <th width="14%">Thursday</th>
+                        <th width="14%">Friday</th>
+                        <th width="14%">Saturday</th>
+                        <th width="14%">Sunday</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         {% set daysInMonth = time|date('t') %}
-                        {% set startDow = time|date('F 1\\s\\t Y')|date('w') %}
+                        {% set startDow = time|date('F 1\\s\\t Y')|date('w') - 1%}
                         {% set dow = startDow %}
                         {% for day,rideList in dayList %}
                         {% if loop.first and startDow != 0 %}
-                            <td colspan="{{ startDow }}"></td>
+                            <td colspan="{{ startDow  }}"></td>
                         {% endif %}
-                        <td>
-                            <div>
-                                <div>{{ day }}</div>
-                                <div>
-                                    {% for ride in rideList %}
-                                        {{ ride.fancyTitle }}
-                                    {% endfor %}
-                                </div>
+                        <td class="day">
+                            <div class="day-number">
+                                {{ day|date('d') }}
                             </div>
+
+                            <ul>
+                                {% for ride in rideList %}
+                                <li>
+                                    <a href="{{ objectPath(ride) }}">
+                                        {{ ride.fancyTitle }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </td>
                         {% if loop.last and dow != 6 %}
                             <td colspan="{{ 6 - dow }}">&nbsp;</td>
