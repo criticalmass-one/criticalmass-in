@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,10 +90,9 @@ class TrackManagementController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
-    public function rangeAction(Request $request, $trackId)
+    public function rangeAction(Request $request, UserInterface $user, int $trackId): Response
     {
-        /** @var Track $track */
-        $track = $this->getTrackRepository()->findOneById($trackId);
+        $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_track_range',
@@ -102,20 +102,23 @@ class TrackManagementController extends AbstractController
             ))
             ->add('startPoint', HiddenType::class)
             ->add('endPoint', HiddenType::class)
-            ->getForm();
+            ->getForm()
+        ;
 
-        if ('POST' == $request->getMethod()) {
+        if ($request->isMethod(Request::METHOD_POST)) {
             return $this->rangePostAction($request, $track, $form);
         } else {
             return $this->rangeGetAction($request, $track, $form);
         }
     }
 
-    protected function rangeGetAction(Request $request, Track $track, Form $form)
+    protected function rangeGetAction(Request $request, Track $track, FormInterface $form)
     {
         $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
-        $llag->loadTrack($track);
-        $llag->execute();
+        $llag
+            ->loadTrack($track)
+            ->execute()
+        ;
 
         return $this->render('AppBundle:Track:range.html.twig',
             [
@@ -127,14 +130,11 @@ class TrackManagementController extends AbstractController
         );
     }
 
-    protected function rangePostAction(Request $request, Track $track, Form $form)
+    protected function rangePostAction(Request $request, Track $track, FormInterface $form)
     {
         $form->handleRequest($request);
 
-        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser())) {
-            /**
-             * @var Track $track
-             */
+        if ($form->isValid()) {
             $track = $form->getData();
 
             $this->generatePolyline($track);
