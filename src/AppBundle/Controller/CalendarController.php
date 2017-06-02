@@ -12,7 +12,7 @@ class CalendarController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesByDateTimeMonth($dateTime);
 
-        $days = [];
+        $days = $this->createDaysList($dateTime);
 
         foreach ($rides as $ride) {
             $days[$ride->getFormattedDate()][] = $ride;
@@ -25,8 +25,26 @@ class CalendarController extends AbstractController
         return $this->render(
             'AppBundle:Calendar:index.html.twig',
             [
-                'days' => $days
+                'days' => $days,
+                'time' => new \DateTime()
             ]
         );
+    }
+
+    protected function createDaysList(\DateTime $dateTime): array
+    {
+        $day = new \DateTime($dateTime->format('Y-m-1'));
+        $lastDay = new \DateTime($dateTime->format('Y-m-t'));
+        $dayInterval = new \DateInterval('P1D');
+
+        $dayList = [];
+
+        while ($day <= $lastDay) {
+            $dayList[$day->format('Y-m-d')] = [];
+
+            $day->add($dayInterval);
+        }
+
+        return $dayList;
     }
 }
