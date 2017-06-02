@@ -65,7 +65,7 @@ class TrackDrawController extends AbstractController
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
-    
+
     public function editAction(Request $request, int $trackId)
     {
         /** @var Track $track */
