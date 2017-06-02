@@ -91,20 +91,6 @@ trait UtilTrait
         return $dateTime;
     }
 
-    protected function getCheckedCitySlugRideDateRide(string $citySlug, string $dateTime): Ride
-    {
-        /** @var City $city */
-        $city = $this->getCheckedCity($citySlug);
-
-        /** @var \DateTime $rideDateTime */
-        $rideDateTime = $this->getCheckedDateTime($dateTime);
-
-        /** @var Ride $ride */
-        $ride = $this->getCheckedRide($city, $rideDateTime);
-
-        return $ride;
-    }
-
     protected function getSession(): Session
     {
         $session = new Session();
