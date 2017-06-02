@@ -76,21 +76,15 @@ class TrackManagementController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
-    public function deleteAction(Request $request, $trackId)
+    public function deleteAction(Request $request, UserInterface $user, int $trackId): Response
     {
-        /** @var Track $track */
-        $track = $this->getTrackRepository()->find($trackId);
-        $ride = $track->getRide();
+        $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
-        if ($track && $track->getUser()->equals($this->getUser())) {
-            $track->setDeleted(true);
+        $track->setDeleted(true);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($track);
-            $em->flush();
+        $this->getManager()->flush();
 
-            $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($ride);
-        }
+        $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($track->getRide());
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
