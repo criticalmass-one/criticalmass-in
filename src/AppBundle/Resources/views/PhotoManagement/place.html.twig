@@ -28,17 +28,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <img class="auto-scale pull-right"
-                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                 <h1>
                     Foto platzieren
                 </h1>
 
+                <p class="lead">
+                    Hier kannst du das folgende Foto auf der Karte platzieren oder verschieben.
+                </p>
             </div>
         </div>
 
-        <div id="map" style="height: 250px;">
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <img class="img-responsive img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+            </div>
 
+            <div class="col-md-9">
+                <div id="map" style="height: 300px;">
+                </div>
+            </div>
         </div>
 
         <div class="row margin-top-medium">
