@@ -13,6 +13,18 @@
                 <h1>
                     Dein weltweiter Critical-Mass-Kalender
                 </h1>
+
+                <p class="lead">
+                    Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>
+                    {{ time|format_date('MMMM YYYY') }}
+                </h3>
             </div>
         </div>
 
@@ -20,11 +32,6 @@
             <div class="col-md-12">
                 <table id="calendar" class="calendar">
                     <thead>
-                    <tr>
-                        <th colspan="7" class="center">
-                            {{ time|date('F') }}
-                        </th>
-                    </tr>
                     <tr>
                         <th width="14%">
                             Montag
