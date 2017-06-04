@@ -6456,6 +6456,12 @@ body
 .calendar {
   width: 100%;
 }
+
+.calendar th {
+  padding: 5px;
+  text-align: center;
+}
+
 .calendar .day,
 .calendar .none-day {
   border: 1px grey solid;
