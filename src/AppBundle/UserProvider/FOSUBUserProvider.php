@@ -39,22 +39,28 @@ class FOSUBUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
-        $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
+        $user = $this->findUserByUsername($response);
 
         if (null === $user) {
+            if (null === $user) {
+                $user = $this->findUserByEmail($response);
+            } else {
+                $user = $this->userManager->createUser();
+            }
+
             $service = $response->getResourceOwner()->getName();
 
             $setter = 'set' . ucfirst($service);
             $setter_id = $setter . 'Id';
             $setter_token = $setter . 'AccessToken';
 
-            $user = $this->userManager->createUser();
+
             $user->$setter_id($username);
             $user->$setter_token($response->getAccessToken());
-
             $this->setUserData($user, $response);
 
             $this->userManager->updateUser($user);
+
             return $user;
         }
 
@@ -76,5 +82,15 @@ class FOSUBUserProvider extends BaseClass
             ->setEmail($email)
             ->setPassword('')
             ->setEnabled(true);
+    }
+
+    protected function findUserByUsername(UserResponseInterface $response): ?UserInterface
+    {
+        return $this->userManager->findUserBy(['username' => $response->getUsername()]);
+    }
+
+    protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
+    {
+        return $this->userManager->findUserBy(['email' => $response->getEmail()]);
     }
 }
