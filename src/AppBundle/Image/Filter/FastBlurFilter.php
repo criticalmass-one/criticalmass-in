@@ -7,7 +7,7 @@ use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;
 
 class FastBlurFilter implements LoaderInterface
 {
-    public function load(ImageInterface $image, array $options = array()): ImageInterface
+    public function load(ImageInterface $image, array $options = []): ImageInterface
     {
         $dimension = $image->getSize();
         $pixelateDimension = $dimension->scale(0.15);
