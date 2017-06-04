@@ -40,10 +40,11 @@ class FOSUBUserProvider extends BaseClass
                 $user = $this->findUserByEmail($response);
             } else {
                 $user = $this->userManager->createUser();
+
+                $user = $this->setUserData($user, $response);
             }
 
             $user = $this->setServiceData($user, $response);
-            $user = $this->setUserData($user, $response);
 
             $this->userManager->updateUser($user);
 
@@ -65,6 +66,8 @@ class FOSUBUserProvider extends BaseClass
         $user
             ->setUsername($username)
             ->setEmail($email)
+            ->setPassword('')
+            ->setEnabled(true)
         ;
 
         return $user;
