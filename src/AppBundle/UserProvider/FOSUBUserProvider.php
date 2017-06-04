@@ -2,6 +2,7 @@
 
 namespace AppBundle\UserProvider;
 
+use AppBundle\Entity\User;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,20 +17,14 @@ class FOSUBUserProvider extends BaseClass
         $property = $this->getProperty($response);
         $username = $response->getUsername();
 
-        $service = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($service);
-        $setter_id = $setter . 'Id';
-        $setter_token = $setter . 'AccessToken';
-
-        //we "disconnect" previously connected users
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
-            $previousUser->$setter_id(null);
-            $previousUser->$setter_token(null);
+            $previousUser = $this->setServiceData($previousUser, $response, true);
+
             $this->userManager->updateUser($previousUser);
         }
 
-        $user->$setter_id($username);
-        $user->$setter_token($response->getAccessToken());
+        $user = $this->setServiceData($user, $response);
+
         $this->userManager->updateUser($user);
     }
 
@@ -38,7 +33,6 @@ class FOSUBUserProvider extends BaseClass
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $username = $response->getUsername();
         $user = $this->findUserByUsername($response);
 
         if (null === $user) {
@@ -48,16 +42,8 @@ class FOSUBUserProvider extends BaseClass
                 $user = $this->userManager->createUser();
             }
 
-            $service = $response->getResourceOwner()->getName();
-
-            $setter = 'set' . ucfirst($service);
-            $setter_id = $setter . 'Id';
-            $setter_token = $setter . 'AccessToken';
-
-
-            $user->$setter_id($username);
-            $user->$setter_token($response->getAccessToken());
-            $this->setUserData($user, $response);
+            $user = $this->setServiceData($user, $response);
+            $user = $this->setUserData($user, $response);
 
             $this->userManager->updateUser($user);
 
@@ -65,14 +51,13 @@ class FOSUBUserProvider extends BaseClass
         }
 
         $user = parent::loadUserByOAuthUserResponse($response);
-        $serviceName = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
 
-        $user->$setter($response->getAccessToken());
+        $user = $this->setServiceData($user, $response);
+
         return $user;
     }
 
-    protected function setUserData(UserInterface $user, UserResponseInterface $response)
+    protected function setUserData(UserInterface $user, UserResponseInterface $response): UserInterface
     {
         $username = $response->getNickname() ? $response->getNickname() : $response->getUsername();
         $email = $response->getEmail() ? $response->getEmail() : $response->getUsername();
@@ -80,8 +65,30 @@ class FOSUBUserProvider extends BaseClass
         $user
             ->setUsername($username)
             ->setEmail($email)
-            ->setPassword('')
-            ->setEnabled(true);
+        ;
+
+        return $user;
+    }
+
+    protected function setServiceData(UserInterface $user, UserResponseInterface $response, bool $clear = false): UserInterface
+    {
+        $username = $response->getUsername();
+        $service = $response->getResourceOwner()->getName();
+
+        $setter = 'set' . ucfirst($service);
+        $setterId = $setter . 'Id';
+        $setterToken = $setter . 'AccessToken';
+
+        if ($clear) {
+            $user->$setterId(null);
+            $user->$setterToken(null);
+
+        } else {
+            $user->$setterId($username);
+            $user->$setterToken($response->getAccessToken());
+        }
+
+        return $user;
     }
 
     protected function findUserByUsername(UserResponseInterface $response): ?UserInterface
