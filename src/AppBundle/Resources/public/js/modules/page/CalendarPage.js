@@ -8,9 +8,11 @@ define([], function () {
 
             if ($rideList.length) {
                 var outerHeight = $day.innerHeight();
-                var innerheight = $rideList.outerHeight();
+                var innerheight = $rideList[0].scrollHeight;
 
-                console.log('foo', outerHeight, innerheight);
+                if (innerheight > outerHeight) {
+                    $day.addClass('shadow');
+                }
             }
         });
     };

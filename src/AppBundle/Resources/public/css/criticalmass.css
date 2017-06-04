@@ -6460,6 +6460,7 @@ body
 .calendar .none-day {
   border: 1px grey solid;
   vertical-align: top;
+  height: 175px;
 }
 
 .calendar .day .day-number,
@@ -6479,9 +6480,13 @@ body
 .calendar .day ul {
   overflow: scroll;
   height: 150px;
-  box-shadow: inset 0 -10px 10px -10px #000000;
   margin: 0;
 }
+
+.calendar .day.shadow {
+  box-shadow: inset 0 -10px 10px -10px #000000;
+}
+
 
 .calendar .day ul.ride-list {
   padding: 5px;
