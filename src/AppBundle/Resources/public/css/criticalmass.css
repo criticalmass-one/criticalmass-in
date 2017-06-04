@@ -6287,6 +6287,36 @@ body #city-jumbotron {
     color: white;
     text-shadow: 0 0 3px #000; }
 
+.calendar {
+  width: 100%; }
+  .calendar th {
+    padding: 5px;
+    text-align: center; }
+  .calendar .day,
+  .calendar .none-day {
+    border: 1px grey solid;
+    vertical-align: top;
+    height: 175px; }
+    .calendar .day .day-number,
+    .calendar .none-day .day-number {
+      background-color: red;
+      text-align: right;
+      padding: 3px;
+      color: white;
+      font-weight: bold;
+      height: 25px; }
+    .calendar .day ul,
+    .calendar .none-day ul {
+      overflow: scroll;
+      height: 150px;
+      margin: 0;
+      padding: 5px; }
+    .calendar .day.shadow,
+    .calendar .none-day.shadow {
+      box-shadow: inset 0 -10px 10px -10px #000000; }
+  .calendar .none-day .day-number {
+    background-color: maroon; }
+
 body .margin-top-small {
   margin-top: 10px; }
 
@@ -6452,48 +6482,3 @@ body
 .breadcrumb > li + li:before {
   content: "/\00a0";
   color: #ccc; }
-
-.calendar {
-  width: 100%;
-}
-
-.calendar th {
-  padding: 5px;
-  text-align: center;
-}
-
-.calendar .day,
-.calendar .none-day {
-  border: 1px grey solid;
-  vertical-align: top;
-  height: 175px;
-}
-
-.calendar .day .day-number,
-.calendar .none-day .day-number {
-  background-color: red;
-  text-align: right;
-  padding: 3px;
-  color: white;
-  font-weight: bold;
-  height: 25px;
-}
-
-.calendar .none-day .day-number {
-  background-color: maroon;;
-}
-
-.calendar .day ul {
-  overflow: scroll;
-  height: 150px;
-  margin: 0;
-}
-
-.calendar .day.shadow {
-  box-shadow: inset 0 -10px 10px -10px #000000;
-}
-
-
-.calendar .day ul.ride-list {
-  padding: 5px;
-}
