@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class CalendarController extends AbstractController
@@ -12,11 +13,14 @@ class CalendarController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesByDateTimeMonth($dateTime);
 
-        $days = [];
+        $dayList = $this->createDaysList($dateTime);
 
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $days[$ride->getFormattedDate()][] = $ride;
+            $dayList[$ride->getDateTime()->format('Y-m-d')][$ride->getId()] = $ride;
         }
+
+        $dayList = $this->sortDayList($dayList);
 
         $this->getMetadata()
             ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
@@ -25,8 +29,40 @@ class CalendarController extends AbstractController
         return $this->render(
             'AppBundle:Calendar:index.html.twig',
             [
-                'days' => $days
+                'dayList' => $dayList,
+                'time' => new \DateTime()
             ]
         );
+    }
+
+    protected function createDaysList(\DateTime $dateTime): array
+    {
+        $day = new \DateTime($dateTime->format('Y-m-1'));
+        $lastDay = new \DateTime($dateTime->format('Y-m-t'));
+        $dayInterval = new \DateInterval('P1D');
+
+        $dayList = [];
+
+        while ($day <= $lastDay) {
+            $dayList[$day->format('Y-m-d')] = [];
+
+            $day->add($dayInterval);
+        }
+
+        return $dayList;
+    }
+
+    protected function sortDayList(array $dayList): array
+    {
+        foreach ($dayList as $day => $list) {
+            usort($list, function(Ride $a, Ride $b): int
+            {
+                return strcmp($a->getCity()->getCity(), $b->getCity()->getCity());
+            });
+
+            $dayList[$day] = $list;
+        }
+
+        return $dayList;
     }
 }
