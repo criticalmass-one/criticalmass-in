@@ -9,7 +9,7 @@
         </a>
     </li>
     <li>
-        {% if board is instanceof('Board') %}
+        {% if instanceof(board, 'Board') %}
         <a href="{{ objectPath(board) }}">
             {% else %}
             <a href="{{ path('caldera_criticalmass_board_listcitythreads', { citySlug: board.slug }) }}">

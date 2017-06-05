@@ -73,14 +73,8 @@ class SiteTwigExtension extends \Twig_Extension
             )),
             new \Twig_SimpleFunction('today', [$this, 'today'], array(
                 'is_safe' => array('html')
-            ))
-        ];
-    }
-
-    public function getTests()
-    {
-        return [
-            'instanceof' => new \Twig_SimpleFunction('isInstanceof', [$this, 'isInstanceof']),
+            )),
+            'instanceof' => new \Twig_SimpleFunction('instanceof', [$this, 'instanceof']),
             'today' => new \Twig_SimpleFunction('today', [$this, 'today'])
         ];
     }
@@ -111,7 +105,7 @@ class SiteTwigExtension extends \Twig_Extension
         return $diffDays;
     }
 
-    public function isInstanceof($var, $instance)
+    public function instanceof($var, $instance)
     {
         return $var instanceof $instance;
     }
