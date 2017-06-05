@@ -22,7 +22,7 @@ liip_imagine:
             quality: 30
             filters:
                 thumbnail: { size: [800, 800], mode: inset }
-                blur_filter: ~
+                fast_blur_filter: ~
         gallery_photo_large:
             quality: 60
             filters:
