@@ -213,7 +213,7 @@ class RideManagementController extends AbstractController
         );
 
         return $this->render(
-            'AppBundle:RideManagement:facebookUpdate.html.twig',
+            'AppBundle:RideManagement:facebook_update.html.twig',
             [
                 'city' => $ride->getCity(),
                 'ride' => $ride,

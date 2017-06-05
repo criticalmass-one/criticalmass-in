@@ -256,13 +256,16 @@ class RideRepository extends EntityRepository
 
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
-        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
-
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
-
-        $builder->orderBy('ride.dateTime', 'ASC');
+        $builder
+            ->select('ride')
+            ->where($builder->expr()->gt('ride.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->eq('ride.isArchived', ':archived'))
+            ->addOrderBy('ride.dateTime', 'ASC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime)
+            ->setParameter('archived', false)
+        ;
 
         $query = $builder->getQuery();
 
@@ -307,10 +310,10 @@ class RideRepository extends EntityRepository
         return $this->findRidesInInterval($startDateTime, $endDateTime);
     }
 
-    public function findRidesByDateTimeMonth(\DateTime $dateTime)
+    public function findRidesByDateTimeMonth(\DateTime $dateTime): array
     {
-        $startDateTime = $dateTime;
-        $endDateTime = new \DateTime($startDateTime->format('Y-m-t'));
+        $startDateTime = new \DateTime($dateTime->format('Y-m-1 00:0:00'));
+        $endDateTime = new \DateTime($startDateTime->format('Y-m-t 23:59:59'));
 
         return $this->findRidesInInterval($startDateTime, $endDateTime);
     }

@@ -7,7 +7,7 @@ use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;
 
 class BlurFilter implements LoaderInterface
 {
-    public function load(ImageInterface $image, array $options = array())
+    public function load(ImageInterface $image, array $options = []): ImageInterface
     {
         $image
             ->effects()

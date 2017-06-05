@@ -98,6 +98,10 @@ define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function () {
     };
 
     MarkerEntity.prototype.getLatLng = function () {
+        if (!this._latitude || !this._longitude) {
+            return null;
+        }
+
         return [this._latitude, this._longitude];
     };
 

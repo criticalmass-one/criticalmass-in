@@ -113,7 +113,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
-    protected $blurGalleries;
+    protected $blurGalleries = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
