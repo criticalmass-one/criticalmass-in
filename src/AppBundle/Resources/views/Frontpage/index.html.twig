@@ -1,13 +1,21 @@
-{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+{% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
 
 {% block title %}criticalmass.in{% endblock %}
 
-{% block breadcrumb %}
-    <li class="active">Startseite</li>
-{% endblock %}
+{% block masterContent %}
+    <div class="navbar-wrapper">
+    {% include('AppBundle:Template/Navigation:_navigation.html.twig') %}
+    </div>
 
-{% block content %}
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                {{ include('AppBundle:Frontpage:_carousel.html.twig') }}
+            </div>
+        </div>
+    </div>
+
+    <div class="container margin-top-medium">
         <div class="row">
             <div class="col-md-8">
                 <div class="row">
@@ -31,68 +39,6 @@
             </div>
 
             <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Live dabei
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="text-center">
-                            <p>
-                                Schau dir an, wo sich die Critical Mass in deiner Stadt gerade aufhält und deine
-                                Position mit anderen Radfahrern.
-                            </p>
-
-                            <div class="btn-group">
-                                <a class="btn btn-default" href="https://criticalmass.live/" title="Besuche criticalmass.live">
-                                    criticalmass.live
-                                </a>
-                                <a class="btn btn-default" href="http://criticalmaps.net/" title="Besuche Critical Maps">
-                                    Critical Maps
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Was ist Critical Mass?
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="text-center">
-                            <p>
-                                Eine große Radtour? Eine wilde Demonstration? Ein ganz großer Spaß? Der größte Stau im
-                                Feierabendverkehr?
-                            </p>
-
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a class="btn btn-default" role="button"
-                                   href="{{ path('caldera_criticalmass_static_display', { slug: 'what-is-the-mass'}) }}">
-                                    <i class="fa fa-bicycle"></i>
-                                    Mehr darüber
-                                </a>
-
-                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_list') }}"
-                                   role="button">
-                                    <i class="fa fa-university"></i>
-                                    Städte
-                                </a>
-
-                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_calendar') }}"
-                                   role="button">
-                                    <i class="fa fa-calendar"></i>
-                                    Kalender
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
@@ -124,4 +70,10 @@
             </div>
         </div>
     </div>
+
+    {% include('AppBundle:Template:Includes/_adserver.html.twig') %}
+
+    {% include('AppBundle:Template:Includes/_footer.html.twig') %}
+
+    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
 {% endblock %}
