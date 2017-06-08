@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
@@ -160,9 +161,6 @@ class User extends BaseUser
      */
     protected $runkeeperAccessToken;
 
-    /**
-     * Der Konstruktor-Aufruf wird direkt an das FOSUserBundle deligiert.
-     */
     public function __construct()
     {
         parent::__construct();
@@ -179,175 +177,135 @@ class User extends BaseUser
      * @JMS\VirtualProperty
      * @JMS\SerializedName("gravatarHash")
      */
-    public function getGravatarHash()
+    public function getGravatarHash(): ?string
     {
         return md5($this->getEmail());
     }
 
-    /**
-     * Gibt den Slug der Stadt zurueck, die der Benutzer gerade ausgewaehlt hat.
-     * Hilfreich, um beispielsweise innerhalb eines Templates automatisch einen
-     * Slug angeben zu koennen, um Routen zu konstruieren.
-     *
-     * @return String: Slug der ausgewaehlten Stadt
-     */
-    public function getCurrentCitySlug()
+    public function getCurrentCitySlug(): ?string
     {
         return $this->getCurrentCity()->getMainSlug()->getSlug();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set currentCity
-     *
-     * @param City $currentCity
-     * @return User
-     */
-    public function setCurrentCity(City $currentCity = null)
+    public function setCurrentCity(City $currentCity = null): User
     {
         $this->currentCity = $currentCity;
 
         return $this;
     }
 
-    /**
-     * Get currentCity
-     *
-     * @return City
-     */
-    public function getCurrentCity()
+    public function getCurrentCity(): ?City
     {
         return $this->currentCity;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return User
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): User
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getColorRed()
+    public function getColorRed(): int
     {
         return $this->colorRed;
     }
 
-    public function setColorRed($colorRed)
+    public function setColorRed(int $colorRed): User
     {
         $this->colorRed = $colorRed;
+
+        return $this;
     }
 
-    public function getColorGreen()
+    public function getColorGreen(): int
     {
         return $this->colorGreen;
     }
 
-    public function setColorGreen($colorGreen)
+    public function setColorGreen(int $colorGreen): User
     {
         $this->colorGreen = $colorGreen;
+
+        return $this;
     }
 
-    public function getColorBlue()
+    public function getColorBlue(): int
     {
         return $this->colorBlue;
     }
 
-    public function setColorBlue($colorBlue)
+    public function setColorBlue(int $colorBlue): User
     {
         $this->colorBlue = $colorBlue;
+
+        return $this;
     }
 
-    public function setToken($token)
+    public function setToken(string $token): User
     {
         $this->token = $token;
+
+        return $this;
     }
 
-    public function getToken()
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    public function equals(User $user)
+    public function equals(User $user): bool
     {
         return $user->getId() == $this->getId();
     }
 
-    /**
-     * Add tracks
-     *
-     * @param Track $tracks
-     * @return User
-     */
-    public function addTrack(Track $tracks)
+    public function addTrack(Track $tracks): User
     {
         $this->tracks[] = $tracks;
 
         return $this;
     }
 
-    /**
-     * Remove tracks
-     *
-     * @param Track $tracks
-     */
-    public function removeTrack(Track $tracks)
+    public function removeTrack(Track $tracks): User
     {
         $this->tracks->removeElement($tracks);
+
+        return $this;
     }
 
-    /**
-     * Get tracks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTracks()
+    public function getTracks(): Collection
     {
         return $this->tracks;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): User
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
 
@@ -356,261 +314,191 @@ class User extends BaseUser
 
     /**
      * @ORM\PrePersist()
-     *
      */
-    public function prePersist()
+    public function prePersist(): User
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+
+        return $this;
     }
 
     /**
-     * Hook on pre-update operations
      * @ORM\PreUpdate()
      */
-    public function preUpdate()
+    public function preUpdate(): User
     {
         $this->updatedAt = new \DateTime();
+
+        return $this;
     }
 
-    /**
-     * Set phoneNumber
-     *
-     * @param string $phoneNumber
-     * @return User
-     */
-    public function setPhoneNumber($phoneNumber)
+    public function setPhoneNumber(string $phoneNumber): User
     {
         $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
-    /**
-     * Get phoneNumber
-     *
-     * @return string
-     */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): string
     {
         return $this->phoneNumber;
     }
 
-    /**
-     * Set phoneNumberVerified
-     *
-     * @param boolean $phoneNumberVerified
-     * @return User
-     */
-    public function setPhoneNumberVerified($phoneNumberVerified)
+    public function setPhoneNumberVerified(bool $phoneNumberVerified): User
     {
         $this->phoneNumberVerified = $phoneNumberVerified;
 
         return $this;
     }
 
-    /**
-     * Get phoneNumberVerified
-     *
-     * @return boolean
-     */
-    public function getPhoneNumberVerified()
+    public function getPhoneNumberVerified(): bool
     {
         return $this->phoneNumberVerified;
     }
 
-    /**
-     * Set phoneNumberVerificationDateTime
-     *
-     * @param \DateTime $phoneNumberVerificationDateTime
-     * @return User
-     */
-    public function setPhoneNumberVerificationDateTime($phoneNumberVerificationDateTime)
+    public function setPhoneNumberVerificationDateTime(\DateTime $phoneNumberVerificationDateTime): User
     {
         $this->phoneNumberVerificationDateTime = $phoneNumberVerificationDateTime;
 
         return $this;
     }
 
-    /**
-     * Get phoneNumberVerificationDateTime
-     *
-     * @return \DateTime
-     */
-    public function getPhoneNumberVerificationDateTime()
+    public function getPhoneNumberVerificationDateTime(): ?\DateTime
     {
         return $this->phoneNumberVerificationDateTime;
     }
 
-    /**
-     * Set phoneNumberVerificationToken
-     *
-     * @param string $phoneNumberVerificationToken
-     * @return User
-     */
-    public function setPhoneNumberVerificationToken($phoneNumberVerificationToken)
+    public function setPhoneNumberVerificationToken(string $phoneNumberVerificationToken): User
     {
         $this->phoneNumberVerificationToken = $phoneNumberVerificationToken;
 
         return $this;
     }
 
-    /**
-     * Get phoneNumberVerificationToken
-     *
-     * @return string
-     */
-    public function getPhoneNumberVerificationToken()
+    public function getPhoneNumberVerificationToken(): string
     {
         return $this->phoneNumberVerificationToken;
     }
 
-    public function getPushoverToken()
+    public function getPushoverToken(): ?string
     {
         return $this->pushoverToken;
     }
 
-    public function setPushoverToken($pushoverToken)
+    public function setPushoverToken(string $pushoverToken): User
     {
         $this->pushoverToken = $pushoverToken;
 
         return $this;
     }
 
-    /**
-     * Add archiveRides
-     *
-     * @param \AppBundle\Entity\Ride $archiveRides
-     * @return User
-     */
-    public function addArchiveRide(\AppBundle\Entity\Ride $archiveRides)
+    public function addArchiveRide(Ride $archiveRides): User
     {
         $this->archiveRides[] = $archiveRides;
 
         return $this;
     }
 
-    /**
-     * Remove archiveRides
-     *
-     * @param \AppBundle\Entity\Ride $archiveRides
-     */
-    public function removeArchiveRide(\AppBundle\Entity\Ride $archiveRides)
+    public function removeArchiveRide(Ride $archiveRides): User
     {
         $this->archiveRides->removeElement($archiveRides);
+
+        return $this;
     }
 
-    /**
-     * Get archiveRides
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArchiveRides()
+    public function getArchiveRides(): Collection
     {
         return $this->archiveRides;
     }
 
-    /**
-     * Add participations
-     *
-     * @param \AppBundle\Entity\Participation $participations
-     * @return User
-     */
-    public function addParticipation(\AppBundle\Entity\Participation $participations)
+    public function addParticipation(Participation $participations): User
     {
         $this->participations[] = $participations;
 
         return $this;
     }
 
-    /**
-     * Remove participations
-     *
-     * @param \AppBundle\Entity\Participation $participations
-     */
-    public function removeParticipation(\AppBundle\Entity\Participation $participations)
+    public function removeParticipation(Participation $participations): User
     {
         $this->participations->removeElement($participations);
+
+        return $this;
     }
 
-    /**
-     * Get participations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParticipations()
+    public function getParticipations(): Collection
     {
         return $this->participations;
     }
 
-    public function setStravaId($stravaId)
+    public function setStravaId(string $stravaId): User
     {
         $this->stravaId = $stravaId;
 
         return $this;
     }
 
-    public function getStravaId()
+    public function getStravaId(): ?string
     {
         return $this->stravaId;
     }
 
-    public function setStravaAccessToken($stravaAccessToken)
+    public function setStravaAccessToken(string $stravaAccessToken): User
     {
         $this->stravaAccessToken = $stravaAccessToken;
 
         return $this;
     }
 
-    public function getStravaAccessToken()
+    public function getStravaAccessToken(): ?string
     {
         return $this->stravaAccessToken;
     }
 
-    public function setFacebookId($facebookId)
+    public function setFacebookId(string $facebookId): User
     {
         $this->facebookId = $facebookId;
 
         return $this;
     }
 
-    public function getFacebookId()
+    public function getFacebookId(): ?string
     {
         return $this->facebookId;
     }
 
-    public function setFacebookAccessToken($facebookAccessToken)
+    public function setFacebookAccessToken(string $facebookAccessToken): User
     {
         $this->facebookAccessToken = $facebookAccessToken;
 
         return $this;
     }
 
-    public function getFacebookAccessToken()
+    public function getFacebookAccessToken(): ?string
     {
         return $this->facebookAccessToken;
     }
 
-    public function setRunkeeperId($runkeeperId)
+    public function setRunkeeperId(string $runkeeperId): User
     {
         $this->runkeeperId = $runkeeperId;
 
         return $this;
     }
 
-    public function getRunkeeperId()
+    public function getRunkeeperId(): ?string
     {
         return $this->runkeeperId;
     }
 
-    public function setRunkeeperAccessToken($runkeeperAccessToken)
+    public function setRunkeeperAccessToken(string $runkeeperAccessToken): User
     {
         $this->runkeeperAccessToken = $runkeeperAccessToken;
 
         return $this;
     }
 
-    public function getRunkeeperAccessToken()
+    public function getRunkeeperAccessToken(): ?string
     {
         return $this->runkeeperAccessToken;
     }
