@@ -11,16 +11,33 @@ class RegionAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', 'text');
+        $formMapper
+            ->with('Region', ['class' => 'col-md-6'])
+            ->add('name')
+            ->add('description')
+            ->end()
+
+            ->with('Settings', ['class' => 'col-md-6'])
+            ->add('slug')
+            ->add('parent')
+            ->end()
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper
+            ->add('name')
+            ->add('description')
+            ->add('parent')
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper
+            ->addIdentifier('name')
+            ->add('parent')
+        ;
     }
 }
