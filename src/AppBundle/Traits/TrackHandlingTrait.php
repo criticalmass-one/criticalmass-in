@@ -135,4 +135,21 @@ trait TrackHandlingTrait
         $em->persist($track);
         $em->flush();
     }
+
+
+    protected function generatePreviewPolyline(Track $track)
+    {
+        /**
+         * @var TrackPolyline $trackPolyline
+         */
+        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+
+        $trackPolyline->loadTrack($track);
+
+        $trackPolyline->execute();
+
+        $track->setPolyline($trackPolyline->getPolyline());
+
+        $this->getDoctrine()->getManager()->flush();
+    }
 }
