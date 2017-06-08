@@ -11,16 +11,44 @@ class RideEstimateAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', 'text');
+        $formMapper
+            ->with('RideEstimate', ['class' => 'col-md-6'])
+            ->add('estimatedParticipants')
+            ->add('estimatedDistance')
+            ->add('estimatedDuration')
+            ->end()
+
+            ->with('Settings', ['class' => 'col-md-6'])
+            ->add('user')
+            ->add('ride')
+            ->add('track')
+            ->add('creationDateTime')
+            ->end()
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper
+            ->add('user')
+            ->add('ride')
+            ->add('track')
+            ->add('estimatedParticipants')
+            ->add('estimatedDistance')
+            ->add('estimatedDuration')
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper
+            ->addIdentifier('id')
+            ->add('user')
+            ->add('ride')
+            ->add('estimatedParticipants')
+            ->add('estimatedDistance')
+            ->add('estimatedDuration')
+            ->add('creationDateTime')
+        ;
     }
 }
