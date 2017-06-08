@@ -1,7 +1,7 @@
 services:
     admin.board:
         class: AppBundle\Admin\BoardAdmin
-        arguments: [~, AppBundle\Entity\Post, ~]
+        arguments: [~, AppBundle\Entity\Board, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Board }
 

@@ -11,16 +11,36 @@ class BoardAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', 'text');
+        $formMapper
+            ->with('Board', ['class' => 'col-md-6'])
+            ->add('title')
+            ->add('description')
+            ->end()
+
+            ->with('Settings', ['class' => 'col-md-6'])
+            ->add('slug')
+            ->add('position')
+            ->add('enabled')
+            ->end()
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper
+            ->add('title')
+            ->add('description')
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper
+            ->addIdentifier('title')
+            ->add('threadNumber')
+            ->add('postNumber')
+            ->add('position')
+            ->add('enabled')
+        ;
     }
 }
