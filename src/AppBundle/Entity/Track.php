@@ -145,6 +145,14 @@ class Track
     protected $polyline;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     * @JMS\SerializedName("previewPolylineString")
+     */
+    protected $previewPolyline;
+
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
@@ -489,16 +497,28 @@ class Track
         return $this->latLngList;
     }
 
-    public function setPolyline($polyline)
+    public function setPolyline(string $polyline): Track
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    public function getPolyline()
+    public function getPolyline(): ?string
     {
         return $this->polyline;
+    }
+
+    public function setPreviewPolyline(string $previewPolyline): Track
+    {
+        $this->previewPolyline = $previewPolyline;
+
+        return $this;
+    }
+
+    public function getPreviewPolyline(): ?string
+    {
+        return $this->previewPolyline;
     }
 
     /**
