@@ -45,3 +45,7 @@
 **/Entity/*~
 criticalmass.iml
 .idea
+
+web/tracks
+web/photos
+web/cities
