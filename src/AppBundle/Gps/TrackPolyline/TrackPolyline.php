@@ -4,7 +4,9 @@ namespace AppBundle\Gps\TrackPolyline;
 
 use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxReader\TrackReader;
+use Exception;
 use PointReduction\Algorithms\RadialDistance;
+use PointReduction\Common\Point;
 
 class TrackPolyline
 {
@@ -26,7 +28,11 @@ class TrackPolyline
     {
         $this->track = $track;
 
-        $this->trackReader->loadTrack($this->track);
+        $fileLoaded = $this->trackReader->loadTrack($this->track);
+
+        if (!$fileLoaded) {
+            throw new Exception('Could not load gpx file.');
+        }
 
         $this->xmlRootNode = $this->trackReader->getRootNode();
 
@@ -51,15 +57,20 @@ class TrackPolyline
 
     public function generatePreviewPolyline(): TrackPolyline
     {
-        $list = $this->trackReader->slicePublicCoords();
+        $list = array_values($this->trackReader->slicePublicCoords());
 
         $tolerance = 0.0025;
         $reducer = new RadialDistance($list);
-        $reducedList = $reducer->reduce($tolerance);
 
-        $polyline = \Polyline::Encode($reducedList);
+        $reducedPointList = $reducer->reduce($tolerance);
+        $reducedList = [];
 
-        $this->polyline = $polyline;
+        /** @var Point $point */
+        foreach ($reducedPointList as $point) {
+            $reducedList[] = [$point->x, $point->y];
+        }
+
+        $this->polyline = \Polyline::Encode($reducedList);
 
         return $this;
     }

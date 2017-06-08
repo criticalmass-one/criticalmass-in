@@ -32,14 +32,15 @@ class GpxReader
         return $this;
     }
 
-    public function loadFile($path)
+    public function loadFile($path): bool
     {
         $this->path = $path;
-        $this->rawFileContent = file_get_contents($this->rootDirectory . $path);
-        $result = true;
 
         try {
+            $this->rawFileContent = file_get_contents($this->rootDirectory . $path);
             $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+
+            $result = true;
         } catch (\Exception $e) {
             $result = false;
         }

@@ -30,15 +30,18 @@ class TrackPreviewCommand extends ContainerAwareCommand
          * @var Track $track
          */
         foreach ($trackList as $track) {
-            $output->writeln(sprintf('Track <info>#%d</info>', $track->getId()));
+            try {
+                $polyline = $trackPolyline
+                    ->loadTrack($track)
+                    ->generatePreviewPolyline()
+                    ->getPolyline();
 
-            $polyline = $trackPolyline
-                ->loadTrack($track)
-                ->generatePreviewPolyline()
-                ->getPolyline()
-            ;
+                $track->setPreviewPolyline($polyline);
 
-            $track->setPolyline($polyline);
+                $output->writeln(sprintf('Track <info>#%d</info>: <comment>%s</comment>', $track->getId(), $track->getPreviewPolyline()));
+            } catch (\Exception $e) {
+                $output->writeln(sprintf('Track <info>#%d</info>: %s', $track->getId(), $e->getMessage()));
+            }
         }
 
         $em->flush();
