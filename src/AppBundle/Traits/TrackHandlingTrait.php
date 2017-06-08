@@ -125,11 +125,13 @@ trait TrackHandlingTrait
          */
         $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
 
-        $trackPolyline->loadTrack($track);
+        $polyline = $trackPolyline
+            ->loadTrack($track)
+            ->generatePolyline()
+            ->getPolyline()
+        ;
 
-        $trackPolyline->execute();
-
-        $track->setPolyline($trackPolyline->getPolyline());
+        $track->setPolyline($polyline);
 
         $this->getDoctrine()->getManager()->flush();
     }
@@ -142,11 +144,13 @@ trait TrackHandlingTrait
          */
         $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
 
-        $trackPolyline->loadTrack($track);
+        $polyline = $trackPolyline
+            ->loadTrack($track)
+            ->generatePreviewPolyline()
+            ->getPolyline()
+        ;
 
-        $trackPolyline->execute();
-
-        $track->setPolyline($trackPolyline->getPolyline());
+        $track->setPolyline($polyline);
 
         $this->getDoctrine()->getManager()->flush();
     }
