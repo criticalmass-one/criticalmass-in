@@ -131,9 +131,7 @@ trait TrackHandlingTrait
 
         $track->setPolyline($trackPolyline->getPolyline());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
     }
 
 
