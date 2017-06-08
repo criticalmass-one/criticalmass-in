@@ -6,21 +6,24 @@
     <li class="active">Dein Benutzerkonto</li>
 {% endblock %}
 
-
 {% block content %}
-    <div class="container main-container">
-        <div class="col-md-10 col-md-offset-1">
-            <h1>Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>
+                    Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
+                </h2>
+            </div>
+        </div>
 
-            <p>Ähm, ja, an dieser Seite arbeiten wir noch. So ganz viel gibt’s hier noch nicht zu tun:</p>
-
-            <ul>
-                <li><a href="{{ path('sonata_user_change_password') }}">Kennwort ändern</a></li>
-                <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
-                <li><a href="{{ path('caldera_criticalmass_api_app_list') }}">Deine Apps</a></li>
-                <li><a href="{{ path('caldera_criticalmass_photo_user_list') }}">Deine Fotos</a></li>
-                <li><a href="{{ path('sonata_user_security_logout') }}">Abmelden</a></li>
-            </ul>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <ul>
+                    <li><a href="{{ path('fos_user_change_password') }}">Kennwort ändern</a></li>
+                    <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
+                    <li><a href="{{ path('caldera_criticalmass_photo_user_list') }}">Deine Fotos</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}
