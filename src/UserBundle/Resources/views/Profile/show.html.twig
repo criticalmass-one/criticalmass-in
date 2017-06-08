@@ -17,12 +17,66 @@
         </div>
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <ul>
-                    <li><a href="{{ path('fos_user_change_password') }}">Kennwort ändern</a></li>
-                    <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
-                    <li><a href="{{ path('caldera_criticalmass_photo_user_list') }}">Deine Fotos</a></li>
-                </ul>
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Deine Fotos
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-center">
+                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
+                                Deine Fotos
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Deine Tracks
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-center">
+                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                                Deine Tracks
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Kennwort ändern
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-center">
+                            <a class="btn btn-default" href="{{ path('fos_user_change_password') }}">
+                                Kennwort ändern
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        E-Mail-Adresse ändern
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-center">
+                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
+                                foo bar baz
+                            </a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
