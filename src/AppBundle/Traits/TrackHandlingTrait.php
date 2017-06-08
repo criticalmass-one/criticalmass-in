@@ -50,6 +50,9 @@ trait TrackHandlingTrait
         $estimateService->calculateEstimates($ride);
     }
 
+    /**
+     * @deprecated
+     */
     protected function generateSimpleLatLngList(Track $track)
     {
         /**
@@ -68,6 +71,9 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
+    /**
+     * @deprecated
+     */
     protected function saveLatLngList(Track $track)
     {
         /**
@@ -129,6 +135,4 @@ trait TrackHandlingTrait
         $em->persist($track);
         $em->flush();
     }
-
-
 }
