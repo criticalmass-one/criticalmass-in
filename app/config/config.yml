@@ -16,6 +16,7 @@ imports:
     - { resource: elastic.yml }
     - { resource: translation.yml }
     - { resource: services.yml }
+    - { resource: "@UserBundle/Resources/config/services.xml" }
 
 hwi_oauth:
     # list of names of the firewalls in which this bundle is active, this setting MUST be set
