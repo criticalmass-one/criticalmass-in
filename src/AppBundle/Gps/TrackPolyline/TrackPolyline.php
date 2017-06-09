@@ -59,7 +59,7 @@ class TrackPolyline
     {
         $list = array_values($this->trackReader->slicePublicCoords());
 
-        $tolerance = 0.0025;
+        $tolerance = 0.01;
         $reducer = new RadialDistance($list);
 
         $reducedPointList = $reducer->reduce($tolerance);
