@@ -152,4 +152,5 @@ services:
 
 imports:
   - { resource: ./services/timeline.yml }
+  - { resource: ./services/admin.yml }
   - { resource: ./services/twig_extensions.yml }
