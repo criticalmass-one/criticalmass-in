@@ -5,6 +5,9 @@ namespace AppBundle\Gps\TrackPolyline;
 use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxReader\TrackReader;
 
+/**
+ * @deprecated
+ */
 class TrackPolyline
 {
     /**

@@ -9,6 +9,9 @@ use AppBundle\Image\ExifReader\DateTimeExifReader;
 use AppBundle\Image\ExifReader\GpsExifReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+/**
+ * @deprecated
+ */
 class PhotoGps
 {
     /**

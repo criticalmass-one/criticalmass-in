@@ -4,6 +4,9 @@ namespace AppBundle\Parser\MultiStepParser\Step;
 
 use AppBundle\Parser\MultiStepParser\StepInterface;
 
+/**
+ * @deprecated
+ */
 class AnchorParserStep implements StepInterface
 {
     public function __construct()

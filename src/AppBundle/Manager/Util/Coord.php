@@ -3,8 +3,6 @@
 namespace AppBundle\Manager\Util;
 
 /**
- * Class Coord
- * @package AppBundle\Manager\Util
  * @deprecated
  */
 class Coord
