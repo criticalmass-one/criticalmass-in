@@ -3,9 +3,7 @@
 namespace AppBundle\Manager\Util;
 
 /**
- * Class Bounds
- * @package AppBundle\Manager\Util
- * @deprecated 
+ * @deprecated
  */
 class Bounds
 {

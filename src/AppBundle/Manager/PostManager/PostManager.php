@@ -5,6 +5,9 @@ namespace AppBundle\Manager\PostManager;
 use AppBundle\Manager\AbstractManager;
 use AppBundle\Repository\PostRepository;
 
+/**
+ * @deprecated
+ */
 class PostManager extends AbstractManager
 {
     /** @var PostRepository $postRepository */

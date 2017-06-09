@@ -10,6 +10,7 @@ use AppBundle\Parser\MultiStepParser\StepInterface;
  * Regex stolen from: http://zenverse.net/php-function-to-auto-convert-url-into-hyperlink/
  *
  * @package AppBundle\Parser\MultiStepParser\Step
+ * @deprecated
  */
 class LinkParserStep implements StepInterface
 {

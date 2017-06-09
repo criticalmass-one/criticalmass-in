@@ -7,6 +7,9 @@ use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxExporter\GpxExporter;
 use AppBundle\Gps\GpxReader\TrackReader;
 
+/**
+ * @deprecated
+ */
 class TrackTimeShift
 {
     protected $doctrine;

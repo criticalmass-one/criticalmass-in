@@ -6,6 +6,9 @@ use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxReader\TrackReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+/**
+ * @deprecated
+ */
 class TrackChecker implements TrackCheckerInterface
 {
     protected $track;

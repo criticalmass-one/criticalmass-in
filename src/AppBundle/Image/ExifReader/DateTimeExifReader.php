@@ -3,8 +3,6 @@
 namespace AppBundle\Image\ExifReader;
 
 /**
- * Class DateTimeExifReader
- * @package AppBundle\Image\ExifReader
  * @deprecated
  */
 class DateTimeExifReader extends AbstractExifReader

@@ -2,6 +2,9 @@
 
 namespace AppBundle\Gps\LatLngListGenerator;
 
+/**
+ * @deprecated
+ */
 class RangeLatLngListGenerator extends AbstractLatLngListGenerator
 {
     public function execute()
