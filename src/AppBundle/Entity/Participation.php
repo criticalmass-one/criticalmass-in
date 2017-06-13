@@ -55,148 +55,77 @@ class Participation
         $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get dateTime
-     *
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * Set dateTime
-     *
-     * @param \DateTime $dateTime
-     * @return Participation
-     */
-    public function setDateTime($dateTime)
+    public function setDateTime($dateTime): Participation
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    /**
-     * Get goingYes
-     *
-     * @return boolean
-     */
-    public function getGoingYes()
+    public function getGoingYes(): bool
     {
         return $this->goingYes;
     }
 
-    /**
-     * Set goingYes
-     *
-     * @param boolean $goingYes
-     * @return Participation
-     */
-    public function setGoingYes($goingYes)
+    public function setGoingYes(bool $goingYes): Participation
     {
         $this->goingYes = $goingYes;
 
         return $this;
     }
 
-    /**
-     * Get goingMaybe
-     *
-     * @return boolean
-     */
-    public function getGoingMaybe()
+    public function getGoingMaybe(): bool
     {
         return $this->goingMaybe;
     }
 
-    /**
-     * Set goingMaybe
-     *
-     * @param boolean $goingMaybe
-     * @return Participation
-     */
-    public function setGoingMaybe($goingMaybe)
+    public function setGoingMaybe(bool $goingMaybe): Participation
     {
         $this->goingMaybe = $goingMaybe;
 
         return $this;
     }
 
-    /**
-     * Get goingNo
-     *
-     * @return boolean
-     */
-    public function getGoingNo()
+    public function getGoingNo(): bool
     {
         return $this->goingNo;
     }
 
-    /**
-     * Set goingNo
-     *
-     * @param boolean $goingNo
-     * @return Participation
-     */
-    public function setGoingNo($goingNo)
+    public function setGoingNo(bool $goingNo): Participation
     {
         $this->goingNo = $goingNo;
 
         return $this;
     }
 
-    /**
-     * Get ride
-     *
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
 
-    /**
-     * Set ride
-     *
-     * @param Ride $ride
-     * @return Participation
-     */
-    public function setRide(Ride $ride = null)
+    public function setRide(Ride $ride = null): Participation
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * Set user
-     *
-     * @param User $user
-     * @return Participation
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): Participation
     {
         $this->user = $user;
 
