@@ -18,7 +18,46 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                {{ form(userForm) }}
+                <h2>
+                    Benutzerdaten ändern
+                </h2>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+
+                {{ form_start(userForm) }}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group{% if form_errors(userForm.username) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Benutzername:</label>
+                            {{ form_widget(userForm.username, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group{% if form_errors(userForm.email) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">E-Mail-Adresse:</label>
+                            {{ form_widget(userForm.email, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group pull-right" role="group">
+                            <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                                Abbrechen
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                Speichern
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_end(userForm) }}
             </div>
         </div>
     </div>
