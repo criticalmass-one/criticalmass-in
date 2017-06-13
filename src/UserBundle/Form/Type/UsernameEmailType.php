@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UsernameEmailType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username', TextType::class)
@@ -17,9 +17,8 @@ class UsernameEmailType extends AbstractType
         ;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'user_username';
     }
-
 }

@@ -1,0 +1,25 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Benutzerdaten ändern
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                {{ form(userForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
