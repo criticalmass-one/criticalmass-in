@@ -30,6 +30,7 @@ class User extends BaseUser
      * @var string
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @Assert\NotBlank()
      */
     protected $username;
 

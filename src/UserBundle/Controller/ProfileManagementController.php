@@ -27,6 +27,16 @@ class ProfileManagementController extends Controller
             ]
         );
 
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $userForm->handleRequest($request);
+
+            if ($userForm->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+            }
+
+            return $this->redirectToRoute('criticalmass_user_usermanagement');
+        }
+
         return $this->render(
             'UserBundle:ProfileManagement:edit.html.twig',
             [
