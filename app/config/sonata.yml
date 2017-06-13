@@ -5,3 +5,7 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts: [admin]
         # ...
+
+sonata_doctrine_orm_admin:
+    audit:
+        force: false
