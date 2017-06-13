@@ -39,5 +39,21 @@ class ParticipationRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
+
+    public function findByUser(User $user): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->join('p.ride', 'r')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user)
+            ->orderBy('r.dateTime', 'DESC')
+        ;
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
 

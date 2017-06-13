@@ -1,0 +1,54 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Deine Touren
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>
+                    Deine Touren
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Stadt
+                            </th>
+
+                            <th>
+                                Datum
+                            </th>
+
+                            <th>
+                                Teilnahme
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for participation in participationList %}
+                            {{ participation.id }}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
