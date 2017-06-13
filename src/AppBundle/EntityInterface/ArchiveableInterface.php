@@ -6,15 +6,15 @@ use AppBundle\Entity\User;
 
 interface ArchiveableInterface
 {
-    public function setArchiveUser(User $archiveUser);
-    public function getArchiveUser();
-    public function setArchiveParent(ArchiveableInterface $archiveParent);
-    public function getArchiveParent();
-    public function setArchiveDateTime(\DateTime $archiveDateTime);
-    public function getArchiveDateTime();
-    public function setIsArchived(bool $isArchived);
-    public function getIsArchived();
-    public function setArchiveMessage($archiveMessage);
-    public function getArchiveMessage();
+    public function setArchiveUser(User $archiveUser): ArchiveableInterface;
+    public function getArchiveUser(): User;
+    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface;
+    public function getArchiveParent(): ?ArchiveableInterface;
+    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface;
+    public function getArchiveDateTime(): \DateTime;
+    public function setIsArchived(bool $isArchived): ArchiveableInterface;
+    public function getIsArchived(): bool;
+    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface;
+    public function getArchiveMessage(): ?string;
     public function archive(User $user): ArchiveableInterface;
 }
