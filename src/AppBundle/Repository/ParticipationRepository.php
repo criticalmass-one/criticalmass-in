@@ -40,7 +40,7 @@ class ParticipationRepository extends EntityRepository
         return $query->getSingleScalarResult();
     }
 
-    public function findByUser(User $user): array
+    public function findByUser(User $user, bool $yes = false, bool $maybe = false, bool $no = false): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -50,6 +50,18 @@ class ParticipationRepository extends EntityRepository
             ->setParameter('user', $user)
             ->orderBy('r.dateTime', 'DESC')
         ;
+
+        if ($yes) {
+            $builder->andWhere($builder->expr()->eq('p.goingYes', true));
+        }
+
+        if ($maybe) {
+            $builder->andWhere($builder->expr()->eq('p.goingMaybe', true));
+        }
+
+        if ($no) {
+            $builder->andWhere($builder->expr()->eq('p.goingNo', true));
+        }
 
         $query = $builder->getQuery();
 

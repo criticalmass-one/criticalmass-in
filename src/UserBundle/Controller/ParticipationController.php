@@ -11,7 +11,7 @@ class ParticipationController extends Controller
 {
     public function listAction(Request $request, UserInterface $user): Response
     {
-        $participationList = $this->getDoctrine()->getRepository('AppBundle:Participation')->findByUser($user);
+        $participationList = $this->getDoctrine()->getRepository('AppBundle:Participation')->findByUser($user, true);
 
         return $this->render(
             'UserBundle:Participation:list.html.twig',
