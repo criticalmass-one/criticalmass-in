@@ -12,81 +12,69 @@ use Doctrine\ORM\Mapping as ORM;
 class PhotoView implements ViewInterface
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="Photo", inversedBy="photo_views")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
+
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): ViewInterface
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * @param \DateTime $dateTime
-     */
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(\DateTime $dateTime): ViewInterface
     {
         $this->dateTime = $dateTime;
+
+        return $this;
     }
 
-    public function getPhoto()
+    public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
-    public function setPhoto($photo)
+    public function setPhoto(Photo $photo): PhotoView
     {
         $this->photo = $photo;
 
