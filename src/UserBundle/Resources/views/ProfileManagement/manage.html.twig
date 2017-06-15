@@ -30,7 +30,7 @@
 
                         <p class="text-center">
                             <a class="btn btn-default" href="{{ path('criticalmass_user_participation_list') }}">
-                                Deine Touren
+                                Tourenübersicht
                             </a>
                         </p>
                     </div>
@@ -40,12 +40,16 @@
             <div class="col-md-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Foo bar baz
+                        Deine Tracks
                     </div>
                     <div class="panel-body">
+                        <p>
+                            Von deinen Critical-Mass-Touren hast du insgesamt {{ trackCounter }} Tracks hochgeladen.
+                        </p>
+
                         <p class="text-center">
                             <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
-                                Foo bar baz
+                                Tracks verwalten
                             </a>
                         </p>
                     </div>
@@ -60,9 +64,13 @@
                         Deine Fotos
                     </div>
                     <div class="panel-body">
+                        <p>
+                            Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
+                        </p>
+
                         <p class="text-center">
                             <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                Deine Fotos
+                                Fotos verwalten
                             </a>
                         </p>
                     </div>
@@ -70,18 +78,7 @@
             </div>
 
             <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Deine Tracks
-                    </div>
-                    <div class="panel-body">
-                        <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
-                                Deine Tracks
-                            </a>
-                        </p>
-                    </div>
-                </div>
+
             </div>
         </div>
 

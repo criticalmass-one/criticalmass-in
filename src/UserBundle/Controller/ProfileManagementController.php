@@ -13,11 +13,15 @@ class ProfileManagementController extends Controller
     public function manageAction(Request $request, UserInterface $user): Response
     {
         $participationCounter = $this->getDoctrine()->getRepository('AppBundle:Participation')->countByUser($user);
+        $trackCounter = $this->getDoctrine()->getRepository('AppBundle:Track')->countByUser($user);
+        $photoCounter = $this->getDoctrine()->getRepository('AppBundle:Photo')->countByUser($user);
 
         return $this->render(
             'UserBundle:ProfileManagement:manage.html.twig',
             [
-                'participationCounter' => $participationCounter
+                'participationCounter' => $participationCounter,
+                'trackCounter' => $trackCounter,
+                'photoCounter' => $photoCounter,
             ]
         );
     }

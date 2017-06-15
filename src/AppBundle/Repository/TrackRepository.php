@@ -158,5 +158,24 @@ class TrackRepository extends EntityRepository
 
         return $result;
     }
+
+    public function countByUser(User $user): int
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->select('COUNT(t)')
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('user', $user)
+            ->setParameter('enabled', true)
+            ->setParameter('deleted', false)
+        ;
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
 }
 
