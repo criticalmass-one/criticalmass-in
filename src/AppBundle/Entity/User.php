@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -170,6 +171,10 @@ class User extends BaseUser
         $this->colorBlue = rand(0, 255);
 
         $this->token = md5(microtime());
+
+        $this->tracks = new ArrayCollection();
+        $this->archiveRides = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     /**
@@ -269,9 +274,9 @@ class User extends BaseUser
         return $user->getId() == $this->getId();
     }
 
-    public function addTrack(Track $tracks): User
+    public function addTrack(Track $track): User
     {
-        $this->tracks[] = $tracks;
+        $this->tracks->add($track);
 
         return $this;
     }
@@ -393,16 +398,16 @@ class User extends BaseUser
         return $this;
     }
 
-    public function addArchiveRide(Ride $archiveRides): User
+    public function addArchiveRide(Ride $archiveRide): User
     {
-        $this->archiveRides[] = $archiveRides;
+        $this->archiveRides->add($archiveRide);
 
         return $this;
     }
 
-    public function removeArchiveRide(Ride $archiveRides): User
+    public function removeArchiveRide(Ride $archiveRide): User
     {
-        $this->archiveRides->removeElement($archiveRides);
+        $this->archiveRides->removeElement($archiveRide);
 
         return $this;
     }
@@ -412,16 +417,16 @@ class User extends BaseUser
         return $this->archiveRides;
     }
 
-    public function addParticipation(Participation $participations): User
+    public function addParticipation(Participation $participation): User
     {
-        $this->participations[] = $participations;
+        $this->participations->add($participation);
 
         return $this;
     }
 
-    public function removeParticipation(Participation $participations): User
+    public function removeParticipation(Participation $participation): User
     {
-        $this->participations->removeElement($participations);
+        $this->participations->removeElement($participation);
 
         return $this;
     }
