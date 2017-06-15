@@ -2,8 +2,10 @@
 
 namespace UserBundle\Controller;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -46,9 +48,15 @@ class ProfileManagementController extends Controller
                 /** @var $userManager UserManagerInterface */
                 $userManager = $this->get('fos_user.user_manager');
 
-                $userManager->updateUser($user);
+                try {
+                    $userManager->updateUser($user);
 
-                return $this->redirectToRoute('criticalmass_user_usermanagement');
+                    return $this->redirectToRoute('criticalmass_user_usermanagement');
+                } catch (UniqueConstraintViolationException $exception) {
+                    $error = new FormError($exception->getMessage());
+
+                    $userForm->get('username')->addError($error);
+                }
             }
         }
 
