@@ -31,7 +31,7 @@ class TrackReader extends GpxReader
 
     public function getEndDateTime()
     {
-        $endPoint = intval($this->track->getEndPoint());
+        $endPoint = intval($this->track->getEndPoint()) - 1;
 
         return new \DateTime($this->simpleXml->trk->trkseg->trkpt[$endPoint]->time);
     }
