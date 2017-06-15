@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -88,291 +90,160 @@ class Post
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+
+        $this->children = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get latitude
-     *
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return Post
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude): Post
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return Post
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude): Post
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get dateTime
-     *
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * Set dateTime
-     *
-     * @param \DateTime $dateTime
-     * @return Post
-     */
-    public function setDateTime($dateTime)
+    public function setDateTime(\DateTime $dateTime): Post
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    /**
-     * Get message
-     *
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    /**
-     * Set message
-     *
-     * @param string $message
-     * @return Post
-     */
-    public function setMessage($message)
+    public function setMessage(string $message): Post
     {
         $this->message = $message;
 
         return $this;
     }
 
-    /**
-     * Get enabled
-     *
-     * @return boolean
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return Post
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): Post
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * Set user
-     *
-     * @param User $user
-     * @return Post
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): Post
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get ride
-     *
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
 
-    /**
-     * Set ride
-     *
-     * @param Ride $ride
-     * @return Post
-     */
-    public function setRide(Ride $ride = null)
+    public function setRide(Ride $ride = null): Post
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    /**
-     * Set city
-     *
-     * @param City $city
-     * @return Post
-     */
-    public function setCity(City $city = null)
+    public function setCity(City $city = null): Post
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPhoto()
+    public function getPhoto(): ?Photo
     {
         return $this->photo;
     }
 
-    /**
-     * @param mixed $photo
-     */
-    public function setPhoto($photo)
+    public function setPhoto(Photo $photo): Post
     {
         $this->photo = $photo;
+
+        return $this;
     }
 
-    /**
-     * Get parent
-     *
-     * @return Post
-     */
-    public function getParent()
+    public function getParent(): ?Post
     {
         return $this->parent;
     }
 
-    /**
-     * Set parent
-     *
-     * @param Post $parent
-     * @return Post
-     */
-    public function setParent(Post $parent = null)
+    public function setParent(Post $parent = null): Post
     {
         $this->parent = $parent;
 
         return $this;
     }
 
-    /**
-     * Add children
-     *
-     * @param Post $children
-     * @return Post
-     */
-    public function addChild(Post $children)
+    public function addChild(Post $child): Post
     {
-        $this->children[] = $children;
+        $this->children->add($child);
 
         return $this;
     }
 
-    /**
-     * Remove children
-     *
-     * @param Post $children
-     */
-    public function removeChild(Post $children)
+    public function removeChild(Post $child): Post
     {
-        $this->children->removeElement($children);
+        $this->children->removeElement($child);
+
+        return $this;
     }
 
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
+    public function getChildren(): Collection
     {
         return $this->children;
     }
 
-    /**
-     * Get thread
-     *
-     * @return Thread
-     */
-    public function getThread()
+    public function getThread(): ?Thread
     {
         return $this->thread;
     }
 
-    /**
-     * Set thread
-     *
-     * @param Thread $thread
-     * @return Post
-     */
-    public function setThread(Thread $thread = null)
+    public function setThread(Thread $thread = null): Post
     {
         $this->thread = $thread;
 
