@@ -4,6 +4,9 @@ namespace AppBundle\Gps\GpxReader;
 
 use AppBundle\Entity\Track;
 
+/**
+ * @deprecated
+ */
 class TrackReader extends GpxReader
 {
     /**

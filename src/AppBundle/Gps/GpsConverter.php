@@ -2,6 +2,9 @@
 
 namespace AppBundle\Gps;
 
+/**
+ * @deprecated
+ */
 class GpsConverter
 {
     public function convert($value)

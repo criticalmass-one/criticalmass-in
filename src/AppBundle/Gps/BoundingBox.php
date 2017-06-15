@@ -8,7 +8,9 @@
 
 namespace AppBundle\Gps;
 
-
+/**
+ * @deprecated
+ */
 class BoundingBox
 {
     /** @var Coord $northWest */

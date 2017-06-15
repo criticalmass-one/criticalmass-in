@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-#    - { resource: assetic.yml }
+    - { resource: sonata.yml }
     - { resource: doctrine.yml }
     - { resource: fos.yml }
     - { resource: framework.yml }

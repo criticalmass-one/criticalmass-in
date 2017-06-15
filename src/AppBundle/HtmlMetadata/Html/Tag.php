@@ -2,6 +2,9 @@
 
 namespace AppBundle\HtmlMetadata\Html;
 
+/**
+ * @deprecated
+ */
 class Tag
 {
     protected $tag = '';

@@ -4,6 +4,9 @@ namespace AppBundle\HtmlMetadata;
 
 use AppBundle\HtmlMetadata\Html\Tag;
 
+/**
+ * @deprecated
+ */
 class Metadata
 {
     /** @var array $tags */

@@ -8,6 +8,9 @@ use AppBundle\Gps\Coord;
 use AppBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+/**
+ * @deprecated
+ */
 class GpxReader
 {
     protected $path;

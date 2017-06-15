@@ -6,6 +6,9 @@ namespace AppBundle\Gps\DistanceCalculator;
 use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxReader\TrackReader;
 
+/**
+ * @deprecated
+ */
 class TrackDistanceCalculator extends BaseDistanceCalculator
 {
     protected $doctrine;
