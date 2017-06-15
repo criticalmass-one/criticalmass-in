@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,11 +42,14 @@ class ProfileManagementController extends Controller
         if ($request->isMethod(Request::METHOD_POST)) {
             $userForm->handleRequest($request);
 
-            if ($userForm->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-            }
+            if ($userForm->isSubmitted() && $userForm->isValid()) {
+                /** @var $userManager UserManagerInterface */
+                $userManager = $this->get('fos_user.user_manager');
 
-            return $this->redirectToRoute('criticalmass_user_usermanagement');
+                $userManager->updateUser($user);
+
+                return $this->redirectToRoute('criticalmass_user_usermanagement');
+            }
         }
 
         return $this->render(

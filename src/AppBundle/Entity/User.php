@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use UserBundle\Validator\Constraint as CriticalAssert;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
@@ -31,6 +32,7 @@ class User extends BaseUser
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Assert\NotBlank()
+     * @CriticalAssert\UniqueUsername()
      */
     protected $username;
 

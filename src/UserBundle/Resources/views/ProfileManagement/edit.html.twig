@@ -1,5 +1,7 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
+{% form_theme userForm 'AppBundle:Form:theme.html.twig' %}
+
 {% block title %}Dein Benutzerprofil{% endblock %}
 
 {% block breadcrumb %}
@@ -22,23 +24,49 @@
                     Benutzerdaten ändern
                 </h2>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-10 col-md-offset-1">
 
                 {{ form_start(userForm) }}
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group{% if form_errors(userForm.username) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Benutzername:</label>
-                            {{ form_widget(userForm.username, { 'attr' : { 'class': 'form-control'} }) }}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Dein Benutzername
+                            </div>
+                            <div class="panel-body form-group form-group{% if form_errors(userForm.username) %} has-error has-feedback{% endif %}">
+                                <p>
+                                    Dein Benutzername wird öffentlich angezeigt &mdash; außerdem brauchst du ihn zum Einloggen, wenn du dich nicht über ein soziales Netzwerk anmeldest.
+                                </p>
+
+                                {{ form_errors(userForm.username) }}
+
+                                <label class="control-label" for="">
+                                    Benutzername:
+                                </label>
+                                {{ form_widget(userForm.username, { 'attr' : { 'class': 'form-control'} }) }}
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group{% if form_errors(userForm.email) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">E-Mail-Adresse:</label>
-                            {{ form_widget(userForm.email, { 'attr' : { 'class': 'form-control'} }) }}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Deine E-Mail-Adresse
+                            </div>
+                            <div class="panel-body form-group form-group{% if form_errors(userForm.email) %} has-error has-feedback{% endif %}">
+                                <p>
+                                    Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
+                                </p>
+
+                                <label class="control-label" for="">
+                                    E-Mail-Adresse:
+                                </label>
+                                {{ form_widget(userForm.email, { 'attr' : { 'class': 'form-control'} }) }}
+                            </div>
                         </div>
                     </div>
                 </div>
