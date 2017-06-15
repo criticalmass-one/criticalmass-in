@@ -30,6 +30,24 @@
             </div>
         </div>
 
+        {% if app.user.oauthAccount %}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="alert alert-info" role="alert">
+                    Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk bei criticalmass.in anmeldest.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <a class="btn btn-default" href="{{ path('criticalmass_user_usermanagement') }}">
+                    Zurück
+                </a>
+            </div>
+        </div>
+        {% else %}
+
         {{ form_start(userEmailForm) }}
 
         <div class="row">
@@ -69,5 +87,6 @@
         </div>
 
         {{ form_end(userEmailForm) }}
+        {% endif %}
     </div>
 {% endblock %}
