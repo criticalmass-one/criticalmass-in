@@ -112,15 +112,21 @@
                         Kennwort ändern
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Ändere dein Kennwort, das du zum Login bei criticalmass.in nutzt.
-                        </p>
+                        {% if app.user.oauthAccount %}
+                            <div class="alert alert-info" role="alert">
+                                Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk bei criticalmass.in anmeldest.
+                            </div>
+                        {% else %}
+                            <p>
+                                Ändere dein Kennwort, das du zum Login bei criticalmass.in nutzt.
+                            </p>
 
-                        <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('fos_user_change_password') }}">
-                                Kennwort ändern
-                            </a>
-                        </p>
+                            <p class="text-center">
+                                <a class="btn btn-default" href="{{ path('fos_user_change_password') }}">
+                                    Kennwort ändern
+                                </a>
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -136,8 +142,8 @@
                         </p>
 
                         <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                Ändern
+                            <a class="btn btn-default" href="{{ path('criticalmass_user_usermanagement_edit') }}">
+                                Logindaten ändern
                             </a>
                         </p>
                     </div>

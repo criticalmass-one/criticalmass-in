@@ -627,4 +627,24 @@ class User extends BaseUser
     {
         return $this->blurGalleries;
     }
+
+    public function isOauthAccount(): bool
+    {
+        return $this->runkeeperId || $this->stravaId || $this->facebookId;
+    }
+
+    public function isFacebookAccount(): bool
+    {
+        return $this->facebookId !== null;
+    }
+
+    public function isStravaAccount(): bool
+    {
+        return $this->stravaId !== null;
+    }
+
+    public function isRunkeeperAccount(): bool
+    {
+        return $this->facebookId !== null;
+    }
 }
