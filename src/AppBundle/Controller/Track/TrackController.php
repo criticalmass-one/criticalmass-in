@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Track;
 
+use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Traits\TrackHandlingTrait;
