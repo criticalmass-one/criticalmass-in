@@ -10,9 +10,16 @@ use UserBundle\Form\Type\UsernameEmailType;
 
 class ProfileManagementController extends Controller
 {
-    public function manageAction(): Response
+    public function manageAction(Request $request, UserInterface $user): Response
     {
-        return $this->render('UserBundle:ProfileManagement:manage.html.twig');
+        $participationCounter = $this->getDoctrine()->getRepository('AppBundle:Participation')->countByUser($user);
+
+        return $this->render(
+            'UserBundle:ProfileManagement:manage.html.twig',
+            [
+                'participationCounter' => $participationCounter
+            ]
+        );
     }
 
     public function editAction(Request $request, UserInterface $user): Response

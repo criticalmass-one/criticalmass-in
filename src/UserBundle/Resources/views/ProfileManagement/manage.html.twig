@@ -22,7 +22,12 @@
                     <div class="panel-heading">
                         Deine Touren
                     </div>
+
                     <div class="panel-body">
+                        <p>
+                            Super: Du hast bislang an {{ participationCounter }} Critical-Mass-Touren teilgenommen.
+                        </p>
+
                         <p class="text-center">
                             <a class="btn btn-default" href="{{ path('criticalmass_user_participation_list') }}">
                                 Deine Touren
@@ -87,6 +92,10 @@
                         Kennwort ändern
                     </div>
                     <div class="panel-body">
+                        <p>
+                            Ändere dein Kennwort, das du zum Login bei criticalmass.in nutzt.
+                        </p>
+
                         <p class="text-center">
                             <a class="btn btn-default" href="{{ path('fos_user_change_password') }}">
                                 Kennwort ändern
@@ -99,12 +108,16 @@
             <div class="col-md-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Benutzername oder E-Mail-Adresse
+                        Benutzername oder E-Mail-Adresse ändern
                     </div>
                     <div class="panel-body">
+                        <p>
+                            Hier kannst du deine E-Mail-Adresse und deinen Benutzernamen ändern. Bedenke bitte, dass du dich künftig mit deinen neuen Benutzerdaten einloggen musst.
+                        </p>
+
                         <p class="text-center">
                             <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                foo bar baz
+                                Ändern
                             </a>
                         </p>
                     </div>

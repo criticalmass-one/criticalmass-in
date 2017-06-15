@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class ParticipationRepository extends EntityRepository
 {
@@ -34,6 +35,22 @@ class ParticipationRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('participation.goingNo', ($status == 'no' ? 1 : 0)));
 
         $builder->setMaxResults(1);
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
+    public function countByUser(User $user): int
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p)')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('p.goingYes', true))
+        ;
 
         $query = $builder->getQuery();
 
