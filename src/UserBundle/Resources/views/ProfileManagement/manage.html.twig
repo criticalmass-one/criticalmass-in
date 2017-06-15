@@ -13,6 +13,10 @@
                 <h2>
                     Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
                 </h2>
+
+                <p class="lead">
+                    Willkommen in deinem Benutzerkonto &mdash; Hier kannst du deine Fotos, Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
+                </p>
             </div>
         </div>
 
@@ -24,15 +28,22 @@
                     </div>
 
                     <div class="panel-body">
-                        <p>
-                            Super: Du hast bislang an {{ participationCounter }} Critical-Mass-Touren teilgenommen.
-                        </p>
+                        {% if participationCounter == 0 %}
+                            <div class="alert alert-info" role="alert">
+                                <strong>Schade:</strong>
+                                Du hast noch an keiner Critical Mass teilgenommen. Im <a href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> findest du Touren in deiner Nähe.
+                            </div>
+                        {% else %}
+                            <p>
+                                Super: Du hast bislang an {{ participationCounter }} Critical-Mass-Touren teilgenommen.
+                            </p>
 
-                        <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('criticalmass_user_participation_list') }}">
-                                Tourenübersicht
-                            </a>
-                        </p>
+                            <p class="text-center">
+                                <a class="btn btn-default" href="{{ path('criticalmass_user_participation_list') }}">
+                                    Tourenübersicht
+                                </a>
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -43,15 +54,21 @@
                         Deine Tracks
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Von deinen Critical-Mass-Touren hast du insgesamt {{ trackCounter }} Tracks hochgeladen.
-                        </p>
+                        {% if trackCounter == 0 %}
+                            <div class="alert alert-info" role="alert">
+                                Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+                            </div>
+                        {% else %}
+                            <p>
+                                Von deinen Critical-Mass-Touren hast du insgesamt {{ trackCounter }} Tracks hochgeladen.
+                            </p>
 
-                        <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
-                                Tracks verwalten
-                            </a>
-                        </p>
+                            <p class="text-center">
+                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                                    Tracks verwalten
+                                </a>
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -64,15 +81,21 @@
                         Deine Fotos
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
-                        </p>
+                        {% if photoCounter == 0 %}
+                            <div class="alert alert-info" role="alert">
+                                Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr Informationen zu diesem Thema.
+                            </div>
+                        {% else %}
+                            <p>
+                                Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
+                            </p>
 
-                        <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                Fotos verwalten
-                            </a>
-                        </p>
+                            <p class="text-center">
+                                <a class="btn btn-default" href="{{ path('caldera_criticalmass_photo_user_list') }}">
+                                    Fotos verwalten
+                                </a>
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
