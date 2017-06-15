@@ -55,7 +55,7 @@ class ProfileManagementController extends Controller
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
                 } catch (UniqueConstraintViolationException $exception) {
-                    $error = new FormError($exception->getMessage());
+                    $error = new FormError('Dieser Benutzername ist bereits vergeben.');
 
                     $usernameForm->get('username')->addError($error);
                 }
@@ -94,7 +94,7 @@ class ProfileManagementController extends Controller
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
                 } catch (UniqueConstraintViolationException $exception) {
-                    $error = new FormError($exception->getMessage());
+                    $error = new FormError('Diese E-Mail-Adresse ist bereits registriert worden.');
 
                     $userEmailForm->get('email')->addError($error);
                 }
