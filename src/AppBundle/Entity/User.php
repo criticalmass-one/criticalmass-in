@@ -32,6 +32,7 @@ class User extends BaseUser
      * @var string
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @Assert\NotBlank()
      */
     protected $username;
 
@@ -518,5 +519,25 @@ class User extends BaseUser
     public function getBlurGalleries(): bool
     {
         return $this->blurGalleries;
+    }
+
+    public function isOauthAccount(): bool
+    {
+        return $this->runkeeperId || $this->stravaId || $this->facebookId;
+    }
+
+    public function isFacebookAccount(): bool
+    {
+        return $this->facebookId !== null;
+    }
+
+    public function isStravaAccount(): bool
+    {
+        return $this->stravaId !== null;
+    }
+
+    public function isRunkeeperAccount(): bool
+    {
+        return $this->facebookId !== null;
     }
 }

@@ -327,4 +327,9 @@ class Photo implements ViewableInterface
     {
         return $this->backupName;
     }
+
+    public function __toString(): string
+    {
+        return $this->id;
+    }
 }

@@ -322,5 +322,24 @@ class PhotoRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function countByUser(User $user): int
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p)')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('user', $user)
+            ->setParameter('enabled', true)
+            ->setParameter('deleted', false)
+        ;
+
+        $query = $builder->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
 }
 

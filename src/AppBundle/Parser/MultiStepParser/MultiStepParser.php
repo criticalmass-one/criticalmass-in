@@ -4,6 +4,9 @@ namespace AppBundle\Parser\MultiStepParser;
 
 use AppBundle\Parser\ParserInterface;
 
+/**
+ * @deprecated
+ */
 class MultiStepParser implements ParserInterface
 {
     protected $steps = [];

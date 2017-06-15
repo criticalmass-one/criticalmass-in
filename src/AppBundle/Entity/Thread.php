@@ -199,4 +199,9 @@ class Thread implements ViewableInterface
     {
         return $this->slug;
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }

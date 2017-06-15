@@ -2,6 +2,9 @@
 
 namespace AppBundle\Gps;
 
+/**
+ * @deprecated
+ */
 class Coord
 {
     /** @var float $latitude */

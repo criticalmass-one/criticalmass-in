@@ -5,6 +5,9 @@ namespace AppBundle\Image\ExifReader;
 use AppBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+/**
+ * @deprecated
+ */
 abstract class AbstractExifReader
 {
     /**

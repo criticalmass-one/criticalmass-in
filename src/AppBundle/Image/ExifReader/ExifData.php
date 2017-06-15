@@ -2,6 +2,9 @@
 
 namespace AppBundle\Image\ExifReader;
 
+/**
+ * @deprecated
+ */
 class ExifData
 {
     /**

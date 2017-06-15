@@ -180,4 +180,9 @@ class Board implements BoardInterface
     {
         return $this->slug;
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }

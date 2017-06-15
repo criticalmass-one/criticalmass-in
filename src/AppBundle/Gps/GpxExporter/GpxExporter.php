@@ -7,6 +7,9 @@ use AppBundle\Entity\CriticalmapsUser;
 use AppBundle\Entity\Position;
 use AppBundle\Entity\Ticket;
 
+/**
+ * @deprecated
+ */
 class GpxExporter
 {
     protected $entityManager;

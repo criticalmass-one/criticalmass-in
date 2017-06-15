@@ -6,6 +6,9 @@ namespace Caldera\AppBundle\Utility\GeoJsonUtility;
 use Caldera\AppBundle\Entity\Track;
 use Caldera\AppBundle\Utility\GpxReader\GpxReader;
 
+/**
+ * @deprecated
+ */
 class GeoJsonUtility
 {
     private $json;

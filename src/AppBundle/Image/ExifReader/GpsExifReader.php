@@ -5,8 +5,6 @@ namespace AppBundle\Image\ExifReader;
 use AppBundle\Gps\GpsConverter;
 
 /**
- * Class GpsExifReader
- * @package AppBundle\Image\ExifReader
  * @deprecated
  */
 class GpsExifReader extends AbstractExifReader

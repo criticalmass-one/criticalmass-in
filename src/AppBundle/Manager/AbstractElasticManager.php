@@ -6,6 +6,9 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\ElasticaBundle\Elastica\Index;
 use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 
+/**
+ * @deprecated
+ */
 abstract class AbstractElasticManager extends AbstractManager
 {
     /** @var RepositoryManagerInterface $elasticManager */
