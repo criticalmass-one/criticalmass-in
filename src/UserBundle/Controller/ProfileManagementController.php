@@ -9,7 +9,9 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use UserBundle\Form\Type\UserEmailType;
 use UserBundle\Form\Type\UsernameEmailType;
+use UserBundle\Form\Type\UsernameType;
 
 class ProfileManagementController extends Controller
 {
@@ -29,22 +31,22 @@ class ProfileManagementController extends Controller
         );
     }
 
-    public function editAction(Request $request, UserInterface $user): Response
+    public function editUsernameAction(Request $request, UserInterface $user): Response
     {
-        $userForm = $this->createForm(
-            UsernameEmailType::class,
+        $usernameForm = $this->createForm(
+            UsernameType::class,
             $user,
             [
                 'action' => $this->generateUrl(
-                    'criticalmass_user_usermanagement_edit'
+                    'criticalmass_user_usermanagement_editusername'
                 )
             ]
         );
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            $userForm->handleRequest($request);
+            $usernameForm->handleRequest($request);
 
-            if ($userForm->isSubmitted() && $userForm->isValid()) {
+            if ($usernameForm->isSubmitted() && $usernameForm->isValid()) {
                 /** @var $userManager UserManagerInterface */
                 $userManager = $this->get('fos_user.user_manager');
 
@@ -55,15 +57,54 @@ class ProfileManagementController extends Controller
                 } catch (UniqueConstraintViolationException $exception) {
                     $error = new FormError($exception->getMessage());
 
-                    $userForm->get('username')->addError($error);
+                    $usernameForm->get('username')->addError($error);
                 }
             }
         }
 
         return $this->render(
-            'UserBundle:ProfileManagement:edit.html.twig',
+            'UserBundle:ProfileManagement:edit_username.html.twig',
             [
-                'userForm' => $userForm->createView()
+                'usernameForm' => $usernameForm->createView()
+            ]
+        );
+    }
+
+    public function editEmailAction(Request $request, UserInterface $user): Response
+    {
+        $userEmailForm = $this->createForm(
+            UserEmailType::class,
+            $user,
+            [
+                'action' => $this->generateUrl(
+                    'criticalmass_user_usermanagement_editemail'
+                )
+            ]
+        );
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $userEmailForm->handleRequest($request);
+
+            if ($userEmailForm->isSubmitted() && $userEmailForm->isValid()) {
+                /** @var $userManager UserManagerInterface */
+                $userManager = $this->get('fos_user.user_manager');
+
+                try {
+                    $userManager->updateUser($user);
+
+                    return $this->redirectToRoute('criticalmass_user_usermanagement');
+                } catch (UniqueConstraintViolationException $exception) {
+                    $error = new FormError($exception->getMessage());
+
+                    $userEmailForm->get('email')->addError($error);
+                }
+            }
+        }
+
+        return $this->render(
+            'UserBundle:ProfileManagement:edit_email.html.twig',
+            [
+                'userEmailForm' => $userEmailForm->createView()
             ]
         );
     }

@@ -101,12 +101,6 @@
             </div>
 
             <div class="col-md-5">
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Kennwort ändern
@@ -130,20 +124,41 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Benutzername ändern
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Hier kannst du deinen Benutzernamen ändern.
+                        </p>
+
+                        <p class="text-center">
+                            <a class="btn btn-default" href="{{ path('criticalmass_user_usermanagement_editusername') }}">
+                                Benutzername ändern
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Benutzername oder E-Mail-Adresse ändern
+                        E-Mail-Adresse ändern
                     </div>
                     <div class="panel-body">
                         <p>
-                            Hier kannst du deine E-Mail-Adresse und deinen Benutzernamen ändern. Bedenke bitte, dass du dich künftig mit deinen neuen Benutzerdaten einloggen musst.
+                            Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig mit deinen neuen Benutzerdaten einloggen musst.
                         </p>
 
                         <p class="text-center">
-                            <a class="btn btn-default" href="{{ path('criticalmass_user_usermanagement_edit') }}">
-                                Logindaten ändern
+                            <a class="btn btn-default" href="{{ path('criticalmass_user_usermanagement_editemail') }}">
+                                E-Mail-Adresse ändern
                             </a>
                         </p>
                     </div>
