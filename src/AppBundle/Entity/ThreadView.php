@@ -12,83 +12,69 @@ use Doctrine\ORM\Mapping as ORM;
 class ThreadView implements ViewInterface
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="Thread", inversedBy="thread_views")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected $thread;
+
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): ViewInterface
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * @param \DateTime $dateTime
-     */
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(\DateTime $dateTime): ViewInterface
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getThread()
+    public function getThread(): Thread
     {
         return $this->thread;
     }
 
-    public function setThread($thread)
+    public function setThread(Thread $thread): ThreadView
     {
         $this->thread = $thread;
 
