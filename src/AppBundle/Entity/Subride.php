@@ -370,7 +370,7 @@ class Subride implements ArchiveableInterface
         return $this;
     }
 
-    public function getArchiveMessage(): string
+    public function getArchiveMessage(): ?string
     {
         return $this->archiveMessage;
     }

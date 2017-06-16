@@ -858,7 +858,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getArchiveMessage(): string
+    public function getArchiveMessage(): ?string
     {
         return $this->archiveMessage;
     }

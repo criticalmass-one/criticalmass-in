@@ -574,7 +574,7 @@ class Track
         return $this;
     }
 
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }

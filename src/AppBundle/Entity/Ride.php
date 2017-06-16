@@ -478,7 +478,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function getEstimatedParticipants(): int
+    public function getEstimatedParticipants(): ?int
     {
         return $this->estimatedParticipants;
     }
@@ -514,7 +514,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function getUrl(): Ride
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -664,7 +664,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function getArchiveMessage(): string
+    public function getArchiveMessage(): ?string
     {
         return $this->archiveMessage;
     }
