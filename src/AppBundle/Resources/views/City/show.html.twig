@@ -149,6 +149,14 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-md-12" id="fahrradstadthamburg-container">
+                        <script>
+                            CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
+                        </script>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-12">
                         {% include 'AppBundle:City:Includes/_currentTime.html.twig' with { 'city': city, 'dateTime': dateTime } %}
                     </div>
