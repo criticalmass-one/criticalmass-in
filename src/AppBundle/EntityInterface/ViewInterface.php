@@ -6,13 +6,13 @@ use AppBundle\Entity\User;
 
 interface ViewInterface
 {
-    public function getId();
+    public function getId(): ?int;
 
-    public function setUser(User $user = null);
+    public function setUser(User $user = null): ViewInterface;
 
-    public function getUser();
+    public function getUser(): ?User;
 
-    public function setDateTime(\DateTime $dateTime);
+    public function setDateTime(\DateTime $dateTime): ViewInterface;
 
-    public function getDateTime();
+    public function getDateTime(): \DateTime;
 }

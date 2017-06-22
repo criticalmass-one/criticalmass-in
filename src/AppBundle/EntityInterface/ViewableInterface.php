@@ -4,11 +4,11 @@ namespace AppBundle\EntityInterface;
 
 interface ViewableInterface
 {
-    public function getId();
+    public function getId(): ?int;
 
-    public function getViews();
+    public function getViews(): int;
 
-    public function setViews($views);
+    public function setViews(int $views): ViewableInterface;
 
-    public function incViews();
+    public function incViews(): ViewableInterface;
 }

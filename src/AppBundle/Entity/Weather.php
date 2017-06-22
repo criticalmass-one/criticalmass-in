@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="weather")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WeatherRepository")
  */
@@ -125,470 +124,245 @@ class Weather
         $this->creationDateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get json
-     *
-     * @return string
-     */
-    public function getJson()
+     public function getJson(): ?string
     {
         return $this->json;
     }
 
-    /**
-     * Set json
-     *
-     * @param string $json
-     * @return Weather
-     */
-    public function setJson($json)
+    public function setJson(string $json): Weather
     {
         $this->json = $json;
 
         return $this;
     }
 
-    /**
-     * Get weatherDateTime
-     *
-     * @return \DateTime
-     */
-    public function getWeatherDateTime()
+    public function getWeatherDateTime(): ?\DateTime
     {
         return $this->weatherDateTime;
     }
 
-    /**
-     * Set weatherDateTime
-     *
-     * @param \DateTime $weatherDateTime
-     * @return Weather
-     */
-    public function setWeatherDateTime($weatherDateTime)
+    public function setWeatherDateTime(\DateTime $weatherDateTime): Weather
     {
         $this->weatherDateTime = $weatherDateTime;
 
         return $this;
     }
 
-    /**
-     * Get creationDateTime
-     *
-     * @return \DateTime
-     */
-    public function getCreationDateTime()
+    public function getCreationDateTime(): ?\DateTime
     {
         return $this->creationDateTime;
     }
 
-    /**
-     * Set creationDateTime
-     *
-     * @param \DateTime $creationDateTime
-     * @return Weather
-     */
-    public function setCreationDateTime($creationDateTime)
+    public function setCreationDateTime(\DateTime $creationDateTime): Weather
     {
         $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
 
-    /**
-     * Get temperatureMin
-     *
-     * @return float
-     */
-    public function getTemperatureMin()
+    public function getTemperatureMin(): ?float
     {
         return $this->temperatureMin;
     }
 
-    /**
-     * Set temperatureMin
-     *
-     * @param float $temperatureMin
-     * @return Weather
-     */
-    public function setTemperatureMin($temperatureMin)
+    public function setTemperatureMin(float $temperatureMin): Weather
     {
         $this->temperatureMin = $temperatureMin;
 
         return $this;
     }
 
-    /**
-     * Get temperatureMax
-     *
-     * @return float
-     */
-    public function getTemperatureMax()
+    public function getTemperatureMax(): ?float
     {
         return $this->temperatureMax;
     }
 
-    /**
-     * Set temperatureMax
-     *
-     * @param float $temperatureMax
-     * @return Weather
-     */
-    public function setTemperatureMax($temperatureMax)
+    public function setTemperatureMax(float $temperatureMax): Weather
     {
         $this->temperatureMax = $temperatureMax;
 
         return $this;
     }
 
-    /**
-     * Get temperatureMorning
-     *
-     * @return float
-     */
-    public function getTemperatureMorning()
+    public function getTemperatureMorning(): ?float
     {
         return $this->temperatureMorning;
     }
 
-    /**
-     * Set temperatureMorning
-     *
-     * @param float $temperatureMorning
-     * @return Weather
-     */
-    public function setTemperatureMorning($temperatureMorning)
+    public function setTemperatureMorning(float $temperatureMorning): Weather
     {
         $this->temperatureMorning = $temperatureMorning;
 
         return $this;
     }
 
-    /**
-     * Get temperatureDay
-     *
-     * @return float
-     */
-    public function getTemperatureDay()
+    public function getTemperatureDay(): ?float
     {
         return $this->temperatureDay;
     }
 
-    /**
-     * Set temperatureDay
-     *
-     * @param float $temperatureDay
-     * @return Weather
-     */
-    public function setTemperatureDay($temperatureDay)
+    public function setTemperatureDay(float $temperatureDay): Weather
     {
         $this->temperatureDay = $temperatureDay;
 
         return $this;
     }
 
-    /**
-     * Get temperatureEvening
-     *
-     * @return float
-     */
-    public function getTemperatureEvening()
+    public function getTemperatureEvening(): ?float
     {
         return $this->temperatureEvening;
     }
 
-    /**
-     * Set temperatureEvening
-     *
-     * @param float $temperatureEvening
-     * @return Weather
-     */
-    public function setTemperatureEvening($temperatureEvening)
+    public function setTemperatureEvening(float $temperatureEvening): Weather
     {
         $this->temperatureEvening = $temperatureEvening;
 
         return $this;
     }
 
-    /**
-     * Get temperatureNight
-     *
-     * @return float
-     */
-    public function getTemperatureNight()
+    public function getTemperatureNight(): ?float
     {
         return $this->temperatureNight;
     }
 
-    /**
-     * Set temperatureNight
-     *
-     * @param float $temperatureNight
-     * @return Weather
-     */
-    public function setTemperatureNight($temperatureNight)
+    public function setTemperatureNight(float $temperatureNight): Weather
     {
         $this->temperatureNight = $temperatureNight;
 
         return $this;
     }
 
-    /**
-     * Get pressure
-     *
-     * @return float
-     */
-    public function getPressure()
+    public function getPressure(): ?float
     {
         return $this->pressure;
     }
 
-    /**
-     * Set pressure
-     *
-     * @param float $pressure
-     * @return Weather
-     */
-    public function setPressure($pressure)
+    public function setPressure(float $pressure): Weather
     {
         $this->pressure = $pressure;
 
         return $this;
     }
 
-    /**
-     * Get humidity
-     *
-     * @return float
-     */
-    public function getHumidity()
+    public function getHumidity(): ?float
     {
         return $this->humidity;
     }
 
-    /**
-     * Set humidity
-     *
-     * @param float $humidity
-     * @return Weather
-     */
-    public function setHumidity($humidity)
+    public function setHumidity(float $humidity): Weather
     {
         $this->humidity = $humidity;
 
         return $this;
     }
 
-    /**
-     * Get weatherCode
-     *
-     * @return integer
-     */
-    public function getWeatherCode()
+    public function getWeatherCode(): ?int
     {
         return $this->weatherCode;
     }
 
-    /**
-     * Set weatherCode
-     *
-     * @param integer $weatherCode
-     * @return Weather
-     */
-    public function setWeatherCode($weatherCode)
+    public function setWeatherCode(int $weatherCode): Weather
     {
         $this->weatherCode = $weatherCode;
 
         return $this;
     }
 
-    /**
-     * Get weather
-     *
-     * @return string
-     */
-    public function getWeather()
+    public function getWeather(): ?string
     {
         return $this->weather;
     }
 
-    /**
-     * Set weather
-     *
-     * @param string $weather
-     * @return Weather
-     */
-    public function setWeather($weather)
+    public function setWeather(string $weather): Weather
     {
         $this->weather = $weather;
 
         return $this;
     }
 
-    /**
-     * Get weatherDescription
-     *
-     * @return string
-     */
-    public function getWeatherDescription()
+    public function getWeatherDescription(): ?string
     {
         return $this->weatherDescription;
     }
 
-    /**
-     * Set weatherDescription
-     *
-     * @param string $weatherDescription
-     * @return Weather
-     */
-    public function setWeatherDescription($weatherDescription)
+    public function setWeatherDescription(string $weatherDescription): Weather
     {
         $this->weatherDescription = $weatherDescription;
 
         return $this;
     }
 
-    /**
-     * Get windSpeed
-     *
-     * @return float
-     */
-    public function getWindSpeed()
+    public function getWindSpeed(): ?float
     {
         return $this->windSpeed;
     }
 
-    /**
-     * Set windSpeed
-     *
-     * @param float $windSpeed
-     * @return Weather
-     */
-    public function setWindSpeed($windSpeed)
+    public function setWindSpeed(float $windSpeed): Weather
     {
         $this->windSpeed = $windSpeed;
 
         return $this;
     }
 
-    /**
-     * Get windDeg
-     *
-     * @return integer
-     */
-    public function getWindDeg()
+    public function getWindDeg(): ?int
     {
         return $this->windDeg;
     }
 
-    /**
-     * Set windDeg
-     *
-     * @param integer $windDeg
-     * @return Weather
-     */
-    public function setWindDeg($windDeg)
+    public function setWindDeg(int $windDeg): Weather
     {
         $this->windDeg = $windDeg;
 
         return $this;
     }
 
-    /**
-     * Get clouds
-     *
-     * @return integer
-     */
-    public function getClouds()
+    public function getClouds(): ?int
     {
         return $this->clouds;
     }
 
-    /**
-     * Set clouds
-     *
-     * @param integer $clouds
-     * @return Weather
-     */
-    public function setClouds($clouds)
+    public function setClouds(int $clouds): Weather
     {
         $this->clouds = $clouds;
 
         return $this;
     }
 
-    /**
-     * Get rain
-     *
-     * @return float
-     */
-    public function getRain()
+    public function getRain(): ?float
     {
         return $this->rain;
     }
 
-    /**
-     * Set rain
-     *
-     * @param float $rain
-     * @return Weather
-     */
-    public function setRain($rain)
+    public function setRain(float $rain): Weather
     {
         $this->rain = $rain;
 
         return $this;
     }
 
-    /**
-     * Get ride
-     *
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
 
-    /**
-     * Set ride
-     *
-     * @param Ride $ride
-     * @return Weather
-     */
-    public function setRide(Ride $ride = null)
+    public function setRide(Ride $ride = null): Weather
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * Get weatherIcon
-     *
-     * @return string
-     */
-    public function getWeatherIcon()
+    public function getWeatherIcon(): ?string
     {
         return $this->weatherIcon;
     }
 
-    /**
-     * Set weatherIcon
-     *
-     * @param string $weatherIcon
-     * @return Weather
-     */
-    public function setWeatherIcon($weatherIcon)
+    public function setWeatherIcon(string $weatherIcon): Weather
     {
         $this->weatherIcon = $weatherIcon;
 

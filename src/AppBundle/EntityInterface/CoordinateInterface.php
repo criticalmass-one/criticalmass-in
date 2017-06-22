@@ -4,11 +4,11 @@ namespace AppBundle\EntityInterface;
 
 interface CoordinateInterface
 {
-    public function setLatitude($latitude);
+    public function setLatitude(float $latitude = null): CoordinateInterface;
 
-    public function getLatitude();
+    public function getLatitude(): ?float;
 
-    public function setLongitude($longitude);
+    public function setLongitude(float $longitude = null): CoordinateInterface;
 
-    public function getLongitude();
+    public function getLongitude(): ?float;
 }

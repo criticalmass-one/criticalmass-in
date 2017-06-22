@@ -37,58 +37,41 @@ class CityView implements ViewInterface
         $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): ViewInterface
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * @param \DateTime $dateTime
-     */
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(\DateTime $dateTime): ViewInterface
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    public function setCity(City $city)
+    public function setCity(City $city = null): CityView
     {
         $this->city = $city;
 
