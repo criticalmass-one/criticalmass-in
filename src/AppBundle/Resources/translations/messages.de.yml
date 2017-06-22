@@ -24,9 +24,7 @@ criticalmass:
             criticalmaps: Aufenthaltsort teilen mit Critical Maps
         account:
             account: Benutzerkonto
-            tracks: Deine Tracks
-            apps: Deine Apps
-            photos: Deine Fotos
+            profile: Dein Profil
             logout: Abmelden
             login: Anmelden
         search:
