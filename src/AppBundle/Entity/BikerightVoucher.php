@@ -69,7 +69,7 @@ class BikerightVoucher
         return $this;
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -86,7 +86,7 @@ class BikerightVoucher
         return $this->createdAt;
     }
 
-    public function setAssignedAt(\DateTime $assignedAt): BikerightVoucher
+    public function setAssignedAt(\DateTime $assignedAt = null): BikerightVoucher
     {
         $this->assignedAt = $assignedAt;
 
