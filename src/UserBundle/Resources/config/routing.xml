@@ -23,4 +23,8 @@
     <route id="criticalmass_user_bikeright_view" path="/profile/bikeright">
         <default key="_controller">UserBundle:Bikeright:view</default>
     </route>
+
+    <route id="criticalmass_user_bikeright_generate" path="/profile/bikeright/generate">
+        <default key="_controller">UserBundle:Bikeright:generate</default>
+    </route>
 </routes>

@@ -8,7 +8,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="bikeright_voucher")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BikerightVoucherRepository")
  */
 class BikerightVoucher
 {
