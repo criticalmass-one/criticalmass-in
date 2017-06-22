@@ -50,7 +50,7 @@
                             {% for rideDate, rides in rideList %}
                                 <li>
                                     <h4>
-                                        {{ rideDate|date('d. F Y') }}
+                                        {{ rideDate|format_date('dd. MMMM YYYY') }}
                                     </h4>
 
                                     <ul>
