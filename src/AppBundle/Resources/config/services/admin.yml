@@ -1,4 +1,10 @@
 services:
+    admin.bikeright_voucher:
+        class: AppBundle\Admin\BikerightVoucherAdmin
+        arguments: [~, AppBundle\Entity\BikerightVoucher, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Bikeright Voucher }
+
     admin.board:
         class: AppBundle\Admin\BoardAdmin
         arguments: [~, AppBundle\Entity\Board, ~]
