@@ -7,6 +7,10 @@ $panel-fahrradstadt-heading-bg:    $fahrradstadt-color !default;
 .panel-fahrradstadt {
   @include panel-variant($panel-fahrradstadt-border, $panel-fahrradstadt-text, $panel-fahrradstadt-heading-bg, $panel-fahrradstadt-border);
 
+  .panel-heading h3 {
+    color: black;
+  }
+
   a:hover {
     text-decoration: none;
   }

@@ -6062,6 +6062,8 @@ body #city-jumbotron {
       background-color: #333333; }
   .panel-fahrradstadt > .panel-footer + .panel-collapse > .panel-body {
     border-bottom-color: #efc828; }
+  .panel-fahrradstadt .panel-heading h3 {
+    color: black; }
   .panel-fahrradstadt a:hover {
     text-decoration: none; }
   .panel-fahrradstadt h3 {
