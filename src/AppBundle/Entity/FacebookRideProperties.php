@@ -108,24 +108,24 @@ class FacebookRideProperties
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): FacebookRideProperties
+    public function setName(string $name = null): FacebookRideProperties
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): FacebookRideProperties
+    public function setDescription(string $description = null): FacebookRideProperties
     {
         $this->description = $description;
 
@@ -264,7 +264,7 @@ class FacebookRideProperties
         return $this;
     }
 
-    public function getLocationAddress(): string
+    public function getLocationAddress(): ?string
     {
         return $this->locationAddress;
     }
