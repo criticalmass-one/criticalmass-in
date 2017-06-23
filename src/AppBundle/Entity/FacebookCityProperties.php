@@ -126,7 +126,7 @@ class FacebookCityProperties
         return $this->likeNumber;
     }
 
-    public function setLikeNumber(int $likeNumber): FacebookCityProperties
+    public function setLikeNumber(int $likeNumber = null): FacebookCityProperties
     {
         $this->likeNumber = $likeNumber;
 
