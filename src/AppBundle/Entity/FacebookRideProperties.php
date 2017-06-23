@@ -132,108 +132,108 @@ class FacebookRideProperties
         return $this;
     }
 
-    public function getNumberAttending(): string
+    public function getNumberAttending(): ?int
     {
         return $this->numberAttending;
     }
 
-    public function setNumberAttending(int $numberAttending): FacebookRideProperties
+    public function setNumberAttending(int $numberAttending = null): FacebookRideProperties
     {
         $this->numberAttending = $numberAttending;
 
         return $this;
     }
 
-    public function getNumberMaybe(): int
+    public function getNumberMaybe(): ?int
     {
         return $this->numberMaybe;
     }
 
-    public function setNumberMaybe(int $numberMaybe): FacebookRideProperties
+    public function setNumberMaybe(int $numberMaybe = null): FacebookRideProperties
     {
         $this->numberMaybe = $numberMaybe;
 
         return $this;
     }
 
-    public function getNumberDeclined(): int
+    public function getNumberDeclined(): ?int
     {
         return $this->numberDeclined;
     }
 
-    public function setNumberDeclined(int $numberDeclined): FacebookRideProperties
+    public function setNumberDeclined(int $numberDeclined = null): FacebookRideProperties
     {
         $this->numberDeclined = $numberDeclined;
 
         return $this;
     }
 
-    public function getNumberInterested(): int
+    public function getNumberInterested(): ?int
     {
         return $this->numberInterested;
     }
 
-    public function setNumberInterested(int $numberInterested): FacebookRideProperties
+    public function setNumberInterested(int $numberInterested = null): FacebookRideProperties
     {
         $this->numberInterested = $numberInterested;
 
         return $this;
     }
 
-    public function getNumberNoreply(): int
+    public function getNumberNoreply(): ?int
     {
         return $this->numberNoreply;
     }
 
-    public function setNumberNoreply(int $numberNoreply): FacebookRideProperties
+    public function setNumberNoreply(int $numberNoreply = null): FacebookRideProperties
     {
         $this->numberNoreply = $numberNoreply;
 
         return $this;
     }
 
-    public function getStartTime(): \DateTime
+    public function getStartTime(): ?\DateTime
     {
         return $this->startTime;
     }
 
-    public function setStartTime(\DateTime $startTime): FacebookRideProperties
+    public function setStartTime(\DateTime $startTime = null): FacebookRideProperties
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndTime(): \DateTime
+    public function getEndTime(): ?\DateTime
     {
         return $this->endTime;
     }
 
-    public function setEndTime(\DateTime $endTime): FacebookRideProperties
+    public function setEndTime(\DateTime $endTime = null): FacebookRideProperties
     {
         $this->endTime = $endTime;
 
         return $this;
     }
 
-    public function getUpdatedTime(): \DateTime
+    public function getUpdatedTime(): ?\DateTime
     {
         return $this->updatedTime;
     }
 
-    public function setUpdatedTime(\DateTime $updatedTime): FacebookRideProperties
+    public function setUpdatedTime(\DateTime $updatedTime = null): FacebookRideProperties
     {
         $this->updatedTime = $updatedTime;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): FacebookRideProperties
+    public function setCreatedAt(\DateTime $createdAt = null): FacebookRideProperties
     {
         $this->createdAt = $createdAt;
 

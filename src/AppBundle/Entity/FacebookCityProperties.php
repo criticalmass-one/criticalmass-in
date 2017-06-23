@@ -133,12 +133,12 @@ class FacebookCityProperties
         return $this;
     }
 
-    public function getCheckinNumber(): int
+    public function getCheckinNumber(): ?int
     {
         return $this->checkinNumber;
     }
 
-    public function setCheckinNumber(int $checkinNumber): FacebookCityProperties
+    public function setCheckinNumber(int $checkinNumber = null): FacebookCityProperties
     {
         $this->checkinNumber = $checkinNumber;
 
