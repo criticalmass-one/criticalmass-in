@@ -114,7 +114,7 @@ class FacebookCityProperties
         return $this->generalInfo;
     }
 
-    public function setGeneralInfo(int $generalInfo = null): FacebookCityProperties
+    public function setGeneralInfo(string $generalInfo = null): FacebookCityProperties
     {
         $this->generalInfo = $generalInfo;
 
