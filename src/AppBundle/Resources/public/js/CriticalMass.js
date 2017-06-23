@@ -29,7 +29,6 @@ require.config({
         "MarkerEntity": "/bundles/app/js/modules/entity/MarkerEntity",
         "PhotoEntity": "/bundles/app/js/modules/entity/PhotoEntity",
         "Container": "/bundles/app/js/modules/entity/Container",
-        "LocalContainer": "/bundles/app/js/modules/entity/LocalContainer",
         "ClusterContainer": "/bundles/app/js/modules/entity/ClusterContainer",
         "EditCityPage": "/bundles/app/js/modules/page/EditCityPage",
         "EditRidePage": "/bundles/app/js/modules/page/EditRidePage",
@@ -102,6 +101,7 @@ require.config({
         "jquery-areaselect": "/bundles/app/js/external/jquery/jquery.areaselect.min",
         "dateformat": "/bundles/app/js/external/dateformat/dateformat",
         "chartjs": "/bundles/app/js/external/chartjs/chartjs",
+        "localforage": "/bundles/app/js/external/localforage/localforage.min",
         "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min"
     },
     shim: {
