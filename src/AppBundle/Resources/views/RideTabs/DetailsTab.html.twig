@@ -29,11 +29,45 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-sm-push-8">
-            {% include 'AppBundle:Ride:Includes/_live.html.twig' with { 'ride': ride } %}
-            {% include 'AppBundle:Ride:Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
-            {% include 'AppBundle:Ride:Includes/_participationNumbers.html.twig' with { 'ride': ride } %}
-            {% include 'AppBundle:Ride:Includes/_socialMedia.html.twig' with { 'ride': ride } %}
-            {% include 'AppBundle:Ride:Includes/_statistic.html.twig' with { 'ride': ride } %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'AppBundle:Ride:Includes/_live.html.twig' with { 'ride': ride } %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'AppBundle:Ride:Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
+                </div>
+            </div>
+
+            {% if 'Hamburg' in ride.city.city %}
+                <div class="row">
+                    <div class="col-md-12" id="fahrradstadthamburg-container">
+                        <script>
+                            CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
+                        </script>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'AppBundle:Ride:Includes/_participationNumbers.html.twig' with { 'ride': ride } %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'AppBundle:Ride:Includes/_socialMedia.html.twig' with { 'ride': ride } %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'AppBundle:Ride:Includes/_statistic.html.twig' with { 'ride': ride } %}
+                </div>
+            </div>
         </div>
 
         <div class="col-xs-12 col-sm-8 col-sm-pull-4">
