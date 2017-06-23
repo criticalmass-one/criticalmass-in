@@ -40,7 +40,7 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "friendsofsymfony/user-bundle": "^2.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/rest-bundle": "2.0.0",
         "hwi/oauth-bundle": "0.5.*",
         "php-curl-class/php-curl-class": "^7.0",
@@ -50,7 +50,6 @@
         "nelmio/api-doc-bundle": "^2.13",
         "predis/predis": "^1.1",
         "miljar/php-exif": "^0.6.3",
-        "sonata-project/admin-bundle": "^3.18",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1"
     },
     "require-dev": {
