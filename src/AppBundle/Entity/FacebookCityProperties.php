@@ -114,7 +114,7 @@ class FacebookCityProperties
         return $this->generalInfo;
     }
 
-    public function setGeneralInfo(int $generalInfo): FacebookCityProperties
+    public function setGeneralInfo(string $generalInfo = null): FacebookCityProperties
     {
         $this->generalInfo = $generalInfo;
 
@@ -126,19 +126,19 @@ class FacebookCityProperties
         return $this->likeNumber;
     }
 
-    public function setLikeNumber(int $likeNumber): FacebookCityProperties
+    public function setLikeNumber(int $likeNumber = null): FacebookCityProperties
     {
         $this->likeNumber = $likeNumber;
 
         return $this;
     }
 
-    public function getCheckinNumber(): int
+    public function getCheckinNumber(): ?int
     {
         return $this->checkinNumber;
     }
 
-    public function setCheckinNumber(int $checkinNumber): FacebookCityProperties
+    public function setCheckinNumber(int $checkinNumber = null): FacebookCityProperties
     {
         $this->checkinNumber = $checkinNumber;
 
@@ -150,7 +150,7 @@ class FacebookCityProperties
         return $this->website;
     }
 
-    public function setWebsite(string $website): FacebookCityProperties
+    public function setWebsite(string $website = null): FacebookCityProperties
     {
         $this->website = $website;
 
