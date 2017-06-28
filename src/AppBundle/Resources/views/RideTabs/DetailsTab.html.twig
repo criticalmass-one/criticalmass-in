@@ -73,6 +73,31 @@
         <div class="col-xs-12 col-sm-8 col-sm-pull-4">
             {% if ride.description %}
                 {{ ride.description|markdown }}
+            {% else %}
+                <div class="alert alert-info">
+                    <strong>Huch?</strong>
+                    Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit hast, kannst du {{ ride.fancyTitle }} <a href="{{ path('caldera_criticalmass_desktop_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}">hier editieren</a>:
+
+                    <ul>
+                        <li>
+                            Gibt es ein Motto für diese Tour?
+                        </li>
+
+                        <li>
+                            Gibt es irgendwelche Neuigkeiten oder Termine für den Radverkehr?
+                        </li>
+
+                        <li>
+                            Oder, auch immer ganz wichtig: Wie wird das Wetter?
+                        </li>
+                    </ul>
+
+                    <p class="text-center margin-top-medium">
+                        <a href="{{ path('caldera_criticalmass_desktop_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}" class="btn btn-primary btn-lg">
+                            Tour editieren
+                        </a>
+                    </p>
+                </div>
             {% endif %}
         </div>
     </div>
