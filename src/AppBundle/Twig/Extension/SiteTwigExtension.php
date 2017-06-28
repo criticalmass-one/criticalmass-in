@@ -13,9 +13,6 @@ class SiteTwigExtension extends \Twig_Extension
     /** @var TranslatorInterface $translator */
     protected $translator;
 
-    /** @var ParserInterface $parser */
-    protected $parser;
-
     /** @var Metadata $metadata */
     protected $metadata;
 
@@ -24,13 +21,11 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function __construct(
         TranslatorInterface $translator,
-        ParserInterface $parser,
         Metadata $metadata,
         RouterInterface $router
     )
     {
         $this->translator = $translator;
-        $this->parser = $parser;
         $this->metadata = $metadata;
         $this->router = $router;
     }
@@ -178,7 +173,7 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function parse(string $text): string
     {
-        return $this->parser->parse($text);
+        return $text;
     }
 
     public function getName()
