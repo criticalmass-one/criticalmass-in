@@ -96,12 +96,12 @@ class User extends BaseUser
     protected $facebookAccessToken;
 
     /**
-     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
+     * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
      */
     protected $stravaId;
 
     /**
-     * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
      */
     protected $stravaAccessToken;
 
