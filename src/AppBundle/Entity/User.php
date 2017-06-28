@@ -138,11 +138,6 @@ class User extends BaseUser
         return md5($this->getEmail());
     }
 
-    public function getCurrentCitySlug(): ?string
-    {
-        return $this->getCurrentCity()->getMainSlug()->getSlug();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -184,6 +179,9 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function equals(User $user): bool
     {
         return $user->getId() == $this->getId();
