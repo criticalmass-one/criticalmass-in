@@ -34,7 +34,6 @@
         "jms/serializer-bundle": "^1.1",
         "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "knplabs/knp-markdown-bundle": "^1.5",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
