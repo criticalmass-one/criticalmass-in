@@ -2,6 +2,9 @@ parameters:
 #    caldera.example.class: AppBundle\Example
 
 services:
+    critical_markdown:
+        class: AppBundle\Markdown\CriticalMarkdown
+
     caldera.user_provider:
         class: AppBundle\UserProvider\FOSUBUserProvider
         arguments: ['@fos_user.user_manager', {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]

@@ -5,6 +5,7 @@ services:
             - '@translator'
             - '@caldera.html_metadata'
             - '@router'
+            - '@critical_markdown'
         tags:
             - { name: twig.extension }
 
