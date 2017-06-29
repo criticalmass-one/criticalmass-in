@@ -21,10 +21,26 @@ define(['jquery', 'localforage'], function ($, localforage) {
         var that = this;
 
         localforage.length().then(function(rowCounter) {
-            if (rowCounter > 0) {
-                that._displayEntry();
+            if (rowCounter > 1) {
+                localforage.getItem('last-update').then(function(lastUpdate) {
+                    var diff = 1800 * 1000;
+
+                    if (lastUpdate < (Date.now() - diff)) {
+                        localforage.clear().then(function() {
+                            that._fetchFeed();
+
+                            console.log('Fahrradstadt: Refreshing feed');
+                        });
+                    } else {
+                        that._displayRandomEntry();
+
+                        console.log('Fahrradstadt: Show entry from cache');
+                    }
+                });
             } else {
                 that._fetchFeed();
+
+                console.log('Fahrradstadt: Fetching feed')
             }
         });
     };
@@ -49,11 +65,15 @@ define(['jquery', 'localforage'], function ($, localforage) {
 
                     localforage.setItem('fahrradstadt-feed-item-' + i, itemObject);
                 }
+
+                localforage.setItem('last-update', Date.now());
+
+                this._displayRandomEntry();
             }
         });
     };
 
-    FahrradstadtHamburg.prototype._displayEntry = function() {
+    FahrradstadtHamburg.prototype._displayRandomEntry = function() {
         var that = this;
 
         localforage.keys().then(function(keys) {
@@ -61,8 +81,6 @@ define(['jquery', 'localforage'], function ($, localforage) {
 
             localforage.getItem(randomKey).then(function(item) {
                 $panel = $('<div class="panel panel-fahrradstadt"><div class="panel-heading"><h3 class="panel-title">Fahrradstadt.Hamburg</h3></div><div class="panel-body"><div class="row"><div class="col-md-12"><a href="' + item.url + '"><img class="img-responsive" src="' + item.imageUrl + '" /></a></div></div><div class="row"><div class="col-md-12 text-center"><a href="' + item.url + '"><h3 class="h4">' + item.title +'</h3></a></div></div><div class="row"><div class="col-md-12 text-center"><a class="btn btn-fahrradstadt" href="' + item.url + '">zur Fahrradstadt</a></div></div></div></div>');
-
-                console.log($panel);
 
                 that._$container.append($panel);
             });
