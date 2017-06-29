@@ -124,6 +124,11 @@ class User extends BaseUser
     protected $participations;
 
     /**
+     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user")
+     */
+    protected $bikerightVouchers;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
@@ -176,6 +181,7 @@ class User extends BaseUser
         $this->tracks = new ArrayCollection();
         $this->archiveRides = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->bikerightVouchers = new ArrayCollection();
     }
 
     /**
@@ -539,5 +545,24 @@ class User extends BaseUser
     public function isRunkeeperAccount(): bool
     {
         return $this->facebookId !== null;
+    }
+
+    public function addBikerightVoucher(BikerightVoucher $bikerightVoucher): User
+    {
+        $this->bikerightVouchers->add($bikerightVoucher);
+
+        return $this;
+    }
+
+    public function getBikerightVouchers(): Collection
+    {
+        return $this->bikerightVouchers;
+    }
+
+    public function removeBikerightVoucher(BikerightVoucher $bikerightVoucher): User
+    {
+        $this->bikerightVouchers->removeElement($bikerightVoucher);
+
+        return $this;
     }
 }

@@ -115,6 +115,31 @@
                         </div>
                     </div>
 
+                    {% if bikeright_visible %}
+                    <div class="col-md-6">
+                        <div class="panel panel-bikeright">
+                            <div class="panel-heading">
+                                <small class="pull-right">
+                                    Anzeige
+                                </small>
+
+                                Bikeright-Rabattcode
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                    Als Community Mitglied erhältst du ab sofort 30 Prozent Rabatt bei bikeright!
+                                </p>
+
+                                <p class="text-center">
+                                    <a class="btn btn-bikeright" href="{{ path('criticalmass_user_bikeright_view') }}">
+                                        Mehr erfahren
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">

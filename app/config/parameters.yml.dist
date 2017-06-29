@@ -54,3 +54,5 @@ parameters:
     sqibe.api_username: 234qt35zr6tjzrgrergerg
     sqibe.api_password: 234qt35zr6tjzrgrergerg
     sqibe.api_url: http://sqi.be/yourls-api.php
+
+    bikeright.visible: false
