@@ -34,7 +34,6 @@
         "jms/serializer-bundle": "^1.1",
         "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "knplabs/knp-markdown-bundle": "^1.5",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
@@ -50,7 +49,8 @@
         "nelmio/api-doc-bundle": "^2.13",
         "predis/predis": "^1.1",
         "miljar/php-exif": "^0.6.3",
-        "sonata-project/doctrine-orm-admin-bundle": "^3.1"
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "cebe/markdown": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

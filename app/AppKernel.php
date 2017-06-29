@@ -25,7 +25,6 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
-            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
