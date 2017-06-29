@@ -18,8 +18,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User extends BaseUser
 {
     /**
-     * Numerische ID dieses Benutzers.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -35,21 +33,6 @@ class User extends BaseUser
      * @Assert\NotBlank()
      */
     protected $username;
-
-    /**
-     * Enthaelt eine kurze Beschreibung zur eigenen Person.
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $description;
-
-    /**
-     * Vom Benutzer momentan ausgewaehlte Stadt.
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $currentCity;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
@@ -81,37 +64,6 @@ class User extends BaseUser
      * @JMS\Expose
      */
     protected $colorBlue = 0;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $token;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     * @Assert\Regex("/^00491(5|6|7)(\d+)$/")
-     */
-    protected $phoneNumber;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $phoneNumberVerified;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $phoneNumberVerificationDateTime;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $phoneNumberVerificationToken;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $pushoverToken;
 
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
@@ -149,12 +101,12 @@ class User extends BaseUser
     protected $facebookAccessToken;
 
     /**
-     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
+     * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
      */
     protected $stravaId;
 
     /**
-     * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
      */
     protected $stravaAccessToken;
 
@@ -176,8 +128,6 @@ class User extends BaseUser
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
 
-        $this->token = md5(microtime());
-
         $this->tracks = new ArrayCollection();
         $this->archiveRides = new ArrayCollection();
         $this->participations = new ArrayCollection();
@@ -194,38 +144,9 @@ class User extends BaseUser
         return md5($this->getEmail());
     }
 
-    public function getCurrentCitySlug(): ?string
-    {
-        return $this->getCurrentCity()->getMainSlug()->getSlug();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setCurrentCity(City $currentCity = null): User
-    {
-        $this->currentCity = $currentCity;
-
-        return $this;
-    }
-
-    public function getCurrentCity(): ?City
-    {
-        return $this->currentCity;
-    }
-
-    public function setDescription(string $description): User
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
     }
 
     public function getColorRed(): int
@@ -264,18 +185,9 @@ class User extends BaseUser
         return $this;
     }
 
-    public function setToken(string $token): User
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
+    /**
+     * @deprecated
+     */
     public function equals(User $user): bool
     {
         return $user->getId() == $this->getId();
@@ -341,66 +253,6 @@ class User extends BaseUser
     public function preUpdate(): User
     {
         $this->updatedAt = new \DateTime();
-
-        return $this;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): User
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getPhoneNumber(): string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumberVerified(bool $phoneNumberVerified): User
-    {
-        $this->phoneNumberVerified = $phoneNumberVerified;
-
-        return $this;
-    }
-
-    public function getPhoneNumberVerified(): bool
-    {
-        return $this->phoneNumberVerified;
-    }
-
-    public function setPhoneNumberVerificationDateTime(\DateTime $phoneNumberVerificationDateTime): User
-    {
-        $this->phoneNumberVerificationDateTime = $phoneNumberVerificationDateTime;
-
-        return $this;
-    }
-
-    public function getPhoneNumberVerificationDateTime(): ?\DateTime
-    {
-        return $this->phoneNumberVerificationDateTime;
-    }
-
-    public function setPhoneNumberVerificationToken(string $phoneNumberVerificationToken): User
-    {
-        $this->phoneNumberVerificationToken = $phoneNumberVerificationToken;
-
-        return $this;
-    }
-
-    public function getPhoneNumberVerificationToken(): string
-    {
-        return $this->phoneNumberVerificationToken;
-    }
-
-    public function getPushoverToken(): ?string
-    {
-        return $this->pushoverToken;
-    }
-
-    public function setPushoverToken(string $pushoverToken): User
-    {
-        $this->pushoverToken = $pushoverToken;
 
         return $this;
     }
