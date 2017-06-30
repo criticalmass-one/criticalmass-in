@@ -46,6 +46,8 @@ security:
         - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
+        - { path: ^/admin, role: ROLE_ADMIN }
+
     role_hierarchy:
         ROLE_USER:        []
         ROLE_ADMIN:       [ROLE_USER]
