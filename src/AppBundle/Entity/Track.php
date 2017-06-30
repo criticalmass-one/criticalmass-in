@@ -446,7 +446,7 @@ class Track
         return $this;
     }
 
-    public function getTrackFile(): File
+    public function getTrackFile(): ?File
     {
         return $this->trackFile;
     }
