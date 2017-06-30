@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use Caldera\GeoBundle\Entity\Track as BaseTrack;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -55,42 +54,49 @@ class Track extends BaseTrack
     protected $rideEstimate;
 
     /**
+     * @ORM\Column(type="datetime")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startDateTime;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $distance;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $points;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startPoint;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
