@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Track;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
@@ -22,6 +23,9 @@ class TrackUploadController extends AbstractController
 {
     use TrackHandlingTrait;
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function uploadAction(Request $request, $citySlug, $rideDate, $embed = false)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

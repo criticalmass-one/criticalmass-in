@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Subride;
 use AppBundle\Form\Type\SubrideType;
@@ -11,6 +12,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SubrideController extends AbstractController
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -106,6 +110,9 @@ class SubrideController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editAction(Request $request, $citySlug, $rideDate, $subrideId)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -187,6 +194,9 @@ class SubrideController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function preparecopyAction(Request $request, $citySlug, $rideDate)
     {
         $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -196,6 +206,9 @@ class SubrideController extends AbstractController
         return $this->render('AppBundle:Subride:preparecopy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function copyAction(Request $request, $citySlug, $oldDate, $newDate)
     {
         $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $newDate);

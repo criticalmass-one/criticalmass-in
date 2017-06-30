@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Position;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
@@ -45,6 +46,9 @@ class StravaController extends AbstractController
         }
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function authAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -67,6 +71,9 @@ class StravaController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function tokenAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -114,6 +121,9 @@ class StravaController extends AbstractController
         }
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function listridesAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -139,6 +149,9 @@ class StravaController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function importAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

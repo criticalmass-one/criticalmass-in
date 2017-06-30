@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +15,9 @@ use UserBundle\Form\Type\UsernameType;
 
 class ProfileManagementController extends Controller
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function manageAction(Request $request, UserInterface $user): Response
     {
         $participationCounter = $this->getDoctrine()->getRepository('AppBundle:Participation')->countByUser($user);
@@ -30,6 +34,9 @@ class ProfileManagementController extends Controller
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editUsernameAction(Request $request, UserInterface $user): Response
     {
         $usernameForm = $this->createForm(
@@ -71,6 +78,9 @@ class ProfileManagementController extends Controller
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editEmailAction(Request $request, UserInterface $user): Response
     {
         $userEmailForm = $this->createForm(
