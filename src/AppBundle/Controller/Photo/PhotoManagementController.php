@@ -18,6 +18,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoManagementController extends AbstractController
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function listAction(Request $request, UserInterface $user): Response
     {
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
@@ -53,6 +56,9 @@ class PhotoManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function deleteAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $this->saveReferer($request);
@@ -66,6 +72,9 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer();
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function manageAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -88,6 +97,9 @@ class PhotoManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function toggleAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $this->saveReferer($request);
@@ -102,6 +114,9 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer();
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function featuredPhotoAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $this->saveReferer($request);
@@ -133,6 +148,9 @@ class PhotoManagementController extends AbstractController
         return $photo;
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function placeSingleAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
@@ -189,6 +207,9 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer();
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function relocateAction(Request $request, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -206,6 +227,9 @@ class PhotoManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function rotateAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $this->saveReferer($request);
@@ -229,6 +253,9 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer();
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function censorAction(Request $request, UserInterface $user, int $photoId): Response
     {
         $photo = $this->getCredentialsCheckedPhoto($user, $photoId);

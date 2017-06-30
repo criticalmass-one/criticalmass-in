@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Weather;
@@ -32,6 +33,9 @@ class RideController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function showAction(Request $request, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -81,6 +85,9 @@ class RideController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addestimateAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

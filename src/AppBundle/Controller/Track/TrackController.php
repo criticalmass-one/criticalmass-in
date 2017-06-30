@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Track;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
@@ -22,6 +23,9 @@ class TrackController extends AbstractController
 {
     use TrackHandlingTrait;
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function listAction()
     {
         /**
@@ -44,6 +48,9 @@ class TrackController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function uploadAction(Request $request, $citySlug, $rideDate, $embed = false)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -135,6 +142,9 @@ class TrackController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function viewAction(Request $request, $trackId)
     {
         $track = $this->getTrackRepository()->findOneById($trackId);
@@ -153,6 +163,9 @@ class TrackController extends AbstractController
         throw new AccessDeniedException('');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function downloadAction(Request $request, $trackId)
     {
         $track = $this->getTrackRepository()->find($trackId);
@@ -180,13 +193,7 @@ class TrackController extends AbstractController
     }
 
     /**
-     * Activate or deactivate the user’s track. Deactivating a track will hide it from public ride overviews.
-     *
-     * @param Request $request
-     * @param $trackId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @author swahlen
+     * @Security("has_role('ROLE_USER')")
      */
     public function toggleAction(Request $request, $trackId)
     {
@@ -205,6 +212,9 @@ class TrackController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function deleteAction(Request $request, $trackId)
     {
         /** @var Track $track */
@@ -224,6 +234,9 @@ class TrackController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function rangeAction(Request $request, $trackId)
     {
         /** @var Track $track */
@@ -281,6 +294,9 @@ class TrackController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function timeAction(Request $request, $trackId)
     {
         $track = $this->getTrackRepository()->findOneById($trackId);
@@ -342,6 +358,9 @@ class TrackController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function drawAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -386,6 +405,9 @@ class TrackController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editAction(Request $request, int $trackId)
     {
         /** @var Track $track */

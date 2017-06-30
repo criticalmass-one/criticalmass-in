@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Track;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
@@ -22,6 +23,9 @@ class TrackDrawController extends AbstractController
 {
     use TrackHandlingTrait;
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function drawAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -66,6 +70,9 @@ class TrackDrawController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editAction(Request $request, int $trackId)
     {
         /** @var Track $track */

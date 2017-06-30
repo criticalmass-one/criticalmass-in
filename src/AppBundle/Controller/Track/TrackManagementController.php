@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Track;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
@@ -24,6 +25,9 @@ class TrackManagementController extends AbstractController
 {
     use TrackHandlingTrait;
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function listAction()
     {
         /**
@@ -46,6 +50,9 @@ class TrackManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function downloadAction(Request $request, UserInterface $user, int $trackId): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
@@ -64,6 +71,9 @@ class TrackManagementController extends AbstractController
         return $response;
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function toggleAction(Request $request, UserInterface $user, int $trackId): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
@@ -77,6 +87,9 @@ class TrackManagementController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function deleteAction(Request $request, UserInterface $user, int $trackId): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
@@ -90,6 +103,9 @@ class TrackManagementController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function rangeAction(Request $request, UserInterface $user, int $trackId): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
@@ -146,6 +162,9 @@ class TrackManagementController extends AbstractController
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function timeAction(Request $request, UserInterface $user, int $trackId): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
