@@ -446,12 +446,12 @@ class Track
         return $this;
     }
 
-    public function getTrackFile(): File
+    public function getTrackFile(): ?File
     {
         return $this->trackFile;
     }
 
-    public function setTrackFilename(string $trackFilename): Track
+    public function setTrackFilename(string $trackFilename = null): Track
     {
         $this->trackFilename = $trackFilename;
 
