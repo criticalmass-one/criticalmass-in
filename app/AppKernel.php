@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
+            new Caldera\GeoBundle\CalderaGeoBundle(),
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
         ];

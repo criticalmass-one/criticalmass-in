@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "12f4c139b50b99fe6ffc0cb484825370",
+    "content-hash": "434eed18b7cf4dde642124a69a50a603",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -49,6 +49,87 @@
                 "strava"
             ],
             "time": "2015-02-23T08:57:10+00:00"
+        },
+        {
+            "name": "calderacc/geobasic",
+            "version": "0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calderacc/geobasic.git",
+                "reference": "d1c60fe735b7147dcb55cd466d53e420d5c0fe6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calderacc/geobasic/zipball/d1c60fe735b7147dcb55cd466d53e420d5c0fe6b",
+                "reference": "d1c60fe735b7147dcb55cd466d53e420d5c0fe6b",
+                "shasum": ""
+            },
+            "require": {
+                "emcconville/google-map-polyline-encoding-tool": "^1.3",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Caldera\\GeoBasic\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Huebner",
+                    "email": "malte@caldera.cc"
+                }
+            ],
+            "time": "2017-05-05T10:40:27+00:00"
+        },
+        {
+            "name": "calderacc/geobundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calderacc/geobundle.git",
+                "reference": "8eb63080b1e45a0801fa356680445b24688f78c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calderacc/geobundle/zipball/8eb63080b1e45a0801fa356680445b24688f78c5",
+                "reference": "8eb63080b1e45a0801fa356680445b24688f78c5",
+                "shasum": ""
+            },
+            "require": {
+                "calderacc/geobasic": "0.2",
+                "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
+                "ext-xml": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Caldera\\GeoBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Hübner",
+                    "email": "malte@caldera.cc"
+                }
+            ],
+            "description": "Handle geo stuff with Symfony",
+            "time": "2017-06-30 12:23:17"
         },
         {
             "name": "cebe/markdown",
@@ -5595,10 +5676,11 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "craue/formflow-bundle": 20,
-        "friendsofsymfony/user-bundle": 20
+        "friendsofsymfony/user-bundle": 20,
+        "calderacc/geobundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -17,6 +17,7 @@
     "autoload-dev": {
         "psr-4": { "Tests\\": "tests/" }
     },
+    "minimum-stability": "dev",
     "require": {
         "php": ">=7.1",
         "symfony/symfony": "3.2.*",
@@ -50,7 +51,8 @@
         "predis/predis": "^1.1",
         "miljar/php-exif": "^0.6.3",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
-        "cebe/markdown": "^1.1"
+        "cebe/markdown": "^1.1",
+        "calderacc/geobundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
