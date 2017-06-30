@@ -210,7 +210,7 @@ class RideManagementController extends AbstractController
         $facebookRide = $fera->createRideForRide($ride);
 
         $form = $this->createForm(
-            new RideType(),
+            RideType::class,
             $ride,
             array(
                 'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit',
