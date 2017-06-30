@@ -31,6 +31,11 @@ class BikerightVoucher
     protected $code;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $priority;
+
+    /**
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $createdAt;
@@ -50,7 +55,7 @@ class BikerightVoucher
         return $this->id;
     }
 
-    public function setUser(User $user): BikerightVoucher
+    public function setUser(User $user = null): BikerightVoucher
     {
         $this->user = $user;
 
@@ -60,6 +65,18 @@ class BikerightVoucher
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function setPriority(int $priority): BikerightVoucher
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getPriority(): ?int
+    {
+        return $this->priority;
     }
 
     public function setCode(string $code): BikerightVoucher

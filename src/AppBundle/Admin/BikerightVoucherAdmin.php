@@ -14,6 +14,7 @@ class BikerightVoucherAdmin extends AbstractAdmin
         $formMapper
             ->with('Voucher', ['class' => 'col-md-6'])
             ->add('code')
+            ->add('priority')
             ->add('user')
             ->end()
 
@@ -28,6 +29,7 @@ class BikerightVoucherAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('code')
+            ->add('priority')
             ->add('user')
             ->add('createdAt')
             ->add('assignedAt')
@@ -38,6 +40,7 @@ class BikerightVoucherAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('code')
+            ->add('priority')
             ->add('user')
             ->add('assignedAt')
         ;
