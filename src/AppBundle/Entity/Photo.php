@@ -278,6 +278,8 @@ class Photo implements ViewableInterface
     public function setImageName(string $imageName): Photo
     {
         $this->imageName = $imageName;
+
+        return $this;
     }
 
     public function getImageName(): ?string
