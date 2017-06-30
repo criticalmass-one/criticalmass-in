@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Caldera\GeoBundle\Entity\Track as BaseTrack;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -14,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class Track
+class Track extends BaseTrack
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -33,13 +34,6 @@ class Track
      * @JMS\Expose
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
-    protected $username;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
@@ -61,58 +55,46 @@ class Track
     protected $rideEstimate;
 
     /**
-     * @ORM\Column(type="datetime")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startDateTime;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $distance;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $points;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $startPoint;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $endPoint;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $md5Hash;
 
     /**
      * @ORM\Column(type="boolean")
@@ -123,48 +105,6 @@ class Track
      * @ORM\Column(type="boolean")
      */
     protected $deleted = false;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @deprecated
-     */
-    protected $latLngList;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
-    protected $geoJson;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     * @JMS\SerializedName("polylineString")
-     */
-    protected $polyline;
-
-    /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
-     * @var File
-     */
-    protected $trackFile;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @var string
-     */
-    protected $trackFilename;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTime
-     */
-    protected $updatedAt;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
@@ -180,24 +120,12 @@ class Track
 
     public function __construct()
     {
-        $this->setCreationDateTime(new \DateTime());
+        parent::__construct();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setUsername(string $username): Track
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getUsername(): string
-    {
-        return $this->username;
     }
 
     public function setRide(Ride $ride = null): Track
@@ -222,86 +150,6 @@ class Track
     public function getUser(): ?User
     {
         return $this->user;
-    }
-
-    public function setCreationDateTime(\DateTime $creationDateTime): Track
-    {
-        $this->creationDateTime = $creationDateTime;
-
-        return $this;
-    }
-
-    public function getCreationDateTime(): \DateTime
-    {
-        return $this->creationDateTime;
-    }
-
-    public function setMd5Hash(string $md5Hash): Track
-    {
-        $this->md5Hash = $md5Hash;
-
-        return $this;
-    }
-
-    public function getMd5Hash(): ?string
-    {
-        return $this->md5Hash;
-    }
-
-    public function setStartDateTime(\DateTime $startDateTime): Track
-    {
-        $this->startDateTime = $startDateTime;
-
-        return $this;
-    }
-
-    public function getStartDateTime(): ?\DateTime
-    {
-        if ($this->startDateTime) {
-            return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
-        }
-
-        return null;
-    }
-
-    public function setEndDateTime(\DateTime $endDateTime): Track
-    {
-        $this->endDateTime = $endDateTime;
-
-        return $this;
-    }
-
-    public function getEndDateTime(): ?\DateTime
-    {
-        if ($this->endDateTime) {
-            return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
-        }
-
-        return null;
-    }
-
-    public function setDistance(float $distance): Track
-    {
-        $this->distance = $distance;
-
-        return $this;
-    }
-
-    public function getDistance(): float
-    {
-        return $this->distance;
-    }
-
-    public function setPoints(int $points): Track
-    {
-        $this->points = $points;
-
-        return $this;
-    }
-
-    public function getPoints(): int
-    {
-        return $this->points;
     }
 
     public function getEnabled(): bool
@@ -347,22 +195,6 @@ class Track
         return $this;
     }
 
-    public function getLatLngList(): string
-    {
-        return $this->latLngList;
-    }
-
-    public function setPolyline(string $polyline): Track
-    {
-        $this->polyline = $polyline;
-
-        return $this;
-    }
-
-    public function getPolyline(): ?string
-    {
-        return $this->polyline;
-    }
 
     /**
      * @JMS\Groups({"timelapse"})
@@ -373,10 +205,6 @@ class Track
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorRed();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorRed();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorRed();
         }
 
         return null;
@@ -391,10 +219,6 @@ class Track
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorGreen();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorGreen();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorGreen();
         }
 
         return null;
@@ -409,10 +233,6 @@ class Track
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorBlue();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorBlue();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorBlue();
         }
 
         return null;
@@ -420,7 +240,7 @@ class Track
 
     public function __toString(): string
     {
-        $result = $this->getUsername() . '(';
+        $result = $this->getUser()->getUsername() . '(';
 
         if ($this->getCreationDateTime()) {
             $result .= $this->getCreationDateTime()->format('Y-m-d');
@@ -435,78 +255,7 @@ class Track
         return $result;
     }
 
-    public function setTrackFile(File $track = null): Track
-    {
-        $this->trackFile = $track;
-
-        if ($track) {
-            $this->updatedAt = new \DateTime('now');
-        }
-
-        return $this;
-    }
-
-    public function getTrackFile(): File
-    {
-        return $this->trackFile;
-    }
-
-    public function setTrackFilename(string $trackFilename): Track
-    {
-        $this->trackFilename = $trackFilename;
-
-        return $this;
-    }
-
-    public function getTrackFilename(): ?string
-    {
-        return $this->trackFilename;
-    }
-
-    public function setStartPoint(int $startPoint): Track
-    {
-        if ($startPoint >= 1) {
-            $this->startPoint = $startPoint;
-        } else {
-            $this->startPoint = 1;
-        }
-
-        return $this;
-    }
-
-    public function getStartPoint(): int
-    {
-        return $this->startPoint;
-    }
-
-    public function setEndPoint(int $endPoint): Track
-    {
-        if ($endPoint <= $this->points) {
-            $this->endPoint = $endPoint;
-        } else {
-            $this->endPoint = $this->points - 1;
-        }
-
-        return $this;
-    }
-
-    public function getEndPoint(): int
-    {
-        return $this->endPoint;
-    }
-
-    public function setUpdatedAt(\DateTime $updatedAt): Track
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
+    /** @deprecated  */
     public function getDurationInterval(): ?\DateInterval
     {
         if ($this->startDateTime && $this->endDateTime) {
@@ -516,6 +265,7 @@ class Track
         return null;
     }
 
+    /** @deprecated */
     public function getDurationInSeconds(): int
     {
         if ($this->startDateTime && $this->endDateTime) {
@@ -525,6 +275,7 @@ class Track
         return 0;
     }
 
+    /** @deprecated  */
     public function getAverageVelocity(): ?float
     {
         if ($this->startDateTime && $this->endDateTime && $this->distance) {
@@ -541,11 +292,13 @@ class Track
         return null;
     }
 
+    /** @deprecated  */
     public function getStartTime(): \DateTime
     {
         return $this->startDateTime;
     }
 
+    /** @deprecated  */
     public function setStartTime(\DateTime $time): Track
     {
         $this->startDateTime = new \DateTime($this->startDateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
@@ -553,11 +306,13 @@ class Track
         return $this;
     }
 
+    /** @deprecated  */
     public function getStartDate(): \DateTime
     {
         return $this->startDateTime;
     }
 
+    /** @deprecated  */
     public function setStartDate(\DateTime $date): Track
     {
         $newDate = new \DateTime($this->startDateTime->format('Y-m-d') . ' 00:00:00');
@@ -589,17 +344,5 @@ class Track
     public function getStravaActivityId(): ?int
     {
         return $this->stravaActitityId;
-    }
-
-    public function setGeoJson(string $geoJson): Track
-    {
-        $this->geoJson = $geoJson;
-
-        return $this;
-    }
-
-    public function getWaypointList(): string
-    {
-        return $this->geoJson;
     }
 }
