@@ -13,6 +13,7 @@ class BikerightVoucherRepository extends EntityRepository
 
         $qb
             ->where($qb->expr()->isNull('bv.user'))
+            ->orderBy('bv.priority', 'DESC')
             ->setMaxResults(1)
         ;
 
