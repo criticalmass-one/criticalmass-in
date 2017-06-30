@@ -451,7 +451,7 @@ class Track
         return $this->trackFile;
     }
 
-    public function setTrackFilename(string $trackFilename): Track
+    public function setTrackFilename(string $trackFilename = null): Track
     {
         $this->trackFilename = $trackFilename;
 
