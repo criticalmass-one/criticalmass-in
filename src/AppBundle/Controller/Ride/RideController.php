@@ -32,10 +32,7 @@ class RideController extends AbstractController
             )
         );
     }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
+    
     public function showAction(Request $request, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
