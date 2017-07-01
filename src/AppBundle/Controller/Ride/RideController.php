@@ -10,6 +10,7 @@ use AppBundle\Traits\ViewStorageTrait;
 use AppBundle\Form\Type\RideEstimateType;
 use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
@@ -32,7 +33,23 @@ class RideController extends AbstractController
             )
         );
     }
-    
+
+    public function showMonthAction(Request $request, string $citySlug, string $rideDate): Response
+    {
+        $city = $this->getCheckedCity($citySlug);
+        $dateTime = new \DateTime(sprintf('%s-01', $rideDate));
+
+        $rideList = $this->getRideRepository()->findByCityAndMonth($city, $dateTime);
+
+        if (count($rideList) !== 1) {
+            throw $this->createNotFoundException();
+        }
+
+        $ride = array_pop($rideList);
+
+        return $this->redirectToObject($ride);
+    }
+
     public function showAction(Request $request, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
