@@ -14,7 +14,7 @@ class SecurityController extends Controller
     const TEMPLATE_MODE_FORM = 2;
     const TEMPLATE_MODE_MODAL = 3;
 
-    public function loginAction(Request $request, $templateMode = self::TEMPLATE_MODE_FULL): Response
+    public function loginAction(Request $request, int $templateMode = self::TEMPLATE_MODE_FULL): Response
     {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
@@ -51,7 +51,7 @@ class SecurityController extends Controller
         );
     }
 
-    protected function renderLogin(array $data, $templateMode = false): Response
+    protected function renderLogin(array $data, int $templateMode = null): Response
     {
         $templateName = '';
 
