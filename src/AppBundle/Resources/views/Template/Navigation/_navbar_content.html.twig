@@ -8,6 +8,31 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li>
+                    <a href="{{ path('caldera_criticalmass_static_display', { slug: 'what-is-the-mass' }) }}">
+                        {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('caldera_criticalmass_static_display', { slug: 'faq' }) }}">
+                        {% trans %}criticalmass.navigation.criticalmass.faq{% endtrans %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('caldera_criticalmass_static_display', { slug: 'help' }) }}">
+                        {% trans %}criticalmass.navigation.criticalmass.help{% endtrans %}
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                <i class="fa fa-university"></i>
+                {% trans %}criticalmass.navigation.cities.cities{% endtrans %}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>
                     <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
                         {% trans %}criticalmass.navigation.cities.list{% endtrans %}
                     </a>
@@ -20,22 +45,6 @@
                 <li>
                     <a href="{{ path('caldera_criticalmass_calendar') }}">
                         {% trans %}criticalmass.navigation.cities.calendar{% endtrans %}
-                    </a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li>
-                    <a href="{{ path('caldera_criticalmass_static_display', { slug: 'what-is-the-mass' }) }}">
-                        Was ist die Critical Mass?
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('caldera_criticalmass_static_display', { slug: 'faq' }) }}">
-                        Häufig gestellte Fragen
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('caldera_criticalmass_static_display', { slug: 'help' }) }}">
-                        Bedienungshilfe
                     </a>
                 </li>
             </ul>
