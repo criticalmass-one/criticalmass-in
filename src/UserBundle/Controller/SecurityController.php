@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +67,7 @@ class SecurityController extends Controller
                 break;
         }
 
-        return $this->render('AppBundle:Security:' . $templateName, $data);
+        return $this->render('UserBundle:Security:' . $templateName, $data);
     }
 
     public function loginFormModalAction(Request $request): Response
