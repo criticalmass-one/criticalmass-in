@@ -2,6 +2,8 @@
 
 {% block title %}Registrierung{% endblock %}
 
+{% form_theme form '@App/Form/theme.html.twig' %}
+
 {% block breadcrumb %}
     <li class="active">
         Registrierung
@@ -30,6 +32,7 @@
 
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
+                    {{ form_errors(form.username) }}
                     <div class="form-group">
                         <label for="username" class="col-sm-4 control-label">Dein gewünschter Benutzername:</label>
                         <div class="col-sm-8">
@@ -41,6 +44,7 @@
 
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
+                    {{ form_errors(form.email) }}
                     <div class="form-group">
                         <label for="email" class="col-sm-4 control-label">Deine E-Mail-Adresse:</label>
                         <div class="col-sm-8">
@@ -52,6 +56,7 @@
 
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
+                    {{ form_errors(form.plainPassword) }}
                     <div class="form-group control-group">
                         <label for="password" class="col-sm-4 control-label">Dein Kennwort:</label>
                         <div class="col-sm-8">
