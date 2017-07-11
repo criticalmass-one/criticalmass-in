@@ -49,64 +49,42 @@ class CitySlug
      */
     protected $city;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function __construct()
+    {
+
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    /**
-     * Set city
-     *
-     * @param City $city
-     * @return CitySlug
-     */
-    public function setCity(City $city = null)
+    public function setCity(City $city = null): CitySlug
     {
         $this->city = $city;
 
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getSlug();
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return CitySlug
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug = null): CitySlug
     {
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSlug();
     }
 }

@@ -6,7 +6,6 @@
     <title>{% block title %}{% endblock %} — criticalmass.in</title>
 
     <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/external/leaflet/leaflet-0.7.7.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/external/leaflet/extramarkers.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/external/fontawesome/fa-4.6.3.css') }}" />
@@ -27,7 +26,7 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                {{ render(controller('AppBundle:Security:loginFormModal' )) }}
+                {{ render(controller('UserBundle:Security:loginFormModal' )) }}
             </div>
         </div>
     </div>

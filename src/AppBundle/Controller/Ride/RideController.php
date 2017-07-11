@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Weather;
@@ -9,6 +10,7 @@ use AppBundle\Traits\ViewStorageTrait;
 use AppBundle\Form\Type\RideEstimateType;
 use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
@@ -30,6 +32,22 @@ class RideController extends AbstractController
                 'rides' => $rides
             )
         );
+    }
+
+    public function showMonthAction(Request $request, string $citySlug, string $rideDate): Response
+    {
+        $city = $this->getCheckedCity($citySlug);
+        $dateTime = new \DateTime(sprintf('%s-01', $rideDate));
+
+        $rideList = $this->getRideRepository()->findByCityAndMonth($city, $dateTime);
+
+        if (count($rideList) !== 1) {
+            throw $this->createNotFoundException();
+        }
+
+        $ride = array_pop($rideList);
+
+        return $this->redirectToObject($ride);
     }
 
     public function showAction(Request $request, $citySlug, $rideDate)
@@ -81,6 +99,9 @@ class RideController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addestimateAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

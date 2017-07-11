@@ -4,6 +4,9 @@ namespace AppBundle\Gps\GpxReader\GpxCoordLoop;
 
 use AppBundle\Gps\GpxReader\GpxReader;
 
+/**
+ * @deprecated
+ */
 class GpxCoordLoop
 {
     /** @var GpxReader $gpxReader */

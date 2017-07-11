@@ -9,3 +9,5 @@ twig:
         timezone: Europe/Paris
         format: d.m.Y, H:i:s
         interval_format: '%%d days'
+    globals:
+        bikeright_visible: %bikeright.visible%

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
@@ -12,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RideManagementController extends AbstractController
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addAction(Request $request, $citySlug)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -107,6 +111,9 @@ class RideManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editAction(Request $request, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -188,6 +195,9 @@ class RideManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function facebookUpdateAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -213,7 +223,7 @@ class RideManagementController extends AbstractController
         );
 
         return $this->render(
-            'AppBundle:RideManagement:facebookUpdate.html.twig',
+            'AppBundle:RideManagement:facebook_update.html.twig',
             [
                 'city' => $ride->getCity(),
                 'ride' => $ride,

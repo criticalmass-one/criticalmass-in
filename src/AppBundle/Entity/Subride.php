@@ -145,58 +145,31 @@ class Subride implements ArchiveableInterface
         $this->setIsArchived(0);
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return SubRide
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): Subride
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return SubRide
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): Subride
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -205,353 +178,199 @@ class Subride implements ArchiveableInterface
      * @JMS\VirtualProperty
      * @JMS\SerializedName("timestamp")
      * @JMS\Type("integer")
-     * @return integer
      */
-    public function getTimestamp()
+    public function getTimestamp(): int
     {
         return $this->dateTime->format('U');
     }
 
-    /**
-     * Set dateTime
-     *
-     * @param \DateTime $dateTime
-     * @return SubRide
-     */
-    public function setDateTime($dateTime)
+    public function setDateTime(\DateTime $dateTime): Subride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    /**
-     * Get dateTime
-     *
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * Set location
-     *
-     * @param string $location
-     * @return SubRide
-     */
-    public function setLocation($location)
+    public function setLocation(string $location): Subride
     {
         $this->location = $location;
 
         return $this;
     }
 
-    /**
-     * Get location
-     *
-     * @return string
-     */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return SubRide
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude): Subride
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get latitude
-     *
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
 
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return SubRide
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude): Subride
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
         return $this->longitude;
     }
 
-    /**
-     * Set facebook
-     *
-     * @param string $facebook
-     * @return SubRide
-     */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook = null): Subride
     {
         $this->facebook = $facebook;
 
         return $this;
     }
 
-    /**
-     * Get facebook
-     *
-     * @return string
-     */
-    public function getFacebook()
+    public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     * @return SubRide
-     */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter = null): Subride
     {
         $this->twitter = $twitter;
 
         return $this;
     }
 
-    /**
-     * Get twitter
-     *
-     * @return string
-     */
-    public function getTwitter()
+    public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return SubRide
-     */
-    public function setUrl($url)
+    public function setUrl(string $url = null): Subride
     {
         $this->url = $url;
 
         return $this;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * Set ride
-     *
-     * @param Ride $ride
-     * @return SubRide
-     */
-    public function setRide(Ride $ride = null)
+   public function setRide(Ride $ride = null): Subride
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * Get ride
-     *
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * Set user
-     *
-     * @param User $user
-     * @return SubRide
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): Subride
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * Set creationDateTime
-     *
-     * @param \DateTime $creationDateTime
-     * @return SubRide
-     */
-    public function setCreationDateTime($creationDateTime)
+    public function setCreationDateTime(\DateTime $creationDateTime): Subride
     {
         $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
 
-    /**
-     * Get creationDateTime
-     *
-     * @return \DateTime
-     */
-    public function getCreationDateTime()
+    public function getCreationDateTime(): \DateTime
     {
         return $this->creationDateTime;
     }
 
-    public function getTime()
+    public function getTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    public function setTime(\DateTime $time)
+    /** @deprecated  */
+    public function setTime(\DateTime $time): Subride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
     }
 
-    /**
-     * Set isArchived
-     *
-     * @param boolean $isArchived
-     * @return SubRide
-     */
-    public function setIsArchived(bool $isArchived)
+    public function setIsArchived(bool $isArchived): ArchiveableInterface
     {
         $this->isArchived = $isArchived;
 
         return $this;
     }
 
-    /**
-     * Get isArchived
-     *
-     * @return boolean
-     */
-    public function getIsArchived()
+    public function getIsArchived(): bool
     {
         return $this->isArchived;
     }
 
-    /**
-     * Set archiveDateTime
-     *
-     * @param \DateTime $archiveDateTime
-     * @return SubRide
-     */
-    public function setArchiveDateTime(\DateTime $archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
     {
         $this->archiveDateTime = $archiveDateTime;
 
         return $this;
     }
 
-    /**
-     * Get archiveDateTime
-     *
-     * @return \DateTime
-     */
-    public function getArchiveDateTime()
+    public function getArchiveDateTime(): \DateTime
     {
         return $this->archiveDateTime;
     }
 
-    /**
-     * Set archiveParent
-     *
-     * @param Subride $archiveParent
-     * @return Subride
-     */
-    public function setArchiveParent(ArchiveableInterface $archiveParent)
+    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
     {
         $this->archiveParent = $archiveParent;
 
         return $this;
     }
 
-    /**
-     * Get archiveParent
-     *
-     * @return Subride
-     */
-    public function getArchiveParent()
+    public function getArchiveParent(): ArchiveableInterface
     {
         return $this->archiveParent;
     }
 
-    /**
-     * Set archiveUser
-     *
-     * @param User $archiveUser
-     * @return Subride
-     */
-    public function setArchiveUser(User $archiveUser)
+    public function setArchiveUser(User $archiveUser): ArchiveableInterface
     {
         $this->archiveUser = $archiveUser;
 
         return $this;
     }
 
-    /**
-     * Get archiveUser
-     *
-     * @return User
-     */
-    public function getArchiveUser()
+    public function getArchiveUser(): User
     {
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage($archiveMessage)
+    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
     {
         $this->archiveMessage = $archiveMessage;
 
         return $this;
     }
 
-    public function getArchiveMessage()
+    public function getArchiveMessage(): ?string
     {
         return $this->archiveMessage;
     }

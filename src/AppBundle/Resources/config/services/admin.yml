@@ -1,0 +1,60 @@
+services:
+    admin.bikeright_voucher:
+        class: AppBundle\Admin\BikerightVoucherAdmin
+        arguments: [~, AppBundle\Entity\BikerightVoucher, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Bikeright Voucher }
+
+    admin.board:
+        class: AppBundle\Admin\BoardAdmin
+        arguments: [~, AppBundle\Entity\Board, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Board }
+
+    admin.location:
+        class: AppBundle\Admin\LocationAdmin
+        arguments: [~, AppBundle\Entity\Location, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Location }
+
+    admin.photo:
+        class: AppBundle\Admin\PhotoAdmin
+        arguments: [~, AppBundle\Entity\Photo, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Photo }
+
+    admin.post:
+        class: AppBundle\Admin\PostAdmin
+        arguments: [~, AppBundle\Entity\Post, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Post }
+
+    admin.region:
+        class: AppBundle\Admin\RegionAdmin
+        arguments: [~, AppBundle\Entity\Region, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Region }
+
+    admin.ride_estimate:
+        class: AppBundle\Admin\RideEstimateAdmin
+        arguments: [~, AppBundle\Entity\RideEstimate, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: RideEstimate }
+
+    admin.thread:
+        class: AppBundle\Admin\ThreadAdmin
+        arguments: [~, AppBundle\Entity\Thread, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Thread }
+
+    admin.track:
+        class: AppBundle\Admin\TrackAdmin
+        arguments: [~, AppBundle\Entity\Track, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Track }
+
+    admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: User }

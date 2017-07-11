@@ -5,6 +5,9 @@ namespace AppBundle\Gps\LatLngListGenerator;
 use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxReader\TrackReader;
 
+/**
+ * @deprecated
+ */
 abstract class AbstractLatLngListGenerator
 {
     protected $list;

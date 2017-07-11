@@ -1,8 +1,15 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "calderacc/criticalmass",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Much critical mass stuff",
+    "authors": [
+        {
+            "name": "Malte Hübner",
+            "email": "malte@caldera.cc",
+            "homepage": "https://www.maltehuebner.de/",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-4": { "": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
@@ -27,7 +34,6 @@
         "jms/serializer-bundle": "^1.1",
         "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "knplabs/knp-markdown-bundle": "^1.5",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
@@ -42,7 +48,9 @@
         "sonata-project/intl-bundle": "^2.3",
         "nelmio/api-doc-bundle": "^2.13",
         "predis/predis": "^1.1",
-        "miljar/php-exif": "^0.6.3"
+        "miljar/php-exif": "^0.6.3",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "cebe/markdown": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

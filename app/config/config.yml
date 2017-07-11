@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-#    - { resource: assetic.yml }
+    - { resource: sonata.yml }
     - { resource: doctrine.yml }
     - { resource: fos.yml }
     - { resource: framework.yml }
@@ -16,6 +16,7 @@ imports:
     - { resource: elastic.yml }
     - { resource: translation.yml }
     - { resource: services.yml }
+    - { resource: "@UserBundle/Resources/config/services.xml" }
 
 hwi_oauth:
     # list of names of the firewalls in which this bundle is active, this setting MUST be set

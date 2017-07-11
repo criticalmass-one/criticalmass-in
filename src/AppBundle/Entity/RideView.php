@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
 use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,83 +14,69 @@ use Doctrine\ORM\Mapping as ORM;
 class RideView implements ViewInterface
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="ride_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="ride_views")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
+
     /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): ViewInterface
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * @param \DateTime $dateTime
-     */
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(\DateTime $dateTime): ViewInterface
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getRide()
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
 
-    public function setRide(Ride $ride)
+    public function setRide(Ride $ride): RideView
     {
         $this->ride = $ride;
 

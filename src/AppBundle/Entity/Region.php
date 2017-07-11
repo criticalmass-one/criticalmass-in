@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="region")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
  */
@@ -49,119 +48,65 @@ class Region
      */
     protected $cities;
 
-    public function __toString()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Region
-     */
-    public function setName($name)
+    public function setName(string $name): Region
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Region
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): Region
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Region
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug): Region
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    /**
-     * Get parent
-     *
-     * @return Region
-     */
-    public function getParent()
+    public function getParent(): ?Region
     {
         return $this->parent;
     }
 
-    /**
-     * Set parent
-     *
-     * @param Region $region
-     * @return Region
-     */
-    public function setParent(Region $parent = null)
+    public function setParent(Region $parent = null): Region
     {
         $this->parent = $parent;
 
         return $this;
     }
 
-    public function isWorld()
+    public function isWorld(): bool
     {
         return $this->id == 1;
     }
 
-    public function isLevel($levelNumber)
+    public function isLevel(int $levelNumber): bool
     {
         if ($levelNumber == 0 && $this->parent == null) {
             return $this->id == 1;
@@ -174,6 +119,11 @@ class Region
         }
 
         return false;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
 }

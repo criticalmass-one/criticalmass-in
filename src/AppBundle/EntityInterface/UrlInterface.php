@@ -4,7 +4,7 @@ namespace AppBundle\EntityInterface;
 
 interface UrlInterface
 {
-    public function setUrl($url);
+    public function setUrl(string $url = null): UrlInterface;
 
-    public function getUrl();
+    public function getUrl(): ?string;
 }

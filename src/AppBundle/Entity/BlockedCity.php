@@ -11,8 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class BlockedCity
 {
     /**
-     * Numerische ID der Stadt.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -65,228 +63,115 @@ class BlockedCity
      */
     protected $rideListLink;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set blockStart
-     *
-     * @param \DateTime $blockStart
-     *
-     * @return BlockedCity
-     */
-    public function setBlockStart($blockStart)
+    public function setBlockStart(\DateTime $blockStart): BlockedCity
     {
         $this->blockStart = $blockStart;
 
         return $this;
     }
 
-    /**
-     * Get blockStart
-     *
-     * @return \DateTime
-     */
-    public function getBlockStart()
+    public function getBlockStart(): ?\DateTime
     {
         return $this->blockStart;
     }
 
-    /**
-     * Set blockEnd
-     *
-     * @param \DateTime $blockEnd
-     *
-     * @return BlockedCity
-     */
-    public function setBlockEnd($blockEnd)
+    public function setBlockEnd(\DateTime $blockEnd): BlockedCity
     {
         $this->blockEnd = $blockEnd;
 
         return $this;
     }
 
-    /**
-     * Get blockEnd
-     *
-     * @return \DateTime
-     */
-    public function getBlockEnd()
+    public function getBlockEnd(): ?\DateTime
     {
         return $this->blockEnd;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return BlockedCity
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): BlockedCity
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return BlockedCity
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): BlockedCity
     {
         $this->url = $url;
 
         return $this;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * Set facebook
-     *
-     * @param string $facebook
-     *
-     * @return BlockedCity
-     */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook): BlockedCity
     {
         $this->facebook = $facebook;
 
         return $this;
     }
 
-    /**
-     * Get facebook
-     *
-     * @return string
-     */
-    public function getFacebook()
+    public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     *
-     * @return BlockedCity
-     */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter): BlockedCity
     {
         $this->twitter = $twitter;
 
         return $this;
     }
 
-    /**
-     * Get twitter
-     *
-     * @return string
-     */
-    public function getTwitter()
+    public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
-    /**
-     * Set photosLink
-     *
-     * @param boolean $photosLink
-     *
-     * @return BlockedCity
-     */
-    public function setPhotosLink($photosLink)
+    public function setPhotosLink(bool $photosLink): BlockedCity
     {
         $this->photosLink = $photosLink;
 
         return $this;
     }
 
-    /**
-     * Get photosLink
-     *
-     * @return boolean
-     */
-    public function getPhotosLink()
+    public function getPhotosLink(): bool
     {
         return $this->photosLink;
     }
 
-    /**
-     * Set rideListLink
-     *
-     * @param boolean $rideListLink
-     *
-     * @return BlockedCity
-     */
-    public function setRideListLink($rideListLink)
+    public function setRideListLink(bool $rideListLink): BlockedCity
     {
         $this->rideListLink = $rideListLink;
 
         return $this;
     }
 
-    /**
-     * Get rideListLink
-     *
-     * @return boolean
-     */
-    public function getRideListLink()
+    public function getRideListLink(): bool
     {
         return $this->rideListLink;
     }
 
-    /**
-     * Set city
-     *
-     * @param \AppBundle\Entity\City $city
-     *
-     * @return BlockedCity
-     */
-    public function setCity(\AppBundle\Entity\City $city = null)
+    public function setCity(City $city = null): BlockedCity
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return \AppBundle\Entity\City
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }

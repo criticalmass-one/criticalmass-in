@@ -66,152 +66,123 @@ class Board implements BoardInterface
         $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Post
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): BoardInterface
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Board
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): Board
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return Post
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): Board
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * Get enabled
-     *
-     * @return boolean
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    public function setLastThread(Thread $lastThread)
+    public function setLastThread(Thread $lastThread): BoardInterface
     {
         $this->lastThread = $lastThread;
 
         return $this;
     }
 
-    public function getLastThread()
+    public function getLastThread(): ?Thread
     {
         return $this->lastThread;
     }
 
-    public function setPostNumber($postNumber)
+    public function setPostNumber(int $postNumber): BoardInterface
     {
         $this->postNumber = $postNumber;
 
         return $this;
     }
 
-    public function getPostNumber()
+    public function getPostNumber(): int
     {
         return $this->postNumber;
     }
 
-    public function incPostNumber()
+    public function incPostNumber(): BoardInterface
     {
         ++$this->postNumber;
+
+        return $this;
     }
 
-    public function setThreadNumber($threadNumber)
+    public function setThreadNumber(int $threadNumber): BoardInterface
     {
         $this->threadNumber = $threadNumber;
 
         return $this;
     }
 
-    public function getThreadNumber()
+    public function getThreadNumber(): int
     {
         return $this->threadNumber;
     }
 
-    public function incThreadNumber()
+    public function incThreadNumber(): BoardInterface
     {
         ++$this->threadNumber;
+
+        return $this;
     }
 
-    public function setPosition($position)
+    public function setPosition(int $position): Board
     {
         $this->position = $position;
 
         return $this;
     }
 
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function setSlug($slug)
+    public function setSlug(string $slug): Board
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

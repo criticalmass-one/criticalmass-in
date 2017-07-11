@@ -181,322 +181,185 @@ class Track
     public function __construct()
     {
         $this->setCreationDateTime(new \DateTime());
-
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return Track
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): Track
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * Set ride
-     *
-     * @param Ride $ride
-     * @return Track
-     */
-    public function setRide(Ride $ride = null)
+    public function setRide(Ride $ride = null): Track
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * Get ride
-     *
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
 
-    /**
-     * Set user
-     *
-     * @param User $user
-     * @return Track
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): Track
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * Set creationDateTime
-     *
-     * @param \DateTime $creationDateTime
-     * @return Track
-     */
-    public function setCreationDateTime($creationDateTime)
+    public function setCreationDateTime(\DateTime $creationDateTime): Track
     {
         $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
 
-    /**
-     * Get creationDateTime
-     *
-     * @return \DateTime
-     */
-    public function getCreationDateTime()
+    public function getCreationDateTime(): \DateTime
     {
         return $this->creationDateTime;
     }
 
-    /**
-     * Set md5Hash
-     *
-     * @param string $md5Hash
-     * @return Track
-     */
-    public function setMd5Hash($md5Hash)
+    public function setMd5Hash(string $md5Hash): Track
     {
         $this->md5Hash = $md5Hash;
 
         return $this;
     }
 
-    /**
-     * Get md5Hash
-     *
-     * @return string
-     */
-    public function getMd5Hash()
+    public function getMd5Hash(): ?string
     {
         return $this->md5Hash;
     }
 
-    /**
-     * Set startDateTime
-     *
-     * @param \DateTime $startDateTime
-     * @return Track
-     */
-    public function setStartDateTime($startDateTime)
+    public function setStartDateTime(\DateTime $startDateTime): Track
     {
         $this->startDateTime = $startDateTime;
 
         return $this;
     }
 
-    /**
-     * Get startDateTime
-     *
-     * @return \DateTime
-     */
-    public function getStartDateTime()
+    public function getStartDateTime(): ?\DateTime
     {
         if ($this->startDateTime) {
             return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
         }
+
+        return null;
     }
 
-    /**
-     * Set endDateTime
-     *
-     * @param \DateTime $endDateTime
-     * @return Track
-     */
-    public function setEndDateTime($endDateTime)
+    public function setEndDateTime(\DateTime $endDateTime): Track
     {
         $this->endDateTime = $endDateTime;
 
         return $this;
     }
 
-    /**
-     * Get endDateTime
-     *
-     * @return \DateTime
-     */
-    public function getEndDateTime()
+    public function getEndDateTime(): ?\DateTime
     {
         if ($this->endDateTime) {
             return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
         }
+
+        return null;
     }
 
-    /**
-     * Set distance
-     *
-     * @param float $distance
-     * @return Track
-     */
-    public function setDistance($distance)
+    public function setDistance(float $distance): Track
     {
         $this->distance = $distance;
 
         return $this;
     }
 
-    /**
-     * Get distance
-     *
-     * @return float
-     */
-    public function getDistance()
+    public function getDistance(): float
     {
         return $this->distance;
     }
 
-    /**
-     * Set points
-     *
-     * @param integer $points
-     * @return Track
-     */
-    public function setPoints($points)
+    public function setPoints(int $points): Track
     {
         $this->points = $points;
 
         return $this;
     }
 
-    /**
-     * Get points
-     *
-     * @return integer
-     */
-    public function getPoints()
+    public function getPoints(): int
     {
         return $this->points;
     }
 
-    /**
-     * @return bool
-     */
     public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     * @return Track $this
-     */
-    public function setEnabled($enabled): Track
+    public function setEnabled(bool $enabled): Track
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getDeleted(): bool
     {
         return $this->deleted;
     }
 
-    /**
-     * @param bool $deleted
-     * @return Track $this
-     */
-    public function setDeleted($deleted): Track
+    public function setDeleted(bool $deleted): Track
     {
         $this->deleted = $deleted;
 
         return $this;
     }
 
-    /**
-     * Set rideEstimate
-     *
-     * @param RideEstimate $rideEstimate
-     * @return Track
-     */
-    public function setRideEstimate(RideEstimate $rideEstimate = null)
+    public function setRideEstimate(RideEstimate $rideEstimate = null): Track
     {
         $this->rideEstimate = $rideEstimate;
 
         return $this;
     }
 
-    /**
-     * Get rideEstimate
-     *
-     * @return RideEstimate
-     */
-    public function getRideEstimate()
+    public function getRideEstimate(): ?RideEstimate
     {
         return $this->rideEstimate;
     }
 
-    /**
-     * Set latLngList
-     *
-     * @param string $latLngList
-     * @return Track
-     */
-    public function setLatLngList($latLngList)
+    public function setLatLngList(string $latLngList): Track
     {
         $this->latLngList = $latLngList;
 
         return $this;
     }
 
-    /**
-     * Get latLngList
-     *
-     * @return array
-     */
-    public function getLatLngList()
+    public function getLatLngList(): string
     {
         return $this->latLngList;
     }
 
-    public function setPolyline($polyline)
+    public function setPolyline(string $polyline): Track
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    public function getPolyline()
+    public function getPolyline(): ?string
     {
         return $this->polyline;
     }
@@ -506,7 +369,7 @@ class Track
      * @JMS\VirtualProperty
      * @JMS\SerializedName("colorRed")
      */
-    public function getColorRed()
+    public function getColorRed(): ?int
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorRed();
@@ -524,7 +387,7 @@ class Track
      * @JMS\VirtualProperty
      * @JMS\SerializedName("colorGreen")
      */
-    public function getColorGreen()
+    public function getColorGreen(): ?int
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorGreen();
@@ -542,7 +405,7 @@ class Track
      * @JMS\VirtualProperty
      * @JMS\SerializedName("colorBlue")
      */
-    public function getColorBlue()
+    public function getColorBlue(): ?int
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorBlue();
@@ -555,7 +418,7 @@ class Track
         return null;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $result = $this->getUsername() . '(';
 
@@ -572,57 +435,35 @@ class Track
         return $result;
     }
 
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $track
-     */
-    public function setTrackFile(File $track = null)
+    public function setTrackFile(File $track = null): Track
     {
         $this->trackFile = $track;
 
         if ($track) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTime('now');
         }
+
+        return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getTrackFile()
+    public function getTrackFile(): ?File
     {
         return $this->trackFile;
     }
 
-    /**
-     * @param string $trackFilename
-     */
-    public function setTrackFilename($trackFilename)
+    public function setTrackFilename(string $trackFilename = null): Track
     {
         $this->trackFilename = $trackFilename;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTrackFilename()
+    public function getTrackFilename(): ?string
     {
         return $this->trackFilename;
     }
 
-    /**
-     * Set startPoint
-     *
-     * @param integer $startPoint
-     * @return Track
-     */
-    public function setStartPoint($startPoint)
+    public function setStartPoint(int $startPoint): Track
     {
         if ($startPoint >= 1) {
             $this->startPoint = $startPoint;
@@ -633,23 +474,12 @@ class Track
         return $this;
     }
 
-    /**
-     * Get startPoint
-     *
-     * @return integer
-     */
-    public function getStartPoint()
+    public function getStartPoint(): int
     {
         return $this->startPoint;
     }
 
-    /**
-     * Set endPoint
-     *
-     * @param integer $endPoint
-     * @return Track
-     */
-    public function setEndPoint($endPoint)
+    public function setEndPoint(int $endPoint): Track
     {
         if ($endPoint <= $this->points) {
             $this->endPoint = $endPoint;
@@ -660,40 +490,24 @@ class Track
         return $this;
     }
 
-    /**
-     * Get endPoint
-     *
-     * @return integer
-     */
-    public function getEndPoint()
+    public function getEndPoint(): int
     {
         return $this->endPoint;
     }
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Track
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt): Track
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function getDurationInterval()
+    public function getDurationInterval(): ?\DateInterval
     {
         if ($this->startDateTime && $this->endDateTime) {
             return $this->getEndDateTime()->diff($this->getStartDateTime());
@@ -702,7 +516,7 @@ class Track
         return null;
     }
 
-    public function getDurationInSeconds()
+    public function getDurationInSeconds(): int
     {
         if ($this->startDateTime && $this->endDateTime) {
             return $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
@@ -711,7 +525,7 @@ class Track
         return 0;
     }
 
-    public function getAverageVelocity()
+    public function getAverageVelocity(): ?float
     {
         if ($this->startDateTime && $this->endDateTime && $this->distance) {
             $kilometres = $this->getDistance();
@@ -727,46 +541,52 @@ class Track
         return null;
     }
 
-    public function getStartTime()
+    public function getStartTime(): \DateTime
     {
         return $this->startDateTime;
     }
 
-    public function setStartTime(\DateTime $time)
+    public function setStartTime(\DateTime $time): Track
     {
         $this->startDateTime = new \DateTime($this->startDateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+
+        return $this;
     }
 
-    public function getStartDate()
+    public function getStartDate(): \DateTime
     {
         return $this->startDateTime;
     }
 
-    public function setStartDate(\DateTime $date)
+    public function setStartDate(\DateTime $date): Track
     {
         $newDate = new \DateTime($this->startDateTime->format('Y-m-d') . ' 00:00:00');
 
         $this->startDateTime = $newDate->add($newDate->diff($date));
+
+        return $this;
     }
 
-    public function setSource(string $source)
+    public function setSource(string $source): Track
     {
         $this->source = $source;
 
         return $this;
     }
 
-    public function getSource()
+    public function getSource(): ?string
     {
         return $this->source;
     }
 
-    public function setStravaActivityId(int $stravaActivityId)
+    public function setStravaActivityId(int $stravaActivityId): Track
     {
         $this->stravaActitityId = $stravaActivityId;
+
+        return $this;
     }
 
-    public function getStravaActivityId()
+    public function getStravaActivityId(): ?int
     {
         return $this->stravaActitityId;
     }

@@ -7,6 +7,9 @@ use AppBundle\Manager\AbstractManager;
 use AppBundle\Manager\ContentManager\Exception\ContentNotFoundException;
 use AppBundle\Repository\ContentRepository;
 
+/**
+ * @deprecated
+ */
 class ContentManager extends AbstractManager
 {
     /** @var ContentRepository $contentRepository */

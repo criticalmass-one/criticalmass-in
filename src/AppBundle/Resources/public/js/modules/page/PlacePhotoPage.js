@@ -1,14 +1,26 @@
-define(['Map', 'TrackEntity', 'SnapablePhotoMarker'], function () {
+define(['CriticalService', 'Map', 'RideEntity', 'TrackEntity', 'PhotoEntity', 'RideEntity', 'CityEntity', 'SnapablePhotoMarker'], function (CriticalService) {
     PlacePhotoPage = function (context, options) {
+        this._CriticalService = CriticalService;
+
         this._options = options;
 
         this._initMap();
     };
 
+    PlacePhotoPage.prototype._CriticalService = null;
+    PlacePhotoPage.prototype._photo = null;
     PlacePhotoPage.prototype._track = null;
+    PlacePhotoPage.prototype._ride = null;
 
     PlacePhotoPage.prototype.init = function () {
-        this._initMarker();
+        var latLng = this._photo.getLatLng();
+
+        if (!latLng) {
+            latLng = this._ride.getLatLng();
+        }
+
+        this._initMarker(latLng);
+
         this._initMarkerEvent();
     };
 
@@ -34,21 +46,29 @@ define(['Map', 'TrackEntity', 'SnapablePhotoMarker'], function () {
         this._map.setView([coord.latitude, coord.longitude], 13);
     };
 
-    PlacePhotoPage.prototype._initMarker = function () {
-        var coord = this._options.photoCoord;
-
-        this._marker = new SnapablePhotoMarker([coord.latitude, coord.longitude]);
+    PlacePhotoPage.prototype._initMarker = function (latLng) {
+        this._marker = new SnapablePhotoMarker(latLng);
 
         this._marker.addToMap(this._map);
         this._marker.snapToTrack(this._track);
     };
 
-    PlacePhotoPage.prototype.setTrack = function (polylineLatLngs, colorRed, colorGreen, colorBlue) {
-        this._track = new TrackEntity();
-        this._track.setPolyline(polylineLatLngs, colorRed, colorGreen, colorBlue);
+    PlacePhotoPage.prototype.addTrack = function (trackJson) {
+        this._track = this._CriticalService.factory.createTrack(trackJson);
+
         this._track.addToMap(this._map);
 
         this._map.fitBounds(this._track.getBounds());
+    };
+
+    PlacePhotoPage.prototype.setPhoto = function (photoJson, filename) {
+        this._photo = this._CriticalService.factory.createPhoto(photoJson);
+
+        this._photo.setFilename(filename);
+    };
+
+    PlacePhotoPage.prototype.addRide = function (rideJson) {
+        this._ride = this._CriticalService.factory.createRide(rideJson);
     };
 
     return PlacePhotoPage;

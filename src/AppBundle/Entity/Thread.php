@@ -51,6 +51,7 @@ class Thread implements ViewableInterface
      * @ORM\Column(type="integer")
      */
     protected $postNumber = 0;
+
     /**
      * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
@@ -70,187 +71,137 @@ class Thread implements ViewableInterface
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set dateTime
-     *
-     * @param \DateTime $dateTime
-     * @return Post
-     */
-    public function setDateTime($dateTime)
-    {
-        $this->dateTime = $dateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get dateTime
-     *
-     * @return \DateTime
-     */
-    public function getDateTime()
-    {
-        return $this->dateTime;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Post
-     */
-    public function setTitle($title)
+    public function setTitle(string $title = null): Thread
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return Post
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): Thread
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * Get enabled
-     *
-     * @return boolean
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * Set city
-     *
-     * @param City $city
-     * @return Thread
-     */
-    public function setCity(City $city = null)
+    public function setCity(City $city = null): Thread
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return Ride
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    public function setBoard(Board $board = null)
+    public function setBoard(Board $board = null): Thread
     {
         $this->board = $board;
+
         return $this;
     }
 
-    public function getBoard()
+    public function getBoard(): ?Board
     {
         return $this->board;
     }
 
-    public function setFirstPost(Post $firstPost)
+    public function setFirstPost(Post $firstPost = null): Thread
     {
         $this->firstPost = $firstPost;
 
         return $this;
     }
 
-    public function getFirstPost()
+    public function getFirstPost(): ?Post
     {
         return $this->firstPost;
     }
 
-    public function setLastPost(Post $lastPost)
+    public function setLastPost(Post $lastPost = null): Thread
     {
         $this->lastPost = $lastPost;
 
         return $this;
     }
 
-    public function getLastPost()
+    public function getLastPost(): ?Post
     {
         return $this->lastPost;
     }
 
-    public function setViews($views)
+    public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
+
+        return $this;
     }
 
-    public function getViews()
+    public function getViews(): int
     {
         return $this->views;
     }
 
-    public function incViews()
+    public function incViews(): ViewableInterface
     {
         ++$this->views;
+
+        return $this;
     }
 
-    public function setPostNumber($postNumber)
+    public function setPostNumber(int $postNumber): Thread
     {
         $this->postNumber = $postNumber;
 
         return $this;
     }
 
-    public function getPostNumber()
+    public function getPostNumber(): int
     {
         return $this->postNumber;
     }
 
-    public function incPostNumber()
+    public function incPostNumber(): Thread
     {
         ++$this->postNumber;
+
+        return $this;
     }
 
-    public function setSlug($slug)
+    public function setSlug(string $slug): Thread
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

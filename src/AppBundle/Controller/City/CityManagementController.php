@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\City;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\City;
 use AppBundle\Entity\CitySlug;
@@ -13,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CityManagementController extends AbstractController
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addAction(Request $request, $slug1, $slug2, $slug3)
     {
         /**
@@ -120,6 +124,9 @@ class CityManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function editAction(Request $request, $citySlug)
     {
         $city = $this->getCityBySlug($citySlug);
@@ -191,6 +198,9 @@ class CityManagementController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function createCityFlowAction(Request $request, $slug1, $slug2, $slug3)
     {
         if ($this->container->has('profiler')) {

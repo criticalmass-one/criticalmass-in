@@ -5,6 +5,7 @@ namespace AppBundle\Twig\Extension;
 use AppBundle\Entity\User;
 use AppBundle\HtmlMetadata\Metadata;
 use AppBundle\Parser\ParserInterface;
+use cebe\markdown\Parser;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -13,26 +14,25 @@ class SiteTwigExtension extends \Twig_Extension
     /** @var TranslatorInterface $translator */
     protected $translator;
 
-    /** @var ParserInterface $parser */
-    protected $parser;
-
     /** @var Metadata $metadata */
     protected $metadata;
 
     /** @var RouterInterface $router */
     protected $router;
 
+    protected $markdownParser;
+
     public function __construct(
         TranslatorInterface $translator,
-        ParserInterface $parser,
         Metadata $metadata,
-        RouterInterface $router
+        RouterInterface $router,
+        Parser $markdownParser
     )
     {
         $this->translator = $translator;
-        $this->parser = $parser;
         $this->metadata = $metadata;
         $this->router = $router;
+        $this->markdownParser = $markdownParser;
     }
 
     public function getFilters()
@@ -41,7 +41,7 @@ class SiteTwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
-            new \Twig_SimpleFilter('parse', [$this, 'parse'], array(
+            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], array(
                 'is_safe' => array('html')
             ))
         ];
@@ -73,14 +73,8 @@ class SiteTwigExtension extends \Twig_Extension
             )),
             new \Twig_SimpleFunction('today', [$this, 'today'], array(
                 'is_safe' => array('html')
-            ))
-        ];
-    }
-
-    public function getTests()
-    {
-        return [
-            'instanceof' => new \Twig_SimpleFunction('isInstanceof', [$this, 'isInstanceof']),
+            )),
+            'instanceof' => new \Twig_SimpleFunction('instanceof', [$this, 'instanceof']),
             'today' => new \Twig_SimpleFunction('today', [$this, 'today'])
         ];
     }
@@ -111,7 +105,7 @@ class SiteTwigExtension extends \Twig_Extension
         return $diffDays;
     }
 
-    public function isInstanceof($var, $instance)
+    public function instanceof($var, $instance)
     {
         return $var instanceof $instance;
     }
@@ -182,9 +176,9 @@ class SiteTwigExtension extends \Twig_Extension
         return $string;
     }
 
-    public function parse(string $text): string
+    public function markdown(string $text): string
     {
-        return $this->parser->parse($text);
+        return $this->markdownParser->parse($text);
     }
 
     public function getName()

@@ -2,28 +2,27 @@
 
 namespace AppBundle\EntityInterface;
 
-
 use AppBundle\Entity\Thread;
 
 interface BoardInterface
 {
-    public function getTitle();
+    public function getTitle(): ?string;
 
-    public function setTitle($title);
+    public function setTitle(string $title): BoardInterface;
 
-    public function getThreadNumber();
+    public function getThreadNumber(): ?int;
 
-    public function setThreadNumber($threadNumber);
+    public function setThreadNumber(int $threadNumber): BoardInterface;
 
-    public function incThreadNumber();
+    public function incThreadNumber(): BoardInterface;
 
     public function getPostNumber();
 
-    public function setPostNumber($postNumber);
+    public function setPostNumber(int $postNumber): BoardInterface;
 
-    public function incPostNumber();
+    public function incPostNumber(): BoardInterface;
 
-    public function getLastThread();
+    public function getLastThread(): ?Thread;
 
-    public function setLastThread(Thread $thread);
+    public function setLastThread(Thread $thread): BoardInterface;
 }

@@ -20,7 +20,7 @@
                 </h4>
 
                 <time>{{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr</time>
-                {{ post.message|parse }}
+                {{ post.message|markdown }}
             </div>
         </div>
     </div>

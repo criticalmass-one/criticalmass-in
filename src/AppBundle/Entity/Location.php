@@ -17,7 +17,7 @@ class Location
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
@@ -50,155 +50,84 @@ class Location
      */
     protected $description;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return Location
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude = null): Location
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get latitude
-     *
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return Location
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude = null): Location
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Location
-     */
-    public function setDescription($description)
+    public function setDescription(string $description = null): Location
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set city
-     *
-     * @param \AppBundle\Entity\City $city
-     * @return Location
-     */
-    public function setCity(\AppBundle\Entity\City $city = null)
+    public function setCity(City $city = null): Location
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return \AppBundle\Entity\City
-     */
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Location
-     */
-    public function setTitle($title)
+    public function setTitle($title = null): Location
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Location
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug = null): Location
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    public function hasCoordinates()
+    public function hasCoordinates(): bool
     {
         return ($this->latitude && $this->longitude);
     }

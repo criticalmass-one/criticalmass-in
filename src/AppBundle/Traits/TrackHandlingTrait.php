@@ -86,7 +86,7 @@ trait TrackHandlingTrait
     protected function updateTrackProperties(Track $track)
     {
         /**
-         * @var TrackReader $gr
+         * @var TrackReader $tr
          */
         $tr = $this->get('caldera.criticalmass.gps.trackreader');
         $tr->loadTrack($track);
