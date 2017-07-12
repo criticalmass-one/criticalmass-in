@@ -43,10 +43,7 @@
                     <div class="panel-body">
                         <div class="row margin-bottom-medium">
                             <div class="col-md-12">
-                                <div id="map-{{ track.id }}" class="preview-map" style="height: 150px;"
-                                     data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
-                                     data-lock-map="true" data-polyline="{{ track.polyline }}">
-                                </div>
+                                <img class="img-responsive" src="{{ mapUrl(track) }}" />
                             </div>
                         </div>
 
