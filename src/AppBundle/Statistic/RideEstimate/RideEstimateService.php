@@ -5,7 +5,7 @@ namespace AppBundle\Statistic\RideEstimate;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Track;
-use AppBundle\Gps\GpxReader\GpxReader;
+use Caldera\GeoBundle\GpxReader\GpxReader;
 use Doctrine\ORM\EntityManager;
 
 class RideEstimateService

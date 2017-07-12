@@ -29,34 +29,6 @@ services:
         arguments:
             - '@router.default'
 
-    caldera.criticalmass.gps.gpxexporter:
-        class: AppBundle\Gps\GpxExporter\GpxExporter
-        arguments: [ '@doctrine.orm.entity_manager', '@doctrine' ]
-
-    caldera.criticalmass.gps.gpxreader:
-        class: AppBundle\Gps\GpxReader\GpxReader
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
-
-    caldera.criticalmass.gps.trackreader:
-        class: AppBundle\Gps\GpxReader\TrackReader
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
-
-    caldera.criticalmass.gps.latlnglistgenerator.simple:
-        class: AppBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
-        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
-
-    caldera.criticalmass.gps.latlnglistgenerator.range:
-        class: AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
-        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
-
-    caldera.criticalmass.gps.latlnglistgenerator.time:
-        class: AppBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
-        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
-
-    caldera.criticalmass.gps.polyline.track:
-        class: AppBundle\Gps\TrackPolyline\TrackPolyline
-        arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
-
     caldera.criticalmass.uploadvalidator.track:
         class: AppBundle\UploadValidator\TrackValidator
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
@@ -67,19 +39,19 @@ services:
 
     caldera.criticalmass.statistic.rideestimate:
         class: AppBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.geobundle.reader.track' ]
 
     caldera.criticalmass.statistic.rideestimate.track:
         class: AppBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.geobundle.reader.track' ]
 
     caldera.criticalmass.statistic.rideestimate.gpx:
         class: AppBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.gpxreader' ]
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.geobundle.reader.gpx' ]
 
     caldera.criticalmass.image.photogps:
         class: AppBundle\Image\PhotoGps\PhotoGps
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.geobundle.reader.track' ]
 
     caldera.criticalmass.image.exifreader.gps:
         class: AppBundle\Image\ExifReader\GpsExifReader
@@ -96,14 +68,6 @@ services:
     caldera.criticalmass.board.builder.boardbuilder:
         class: AppBundle\Board\Builder\BoardBuilder
         arguments: [ '@doctrine' ]
-
-    caldera.criticalmass.gps.distancecalculator.track:
-        class: AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator
-        arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
-
-    caldera.criticalmass.gps.timeshift.track:
-        class: AppBundle\Gps\TrackTimeShift\TrackTimeShift
-        arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader', '@caldera.criticalmass.gps.gpxexporter' ]
 
     fos_user.doctrine_registry:
         alias: doctrine

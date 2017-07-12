@@ -7,6 +7,8 @@ use AppBundle\Entity\Track;
 use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\GeoBundle\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\GeoBundle\GpxReader\TrackReader;
+use Caldera\GeoBundle\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\GeoBundle\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\GeoBundle\PolylineGenerator\PolylineGenerator;
 
 trait TrackHandlingTrait
@@ -58,7 +60,7 @@ trait TrackHandlingTrait
         /**
          * @var SimpleLatLngListGenerator $generator
          */
-        $generator = $this->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
+        $generator = $this->get('caldera.geobundle.latlnglist_generator.simple');
         $list = $generator
             ->loadTrack($track)
             ->execute()
@@ -76,7 +78,7 @@ trait TrackHandlingTrait
         /**
          * @var RangeLatLngListGenerator $llag
          */
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+        $llag = $this->container->get('caldera.geobundle.latlnglist_generator.range');
         $llag->loadTrack($track);
         $llag->execute();
         $track->setLatLngList($llag->getList());
