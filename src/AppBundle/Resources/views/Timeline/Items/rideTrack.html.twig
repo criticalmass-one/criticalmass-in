@@ -5,14 +5,7 @@
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-        <div id="map-{{ item.uniqId }}"
-             data-polyline="{{ item.polyline }}"
-             data-polyline-color="{{ item.polylineColor }}"
-             data-lock-map="true"
-             data-map-marker-clickable="false"
-             style="height: 150px;">
-
-        </div>
+        <img class="img-responsive" src="{{ mapUrl(track) }}" />
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
@@ -74,7 +67,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-</script>
