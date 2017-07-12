@@ -46,3 +46,7 @@ hwi_oauth:
             client_secret:       %runkeeper.secret%
 
 nelmio_api_doc: ~
+
+caldera_geo:
+    track_class: AppBundle\Entity\Track
+    position_class: AppBundle\Entity\Track
