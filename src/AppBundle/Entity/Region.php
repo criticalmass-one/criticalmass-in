@@ -2,13 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="region")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
  */
-class Region
+class Region implements RouteableInterface
 {
     /**
      * @ORM\Id

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -16,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo implements ViewableInterface, PhotoInterface
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
 {
     /**
      * @ORM\Id

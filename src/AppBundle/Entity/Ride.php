@@ -6,6 +6,7 @@ use AppBundle\EntityInterface\ArchiveableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\ParticipateableInterface;
 use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
 {
     /**
      * @ORM\Id

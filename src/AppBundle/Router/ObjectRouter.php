@@ -13,6 +13,7 @@ use AppBundle\Entity\Region;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Thread;
 use AppBundle\Entity\Track;
+use AppBundle\EntityInterface\RouteableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -26,7 +27,7 @@ class ObjectRouter
         $this->router = $router;
     }
 
-    public function generate($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generate(RouteableInterface $object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         if ($object instanceof Ride) {
             return $this->generateRideUrl($object, $referenceType);
@@ -94,7 +95,7 @@ class ObjectRouter
             'citySlug' => $photo->getCity()->getMainSlugString(),
             'photoId' => $photo->getId()
         ];
-        
+
         $parameters['rideDate'] = $photo->getRide()->getFormattedDate();
 
         return $this->router->generate($route, $parameters, $referenceType);
