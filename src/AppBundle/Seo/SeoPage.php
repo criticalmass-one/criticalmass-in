@@ -13,4 +13,24 @@ class SeoPage
     {
         $this->sonataSeoPage = $sonataSeoPage;
     }
+
+    public function setTitle(string $title): SeoPage
+    {
+        $this->sonataSeoPage
+            ->setTitle($title)
+            ->addMeta('property', 'og:title', $title)
+        ;
+
+        return $this;
+    }
+
+    public function setDescription(string $description): SeoPage
+    {
+        $this->sonataSeoPage
+            ->addMeta('name', 'description',$description)
+            ->addMeta('property', 'og:description', $description)
+        ;
+
+        return $this;
+    }
 }
