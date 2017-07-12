@@ -29,39 +29,12 @@ class ObjectRouter
 
     public function generate(RouteableInterface $object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        if ($object instanceof Ride) {
-            return $this->generateRideUrl($object, $referenceType);
-        }
+        $classNameParts = explode('\\', get_class($object));
+        $className = array_pop($classNameParts);
 
-        if ($object instanceof City) {
-            return $this->generateCityUrl($object, $referenceType);
-        }
+        $methodName = sprintf('generate%sUrl', $className);
 
-        if ($object instanceof Photo) {
-            return $this->generatePhotoUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Board) {
-            return $this->generateBoardUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Thread) {
-            return $this->generateThreadUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Location) {
-            return $this->generateLocationUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Track) {
-            return $this->generateTrackUrl($object, $referenceType);
-        }
-
-        if ($object instanceof Region) {
-            return $this->generateRegionUrl($object, $referenceType);
-        }
-
-        return $this->router->generate($object, [], $referenceType);
+        return $this->$methodName($object, $referenceType);
     }
 
     protected function generateRideUrl(Ride $ride, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
