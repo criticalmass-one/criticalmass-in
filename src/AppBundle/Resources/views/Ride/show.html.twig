@@ -20,14 +20,6 @@
 
 {% block additionalHeaderElements %}
     <meta property="og:url" content="{{ url('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}" />
-
-    {% if ride.socialDescription %}
-        <meta name="twitter:description" content="{{ ride.socialDescription }}" />
-        <meta property="og:description" content="{{ ride.socialDescription }}" />
-    {% else %}
-        <meta name="twitter:description" content="{{ ride.description }}" />
-        <meta property="og:description" content="{{ ride.description }}" />
-    {% endif %}
 {% endblock %}
 
 {% block content %}

@@ -71,6 +71,12 @@ class RideController extends AbstractController
             $this->getSeoPage()->setPreviewPhoto($ride->getFeaturedPhoto());
         }
 
+        if ($ride->getSocialDescription()) {
+            $this->getSeoPage()->setDescription($ride->getSocialDescription());
+        } else {
+            $this->getSeoPage()->setDescription($ride->getDescription());
+        }
+
         /**
          * @var Weather $weather
          */
