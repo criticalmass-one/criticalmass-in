@@ -137,6 +137,9 @@ services:
         class: AppBundle\Seo\SeoPage
         arguments:
             - '@sonata.seo.page.default'
+            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@liip_imagine.cache.manager'
+
 imports:
   - { resource: ./services/timeline.yml }
   - { resource: ./services/admin.yml }
