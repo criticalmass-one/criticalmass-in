@@ -7,6 +7,7 @@ use AppBundle\Entity\Track;
 use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Caldera\GeoBundle\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\GeoBundle\GpxReader\TrackReader;
+use Caldera\GeoBundle\PolylineGenerator\PolylineGenerator;
 
 trait TrackHandlingTrait
 {
@@ -115,40 +116,17 @@ trait TrackHandlingTrait
         $res->calculateEstimates($track->getRide());
     }
 
-    /** @deprecated  */
-    protected function generatePolyline(Track $track)
+    protected function generatePolylines(Track $track)
     {
         /**
-         * @var TrackPolyline $trackPolyline
+         * @var PolylineGenerator $polylineGenerator
          */
-        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+        $olylineGeneator = $this->get('caldera.geobundle.polyline_generator');
 
-        $polyline = $trackPolyline
-            ->loadTrack($track)
-            ->generatePolyline()
-            ->getPolyline()
+        $olylineGeneator
+            ->setTrack($track)
+            ->processTrack()
         ;
-
-        $track->setPolyline($polyline);
-
-        $this->getDoctrine()->getManager()->flush();
-    }
-
-
-    protected function generatePreviewPolyline(Track $track)
-    {
-        /**
-         * @var TrackPolyline $trackPolyline
-         */
-        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
-
-        $polyline = $trackPolyline
-            ->loadTrack($track)
-            ->generatePreviewPolyline()
-            ->getPolyline()
-        ;
-
-        $track->setPolyline($polyline);
 
         $this->getDoctrine()->getManager()->flush();
     }
