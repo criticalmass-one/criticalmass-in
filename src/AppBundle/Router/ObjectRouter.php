@@ -86,7 +86,7 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    private function generateBoardUrl(Board $board, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateBoardUrl(Board $board, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         $route = 'caldera_criticalmass_board_listthreads';
 
@@ -97,7 +97,7 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    private function generateTrackUrl(Track $track, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateTrackUrl(Track $track, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         $route = 'caldera_criticalmass_track_view';
 
@@ -108,7 +108,7 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    private function generateThreadUrl(Thread $thread, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateThreadUrl(Thread $thread, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
@@ -130,7 +130,7 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    private function generateRegionUrl(Region $region, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateRegionUrl(Region $region, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if ($region->getParent() == null) {
             return $this->router->generate(
