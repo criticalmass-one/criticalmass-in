@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include('AppBundle:Template:Includes/_meta.html.twig') %}
-
-    <title>{% block title %}{% endblock %} — criticalmass.in</title>
-
+<html {{ sonata_seo_html_attributes() }}>
+<head {{ sonata_seo_head_attributes() }}>
+    {{ sonata_seo_title() }}
+    {{ sonata_seo_metadatas() }}
+    {{ sonata_seo_link_canonical() }}
+    {{ sonata_seo_lang_alternates() }}
+    
     <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/external/leaflet/leaflet-0.7.7.css') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/external/leaflet/extramarkers.css') }}" />
