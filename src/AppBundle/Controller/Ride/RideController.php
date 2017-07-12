@@ -62,7 +62,7 @@ class RideController extends AbstractController
         $this->countRideView($ride);
 
         $this
-            ->getMetadata()
+            ->getSeoPage()
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
 
         /**

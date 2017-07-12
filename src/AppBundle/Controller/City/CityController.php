@@ -16,7 +16,7 @@ class CityController extends AbstractController
     public function listAction()
     {
         $this
-            ->getMetadata()
+            ->getSeoPage()
             ->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
         $cities = $this->getCityRepository()->findCities();
@@ -117,7 +117,7 @@ class CityController extends AbstractController
     {
         $city = $this->getCityBySlug($citySlug);
 
-        $this->getMetadata()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
+        $this->getSeoPage()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
@@ -163,7 +163,7 @@ class CityController extends AbstractController
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
 
-        $this->getMetadata()
+        $this->getSeoPage()
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity());
 
         return $this->render('AppBundle:City:show.html.twig', [

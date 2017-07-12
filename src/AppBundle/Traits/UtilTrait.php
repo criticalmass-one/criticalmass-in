@@ -8,6 +8,7 @@ use AppBundle\Entity\Ride;
 use AppBundle\HtmlMetadata\Metadata;
 use AppBundle\Router\ObjectRouter;
 use Doctrine\ORM\EntityManagerInterface;
+use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -35,12 +36,9 @@ trait UtilTrait
         }
     }
 
-    /**
-     * @return Metadata
-     */
-    protected function getMetadata(): Metadata
+    protected function getSeoPage(): SeoPage
     {
-        return $this->get('caldera.html_metadata');
+        return $this->get('sonata.seo.page.default');
     }
 
     protected function getCheckedCity($citySlug): City
