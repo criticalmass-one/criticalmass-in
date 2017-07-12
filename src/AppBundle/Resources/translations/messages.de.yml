@@ -30,3 +30,20 @@ criticalmass:
             login: Anmelden
         search:
             search: Suche
+
+    city_list:
+        event_date:
+            day:
+                0: Sonntag
+                1: Montag
+                2: Dienstag
+                3: Mittwoch
+                4: Donnerstag
+                5: Freitag
+                6: Sonnabend
+            month_week:
+                0: letzten
+                1: ersten
+                2: zweiten
+                3: dritten
+                4: vierten
