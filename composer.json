@@ -28,8 +28,6 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "3.2.*",
         "basvandorst/StravaPHP": "1.0.1",
-        "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
-        "emcconville/point-reduction-algorithms": "^1.2",
         "facebook/php-sdk-v4" : "~5.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "jms/serializer-bundle": "^1.1",
