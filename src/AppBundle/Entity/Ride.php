@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\EntityInterface\ArchiveableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\ParticipateableInterface;
+use AppBundle\EntityInterface\PhotoInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface
 {
     /**
      * @ORM\Id
@@ -986,7 +987,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName): Ride
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\PhotoInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -15,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo implements ViewableInterface
+class Photo implements ViewableInterface, PhotoInterface
 {
     /**
      * @ORM\Id
@@ -275,7 +276,7 @@ class Photo implements ViewableInterface
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName): Photo
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
