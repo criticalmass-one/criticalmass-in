@@ -13,9 +13,6 @@ services:
         class: AppBundle\Manager\PostManager\PostManager
         arguments: ['@doctrine']
 
-    caldera.html_metadata:
-        class: AppBundle\HtmlMetadata\Metadata
-
     caldera.view_storage.cache:
         class: AppBundle\ViewStorage\ViewStorageCache
         arguments: ['@security.token_storage']
