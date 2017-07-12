@@ -201,7 +201,6 @@ class Track extends BaseTrack
         return $this;
     }
 
-
     /**
      * @JMS\Groups({"timelapse"})
      * @JMS\VirtualProperty

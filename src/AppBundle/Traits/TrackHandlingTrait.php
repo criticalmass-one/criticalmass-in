@@ -52,7 +52,6 @@ trait TrackHandlingTrait
         $estimateService->calculateEstimates($ride);
     }
 
-    /** @deprecated  */
     protected function generateSimpleLatLngList(Track $track)
     {
         /**
@@ -71,7 +70,6 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
-    /** @deprecated  */
     protected function saveLatLngList(Track $track)
     {
         /**
@@ -125,16 +123,33 @@ trait TrackHandlingTrait
          */
         $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
 
-        $trackPolyline->loadTrack($track);
+        $polyline = $trackPolyline
+            ->loadTrack($track)
+            ->generatePolyline()
+            ->getPolyline()
+        ;
 
-        $trackPolyline->execute();
+        $track->setPolyline($polyline);
 
-        $track->setPolyline($trackPolyline->getPolyline());
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
     }
 
 
+    protected function generatePreviewPolyline(Track $track)
+    {
+        /**
+         * @var TrackPolyline $trackPolyline
+         */
+        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+
+        $polyline = $trackPolyline
+            ->loadTrack($track)
+            ->generatePreviewPolyline()
+            ->getPolyline()
+        ;
+
+        $track->setPolyline($polyline);
+
+        $this->getDoctrine()->getManager()->flush();
+    }
 }

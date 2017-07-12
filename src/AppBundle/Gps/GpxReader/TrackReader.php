@@ -19,7 +19,7 @@ class TrackReader extends GpxReader
         $this->track = $track;
         $filename = $this->uploaderHelper->asset($track, 'trackFile');
 
-        $this->loadFile($filename);
+        return $this->loadFile($filename);
     }
 
     public function getStartDateTime()

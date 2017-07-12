@@ -128,6 +128,7 @@ class TrackController extends AbstractController
             $this->addRideEstimate($track, $ride);
             $this->generateSimpleLatLngList($track);
             $this->generatePolyline($track);
+            $this->generatePreviewPolyline($track);
 
             return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', ['trackId' => $track->getId()]));
         }
