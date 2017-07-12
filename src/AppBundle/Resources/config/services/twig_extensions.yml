@@ -15,3 +15,8 @@ services:
             - '@caldera.criticalmass.routing.object_router'
         tags:
             - { name: twig.extension }
+
+    caldera_criticalmass.twig.map_extension:
+        class: AppBundle\Twig\Extension\MapTwigExtension
+        tags:
+            - { name: twig.extension }
