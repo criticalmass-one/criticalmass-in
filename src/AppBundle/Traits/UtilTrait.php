@@ -5,10 +5,9 @@ namespace AppBundle\Traits;
 use AppBundle\Entity\City;
 use AppBundle\Entity\CitySlug;
 use AppBundle\Entity\Ride;
-use AppBundle\HtmlMetadata\Metadata;
 use AppBundle\Router\ObjectRouter;
+use AppBundle\Seo\SeoPage;
 use Doctrine\ORM\EntityManagerInterface;
-use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -38,7 +37,7 @@ trait UtilTrait
 
     protected function getSeoPage(): SeoPage
     {
-        return $this->get('sonata.seo.page.default');
+        return $this->get('app.seo_page');
     }
 
     protected function getCheckedCity($citySlug): City

@@ -133,6 +133,10 @@ services:
         tags:
             - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }
 
+    app.seo_page:
+        class: AppBundle\Seo\SeoPage
+        arguments:
+            - '@sonata.seo.page.default'
 imports:
   - { resource: ./services/timeline.yml }
   - { resource: ./services/admin.yml }
