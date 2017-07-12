@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html {{ sonata_seo_html_attributes() }}>
 <head {{ sonata_seo_head_attributes() }}>
+
+    {% if block('title') %}
+    <title>{% block title %}{% endblock %} — criticalmass.in</title>
+    {% else %}
     {{ sonata_seo_title() }}
+    {% endif %}
+
     {{ sonata_seo_metadatas() }}
     {{ sonata_seo_link_canonical() }}
     {{ sonata_seo_lang_alternates() }}
