@@ -95,7 +95,6 @@ class TrackUploadController extends AbstractController
 
             $track->setRide($ride);
             $track->setUser($this->getUser());
-            $track->setUsername($this->getUser()->getUsername());
 
             $em->persist($track);
             $em->flush();
