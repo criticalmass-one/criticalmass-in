@@ -3,8 +3,11 @@
 namespace AppBundle\Seo;
 
 use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\Router\ObjectRouter;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\SeoBundle\Seo\SeoPageInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class SeoPage
@@ -18,11 +21,15 @@ class SeoPage
     /** @var CacheManager $cacheManager */
     protected $cacheManager;
 
-    public function __construct(SeoPageInterface $sonataSeoPage, UploaderHelper $uploaderHelper, CacheManager $cacheManager)
+    /** @var ObjectRouter $objectRouter */
+    protected $objectRouter;
+
+    public function __construct(SeoPageInterface $sonataSeoPage, UploaderHelper $uploaderHelper, CacheManager $cacheManager, ObjectRouter $objectRouter)
     {
         $this->sonataSeoPage = $sonataSeoPage;
         $this->uploaderHelper = $uploaderHelper;
         $this->cacheManager = $cacheManager;
+        $this->objectRouter = $objectRouter;
     }
 
     public function setTitle(string $title): SeoPage
@@ -56,6 +63,25 @@ class SeoPage
             ->addMeta('property', 'og:image', $facebookPreviewPath)
             ->addMeta('name', 'twitter:image', $twitterPreviewPath)
         ;
+
+        return $this;
+    }
+
+    public function setCanonicalLink(string $link): SeoPage
+    {
+        $this->sonataSeoPage
+            ->setLinkCanonical($link)
+            ->addMeta('property', 'og:url', $link)
+        ;
+
+        return $this;
+    }
+
+    public function setCanonicalForObject(RouteableInterface $object): SeoPage
+    {
+        $url = $this->objectRouter->generate($object, UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $this->setCanonicalLink($url);
 
         return $this;
     }

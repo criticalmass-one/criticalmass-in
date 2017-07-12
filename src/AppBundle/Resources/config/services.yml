@@ -139,6 +139,7 @@ services:
             - '@sonata.seo.page.default'
             - '@vich_uploader.templating.helper.uploader_helper'
             - '@liip_imagine.cache.manager'
+            - '@caldera.criticalmass.routing.object_router'
 
 imports:
   - { resource: ./services/timeline.yml }
