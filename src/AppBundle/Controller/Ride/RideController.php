@@ -63,7 +63,9 @@ class RideController extends AbstractController
 
         $this
             ->getSeoPage()
-            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
+            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
+            ->setCanonicalForObject($ride)
+        ;
 
         if ($ride->getImageName()) {
             $this->getSeoPage()->setPreviewPhoto($ride);

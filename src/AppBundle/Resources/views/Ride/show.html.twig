@@ -18,10 +18,6 @@
     </li>
 {% endblock %}
 
-{% block additionalHeaderElements %}
-    <meta property="og:url" content="{{ url('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}" />
-{% endblock %}
-
 {% block content %}
     <div class="container">
         {% if today(ride.date) %}
