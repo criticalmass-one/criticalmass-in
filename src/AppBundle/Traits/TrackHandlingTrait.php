@@ -5,7 +5,7 @@ namespace AppBundle\Traits;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Statistic\RideEstimate\RideEstimateService;
-use Caldera\AppBundle\DistanceCalculator\TrackDistanceCalculator;
+use Caldera\GeoBundle\DistanceCalculator\TrackDistanceCalculator;
 use Caldera\GeoBundle\GpxReader\TrackReader;
 
 trait TrackHandlingTrait
