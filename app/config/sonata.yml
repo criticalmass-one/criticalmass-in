@@ -16,7 +16,7 @@ sonata_seo:
                 robots:               index, follow
 
             property:
-                'fb:app_id':          216780188685195
+                'fb:app_id':          '216780188685195'
                 'og:site_name':       criticalmass.in
                 'og:description':     criticalmass.in sammelt Fotos und Tourdaten über die Critical Mass
 
