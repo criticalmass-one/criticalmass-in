@@ -65,6 +65,12 @@ class RideController extends AbstractController
             ->getSeoPage()
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
 
+        if ($ride->getImageName()) {
+            $this->getSeoPage()->setPreviewPhoto($ride);
+        } elseif ($ride->getFeaturedPhoto()) {
+            $this->getSeoPage()->setPreviewPhoto($ride->getFeaturedPhoto());
+        }
+
         /**
          * @var Weather $weather
          */
