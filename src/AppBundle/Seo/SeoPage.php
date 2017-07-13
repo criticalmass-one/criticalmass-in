@@ -62,6 +62,7 @@ class SeoPage
         $this->sonataSeoPage
             ->addMeta('property', 'og:image', $facebookPreviewPath)
             ->addMeta('name', 'twitter:image', $twitterPreviewPath)
+            ->addMeta('name', 'twitter:card', 'summary_large_image')
         ;
 
         return $this;
