@@ -7,24 +7,6 @@
     <li class="active">{{ city.city }}</li>
 {% endblock %}
 
-{% block additionalHeaderElements %}
-    <meta property="og:title" content="{{ city.title }}" />
-    <meta property="og:type" content="Website" />
-    <meta property="og:description" content="{{ city.description }}" />
-    <meta property="og:url" content="{{ url('caldera_criticalmass_desktop_city_show', { citySlug: city.slug }) }}" />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="criticalmass.in" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@calderacc" />
-    <meta name="twitter:creator" content="@maltehuebner" />
-    <meta name="twitter:title" content="{{ city.title }}" />
-    <meta name="twitter:description" content="{{ city.description }}" />
-    {% if city.imageName %}
-        <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
-        <meta name="twitter:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
-    {% endif %}
-{% endblock %}
-
 {% block optionsButton %}
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"

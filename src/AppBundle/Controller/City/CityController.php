@@ -164,7 +164,11 @@ class CityController extends AbstractController
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
 
         $this->getSeoPage()
-            ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity());
+            ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
+            ->setPreviewPhoto($city)
+            ->setCanonicalForObject($city)
+            ->setTitle($city->getTitle())
+        ;
 
         return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,
