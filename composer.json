@@ -50,7 +50,8 @@
         "predis/predis": "^1.1",
         "miljar/php-exif": "^0.6.3",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
-        "cebe/markdown": "^1.1"
+        "cebe/markdown": "^1.1",
+        "sonata-project/seo-bundle": "^2.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

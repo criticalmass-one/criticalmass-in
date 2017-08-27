@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use AppBundle\EntityInterface\ArchiveableInterface;
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
 {
     /**
      * Numerische ID der Stadt.
@@ -915,7 +917,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName): City
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 

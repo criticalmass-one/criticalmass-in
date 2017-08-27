@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="thread")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
  */
-class Thread implements ViewableInterface
+class Thread implements ViewableInterface, RouteableInterface
 {
     /**
      * @ORM\Id

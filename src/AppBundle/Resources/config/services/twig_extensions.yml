@@ -3,7 +3,6 @@ services:
         class: AppBundle\Twig\Extension\SiteTwigExtension
         arguments:
             - '@translator'
-            - '@caldera.html_metadata'
             - '@router'
             - '@critical_markdown'
         tags:
