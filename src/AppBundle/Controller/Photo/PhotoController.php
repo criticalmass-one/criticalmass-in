@@ -41,6 +41,8 @@ class PhotoController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 
+        $this->getSeoPage()->setPreviewPhoto($photo);
+
         return $this->render(
             'AppBundle:Photo:show.html.twig',
             [
