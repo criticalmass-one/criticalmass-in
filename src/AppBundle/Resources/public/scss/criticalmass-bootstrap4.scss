@@ -1,16 +1,6 @@
 @import "bootstrap4/bootstrap.scss";
 @import "external/leaflet/_extramarkers.scss";
 @import "criticalmass/_criticalmass.scss";
-
-.form-control.datepicker {
-  padding: 0.5rem 0.75rem !important;
-}
-
-.input-daterange input {
-  text-align: left !important;
-}
-
-.breadcrumb > li + li:before {
-  content: "/\00a0";
-  color: $breadcrumb-color;
-}
+@import "criticalmass/_bikeright4.scss";
+@import "criticalmass/_fahrradstadt4.scss";
+@import "criticalmass/_frontpage4.scss";
