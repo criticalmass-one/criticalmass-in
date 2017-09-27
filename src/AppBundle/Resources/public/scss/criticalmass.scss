@@ -1,15 +1,9 @@
 @import "bootstrap3/bootstrap.scss";
 @import "external/leaflet/_extramarkers.scss";
-@import "criticalmass/_bikeright.scss";
-@import "criticalmass/_city.scss";
-@import "criticalmass/_fahrradstadt.scss";
-@import "criticalmass/_calendar.scss";
-@import "criticalmass/_margin-padding.scss";
-@import "criticalmass/_search.scss";
-@import "criticalmass/_userposition.scss";
-@import "criticalmass/_navigation.scss";
-@import "criticalmass/_transit.scss";
-@import "criticalmass/_frontpage.scss";
+@import "criticalmass/_criticalmass.scss";
+@import "criticalmass/_bikeright3.scss";
+@import "criticalmass/_fahrradstadt3.scss";
+@import "criticalmass/_frontpage3.scss";
 
 .form-control.datepicker {
   padding: 0.5rem 0.75rem !important;
