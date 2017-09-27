@@ -1,6 +1,6 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}{{ city.title }}{% endblock %}
+{% set bootstrap4 = true %}
 
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
@@ -36,12 +36,12 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if city.imageName %}
                     <div class="jumbotron" id="city-jumbotron"
                          style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <h1 class="pull-right no-margin-top">
                                     {{ city.title }}
                                 </h1>
@@ -78,9 +78,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-9">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% if city.longDescription %}
                         {{ city.longDescription|markdown }}
                         {% else %}
@@ -145,7 +145,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-md-3">
+            <div class="col-3">
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
