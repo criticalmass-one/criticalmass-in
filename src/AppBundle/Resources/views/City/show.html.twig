@@ -78,7 +78,7 @@
         </div>
 
         <div class="row">
-            <div class="col-9">
+            <div class="col-12 col-md-8">
                 <div class="row">
                     <div class="col-12">
                         {% if city.longDescription %}
@@ -145,22 +145,22 @@
                 {% endif %}
             </div>
 
-            <div class="col-3">
+            <div class="col-12 col-md-4">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'AppBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                     </div>
                 </div>
 
                 {% if 'Hamburg' in city.city %}
                 <div class="row">
-                    <div class="col-md-12" id="fahrradstadthamburg-container">
+                    <div class="col-12" id="fahrradstadthamburg-container">
                         <script>
                             CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
                         </script>
@@ -169,25 +169,25 @@
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'AppBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'AppBundle:City:Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'AppBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>
