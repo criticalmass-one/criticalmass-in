@@ -80,7 +80,7 @@ define(['jquery', 'localforage'], function ($, localforage) {
             var randomKey = keys[Math.floor(Math.random() * keys.length)];
 
             localforage.getItem(randomKey).then(function(item) {
-                $panel = $('<div class="panel panel-fahrradstadt"><div class="panel-heading"><h3 class="panel-title">Fahrradstadt.Hamburg</h3></div><div class="panel-body"><div class="row"><div class="col-md-12"><a href="' + item.url + '"><img class="img-responsive" src="' + item.imageUrl + '" /></a></div></div><div class="row"><div class="col-md-12 text-center"><a href="' + item.url + '"><h3 class="h4">' + item.title +'</h3></a></div></div><div class="row"><div class="col-md-12 text-center"><a class="btn btn-fahrradstadt" href="' + item.url + '">zur Fahrradstadt</a></div></div></div></div>');
+                $panel = $('<div class="panel panel-fahrradstadt card"><div class="panel-heading card-body"><h4 class="panel-title card-title">Fahrradstadt.Hamburg</h4></div><div class="panel-body bard-body"><div class="row"><div class="col-md-12 col-12"><a href="' + item.url + '"><img class="img-responsive img-fluid" src="' + item.imageUrl + '" /></a></div></div><div class="row"><div class="col-md-12 col-12 text-center"><a href="' + item.url + '"><h3 class="h4">' + item.title +'</h3></a></div></div><div class="row"><div class="col-md-12 col-12 text-center"><a class="btn btn-fahrradstadt" href="' + item.url + '">zur Fahrradstadt</a></div></div></div></div>');
 
                 that._$container.append($panel);
             });
