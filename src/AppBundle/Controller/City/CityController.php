@@ -152,6 +152,8 @@ class CityController extends AbstractController
 
         $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);
 
+        $rides = $this->getRideRepository()->findRidesForCity($city, 'DESC', 12);
+
         $dateTime = null;
 
         if ($city->getTimezone()) {
@@ -176,7 +178,8 @@ class CityController extends AbstractController
             'dateTime' => $dateTime,
             'nearCities' => $nearCities,
             'locations' => $locations,
-            'photos' => $photos
+            'photos' => $photos,
+            'rides' => $rides,
         ]);
     }
 
