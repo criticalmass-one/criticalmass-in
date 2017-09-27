@@ -141,6 +141,16 @@
                     </div>
                 {% endfor %}
 
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href="{{ path('caldera_criticalmass_desktop_city_listrides', { citySlug: city.getMainSlugString }) }}"
+                           class="btn btn-primary">
+                            <i class="fa fa-list"></i>
+                            weitere Touren anzeigen
+                        </a>
+                    </div>
+                </div>
+
                 {% if photos|length > 0 %}
                     <div class="row">
                         <div class="col-md-12">

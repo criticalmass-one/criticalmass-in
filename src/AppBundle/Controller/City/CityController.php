@@ -152,7 +152,7 @@ class CityController extends AbstractController
 
         $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);
 
-        $rides = $this->getRideRepository()->findRidesForCity($city, 'DESC', 12);
+        $rides = $this->getRideRepository()->findRidesForCity($city, 'DESC', 6);
 
         $dateTime = null;
 
