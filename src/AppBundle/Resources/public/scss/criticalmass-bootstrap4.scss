@@ -4,3 +4,9 @@
 @import "criticalmass/_bikeright4.scss";
 @import "criticalmass/_fahrradstadt4.scss";
 @import "criticalmass/_frontpage4.scss";
+
+.readmore {
+  -webkit-box-shadow: inset 0px -80px 40px -40px rgba(255, 255, 255, 1);
+  -moz-box-shadow: inset 0px -80px 40px -40px rgba(255, 255, 255, 1);
+  box-shadow: inset 0px -80px 40px -40px rgba(255, 255, 255, 1);
+}

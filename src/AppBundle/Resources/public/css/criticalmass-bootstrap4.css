@@ -6209,3 +6209,8 @@ body .transit-hvv-a2,
 body
 .transit-hvv-a3 {
   background-color: #e7873a; }
+
+.readmore {
+  -webkit-box-shadow: inset 0px -80px 40px -40px white;
+  -moz-box-shadow: inset 0px -80px 40px -40px white;
+  box-shadow: inset 0px -80px 40px -40px white; }
