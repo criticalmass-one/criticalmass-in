@@ -82,7 +82,12 @@
                 <div class="row">
                     <div class="col-12">
                         {% if city.longDescription %}
-                        {{ city.longDescription|markdown }}
+                            <div class="readmore">
+                                {{ city.longDescription|markdown }}
+                            </div>
+                            <script>
+                                CriticalMass.loadModule('ReadMore', '.readmore');
+                            </script>
                         {% else %}
                         <div class="alert alert-info">
                             <strong>Huch?</strong>
