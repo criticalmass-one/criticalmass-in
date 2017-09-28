@@ -118,11 +118,15 @@
                         <div class="col-12">
                             <div class="card mb-3">
                                 {% if ride.featuredPhoto %}
-                                <img class="card-img-top" src="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('ride_image_wide') }}" alt="{{ ride.title }}" />
+                                <a href="{{ objectPath(ride) }}">
+                                    <img class="card-img-top" src="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('ride_image_wide') }}" alt="{{ ride.title }}" />
+                                </a>
                                 {% endif %}
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        {{ ride.fancyTitle }}
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.fancyTitle }}
+                                        </a>
                                     </h4>
                                     {% if ride.description %}
                                     <p class="card-text">
