@@ -73,6 +73,7 @@ require.config({
         "SubrideMarker": "/bundles/app/js/modules/map/marker/SubrideMarker",
         "SnapablePhotoMarker": "/bundles/app/js/modules/map/marker/SnapablePhotoMarker",
         "Search": "/bundles/app/js/modules/Search",
+        "readmore": "/bundles/app/js/external/readmore/readmore.min",
         "leaflet": "/bundles/app/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/app/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/app/js/external/leaflet/L.Control.Locate",
