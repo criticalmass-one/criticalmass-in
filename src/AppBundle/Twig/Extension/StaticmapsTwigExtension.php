@@ -42,7 +42,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
     {
         $parameters = [
             sprintf('center=%f,%f', $ride->getLatitude(), $ride->getLongitude()),
-            sprintf('markers=%f,%f,%s,%s', $ride->getLatitude(), $ride->getLongitude(), 'red', 'bicycle'),
+            sprintf('markers=%f,%f,%s,%s,%s', $ride->getLatitude(), $ride->getLongitude(), 'circle', 'red', 'bicycle'),
             'zoom=14',
             'size=865x512',
             'maptype=wikimedia-intl',
@@ -55,7 +55,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
     {
         $parameters = [
             sprintf('center=%f,%f', $city->getLatitude(), $city->getLongitude()),
-            sprintf('markers=%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'blue', 'round', 'university'),
+            sprintf('markers=%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'circle', 'blue', 'university'),
             'zoom=14',
             'size=865x512',
             'maptype=wikimedia-intl',
