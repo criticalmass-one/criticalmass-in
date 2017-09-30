@@ -126,9 +126,11 @@
                                 <a href="{{ objectPath(ride) }}">
                                 {% if ride.featuredPhoto %}
                                     <img class="card-img-top" src="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('ride_image_wide') }}" alt="{{ ride.title }}" />
-                                {% else %}
+                                {% elseif ride.hasLocation() and ride.latitude and ride.longitude %}
                                     {#<img class="card-img-top" src="http://staticmaplite.cm/staticmap.php?center=53.551886,9.992474&zoom=14&size=865x512&maptype=wikimedia-intl&markers=53.551886,10" alt="{{ ride.title }}" />#}
                                     <img class="card-img-top" src="{{ staticmaps(ride) }}" alt="{{ ride.title }}" />
+                                {% else %}
+                                    <img class="card-img-top" src="{{ staticmaps(ride.city) }}" alt="{{ ride.title }}" />
                                 {% endif %}
                                 </a>
                                 <div class="card-body">
