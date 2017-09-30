@@ -56,3 +56,5 @@ parameters:
     sqibe.api_url: http://sqi.be/yourls-api.php
 
     bikeright.visible: false
+
+    staticmaps.host: https://staticmaps.caldera.cc/
