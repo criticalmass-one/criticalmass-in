@@ -55,7 +55,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
     {
         $parameters = [
             sprintf('center=%f,%f', $city->getLatitude(), $city->getLongitude()),
-            sprintf('markers=%f,%f,%s,%s', $city->getLatitude(), $city->getLongitude(), 'blue', 'university'),
+            sprintf('markers=%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'blue', 'round', 'university'),
             'zoom=14',
             'size=865x512',
             'maptype=wikimedia-intl',
