@@ -83,8 +83,13 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         {% if city.longDescription %}
-                            <div class="readmore">
-                                {{ city.longDescription|markdown }}
+                            <div class="card">
+                                <div class="card-header">
+                                    {{ city.title }}
+                                </div>
+                                <div class="card-body readmore">
+                                    {{ city.longDescription|markdown }}
+                                </div>
                             </div>
                             <script>
                                 CriticalMass.loadModule('ReadMore', '.readmore');
@@ -127,7 +132,6 @@
                                 {% if ride.featuredPhoto %}
                                     <img class="card-img-top" src="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('ride_image_wide') }}" alt="{{ ride.title }}" />
                                 {% elseif ride.hasLocation() and ride.latitude and ride.longitude %}
-                                    {#<img class="card-img-top" src="http://staticmaplite.cm/staticmap.php?center=53.551886,9.992474&zoom=14&size=865x512&maptype=wikimedia-intl&markers=53.551886,10" alt="{{ ride.title }}" />#}
                                     <img class="card-img-top" src="{{ staticmaps(ride) }}" alt="{{ ride.title }}" />
                                 {% else %}
                                     <img class="card-img-top" src="{{ staticmaps(ride.city) }}" alt="{{ ride.title }}" />

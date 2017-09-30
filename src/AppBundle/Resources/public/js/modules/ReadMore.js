@@ -2,8 +2,8 @@ define(['readmorejs'], function () {
 
     ReadMore = function (context, additionalOptions) {
         var options = {
-            moreLink: '<a href="#" class="readmore-more">Mehr anzeigen</a>',
-            lessLink: '<a href="#" class="readmore-less">Weniger anzeigen</a>'
+            moreLink: '',
+            lessLink: ''
         };
 
         if (additionalOptions) {
@@ -11,6 +11,12 @@ define(['readmorejs'], function () {
         }
 
         $(context).readmore(options);
+
+        $('.readmore').click(function() {
+            $(context).readmore('toggle');
+            $(context).readmore('destroy');
+            $(context).removeClass('readmore');
+        });
     };
 
     return ReadMore;
