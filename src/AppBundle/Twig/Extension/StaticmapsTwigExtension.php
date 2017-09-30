@@ -15,7 +15,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
         $this->staticmapsHost = $staticmapsHost;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('staticmaps', [$this, 'staticmaps',], ['is_safe' => ['raw']]),
@@ -33,7 +33,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
         return '';
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'staticmaps_extension';
     }
