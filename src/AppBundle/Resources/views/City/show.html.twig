@@ -132,9 +132,9 @@
                                 {% if ride.featuredPhoto %}
                                     <img class="card-img-top" src="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('ride_image_wide') }}" alt="{{ ride.title }}" />
                                 {% elseif ride.hasLocation() and ride.latitude and ride.longitude %}
-                                    <img class="card-img-top" src="{{ staticmaps(ride) }}" alt="{{ ride.title }}" />
+                                    <img class="card-img-top" src="{{ staticmaps(ride, 800, 200, 13) }}" alt="{{ ride.title }}" />
                                 {% else %}
-                                    <img class="card-img-top" src="{{ staticmaps(ride.city) }}" alt="{{ ride.title }}" />
+                                    <img class="card-img-top" src="{{ staticmaps(ride.city, 800, 200, 13) }}" alt="{{ ride.title }}" />
                                 {% endif %}
                                 </a>
                                 <div class="card-body">

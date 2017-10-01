@@ -29,12 +29,12 @@ class StaticmapsTwigExtension extends \Twig_Extension
         ];
     }
 
-    public function staticmaps($object): string
+    public function staticmaps($object, int $width = null, int $height = null, int $zoom = null): string
     {
         if ($object instanceof Ride) {
-            return $this->staticmapsRide($object);
+            return $this->staticmapsRide($object, $width, $height, $zoom);
         } elseif ($object instanceof City) {
-            return $this->staticmapsCity($object);
+            return $this->staticmapsCity($object, $width, $height, $zoom);
         }
 
         return '';
@@ -71,15 +71,11 @@ class StaticmapsTwigExtension extends \Twig_Extension
         $viewParameters = [];
 
         if ($width && $height) {
-            $viewParameters = [
-                'size' => sprintf('%dx%d', $width, $height),
-            ];
+            $viewParameters['size'] = sprintf('%dx%d', $width, $height);
         }
 
         if ($zoom) {
-            $viewParameters = [
-                'zoom' => sprintf('%d', $zoom),
-            ];
+            $viewParameters['zoom'] = sprintf('%d', $zoom);
         }
 
         $parameters = array_merge($parameters, $this->defaultParameters, $viewParameters);
@@ -90,7 +86,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
     protected function generateMapUrlParameters(array $parameters = []): string
     {
         $list = [];
-        
+
         foreach ($parameters as $key => $value) {
             $list [] = sprintf('%s=%s', $key, $value);
         }
