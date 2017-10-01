@@ -10,6 +10,13 @@ class StaticmapsTwigExtension extends \Twig_Extension
     /** @var string $staticmapsHost */
     protected $staticmapsHost = '';
 
+    /** @var array $defaultParameters */
+    protected $defaultParameters = [
+        'maptype' => 'wikimedia-intl',
+        'zoom' => 14,
+        'size' => '865x512',
+    ];
+
     public function __construct(string $staticmapsHost)
     {
         $this->staticmapsHost = $staticmapsHost;
@@ -38,35 +45,57 @@ class StaticmapsTwigExtension extends \Twig_Extension
         return 'staticmaps_extension';
     }
 
-    public function staticmapsRide(Ride $ride): string
+    public function staticmapsRide(Ride $ride, int $width = null, int $height = null, int $zoom = null): string
     {
         $parameters = [
-            sprintf('center=%f,%f', $ride->getLatitude(), $ride->getLongitude()),
-            sprintf('markers=%f,%f,%s,%s,%s', $ride->getLatitude(), $ride->getLongitude(), 'circle', 'red', 'bicycle'),
-            'zoom=14',
-            'size=865x512',
-            'maptype=wikimedia-intl',
+            'center' => sprintf('%f,%f', $ride->getLatitude(), $ride->getLongitude()),
+            'markers' => sprintf('%f,%f,%s,%s,%s', $ride->getLatitude(), $ride->getLongitude(), 'circle', 'red', 'bicycle'),
         ];
 
-        return $this->generateMapUrl($parameters);
+        return $this->generateMapUrl($parameters, $width, $height, $zoom);
     }
 
-    public function staticmapsCity(City $city): string
+    public function staticmapsCity(City $city, int $width = null, int $height = null, int $zoom = null): string
     {
         $parameters = [
-            sprintf('center=%f,%f', $city->getLatitude(), $city->getLongitude()),
-            sprintf('markers=%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'circle', 'blue', 'university'),
-            'zoom=14',
-            'size=865x512',
-            'maptype=wikimedia-intl',
+            'center' => sprintf('%f,%f', $city->getLatitude(), $city->getLongitude()),
+            'markers' => sprintf('%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'circle', 'blue', 'university'),
+
         ];
 
-        return $this->generateMapUrl($parameters);
+        return $this->generateMapUrl($parameters, $width, $height, $zoom);
     }
 
-    protected function generateMapUrl(array $parameters = []): string
+    protected function generateMapUrl(array $parameters = [], int $width = null, int $height = null, int $zoom = null): string
     {
-        return sprintf('%sstaticmap.php?%s', $this->staticmapsHost, implode('&',$parameters));
+        $viewParameters = [];
+
+        if ($width && $height) {
+            $viewParameters = [
+                'size' => sprintf('%dx%d', $width, $height),
+            ];
+        }
+
+        if ($zoom) {
+            $viewParameters = [
+                'zoom' => sprintf('%d', $zoom),
+            ];
+        }
+
+        $parameters = array_merge($parameters, $this->defaultParameters, $viewParameters);
+
+        return sprintf('%sstaticmap.php?%s', $this->staticmapsHost, $this->generateMapUrlParameters($parameters));
+    }
+
+    protected function generateMapUrlParameters(array $parameters = []): string
+    {
+        $list = [];
+        
+        foreach ($parameters as $key => $value) {
+            $list [] = sprintf('%s=%s', $key, $value);
+        }
+
+        return implode('&',$list);
     }
 }
 
