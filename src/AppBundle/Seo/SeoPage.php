@@ -54,6 +54,10 @@ class SeoPage
 
     public function setPreviewPhoto(PhotoInterface $object): SeoPage
     {
+        if (!$object->getImageName()) {
+            return $this;
+        }
+        
         $imageFilename = $this->uploaderHelper->asset($object, 'imageFile');
 
         $facebookPreviewPath = $this->cacheManager->getBrowserPath($imageFilename, 'facebook_preview_image');
