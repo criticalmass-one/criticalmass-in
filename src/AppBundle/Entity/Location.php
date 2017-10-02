@@ -99,7 +99,7 @@ class Location implements RouteableInterface
         return $this;
     }
 
-    public function getCity(): City
+    public function getCity(): ?City
     {
         return $this->city;
     }
