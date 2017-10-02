@@ -41,6 +41,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Region }
 
+    admin.ride:
+        class: AppBundle\Admin\RideAdmin
+        arguments: [~, AppBundle\Entity\Ride, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Ride }
+
     admin.ride_estimate:
         class: AppBundle\Admin\RideEstimateAdmin
         arguments: [~, AppBundle\Entity\RideEstimate, ~]
