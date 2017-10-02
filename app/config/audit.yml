@@ -1,4 +1,3 @@
 simple_things_entity_audit:
     audited_entities:
-        - MyBundle\Entity\MyEntity
-        - MyBundle\Entity\MyEntity2
+        - AppBundle\Entity\Location
