@@ -75,7 +75,7 @@ class RideController extends AbstractController
 
         if ($ride->getSocialDescription()) {
             $this->getSeoPage()->setDescription($ride->getSocialDescription());
-        } else {
+        } elseif ($ride->getDescription()) {
             $this->getSeoPage()->setDescription($ride->getDescription());
         }
 
