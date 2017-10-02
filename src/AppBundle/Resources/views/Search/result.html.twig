@@ -54,11 +54,10 @@
                 <div class="col-md-9">
                     {% for result in results %}
                         {% if result.standardLocation is defined %}
-                            {% include 'AppBundle:Search:city.html.twig' with { city: result } %}
+                            {% include 'AppBundle:Search/includes:_city.html.twig' with { city: result } %}
                         {% else %}
-                            {% include 'AppBundle:Search:ride.html.twig' with { ride: result } %}
+                            {% include 'AppBundle:Search/includes:_ride.html.twig' with { ride: result } %}
                         {% endif %}
-
                     {% endfor %}
                 </div>
             </div>
