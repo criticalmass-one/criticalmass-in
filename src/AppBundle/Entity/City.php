@@ -421,6 +421,13 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->getMainSlugString();
     }
 
+    public function setId(int $id): City
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -40,8 +40,9 @@ class InitAuditCommand extends ContainerAwareCommand
             foreach ($revs as $rev) {
                 $output->writeln(sprintf('Revision: <comment>%s</comment>', $rev->getCity()));
 
-                $manager->detach($rev);
-                $manager->persist($rev);
+                $rev->setId($city->getId());
+
+                $manager->merge($rev);
             }
         }
 
