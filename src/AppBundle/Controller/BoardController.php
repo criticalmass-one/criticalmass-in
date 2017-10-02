@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
@@ -105,6 +106,9 @@ class BoardController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addthreadAction(Request $request, $boardSlug = null, $citySlug = null)
     {
         /**

@@ -5,7 +5,11 @@ namespace AppBundle\Entity;
 use AppBundle\EntityInterface\ArchiveableInterface;
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -21,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
 {
     /**
      * Numerische ID der Stadt.
@@ -350,62 +354,54 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      */
     protected $views = 0;
 
-    public function setRegion(Region $region)
+    public function __construct()
+    {
+        $this->rides = new ArrayCollection();
+        $this->slugs = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+
+        $this->archiveDateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
+    }
+
+    public function setRegion(Region $region): City
     {
         $this->region = $region;
 
         return $this;
     }
 
-    public function getRegion()
+    public function getRegion(): ?Region
     {
         return $this->region;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): City
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return CitySlug
-     */
-    public function getMainSlug()
+    public function getMainSlug(): CitySlug
     {
         return $this->mainSlug;
     }
 
-    /**
-     * @param CitySlug $citySlug
-     */
-    public function setMainSlug(CitySlug $citySlug)
+    public function setMainSlug(CitySlug $citySlug): City
     {
         $this->mainSlug = $citySlug;
 
         return $this;
     }
 
-    /**
-     * Die Umwandlung dieser Entitaet in einen String geschieht unter anderem in
-     * automatisch konstruierten Auswahlfeldern. In dem Fall soll diese Entitaet
-     * mit dem Namen ihrer Stadt dargestellt werden.
-     *
-     * @return String: Name der Stadt
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getCity();
     }
@@ -414,241 +410,126 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @JMS\VirtualProperty
      * @JMS\SerializedName("slug")
      * @JMS\Type("string")
-     * @return string
      */
-    public function getMainSlugString()
+    public function getMainSlugString(): string
     {
         return $this->getMainSlug()->getSlug();
     }
 
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->getMainSlugString();
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->slugs = new \Doctrine\Common\Collections\ArrayCollection();
-
-        $this->archiveDateTime = new \DateTime();
-        $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return City
-     */
-    public function setCity($city)
+    public function setCity(string $city): City
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return City
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): BoardInterface
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return City
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): City
     {
         $this->url = $url;
 
         return $this;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * Set facebook
-     *
-     * @param string $facebook
-     * @return City
-     */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook): City
     {
         $this->facebook = $facebook;
 
         return $this;
     }
 
-    /**
-     * Get facebook
-     *
-     * @return string
-     */
-    public function getFacebook()
+    public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     * @return City
-     */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter): City
     {
         $this->twitter = $twitter;
 
         return $this;
     }
 
-    /**
-     * Get twitter
-     *
-     * @return string
-     */
-    public function getTwitter()
+    public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return City
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude): City
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get latitude
-     *
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return City
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude): City
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * Add rides
-     *
-     * @param Ride $rides
-     * @return City
-     */
-    public function addRide(Ride $rides)
+    public function addRide(Ride $rides): City
     {
         $this->rides[] = $rides;
 
         return $this;
     }
 
-    /**
-     * Remove rides
-     *
-     * @param Ride $rides
-     */
-    public function removeRide(Ride $rides)
+    public function removeRide(Ride $ride): City
     {
-        $this->rides->removeElement($rides);
+        $this->rides->removeElement($ride);
+
+        return $this;
     }
 
-    /**
-     * Get rides
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRides()
+    public function getRides(): Collection
     {
         return $this->rides;
     }
 
-    /**
-     * Add slug
-     *
-     * @param CitySlug $slug
-     * @return City
-     */
-    public function addSlug(CitySlug $slug)
+    public function addSlug(CitySlug $slug): City
     {
         if (!$this->mainSlug) {
             $this->mainSlug = $slug;
@@ -659,239 +540,133 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    /**
-     * Remove slugs
-     *
-     * @param CitySlug $slugs
-     */
-    public function removeSlug(CitySlug $slugs)
+    public function removeSlug(CitySlug $slugs): City
     {
         $this->slugs->removeElement($slugs);
+
+        return $this;
     }
 
-    /**
-     * Get slugs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSlugs()
+    public function getSlugs(): Collection
     {
         return $this->slugs;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return City
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): City
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function isEqual(City $city)
+    /** @deprecated  */
+    public function isEqual(City $city): bool
     {
-        return $city->getId() == $this->getId();
+        return $city->getId() === $this->getId();
     }
 
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return City
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): City
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * Get enabled
-     *
-     * @return boolean
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * Set isStandardable
-     *
-     * @param boolean $isStandardable
-     * @return City
-     */
-    public function setIsStandardable($isStandardable)
+    public function setIsStandardable(bool $isStandardable): City
     {
         $this->isStandardable = $isStandardable;
 
         return $this;
     }
 
-    /**
-     * Get isStandardable
-     *
-     * @return boolean
-     */
-    public function getIsStandardable()
+    public function getIsStandardable(): bool
     {
         return $this->isStandardable;
     }
 
-    /**
-     * Set standardDayOfWeek
-     *
-     * @param integer $standardDayOfWeek
-     * @return City
-     */
-    public function setStandardDayOfWeek($standardDayOfWeek)
+    public function setStandardDayOfWeek(int $standardDayOfWeek): City
     {
         $this->standardDayOfWeek = $standardDayOfWeek;
 
         return $this;
     }
 
-    /**
-     * Get standardDayOfWeek
-     *
-     * @return integer
-     */
-    public function getStandardDayOfWeek()
+    public function getStandardDayOfWeek(): int
     {
         return $this->standardDayOfWeek;
     }
 
-    /**
-     * Set standardWeekOfMonth
-     *
-     * @param integer $standardWeekOfMonth
-     * @return City
-     */
-    public function setStandardWeekOfMonth($standardWeekOfMonth)
+    public function setStandardWeekOfMonth(int $standardWeekOfMonth): City
     {
         $this->standardWeekOfMonth = $standardWeekOfMonth;
 
         return $this;
     }
 
-    /**
-     * Get standardWeekOfMonth
-     *
-     * @return integer
-     */
-    public function getStandardWeekOfMonth()
+    public function getStandardWeekOfMonth(): int
     {
         return $this->standardWeekOfMonth;
     }
 
-    /**
-     * Set standardTime
-     *
-     * @param \DateTime $standardTime
-     * @return City
-     */
-    public function setStandardTime($standardTime)
+    public function setStandardTime(\DateTime $standardTime): City
     {
         $this->standardTime = $standardTime;
 
         return $this;
     }
 
-    /**
-     * Get standardTime
-     *
-     * @return \DateTime
-     */
-    public function getStandardTime()
+    public function getStandardTime(): \DateTime
     {
         return $this->standardTime;
     }
 
-    /**
-     * Set standardLocation
-     *
-     * @param string $standardLocation
-     * @return City
-     */
-    public function setStandardLocation($standardLocation)
+    public function setStandardLocation(string $standardLocation = null): City
     {
         $this->standardLocation = $standardLocation;
 
         return $this;
     }
 
-    /**
-     * Get standardLocation
-     *
-     * @return string
-     */
-    public function getStandardLocation()
+    public function getStandardLocation(): ?string
     {
         return $this->standardLocation;
     }
 
-    /**
-     * Set standardLatitude
-     *
-     * @param float $standardLatitude
-     * @return City
-     */
-    public function setStandardLatitude($standardLatitude)
+    public function setStandardLatitude(float $standardLatitude = null): City
     {
         $this->standardLatitude = $standardLatitude;
 
         return $this;
     }
 
-    /**
-     * Get standardLatitude
-     *
-     * @return float
-     */
-    public function getStandardLatitude()
+    public function getStandardLatitude(): ?float
     {
         return $this->standardLatitude;
     }
 
-    /**
-     * Set standardLongitude
-     *
-     * @param float $standardLongitude
-     * @return City
-     */
-    public function setStandardLongitude($standardLongitude)
+    public function setStandardLongitude(float $standardLongitude = null): City
     {
         $this->standardLongitude = $standardLongitude;
 
         return $this;
     }
 
-    /**
-     * Get standardLongitude
-     *
-     * @return float
-     */
-    public function getStandardLongitude()
+    public function getStandardLongitude(): ?float
     {
         return $this->standardLongitude;
     }
@@ -899,7 +674,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @deprecated
      */
-    public function getEventDateTimeLocationString()
+    public function getEventDateTimeLocationString(): string
     {
         $result = $this->getEventDateTimeString();
 
@@ -913,7 +688,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @deprecated
      */
-    public function getEventDateTimeString()
+    public function getEventDateTimeString(): string
     {
         $weekDays = array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag');
         $monthWeeks = array(1 => 'ersten', 2 => 'zweiten', 3 => 'dritten', 4 => 'vierten', 0 => 'letzten');
@@ -932,71 +707,38 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $result;
     }
 
-    /**
-     * Set cityPopulation
-     *
-     * @param integer $cityPopulation
-     * @return City
-     */
-    public function setCityPopulation($cityPopulation)
+    public function setCityPopulation(int $cityPopulation): City
     {
         $this->cityPopulation = $cityPopulation;
 
         return $this;
     }
 
-    /**
-     * Get cityPopulation
-     *
-     * @return integer
-     */
-    public function getCityPopulation()
+    public function getCityPopulation(): int
     {
         return $this->cityPopulation;
     }
 
-    /**
-     * Set punchLine
-     *
-     * @param string $punchLine
-     * @return City
-     */
-    public function setPunchLine($punchLine)
+    public function setPunchLine(string $punchLine): City
     {
         $this->punchLine = $punchLine;
 
         return $this;
     }
 
-    /**
-     * Get punchLine
-     *
-     * @return string
-     */
-    public function getPunchLine()
+    public function getPunchLine(): ?string
     {
         return $this->punchLine;
     }
 
-    /**
-     * Set longDescription
-     *
-     * @param string $longDescription
-     * @return City
-     */
-    public function setLongDescription($longDescription)
+    public function setLongDescription(string $longDescription = null): City
     {
         $this->longDescription = $longDescription;
 
         return $this;
     }
 
-    /**
-     * Get longDescription
-     *
-     * @return string
-     */
-    public function getLongDescription()
+    public function getLongDescription(): ?string
     {
         return $this->longDescription;
     }
@@ -1004,7 +746,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @deprecated
      */
-    public function countRides()
+    public function countRides(): int
     {
         return count($this->getActiveRides());
     }
@@ -1012,7 +754,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @deprecated
      */
-    public function getActiveRides()
+    public function getActiveRides(): array
     {
         $result = array();
 
@@ -1028,7 +770,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @deprecated
      */
-    public function getCurrentRide()
+    public function getCurrentRide(): ?Ride
     {
         $currentRide = null;
         $dateTime = new \DateTime();
@@ -1044,139 +786,81 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $currentRide;
     }
 
-    /**
-     * Add posts
-     *
-     * @param Post $posts
-     * @return City
-     */
-    public function addPost(Post $posts)
+    public function addPost(Post $post): City
     {
-        $this->posts[] = $posts;
+        $this->posts->add($post);
 
         return $this;
     }
 
-    /**
-     * Remove posts
-     *
-     * @param Post $posts
-     */
-    public function removePost(Post $posts)
+    public function removePost(Post $posts): City
     {
         $this->posts->removeElement($posts);
+
+        return $this;
     }
 
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPosts()
+    public function getPosts(): Collection
     {
         return $this->posts;
     }
 
-    /**
-     * Set isArchived
-     *
-     * @param boolean $isArchived
-     * @return City
-     */
-    public function setIsArchived(bool $isArchived)
+    public function setIsArchived(bool $isArchived): ArchiveableInterface
     {
         $this->isArchived = $isArchived;
 
         return $this;
     }
 
-    /**
-     * Get isArchived
-     *
-     * @return boolean
-     */
-    public function getIsArchived()
+    public function getIsArchived(): bool
     {
         return $this->isArchived;
     }
 
-    /**
-     * Set archiveDateTime
-     *
-     * @param \DateTime $archiveDateTime
-     * @return City
-     */
-    public function setArchiveDateTime(\DateTime $archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
     {
         $this->archiveDateTime = $archiveDateTime;
 
         return $this;
     }
 
-    /**
-     * Get archiveDateTime
-     *
-     * @return \DateTime
-     */
-    public function getArchiveDateTime()
+    public function getArchiveDateTime(): \DateTime
     {
         return $this->archiveDateTime;
     }
 
-    /**
-     * Set archiveParent
-     *
-     * @param City $archiveParent
-     * @return City
-     */
-    public function setArchiveParent(ArchiveableInterface $archiveParent)
+    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
     {
         $this->archiveParent = $archiveParent;
 
         return $this;
     }
 
-    /**
-     * Get archiveParent
-     *
-     * @return City
-     */
-    public function getArchiveParent()
+    public function getArchiveParent(): ArchiveableInterface
     {
         return $this->archiveParent;
     }
 
-    /**
-     * Set archiveUser
-     *
-     * @param User $archiveUser
-     * @return City
-     */
-    public function setArchiveUser(User $archiveUser)
+    public function setArchiveUser(User $archiveUser): ArchiveableInterface
     {
         $this->archiveUser = $archiveUser;
 
         return $this;
     }
 
-    /**
-     * Get archiveUser
-     *
-     * @return User
-     */
-    public function getArchiveUser()
+    public function getArchiveUser(): User
     {
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage($archiveMessage)
+    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
     {
         $this->archiveMessage = $archiveMessage;
 
         return $this;
     }
 
-    public function getArchiveMessage()
+    public function getArchiveMessage(): ?string
     {
         return $this->archiveMessage;
     }
@@ -1188,314 +872,236 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->setArchiveDateTime(new \DateTime());
     }
 
-    /**
-     * Set isStandardableLocation
-     *
-     * @param boolean $isStandardableLocation
-     * @return City
-     */
-    public function setIsStandardableLocation($isStandardableLocation)
+    public function setIsStandardableLocation(bool $isStandardableLocation): City
     {
         $this->isStandardableLocation = $isStandardableLocation;
 
         return $this;
     }
 
-    /**
-     * Get isStandardableLocation
-     *
-     * @return boolean
-     */
-    public function getIsStandardableLocation()
+    public function getIsStandardableLocation(): bool
     {
         return $this->isStandardableLocation;
     }
 
-    /**
-     * Set isStandardableTime
-     *
-     * @param boolean $isStandardableTime
-     * @return City
-     */
-    public function setIsStandardableTime($isStandardableTime)
+    public function setIsStandardableTime(bool $isStandardableTime): City
     {
         $this->isStandardableTime = $isStandardableTime;
 
         return $this;
     }
 
-    /**
-     * Get isStandardableTime
-     *
-     * @return boolean
-     */
-    public function getIsStandardableTime()
+    public function getIsStandardableTime(): bool
     {
         return $this->isStandardableTime;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPhotos()
+    public function getPhotos(): Collection
     {
         return $this->photos;
     }
 
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-     */
-    public function setImageFile(File $image = null)
+    public function setImageFile(File $image = null): City
     {
         $this->imageFile = $image;
 
         if ($image) {
             $this->updatedAt = new \DateTime('now');
         }
+
+        return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    /**
-     * @param string $imageName
-     */
-    public function setImageName($imageName)
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getImageName()
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
     public function getPin(): string
     {
-        return $this->latitude . ',' . $this->longitude;
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
-    public function setEnableBoard($enableBoard)
+    public function setEnableBoard(bool $enableBoard): City
     {
         $this->enableBoard = $enableBoard;
 
         return $this;
     }
 
-    public function getEnableBoard()
+    public function getEnableBoard(): bool
     {
         return $this->enableBoard;
     }
 
-    public function setTimezone($timezone)
+    public function setTimezone(string $timezone): City
     {
         $this->timezone = $timezone;
 
         return $this;
     }
 
-    public function getTimezone()
+    public function getTimezone(): string
     {
         return $this->timezone;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): City
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function setLastThread(Thread $lastThread)
+    public function setLastThread(Thread $lastThread = null): BoardInterface
     {
         $this->lastThread = $lastThread;
 
         return $this;
     }
 
-    public function getLastThread()
+    public function getLastThread(): ?Thread
     {
         return $this->lastThread;
     }
 
-    public function setPostNumber($postNumber)
+    public function setPostNumber(int $postNumber): BoardInterface
     {
         $this->postNumber = $postNumber;
 
         return $this;
     }
 
-    public function getPostNumber()
+    public function getPostNumber(): int
     {
         return $this->postNumber;
     }
 
-    public function incPostNumber()
+    public function incPostNumber(): BoardInterface
     {
         ++$this->postNumber;
+
+        return $this;
     }
 
-    public function setThreadNumber($threadNumber)
+    public function setThreadNumber(int $threadNumber): BoardInterface
     {
         $this->threadNumber = $threadNumber;
 
         return $this;
     }
 
-    public function getThreadNumber()
+    public function getThreadNumber(): int
     {
         return $this->threadNumber;
     }
 
-    public function incThreadNumber()
+    public function incThreadNumber(): BoardInterface
     {
         ++$this->threadNumber;
+
+        return $this;
     }
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return City
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt = null): City
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * Set colorRed
-     *
-     * @param integer $colorRed
-     * @return City
-     */
-    public function setColorRed($colorRed)
+    public function setColorRed(int $colorRed): City
     {
         $this->colorRed = $colorRed;
 
         return $this;
     }
 
-    /**
-     * Get colorRed
-     *
-     * @return integer
-     */
-    public function getColorRed()
+    public function getColorRed(): int
     {
         return $this->colorRed;
     }
 
-    /**
-     * Set colorGreen
-     *
-     * @param integer $colorGreen
-     * @return City
-     */
-    public function setColorGreen($colorGreen)
+    public function setColorGreen(int $colorGreen): City
     {
         $this->colorGreen = $colorGreen;
 
         return $this;
     }
 
-    /**
-     * Get colorGreen
-     *
-     * @return integer
-     */
-    public function getColorGreen()
+    public function getColorGreen(): int
     {
         return $this->colorGreen;
     }
 
-    /**
-     * Set colorBlue
-     *
-     * @param integer $colorBlue
-     * @return City
-     */
-    public function setColorBlue($colorBlue)
+    public function setColorBlue(int $colorBlue): City
     {
         $this->colorBlue = $colorBlue;
 
         return $this;
     }
 
-    /**
-     * Get colorBlue
-     *
-     * @return integer
-     */
-    public function getColorBlue()
+    public function getColorBlue(): int
     {
         return $this->colorBlue;
     }
 
-    /**
-     * Add photos
-     *
-     * @param \AppBundle\Entity\Photo $photos
-     * @return City
-     */
-    public function addPhoto(\AppBundle\Entity\Photo $photos)
+    public function addPhoto(Photo $photo): City
     {
-        $this->photos[] = $photos;
+        $this->photos->add($photo);
 
         return $this;
     }
 
-    /**
-     * Remove photos
-     *
-     * @param \AppBundle\Entity\Photo $photos
-     */
-    public function removePhoto(\AppBundle\Entity\Photo $photos)
+    public function removePhoto(Photo $photo): City
     {
-        $this->photos->removeElement($photos);
+        $this->photos->removeElement($photo);
+
+        return $this;
     }
 
-    public function setViews($views)
+    public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
+
+        return $this;
     }
 
-    public function getViews()
+    public function getViews(): int
     {
         return $this->views;
     }
 
-    public function incViews()
+    public function incViews(): ViewableInterface
     {
         ++$this->views;
+
+        return $this;
     }
 
-    public function getCountry()
+    public function getCountry(): ?Region
     {
         if ($this->region) {
             return $this->region->getParent();
@@ -1504,7 +1110,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return null;
     }
 
-    public function getDateTime()
+    public function getDateTime(): ?\DateTime
     {
         return null;
     }

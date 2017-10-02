@@ -2,10 +2,17 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PhotoAdmin extends AbstractAdmin
@@ -14,28 +21,28 @@ class PhotoAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Photo', ['class' => 'col-md-6'])
-            ->add('ride')
-            ->add('user')
-            ->add('description')
+            ->add('ride', EntityType::class, ['class' => Ride::class])
+            ->add('user', EntityType::class, ['class' => User::class])
+            ->add('description', TextareaType::class, ['required' => false])
             ->end()
 
             ->with('Date', ['class' => 'col-md-6'])
-            ->add('dateTime')
-            ->add('creationDateTime')
+            ->add('dateTime', DateTimeType::class)
+            ->add('creationDateTime', DateTimeType::class)
             ->end()
 
             ->with('Coords', ['class' => 'col-md-6'])
-            ->add('latitude')
-            ->add('longitude')
+            ->add('latitude', TextType::class, ['required' => false])
+            ->add('longitude', TextType::class, ['required' => false])
             ->end()
 
             ->with('Settings', ['class' => 'col-md-6'])
-            ->add('enabled')
-            ->add('deleted')
+            ->add('enabled', CheckboxType::class, ['required' => false])
+            ->add('deleted', CheckboxType::class, ['required' => false])
             ->end()
 
             ->with('Image file', ['class' => 'col-md-6'])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->end()
         ;
     }

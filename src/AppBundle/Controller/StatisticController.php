@@ -16,7 +16,7 @@ class StatisticController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        $this->getMetadata()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $this->getSeoPage()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
             'AppBundle:Statistic:city_statistic.html.twig',
@@ -106,7 +106,7 @@ class StatisticController extends AbstractController
 
         rsort($rideMonths);
 
-        $this->getMetadata()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $this->getSeoPage()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
             'AppBundle:Statistic:overview.html.twig',

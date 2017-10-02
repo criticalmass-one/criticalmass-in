@@ -4,7 +4,7 @@ namespace AppBundle\EntityInterface;
 
 interface TwitterInterface
 {
-    public function setTwitter($twitter);
+    public function setTwitter(string $twitter = null): TwitterInterface;
 
-    public function getTwitter();
+    public function getTwitter(): ?string;
 }

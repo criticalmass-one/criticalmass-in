@@ -5,7 +5,12 @@ namespace AppBundle\Entity;
 use AppBundle\EntityInterface\ArchiveableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\ParticipateableInterface;
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ViewInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -20,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
 {
     /**
      * @ORM\Id
@@ -285,222 +290,146 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->archiveDateTime = new \DateTime();
         $this->latitude = 0.0;
         $this->longitude = 0.0;
+
+        $this->weathers = new ArrayCollection();
+        $this->estimates = new ArrayCollection();
+        $this->tracks = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->subrides = new ArrayCollection();
+        $this->participations = new ArrayCollection();
+        $this->archiveRides = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser(User $user)
+    public function setUser(User $user = null): Ride
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $dateTime
-     * @return Ride
-     */
-    public function setDateTime($dateTime)
+    public function setDateTime(\DateTime $dateTime): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    public function getSimpleDate()
+    /**
+     * @deprecated
+     */
+    public function getSimpleDate(): string
     {
         return $this->dateTime->format('Y-m-d');
     }
     
-    /**
-     * Set hasTime
-     *
-     * @param boolean $hasTime
-     * @return Ride
-     */
-    public function setHasTime($hasTime)
+    public function setHasTime(bool $hasTime): Ride
     {
         $this->hasTime = $hasTime;
 
         return $this;
     }
 
-    /**
-     * Get hasTime
-     *
-     * @return boolean
-     */
-    public function getHasTime()
+    public function getHasTime(): bool
     {
         return $this->hasTime;
     }
 
-    /**
-     * Set hasLocation
-     *
-     * @param boolean $hasLocation
-     * @return Ride
-     */
-    public function setHasLocation($hasLocation)
+    public function setHasLocation(bool $hasLocation): Ride
     {
         $this->hasLocation = $hasLocation;
 
         return $this;
     }
 
-    /**
-     * Get hasLocation
-     *
-     * @return boolean
-     */
-    public function getHasLocation()
+    public function getHasLocation(): bool
     {
         return $this->hasLocation;
     }
 
-    /**
-     * Set location
-     *
-     * @param string $location
-     * @return Ride
-     */
-    public function setLocation($location)
+    public function setLocation(string $location = null): Ride
     {
         $this->location = $location;
 
         return $this;
     }
 
-    /**
-     * Get location
-     *
-     * @return string
-     */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
 
-    /**
-     * Set city
-     *
-     * @param City $city
-     * @return Ride
-     */
-    public function setCity(City $city = null)
+    public function setCity(City $city = null): Ride
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return Ride
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude = null): Ride
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get latitude
-     *
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return Ride
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude = null): Ride
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    public function setTitle($title)
+    public function setTitle(string $title = null): Ride
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setDescription($description)
+    public function setDescription(string $description): Ride
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -517,119 +446,77 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->socialDescription;
     }
 
-    public function isEqual(Ride $ride)
+    /** @deprecated */
+    public function isEqual(Ride $ride): bool
     {
         return $ride->getId() == $this->getId();
     }
 
-    public function equals(Ride $ride)
+    /** @deprecated */
+    public function equals(Ride $ride): bool
     {
         return $this->isEqual($ride);
     }
 
-    public function isSameRide(Ride $ride)
+    /** @deprecated */
+    public function isSameRide(Ride $ride): bool
     {
         return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->city) {
-            return $this->city->getTitle() . " - " . $this->getDateTime()->format("Y-m-d");
+            return $this->city->getTitle() . " - " . $this->getDateTime()->format('Y-m-d');
         } else {
-            return $this->getDateTime()->format("Y-m-d");
+            return $this->getDateTime()->format('Y-m-d');
         }
     }
 
-
-    /**
-     * Set estimatedParticipants
-     *
-     * @param integer $estimatedParticipants
-     * @return Ride
-     */
-    public function setEstimatedParticipants($estimatedParticipants)
+    public function setEstimatedParticipants(int $estimatedParticipants): Ride
     {
         $this->estimatedParticipants = $estimatedParticipants;
 
         return $this;
     }
 
-    /**
-     * Get estimatedParticipants
-     *
-     * @return integer
-     */
-    public function getEstimatedParticipants()
+    public function getEstimatedParticipants(): ?int
     {
         return $this->estimatedParticipants;
     }
 
-    /**
-     * Set facebook
-     *
-     * @param string $facebook
-     * @return Ride
-     */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook = null): Ride
     {
         $this->facebook = $facebook;
 
         return $this;
     }
 
-    /**
-     * Get facebook
-     *
-     * @return string
-     */
-    public function getFacebook()
+    public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     * @return Ride
-     */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter = null): Ride
     {
         $this->twitter = $twitter;
 
         return $this;
     }
 
-    /**
-     * Get twitter
-     *
-     * @return string
-     */
-    public function getTwitter()
+    public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
-    /**
-     * Set website
-     *
-     * @param string $website
-     * @return Ride
-     */
-    public function setUrl($url)
+    public function setUrl(string $url = null): Ride
     {
         $this->url = $url;
 
         return $this;
     }
 
-    /**
-     * Get website
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -638,122 +525,85 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\VirtualProperty
      * @JMS\SerializedName("timestamp")
      * @JMS\Type("integer")
-     * @return integer
      */
-    public function getTimestamp()
+    public function getTimestamp(): int
     {
         return $this->dateTime->format('U');
     }
 
-
-    public function getFormattedDate()
+    /** @deprecated */
+    public function getFormattedDate(): string
     {
         return $this->dateTime->format('Y-m-d');
     }
 
-    public function getDate()
+    /** @deprecated */
+    public function getDate(): \DateTime
     {
         return $this->dateTime;
     }
 
-    public function getTime()
+    /** @deprecated */
+    public function getTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    public function setDate(\DateTime $date)
+    /** @deprecated */
+    public function setDate(\DateTime $date): Ride
     {
         $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'), $date->getTimezone());
+
+        return $this;
     }
 
-    public function setTime(\DateTime $time)
+    /** @deprecated */
+    public function setTime(\DateTime $time): Ride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'), $time->getTimezone());
+
+        return $this;
     }
 
-    /**
-     * Set estimatedDistance
-     *
-     * @param float $estimatedDistance
-     * @return Ride
-     */
-    public function setEstimatedDistance($estimatedDistance)
+    public function setEstimatedDistance(float $estimatedDistance): Ride
     {
         $this->estimatedDistance = $estimatedDistance;
 
         return $this;
     }
 
-    /**
-     * Get estimatedDistance
-     *
-     * @return float
-     */
-    public function getEstimatedDistance()
+    public function getEstimatedDistance(): ?float
     {
         return $this->estimatedDistance;
     }
 
-    /**
-     * Set estimatedDuration
-     *
-     * @param float $estimatedDuration
-     * @return Ride
-     */
-    public function setEstimatedDuration($estimatedDuration)
+    public function setEstimatedDuration(float $estimatedDuration): Ride
     {
         $this->estimatedDuration = $estimatedDuration;
 
         return $this;
     }
 
-    /**
-     * Get estimatedDuration
-     *
-     * @return float
-     */
-    public function getEstimatedDuration()
+    public function getEstimatedDuration(): ?float
     {
         return $this->estimatedDuration;
     }
 
-    /**
-     * Updates the hash value to force the preUpdate and postUpdate events to fire
-     */
-    public function refreshUpdated()
+    public function addTrack(Track $track): Ride
     {
-        $this->setUpdated(date('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Add tracks
-     *
-     * @param Track $tracks
-     * @return Ride
-     */
-    public function addTrack(Track $tracks)
-    {
-        $this->tracks[] = $tracks;
+        $this->tracks->add($track);
 
         return $this;
     }
 
-    /**
-     * Remove tracks
-     *
-     * @param Track $tracks
-     */
-    public function removeTrack(Track $tracks)
+    public function removeTrack(Track $track): Ride
     {
-        $this->tracks->removeElement($tracks);
+        $this->tracks->removeElement($track);
+
+        return $this;
     }
 
-    /**
-     * Get tracks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTracks()
+    public function getTracks(): Collection
     {
         return $this->tracks;
     }
@@ -762,9 +612,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\VirtualProperty
      * @JMS\SerializedName("title")
      * @JMS\Type("string")
-     * @return string
+     * @deprecated
      */
-    public function getFancyTitle()
+    public function getFancyTitle(): string
     {
         if (!$this->title) {
             return $this->city->getTitle() . ' ' . $this->dateTime->format('d.m.Y');
@@ -773,206 +623,124 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->getTitle();
     }
 
-    /**
-     * Set isArchived
-     *
-     * @param boolean $isArchived
-     * @return Ride
-     */
-    public function setIsArchived(bool $isArchived)
+    public function setIsArchived(bool $isArchived): ArchiveableInterface
     {
         $this->isArchived = $isArchived;
 
         return $this;
     }
 
-    /**
-     * Get isArchived
-     *
-     * @return boolean
-     */
-    public function getIsArchived()
+    public function getIsArchived(): bool
     {
         return $this->isArchived;
     }
 
-    /**
-     * Set archiveDateTime
-     *
-     * @param \DateTime $archiveDateTime
-     * @return Ride
-     */
-    public function setArchiveDateTime(\DateTime $archiveDateTime)
+    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
     {
         $this->archiveDateTime = $archiveDateTime;
 
         return $this;
     }
 
-    /**
-     * Get archiveDateTime
-     *
-     * @return \DateTime
-     */
-    public function getArchiveDateTime()
+    public function getArchiveDateTime(): \DateTime
     {
         return $this->archiveDateTime;
     }
 
-    /**
-     * Set archiveUser
-     *
-     * @param User $archiveUser
-     * @return Ride
-     */
-    public function setArchiveUser(User $archiveUser)
+    public function setArchiveUser(User $archiveUser): ArchiveableInterface
     {
         $this->archiveUser = $archiveUser;
 
         return $this;
     }
 
-    /**
-     * Get archiveUser
-     *
-     * @return User
-     */
-    public function getArchiveUser()
+    public function getArchiveUser(): User
     {
         return $this->archiveUser;
     }
 
-    public function setArchiveMessage($archiveMessage)
+    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
     {
         $this->archiveMessage = $archiveMessage;
 
         return $this;
     }
 
-    public function getArchiveMessage()
+    public function getArchiveMessage(): ?string
     {
         return $this->archiveMessage;
     }
 
-    /**
-     * Set archiveParent
-     *
-     * @param $archiveParent
-     * @return Ride
-     */
-    public function setArchiveParent(ArchiveableInterface $archiveParent)
+    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
     {
         $this->archiveParent = $archiveParent;
 
         return $this;
     }
 
-    /**
-     * Get archiveParent
-     *
-     * @return Ride
-     */
-    public function getArchiveParent()
+    public function getArchiveParent(): ArchiveableInterface
     {
         return $this->archiveParent;
     }
 
-    /**
-     * Add posts
-     *
-     * @param Post $posts
-     * @return City
-     */
-    public function addPost(Post $posts)
+    public function addPost(Post $post): Ride
     {
-        $this->posts[] = $posts;
-    }
-
-    /**
-     * Add subrides
-     *
-     * @param Subride $subrides
-     * @return Ride
-     */
-    public function addSubride(Subride $subrides)
-    {
-        $this->subrides[] = $subrides;
+        $this->posts->add($post);
 
         return $this;
     }
 
-    /**
-     * Remove posts
-     *
-     * @param Post $posts
-     */
-    public function removePost(Post $posts)
+    public function removePost(Post $posts): Ride
     {
         $this->posts->removeElement($posts);
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPosts()
+    public function getPosts(): Collection
     {
         return $this->posts;
     }
 
-    /**
-     * Add photos
-     *
-     * @param Photo $photos
-     * @return Ride
-     */
-    public function addPhoto(Photo $photos)
+    public function addPhoto(Photo $photo): Ride
     {
-        $this->photos[] = $photos;
+        $this->photos->add($photo);
 
         return $this;
     }
 
-    /**
-     * Remove photos
-     *
-     * @param Photo $photos
-     */
-    public function removePhoto(Photo $photos)
+    public function removePhoto(Photo $photos): Ride
     {
         $this->photos->removeElement($photos);
+
+        return $this;
     }
 
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
+    public function getPhotos(): Collection
     {
         return $this->photos;
     }
 
-    /**
-     * Remove subrides
-     *
-     * @param Subride $subrides
-     */
-    public function removeSubride(Subride $subrides)
+    public function addSubride(Subride $subride): Ride
     {
-        $this->subrides->removeElement($subrides);
+        $this->subrides->add($subride);
+
+        return $this;
     }
 
-    /**
-     * Get subrides
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSubrides()
+    public function removeSubride(Subride $subrides): Ride
+    {
+        $this->subrides->removeElement($subrides);
+
+        return $this;
+    }
+
+    public function getSubrides(): Collection
     {
         return $this->subrides;
     }
 
-    public function getDurationInterval()
+    public function getDurationInterval(): \DateInterval
     {
         $totalMinutes = $this->estimatedDuration * 60.0;
 
@@ -982,7 +750,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
     }
 
-    public function getAverageVelocity()
+    public function getAverageVelocity(): int
     {
         if (!$this->getEstimatedDuration() || !$this->getEstimatedDistance()) {
             return 0;
@@ -996,103 +764,72 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->latitude . ',' . $this->longitude;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): Ride
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * Set participationsNumberYes
-     *
-     * @param integer $participationsNumberYes
-     * @return Ride
-     */
-    public function setParticipationsNumberYes($participationsNumberYes)
+    public function setParticipationsNumberYes(int $participationsNumberYes): ParticipateableInterface
     {
         $this->participationsNumberYes = $participationsNumberYes;
 
         return $this;
     }
 
-    /**
-     * Get participationsNumberYes
-     *
-     * @return integer
-     */
-    public function getParticipationsNumberYes()
+    public function getParticipationsNumberYes(): int
     {
         return $this->participationsNumberYes;
     }
 
-    /**
-     * Set participationsNumberMaybe
-     *
-     * @param integer $participationsNumberMaybe
-     * @return Ride
-     */
-    public function setParticipationsNumberMaybe($participationsNumberMaybe)
+    public function setParticipationsNumberMaybe(int $participationsNumberMaybe): ParticipateableInterface
     {
         $this->participationsNumberMaybe = $participationsNumberMaybe;
 
         return $this;
     }
 
-    /**
-     * Get participationsNumberMaybe
-     *
-     * @return integer
-     */
-    public function getParticipationsNumberMaybe()
+    public function getParticipationsNumberMaybe(): int
     {
         return $this->participationsNumberMaybe;
     }
 
-    /**
-     * Set participationsNumberNo
-     *
-     * @param integer $participationsNumberNo
-     * @return Ride
-     */
-    public function setParticipationsNumberNo($participationsNumberNo)
+    public function setParticipationsNumberNo(int $participationsNumberNo): ParticipateableInterface
     {
         $this->participationsNumberNo = $participationsNumberNo;
 
         return $this;
     }
 
-    /**
-     * Get participationsNumberNo
-     *
-     * @return integer
-     */
-    public function getParticipationsNumberNo()
+    public function getParticipationsNumberNo(): int
     {
         return $this->participationsNumberNo;
     }
 
-    public function setViews($views)
+    public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
     }
 
-    public function getViews()
+    public function getViews(): int
     {
         return $this->views;
     }
 
-    public function incViews()
+    public function incViews(): ViewableInterface
     {
         ++$this->views;
+
+        return $this;
     }
 
-    public function getCountry()
+    public function getCountry(): ?Region
     {
         if ($this->city) {
             return $this->city->getCountry();
@@ -1101,7 +838,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return null;
     }
 
-    public function getIsEnabled()
+    public function getIsEnabled(): ?bool
     {
         if ($this->city) {
             return $this->city->isEnabled();
@@ -1110,156 +847,104 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return null;
     }
 
-    public function setFeaturedPhoto(Photo $featuredPhoto)
+    public function setFeaturedPhoto(Photo $featuredPhoto = null): Ride
     {
         $this->featuredPhoto = $featuredPhoto;
+
+        return $this;
     }
 
-    public function getFeaturedPhoto()
+    public function getFeaturedPhoto(): ?Photo
     {
         return $this->featuredPhoto;
     }
 
-    public function getRestrictedPhotoAccess()
+    /** @deprecated */
+    public function getRestrictedPhotoAccess(): bool
     {
         return $this->restrictedPhotoAccess;
     }
 
-    public function setRestrictedPhotoAccess($restrictedPhotoAccess)
+    /** @deprecated */
+    public function setRestrictedPhotoAccess(bool $restrictedPhotoAccess): Ride
     {
         $this->restrictedPhotoAccess = $restrictedPhotoAccess;
 
         return $this;
     }
 
-    /**
-     * Add archiveRides
-     *
-     * @param Ride $archiveRides
-     * @return Ride
-     */
-    public function addArchiveRide(Ride $archiveRides)
+    public function addArchiveRide(Ride $archiveRide): Ride
     {
-        $this->archiveRides[] = $archiveRides;
+        $this->archiveRides->add($archiveRide);
 
         return $this;
     }
 
-    /**
-     * Remove archiveRides
-     *
-     * @param Ride $archiveRides
-     */
-    public function removeArchiveRide(Ride $archiveRides)
+    public function removeArchiveRide(Ride $archiveRides): Ride
     {
         $this->archiveRides->removeElement($archiveRides);
+
+        return $this;
     }
 
-    /**
-     * Get archiveRides
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArchiveRides()
+    public function getArchiveRides(): Collection
     {
         return $this->archiveRides;
     }
 
-    /**
-     * Add participations
-     *
-     * @param Participation $participations
-     * @return Ride
-     */
-    public function addParticipation(Participation $participations)
+    public function addParticipation(Participation $participation): Ride
     {
-        $this->participations[] = $participations;
+        $this->participations->add($participation);
 
         return $this;
     }
 
-    /**
-     * Remove participations
-     *
-     * @param \Caldera\Bundle\AppBundle\Entity\Participation $participations
-     */
-    public function removeParticipation(Participation $participations)
+    public function removeParticipation(Participation $participation): Ride
     {
-        $this->participations->removeElement($participations);
+        $this->participations->removeElement($participation);
+
+        return $this;
     }
 
-    /**
-     * Get participations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParticipations()
+    public function getParticipations(): Collection
     {
         return $this->participations;
     }
 
-    /**
-     * Add estimates
-     *
-     * @param \Caldera\Bundle\AppBundle\Entity\RideEstimate $estimates
-     * @return Ride
-     */
-    public function addEstimate(RideEstimate $estimates)
+    public function addEstimate(RideEstimate $estimate): Ride
     {
-        $this->estimates[] = $estimates;
+        $this->estimates->add($estimate);
 
         return $this;
     }
 
-    /**
-     * Remove estimates
-     *
-     * @param \Caldera\Bundle\AppBundle\Entity\RideEstimate $estimates
-     */
-    public function removeEstimate(RideEstimate $estimates)
+    public function removeEstimate(RideEstimate $estimate): Ride
     {
-        $this->estimates->removeElement($estimates);
+        $this->estimates->removeElement($estimate);
+
+        return $this;
     }
 
-    /**
-     * Get estimates
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEstimates()
+    public function getEstimates(): Collection
     {
         return $this->estimates;
     }
 
-    /**
-     * Add weathers
-     *
-     * @param \Caldera\Bundle\AppBundle\Entity\Weather $weathers
-     * @return Ride
-     */
-    public function addWeather(Weather $weathers)
+    public function addWeather(Weather $weather): Ride
     {
-        $this->weathers[] = $weathers;
+        $this->weathers->add($weather);
 
         return $this;
     }
 
-    /**
-     * Remove weathers
-     *
-     * @param \Caldera\Bundle\AppBundle\Entity\Weather $weathers
-     */
-    public function removeWeather(Weather $weathers)
+    public function removeWeather(Weather $weathers): Ride
     {
         $this->weathers->removeElement($weathers);
+
+        return $this;
     }
 
-    /**
-     * Get weathers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWeathers()
+    public function getWeathers(): Collection
     {
         return $this->weathers;
     }
@@ -1287,38 +972,30 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $archivedRide;
     }
 
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-     */
-    public function setImageFile(File $image = null)
+    public function setImageFile(File $image = null): Ride
     {
         $this->imageFile = $image;
 
         if ($image) {
             $this->updatedAt = new \DateTime('now');
         }
+
+        return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    /**
-     * @param string $imageName
-     */
-    public function setImageName($imageName)
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getImageName()
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }

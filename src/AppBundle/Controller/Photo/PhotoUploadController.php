@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Photo;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
@@ -13,6 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoUploadController extends AbstractController
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function uploadAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

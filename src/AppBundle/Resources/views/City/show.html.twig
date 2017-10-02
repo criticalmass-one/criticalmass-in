@@ -7,24 +7,6 @@
     <li class="active">{{ city.city }}</li>
 {% endblock %}
 
-{% block additionalHeaderElements %}
-    <meta property="og:title" content="{{ city.title }}" />
-    <meta property="og:type" content="Website" />
-    <meta property="og:description" content="{{ city.description }}" />
-    <meta property="og:url" content="{{ url('caldera_criticalmass_desktop_city_show', { citySlug: city.slug }) }}" />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="criticalmass.in" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@calderacc" />
-    <meta name="twitter:creator" content="@maltehuebner" />
-    <meta name="twitter:title" content="{{ city.title }}" />
-    <meta name="twitter:description" content="{{ city.description }}" />
-    {% if city.imageName %}
-        <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
-        <meta name="twitter:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
-    {% endif %}
-{% endblock %}
-
 {% block optionsButton %}
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -99,7 +81,35 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-12">
+                        {% if city.longDescription %}
                         {{ city.longDescription|markdown }}
+                        {% else %}
+                        <div class="alert alert-info">
+                            <strong>Huch?</strong>
+                            Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du Lust und Zeit hast, kannst du {{ city.title }} <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}">hier beschreiben</a>:
+
+                            <ul>
+                                <li>
+                                    Seit wann gibt es die Critical Mass in {{ city.city }}?
+                                </li>
+                                <li>
+                                    Wie lange dauern eure Touren?
+                                </li>
+                                <li>
+                                    Wo fahrt ihr ungefähr lang?
+                                </li>
+                                <li>
+                                    Welche Probleme gibt es in {{ city.city }} für den Radverkehr?
+                                </li>
+                            </ul>
+
+                            <p class="text-center margin-top-medium">
+                                <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}" class="btn btn-primary btn-lg">
+                                    {{ city.city }} editieren
+                                </a>
+                            </p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -136,13 +146,57 @@
             </div>
 
             <div class="col-md-3">
-                {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
-                {% include 'AppBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
-                {% include 'AppBundle:City:Includes/_currentTime.html.twig' with { 'city': city, 'dateTime': dateTime } %}
-                {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
-                {% include 'AppBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
-                {% include 'AppBundle:City:Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
-                {% include 'AppBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
+                    </div>
+                </div>
+
+                {% if 'Hamburg' in city.city %}
+                <div class="row">
+                    <div class="col-md-12" id="fahrradstadthamburg-container">
+                        <script>
+                            CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
+                        </script>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_currentTime.html.twig' with { 'city': city, 'dateTime': dateTime } %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'AppBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

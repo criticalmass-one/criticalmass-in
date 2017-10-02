@@ -4,15 +4,15 @@ namespace AppBundle\EntityInterface;
 
 interface ParticipateableInterface
 {
-    public function setParticipationsNumberYes($participationsNumberYes);
+    public function setParticipationsNumberYes(int $participationsNumberYes);
 
-    public function getParticipationsNumberYes();
+    public function getParticipationsNumberYes(): int;
 
-    public function setParticipationsNumberMaybe($participationsNumberMaybe);
+    public function setParticipationsNumberMaybe(int $participationsNumberMaybe);
 
-    public function getParticipationsNumberMaybe();
+    public function getParticipationsNumberMaybe(): int;
 
-    public function setParticipationsNumberNo($participationsNumberNo);
+    public function setParticipationsNumberNo(int $participationsNumberNo);
 
-    public function getParticipationsNumberNo();
+    public function getParticipationsNumberNo(): int;
 }

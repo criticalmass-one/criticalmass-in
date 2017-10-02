@@ -17,6 +17,7 @@ criticalmass:
             tips: Tipps und Tricks
             about-us: Über Caldera Critical Mass
             caldera-faq: Häufig gestellte Fragen zu Caldera
+            help: Hilfe
         live:
             live: Live
             map: Live-Karte
@@ -24,9 +25,7 @@ criticalmass:
             criticalmaps: Aufenthaltsort teilen mit Critical Maps
         account:
             account: Benutzerkonto
-            tracks: Deine Tracks
-            apps: Deine Apps
-            photos: Deine Fotos
+            profile: Dein Profil
             logout: Abmelden
             login: Anmelden
         search:

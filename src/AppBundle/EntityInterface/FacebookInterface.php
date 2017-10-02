@@ -4,7 +4,7 @@ namespace AppBundle\EntityInterface;
 
 interface FacebookInterface
 {
-    public function setFacebook($facebook);
+    public function setFacebook(string $facebook = null): FacebookInterface;
 
-    public function getFacebook();
+    public function getFacebook(): ?string;
 }

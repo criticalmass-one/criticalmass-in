@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Weather;
@@ -9,6 +10,7 @@ use AppBundle\Traits\ViewStorageTrait;
 use AppBundle\Form\Type\RideEstimateType;
 use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
@@ -32,6 +34,22 @@ class RideController extends AbstractController
         );
     }
 
+    public function showMonthAction(Request $request, string $citySlug, string $rideDate): Response
+    {
+        $city = $this->getCheckedCity($citySlug);
+        $dateTime = new \DateTime(sprintf('%s-01', $rideDate));
+
+        $rideList = $this->getRideRepository()->findByCityAndMonth($city, $dateTime);
+
+        if (count($rideList) !== 1) {
+            throw $this->createNotFoundException();
+        }
+
+        $ride = array_pop($rideList);
+
+        return $this->redirectToObject($ride);
+    }
+
     public function showAction(Request $request, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -44,8 +62,22 @@ class RideController extends AbstractController
         $this->countRideView($ride);
 
         $this
-            ->getMetadata()
-            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'));
+            ->getSeoPage()
+            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
+            ->setCanonicalForObject($ride)
+        ;
+
+        if ($ride->getImageName()) {
+            $this->getSeoPage()->setPreviewPhoto($ride);
+        } elseif ($ride->getFeaturedPhoto()) {
+            $this->getSeoPage()->setPreviewPhoto($ride->getFeaturedPhoto());
+        }
+
+        if ($ride->getSocialDescription()) {
+            $this->getSeoPage()->setDescription($ride->getSocialDescription());
+        } elseif ($ride->getDescription()) {
+            $this->getSeoPage()->setDescription($ride->getDescription());
+        }
 
         /**
          * @var Weather $weather
@@ -81,6 +113,9 @@ class RideController extends AbstractController
         );
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function addestimateAction(Request $request, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);

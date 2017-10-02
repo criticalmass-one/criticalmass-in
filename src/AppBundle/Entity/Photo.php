@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -15,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo implements ViewableInterface
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
 {
     /**
      * @ORM\Id
@@ -129,258 +131,191 @@ class Photo implements ViewableInterface
         $this->description = '';
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city)
+    public function setCity(City $city): Photo
     {
         $this->city = $city;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param mixed $enabled
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): Photo
     {
         $this->enabled = $enabled;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDeleted()
+    public function getDeleted(): bool
     {
         return $this->deleted;
     }
 
-    /**
-     * @param mixed $deleted
-     */
-    public function setDeleted($deleted)
+    public function setDeleted(bool $deleted): Photo
     {
         $this->deleted = $deleted;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * @param mixed $latitude
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude = null): Photo
     {
         $this->latitude = $latitude;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * @param mixed $longitude
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude = null): Photo
     {
         $this->longitude = $longitude;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * @param mixed $ride
-     */
-    public function setRide($ride)
+    public function setRide(Ride $ride): Photo
     {
         $this->ride = $ride;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user)
+    public function setUser(User $user): Photo
     {
         $this->user = $user;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): Photo
     {
         $this->description = $description;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * @param mixed $dateTime
-     */
-    public function setDateTime($dateTime)
+    public function setDateTime(\DateTime $dateTime): Photo
     {
         $this->dateTime = $dateTime;
+
+        return $this;
     }
 
-    public function hasCoordinates()
+    public function hasCoordinates(): bool
     {
         return ($this->latitude && $this->longitude);
     }
 
-    /**
-     * Set creationDateTime
-     *
-     * @param \DateTime $creationDateTime
-     * @return Photo
-     */
-    public function setCreationDateTime($creationDateTime)
+    public function setCreationDateTime(\DateTime $creationDateTime): Photo
     {
         $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
 
-    /**
-     * Get creationDateTime
-     *
-     * @return \DateTime
-     */
-    public function getCreationDateTime()
+    public function getCreationDateTime(): \DateTime
     {
         return $this->creationDateTime;
     }
 
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-     */
-    public function setImageFile(File $image = null)
+    public function setImageFile(File $image = null): Photo
     {
         $this->imageFile = $image;
 
         if ($image) {
             $this->updatedAt = new \DateTime('now');
         }
+
+        return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    /**
-     * @param string $imageName
-     */
-    public function setImageName($imageName)
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getImageName()
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
-    public function setViews($views)
+    public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
+
+        return $this;
     }
 
-    public function getViews()
+    public function getViews(): int
     {
         return $this->views;
     }
 
-    public function incViews()
+    public function incViews(): ViewableInterface
     {
         ++$this->views;
+
+        return $this;
     }
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Photo
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updatedAt): Photo
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }

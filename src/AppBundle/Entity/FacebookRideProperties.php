@@ -103,378 +103,197 @@ class FacebookRideProperties
         $this->createdAt = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return FacebookRideProperties
-     */
-    public function setName($name)
+    public function setName(string $name = null): FacebookRideProperties
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return FacebookRideProperties
-     */
-    public function setDescription($description)
+    public function setDescription(string $description = null): FacebookRideProperties
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get numberAttending
-     *
-     * @return integer
-     */
-    public function getNumberAttending()
+    public function getNumberAttending(): ?int
     {
         return $this->numberAttending;
     }
 
-    /**
-     * Set numberAttending
-     *
-     * @param integer $numberAttending
-     * @return FacebookRideProperties
-     */
-    public function setNumberAttending($numberAttending)
+    public function setNumberAttending(int $numberAttending = null): FacebookRideProperties
     {
         $this->numberAttending = $numberAttending;
 
         return $this;
     }
 
-    /**
-     * Get numberMaybe
-     *
-     * @return integer
-     */
-    public function getNumberMaybe()
+    public function getNumberMaybe(): ?int
     {
         return $this->numberMaybe;
     }
 
-    /**
-     * Set numberMaybe
-     *
-     * @param integer $numberMaybe
-     * @return FacebookRideProperties
-     */
-    public function setNumberMaybe($numberMaybe)
+    public function setNumberMaybe(int $numberMaybe = null): FacebookRideProperties
     {
         $this->numberMaybe = $numberMaybe;
 
         return $this;
     }
 
-    /**
-     * Get numberDeclined
-     *
-     * @return integer
-     */
-    public function getNumberDeclined()
+    public function getNumberDeclined(): ?int
     {
         return $this->numberDeclined;
     }
 
-    /**
-     * Set numberDeclined
-     *
-     * @param integer $numberDeclined
-     * @return FacebookRideProperties
-     */
-    public function setNumberDeclined($numberDeclined)
+    public function setNumberDeclined(int $numberDeclined = null): FacebookRideProperties
     {
         $this->numberDeclined = $numberDeclined;
 
         return $this;
     }
 
-    /**
-     * Get numberInterested
-     *
-     * @return integer
-     */
-    public function getNumberInterested()
+    public function getNumberInterested(): ?int
     {
         return $this->numberInterested;
     }
 
-    /**
-     * Set numberInterested
-     *
-     * @param integer $numberInterested
-     * @return FacebookRideProperties
-     */
-    public function setNumberInterested($numberInterested)
+    public function setNumberInterested(int $numberInterested = null): FacebookRideProperties
     {
         $this->numberInterested = $numberInterested;
 
         return $this;
     }
 
-    /**
-     * Get numberNoreply
-     *
-     * @return integer
-     */
-    public function getNumberNoreply()
+    public function getNumberNoreply(): ?int
     {
         return $this->numberNoreply;
     }
 
-    /**
-     * Set numberNoreply
-     *
-     * @param integer $numberNoreply
-     * @return FacebookRideProperties
-     */
-    public function setNumberNoreply($numberNoreply)
+    public function setNumberNoreply(int $numberNoreply = null): FacebookRideProperties
     {
         $this->numberNoreply = $numberNoreply;
 
         return $this;
     }
 
-    /**
-     * Get startTime
-     *
-     * @return \DateTime
-     */
-    public function getStartTime()
+    public function getStartTime(): ?\DateTime
     {
         return $this->startTime;
     }
 
-    /**
-     * Set startTime
-     *
-     * @param \DateTime $startTime
-     * @return FacebookRideProperties
-     */
-    public function setStartTime($startTime)
+    public function setStartTime(\DateTime $startTime = null): FacebookRideProperties
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    /**
-     * Get endTime
-     *
-     * @return \DateTime
-     */
-    public function getEndTime()
+    public function getEndTime(): ?\DateTime
     {
         return $this->endTime;
     }
 
-    /**
-     * Set endTime
-     *
-     * @param \DateTime $endTime
-     * @return FacebookRideProperties
-     */
-    public function setEndTime($endTime)
+    public function setEndTime(\DateTime $endTime = null): FacebookRideProperties
     {
         $this->endTime = $endTime;
 
         return $this;
     }
 
-    /**
-     * Get updatedTime
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedTime()
+    public function getUpdatedTime(): ?\DateTime
     {
         return $this->updatedTime;
     }
 
-    /**
-     * Set updatedTime
-     *
-     * @param \DateTime $updatedTime
-     * @return FacebookRideProperties
-     */
-    public function setUpdatedTime($updatedTime)
+    public function setUpdatedTime(\DateTime $updatedTime = null): FacebookRideProperties
     {
         $this->updatedTime = $updatedTime;
 
         return $this;
     }
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return FacebookRideProperties
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt = null): FacebookRideProperties
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * Get ride
-     *
-     * @return \AppBundle\Entity\Ride
-     */
-    public function getRide()
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
 
-    /**
-     * Set ride
-     *
-     * @param \AppBundle\Entity\Ride $ride
-     * @return FacebookRideProperties
-     */
-    public function setRide(\AppBundle\Entity\Ride $ride = null)
+    public function setRide(Ride $ride = null): FacebookRideProperties
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * Get location
-     *
-     * @return string
-     */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
 
-    /**
-     * Set location
-     *
-     * @param string $location
-     * @return FacebookRideProperties
-     */
-    public function setLocation($location)
+    public function setLocation(string $location = null): FacebookRideProperties
     {
         $this->location = $location;
 
         return $this;
     }
 
-    /**
-     * Get locationAddress
-     *
-     * @return string
-     */
-    public function getLocationAddress()
+    public function getLocationAddress(): ?string
     {
         return $this->locationAddress;
     }
 
-    /**
-     * Set locationAddress
-     *
-     * @param string $locationAddress
-     * @return FacebookRideProperties
-     */
-    public function setLocationAddress($locationAddress)
+    public function setLocationAddress(string $locationAddress = null): FacebookRideProperties
     {
         $this->locationAddress = $locationAddress;
 
         return $this;
     }
 
-    /**
-     * Get latitude
-     *
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return FacebookRideProperties
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude = null): FacebookRideProperties
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return FacebookRideProperties
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude = null): FacebookRideProperties
     {
         $this->longitude = $longitude;
 

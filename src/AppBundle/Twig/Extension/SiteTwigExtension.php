@@ -5,6 +5,7 @@ namespace AppBundle\Twig\Extension;
 use AppBundle\Entity\User;
 use AppBundle\HtmlMetadata\Metadata;
 use AppBundle\Parser\ParserInterface;
+use cebe\markdown\Parser;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -13,26 +14,23 @@ class SiteTwigExtension extends \Twig_Extension
     /** @var TranslatorInterface $translator */
     protected $translator;
 
-    /** @var ParserInterface $parser */
-    protected $parser;
-
     /** @var Metadata $metadata */
     protected $metadata;
 
     /** @var RouterInterface $router */
     protected $router;
 
+    protected $markdownParser;
+
     public function __construct(
         TranslatorInterface $translator,
-        ParserInterface $parser,
-        Metadata $metadata,
-        RouterInterface $router
+        RouterInterface $router,
+        Parser $markdownParser
     )
     {
         $this->translator = $translator;
-        $this->parser = $parser;
-        $this->metadata = $metadata;
         $this->router = $router;
+        $this->markdownParser = $markdownParser;
     }
 
     public function getFilters()
@@ -41,7 +39,7 @@ class SiteTwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
-            new \Twig_SimpleFilter('parse', [$this, 'parse'], array(
+            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], array(
                 'is_safe' => array('html')
             ))
         ];
@@ -117,11 +115,6 @@ class SiteTwigExtension extends \Twig_Extension
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
     }
 
-    public function getMetadataService()
-    {
-        return $this->metadata;
-    }
-
     public function twitterUsername($twitterUrl)
     {
         $parsedParts = parse_url($twitterUrl);
@@ -176,9 +169,9 @@ class SiteTwigExtension extends \Twig_Extension
         return $string;
     }
 
-    public function parse(string $text): string
+    public function markdown(string $text): string
     {
-        return $this->parser->parse($text);
+        return $this->markdownParser->parse($text);
     }
 
     public function getName()

@@ -68,217 +68,113 @@ class FacebookCityProperties
         $this->createdAt = new \DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return FacebookCityProperties
-     */
-    public function setName($name)
+    public function setName($name = null): FacebookCityProperties
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get about
-     *
-     * @return string
-     */
-    public function getAbout()
+    public function getAbout(): ?string
     {
         return $this->about;
     }
 
-    /**
-     * Set about
-     *
-     * @param string $about
-     * @return FacebookCityProperties
-     */
-    public function setAbout($about)
+    public function setAbout(string $about = null): FacebookCityProperties
     {
         $this->about = $about;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return FacebookCityProperties
-     */
-    public function setDescription($description)
+    public function setDescription(string $description = null): FacebookCityProperties
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get generalInfo
-     *
-     * @return string
-     */
-    public function getGeneralInfo()
+    public function getGeneralInfo(): ?string
     {
         return $this->generalInfo;
     }
 
-    /**
-     * Set generalInfo
-     *
-     * @param string $generalInfo
-     * @return FacebookCityProperties
-     */
-    public function setGeneralInfo($generalInfo)
+    public function setGeneralInfo(string $generalInfo = null): FacebookCityProperties
     {
         $this->generalInfo = $generalInfo;
 
         return $this;
     }
 
-    /**
-     * Get likeNumber
-     *
-     * @return integer
-     */
-    public function getLikeNumber()
+    public function getLikeNumber(): int
     {
         return $this->likeNumber;
     }
 
-    /**
-     * Set likeNumber
-     *
-     * @param integer $likeNumber
-     * @return FacebookCityProperties
-     */
-    public function setLikeNumber($likeNumber)
+    public function setLikeNumber(int $likeNumber = null): FacebookCityProperties
     {
         $this->likeNumber = $likeNumber;
 
         return $this;
     }
 
-    /**
-     * Get checkinNumber
-     *
-     * @return integer
-     */
-    public function getCheckinNumber()
+    public function getCheckinNumber(): ?int
     {
         return $this->checkinNumber;
     }
 
-    /**
-     * Set checkinNumber
-     *
-     * @param integer $checkinNumber
-     * @return FacebookCityProperties
-     */
-    public function setCheckinNumber($checkinNumber)
+    public function setCheckinNumber(int $checkinNumber = null): FacebookCityProperties
     {
         $this->checkinNumber = $checkinNumber;
 
         return $this;
     }
 
-    /**
-     * Get website
-     *
-     * @return string
-     */
-    public function getWebsite()
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
 
-    /**
-     * Set website
-     *
-     * @param string $website
-     * @return FacebookCityProperties
-     */
-    public function setWebsite($website)
+    public function setWebsite(string $website = null): FacebookCityProperties
     {
         $this->website = $website;
 
         return $this;
     }
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return FacebookCityProperties
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt): FacebookCityProperties
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    /**
-     * Set city
-     *
-     * @param City $city
-     * @return FacebookCityProperties
-     */
-    public function setCity(City $city = null)
+    public function setCity(City $city = null): FacebookCityProperties
     {
         $this->city = $city;
 

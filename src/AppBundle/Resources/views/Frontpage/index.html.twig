@@ -7,14 +7,14 @@
     {% include('AppBundle:Template/Navigation:_navigation.html.twig') %}
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid margin-bottom-medium">
         <div class="row">
             <div class="col-md-12">
                 {{ include('AppBundle:Frontpage:_carousel.html.twig') }}
             </div>
         </div>
     </div>
-
+    
     <div class="container margin-top-medium">
         <div class="row">
             <div class="col-md-8">
@@ -39,32 +39,42 @@
             </div>
 
             <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Bald unterwegs
-                        </h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ include('AppBundle:Frontpage:_bikeright.html.twig') }}
                     </div>
-                    <div class="panel-body">
-                        <ul class="list-unstyled">
-                            {% for rideDate, rides in rideList %}
-                                <li>
-                                    <h4>
-                                        {{ rideDate|date('d. F Y') }}
-                                    </h4>
+                </div>
 
-                                    <ul>
-                                        {% for ride in rides %}
-                                            <li>
-                                                <a href="{{ objectPath(ride) }}">
-                                                    {{ ride.getFancyTitle() }}
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Bald unterwegs
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    {% for rideDate, rides in rideList %}
+                                        <li>
+                                            <h4>
+                                                {{ rideDate|format_date('dd. MMMM YYYY') }}
+                                            </h4>
+
+                                            <ul>
+                                                {% for ride in rides %}
+                                                    <li>
+                                                        <a href="{{ objectPath(ride) }}">
+                                                            {{ ride.getFancyTitle() }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

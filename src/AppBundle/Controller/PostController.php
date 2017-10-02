@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Ride;
@@ -14,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends AbstractController
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function writeAction(
         Request $request,
         int $cityId = null,

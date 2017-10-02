@@ -10,9 +10,7 @@ class FrontpageController extends AbstractController
 {
     public function indexAction(Request $request)
     {
-        $this->getMetadata()
-            ->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren')
-            ->setKeywords('Critical Mass, Tracks, Live-Tracking, Tracking');
+        $this->getSeoPage()->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $rideList = $this->getFrontpageRideList();
 
