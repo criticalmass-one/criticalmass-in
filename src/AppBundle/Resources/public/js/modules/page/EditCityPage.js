@@ -12,12 +12,12 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
 
     EditCityPage.prototype._defaults = {
         mapContainerId: 'map',
-        cityLatitudeInputSelector: '#city_latitude',
-        cityLongitudeInputSelector: '#city_longitude',
-        cityStandardLatitudeInputSelector: '#city_standardLatitude',
-        cityStandardLongitudeInputSelector: '#city_standardLongitude',
-        cityIsStandardableLocationInputSelector: '#city_isStandardableLocation',
-        cityIsLocationInputSelector: '#city_standardLocation',
+        cityLatitudeInputSelector: '#standard_city_latitude',
+        cityLongitudeInputSelector: '#standard_city_longitude',
+        cityStandardLatitudeInputSelector: '#standard_city_standardLatitude',
+        cityStandardLongitudeInputSelector: '#standard_city_standardLongitude',
+        cityIsStandardableLocationInputSelector: '#standard_city_isStandardableLocation',
+        cityIsLocationInputSelector: '#standard_city_standardLocation',
         cityMarkerPopupText: 'Zieh mich auf den Mittelpunkt der Stadt!',
         cityStandardLocationPopupText: 'Zieh mich auf den Treffpunkt!',
         defaultCenterLatitude: 51.163375,
