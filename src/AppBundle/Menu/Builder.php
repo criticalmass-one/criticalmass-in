@@ -36,7 +36,7 @@ class Builder implements ContainerAwareInterface
         $menu['Community']->addChild('Diskussion');
         $menu['Community']->addChild('Fotos');
 
-        $menu->addChild('Anmelden', ['route' => 'fos_user_security_login', 'attributes' => ['foo' => 'bar']]);
+        $menu->addChild('Anmelden', ['route' => 'fos_user_security_login'])->setLinkAttributes(['href' => '#', 'data-toggle' => 'modal', 'data-target' => '#loginModal']);
 
         $menu->addChild('Benutzerkonto', ['route' => 'caldera_criticalmass_frontpage']);
         $menu['Benutzerkonto']->addChild('Dein Profil');
