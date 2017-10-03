@@ -176,7 +176,6 @@ class CityManagementController extends AbstractController
             $city->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($city);
             $em->flush();
 
             $hasErrors = false;
