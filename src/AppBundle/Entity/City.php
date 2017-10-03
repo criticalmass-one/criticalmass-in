@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\ArchiveableInterface;
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\PhotoInterface;
@@ -25,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface
 {
     /**
      * Numerische ID der Stadt.
@@ -244,34 +243,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $longDescription;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="archive_cities")
-     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
-     */
-    protected $archiveParent;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $isArchived = false;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $archiveDateTime;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_rides")
-     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
-     */
-    protected $archiveUser;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
-    protected $archiveMessage;
-
-    /**
      * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName")
      *
      * @var File
@@ -361,7 +332,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->posts = new ArrayCollection();
         $this->photos = new ArrayCollection();
 
-        $this->archiveDateTime = new \DateTime();
         $this->createdAt = new \DateTime();
     }
 
@@ -755,23 +725,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      */
     public function countRides(): int
     {
-        return count($this->getActiveRides());
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getActiveRides(): array
-    {
-        $result = array();
-
-        foreach ($this->rides as $ride) {
-            if (!$ride->getIsArchived()) {
-                $result[] = $ride;
-            }
-        }
-
-        return $result;
+        return count($this->rides);
     }
 
     /**
@@ -783,9 +737,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $dateTime = new \DateTime();
 
         foreach ($this->getRides() as $ride) {
-            if ($ride && !$currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() > $dateTime) {
+            if ($ride && !$currentRide && $ride->getDateTime() > $dateTime) {
                 $currentRide = $ride;
-            } elseif ($ride && $currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime) {
+            } elseif ($ride && $currentRide && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime) {
                 $currentRide = $ride;
             }
         }
@@ -810,73 +764,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getPosts(): Collection
     {
         return $this->posts;
-    }
-
-    public function setIsArchived(bool $isArchived): ArchiveableInterface
-    {
-        $this->isArchived = $isArchived;
-
-        return $this;
-    }
-
-    public function getIsArchived(): bool
-    {
-        return $this->isArchived;
-    }
-
-    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
-    {
-        $this->archiveDateTime = $archiveDateTime;
-
-        return $this;
-    }
-
-    public function getArchiveDateTime(): \DateTime
-    {
-        return $this->archiveDateTime;
-    }
-
-    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
-    {
-        $this->archiveParent = $archiveParent;
-
-        return $this;
-    }
-
-    public function getArchiveParent(): ArchiveableInterface
-    {
-        return $this->archiveParent;
-    }
-
-    public function setArchiveUser(User $archiveUser): ArchiveableInterface
-    {
-        $this->archiveUser = $archiveUser;
-
-        return $this;
-    }
-
-    public function getArchiveUser(): User
-    {
-        return $this->archiveUser;
-    }
-
-    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
-    {
-        $this->archiveMessage = $archiveMessage;
-
-        return $this;
-    }
-
-    public function getArchiveMessage(): ?string
-    {
-        return $this->archiveMessage;
-    }
-
-    public function __clone()
-    {
-        $this->id = null;
-        $this->setIsArchived(true);
-        $this->setArchiveDateTime(new \DateTime());
     }
 
     public function setIsStandardableLocation(bool $isStandardableLocation): City
@@ -1120,23 +1007,5 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getDateTime(): ?\DateTime
     {
         return null;
-    }
-
-    public function archive(User $user): ArchiveableInterface
-    {
-        $archivedCity = clone $this;
-
-        $archivedCity
-            ->setIsArchived(true)
-            ->setArchiveDateTime(new \DateTime())
-            ->setArchiveParent($this)
-            ->setArchiveUser($user)
-            ->setArchiveMessage($this->archiveMessage)
-            ->setImageFile(null)
-        ;
-
-        $this->archiveMessage = '';
-
-        return $archivedCity;
     }
 }
