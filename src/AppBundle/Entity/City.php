@@ -606,38 +606,38 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->isStandardable;
     }
 
-    public function setStandardDayOfWeek(int $standardDayOfWeek): City
+    public function setStandardDayOfWeek(int $standardDayOfWeek = null): City
     {
         $this->standardDayOfWeek = $standardDayOfWeek;
 
         return $this;
     }
 
-    public function getStandardDayOfWeek(): int
+    public function getStandardDayOfWeek(): ?int
     {
         return $this->standardDayOfWeek;
     }
 
-    public function setStandardWeekOfMonth(int $standardWeekOfMonth): City
+    public function setStandardWeekOfMonth(int $standardWeekOfMonth = null): City
     {
         $this->standardWeekOfMonth = $standardWeekOfMonth;
 
         return $this;
     }
 
-    public function getStandardWeekOfMonth(): int
+    public function getStandardWeekOfMonth(): ?int
     {
         return $this->standardWeekOfMonth;
     }
 
-    public function setStandardTime(\DateTime $standardTime): City
+    public function setStandardTime(\DateTime $standardTime = null): City
     {
         $this->standardTime = $standardTime;
 
         return $this;
     }
 
-    public function getStandardTime(): \DateTime
+    public function getStandardTime(): ?\DateTime
     {
         return $this->standardTime;
     }
