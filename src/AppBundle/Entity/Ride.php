@@ -211,9 +211,15 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $createdAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
     /**
      * @ORM\Column(type="integer")
@@ -772,6 +778,18 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setCreatedAt(\DateTime $createdAt): Ride
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): Ride
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
