@@ -167,12 +167,9 @@ class RideManagementController extends AbstractController
         $hasErrors = null;
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            
-            $archiveRide = $ride->archive($this->getUser());
+            $ride->setUpdatedAt(new \DateTime());
 
-            $em->persist($ride);
-            $em->persist($archiveRide);
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
 
             // TODO: remove also this
