@@ -3,70 +3,70 @@ services:
         class: AppBundle\Admin\BikerightVoucherAdmin
         arguments: [~, AppBundle\Entity\BikerightVoucher, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Bikeright Voucher }
+            - { name: sonata.admin, manager_type: orm, group: Campaign, label: Bikeright Voucher }
 
     admin.board:
         class: AppBundle\Admin\BoardAdmin
         arguments: [~, AppBundle\Entity\Board, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Board }
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Board }
 
     admin.city:
         class: AppBundle\Admin\CityAdmin
         arguments: [~, AppBundle\Entity\City, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: City }
+            - { name: sonata.admin, manager_type: orm, group: Critical Mass, label: City }
 
     admin.location:
         class: AppBundle\Admin\LocationAdmin
         arguments: [~, AppBundle\Entity\Location, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Location }
+            - { name: sonata.admin, manager_type: orm, group: Geo, label: Location }
 
     admin.photo:
         class: AppBundle\Admin\PhotoAdmin
         arguments: [~, AppBundle\Entity\Photo, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Photo }
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Photo }
 
     admin.post:
         class: AppBundle\Admin\PostAdmin
         arguments: [~, AppBundle\Entity\Post, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Post }
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Post }
 
     admin.region:
         class: AppBundle\Admin\RegionAdmin
         arguments: [~, AppBundle\Entity\Region, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Region }
+            - { name: sonata.admin, manager_type: orm, group: Geo, label: Region }
 
     admin.ride:
         class: AppBundle\Admin\RideAdmin
         arguments: [~, AppBundle\Entity\Ride, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Ride }
+            - { name: sonata.admin, manager_type: orm, group: Critical Mass,, label: Ride }
 
     admin.ride_estimate:
         class: AppBundle\Admin\RideEstimateAdmin
         arguments: [~, AppBundle\Entity\RideEstimate, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: RideEstimate }
+            - { name: sonata.admin, manager_type: orm, group: Statistic, label: RideEstimate }
 
     admin.thread:
         class: AppBundle\Admin\ThreadAdmin
         arguments: [~, AppBundle\Entity\Thread, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Thread }
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Thread }
 
     admin.track:
         class: AppBundle\Admin\TrackAdmin
         arguments: [~, AppBundle\Entity\Track, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Track }
+            - { name: sonata.admin, manager_type: orm, group: Statistic, label: Track }
 
     admin.user:
         class: AppBundle\Admin\UserAdmin
         arguments: [~, AppBundle\Entity\User, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: User }
+            - { name: sonata.admin, manager_type: orm, group: Community, label: User }
