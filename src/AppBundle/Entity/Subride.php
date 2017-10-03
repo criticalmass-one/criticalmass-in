@@ -54,7 +54,7 @@ class Subride implements ArchiveableInterface
      * @ORM\Column(type="datetime")
      * @JMS\Expose
      */
-    protected $creationDateTime;
+    protected $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -132,13 +132,13 @@ class Subride implements ArchiveableInterface
 
     public function __construct()
     {
-        $this->creationDateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
         $this->archiveDateTime = new \DateTime();
     }
 
     public function __clone()
     {
-        $this->setCreationDateTime(new \DateTime());
+        $this->setCreatedAt(new \DateTime());
         $this->setArchiveDateTime(null);
         $this->setArchiveParent(null);
         $this->setArchiveUser(null);
@@ -292,16 +292,16 @@ class Subride implements ArchiveableInterface
         return $this->user;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): Subride
+    public function setCreatedAt(\DateTime $createdAt): Subride
     {
-        $this->creationDateTime = $creationDateTime;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreationDateTime(): \DateTime
+    public function getCreatedAt(): \DateTime
     {
-        return $this->creationDateTime;
+        return $this->createdAt;
     }
 
     public function getTime(): \DateTime
