@@ -173,11 +173,10 @@ class CityManagementController extends AbstractController
         $hasErrors = null;
 
         if ($form->isValid()) {
-            $archiveCity = $city->archive($this->getUser());
+            $city->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($city);
-            $em->persist($archiveCity);
             $em->flush();
 
             $hasErrors = false;
