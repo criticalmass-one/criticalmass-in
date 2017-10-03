@@ -51,10 +51,16 @@ class Subride implements ArchiveableInterface
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      * @JMS\Expose
      */
     protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     */
+    protected $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -302,6 +308,18 @@ class Subride implements ArchiveableInterface
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt = null): Subride
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
     }
 
     public function getTime(): \DateTime
