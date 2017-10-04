@@ -17,6 +17,17 @@ class Version20171003102749 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        
+        $this->addSql('UPDATE ride SET archive_parent_id = NULL');
+        $this->addSql('UPDATE photo AS p JOIN ride AS r ON r.id = p.ride_id SET p.ride_id = NULL WHERE r.isArchived = 1');
+        $this->addSql('DELETE rv.* FROM ride AS r JOIN ride_view AS rv ON r.id = rv.ride_id WHERE r.isArchived = 1');
+        $this->addSql('DELETE w.* FROM ride AS r JOIN weather AS w ON r.id = w.ride_id WHERE r.isArchived = 1');
+        $this->addSql('DELETE frp.* FROM ride AS r JOIN facebook_ride_properties AS frp ON r.id = frp.ride_id WHERE r.isArchived = 1');
+        $this->addSql('DELETE p.* FROM ride AS r JOIN participation AS p ON r.id = p.ride_id WHERE r.isArchived = 1');
+        $this->addSql('DELETE re.* FROM ride AS r JOIN ride_estimate AS re ON r.id = re.ride_id WHERE r.isArchived = 1');
+        $this->addSql('DELETE FROM city WHERE isArchived = 1');
+        $this->addSql('DELETE FROM ride WHERE isArchived = 1');
+        $this->addSql('DELETE FROM subride WHERE isArchived = 1');
 
         $this->addSql('ALTER TABLE subride DROP FOREIGN KEY FK_42880E5B365388CC');
         $this->addSql('ALTER TABLE subride DROP FOREIGN KEY FK_42880E5BCA4E326A');
