@@ -9,7 +9,7 @@ define([], function () {
     SortableTable.prototype._init = function () {
         var $button = $('#' + this.settings.buttonId);
         var that = this;
-        var sortOptionList = $('.sortOption');
+        var sortOptionList = $('.sort-option');
 
         sortOptionList.each(function (n) {
             var $sortOption = $(sortOptionList[n]);

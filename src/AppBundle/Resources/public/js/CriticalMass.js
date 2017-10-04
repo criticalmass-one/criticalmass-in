@@ -54,6 +54,7 @@ require.config({
         "FacebookStatisticPage": "/bundles/app/js/modules/page/FacebookStatisticPage",
         "StatisticPage": "/bundles/app/js/modules/page/StatisticPage",
         "FahrradstadtHamburg": "/bundles/app/js/modules/FahrradstadtHamburg",
+        "SortableTable": "/bundles/app/js/modules/SortableTable",
         "Map": "/bundles/app/js/modules/map/Map",
         "AutoMap": "/bundles/app/js/modules/map/AutoMap",
         "DrawMap": "/bundles/app/js/modules/map/DrawMap",
