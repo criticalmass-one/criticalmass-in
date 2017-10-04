@@ -9,28 +9,23 @@
 {% endblock %}
 
 {% block optionsButton %}
-    <div class="btn-group pull-right">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+    <div class="dropdown float-right">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="city-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-cogs"></i>
             Optionen
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
-                    <i class="fa fa-cogs"></i>
-                    Stadt editieren
-                </a>
-            </li>
+        <div class="dropdown-menu" aria-labelledby="city-dropdown">
+            <a class="dropdown-item" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                <i class="fa fa-cogs"></i>
+                Stadt editieren
+            </a>
 
-            <li>
-                <a href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
-                    <i class="fa fa-plus"></i>
-                    Tour hinzufügen
-                </a>
-            </li>
-        </ul>
+            <a class="dropdown-item" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                <i class="fa fa-plus"></i>
+                Tour hinzufügen
+            </a>
+        </div>
     </div>
 {% endblock %}
 
