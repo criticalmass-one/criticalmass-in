@@ -24,13 +24,11 @@ class SiteTwigExtension extends \Twig_Extension
 
     public function __construct(
         TranslatorInterface $translator,
-        Metadata $metadata,
         RouterInterface $router,
         Parser $markdownParser
     )
     {
         $this->translator = $translator;
-        $this->metadata = $metadata;
         $this->router = $router;
         $this->markdownParser = $markdownParser;
     }
@@ -115,11 +113,6 @@ class SiteTwigExtension extends \Twig_Extension
         $today = new \DateTime();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
-    }
-
-    public function getMetadataService()
-    {
-        return $this->metadata;
     }
 
     public function twitterUsername($twitterUrl)

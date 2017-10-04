@@ -22,7 +22,7 @@ class CalendarController extends AbstractController
 
         $dayList = $this->sortDayList($dayList);
 
-        $this->getMetadata()
+        $this->getSeoPage()
             ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
             ->setDate(new \DateTime());
 

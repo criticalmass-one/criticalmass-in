@@ -3,14 +3,8 @@
   margin-bottom: $jumbotron-padding;
   background-color: $jumbotron-bg;
   @include border-radius($border-radius-lg);
-}
 
-.jumbotron-hr {
-  border-top-color: darken($jumbotron-bg, 10%);
-}
-
-@include media-breakpoint-up(sm) {
-  .jumbotron {
+  @include media-breakpoint-up(sm) {
     padding: ($jumbotron-padding * 2) $jumbotron-padding;
   }
 }

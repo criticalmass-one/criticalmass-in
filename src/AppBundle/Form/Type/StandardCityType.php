@@ -113,7 +113,11 @@ class StandardCityType extends AbstractType
                 ]
             )
             ->add(
-                'enableBoard', CheckboxType::class
+                'enableBoard',
+                CheckboxType::class,
+                [
+                    'required' => false
+                ]
             )
             ->add(
                 'timezone',

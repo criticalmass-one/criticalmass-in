@@ -13,9 +13,6 @@ services:
         class: AppBundle\Manager\PostManager\PostManager
         arguments: ['@doctrine']
 
-    caldera.html_metadata:
-        class: AppBundle\HtmlMetadata\Metadata
-
     caldera.view_storage.cache:
         class: AppBundle\ViewStorage\ViewStorageCache
         arguments: ['@security.token_storage']
@@ -135,6 +132,14 @@ services:
         class: AppBundle\Image\Filter\FastBlurFilter
         tags:
             - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }
+
+    app.seo_page:
+        class: AppBundle\Seo\SeoPage
+        arguments:
+            - '@sonata.seo.page.default'
+            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@liip_imagine.cache.manager'
+            - '@caldera.criticalmass.routing.object_router'
 
 imports:
   - { resource: ./services/timeline.yml }
