@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\City;
 
 use AppBundle\Controller\AbstractController;
+use AppBundle\Factory\CityListFactory;
 
 class CityListController extends AbstractController
 {
@@ -12,18 +13,9 @@ class CityListController extends AbstractController
             ->getSeoPage()
             ->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
-        $cityManager = $this->get('app.manager.city');
-        $cityList = $cityManager->buildCityList();
-        /*
-        $cities = $this->getCityRepository()->findCities();
-
-        $result = [];
-
-        foreach ($cities as $city) {
-            $result[$city->getSlug()]['city'] = $city;
-            $result[$city->getSlug()]['currentRide'] = $this->getRideRepository()->findCurrentRideForCity($city);
-            $result[$city->getSlug()]['countRides'] = $this->getRideRepository()->countRidesByCity($city);
-        }*/
+        /** @var CityListFactory $cityListFactory */
+        $cityListFactory = $this->get('app.factory.city_list');
+        $cityList = $cityListFactory->getList();
 
         return $this->render(
             'AppBundle:CityList:list.html.twig',
