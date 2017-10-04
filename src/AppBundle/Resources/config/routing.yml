@@ -74,6 +74,10 @@ caldera_criticalmass_timeline:
     resource: "@AppBundle/Resources/config/routing/timeline.yml"
     prefix: /
 
+caldera_criticalmass_citylist:
+    resource: "@AppBundle/Resources/config/routing/citylist.yml"
+    prefix: /
+
 caldera_criticalmass_city:
     resource: "@AppBundle/Resources/config/routing/city.yml"
     prefix: /

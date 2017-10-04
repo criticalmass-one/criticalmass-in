@@ -19,11 +19,11 @@
                 </p>
 
                 <div class="pull-right">
-                    {% include 'AppBundle:City:Includes/_cityListSort.html.twig' %}
+                    {% include 'AppBundle:CityList:_cityListSort.html.twig' %}
                 </div>
 
                 <p>
-                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ result|length }} Städte.
+                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
                     Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
                     womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen
                     Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.
@@ -51,35 +51,34 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for row in result %}
-                        {% set city = row.city %}
-                        {% set currentRide = row.currentRide %}
-                        {% set countRides = row.countRides %}
+                    {% for city in cityList %}
                         <tr class="city"
                             data-cityName="{{ city.city }}"
-                            data-cityslug="{{ city.slug }}"
-                            data-latitude="{{ city.latitude }}"
-                            data-longitude="{{ city.longitude }}"
-                            data-currentRide="{% if currentRide %}{{ currentRide.dateTime|date('Y-m-d H:i', 'Europe/Berlin') }}{% else %}9999-99-99 99:99{% endif %}"
+                            data-cityslug="{{ city.city.slug }}"
+                            data-latitude="{{ city.city.latitude }}"
+                            data-longitude="{{ city.city.longitude }}"
+                            data-currentRide="{% if city.currentRide %}{{ city.currentRide.dateTime|date('Y-m-d H:i', 'Europe/Berlin') }}{% else %}9999-99-99 99:99{% endif %}"
                         >
                             <td>
-                                <a href="{{ objectPath(city) }}">
-                                    {{ city.city }}
+                                <a href="{{ objectPath(city.city) }}">
+                                    {{ city.city.city }}
                                 </a>
                             </td>
                             <td>
-                                {% if currentRide %}
-                                    <a href="{{ objectPath(currentRide) }}">
-                                        {{ currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}&nbsp;Uhr
+                                {% if city.currentRide %}
+                                    <a href="{{ objectPath(city.currentRide) }}">
+                                        {{ city.currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}&nbsp;Uhr
                                     </a>
                                 {% endif %}
                             </td>
                             <td>
-                                {{ city.getEventDateTimeString() }}
+                                {% if city.city.isStandardable %}
+                                jeweils am {{ ('criticalmass.city_list.event_date.month_week.' ~ city.city.standardWeekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ city.city.standardDayOfWeek)|trans }} um {{ city.city.standardTime|date('H:i', 'Europe/Berlin') }} Uhr
+                                {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_desktop_city_listrides', { citySlug: city.slug }) }}">
-                                    {{ countRides }}
+                                <a href="{{ path('caldera_criticalmass_desktop_city_listrides', { citySlug: city.city.slug }) }}">
+                                    {{ city.countRides }}
                                 </a>
                             </td>
                         </tr>

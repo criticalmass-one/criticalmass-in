@@ -671,42 +671,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->standardLongitude;
     }
 
-    /**
-     * @deprecated
-     */
-    public function getEventDateTimeLocationString(): string
-    {
-        $result = $this->getEventDateTimeString();
-
-        if ($this->standardLocation) {
-            $result .= ': ' . $this->standardLocation;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getEventDateTimeString(): string
-    {
-        $weekDays = array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag');
-        $monthWeeks = array(1 => 'ersten', 2 => 'zweiten', 3 => 'dritten', 4 => 'vierten', 0 => 'letzten');
-
-        $result = '';
-
-        if ($this->isStandardable) {
-            $result = 'jeweils am ' . $monthWeeks[$this->standardWeekOfMonth] . ' ' . $weekDays[$this->standardDayOfWeek];
-
-            if ($this->standardTime) {
-                $this->standardTime->setTimezone(new \DateTimeZone('UTC'));
-                $result .= ' um ' . $this->standardTime->format('H.i') . ' Uhr';
-            }
-        }
-
-        return $result;
-    }
-
     public function setCityPopulation(int $cityPopulation): City
     {
         $this->cityPopulation = $cityPopulation;
