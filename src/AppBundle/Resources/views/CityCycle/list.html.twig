@@ -42,15 +42,15 @@
                         {% for cycle in cycles %}
                         <tr>
                             <td>
-                                {{ ('criticalmass.city_list.event_date.month_week.' ~ city.city.standardWeekOfMonth)|trans }}
+                                am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.weekOfMonth)|trans }} im Monat
                             </td>
 
                             <td>
-                                {{ cycle.location }}
+                                {{ cycle.location }} ({{ cycle.latitude|round(3) }}, {{ cycle.longitude|round(3) }})
                             </td>
 
                             <td>
-                                {{ cycle.time }}
+                                {{ cycle.time|date('H:i', city.timezone) }} Uhr
                             </td>
                         </tr>
                         {% endfor %}
