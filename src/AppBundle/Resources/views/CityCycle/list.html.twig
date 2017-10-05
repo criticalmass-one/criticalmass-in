@@ -46,7 +46,7 @@
                         {% for cycle in cycles %}
                         <tr>
                             <td>
-                                am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.weekOfMonth)|trans }} im Monat
+                                am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }} im Monat
                             </td>
 
                             <td>

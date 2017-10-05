@@ -99,16 +99,7 @@ class CityCycleController extends AbstractController
                 ]
             );
 
-            return $this->render(
-                'AppBundle:CityCycle:edit.html.twig',
-                [
-                    'city' => $city,
-                    'cityCycle' => $cityCycle,
-                    'form' => $form->createView(),
-                ]
-            );
-        } elseif ($form->isSubmitted()) {
-            $hasErrors = true;
+            return $this->redirectToRoute('caldera_criticalmass_citycycle_list', ['citySlug' => $city->getMainSlugString()]);
         }
 
         return $this->render(
