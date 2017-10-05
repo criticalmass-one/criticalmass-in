@@ -38,6 +38,10 @@
                             </th>
 
                             <th>
+                                Gültigkeit
+                            </th>
+
+                            <th>
                                 Aktionen
                             </th>
                         </tr>
@@ -55,6 +59,16 @@
 
                             <td>
                                 {{ cycle.time|date('H:i', city.timezone) }} Uhr
+                            </td>
+
+                            <td>
+                                {% if (cycle.range) %}
+                                    {{ cycle.validFrom|date('d.m.Y') }} bis {{ cycle.validUntil|date('d.m.Y') }}
+                                {% else %}
+                                <em>
+                                    nicht begrenzt
+                                </em>
+                                {% endif %}
                             </td>
 
                             <td>

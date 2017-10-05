@@ -81,12 +81,12 @@ class CityCycle
     protected $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $validFrom;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $validUntil;
 
@@ -242,5 +242,10 @@ class CityCycle
     public function getValidUntil(): ?\DateTime
     {
         return $this->validUntil;
+    }
+
+    public function hasRange(): bool
+    {
+        return ($this->validFrom && $this->validUntil);
     }
 }
