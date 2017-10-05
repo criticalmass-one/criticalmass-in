@@ -120,6 +120,11 @@ class User extends BaseUser
      */
     protected $runkeeperAccessToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
+     */
+    protected $cycles;
+
     public function __construct()
     {
         parent::__construct();
@@ -414,6 +419,32 @@ class User extends BaseUser
     public function removeBikerightVoucher(BikerightVoucher $bikerightVoucher): User
     {
         $this->bikerightVouchers->removeElement($bikerightVoucher);
+
+        return $this;
+    }
+
+    public function addCycle(CityCycle $cityCycle): User
+    {
+        $this->cycles->add($cityCycle);
+
+        return $this;
+    }
+
+    public function setCycles(Collection $cityCycles): User
+    {
+        $this->cycles = $cityCycles;
+
+        return $this;
+    }
+
+    public function getCycles(): Collection
+    {
+        return $this->cycles;
+    }
+
+    public function removeCycle(CityCycle $cityCycle): User
+    {
+        $this->cycles->removeElement($cityCycle);
 
         return $this;
     }
