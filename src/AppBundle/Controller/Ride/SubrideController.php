@@ -167,11 +167,7 @@ class SubrideController extends AbstractController
         $hasErrors = null;
 
         if ($form->isValid()) {
-            $archiveRide = $subride->archive($this->getUser());
-
             $em = $this->getDoctrine()->getManager();
-            $em->persist($subride);
-            $em->persist($archiveRide);
             $em->flush();
 
             // TODO: remove also this

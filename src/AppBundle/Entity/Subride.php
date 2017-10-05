@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\ArchiveableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
-class Subride implements ArchiveableInterface
+class Subride
 {
     /**
      * Numerische ID der Tour.
@@ -51,10 +50,16 @@ class Subride implements ArchiveableInterface
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      * @JMS\Expose
      */
-    protected $creationDateTime;
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     */
+    protected $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -102,47 +107,14 @@ class Subride implements ArchiveableInterface
      */
     protected $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="archive_subrides")
-     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
-     */
-    protected $archiveParent;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $isArchived = false;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $archiveDateTime;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_subrides")
-     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
-     */
-    protected $archiveUser;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
-    protected $archiveMessage;
-
     public function __construct()
     {
-        $this->creationDateTime = new \DateTime();
-        $this->archiveDateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     public function __clone()
     {
-        $this->setCreationDateTime(new \DateTime());
-        $this->setArchiveDateTime(null);
-        $this->setArchiveParent(null);
-        $this->setArchiveUser(null);
-        $this->setIsArchived(0);
+        $this->setCreatedAt(new \DateTime());
     }
 
     public function getId(): ?int
@@ -292,16 +264,28 @@ class Subride implements ArchiveableInterface
         return $this->user;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): Subride
+    public function setCreatedAt(\DateTime $createdAt): Subride
     {
-        $this->creationDateTime = $creationDateTime;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreationDateTime(): \DateTime
+    public function getCreatedAt(): \DateTime
     {
-        return $this->creationDateTime;
+        return $this->createdAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt = null): Subride
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
     }
 
     public function getTime(): \DateTime
@@ -313,81 +297,5 @@ class Subride implements ArchiveableInterface
     public function setTime(\DateTime $time): Subride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
-    }
-
-    public function setIsArchived(bool $isArchived): ArchiveableInterface
-    {
-        $this->isArchived = $isArchived;
-
-        return $this;
-    }
-
-    public function getIsArchived(): bool
-    {
-        return $this->isArchived;
-    }
-
-    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
-    {
-        $this->archiveDateTime = $archiveDateTime;
-
-        return $this;
-    }
-
-    public function getArchiveDateTime(): \DateTime
-    {
-        return $this->archiveDateTime;
-    }
-
-    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
-    {
-        $this->archiveParent = $archiveParent;
-
-        return $this;
-    }
-
-    public function getArchiveParent(): ArchiveableInterface
-    {
-        return $this->archiveParent;
-    }
-
-    public function setArchiveUser(User $archiveUser): ArchiveableInterface
-    {
-        $this->archiveUser = $archiveUser;
-
-        return $this;
-    }
-
-    public function getArchiveUser(): User
-    {
-        return $this->archiveUser;
-    }
-
-    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
-    {
-        $this->archiveMessage = $archiveMessage;
-
-        return $this;
-    }
-
-    public function getArchiveMessage(): ?string
-    {
-        return $this->archiveMessage;
-    }
-
-    public function archive(User $user): ArchiveableInterface
-    {
-        $archivedSubride = clone $this;
-
-        $archivedSubride
-            ->setIsArchived(true)
-            ->setArchiveDateTime(new \DateTime())
-            ->setArchiveParent($this)
-            ->setArchiveUser($user)
-            ->setArchiveMessage($this->archiveMessage);
-
-        $this->archiveMessage = '';
-
-        return $archivedSubride;
     }
 }
