@@ -4,6 +4,7 @@ namespace AppBundle\CityCycleRideGenerator;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class CityCycleRideGenerator
 {
@@ -13,13 +14,16 @@ class CityCycleRideGenerator
     /** @var int $month */
     protected $month;
 
+    /** @var  \DateTime $dateTime */
+    protected $dateTime;
+
     /** @var City $city */
     protected $city;
 
-    /** @var Ride $ride */
-    protected $ride;
+    /** @var array $rideList */
+    protected $rideList;
 
-    public function __construct(City $city, int $year, int $month)
+    public function __construct(Doctrine $doctrine)
     {
         $this->year = $year;
         $this->month = $month;
@@ -29,11 +33,29 @@ class CityCycleRideGenerator
         $this->ride->setCity($city);
     }
 
-    public function execute(): Ride
+    public function setCity(City $city): CityCycleRideGenerator
     {
-        if (!$this->city->getIsStandardable()) {
-            return null;
-        }
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function setYear(int $year): CityCycleRideGenerator
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    public function setMonth(int $month): CityCycleRideGenerator
+    {
+        $this->month = $month;
+
+        return $this;
+    }
+
+    public function execute(): CityCycleRideGenerator
+    {
 
         if ($this->city->getTimezone()) {
             $timezone = new \DateTimeZone($this->city->getTimezone());

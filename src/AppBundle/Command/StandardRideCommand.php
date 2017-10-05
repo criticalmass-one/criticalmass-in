@@ -4,11 +4,9 @@ namespace AppBundle\Command;
 
 use AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
 use AppBundle\Entity\City;
-use AppBundle\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class StandardRideCommand extends ContainerAwareCommand
@@ -38,54 +36,22 @@ class StandardRideCommand extends ContainerAwareCommand
         /** @var int $month */
         $month = $input->getArgument('month');
 
+        $generator = $this->getContainer()->get('app.city_cycle_ride_generator');
+        $generator
+            ->setMonth($month)
+            ->setYear($year);
+
         $doctrine = $this->getContainer()->get('doctrine');
-        $entityManager = $doctrine->getManager();
 
         $cities = $doctrine->getRepository('AppBundle:City')->findBy(
             [
-                'isArchived' => false,
                 'enabled' => true
-            ],
-            [
-                'city' => 'ASC'
             ]
         );
 
         /** @var City $city */
         foreach ($cities as $city) {
             $output->writeln($city->getTitle());
-
-            if ($city->getIsStandardable()) {
-                $srg = new CityCycleRideGenerator($city, $year, $month);
-                $ride = $srg->execute();
-
-                if ($srg->isRideDuplicate()) {
-                    $output->writeln('Tour existiert bereits.');
-                } else {
-                    $output->writeln('Lege folgende Tour an');
-
-                    if ($ride->getHasTime()) {
-                        $output->writeln('Datum und Uhrzeit: ' . $ride->getDateTime()->format('Y-m-d H:i'));
-                    } else {
-                        $output->writeln('Datum: ' . $ride->getDateTime()->format('Y-m-d') . ', Uhrzeit ist bislang unbekannt');
-                    }
-
-                    if ($ride->getHasLocation()) {
-                        $output->writeln('Treffpunkt: ' . $ride->getLocation() . ' (' . $ride->getLatitude() . '/' . $ride->getLongitude() . ')');
-                    } else {
-                        $output->writeln('Treffpunkt ist bislang unbekannt');
-                    }
-
-                    $output->writeln('');
-                    $output->writeln('');
-
-                    $entityManager->persist($ride);
-                }
-            } else {
-                $output->writeln('Lege keine Tourdaten für diese Stadt an.');
-            }
         }
-
-        $entityManager->flush();
     }
 }
