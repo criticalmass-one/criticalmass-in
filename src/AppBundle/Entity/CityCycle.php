@@ -95,6 +95,11 @@ class CityCycle
         $this->createdAt = new \DateTime();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function setCity(City $city): CityCycle
     {
         $this->city = $city;

@@ -36,6 +36,10 @@
                             <th>
                                 Uhrzeit
                             </th>
+
+                            <th>
+                                Aktionen
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +55,12 @@
 
                             <td>
                                 {{ cycle.time|date('H:i', city.timezone) }} Uhr
+                            </td>
+
+                            <td>
+                                <a class="btn btn-default btn-xs" href="{{ path('caldera_criticalmass_citycycle_edit', { citySlug: city.mainSlugString, cycleId: cycle.id }) }}">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
