@@ -615,12 +615,38 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelineRideEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
+    public function findForTimelineRideEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, int $limit = null): array
     {
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->addOrderBy('ride.updatedAt', 'DESC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->isNotNull('r.updatedAt'))
+        ;
+
+        if ($startDateTime) {
+            $builder
+                ->andWhere($builder->expr()->gte('r.updatedAt', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime)
+            ;
+        }
+
+        if ($endDateTime) {
+            $builder
+                ->andWhere($builder->expr()->lte('r.updatedAt', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime)
+            ;
+        }
+
+        if ($limit) {
+            $builder
+                ->setMaxResults($limit)
+            ;
+        }
+
+        $builder
+            ->addOrderBy('r.updatedAt', 'DESC')
+        ;
 
         $query = $builder->getQuery();
 
