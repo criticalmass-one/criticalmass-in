@@ -13,7 +13,6 @@ class SubrideRepository extends EntityRepository
 
         $builder->select('subride');
         $builder->where($builder->expr()->eq('subride.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('subride.isArchived', 0));
         $builder->addOrderBy('subride.dateTime', 'ASC');
 
         $query = $builder->getQuery();
