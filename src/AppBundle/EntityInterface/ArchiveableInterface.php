@@ -4,6 +4,11 @@ namespace AppBundle\EntityInterface;
 
 use AppBundle\Entity\User;
 
+/**
+ * Interface ArchiveableInterface
+ * @package AppBundle\EntityInterface
+ * @deprecated
+ */
 interface ArchiveableInterface
 {
     public function setArchiveUser(User $archiveUser): ArchiveableInterface;

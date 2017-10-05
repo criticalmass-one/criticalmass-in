@@ -11,13 +11,15 @@ use AppBundle\Form\Type\StandardCityType;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CityManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function addAction(Request $request, $slug1, $slug2, $slug3)
+    public function addAction(Request $request, UserInterface $user, string $slug1, string $slug2, string $slug3): Response
     {
         /**
          * @var Region $region
@@ -25,8 +27,10 @@ class CityManagementController extends AbstractController
         $region = $this->getRegionRepository()->findOneBySlug($slug3);
 
         $city = new City();
-        $city->setRegion($region);
-        $city->setUser($this->getUser());
+        $city
+            ->setRegion($region)
+            ->setUser($this->getUser())
+        ;
 
         $form = $this->createForm(
             new StandardCityType(),
@@ -44,13 +48,13 @@ class CityManagementController extends AbstractController
         );
 
         if ('POST' == $request->getMethod()) {
-            return $this->addPostAction($request, $city, $region, $form);
+            return $this->addPostAction($request, $user, $city, $region, $form);
         } else {
-            return $this->addGetAction($request, $city, $region, $form);
+            return $this->addGetAction($request, $user, $city, $region, $form);
         }
     }
 
-    protected function addGetAction(Request $request, City $city, Region $region, Form $form)
+    protected function addGetAction(Request $request, UserInterface $user, City $city, Region $region, Form $form)
     {
         return $this->render(
             'AppBundle:CityManagement:edit.html.twig',
@@ -65,7 +69,7 @@ class CityManagementController extends AbstractController
         );
     }
 
-    protected function addPostAction(Request $request, City $city, Region $region, Form $form)
+    protected function addPostAction(Request $request, UserInterface $user, City $city, Region $region, Form $form)
     {
         $form->handleRequest($request);
 
@@ -79,6 +83,7 @@ class CityManagementController extends AbstractController
 
             $em->persist($citySlug);
             $em->persist($city);
+
             $em->flush();
 
             $hasErrors = false;
@@ -127,7 +132,7 @@ class CityManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function editAction(Request $request, $citySlug)
+    public function editAction(Request $request, UserInterface $user, string $citySlug): Response
     {
         $city = $this->getCityBySlug($citySlug);
 
@@ -145,13 +150,13 @@ class CityManagementController extends AbstractController
         );
 
         if ('POST' == $request->getMethod()) {
-            return $this->editPostAction($request, $city, $form);
+            return $this->editPostAction($request, $user, $city, $form);
         } else {
-            return $this->editGetAction($request, $city, $form);
+            return $this->editGetAction($request, $user, $city, $form);
         }
     }
 
-    protected function editGetAction(Request $request, City $city, Form $form)
+    protected function editGetAction(Request $request, UserInterface $user, City $city, Form $form): Response
     {
         return $this->render(
             'AppBundle:CityManagement:edit.html.twig',
@@ -166,19 +171,19 @@ class CityManagementController extends AbstractController
         );
     }
 
-    protected function editPostAction(Request $request, City $city, Form $form)
+    protected function editPostAction(Request $request, UserInterface $user, City $city, Form $form): Response
     {
         $form->handleRequest($request);
 
         $hasErrors = null;
 
         if ($form->isValid()) {
-            $archiveCity = $city->archive($this->getUser());
+            $city
+                ->setUpdatedAt(new \DateTime())
+                ->setUser($user)
+            ;
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($city);
-            $em->persist($archiveCity);
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             $hasErrors = false;
         } elseif ($form->isSubmitted()) {
@@ -201,8 +206,9 @@ class CityManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function createCityFlowAction(Request $request, $slug1, $slug2, $slug3)
+    public function createCityFlowAction(Request $request, $slug1, $slug2, $slug3): Response
     {
+        /** WTF is this? */
         if ($this->container->has('profiler')) {
             $this->container->get('profiler')->disable();
         }
@@ -213,8 +219,10 @@ class CityManagementController extends AbstractController
         $region = $this->getRegionRepository()->findOneBySlug($slug3);
 
         $city = new City();
-        $city->setRegion($region);
-        $city->setUser($this->getUser());
+        $city
+            ->setRegion($region)
+            ->setUser($this->getUser())
+        ;
 
         $flow = $this->get('caldera.criticalmass.flow.create_city');
         $flow->bind($city);

@@ -21,7 +21,7 @@ services:
         class: AppBundle\Admin\LocationAdmin
         arguments: [~, AppBundle\Entity\Location, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Geo, label: Location }
+            - { name: sonata.admin, manager_type: orm, group: Geo, label: Location, audit: true }
 
     admin.photo:
         class: AppBundle\Admin\PhotoAdmin
