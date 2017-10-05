@@ -91,7 +91,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Expose
      * @JMS\Type("boolean")
      */
-    protected $hasTime;
+    protected $hasTime = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -99,7 +99,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Expose
      * @JMS\Type("boolean")
      */
-    protected $hasLocation;
+    protected $hasLocation = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
