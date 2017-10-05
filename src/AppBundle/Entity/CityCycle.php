@@ -2,21 +2,10 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\BoardInterface;
-use AppBundle\EntityInterface\ElasticSearchPinInterface;
-use AppBundle\EntityInterface\PhotoInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CityCycleRepository")
  * @ORM\Table(name="city_cycle")
  */
 class CityCycle
@@ -124,7 +113,7 @@ class CityCycle
         return $this->user;
     }
 
-    public function setLatitude(float $latitude): CityCycle
+    public function setLatitude(float $latitude = null): CityCycle
     {
         $this->latitude = $latitude;
 
@@ -136,7 +125,7 @@ class CityCycle
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude): CityCycle
+    public function setLongitude(float $longitude = null): CityCycle
     {
         $this->longitude = $longitude;
 
