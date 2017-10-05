@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
 use AppBundle\Entity\City;
 use AppBundle\StandardRideGenerator\StandardRideGenerator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -55,7 +56,7 @@ class StandardRideCommand extends ContainerAwareCommand
             $output->writeln($city->getTitle());
 
             if ($city->getIsStandardable()) {
-                $srg = new StandardRideGenerator($city, $year, $month);
+                $srg = new CityCycleRideGenerator($city, $year, $month);
                 $ride = $srg->execute();
 
                 if ($srg->isRideDuplicate()) {

@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\StandardRideGenerator;
+namespace AppBundle\CityCycleRideGenerator;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
 
-class StandardRideGenerator
+class CityCycleRideGenerator
 {
     /** @var int year */
     protected $year;
