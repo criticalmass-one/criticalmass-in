@@ -40,8 +40,8 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         var locationLatitude = $(this.settings.latitudeInputSelector).val();
         var locationLongitude = $(this.settings.longitudeInputSelector).val();
 
-        if (this.isFloat(locationLatitude) && this.isFloat(locationLatitude)) {
-            this.locationLatLng = L.latLng(locationLatitude, locationLatitude);
+        if (this.isFloat(locationLatitude) && this.isFloat(locationLongitude)) {
+            this.locationLatLng = L.latLng(locationLatitude, locationLongitude);
         }
 
         this.defaultCenterLatLng = L.latLng(this.settings.defaultCenterLatitude, this.settings.defaultCenterLongitude);
