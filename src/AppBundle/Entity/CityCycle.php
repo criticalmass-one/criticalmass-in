@@ -95,6 +95,30 @@ class CityCycle
         $this->createdAt = new \DateTime();
     }
 
+    public function setCity(City $city): CityCycle
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCity(): City
+    {
+        return $this->city;
+    }
+
+    public function setUser(User $user): CityCycle
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
     public function setLatitude(float $latitude): CityCycle
     {
         $this->latitude = $latitude;
