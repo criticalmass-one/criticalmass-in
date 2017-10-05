@@ -83,9 +83,6 @@
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Treffpunkt der Touren:</label>
-                            <button id="search-location-button" class="btn btn-default btn-xs pull-right" type="button">
-                                <i class="fa fa-map-marker"></i>
-                            </button>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="help-block">
                                 Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.
@@ -112,6 +109,13 @@
     </div>
 
     <script type="text/javascript">
-        CriticalMass.loadModule('EditCityCyclePage');
+        var options = {
+            cityCoords: {
+                latitude: {{ city.latitude }},
+                longitude: {{ city.longitude }}
+            }
+        };
+
+        CriticalMass.loadModule('EditCityCyclePage', null, options);
     </script>
 {% endblock %}

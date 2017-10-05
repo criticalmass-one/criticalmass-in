@@ -102,6 +102,7 @@ class CityCycleController extends AbstractController
             return $this->render(
                 'AppBundle:CityCycle:edit.html.twig',
                 [
+                    'city' => $city,
                     'cityCycle' => $cityCycle,
                     'form' => $form->createView(),
                 ]
@@ -113,6 +114,7 @@ class CityCycleController extends AbstractController
         return $this->render(
             'AppBundle:CityCycle:edit.html.twig',
             [
+                'city' => $city,
                 'cityCycle' => $cityCycle,
                 'form' => $form->createView(),
             ]
