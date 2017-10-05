@@ -227,7 +227,7 @@ class CityCycle
         return $this;
     }
 
-    public function getValidFrom(): \DateTime
+    public function getValidFrom(): ?\DateTime
     {
         return $this->validFrom;
     }
