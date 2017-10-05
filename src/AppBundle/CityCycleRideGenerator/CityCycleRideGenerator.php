@@ -3,6 +3,7 @@
 namespace AppBundle\CityCycleRideGenerator;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\CityCycle;
 use AppBundle\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
@@ -21,16 +22,14 @@ class CityCycleRideGenerator
     protected $city;
 
     /** @var array $rideList */
-    protected $rideList;
+    protected $rideList = [];
+
+    /** @var Doctrine $doctrine */
+    protected $doctrine;
 
     public function __construct(Doctrine $doctrine)
     {
-        $this->year = $year;
-        $this->month = $month;
-        $this->city = $city;
-
-        $this->ride = new Ride();
-        $this->ride->setCity($city);
+        $this->doctrine = $doctrine;
     }
 
     public function setCity(City $city): CityCycleRideGenerator
@@ -56,6 +55,7 @@ class CityCycleRideGenerator
 
     public function execute(): CityCycleRideGenerator
     {
+        $this->rideList = [];
 
         if ($this->city->getTimezone()) {
             $timezone = new \DateTimeZone($this->city->getTimezone());
@@ -63,31 +63,55 @@ class CityCycleRideGenerator
             $timezone = new \DateTimeZone('Europe/Berlin');
         }
 
-        $this->ride->setDateTime(new \DateTime($this->year . '-' . $this->month . '-01 00:00:00', $timezone));
+        $this->dateTime = new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month), $timezone);
 
-        $this->calculateDate();
-        $this->calculateTime();
-        $this->calculateLocation();
+        $cycles = $this->findCylces();
 
-        return $this->ride;
+        foreach ($cycles as $cycle) {
+            $ride = new Ride();
+            $ride
+                ->setCity($this->city)
+            ;
+
+            $ride = $this->calculateDate($cycle, $ride);
+            $ride = $this->calculateTime($cycle, $ride);
+            $ride = $this->setupLocation($cycle, $ride);
+
+            $this->rideList[] = $ride;
+        }
+
+        return $this;
     }
 
-    protected function calculateDate()
+    public function getList(): array
     {
-        $dateTime = $this->ride->getDateTime();
+        return $this->rideList;
+    }
+
+    protected function findCylces(): array
+    {
+        $startDateTime = $this->dateTime;
+        $endDateTime = new \DateTimeImmutable(sprintf('%d-%d-%d 00:00:00', $this->year, $this->month, $startDateTime->format('t')));
+
+        return $this->doctrine->getRepository(CityCycle::class)->findByCity($this->city, $startDateTime, $endDateTime);
+    }
+
+    protected function calculateDate(CityCycle $cityCycle, Ride $ride): Ride
+    {
+        $dateTime = clone $this->dateTime;
 
         $dayInterval = new \DateInterval('P1D');
 
-        while ($dateTime->format('w') != $this->city->getStandardDayOfWeek()) {
+        while ($dateTime->format('w') != $cityCycle->getDayOfWeek()) {
             $dateTime->add($dayInterval);
         }
 
-        if ($this->city->getStandardWeekOfMonth() > 0) {
+        if ($cityCycle->getWeekOfMonth() > 0) {
             $weekInterval = new \DateInterval('P7D');
 
-            $standardWeekOfMonth = $this->city->getStandardWeekOfMonth();
+            $weekOfMonth = $this->city->getStandardWeekOfMonth();
 
-            for ($weekOfMonth = 1; $weekOfMonth < $standardWeekOfMonth; ++$weekOfMonth) {
+            for ($i = 1; $i < $weekOfMonth; ++$i) {
                 $dateTime->add($weekInterval);
             }
         } else {
@@ -100,39 +124,39 @@ class CityCycleRideGenerator
             $dateTime->sub($weekInterval);
         }
 
-        $this->ride->setDateTime($dateTime);
+        $ride->setDateTime($dateTime);
+
+        return $ride;
     }
 
-    protected function calculateTime()
+    protected function calculateTime(CityCycle $cityCycle, Ride $ride): Ride
     {
-        $this->ride->setHasTime($this->city->getStandardTime() != null);
+        $time = $cityCycle->getTime();
+        $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));
+        $timeInterval = new \DateInterval($intervalSpec);
 
-        if ($this->city->getStandardTime()) {
-            $timeInterval = new \DateInterval('PT' . $this->city->getStandardTime()->format('H') . 'H' . $this->city->getStandardTime()->format('i') . 'M');
-            $this->ride->setDateTime($this->ride->getDateTime()->add($timeInterval));
-        }
+        $dateTimeSpec = sprintf('%d-%d-%d 00:00:00', $ride->getDateTime()->format('Y'), $ride->getDateTime()->format('m'), $ride->getDateTime()->format('d'));
+        $rideDateTime = new \DateTime($dateTimeSpec);
+        $rideDateTime->add($timeInterval);
+
+        $ride->setDateTime($rideDateTime);
+
+        return $ride;
     }
 
-    protected function calculateLocation()
+    protected function setupLocation(CityCycle $cityCycle, Ride $ride): Ride
     {
-        if ($this->city->getStandardLocation() && $this->city->getStandardLatitude() && $this->city->getStandardLongitude()) {
-            $this->ride->setLocation($this->city->getStandardLocation());
-            $this->ride->setLatitude($this->city->getStandardLatitude());
-            $this->ride->setLongitude($this->city->getStandardLongitude());
-            $this->ride->setHasLocation(true);
-        } else {
-            $this->ride->setHasLocation(false);
-        }
+        $ride
+            ->setLatitude($cityCycle->getLatitude())
+            ->setLongitude($cityCycle->getLongitude())
+            ->setLocation($cityCycle->getLocation())
+        ;
+
+        return $ride;
     }
 
     public function isRideDuplicate(): bool
     {
-        foreach ($this->city->getRides() as $ride) {
-            if ($ride->isSameRide($this->ride)) {
-                return true;
-            }
-        }
-
         return false;
     }
 }

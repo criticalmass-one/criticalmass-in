@@ -51,7 +51,21 @@ class StandardRideCommand extends ContainerAwareCommand
 
         /** @var City $city */
         foreach ($cities as $city) {
-            $output->writeln($city->getTitle());
+            $output->writeln(sprintf('Stadt: <info>%s</info>', $city->getCity()));
+
+            $rides = $generator
+                ->setCity($city)
+                ->execute()
+                ->getList()
+            ;
+
+            if (count($rides)) {
+                foreach ($rides as $ride) {
+                    $output->writeln(sprintf('Tour: <comment>%s</comment> (%s)', $ride->getDateTime()->format('Y-m-d H:i'), $ride->getLocation()));
+                }
+            } else {
+                $output->writeln('No rides for this city.');
+            }
         }
     }
 }
