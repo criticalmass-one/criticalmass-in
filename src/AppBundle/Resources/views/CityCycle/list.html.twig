@@ -10,8 +10,51 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                foo
+                <h2>
+                    Regelmäßige Touren in {{ city.city }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+             <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Turnus
+                            </th>
+
+                            <th>
+                                Treffpunkt
+                            </th>
+
+                            <th>
+                                Uhrzeit
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cycle in cycles %}
+                        <tr>
+                            <td>
+                                {{ ('criticalmass.city_list.event_date.month_week.' ~ city.city.standardWeekOfMonth)|trans }}
+                            </td>
+
+                            <td>
+                                {{ cycle.location }}
+                            </td>
+
+                            <td>
+                                {{ cycle.time }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 {% endblock %}
+
+

@@ -15,6 +15,16 @@ class CityCycleController extends AbstractController
      */
     public function listAction(Request $request, UserInterface $user, string $citySlug): Response
     {
-        return $this->render('AppBundle:CityCycle:list.html.twig');
+        $city = $this->getCheckedCity($citySlug);
+
+        $cycles = $this->getCityCycleRepository()->findByCity($city);
+
+        return $this->render(
+            'AppBundle:CityCycle:list.html.twig',
+            [
+                'cycles' => $cycles,
+                'city' => $city,
+            ]
+        );
     }
 }

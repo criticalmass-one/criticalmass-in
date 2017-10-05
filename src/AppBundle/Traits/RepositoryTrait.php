@@ -36,6 +36,11 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:Ride');
     }
 
+    protected function getCityCycleRepository(): ObjectRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:CityCycle');
+    }
+
     protected function getCitySlugRepository(): ObjectRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:CitySlug');
