@@ -2,14 +2,14 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * @ORM\Table(name="frontpage_teaser")
  * @ORM\Entity()
+ * @Vich\Uploadable
  */
 class FrontpageTeaser
 {
@@ -43,7 +43,7 @@ class FrontpageTeaser
     protected $text;
 
     /**
-     * @Vich\UploadableField(mapping="imageFile", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName")
      */
     protected $imageFile;
 
@@ -55,7 +55,7 @@ class FrontpageTeaser
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -76,7 +76,6 @@ class FrontpageTeaser
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $validUntil;
-
 
     public function __construct()
     {
