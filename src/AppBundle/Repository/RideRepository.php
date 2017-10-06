@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\CityCycle;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Region;
 use AppBundle\Entity\Ride;
@@ -665,6 +666,26 @@ class RideRepository extends EntityRepository
         $builder->orderBy('ride.estimatedParticipants', 'DESC');
 
         $builder->setMaxResults($limit);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findRidesByCycleInInterval(CityCycle $cityCycle, \DateTime $startDateTime, \DateTime $endDateTime): array
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lt('r.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->eq('r.cycle', ':cityCycle'))
+            ->addOrderBy('r.dateTime', 'ASC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime)
+            ->setParameter('cityCycle', $cityCycle)
+        ;
 
         $query = $builder->getQuery();
 

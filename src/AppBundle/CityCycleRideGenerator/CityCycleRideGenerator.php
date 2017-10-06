@@ -15,8 +15,11 @@ class CityCycleRideGenerator
     /** @var int $month */
     protected $month;
 
-    /** @var  \DateTime $dateTime */
-    protected $dateTime;
+    /** @var \DateTime $endDateTime */
+    protected $startDateTime;
+
+    /** @var \DateTime $endDateTime */
+    protected $endDateTime;
 
     /** @var City $city */
     protected $city;
@@ -63,14 +66,20 @@ class CityCycleRideGenerator
             $timezone = new \DateTimeZone('Europe/Berlin');
         }
 
-        $this->dateTime = new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month), $timezone);
+        $this->startDateTime = new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month), $timezone);
+        $this->endDateTime = new \DateTime(sprintf('%d-%d-%d 23:59:59', $this->year, $this->month, $this->startDateTime->format('t')));
 
         $cycles = $this->findCylces();
 
         foreach ($cycles as $cycle) {
+            if ($this->wasRideCreated($cycle)) {
+                continue;
+            }
+
             $ride = new Ride();
             $ride
                 ->setCity($this->city)
+                ->setCycle($cycle)
             ;
 
             $ride = $this->calculateDate($cycle, $ride);
@@ -90,15 +99,12 @@ class CityCycleRideGenerator
 
     protected function findCylces(): array
     {
-        $startDateTime = $this->dateTime;
-        $endDateTime = new \DateTimeImmutable(sprintf('%d-%d-%d 00:00:00', $this->year, $this->month, $startDateTime->format('t')));
-
-        return $this->doctrine->getRepository(CityCycle::class)->findByCity($this->city, $startDateTime, $endDateTime);
+        return $this->doctrine->getRepository(CityCycle::class)->findByCity($this->city, $this->startDateTime, $this->endDateTime);
     }
 
     protected function calculateDate(CityCycle $cityCycle, Ride $ride): Ride
     {
-        $dateTime = clone $this->dateTime;
+        $dateTime = clone $this->startDateTime;
 
         $dayInterval = new \DateInterval('P1D');
 
@@ -155,8 +161,10 @@ class CityCycleRideGenerator
         return $ride;
     }
 
-    public function isRideDuplicate(): bool
+    public function wasRideCreated(CityCycle $cityCycle): bool
     {
-        return false;
+        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $this->startDateTime, $this->endDateTime);
+
+        return count($existingRides) > 0;
     }
 }

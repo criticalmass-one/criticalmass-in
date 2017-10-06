@@ -39,15 +39,13 @@ class StandardRideCommand extends ContainerAwareCommand
         $generator = $this->getContainer()->get('app.city_cycle_ride_generator');
         $generator
             ->setMonth($month)
-            ->setYear($year);
+            ->setYear($year)
+        ;
 
         $doctrine = $this->getContainer()->get('doctrine');
+        $manager = $doctrine->getManager();
 
-        $cities = $doctrine->getRepository('AppBundle:City')->findBy(
-            [
-                'enabled' => true
-            ]
-        );
+        $cities = $doctrine->getRepository('AppBundle:City')->findCities();
 
         /** @var City $city */
         foreach ($cities as $city) {
@@ -62,10 +60,14 @@ class StandardRideCommand extends ContainerAwareCommand
             if (count($rides)) {
                 foreach ($rides as $ride) {
                     $output->writeln(sprintf('Tour: <comment>%s</comment> (%s)', $ride->getDateTime()->format('Y-m-d H:i'), $ride->getLocation()));
+
+                    $manager->persist($ride);
                 }
             } else {
                 $output->writeln('No rides for this city.');
             }
         }
+
+        $manager->flush();
     }
 }
