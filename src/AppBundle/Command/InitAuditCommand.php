@@ -3,11 +3,15 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\City;
-use AppBundle\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Subride;
+use AppBundle\EntityInterface\AuditableInterface;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class InitAuditCommand extends ContainerAwareCommand
@@ -25,27 +29,27 @@ class InitAuditCommand extends ContainerAwareCommand
         $repo = $doctrine->getRepository('AppBundle:City');
         $manager = $doctrine->getManager();
 
-        $cities = $repo->findCities();
+        $classnames = [City::class, Ride::class, Subride::class, Region::class, Location::class];
 
-        /** @var City $city */
-        foreach ($cities as $city) {
-            $output->writeln(sprintf('City: <info>%s</info>', $city->getCity()));
+        foreach ($classnames as $classname) {
+            $entities = $this->findEntities($doctrine, $classname);
 
-            $manager->detach($city);
-            $manager->persist($city);
-
-            $revs = $repo->findBy(['archiveParent' => $city, 'isArchived' => true]);
-
-            /** @var City $rev */
-            foreach ($revs as $rev) {
-                $output->writeln(sprintf('Revision: <comment>%s</comment>', $rev->getCity()));
-
-                $rev->setId($city->getId());
-
-                $manager->merge($rev);
+            foreach ($entities as $entity) {
+                $this->initEntity($manager, $entity);
             }
         }
 
         $manager->flush();
+    }
+
+    protected function findEntities(Doctrine $doctrine, string $classname): array
+    {
+        return $doctrine->getRepository($classname)->findBy(['isArchived' => false]);
+    }
+
+    protected function initEntity(ObjectManager $manager, AuditableInterface $auditable): void
+    {
+        $manager->detach($auditable);
+        $manager->persist($auditable);
     }
 }
