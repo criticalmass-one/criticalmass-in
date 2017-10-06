@@ -12,8 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RideEstimate
 {
     /**
-     * ID der Entitaet.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -27,8 +25,6 @@ class RideEstimate
     protected $user;
 
     /**
-     * Tour, zu der diese Entitaet abgespeichert wurde.
-     *
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
