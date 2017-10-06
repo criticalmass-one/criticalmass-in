@@ -686,6 +686,10 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     public function getPin(): string
     {
+        if (!$this->latitude || !$this->longitude) {
+            return '0,0';
+        }
+        
         return $this->latitude . ',' . $this->longitude;
     }
 
