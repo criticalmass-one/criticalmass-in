@@ -25,7 +25,7 @@ class FrontpageTeaserAdmin extends AbstractAdmin
             ->end()
 
             ->with('Photo', ['class' => 'col-md-6'])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->end()
 
             ->with('Valid range', ['class' => 'col-md-6'])
