@@ -12,17 +12,13 @@
                 </p>
 
                 <div class="btn-group" role="group">
-                    <a class="btn btn-default" role="button"
-                       href="{{ path('caldera_criticalmass_static_display', { slug: 'what-is-the-mass'}) }}">
-                        <i class="fa fa-bicycle"></i>
-                        Mehr darüber
+                    {% for button in frontpageTeaser.buttons %}
+                    <a class="btn {{ button.class }}" role="button"
+                       href="{{ button.link }}">
+                        <i class="fa {{ button.icon }}"></i>
+                        {{ button.caption }}
                     </a>
-
-                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_list') }}"
-                       role="button">
-                        <i class="fa fa-university"></i>
-                        Städte
-                    </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
