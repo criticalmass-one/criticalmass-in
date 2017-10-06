@@ -1,7 +1,7 @@
 <div id="frontpage-carousel" class="carousel slide" data-interval="4000" data-ride="carousel">
     <div class="carousel-inner">
         {% for frontpageTeaser in frontpageTeaserList %}
-        <div class="item{% if loop.first %} active{% endif %}" style="background-image: url({{ vich_uploader_asset(frontpageTeaser, 'imageFile')|imagine_filter('gallery_photo_blurred') }})">
+        <div class="item{% if loop.first %} active{% endif %}" style="background-image: url({{ vich_uploader_asset(frontpageTeaser, 'imageFile')|imagine_filter('frontpage_teaser_large') }})">
             <div class="carousel-caption">
                 {% if frontpageTeaser.headline %}
                 <h2>
