@@ -39,6 +39,7 @@ class FrontpageTeaserAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('headline')
+            ->add('text')
         ;
     }
 

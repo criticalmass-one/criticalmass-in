@@ -35,6 +35,7 @@ class FrontpageTeaserButtonAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('caption')
+            ->add('frontpageTeaser')
         ;
     }
 
@@ -42,6 +43,8 @@ class FrontpageTeaserButtonAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('caption')
+            ->add('frontpageTeaser')
+            ->add('link')
         ;
     }
 }
