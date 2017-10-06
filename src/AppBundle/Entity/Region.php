@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="region")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
  */
-class Region implements RouteableInterface
+class Region implements RouteableInterface, AuditableInterface
 {
     /**
      * @ORM\Id

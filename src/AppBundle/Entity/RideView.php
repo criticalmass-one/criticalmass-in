@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\ORM\Mapping as ORM;
