@@ -14,7 +14,7 @@ class FrontpageController extends AbstractController
         $this->getSeoPage()->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $rideList = $this->getFrontpageRideList();
-        $frontpageTeaserList = $this->getFrontpageTeaserList();
+        $frontpageTeaserList = $this->getFrontpageTeaserRepository()->findForFrontpage();
 
         $endDateTime = new \DateTime();
         $startDateTime = new \DateTime();
@@ -59,10 +59,5 @@ class FrontpageController extends AbstractController
         }
 
         return $rideList;
-    }
-
-    protected function getFrontpageTeaserList(): array
-    {
-        return $this->getFrontpageTeaserRepository()->findAll();
     }
 }
