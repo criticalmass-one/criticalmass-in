@@ -32,6 +32,10 @@ class FrontpageTeaserAdmin extends AbstractAdmin
             ->add('validFrom', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->add('validUntil', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->end()
+
+            ->with('Buttons', ['class' => 'col-md-6'])
+            ->add('buttons')
+            ->end()
         ;
     }
 

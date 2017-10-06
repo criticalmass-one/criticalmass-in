@@ -164,4 +164,9 @@ class FrontpageTeaserButton
     {
         return $this->updatedAt;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s: %s (%d)', $this->caption, $this->link, $this->id);
+    }
 }
