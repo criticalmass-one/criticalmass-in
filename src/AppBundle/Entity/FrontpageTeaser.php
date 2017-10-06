@@ -81,6 +81,7 @@ class FrontpageTeaser
 
     /**
      * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $buttons;
 
