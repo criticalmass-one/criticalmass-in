@@ -222,4 +222,9 @@ class FrontpageTeaser
     {
         return $this->validUntil;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s (%d)', $this->headline, $this->id);
+    }
 }

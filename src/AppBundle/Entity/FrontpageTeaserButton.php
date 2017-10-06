@@ -69,14 +69,14 @@ class FrontpageTeaserButton
         return $this->id;
     }
 
-    public function setTeaser(FrontpageTeaser $frontpageTeaser): FrontpageTeaserButton
+    public function setFrontpageTeaser(FrontpageTeaser $frontpageTeaser): FrontpageTeaserButton
     {
         $this->teaser = $frontpageTeaser;
 
         return $this;
     }
 
-    public function getTeaser(): ?FrontpageTeaser
+    public function getFrontpageTeaser(): ?FrontpageTeaser
     {
         return $this->frontpageTeaser;
     }
