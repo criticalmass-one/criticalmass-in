@@ -71,7 +71,7 @@ class FrontpageTeaserButton
 
     public function setFrontpageTeaser(FrontpageTeaser $frontpageTeaser): FrontpageTeaserButton
     {
-        $this->teaser = $frontpageTeaser;
+        $this->frontpageTeaser = $frontpageTeaser;
 
         return $this;
     }
