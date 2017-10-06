@@ -5,14 +5,16 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Ride;
 use AppBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $this->getSeoPage()->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $rideList = $this->getFrontpageRideList();
+        $frontpageTeaserList = $this->getFrontpageTeaserList();
 
         $endDateTime = new \DateTime();
         $startDateTime = new \DateTime();
@@ -32,12 +34,13 @@ class FrontpageController extends AbstractController
             'AppBundle:Frontpage:index.html.twig',
             [
                 'timelineContent' => $timelineContent,
-                'rideList' => $rideList
+                'rideList' => $rideList,
+                'frontpageTeaserList' => $frontpageTeaserList,
             ]
         );
     }
 
-    protected function getFrontpageRideList()
+    protected function getFrontpageRideList(): array
     {
         $rides = $this->getRideRepository()->findFrontpageRides();
 
@@ -56,5 +59,10 @@ class FrontpageController extends AbstractController
         }
 
         return $rideList;
+    }
+
+    protected function getFrontpageTeaserList(): array
+    {
+        return $this->getFrontpageTeaserRepository()->findAll();
     }
 }

@@ -31,6 +31,11 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:Board');
     }
 
+    protected function getFrontpageTeaserRepository(): ObjectRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:FrontpageTeaser');
+    }
+
     protected function getRideRepository(): RideRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Ride');
