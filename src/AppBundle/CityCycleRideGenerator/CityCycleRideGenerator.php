@@ -60,13 +60,7 @@ class CityCycleRideGenerator
     {
         $this->rideList = [];
 
-        if ($this->city->getTimezone()) {
-            $timezone = new \DateTimeZone($this->city->getTimezone());
-        } else {
-            $timezone = new \DateTimeZone('Europe/Berlin');
-        }
-
-        $this->startDateTime = new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month), $timezone);
+        $this->startDateTime = new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month));
         $this->endDateTime = new \DateTime(sprintf('%d-%d-%d 23:59:59', $this->year, $this->month, $this->startDateTime->format('t')));
 
         $cycles = $this->findCylces();
@@ -115,7 +109,7 @@ class CityCycleRideGenerator
         if ($cityCycle->getWeekOfMonth() > 0) {
             $weekInterval = new \DateInterval('P7D');
 
-            $weekOfMonth = $this->city->getStandardWeekOfMonth();
+            $weekOfMonth = $cityCycle->getWeekOfMonth();
 
             for ($i = 1; $i < $weekOfMonth; ++$i) {
                 $dateTime->add($weekInterval);
