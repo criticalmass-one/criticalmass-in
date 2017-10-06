@@ -38,7 +38,7 @@ class FrontpageTeaser
     protected $headline;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $text;
 
