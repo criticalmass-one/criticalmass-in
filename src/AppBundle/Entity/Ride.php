@@ -41,6 +41,12 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
+     * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     */
+    protected $cycle;
+
+    /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @JMS\Groups({"ride-list"})
@@ -283,6 +289,18 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setUser(User $user = null): Ride
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCycle(): ?CityCycle
+    {
+        return $this->cycle;
+    }
+
+    public function setCycle(CityCycle $cityCycle = null): Ride
+    {
+        $this->cycle = $cityCycle;
 
         return $this;
     }
