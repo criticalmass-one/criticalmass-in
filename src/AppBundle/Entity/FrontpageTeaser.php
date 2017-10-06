@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -77,9 +79,15 @@ class FrontpageTeaser
      */
     protected $validUntil;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
+     */
+    protected $buttons;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->buttons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,5 +234,31 @@ class FrontpageTeaser
     public function __toString(): string
     {
         return sprintf('%s (%d)', $this->headline, $this->id);
+    }
+
+    public function addButton(FrontpageTeaserButton $button): FrontpageTeaser
+    {
+        $this->buttons->add($button);
+
+        return $this;
+    }
+
+    public function setButtons(Collection $buttons): FrontpageTeaser
+    {
+        $this->buttons = $buttons;
+
+        return $this;
+    }
+
+    public function getButtons(): Collection
+    {
+        return $this->buttons;
+    }
+
+    public function removeButton(FrontpageTeaserButton $button): FrontpageTeaser
+    {
+        $this->buttons->removeElement($button);
+
+        return $this;
     }
 }
