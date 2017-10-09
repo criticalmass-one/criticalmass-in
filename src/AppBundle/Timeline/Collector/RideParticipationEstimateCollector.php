@@ -29,7 +29,7 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
             $item->setRideTitle($estimateEntity->getRide()->getFancyTitle());
             $item->setUsername($estimateEntity->getUser()->getUsername());
             $item->setEstimatedParticipants($estimateEntity->getEstimatedParticipants());
-            $item->setDateTime($estimateEntity->getCreationDateTime());
+            $item->setDateTime($estimateEntity->getDateTime());
 
             $this->addItem($item);
         }
