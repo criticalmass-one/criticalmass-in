@@ -169,7 +169,7 @@ class CityCycle
         return $this->weekOfMonth;
     }
 
-    public function setTime(\DateTime $time): CityCycle
+    public function setTime(\DateTime $time = null): CityCycle
     {
         $this->time = $time;
 
