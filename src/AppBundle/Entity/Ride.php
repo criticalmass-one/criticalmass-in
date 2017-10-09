@@ -42,6 +42,12 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
+     * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     */
+    protected $cycle;
+
+    /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @JMS\Groups({"ride-list"})
@@ -110,14 +116,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $location;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $latitude;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
@@ -259,8 +265,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->visibleSince = new \DateTime();
         $this->visibleUntil = new \DateTime();
         $this->expectedStartDateTime = new \DateTime();
-        $this->latitude = 0.0;
-        $this->longitude = 0.0;
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -284,6 +288,18 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setUser(User $user = null): Ride
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCycle(): ?CityCycle
+    {
+        return $this->cycle;
+    }
+
+    public function setCycle(CityCycle $cityCycle = null): Ride
+    {
+        $this->cycle = $cityCycle;
 
         return $this;
     }
@@ -671,6 +687,10 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     public function getPin(): string
     {
+        if (!$this->latitude || !$this->longitude) {
+            return '0,0';
+        }
+        
         return $this->latitude . ',' . $this->longitude;
     }
 

@@ -4,6 +4,7 @@ namespace AppBundle\Traits;
 
 use AppBundle\Repository\BlockedCityRepository;
 use AppBundle\Repository\BoardRepository;
+use AppBundle\Repository\CityCycleRepository;
 use AppBundle\Repository\CityRepository;
 use AppBundle\Repository\FacebookRidePropertiesRepository;
 use AppBundle\Repository\FrontpageTeaserRepository;
@@ -40,6 +41,11 @@ trait RepositoryTrait
     protected function getRideRepository(): RideRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Ride');
+    }
+
+    protected function getCityCycleRepository(): CityCycleRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:CityCycle');
     }
 
     protected function getCitySlugRepository(): ObjectRepository

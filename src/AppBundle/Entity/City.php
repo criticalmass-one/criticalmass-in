@@ -143,6 +143,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $slugs;
 
     /**
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
+     */
+    protected $cycles;
+
+    /**
      * @ORM\Column(type="boolean")
      * @JMS\Expose
      */
@@ -304,6 +309,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->slugs = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->cycles = new ArrayCollection();
 
         $this->createdAt = new \DateTime();
     }
@@ -944,5 +950,31 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getDateTime(): ?\DateTime
     {
         return null;
+    }
+
+    public function addCycle(CityCycle $cityCycle): City
+    {
+        $this->cycles->add($cityCycle);
+
+        return $this;
+    }
+
+    public function setCycles(Collection $cityCycles): City
+    {
+        $this->cycles = $cityCycles;
+
+        return $this;
+    }
+
+    public function getCycles(): Collection
+    {
+        return $this->cycles;
+    }
+
+    public function removeCycle(CityCycle $cityCycle): City
+    {
+        $this->cycles->removeElement($cityCycle);
+
+        return $this;
     }
 }
