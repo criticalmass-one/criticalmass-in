@@ -40,7 +40,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     protected $region;
@@ -146,60 +146,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
     protected $cycles;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     */
-    protected $isStandardable = false;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardDayOfWeek;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardWeekOfMonth;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     */
-    protected $isStandardableTime = false;
-
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardTime;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     */
-    protected $isStandardableLocation = false;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardLocation;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardLatitude = 0;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardLongitude = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -543,90 +489,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->enabled;
     }
 
-    public function setIsStandardable(bool $isStandardable): City
-    {
-        $this->isStandardable = $isStandardable;
-
-        return $this;
-    }
-
-    public function getIsStandardable(): bool
-    {
-        return $this->isStandardable;
-    }
-
-    public function setStandardDayOfWeek(int $standardDayOfWeek = null): City
-    {
-        $this->standardDayOfWeek = $standardDayOfWeek;
-
-        return $this;
-    }
-
-    public function getStandardDayOfWeek(): ?int
-    {
-        return $this->standardDayOfWeek;
-    }
-
-    public function setStandardWeekOfMonth(int $standardWeekOfMonth = null): City
-    {
-        $this->standardWeekOfMonth = $standardWeekOfMonth;
-
-        return $this;
-    }
-
-    public function getStandardWeekOfMonth(): ?int
-    {
-        return $this->standardWeekOfMonth;
-    }
-
-    public function setStandardTime(\DateTime $standardTime = null): City
-    {
-        $this->standardTime = $standardTime;
-
-        return $this;
-    }
-
-    public function getStandardTime(): ?\DateTime
-    {
-        return $this->standardTime;
-    }
-
-    public function setStandardLocation(string $standardLocation = null): City
-    {
-        $this->standardLocation = $standardLocation;
-
-        return $this;
-    }
-
-    public function getStandardLocation(): ?string
-    {
-        return $this->standardLocation;
-    }
-
-    public function setStandardLatitude(float $standardLatitude = null): City
-    {
-        $this->standardLatitude = $standardLatitude;
-
-        return $this;
-    }
-
-    public function getStandardLatitude(): ?float
-    {
-        return $this->standardLatitude;
-    }
-
-    public function setStandardLongitude(float $standardLongitude = null): City
-    {
-        $this->standardLongitude = $standardLongitude;
-
-        return $this;
-    }
-
-    public function getStandardLongitude(): ?float
-    {
-        return $this->standardLongitude;
-    }
-
     public function setCityPopulation(int $cityPopulation): City
     {
         $this->cityPopulation = $cityPopulation;
@@ -707,30 +569,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getPosts(): Collection
     {
         return $this->posts;
-    }
-
-    public function setIsStandardableLocation(bool $isStandardableLocation): City
-    {
-        $this->isStandardableLocation = $isStandardableLocation;
-
-        return $this;
-    }
-
-    public function getIsStandardableLocation(): bool
-    {
-        return $this->isStandardableLocation;
-    }
-
-    public function setIsStandardableTime(bool $isStandardableTime): City
-    {
-        $this->isStandardableTime = $isStandardableTime;
-
-        return $this;
-    }
-
-    public function getIsStandardableTime(): bool
-    {
-        return $this->isStandardableTime;
     }
 
     public function getPhotos(): Collection

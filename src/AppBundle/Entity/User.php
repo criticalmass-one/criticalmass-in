@@ -40,11 +40,6 @@ class User extends BaseUser
     protected $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="user")
-     */
-    protected $archiveRides;
-
-    /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
@@ -134,7 +129,6 @@ class User extends BaseUser
         $this->colorBlue = rand(0, 255);
 
         $this->tracks = new ArrayCollection();
-        $this->archiveRides = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
     }
@@ -260,25 +254,6 @@ class User extends BaseUser
         $this->updatedAt = new \DateTime();
 
         return $this;
-    }
-
-    public function addArchiveRide(Ride $archiveRide): User
-    {
-        $this->archiveRides->add($archiveRide);
-
-        return $this;
-    }
-
-    public function removeArchiveRide(Ride $archiveRide): User
-    {
-        $this->archiveRides->removeElement($archiveRide);
-
-        return $this;
-    }
-
-    public function getArchiveRides(): Collection
-    {
-        return $this->archiveRides;
     }
 
     public function addParticipation(Participation $participation): User
