@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\PhotoInterface;
@@ -21,7 +22,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
 {
     /**
      * @ORM\Id

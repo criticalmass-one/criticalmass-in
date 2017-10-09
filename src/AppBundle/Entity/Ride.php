@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\ParticipateableInterface;
 use AppBundle\EntityInterface\PhotoInterface;
@@ -23,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
 {
     /**
      * @ORM\Id

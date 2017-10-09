@@ -3,11 +3,16 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\City;
-use AppBundle\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Subride;
+use AppBundle\EntityInterface\AuditableInterface;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class InitAuditCommand extends ContainerAwareCommand
@@ -22,30 +27,37 @@ class InitAuditCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $doctrine = $this->getContainer()->get('doctrine');
-        $repo = $doctrine->getRepository('AppBundle:City');
         $manager = $doctrine->getManager();
 
-        $cities = $repo->findCities();
+        $classnames = [City::class, Ride::class, Subride::class, Region::class, Location::class];
 
-        /** @var City $city */
-        foreach ($cities as $city) {
-            $output->writeln(sprintf('City: <info>%s</info>', $city->getCity()));
+        foreach ($classnames as $classname) {
 
-            $manager->detach($city);
-            $manager->persist($city);
+            $entities = $this->findEntities($doctrine, $classname);
 
-            $revs = $repo->findBy(['archiveParent' => $city, 'isArchived' => true]);
+            $output->writeln(sprintf('Init <info>%d</info> entities of <comment>%s</comment> now', count($entities), $classname));
+            $progress = new ProgressBar($output, count($entities));
 
-            /** @var City $rev */
-            foreach ($revs as $rev) {
-                $output->writeln(sprintf('Revision: <comment>%s</comment>', $rev->getCity()));
+            foreach ($entities as $entity) {
+                $this->initEntity($manager, $entity);
 
-                $rev->setId($city->getId());
-
-                $manager->merge($rev);
+                $progress->advance();
             }
-        }
 
-        $manager->flush();
+            $manager->flush();
+
+            $progress->finish();
+        }
+    }
+
+    protected function findEntities(Doctrine $doctrine, string $classname): array
+    {
+        return $doctrine->getRepository($classname)->findAll();
+    }
+
+    protected function initEntity(ObjectManager $manager, AuditableInterface $auditable): void
+    {
+        $manager->detach($auditable);
+        $manager->persist($auditable);
     }
 }
