@@ -2,21 +2,38 @@
 
 namespace AppBundle\Model;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use JMS\Serializer\Annotation as JMS;
 
+/**
+ * @JMS\ExclusionPolicy("all")
+ */
 class CreateEstimateModel
 {
-    /** @var \DateTime $dateTime */
+    /**
+     * @var \DateTime $dateTime
+     * @JMS\Expose()
+     * @JMS\Type("DateTime<'U'>")
+     */
     protected $dateTime;
 
-    /** @var float $latitude */
+    /**
+     * @var float $latitude
+     * @JMS\Expose()
+     * @JMS\Type("float")
+     */
     protected $latitude;
 
-    /** @var float $longitude */
+    /** @var float $longitude
+     * @JMS\Expose()
+     * @JMS\Type("float")
+     */
     protected $longitude;
 
-    /** @var int $estimation */
+    /**
+     * @var int $estimation
+     * @JMS\Expose()
+     * @JMS\Type("integer")
+     */
     protected $estimation;
 
     public function __construct(\DateTime $dateTime = null, float $latitude = null, float $longitude = null, int $estimation = null)

@@ -2,13 +2,15 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Model\CreateEstimateModel;
 use AppBundle\Traits\RepositoryTrait;
 use AppBundle\Traits\UtilTrait;
-use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class CityController extends BaseController
+class EstimateController extends BaseController
 {
     use RepositoryTrait;
     use UtilTrait;
@@ -19,35 +21,12 @@ class CityController extends BaseController
      *  description="This is a description of your API method"
      * )
      */
-    public function listAction(): Response
+    public function createAction(Request $request, UserInterface $user): Response
     {
-        $cityList = $this->getCityRepository()->findEnabledCities();
+        $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
 
-        $view = View::create();
-        $view
-            ->setData($cityList)
-            ->setFormat('json')
-            ->setStatusCode(200);
+        var_dump($estimateModel);
 
-        return $this->handleView($view);
-    }
-
-    /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="This is a description of your API method"
-     * )
-     */
-    public function showAction(string $citySlug): Response
-    {
-        $city = $this->getCheckedCity($citySlug);
-
-        $view = View::create();
-        $view
-            ->setData($city)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return new Response();
     }
 }
