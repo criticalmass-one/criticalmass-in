@@ -72,15 +72,13 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if city.city.isStandardable %}
-                                    {% if city.city.timezone %}
-                                    {% set timezone = city.city.timezone %}
-                                    {% else %}
-                                    {% set timezone = 'UTC' %}
-                                    {% endif %}
-
-                                jeweils am {{ ('criticalmass.city_list.event_date.month_week.' ~ city.city.standardWeekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ city.city.standardDayOfWeek)|trans }} um {{ city.city.standardTime|date('H:i', timezone) }} Uhr
-                                {% endif %}
+                                <ul class="list-unstyled">
+                                    {% for cycle in city.cycles %}
+                                    <li>
+                                        am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', 'Europe/Berlin') }} Uhr
+                                    </li>
+                                    {% endfor %}
+                                </ul>
                             </td>
                             <td>
                                 <a href="{{ path('caldera_criticalmass_desktop_city_listrides', { citySlug: city.city.slug }) }}">
