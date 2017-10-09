@@ -211,13 +211,7 @@ class StandardCityType extends AbstractType
                     'required' => false
                 ]
             )
-            ->add(
-                'archiveMessage',
-                TextType::class,
-                [
-                    'required' => true
-                ]
-            );
+        ;
     }
 
     public function getName()

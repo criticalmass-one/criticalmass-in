@@ -31,6 +31,7 @@ require.config({
         "Container": "/bundles/app/js/modules/entity/Container",
         "ClusterContainer": "/bundles/app/js/modules/entity/ClusterContainer",
         "EditCityPage": "/bundles/app/js/modules/page/EditCityPage",
+        "EditCityCyclePage": "/bundles/app/js/modules/page/EditCityCyclePage",
         "EditRidePage": "/bundles/app/js/modules/page/EditRidePage",
         "RegionPage": "/bundles/app/js/modules/page/RegionPage",
         "StravaImportPage": "/bundles/app/js/modules/page/StravaImportPage",
