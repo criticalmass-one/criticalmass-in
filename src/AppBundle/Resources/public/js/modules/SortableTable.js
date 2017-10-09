@@ -15,7 +15,7 @@ define([], function () {
             var $sortOption = $(sortOptionList[n]);
 
             $sortOption.on('click', function () {
-                that._prepareSort($sortOption.attr('data-sortAttribute'));
+                that._prepareSort($sortOption.attr('data-sort-attribute'));
             });
         });
     };
@@ -23,7 +23,7 @@ define([], function () {
     SortableTable.prototype._prepareSort = function (sortAttribute) {
         _paq.push(['trackEvent', this.settings.tableId, sortAttribute]);
 
-        if (sortAttribute == 'RideLocation' || sortAttribute == 'cityLocation') {
+        if (sortAttribute == 'RideLocation' || sortAttribute == 'CityLocation') {
             this._sortByDistance(sortAttribute);
         }
 
@@ -38,6 +38,7 @@ define([], function () {
     };
 
     SortableTable.prototype._sortByDistance = function () {
+        alert('YEAH');
         var that = this;
 
         function successCallback(geolocationResult) {
