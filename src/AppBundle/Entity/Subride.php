@@ -15,8 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Subride implements AuditableInterface
 {
     /**
-     * Numerische ID der Tour.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")

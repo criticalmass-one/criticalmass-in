@@ -17,9 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
- * derer einzelne Critical-Mass-Touren stattfinden.
- *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
@@ -28,8 +25,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
 {
     /**
-     * Numerische ID der Stadt.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -59,8 +54,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $mainSlug;
 
     /**
-     * Name der Stadt.
-     *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      * @JMS\Expose
@@ -70,9 +63,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $city;
 
     /**
-     * Bezeichnung der Critical Mass in dieser Stadt, etwa "Critical Mass Hamburg"
-     * oder "Critical Mass Bremen".
-     *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @JMS\Expose
@@ -81,8 +71,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $title;
 
     /**
-     * Kurze Beschreibung der Critical Mass dieser Stadt.
-     *
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -90,8 +78,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $description;
 
     /**
-     * Adresse der Webseite der Critical Mass in dieser Stadt.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
@@ -100,8 +86,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $url;
 
     /**
-     * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
@@ -110,8 +94,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $facebook;
 
     /**
-     * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
@@ -120,8 +102,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $twitter;
 
     /**
-     * Breitengrad der Stadt.
-     *
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -129,8 +109,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $latitude = 0;
 
     /**
-     * Längengrad der Stadt.
-     *
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -143,22 +121,16 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $enabled = true;
 
     /**
-     * Array mit den Touren in dieser Stadt.
-     *
      * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
      */
     protected $rides;
 
     /**
-     * Array mit den Kommentaren zu dieser Stadt.
-     *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="city")
      */
     protected $posts;
 
     /**
-     * Array mit den Bildern zu dieser Stadt.
-     *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="city")
      */
     protected $photos;
