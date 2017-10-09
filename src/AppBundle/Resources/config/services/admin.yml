@@ -17,6 +17,18 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Critical Mass, label: City }
 
+    admin.frontpage_teaser:
+        class: AppBundle\Admin\FrontpageTeaserAdmin
+        arguments: [~, AppBundle\Entity\FrontpageTeaser, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Frontpage Teaser, label: Teaser }
+
+    admin.frontpage_teaser_button:
+        class: AppBundle\Admin\FrontpageTeaserButtonAdmin
+        arguments: [~, AppBundle\Entity\FrontpageTeaserButton, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Frontpage Teaser, label: Button }
+
     admin.location:
         class: AppBundle\Admin\LocationAdmin
         arguments: [~, AppBundle\Entity\Location, ~]
