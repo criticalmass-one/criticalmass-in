@@ -6,28 +6,38 @@ use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository
 {
-    public function findForTimelineRideParticipantsEstimateCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
+    public function findForTimelineRideParticipantsEstimateCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
     {
         $builder = $this->createQueryBuilder('e');
 
-        $builder->select('e');
-        $builder->where($builder->expr()->isNull('e.track'));
-        $builder->andWhere($builder->expr()->isNull('e.estimatedDistance'));
-        $builder->andWhere($builder->expr()->isNull('e.estimatedDuration'));
+        $builder
+            ->select('e')
+            ->where($builder->expr()->isNull('e.track'))
+            ->andWhere($builder->expr()->isNull('e.estimatedDistance'))
+            ->andWhere($builder->expr()->isNull('e.estimatedDuration'))
+            ->addOrderBy('e.dateTime', 'DESC')
+        ;
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('e.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('e.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime)
+            ;
+
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('e.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('e.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime)
+            ;
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('e.dateTime', 'DESC');
+
 
         $query = $builder->getQuery();
 
