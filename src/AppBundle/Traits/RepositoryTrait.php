@@ -7,6 +7,7 @@ use AppBundle\Repository\BoardRepository;
 use AppBundle\Repository\CityCycleRepository;
 use AppBundle\Repository\CityRepository;
 use AppBundle\Repository\FacebookRidePropertiesRepository;
+use AppBundle\Repository\FrontpageTeaserRepository;
 use AppBundle\Repository\LocationRepository;
 use AppBundle\Repository\ParticipationRepository;
 use AppBundle\Repository\PhotoRepository;
@@ -30,6 +31,11 @@ trait RepositoryTrait
     protected function getBoardRepository(): BoardRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Board');
+    }
+
+    protected function getFrontpageTeaserRepository(): FrontpageTeaserRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:FrontpageTeaser');
     }
 
     protected function getRideRepository(): RideRepository

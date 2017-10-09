@@ -4,4 +4,10 @@
         <import resource="services/manager.xml" />
         <import resource="services/factory.xml" />
     </imports>
+
+    <services>
+        <service id="app.city_cycle_ride_generator" class="AppBundle\CityCycleRideGenerator\CityCycleRideGenerator">
+            <argument type="service" id="doctrine" />
+        </service>
+    </services>
 </container>

@@ -106,14 +106,14 @@ class CityRepository extends EntityRepository
 
     public function findCities()
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
-
-        $builder->orderBy('city.city', 'ASC');
+        $builder
+            ->select('c')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->orderBy('c.city', 'ASC')
+            ->setParameter('enabled', true)
+        ;
 
         $query = $builder->getQuery();
 

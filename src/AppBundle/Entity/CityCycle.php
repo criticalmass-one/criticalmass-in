@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +30,11 @@ class CityCycle
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="cycle", cascade={"persist", "remove"})
+     */
+    protected $rides;
 
     /**
      * @ORM\Column(type="smallint", nullable=false)
@@ -82,6 +89,7 @@ class CityCycle
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->rides = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,7 +169,7 @@ class CityCycle
         return $this->weekOfMonth;
     }
 
-    public function setTime(\DateTime $time): CityCycle
+    public function setTime(\DateTime $time = null): CityCycle
     {
         $this->time = $time;
 
@@ -236,5 +244,31 @@ class CityCycle
     public function hasRange(): bool
     {
         return ($this->validFrom && $this->validUntil);
+    }
+
+    public function addRide(Ride $ride): CityCycle
+    {
+        $this->rides->add($ride);
+
+        return $this;
+    }
+
+    public function setRides(Collection $rides): CityCycle
+    {
+        $this->rides = $rides;
+
+        return $this;
+    }
+
+    public function getRides(): Collection
+    {
+        return $this->rides;
+    }
+
+    public function removeRide(Ride $ride): CityCycle
+    {
+        $this->rides->removeElement($ride);
+
+        return $this;
     }
 }

@@ -10,7 +10,7 @@
     <div class="container-fluid margin-bottom-medium">
         <div class="row">
             <div class="col-md-12">
-                {{ include('AppBundle:Frontpage:_carousel.html.twig') }}
+                {% include 'AppBundle:Frontpage:_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
             </div>
         </div>
     </div>

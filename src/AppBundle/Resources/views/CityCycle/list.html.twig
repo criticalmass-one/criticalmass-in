@@ -54,7 +54,13 @@
                             </td>
 
                             <td>
+                                {% if (cycle.location) %}
                                 {{ cycle.location }} ({{ cycle.latitude|round(3) }}, {{ cycle.longitude|round(3) }})
+                                {% else %}
+                                <em>
+                                    nicht definiert
+                                </em>
+                                {% endif %}
                             </td>
 
                             <td>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AuditableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,11 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
-class Subride
+class Subride implements AuditableInterface
 {
     /**
-     * Numerische ID der Tour.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
