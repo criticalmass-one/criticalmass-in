@@ -40,7 +40,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     protected $region;
