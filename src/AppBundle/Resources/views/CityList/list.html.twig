@@ -73,7 +73,7 @@
                             </td>
                             <td>
                                 {% if city.city.isStandardable %}
-                                jeweils am {{ ('criticalmass.city_list.event_date.month_week.' ~ city.city.standardWeekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ city.city.standardDayOfWeek)|trans }} um {{ city.city.standardTime|date('H:i', 'Europe/Berlin') }} Uhr
+                                jeweils am {{ ('criticalmass.city_list.event_date.month_week.' ~ city.city.standardWeekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ city.city.standardDayOfWeek)|trans }} um {{ city.city.standardTime|date('H:i', city.city.timezone) }} Uhr
                                 {% endif %}
                             </td>
                             <td>
