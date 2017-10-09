@@ -31,6 +31,9 @@ class EstimateController extends BaseController
 
         $rideEstimation = $this->createRideEstimate($estimateModel);
 
+        $this->getManager()->persist($rideEstimation);
+        $this->getManager()->flush();
+
         return new Response();
     }
 
