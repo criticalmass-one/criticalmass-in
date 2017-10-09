@@ -36,25 +36,21 @@ class EstimateController extends BaseController
 
     protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
     {
+        $ride = $this->findNearestRide($model);
+
         $estimate = new RideEstimate();
 
         $estimate
             ->setEstimatedParticipants($model->getEstimation())
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
+            ->setRide($ride)
         ;
 
         if ($model->getDateTime()) {
             $estimate
                 ->setDateTime($model->getDateTime())
             ;
-        }
-
-        $ride = $this->findNearestRide($model);
-
-        if ($ride) {
-            echo "WEFWEFEWFEWF";
-            echo $ride->getFancyTitle();
         }
 
         return $estimate;
@@ -74,7 +70,11 @@ class EstimateController extends BaseController
             '25km'
         );
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
+        $dateTimeFilter = new \Elastica\Filter\Term(['simpleDate' => $model->getDateTime()->format('Y-m-d')]);
+
+        $boolFilter = new \Elastica\Filter\BoolAnd([$geoFilter, $dateTimeFilter]);
+
+        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $boolFilter);
 
         $query = new \Elastica\Query($filteredQuery);
 
