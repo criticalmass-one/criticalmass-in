@@ -16,10 +16,14 @@ class CityListModel
     /** @var int $countRides */
     protected $countRides;
 
-    public function __construct(City $city, Ride $currentRide = null, int $countRides = 0)
+    /** @var array $cycles */
+    protected $cycles;
+
+    public function __construct(City $city, Ride $currentRide = null, array $cycles = [], int $countRides = 0)
     {
         $this->city = $city;
         $this->currentRide = $currentRide;
+        $this->cycles = $cycles;
         $this->countRides = $countRides;
     }
 
@@ -31,6 +35,11 @@ class CityListModel
     public function getCurrentRide(): ?Ride
     {
         return $this->currentRide;
+    }
+
+    public function getCycles(): array
+    {
+        return $this->cycles;
     }
 
     public function countRides(): int
