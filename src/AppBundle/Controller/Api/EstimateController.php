@@ -8,7 +8,7 @@ use AppBundle\Model\CreateEstimateModel;
 use AppBundle\Traits\RepositoryTrait;
 use AppBundle\Traits\UtilTrait;
 use FOS\ElasticaBundle\Finder\FinderInterface;
-use JMS\Serializer\Context;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -34,7 +34,14 @@ class EstimateController extends BaseController
         $this->getManager()->persist($rideEstimation);
         $this->getManager()->flush();
 
-        return new Response();
+        $view = View::create();
+        $view
+            ->setData($rideEstimation)
+            ->setFormat('json')
+            ->setStatusCode(200)
+        ;
+
+        return $this->handleView($view);
     }
 
     protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
