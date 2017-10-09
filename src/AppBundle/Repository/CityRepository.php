@@ -19,7 +19,6 @@ class CityRepository extends EntityRepository
         $builder->select('city');
 
         $builder->where($builder->expr()->isNotNull('city.facebook'));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
         $builder->orderBy('city.city', 'ASC');
 
@@ -35,7 +34,6 @@ class CityRepository extends EntityRepository
         $builder->select('city');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
         $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
         $builder->andWhere($builder->expr()->neq('city.latitude', 0));
         $builder->andWhere($builder->expr()->neq('city.longitude', 0));
@@ -58,7 +56,6 @@ class CityRepository extends EntityRepository
         $builder->leftJoin('region2.parent', 'region3');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
         $builder->andWhere(
             $builder->expr()->orX(
@@ -84,7 +81,6 @@ class CityRepository extends EntityRepository
         $builder->leftJoin('region2.parent', 'region3');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
         $builder->andWhere(
             $builder->expr()->orX(
@@ -127,7 +123,6 @@ class CityRepository extends EntityRepository
         $builder->select('city');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
         $builder->andWhere($builder->expr()->eq('city.enableBoard', 1));
 
         $builder->orderBy('city.city', 'ASC');
