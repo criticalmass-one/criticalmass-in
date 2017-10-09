@@ -58,6 +58,6 @@ class InitAuditCommand extends ContainerAwareCommand
     protected function initEntity(ObjectManager $manager, AuditableInterface $auditable): void
     {
         $manager->detach($auditable);
-        $manager->persist($auditable);
+        $manager->merge($auditable);
     }
 }
