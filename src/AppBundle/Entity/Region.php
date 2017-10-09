@@ -35,7 +35,7 @@ class Region implements RouteableInterface, AuditableInterface
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="children", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
