@@ -15,6 +15,7 @@
             Optionen
             <span class="caret"></span>
         </button>
+
         <div class="dropdown-menu" aria-labelledby="city-dropdown">
             <a class="dropdown-item" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
                 <i class="fa fa-cogs"></i>
@@ -24,6 +25,11 @@
             <a class="dropdown-item" href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
                 <i class="fa fa-plus"></i>
                 Tour hinzufügen
+            </a>
+
+            <a class="drowpdown-item" href="{{ path('caldera_criticalmass_citycycle_list', { citySlug: city.getMainSlugString() } ) }}">
+                <i class="fa Example of calendar-o fa-calendar-o"></i>
+                Turnus
             </a>
         </div>
     </div>

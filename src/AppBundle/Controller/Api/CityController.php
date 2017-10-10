@@ -16,7 +16,7 @@ class CityController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Returns a list of critical mass cities"
      * )
      */
     public function listAction(): Response
@@ -35,7 +35,7 @@ class CityController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Shows a critical mass city"
      * )
      */
     public function showAction(string $citySlug): Response

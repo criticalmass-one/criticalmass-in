@@ -1,7 +1,3 @@
-caldera_criticalmass_desktop_city_list:
-    path:  /citylist
-    defaults: { _controller: AppBundle:City/City:list }
-
 caldera_criticalmass_desktop_city_show:
     path:  /{citySlug}
     defaults: { _controller: AppBundle:City/City:show }

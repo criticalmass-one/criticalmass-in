@@ -1,6 +1,6 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Häufig gestellte Fragen zu Caldera Critical Mass{% endblock %}
+{% block title %}Häufig gestellte Fragen zu criticalmass.in{% endblock %}
 
 {% block breadcrumb %}
     <li class="active">
@@ -11,139 +11,277 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <h1>
-                Häufig gestellte Fragen zu Caldera Critical Mass
+                Häufig gestellte Fragen zu dieser Webseite
             </h1>
+        </div>
+    </div>
 
-            <h2>
-                Wie synchronisiert sich Caldera Critical Mass mit facebook?
-            </h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Städte
+                    </h3>
 
-            <p>
-                Caldera Critical Mass tauscht keine persönlichen Daten mit facebook aus.
-            </p>
+                    <p class="lead">
+                        criticalmass.in enthält eine Liste von weltweiten Critical-Mass-Städten.
+                    </p>
 
-            <p>
-                Sofern für eine Stadt eine Seite auf facebook angegeben wurde, werden alle vier Stunden die öffentlich zugänglichen Daten dieser Seite abgerufen und zu statistischen Zwecken abgespeichert. Darüber lässt sich beispielsweise verfolgen, wie viele Like-Angaben eine Stadt zählt.
-            </p>
+                    <h4>
+                        Wie kann ich herausfinden, ob in meiner Stadt eine Critical Mass unterwegs ist?
+                    </h4>
 
-            <p>
-                Wenn eine Tour mit einer Veranstaltung auf facebook verlinkt wurde, werden alle vier Stunden die öffentlich zugänglichen Daten dieser Tour abgerufen und abgespeichert. Das beinhaltet beispielsweise die Anzahl der Teilnehmer oder der eingeladenen Personen, Titel und Beschreibung der Veranstaltung sowie den Treffpunkt.
-            </p>
+                    <p>
+                        Da gibt’s drei Möglichkeiten:
+                    </p>
 
-            <p>
-                Außerdem versucht Caldera Critical Mass automatisch die öffentlich zugängliche Veranstaltung einer Critical-Mass-Tour auf facebook zu finden. Das klappt aber nur unter folgenden Voraussetzungen:
-            </p>
+                    <ol>
+                        <li>
+                            Such deine Stadt in der <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a>.
+                        </li>
 
-            <ul>
-                <li>
-                    Die dazugehörige Stadt wurde mit einer Seite auf facebook verlinkt.
-                </li>
-                <li>
-                    Es gibt auf der Seite eine Veranstaltung für die Critical Mass.
-                </li>
-                <li>
-                    Es gibt auf der Seite für den Tag der Tour keine anderen Veranstaltungen.
-                </li>
-            </ul>
+                        <li>
+                            Arbeite dich durch das <a href="{{ path('caldera_criticalmass_region_world') }}">Verzeichnis</a> bis zu deiner Stadt hindurch.
+                        </li>
 
-            <p>
-                Es gibt außerdem die Möglichkeit, die Daten einer Tour einigermaßen automatisch mit den Veranstaltungsdaten auf facebook zu synchronisieren, um beispielsweise Uhrzeiten und Treffpunkte abzugleichen.
-            </p>
+                        <li>
+                            Oder viel einfacher: Gib einfach den Namen deiner Stadt oben rechts im Suchfeld ein.
+                        </li>
+                    </ol>
 
-            <h2>
-                Wie kann man Fotos hochladen?
-            </h2>
+                    <h4>
+                        Wie kann ich eine neue Stadt hinzufügen?
+                    </h4>
 
-            <p>
-                Die Möglichkeit, Fotos einer Tour hochzuladen, besteht erst nach dem Ende einer Tour. Auf der Seite einer Tour kannst du unter dem Menüpunkt „Galerie“ den Button „Fotos hochladen“ betätigen.
-            </p>
+                    <ol>
+                        <li>
+                            Klicke dich im <a href="{{ path('caldera_criticalmass_region_world') }}">Verzeichnis</a> bis zu deinem Bundesland hindurch.
+                        </li>
 
-            <h2>
-                In welcher Größe sollte ich Fotos hochladen?
-            </h2>
+                        <li>
+                            Klicke dann auf der Ebene deines Bundeslandes auf den Button „Stadt hinzufügen“.
+                        </li>
 
-            <p>
-                Gerne so groß wie möglich. Auf dem Server ist genug Platz.
-            </p>
+                        <li>
+                            Folge den Anweisungen des Assistenten.
+                        </li>
+                    </ol>
+                </div>
+            </div>
 
-            <h2>
-                Wie werden hochgeladene Fotos auf der Karte verlinkt?
-            </h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Touren
+                    </h3>
 
-            <p>
-                Um Fotos automatisch auf der Karte zu verorten muss eine der beiden folgenden Voraussetzungen erfüllt sein:
-            </p>
+                    <p class="lead">
+                        „Tour“ ist eigentlich das Synonym für die eigentliche Critical Mass.
+                    </p>
 
-            <ul>
-                <li>
-                    Das Foto beinhaltet bereits GPS-Koordinaten. Das ist beispielsweise der Fall bei Fotos, die mit einem Smartphone oder einer GPS-fähigen Digitalkamera aufgenommen wurden sind. Caldera Critical Mass versucht die GPS-Koordinaten aus den EXIF-Daten der Fotos auszulesen und platziert sie entsprechend auf der Karte.
-                </li>
-                <li>
-                    Der Benutzer, mit dessen Benutzerkonto die Fotos hochgeladen werden, hat einen GPS-Track hochgeladen oder importiert. Anhand des Aufnahmedatums des Fotos versucht Caldera Critical Mass die dazugehörigen Koordinaten zu berechnen und platziert das Foto entsprechend auf der Karte. Für diese Berechnung ist es natürlich hilfreich, wenn die Uhren des GPS-Aufzeichnungsgerätes und der Kamera synchron sind — falls nicht, lassen sich gewisse Zeitverschiebungen manuell im Benutzerkonto korrigieren.
-                </li>
-            </ul>
+                    <h4>
+                        Werden automatisch neue Touren erstellt?
+                    </h4>
 
-            <h2>
-                Wie erstellt Caldera Critical Mass automatisch neue Touren?
-            </h2>
+                    <p>
+                        Für jede Stadt lässt sich einstellen, ob automatisch neue Touren generiert werden sollen. Dazu muss lediglich angegeben werden, an welchem Wochentag und an welcher Woche im Monat die Touren stattfinden. Optional lässt sich auch die Uhrzeit und der Treffpunkt angeben.
+                    </p>
 
-            <p>
-                Für jede Stadt lässt sich angeben, ob monatlich neue Touren generiert werden sollen. Dazu muss lediglich angegeben werden, an welchem Wochentag und an welcher Woche im Monat die Touren stattfinden. Optional lässt sich automatisch die Uhrzeit und der Treffpunkt angeben.
-            </p>
+                    <ul>
+                        <li>
+                            Die dazugehörige Stadt wurde mit einer Seite auf facebook verlinkt.
+                        </li>
+                        <li>
+                            Es gibt auf der Seite eine Veranstaltung für die Critical Mass.
+                        </li>
+                        <li>
+                            Es gibt auf der Seite für den Tag der Tour keine anderen Veranstaltungen.
+                        </li>
+                    </ul>
 
-            <p>
-                Jeweils am Ende des Monats werden die Touren für den jeweils nächsten Monat generiert. Das ist etwas uncool, falls eine Tour am Monatsanfang stattfindet, weil die Tourdaten dann lediglich mit ein paar Tagen Vorlaufzeit zu sehen sind, aber daran arbeiten wir noch.
-            </p>
+                    <p>
+                        Es gibt außerdem die Möglichkeit, die Daten einer Tour einigermaßen automatisch mit den Veranstaltungsdaten auf facebook zu synchronisieren, um beispielsweise Uhrzeiten und Treffpunkte abzugleichen.
+                    </p>
+                </div>
+            </div>
 
-            <h2>
-                Wie viel kostet der Anruf an eurer 0700-Nummer?
-            </h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Tracks, GPX und Timelapse
+                    </h3>
 
-            <p>
-                Kommt auf deinen Anbieter an. Generell bewegen sich die Kosten irgendwo in der Nähe des üblichen Orstarifes. Noch günstiger und besser ist es, wenn du eine E-Mail schickst oder einen Kommentar schreibst.
-            </p>
+                    <p class="lead">
+                        Tracks sind Strecken-Aufzeichnungen von Critical-Mass-Fahrten.
+                    </p>
 
-            <h2>
-                Woher kommen die Daten für die Statistiken?
-            </h2>
+                    <h4>
+                        Wie kann man Tracks hochladen?
+                    </h4>
 
-            <p>
-                Die Teilnehmerzahlen werden aus den Daten errechnet, die als Schätzung zu einer jeweiligen Tour abgespeichert worden sind. Jeder angemeldete Benutzer kann eine solche Schätzung abgeben.
-            </p>
+                    <p>
+                        Nach dem Ende einer Tour kannst du unter dem Reiter „Tracks“ entweder einen Track direkt von Strava importieren oder eine GPX-Datei hochladen.
+                    </p>
 
-            <p>
-                Tourlänge und -dauer hingegen werden aus den hochgeladenen GPX-Dateien berechnet.
-            </p>
+                    <h4>
+                        Wie kann ich meine Strecke zu der Timelapse-Ansicht hinzufügen?
+                    </h4>
 
-            <p>
-                Die Anzahl der Likes der facebook-Seiten und die Teilnehmer-Zusagen einer Veranstaltung auf facebook werden automatisch über die facebook-API abgefragt.
-            </p>
+                    <p>
+                        Das passiert ganz automatisch mit dem Hochladen eines Tracks. Voraussetzung ist lediglich, dass deine GPX-Datei sowohl Koordinaten als auch Zeitstempel enthält. Beachte bitte, dass dein Track unter Umständen nicht in der Timelapse-Ansicht dargestellt wird, wenn dein GPX-Aufzeichnungsgerät falsche Zeitstempel eingetragen hat. Das kann beispielsweise passieren, wenn du die Uhr deines Gerätes nicht eingestellt hast oder dein Gerät in der falschen Zeitzone arbeitet.
+                    </p>
 
-            <h2>
-                Wie kann man Tracks hochladen?
-            </h2>
+                    <h4>
+                        Wie kann ich meine aufgezeichnete Strecke editieren?
+                    </h4>
 
-            <p>
-                Nach dem Ende einer Tour kannst du unter dem Reiter „Tracks“ entweder einen Track direkt von Strava importieren oder eine GPX-Datei hochladen.
-            </p>
+                    <p>
+                        Du kannst unter „Dein Benutzerkonto“ und dem Menüpunkt „Deine Tracks“ jede GPX-Aufzeichnung nachträglich beschneiden, um beispielsweise deinen An- oder Abfahrtsweg zu entfernen.
+                    </p>
+                </div>
+            </div>
+        </div>
 
-            <h2>
-                Wie kann ich meine Strecke zu der Timelapse-Ansicht hinzufügen?
-            </h2>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Fotos
+                    </h3>
 
-            <p>
-                Das passiert ganz automatisch mit dem Hochladen eines Tracks. Voraussetzung ist lediglich, dass deine GPX-Datei sowohl Koordinaten als auch Zeitstempel enthält. Beachte bitte, dass dein Track unter Umständen nicht in der Timelapse-Ansicht dargestellt wird, wenn dein GPX-Aufzeichnungsgerät falsche Zeitstempel eingetragen hat. Das kann beispielsweise passieren, wenn du die Uhr deines Gerätes nicht gestellt hast.
-            </p>
+                    <p class="lead">
+                        Du kannst Fotos von deiner Tour mit anderen Radfahrern auf criticalmass.in teilen.
+                    </p>
 
-            <h2>
-                Wie kann ich meine aufgezeichnete Strecke editieren?
-            </h2>
+                    <h4>
+                        Wie kann man Fotos hochladen?
+                    </h4>
 
-            <p>
-                Du kannst unter „Dein Benutzerkonto“ und dem Menüpunkt „Deine Tracks“ jede GPX-Aufzeichnung nachträglich beschneiden, um beispielsweise deinen An- oder Abfahrtsweg zu entfernen.
-            </p>
+                    <p>
+                        Die Möglichkeit, Fotos einer Tour hochzuladen, besteht erst nach dem Ende einer Tour. Auf der Seite einer Tour kannst du unter dem Menüpunkt „Galerie“ den Button „Fotos hochladen“ betätigen.
+                    </p>
+
+                    <h4>
+                        In welcher Größe sollte ich Fotos hochladen?
+                    </h4>
+
+                    <p>
+                        Gerne so groß wie möglich in der besten Auflösung. Auf dem Server ist genug Platz, Herunterrechnen kann man danach immer noch.
+                    </p>
+
+                    <h4>
+                        Wie werden hochgeladene Fotos auf der Karte verlinkt?
+                    </h4>
+
+                    <p>
+                        Um Fotos automatisch auf der Karte zu verorten muss eine der beiden folgenden Voraussetzungen erfüllt sein:
+                    </p>
+
+                    <ul>
+                        <li>
+                            Das Foto beinhaltet bereits GPS-Koordinaten. Das ist beispielsweise der Fall bei Fotos, die mit einem Smartphone oder einer GPS-fähigen Digitalkamera aufgenommen wurden sind. Beim Hochladen werden die GPS-Koordinaten aus den EXIF-Daten der Fotos ausgelesen und automatisch auf der Karte platziert.
+                        </li>
+
+                        <li>
+                            Der Benutzer, mit dessen Benutzerkonto die Fotos hochgeladen werden, hat einen GPS-Track hochgeladen oder importiert. Anhand des Aufnahmedatums des Fotos werden die dazugehörigen Koordinaten berechnet und das Fotoauf der Karte platziert. Für diese Berechnung ist es natürlich hilfreich, wenn die Uhren des GPS-Aufzeichnungsgerätes und der Kamera synchron sind — falls nicht, lassen sich gewisse Zeitverschiebungen manuell im Benutzerkonto korrigieren.
+                        </li>
+                    </ul>
+
+                    <h4>
+                        Warum muss ich mich registrieren, um Fotos anschauen zu können?
+                    </h4>
+
+                    <p>
+                        Die Bereitstellung von Fotos kostet nicht nur Speicherplatz, sondern auch noch einiges an Rechenpower und Übertragungsvolumen, was von einem ausschließlich aus eigener Tasche finanzierten Hobbyprojekt leider nur bedingt zu stemmen ist. Dadurch, dass neue Fotos für einige Zeit nur für registrierte Nutzer zugänglich sind, soll der Ansturm etwas abgefedert werden. Dass dadurch Gäste, die sich nicht registrieren wollen, von den Fotogalerien ausgeschlossen werden, ist zwar blöd, momentan aber leider nicht zu vermeiden.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Statistiken
+                    </h3>
+
+                    <p class="lead">
+                        Vergleiche Teilnehmerzahlen mit anderen Städten.
+                    </p>
+
+                    <h4>
+                        Wie wird die Teilnehmerzahl berechnet?
+                    </h4>
+
+                    <p>
+                        Nach Abschluss einer Tour kannst du als angemeldeter Nutzer eine Schätzung angeben, wie viele Teilnehmer unterwegs waren. Bei der für eine Tour angegebene Teilnehmerzahl handelt es sich schließlich um den Durchschnitt aller abgegebenen Schätzungen.
+                    </p>
+
+                    <h4>
+                        Wie kann ich die Länge und Dauer einer Tour angeben?
+                    </h4>
+
+                    <p>
+                        Gar nicht &mdash; Länge und Dauer einer solchen Tour werden aus den hochgeladenen Tracks berechnet.
+                    </p>
+
+                    <h4>
+                        Wie werden die facebook-Statistiken generiert?
+                    </h4>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Sonstiges
+                    </h3>
+
+                    <p class="lead">
+                        Sind noch Fragen offen?
+                    </p>
+
+                    <h4>
+                        Wie viel kostet der Anruf an eurer 0700-Nummer?
+                    </h4>
+
+                    <p>
+                        Kommt auf deinen Anbieter an. Generell bewegen sich die Kosten irgendwo in der Nähe des üblichen Orstarifes. Noch günstiger und besser ist es, wenn du eine E-Mail schickst oder einen Kommentar schreibst.
+                    </p>
+
+                    <h4>
+                        Ihr habt noch immer nicht auf meine E-Mail geantwortet!
+                    </h4>
+
+                    <p>
+                        Ja, das passiert leider manchmal. Wie gesagt: Das hier ist ein reines Hobbyprojekt, das in nebenbei in spärlicher Freizeit betrieben wird.
+                    </p>
+
+                    <h4>
+                        Ich habe einen Fehler gefunden!
+                    </h4>
+
+                    <p>
+                        Super! Also, äh, schade, dass es Fehler gibt, aber super, dass du ihn gefunden hast.
+                    </p>
+
+                    <ul>
+                        <li>
+                            Falls du mit GitHub vertraut bist, <a href="https://github.com/calderacc/criticalmass-in/issues/new">erstelle bitte direkt ein Issue mit dem Label „Bug“</a>. Das erleichtert uns die Arbeit ungemein.
+                        </li>
+
+                        <li>
+                            Ansonsten kannst du Fehler auch <a href="https://www.facebook.com/calderacc/">auf unserer facebook-Seite</a> oder im <a href="https://www.radverkehrsforum.de/index.php/Board/17-Fragen-und-Probleme/">Radverkehrsforum</a> melden.
+                        </li>
+
+                        <li>
+                            Ansonsten bleibt noch der Weg über eine E-Mail &mdash; da kann es aber aufgrund des vollen Posteinganges leider etwas länger mit der Antwort und der Bearbeitung dauern.
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

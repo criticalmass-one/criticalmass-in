@@ -17,24 +17,13 @@ class SearchController extends AbstractController
         } else {
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
-
-        $dateTimeRange = new \Elastica\Query\Range();
-        $dateTimeRange->addField('dateTime',
-            [
-                'lte' => '2013-01-01 00:00:00',
-            ]
-        );
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery->addMust($simpleQueryString);
-        $boolQuery->addMust($dateTimeRange);
-
+        
         $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
 
         $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $enabledFilter, $cityFilter, $countryFilter]);
 
-        $filteredQuery = new \Elastica\Query\Filtered($boolQuery, $filter);
+        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
 
         $query = new \Elastica\Query($filteredQuery);
 
@@ -50,8 +39,8 @@ class SearchController extends AbstractController
 
         $search = $mngr->getIndex('criticalmass')->createSearch();
 
-        $search->addType('ride');
-        $search->addType('city');
+        //$search->addType('ride');
+        //$search->addType('city');
 
         return $search->search($query);
     }

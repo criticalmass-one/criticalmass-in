@@ -37,7 +37,6 @@ class RideType extends AbstractType
             ->add('hasLocation', CheckboxType::class)
             ->add('hasTime', CheckboxType::class)
             ->add('save', SubmitType::class)
-            ->add('archiveMessage', TextType::class, array('required' => true))
             ->add('imageFile',
                 VichFileType::class,
                 [

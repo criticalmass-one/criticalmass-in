@@ -49,7 +49,9 @@
         "nelmio/api-doc-bundle": "^2.13",
         "predis/predis": "^1.1",
         "miljar/php-exif": "^0.6.3",
+        "sonata-project/admin-bundle": "^3.18",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "simplethings/entity-audit-bundle": "^1.0",
         "cebe/markdown": "^1.1",
         "sonata-project/seo-bundle": "^2.2"
     },

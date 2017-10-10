@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\CityCycle;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Region;
 use AppBundle\Entity\Ride;
@@ -33,7 +34,6 @@ class RideRepository extends EntityRepository
 
         $builder->where($builder->expr()->gte('ride.dateTime', '\'' . $dateTime->format('Y-m-d h:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->addOrderBy('ride.dateTime', 'ASC');
 
@@ -147,8 +147,6 @@ class RideRepository extends EntityRepository
         $builder->where($builder->expr()->lte('ride.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->gte('ride.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
-
         $builder->orderBy('ride.dateTime', $order);
 
         $query = $builder->getQuery();
@@ -168,8 +166,6 @@ class RideRepository extends EntityRepository
         $builder->andWhere($builder->expr()->lte('ride.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
 
         $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
-
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
 
         $query = $builder->getQuery();
 
@@ -195,8 +191,6 @@ class RideRepository extends EntityRepository
         $builder->where($builder->expr()->lte('ride.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->gte('ride.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', '0'));
-
         $builder->addOrderBy('ride.dateTime', 'ASC');
         $builder->addOrderBy('city.city', 'ASC');
 
@@ -216,7 +210,6 @@ class RideRepository extends EntityRepository
             ->join('ride.city', 'city')
             ->orderBy('ride.dateTime', 'ASC')
             ->addOrderBy('city.city', 'ASC')
-            ->where($builder->expr()->eq('ride.isArchived', 0))
         ;
 
         if ($year && $month) {
@@ -239,8 +232,6 @@ class RideRepository extends EntityRepository
 
         $builder->select('ride');
         $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->orderBy('ride.dateTime', 'ASC');
 
@@ -267,11 +258,9 @@ class RideRepository extends EntityRepository
             ->select('ride')
             ->where($builder->expr()->gt('ride.dateTime', ':startDateTime'))
             ->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
-            ->andWhere($builder->expr()->eq('ride.isArchived', ':archived'))
             ->addOrderBy('ride.dateTime', 'ASC')
             ->setParameter('startDateTime', $startDateTime)
             ->setParameter('endDateTime', $endDateTime)
-            ->setParameter('archived', false)
         ;
 
         $query = $builder->getQuery();
@@ -298,7 +287,6 @@ class RideRepository extends EntityRepository
             ->join('ride.city', 'city')
             ->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''))
             ->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''))
-            ->andWhere($builder->expr()->eq('ride.isArchived', 0))
             ->andWhere($builder->expr()->eq('city.enabled', 1))
             ->addOrderBy('city.city', 'ASC')
             ->addOrderBy('ride.dateTime', 'ASC');
@@ -349,8 +337,6 @@ class RideRepository extends EntityRepository
         $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $fromDateTime->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $untilDateTime->format('Y-m-d H:i:s') . '\''));
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
-
         $query = $builder->getQuery();
 
         return $query->getOneOrNullResult();
@@ -372,8 +358,6 @@ class RideRepository extends EntityRepository
         $builder->where($builder->expr()->eq('ride.city', $city->getId()));
         $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $fromDateTime->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $untilDateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->setMaxResults(1);
 
@@ -472,7 +456,6 @@ class RideRepository extends EntityRepository
         );
         $builder->where($builder->expr()->eq('ride.city', $city->getId()));
         $builder->andWhere($builder->expr()->isNotNull('ride.location'));
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->orderBy('ride.location', 'ASC');
         $builder->groupBy('ride.location');
@@ -491,7 +474,6 @@ class RideRepository extends EntityRepository
         $builder->select('COUNT(ride)');
 
         $builder->where($builder->expr()->like('ride.location', '\'' . $location->getTitle() . '\''));
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $query = $builder->getQuery();
 
@@ -505,7 +487,6 @@ class RideRepository extends EntityRepository
         $builder->select('ride');
 
         $builder->where($builder->expr()->like('ride.location', '\'' . $location->getTitle() . '\''));
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->addOrderBy('ride.dateTime', 'DESC');
 
@@ -521,7 +502,6 @@ class RideRepository extends EntityRepository
         $builder->select('COUNT(ride)');
 
         $builder->where($builder->expr()->eq('ride.city', $city->getId()));
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $query = $builder->getQuery();
 
@@ -535,7 +515,6 @@ class RideRepository extends EntityRepository
         $builder->select('ride');
 
         $builder->where($builder->expr()->isNotNull('ride.facebook'));
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
 
         $builder->orderBy('ride.dateTime', 'DESC');
 
@@ -562,7 +541,6 @@ class RideRepository extends EntityRepository
         $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
         $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
         $builder->andWhere($builder->expr()->isNotNull('ride.facebook'));
 
         $builder->orderBy('ride.dateTime', 'DESC');
@@ -583,7 +561,6 @@ class RideRepository extends EntityRepository
             $builder->expr()->isNull('ride.estimatedDistance')
         ));
 
-        $builder->andWhere($builder->expr()->eq('ride.isArchived', 0));
         $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
 
         if ($pastOnly) {
@@ -605,8 +582,6 @@ class RideRepository extends EntityRepository
         $builder->select('ride');
 
         $builder->join('ride.city', 'city');
-
-        $builder->where($builder->expr()->eq('ride.isArchived', 0));
 
         if ($pastOnly) {
             $dateTime = new \DateTime();
@@ -631,14 +606,12 @@ class RideRepository extends EntityRepository
         $builder->join('ride.city', 'city');
         $builder->join('city.region', 'region1');
 
-        $builder->where($builder->expr()->eq('ride.isArchived', 0));
-
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
+            $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
+            $builder->where($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
         }
 
         $builder->andWhere($builder->expr()->eq('region1.parent', $region->getId()));
@@ -651,31 +624,38 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelineRideEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
+    public function findForTimelineRideEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, int $limit = null): array
     {
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-
-        $builder->where($builder->expr()->eq('ride.isArchived', 1));
-        $builder->andWhere($builder->expr()->isNotNull('ride.archiveUser'));
+        $builder
+            ->select('r')
+            ->where($builder->expr()->isNotNull('r.updatedAt'))
+        ;
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('ride.archiveDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('r.updatedAt', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime)
+            ;
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('ride.archiveDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('r.updatedAt', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime)
+            ;
         }
 
         if ($limit) {
-            $builder->setMaxResults($limit);
+            $builder
+                ->setMaxResults($limit)
+            ;
         }
 
-        $builder->addOrderBy('ride.archiveDateTime', 'DESC');
-
-        $builder->addGroupBy('ride.user');
-        $builder->addGroupBy('ride.archiveParent');
+        $builder
+            ->addOrderBy('r.updatedAt', 'DESC')
+        ;
 
         $query = $builder->getQuery();
 
@@ -689,13 +669,31 @@ class RideRepository extends EntityRepository
         $builder->select('ride');
         $builder->join('ride.city', 'city');
 
-        $builder->where($builder->expr()->eq('ride.isArchived', 0));
-
         $builder->groupBy('ride.city');
 
         $builder->orderBy('ride.estimatedParticipants', 'DESC');
 
         $builder->setMaxResults($limit);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findRidesByCycleInInterval(CityCycle $cityCycle, \DateTime $startDateTime, \DateTime $endDateTime): array
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lt('r.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->eq('r.cycle', ':cityCycle'))
+            ->addOrderBy('r.dateTime', 'ASC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime)
+            ->setParameter('cityCycle', $cityCycle)
+        ;
 
         $query = $builder->getQuery();
 

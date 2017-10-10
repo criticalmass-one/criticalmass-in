@@ -1,0 +1,11 @@
+caldera_criticalmass_citycycle_list:
+    path:  /{citySlug}/cycles/list
+    defaults: { _controller: AppBundle:City/CityCycle:list }
+
+caldera_criticalmass_citycycle_add:
+    path:  /{citySlug}/cycles/add
+    defaults: { _controller: AppBundle:City/CityCycle:add }
+
+caldera_criticalmass_citycycle_edit:
+    path:  /{citySlug}/cycles/edit/{cycleId}
+    defaults: { _controller: AppBundle:City/CityCycle:edit }

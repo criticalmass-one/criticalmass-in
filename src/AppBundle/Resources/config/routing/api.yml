@@ -27,3 +27,8 @@ caldera_criticalmass_rest_ride_show:
     path:     /{citySlug}/{rideDate}
     defaults: { _controller: AppBundle:Api/Ride:show }
     methods:  [GET]
+
+caldera_criticalmass_rest_estimate_create:
+    path:     /estimate
+    defaults: { _controller: AppBundle:Api/Estimate:create }
+    methods:  [POST]
