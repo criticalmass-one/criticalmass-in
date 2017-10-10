@@ -23,7 +23,7 @@ class SubrideType extends AbstractType
             ->add('facebook', TextType::class, array('required' => false))
             ->add('twitter', TextType::class, array('required' => false))
             ->add('url', TextType::class, array('required' => false))
-            ->add('archiveMessage', TextType::class, array('required' => true));
+        ;
     }
 
     public function getName()
