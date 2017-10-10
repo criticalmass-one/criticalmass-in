@@ -17,7 +17,7 @@ class RideController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Returns ride details"
      * )
      */
     public function showAction(string $citySlug, string $rideDate): Response
@@ -36,7 +36,7 @@ class RideController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Returns details of the next ride in the city"
      * )
      */
     public function showCurrentAction(string $citySlug): Response
@@ -57,7 +57,7 @@ class RideController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Lists all next rides"
      * )
      */
     public function listAction(): Response

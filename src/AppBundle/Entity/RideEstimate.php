@@ -12,8 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RideEstimate
 {
     /**
-     * ID der Entitaet.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -27,8 +25,6 @@ class RideEstimate
     protected $user;
 
     /**
-     * Tour, zu der diese Entitaet abgespeichert wurde.
-     *
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
@@ -39,6 +35,16 @@ class RideEstimate
      * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
      */
     protected $track;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $latitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $longitude;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -61,11 +67,11 @@ class RideEstimate
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $creationDateTime;
+    protected $dateTime;
 
     public function __construct()
     {
-        $this->creationDateTime = new \DateTime();
+        $this->dateTime = new \DateTime();
     }
 
     public function getId(): ?int
@@ -109,14 +115,14 @@ class RideEstimate
         return $this;
     }
 
-    public function getCreationDateTime(): \DateTime
+    public function getDateTime(): \DateTime
     {
-        return $this->creationDateTime;
+        return $this->dateTime;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): RideEstimate
+    public function setDateTime(\DateTime $dateTime): RideEstimate
     {
-        $this->creationDateTime = $creationDateTime;
+        $this->dateTime = $dateTime;
 
         return $this;
     }
@@ -155,5 +161,29 @@ class RideEstimate
         $this->track = $track;
 
         return $this;
+    }
+
+    public function setLatitude(float $latitude = null): RideEstimate
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLongitude(float $longitude = null): RideEstimate
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
     }
 }

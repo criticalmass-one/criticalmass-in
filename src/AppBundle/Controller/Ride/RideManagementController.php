@@ -10,19 +10,23 @@ use AppBundle\Facebook\FacebookEventRideApi;
 use AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function addAction(Request $request, $citySlug)
+    public function addAction(Request $request, UserInterface $user, string $citySlug): Response
     {
         $city = $this->getCheckedCity($citySlug);
 
         $ride = new Ride();
-        $ride->setCity($city);
-        $ride->setUser($this->getUser());
+        $ride
+            ->setCity($city)
+            ->setUser($user)
+        ;
 
         $form = $this->createForm(
             RideType::class,
@@ -38,13 +42,13 @@ class RideManagementController extends AbstractController
         );
 
         if ('POST' == $request->getMethod()) {
-            return $this->addPostAction($request, $ride, $city, $form);
+            return $this->addPostAction($request, $user, $ride, $city, $form);
         } else {
-            return $this->addGetAction($request, $ride, $city, $form);
+            return $this->addGetAction($request, $user, $ride, $city, $form);
         }
     }
 
-    protected function addGetAction(Request $request, Ride $ride, City $city, Form $form)
+    protected function addGetAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -61,7 +65,7 @@ class RideManagementController extends AbstractController
         );
     }
 
-    protected function addPostAction(Request $request, Ride $ride, City $city, Form $form)
+    protected function addPostAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -71,9 +75,7 @@ class RideManagementController extends AbstractController
         $hasErrors = null;
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             // TODO: remove also this
             $hasErrors = false;
@@ -114,7 +116,7 @@ class RideManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function editAction(Request $request, $citySlug, $rideDate)
+    public function editAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
     {
         $city = $this->getCheckedCity($citySlug);
         $rideDateTime = $this->getCheckedDateTime($rideDate);
@@ -134,13 +136,13 @@ class RideManagementController extends AbstractController
         );
 
         if ('POST' == $request->getMethod()) {
-            return $this->editPostAction($request, $ride, $city, $form);
+            return $this->editPostAction($request, $user, $ride, $city, $form);
         } else {
-            return $this->editGetAction($request, $ride, $city, $form);
+            return $this->editGetAction($request, $user, $ride, $city, $form);
         }
     }
 
-    protected function editGetAction(Request $request, Ride $ride, City $city, Form $form)
+    protected function editGetAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -157,7 +159,7 @@ class RideManagementController extends AbstractController
         );
     }
 
-    protected function editPostAction(Request $request, Ride $ride, City $city, Form $form)
+    protected function editPostAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -167,13 +169,12 @@ class RideManagementController extends AbstractController
         $hasErrors = null;
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            
-            $archiveRide = $ride->archive($this->getUser());
+            $ride
+                ->setUpdatedAt(new \DateTime())
+                ->setUser($user)
+            ;
 
-            $em->persist($ride);
-            $em->persist($archiveRide);
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             // TODO: remove also this
             $hasErrors = false;
@@ -198,7 +199,7 @@ class RideManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function facebookUpdateAction(Request $request, $citySlug, $rideDate)
+    public function facebookUpdateAction(Request $request, string $citySlug, string $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 

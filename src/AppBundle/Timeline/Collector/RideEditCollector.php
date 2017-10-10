@@ -2,6 +2,7 @@
 
 namespace AppBundle\Timeline\Collector;
 
+use AppBundle\Entity\Ride;
 use AppBundle\Timeline\Item\RideEditItem;
 
 class RideEditCollector extends AbstractTimelineCollector
@@ -24,11 +25,10 @@ class RideEditCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $ride) {
             $item = new RideEditItem();
 
-            $item->setUsername($ride->getArchiveUser()->getUsername());
+            $item->setUsername($ride->getUser()->getUsername());
             $item->setRideTitle($ride->getFancyTitle());
             $item->setRide($ride);
-            $item->setDateTime($ride->getArchiveDateTime());
-            $item->setArchiveMessage($ride->getArchiveMessage());
+            $item->setDateTime($ride->getUpdatedAt());
 
             $this->addItem($item);
         }

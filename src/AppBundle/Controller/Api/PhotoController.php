@@ -17,7 +17,7 @@ class PhotoController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Does bullshit"
      * )
      */
     public function galleryAction(): Response

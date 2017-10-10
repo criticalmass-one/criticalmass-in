@@ -2,13 +2,12 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\ParticipateableInterface;
 use AppBundle\EntityInterface\PhotoInterface;
 use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
-use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
 {
     /**
      * @ORM\Id
@@ -41,6 +40,12 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
+     * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     */
+    protected $cycle;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
@@ -93,7 +98,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Expose
      * @JMS\Type("boolean")
      */
-    protected $hasTime;
+    protected $hasTime = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -101,7 +106,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Expose
      * @JMS\Type("boolean")
      */
-    protected $hasLocation;
+    protected $hasLocation = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -111,14 +116,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $location;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $latitude;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
@@ -167,39 +172,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="archiveRides", fetch="LAZY")
-     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
-     */
-    protected $archiveParent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="archiveParent", fetch="LAZY")
-     */
-    protected $archiveRides;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $isArchived = false;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $archiveDateTime;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_rides", fetch="LAZY")
-     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
-     */
-    protected $archiveUser;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
-    protected $archiveMessage;
-
-    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
      */
     protected $posts;
@@ -211,9 +183,15 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $createdAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
     /**
      * @ORM\Column(type="integer")
@@ -287,9 +265,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->visibleSince = new \DateTime();
         $this->visibleUntil = new \DateTime();
         $this->expectedStartDateTime = new \DateTime();
-        $this->archiveDateTime = new \DateTime();
-        $this->latitude = 0.0;
-        $this->longitude = 0.0;
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -298,7 +273,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->posts = new ArrayCollection();
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
-        $this->archiveRides = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -314,6 +288,18 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setUser(User $user = null): Ride
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCycle(): ?CityCycle
+    {
+        return $this->cycle;
+    }
+
+    public function setCycle(CityCycle $cityCycle = null): Ride
+    {
+        $this->cycle = $cityCycle;
 
         return $this;
     }
@@ -623,66 +609,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->getTitle();
     }
 
-    public function setIsArchived(bool $isArchived): ArchiveableInterface
-    {
-        $this->isArchived = $isArchived;
-
-        return $this;
-    }
-
-    public function getIsArchived(): bool
-    {
-        return $this->isArchived;
-    }
-
-    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
-    {
-        $this->archiveDateTime = $archiveDateTime;
-
-        return $this;
-    }
-
-    public function getArchiveDateTime(): \DateTime
-    {
-        return $this->archiveDateTime;
-    }
-
-    public function setArchiveUser(User $archiveUser): ArchiveableInterface
-    {
-        $this->archiveUser = $archiveUser;
-
-        return $this;
-    }
-
-    public function getArchiveUser(): User
-    {
-        return $this->archiveUser;
-    }
-
-    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
-    {
-        $this->archiveMessage = $archiveMessage;
-
-        return $this;
-    }
-
-    public function getArchiveMessage(): ?string
-    {
-        return $this->archiveMessage;
-    }
-
-    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
-    {
-        $this->archiveParent = $archiveParent;
-
-        return $this;
-    }
-
-    public function getArchiveParent(): ArchiveableInterface
-    {
-        return $this->archiveParent;
-    }
-
     public function addPost(Post $post): Ride
     {
         $this->posts->add($post);
@@ -761,6 +687,10 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     public function getPin(): string
     {
+        if (!$this->latitude || !$this->longitude) {
+            return '0,0';
+        }
+        
         return $this->latitude . ',' . $this->longitude;
     }
 
@@ -772,6 +702,18 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setCreatedAt(\DateTime $createdAt): Ride
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): Ride
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -873,25 +815,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function addArchiveRide(Ride $archiveRide): Ride
-    {
-        $this->archiveRides->add($archiveRide);
-
-        return $this;
-    }
-
-    public function removeArchiveRide(Ride $archiveRides): Ride
-    {
-        $this->archiveRides->removeElement($archiveRides);
-
-        return $this;
-    }
-
-    public function getArchiveRides(): Collection
-    {
-        return $this->archiveRides;
-    }
-
     public function addParticipation(Participation $participation): Ride
     {
         $this->participations->add($participation);
@@ -952,24 +875,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function __clone()
     {
         $this->id = null;
-    }
-
-    public function archive(User $user): ArchiveableInterface
-    {
-        $archivedRide = clone $this;
-
-        $archivedRide
-            ->setIsArchived(true)
-            ->setArchiveDateTime(new \DateTime())
-            ->setArchiveParent($this)
-            ->setArchiveUser($user)
-            ->setArchiveMessage($this->archiveMessage)
-            ->setImageFile(null)
-        ;
-
-        $this->archiveMessage = '';
-
-        return $archivedRide;
     }
 
     public function setImageFile(File $image = null): Ride
