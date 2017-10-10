@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Model\CreateEstimateModel;
+use AppBundle\Statistic\RideEstimate\RideEstimateService;
 use AppBundle\Traits\RepositoryTrait;
 use AppBundle\Traits\UtilTrait;
 use FOS\ElasticaBundle\Finder\FinderInterface;
@@ -44,6 +45,8 @@ class EstimateController extends BaseController
 
         $this->getManager()->persist($rideEstimation);
         $this->getManager()->flush();
+
+        $this->recalculateEstimates($rideEstimation);
 
         $view = View::create();
         $view
@@ -122,5 +125,16 @@ class EstimateController extends BaseController
         }
 
         return null;
+    }
+
+    protected function recalculateEstimates(RideEstimate $rideEstimate): void
+    {
+        if ($rideEstimate->getRide()) {
+            /**
+             * @var RideEstimateService $estimateService
+             */
+            $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate');
+            $estimateService->calculateEstimates($rideEstimate->getRide());
+        }
     }
 }
