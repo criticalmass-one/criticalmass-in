@@ -124,10 +124,6 @@ class FacebookRideHandleCommand extends ContainerAwareCommand
 
     protected function updateRide(Ride $ride, GraphEvent $event)
     {
-        $archiveRide = clone $ride;
-        $archiveRide->setArchiveUser(null);
-        $archiveRide->setArchiveParent($ride);
-
         $ride->setDateTime($event->getStartTime());
 
         $ride->setTitle($event->getName());

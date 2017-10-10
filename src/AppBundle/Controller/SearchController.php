@@ -18,10 +18,9 @@ class SearchController extends AbstractController
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
         
-        $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $enabledFilter, $cityFilter, $countryFilter]);
+        $filter = new \Elastica\Filter\BoolAnd([$enabledFilter, $cityFilter, $countryFilter]);
 
         $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
 
