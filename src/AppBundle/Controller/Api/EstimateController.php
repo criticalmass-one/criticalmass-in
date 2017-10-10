@@ -22,7 +22,7 @@ class EstimateController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="This is a description of your API method"
+     *  description="Adds an estimation to statistic"
      * )
      */
     public function createAction(Request $request, UserInterface $user): Response
