@@ -67,11 +67,11 @@ class RideEstimate
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $creationDateTime;
+    protected $dateTime;
 
     public function __construct()
     {
-        $this->creationDateTime = new \DateTime();
+        $this->dateTime = new \DateTime();
     }
 
     public function getId(): ?int
@@ -115,14 +115,14 @@ class RideEstimate
         return $this;
     }
 
-    public function getCreationDateTime(): \DateTime
+    public function getDateTime(): \DateTime
     {
-        return $this->creationDateTime;
+        return $this->dateTime;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): RideEstimate
+    public function setDateTime(\DateTime $dateTime): RideEstimate
     {
-        $this->creationDateTime = $creationDateTime;
+        $this->dateTime = $dateTime;
 
         return $this;
     }
