@@ -20,6 +20,17 @@ class EstimateController extends BaseController
     use UtilTrait;
 
     /**
+     * You can add an estimation of ride participants like this:
+     *
+     * <pre>{
+     *   "latitude": 53.549280,
+     *   "longitude": 9.979589,
+     *   "estimation": 6554,
+     *   "dateTime": 1506710306
+     * }</pre>
+     *
+     * If you do not provide <code>dateTime</code> it will use the current time.
+     * 
      * @ApiDoc(
      *  resource=true,
      *  description="Adds an estimation to statistic"
