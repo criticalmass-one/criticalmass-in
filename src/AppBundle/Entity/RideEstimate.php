@@ -37,6 +37,16 @@ class RideEstimate
     protected $track;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $latitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $longitude;
+
+    /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\Regex("/^([0-9]{1,6})$/")
      */
@@ -151,5 +161,29 @@ class RideEstimate
         $this->track = $track;
 
         return $this;
+    }
+
+    public function setLatitude(float $latitude = null): RideEstimate
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLongitude(float $longitude = null): RideEstimate
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
     }
 }
