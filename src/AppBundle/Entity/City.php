@@ -335,7 +335,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
