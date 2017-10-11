@@ -5,7 +5,9 @@ namespace AppBundle\Timeline;
 use AppBundle\Timeline\Collector\AbstractTimelineCollector;
 use AppBundle\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Twig\TwigEngine;
+use Symfony\Component\Templating\EngineInterface;
 
 class Timeline
 {
@@ -30,7 +32,7 @@ class Timeline
     /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    public function __construct(Registry $doctrine, TwigEngine $templating)
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
