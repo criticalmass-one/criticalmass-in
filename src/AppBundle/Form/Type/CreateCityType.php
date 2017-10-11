@@ -2,6 +2,8 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\CityCycle;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -45,95 +47,6 @@ class CreateCityType extends AbstractType
                 break;
 
             case 4:
-                $builder
-                    ->add('latitude', HiddenType::class)
-                    ->add('longitude', HiddenType::class)
-                    ->add(
-                        'isStandardable',
-                        CheckboxType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                    ->add(
-                        'standardDayOfWeek',
-                        ChoiceType::class,
-                        [
-                            'label' => 'Wochentag',
-                            'choices' => [
-                                'Montag' => 1,
-                                'Dienstag' => 2,
-                                'Mittwoch' => 3,
-                                'Donnerstag' => 4,
-                                'Freitag' => 5,
-                                'Sonnabend' => 6,
-                                'Sonntag' => 0
-                            ],
-                            'required' => true
-                        ]
-                    )
-                    ->add(
-                        'standardWeekOfMonth',
-                        ChoiceType::class,
-                        [
-                            'label' => 'Woche im Monat',
-                            'choices' => [
-                                'Erste Woche im Monat' => 1,
-                                'Zweite Woche im Monat' => 2,
-                                'Dritte Woche im Monat' => 3,
-                                'Vierte Woche im Monat' => 4,
-                                'Letzte Woche im Monat' => 0
-                            ],
-                            'required' => true
-                        ]
-                    )
-                    ->add(
-                        'isStandardableTime',
-                        CheckboxType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                    ->add(
-                        'standardTime',
-                        TimeType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                    ->add(
-                        'isStandardableLocation',
-                        CheckboxType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                    ->add(
-                        'standardLocation',
-                        TextType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                    ->add(
-                        'standardLatitude',
-                        HiddenType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                    ->add(
-                        'standardLongitude',
-                        HiddenType::class,
-                        [
-                            'required' => false
-                        ]
-                    )
-                ;
-
-                break;
-
-            case 5:
                 $builder
                     ->add('enableBoard')
                     ->add('timezone', TimezoneType::class);
