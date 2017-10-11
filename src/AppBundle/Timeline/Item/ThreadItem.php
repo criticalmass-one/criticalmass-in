@@ -6,92 +6,60 @@ use AppBundle\Entity\Thread;
 
 class ThreadItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     public $username;
 
-    /**
-     * @var Thread $thread
-     */
+    /** @var Thread $thread */
     public $thread;
 
-    /**
-     * @var string $title
-     */
+    /** @var string $title */
     public $title;
 
-    /**
-     * @var string $text
-     */
+    /** @var string $text */
     public $text;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): ThreadItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Thread
-     */
-    public function getThread()
+    public function getThread(): Thread
     {
         return $this->thread;
     }
 
-    /**
-     * @param Thread $thread
-     */
-    public function setThread($thread)
+    public function setThread(Thread $thread): ThreadItem
     {
         $this->thread = $thread;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): ThreadItem
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @param string $text
-     */
-    public function setText($text)
+    public function setText(string $text): ThreadItem
     {
         $this->text = $text;
 

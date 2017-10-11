@@ -6,90 +6,63 @@ use AppBundle\Entity\Ride;
 
 class RideCommentItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     protected $username;
 
-    /**
-     * @var Ride $ride
-     */
+    /* @var Ride $ride */
     protected $ride;
 
-    /**
-     * @var string $rideTitle
-     */
+    /** @var string $rideTitle */
     protected $rideTitle;
 
-    /**
-     * @var string $text
-     */
+    /** @var string $text */
     protected $text;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): RideCommentItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * @param Ride $ride
-     */
-    public function setRide($ride)
+    public function setRide(Ride $ride): RideCommentItem
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRideTitle()
+    public function getRideTitle(): string
     {
         return $this->rideTitle;
     }
 
-    /**
-     * @param string $rideTitle
-     */
-    public function setRideTitle($rideTitle)
+    public function setRideTitle(string $rideTitle): RideCommentItem
     {
         $this->rideTitle = $rideTitle;
 
         return $this;
     }
 
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    public function setText($text)
+    public function setText(string $text): RideCommentItem
     {
         $this->text = $text;
 
         return $this;
     }
-
 }

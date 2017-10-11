@@ -8,140 +8,92 @@ use AppBundle\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     protected $username;
 
-    /**
-     * @var Ride $ride
-     */
+    /** @var Ride $ride */
     protected $ride;
 
-    /**
-     * @var City $city
-     */
+    /** @var City $city */
     protected $city;
 
-    /**
-     * @var string $rideTitle
-     */
+    /** @var string $rideTitle */
     protected $rideTitle;
 
-    /**
-     * @var integer $counter
-     */
+    /** @var integer $counter */
     protected $counter;
 
-    /**
-     * @var Photo $previewPhoto
-     */
+    /** @var Photo $previewPhoto */
     protected $previewPhoto;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): RidePhotoItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * @param Ride $ride
-     */
-    public function setRide($ride)
+    public function setRide(Ride $ride): RidePhotoItem
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
-    /**
-     * @param City $city
-     */
-    public function setCity($city)
+    public function setCity(City $city): RidePhotoItem
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRideTitle()
+    public function getRideTitle(): string
     {
         return $this->rideTitle;
     }
 
-    /**
-     * @param string $rideTitle
-     */
-    public function setRideTitle($rideTitle)
+    public function setRideTitle(string $rideTitle): RidePhotoItem
     {
         $this->rideTitle = $rideTitle;
 
         return $this;
     }
 
-    /**
-     * @return integer
-     */
-    public function getCounter()
+    public function getCounter(): int
     {
         return $this->counter;
     }
 
-    /**
-     * @param integer $counter
-     */
-    public function setCounter($counter)
+    public function setCounter(int $counter): RidePhotoItem
     {
         $this->counter = $counter;
 
         return $this;
     }
 
-    /**
-     * @param Photo $previewPhoto
-     */
-    public function setPreviewPhoto(Photo $previewPhoto)
+    public function setPreviewPhoto(Photo $previewPhoto): RidePhotoItem
     {
         $this->previewPhoto = $previewPhoto;
 
         return $this;
     }
 
-    /**
-     * @return Photo
-     */
-    public function getPreviewPhoto()
+    public function getPreviewPhoto(): Photo
     {
         return $this->previewPhoto;
     }

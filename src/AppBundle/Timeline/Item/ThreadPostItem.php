@@ -6,96 +6,63 @@ use AppBundle\Entity\Thread;
 
 class ThreadPostItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     public $username;
 
-    /**
-     * @var Thread $thread
-     */
+    /** @var Thread $thread */
     public $thread;
 
-    /**
-     * @var string $threadTitle
-     */
+    /** @var string $threadTitle */
     public $threadTitle;
 
-    /**
-     * @var string $text
-     */
+    /** @var string $text */
     public $text;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): ThreadPostItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Thread
-     */
-    public function getThread()
+    public function getThread(): Thread
     {
         return $this->thread;
     }
 
-    /**
-     * @param Thread $thread
-     */
-    public function setThread($thread)
+    public function setThread(Thread $thread): ThreadPostItem
     {
         $this->thread = $thread;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getThreadTitle()
+    public function getThreadTitle(): string
     {
-        return $this->title;
+        return $this->threadTitle;
     }
 
-    /**
-     * @param string $threadTitle
-     */
-    public function setThreadTitle($threadTitle)
+    public function setThreadTitle(string $threadTitle): ThreadPostItem
     {
         $this->threadTitle = $threadTitle;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @param string $text
-     */
-    public function setText($text)
+    public function setText(string $text): ThreadPostItem
     {
         $this->text = $text;
 
         return $this;
     }
-
 }
