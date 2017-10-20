@@ -21,3 +21,7 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+        gelf:
+            type: service
+            id: monolog.gelf_handler
+            level: error
