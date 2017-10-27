@@ -57,6 +57,9 @@
 <script src="{{ asset('bundles/app/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('bundles/app/js/external/bootstrap4/bootstrap.min.js') }}"></script>
 {% elseif bootstrap4app is defined and bootstrap4app == true %}
+<script>
+    CriticalMass.loadModule('initBootstrap');
+</script>
 <script src="{{ asset('bundles/app/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('bundles/app/js/external/bootstrap-app-4/toolkit.min.js') }}"></script>
 {% else %}
