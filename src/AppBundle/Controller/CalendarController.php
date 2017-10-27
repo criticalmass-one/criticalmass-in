@@ -24,7 +24,7 @@ class CalendarController extends AbstractController
 
         $this->getSeoPage()
             ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
-            ->setDate(new \DateTime());
+        ;
 
         return $this->render(
             'AppBundle:Calendar:index.html.twig',
