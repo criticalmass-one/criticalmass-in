@@ -56,3 +56,6 @@ parameters:
     sqibe.api_url: http://sqi.be/yourls-api.php
 
     bikeright.visible: false
+
+    graylog.hostname: anagnina.caldera.cc
+    graylog.port: 12201
