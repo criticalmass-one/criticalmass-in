@@ -170,32 +170,6 @@
                         </a>
                     </div>
                 </div>
-
-                {% if photos|length > 0 %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>
-                                Fotos aus {{ city.city }}
-                            </h2>
-
-                            <p>
-                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
-                                        href="{{ path('caldera_criticalmass_desktop_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
-                                    über Fotos aus {{ city.city }}</a> an.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                    {% for photo in photos %}
-                        <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 mb-3 text-center">
-                            <a href="{{ objectPath(photo) }}">
-                                <img class="img-fluid img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
-                            </a>
-                        </div>
-                    {% endfor %}
-                    </div>
-                {% endif %}
             </div>
 
             <div class="col-12 col-md-4">
@@ -216,6 +190,8 @@
                         {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
                     </div>
                 </div>
+
+                {% include 'AppBundle:City:Includes/_photos.html.twig' with { 'city': city, 'photos': photos } %}
 
                 {% include 'AppBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
 
