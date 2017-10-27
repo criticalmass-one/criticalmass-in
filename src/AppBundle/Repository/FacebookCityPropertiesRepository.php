@@ -28,7 +28,7 @@ class FacebookCityPropertiesRepository extends EntityRepository
 
         $builder->select('frp');
 
-        $builder->where($builder->expr()->eq('DAYOFWEEK(frp.createdAt)', 1));
+        $builder->where($builder->expr()->eq('DAY(frp.createdAt)', 1));
 
         $builder->orderBy('frp.createdAt');
 
