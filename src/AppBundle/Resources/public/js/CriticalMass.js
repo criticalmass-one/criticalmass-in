@@ -186,3 +186,11 @@ require.config({
         }
     }
 });
+
+define('initBootstrap', ['popper'], function(popper) {
+    // set popper as required by Bootstrap
+    window.Popper = popper;
+    require(['bootstrap4'], function(bootstrap) {
+        // do nothing - just let Bootstrap initialise itself
+    });
+});
