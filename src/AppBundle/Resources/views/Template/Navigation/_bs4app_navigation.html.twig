@@ -120,17 +120,32 @@
         <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 d-none d-md-flex">
             {% if app.user %}
             <li class="nav-item ml-2">
-                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover" data-original-title="" title="" aria-describedby="popover655621">
-                    <img class="rounded-circle" src="{{ gravatarUrl(app.user.email) }}">
+                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover">
+                    <img class="rounded-circle" src="{{ gravatarUrl(app.user) }}">
                 </button>
             </li>
             {% else %}
             <li class="nav-item ml-2">
-                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover" data-original-title="" title="" aria-describedby="popover655621">
+                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover">
                     <img class="rounded-circle" src="https://www.gravatar.com/avatar/qwqeqwe?f=y">
                 </button>
             </li>
             {% endif %}
         </ul>
+
+        {% if app.user %}
+            <ul class="nav navbar-nav d-none" id="js-popoverContent">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('criticalmass_user_usermanagement') }}">
+                        {% trans %}criticalmass.navigation.account.profile{% endtrans %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
+                        {% trans %}criticalmass.navigation.account.logout{% endtrans %}
+                    </a>
+                </li>
+            </ul>
+        {% endif %}
     </div>
 </nav>
