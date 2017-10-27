@@ -103,9 +103,16 @@ require.config({
         "dateformat": "/bundles/app/js/external/dateformat/dateformat",
         "chartjs": "/bundles/app/js/external/chartjs/chartjs",
         "localforage": "/bundles/app/js/external/localforage/localforage.min",
-        "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min"
+        "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min",
+        "bootstrap4": "/bundles/app/js/external/bootstrap4/bootstrap.min",
+        "bootstrap4app": "/bundles/app/js/external/bootstrap-app-4/toolkit",
+        "popper": "/bundles/app/js/external/popper/popper.min"
     },
     shim: {
+        'popper': {
+            deps: ['jquery'],
+            exports: 'Popper'
+        },
         'leaflet-locate': {
             deps: ['leaflet'],
             exports: 'L.Control.Locate'
@@ -190,7 +197,7 @@ require.config({
 define('initBootstrap', ['popper'], function(popper) {
     // set popper as required by Bootstrap
     window.Popper = popper;
-    require(['bootstrap4'], function(bootstrap) {
+    require(['bootstrap4app'], function(bootstrap) {
         // do nothing - just let Bootstrap initialise itself
     });
 });
