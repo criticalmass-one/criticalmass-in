@@ -13,5 +13,5 @@ services:
         arguments: ['@gelf.publisher', 'error']
 
     caldera.oauth_success_handler:
-        class: AppBundle\Authentication\CriticalAuthenticationSuccessHandler
+        class: AppBundle\AuthenticationHandler\CriticalAuthenticationSuccessHandler
         arguments: ['@security.http_utils']

@@ -1,19 +1,17 @@
 <?php
 
-namespace AppBundle\Authentication;
+namespace AppBundle\AuthenticationHandler;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 
 class CriticalAuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    protected function determineTargetUrl(Request $request)
+    protected function determineTargetUrl(Request $request): string
     {
-        if ($this->options['always_use_default_target_path']) {
-            return $this->options['default_target_path'];
-        }
+        $targetUrl = $request->headers->get('Referer');
 
-        if ($this->options['use_referer'] && ($targetUrl = $request->headers->get('Referer')) && $targetUrl !== $this->httpUtils->generateUri($request, $this->options['login_path'])) {
+        if ($this->options['use_referer'] && !empty($targetUrl) && $targetUrl !== $this->httpUtils->generateUri($request, $this->options['login_path'])) {
             return $targetUrl;
         }
 

@@ -31,6 +31,7 @@ security:
                     strava:    "/login/check-strava"
                     runkeeper: "/login/check-runkeeper"
                 login_path:        /login
+                default_target_path: /
                 use_referer: true
                 failure_path:      /login
                 oauth_user_provider:
