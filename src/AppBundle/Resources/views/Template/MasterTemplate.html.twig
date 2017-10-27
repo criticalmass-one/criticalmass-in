@@ -19,6 +19,8 @@
 
     {% if bootstrap4 is defined and bootstrap4 == true %}
     <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass-bootstrap4.css') }}" />
+    {% elseif bootstrap4app is defined and bootstrap4app == true %}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/external/bootstrap-app-4/toolkit.css') }}" />
     {% else %}
     <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass.css') }}" />
     {% endif %}
@@ -54,6 +56,8 @@
 {% if bootstrap4 is defined and bootstrap4 == true %}
 <script src="{{ asset('bundles/app/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('bundles/app/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+{% elseif bootstrap4app is defined and bootstrap4app == true %}
+<script src="{{ asset('bundles/app/js/external/bootstrap-app-4/toolkit.min.js') }}"></script>
 {% else %}
 <script src="{{ asset('bundles/app/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
 <script src="{{ asset('bundles/app/js/external/bootstrap3/bootstrap.min.js') }}"></script>
