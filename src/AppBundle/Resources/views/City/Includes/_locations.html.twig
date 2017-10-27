@@ -1,13 +1,13 @@
 {% if locations|length > 1 %}
-    <div class="card">
+    <div class="card d-md-block d-lg-block mb-4">
         <div class="card-body">
-            <h4 class="card-title">
+            <h6 class="mb-3">
                 Treffpunkte
-            </h4>
-
-            <ul class="list-unstyled">
+            </h6>
+            <ul class="list-unstyled list-spaced">
                 {% for location in locations %}
                     <li>
+                        <span class="text-muted fa fa-map-pin"></span>
                         <a href="{{ objectPath(location) }}">
                             {{ location.title }}
                         </a>
@@ -17,5 +17,3 @@
         </div>
     </div>
 {% endif %}
-
-
