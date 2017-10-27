@@ -199,11 +199,7 @@
             </div>
 
             <div class="col-12 col-md-4">
-                <div class="row mb-1">
-                    <div class="col-12">
-                        {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
-                    </div>
-                </div>
+                {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
 
                 {% if 'Hamburg' in city.city %}
                 <div class="row mb-1">
