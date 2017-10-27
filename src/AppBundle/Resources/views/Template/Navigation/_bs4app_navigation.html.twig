@@ -116,5 +116,21 @@
         <form class="form-inline float-right d-none d-md-flex" action="{{ path('caldera_criticalmass_search_query') }}">
             <input id="search-input" class="form-control" type="text" data-action="grow" placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}" style="width: 180px;">
         </form>
+
+        <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 d-none d-md-flex">
+            {% if app.user %}
+            <li class="nav-item ml-2">
+                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover" data-original-title="" title="" aria-describedby="popover655621">
+                    <img class="rounded-circle" src="{{ gravatarUrl(app.user.email) }}">
+                </button>
+            </li>
+            {% else %}
+            <li class="nav-item ml-2">
+                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover" data-original-title="" title="" aria-describedby="popover655621">
+                    <img class="rounded-circle" src="https://www.gravatar.com/avatar/qwqeqwe?f=y">
+                </button>
+            </li>
+            {% endif %}
+        </ul>
     </div>
 </nav>
