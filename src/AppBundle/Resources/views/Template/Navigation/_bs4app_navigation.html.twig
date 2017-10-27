@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary app-navbar">
     <div class="container">
         <a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
             {% trans %}criticalmass.logoname{% endtrans %}
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right d-md-none" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -114,70 +114,6 @@
                 {% endif %}
             </ul>
         </div>
-    </div>
-</nav>
-
-
-
-
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary app-navbar">
-
-    <a class="navbar-brand" href="index.html">
-        <img src="assets/img/brand-white.png" alt="brand">
-    </a>
-
-    <button class="navbar-toggler navbar-toggler-right d-md-none" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="profile/index.html">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" href="#msgModal">Messages</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="docs/index.html">Docs</a>
-            </li>
-
-            <li class="nav-item d-md-none">
-                <a class="nav-link" href="notifications/index.html">Notifications</a>
-            </li>
-            <li class="nav-item d-md-none">
-                <a class="nav-link" data-action="growl">Growl</a>
-            </li>
-            <li class="nav-item d-md-none">
-                <a class="nav-link" href="login/index.html">Logout</a>
-            </li>
-
-        </ul>
-
-        <form class="form-inline float-right d-none d-md-flex">
-            <input class="form-control" type="text" data-action="grow" placeholder="Search">
-        </form>
-
-        <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 d-none d-md-flex">
-            <li class="nav-item">
-                <a class="app-notifications nav-link" href="notifications/index.html">
-                    <span class="icon icon-bell"></span>
-                </a>
-            </li>
-            <li class="nav-item ml-2">
-                <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover" data-original-title="" title="">
-                    <img class="rounded-circle" src="assets/img/avatar-dhg.png">
-                </button>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav d-none" id="js-popoverContent">
-            <li class="nav-item"><a class="nav-link" href="#" data-action="growl">Growl</a></li>
-            <li class="nav-item"><a class="nav-link" href="login/index.html">Logout</a></li>
-        </ul>
     </div>
 </nav>
 
