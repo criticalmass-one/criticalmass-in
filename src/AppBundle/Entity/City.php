@@ -197,7 +197,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enableBoard;
+    protected $enableBoard = false;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -335,7 +335,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -628,7 +628,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getTimezone(): string
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }

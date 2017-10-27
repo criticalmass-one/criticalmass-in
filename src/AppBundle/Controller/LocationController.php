@@ -80,7 +80,6 @@ class LocationController extends AbstractController
 
         $finder = $this->container->get('fos_elastica.finder.criticalmass.ride');
 
-        $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
         $geoFilter = new \Elastica\Filter\GeoDistance(
             'pin',
             [
@@ -90,9 +89,7 @@ class LocationController extends AbstractController
             '500m'
         );
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $geoFilter]);
-
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
+        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
 
         $query = new \Elastica\Query($filteredQuery);
 

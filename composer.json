@@ -53,7 +53,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
         "simplethings/entity-audit-bundle": "^1.0",
         "cebe/markdown": "^1.1",
-        "sonata-project/seo-bundle": "^2.2"
+        "sonata-project/seo-bundle": "^2.2",
+        "mlehner/gelf-php": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
