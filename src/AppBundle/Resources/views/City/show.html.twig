@@ -147,6 +147,24 @@
                                             {{ ride.description }}
                                         </p>
                                         {% endif %}
+
+                                        <div class="media-body-inline-grid" data-grid="images">
+                                            {% if ride.featuredPhoto %}
+                                                <div style="display: inline-block; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;">
+                                                    <img data-action="zoom" data-width="1050" data-height="700" src="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('ride_image_wide') }}" class="" style="width: 346px; height: 231px;">
+                                                </div>
+                                            {% endif %}
+
+                                            {% if ride.hasLocation() and ride.latitude and ride.longitude %}
+                                                <div style="display: inline-block; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;">
+                                                    <img data-action="zoom" data-width="1050" data-height="700" src="{{ staticmaps(ride, 800, 200, 13) }}" class="" style="width: 346px; height: 231px;">
+                                                </div>
+                                            {% else %}
+                                                <div style="display: inline-block; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;">
+                                                    <img data-action="zoom" data-width="1050" data-height="700" src="{{ staticmaps(ride.city, 800, 200, 13) }}" class="" style="width: 346px; height: 231px;">
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </li>
 
