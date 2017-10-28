@@ -11,7 +11,3 @@ services:
     monolog.gelf_handler:
         class: Monolog\Handler\GelfHandler
         arguments: ['@gelf.publisher', 'error']
-
-    caldera.oauth_success_handler:
-        class: AppBundle\AuthenticationHandler\CriticalAuthenticationSuccessHandler
-        arguments: ['@security.http_utils']
