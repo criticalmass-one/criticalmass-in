@@ -7,7 +7,7 @@ use AppBundle\Timeline\Item\RideEditItem;
 
 class RideEditCollector extends AbstractTimelineCollector
 {
-    private $entityClass = Ride::class;
+    protected $entityClass = Ride::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

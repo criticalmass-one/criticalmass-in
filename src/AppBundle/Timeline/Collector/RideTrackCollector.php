@@ -7,7 +7,7 @@ use AppBundle\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {
-    private $entityClass = Track::class;
+    protected $entityClass = Track::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

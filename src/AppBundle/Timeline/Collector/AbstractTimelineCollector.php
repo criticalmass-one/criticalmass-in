@@ -8,7 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
     /** @var string $entityClass */
-    private $entityClass;
+    protected $entityClass;
 
     /** @var Doctrine $doctrine */
     protected $doctrine;

@@ -7,7 +7,7 @@ use AppBundle\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {
-    private $entityClass = Thread::class;
+    protected $entityClass = Thread::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

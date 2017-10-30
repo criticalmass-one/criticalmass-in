@@ -7,7 +7,7 @@ use AppBundle\Timeline\Item\RideCommentItem;
 
 class RideCommentCollector extends AbstractTimelineCollector
 {
-    private $entityClass = Post::class;
+    protected $entityClass = Post::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

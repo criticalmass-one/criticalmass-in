@@ -7,7 +7,7 @@ use AppBundle\Timeline\Item\CityEditItem;
 
 class CityEditCollector extends AbstractTimelineCollector
 {
-    private $entityClass = City::class;
+    protected $entityClass = City::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

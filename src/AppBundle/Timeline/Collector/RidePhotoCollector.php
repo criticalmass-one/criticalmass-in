@@ -7,7 +7,7 @@ use AppBundle\Timeline\Item\RidePhotoItem;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {
-    private $entityClass = Photo::class;
+    protected $entityClass = Photo::class;
 
     protected function groupEntities(array $photoEntities): array
     {
