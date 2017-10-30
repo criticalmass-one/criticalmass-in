@@ -17,7 +17,7 @@ class TimelineCollectorPass implements CompilerPassInterface
         }
 
         $timeline = $container->findDefinition(Timeline::class);
-        $cachedTimeline = $container->findDefinition(Timeline::class);
+        $cachedTimeline = $container->findDefinition(CachedTimeline::class);
 
         $taggedServices = $container->findTaggedServiceIds('timeline.collector');
 
