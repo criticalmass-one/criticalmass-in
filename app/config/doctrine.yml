@@ -18,6 +18,7 @@ doctrine:
         auto_mapping: true
         dql:
             datetime_functions:
+                day: AppBundle\DQL\DayFunction
                 date: AppBundle\DQL\DateFunction
                 month: AppBundle\DQL\MonthFunction
                 year: AppBundle\DQL\YearFunction
