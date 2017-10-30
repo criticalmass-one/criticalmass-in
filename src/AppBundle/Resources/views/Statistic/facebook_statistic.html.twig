@@ -40,7 +40,7 @@
             page.addCity('{{ city.city }}', '{{ city.slug }}', {{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
 
             {% for property in filteredProperties[city.slug] %}
-            page.addData('{{ property.city.slug }}', '{{ property.createdAt|date('Y-m-d') }}', {{ property.likeNumber|default(0) }});
+            page.addData('{{ property.city.slug }}', '{{ property.createdAt|date('Y-m-d', 'UTC') }}', {{ property.likeNumber|default(0) }});
             {% endfor %}
 
             {% endfor %}

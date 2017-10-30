@@ -4,8 +4,11 @@ namespace AppBundle\Traits;
 
 use AppBundle\Repository\BlockedCityRepository;
 use AppBundle\Repository\BoardRepository;
+use AppBundle\Repository\CityCycleRepository;
 use AppBundle\Repository\CityRepository;
+use AppBundle\Repository\FacebookCityPropertiesRepository;
 use AppBundle\Repository\FacebookRidePropertiesRepository;
+use AppBundle\Repository\FrontpageTeaserRepository;
 use AppBundle\Repository\LocationRepository;
 use AppBundle\Repository\ParticipationRepository;
 use AppBundle\Repository\PhotoRepository;
@@ -31,9 +34,19 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:Board');
     }
 
+    protected function getFrontpageTeaserRepository(): FrontpageTeaserRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:FrontpageTeaser');
+    }
+
     protected function getRideRepository(): RideRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Ride');
+    }
+
+    protected function getCityCycleRepository(): CityCycleRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:CityCycle');
     }
 
     protected function getCitySlugRepository(): ObjectRepository
@@ -46,7 +59,7 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:City');
     }
 
-    protected function getFacebookCityPropertiesRepository(): ObjectRepository
+    protected function getFacebookCityPropertiesRepository(): FacebookCityPropertiesRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:FacebookCityProperties');
     }

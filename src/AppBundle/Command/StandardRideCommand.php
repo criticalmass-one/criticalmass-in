@@ -2,9 +2,11 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
 use AppBundle\Entity\City;
-use AppBundle\StandardRideGenerator\StandardRideGenerator;
+use AppBundle\Entity\Ride;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -15,7 +17,7 @@ class StandardRideCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:standardrides')
+            ->setName('criticalmass:cycles:create')
             ->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'year',
@@ -26,6 +28,12 @@ class StandardRideCommand extends ContainerAwareCommand
                 'month',
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
+            )
+            ->addOption(
+                'save',
+                null,
+                InputOption::VALUE_NONE,
+                'Save the generated stuff'
             );
     }
 
@@ -37,54 +45,52 @@ class StandardRideCommand extends ContainerAwareCommand
         /** @var int $month */
         $month = $input->getArgument('month');
 
-        $doctrine = $this->getContainer()->get('doctrine');
-        $entityManager = $doctrine->getManager();
+        $generator = $this->getContainer()->get('app.city_cycle_ride_generator');
+        $generator
+            ->setMonth($month)
+            ->setYear($year)
+        ;
 
-        $cities = $doctrine->getRepository('AppBundle:City')->findBy(
-            [
-                'isArchived' => false,
-                'enabled' => true
-            ],
-            [
-                'city' => 'ASC'
-            ]
-        );
+        $doctrine = $this->getContainer()->get('doctrine');
+        $manager = $doctrine->getManager();
+
+        $cities = $doctrine->getRepository('AppBundle:City')->findCities();
+
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'DateTime', 'Location'])
+        ;
 
         /** @var City $city */
         foreach ($cities as $city) {
-            $output->writeln($city->getTitle());
+            $rides = $generator
+                ->setCity($city)
+                ->execute()
+                ->getList()
+            ;
 
-            if ($city->getIsStandardable()) {
-                $srg = new StandardRideGenerator($city, $year, $month);
-                $ride = $srg->execute();
+            if (count($rides)) {
+                /** @var Ride $ride */
+                foreach ($rides as $ride) {
+                    $table->addRow([
+                        $city->getCity(),
+                        $ride->getDateTime()->format('Y-m-d H:i'),
+                        $ride->getLocation(),
+                    ]);
 
-                if ($srg->isRideDuplicate()) {
-                    $output->writeln('Tour existiert bereits.');
-                } else {
-                    $output->writeln('Lege folgende Tour an');
-
-                    if ($ride->getHasTime()) {
-                        $output->writeln('Datum und Uhrzeit: ' . $ride->getDateTime()->format('Y-m-d H:i'));
-                    } else {
-                        $output->writeln('Datum: ' . $ride->getDateTime()->format('Y-m-d') . ', Uhrzeit ist bislang unbekannt');
-                    }
-
-                    if ($ride->getHasLocation()) {
-                        $output->writeln('Treffpunkt: ' . $ride->getLocation() . ' (' . $ride->getLatitude() . '/' . $ride->getLongitude() . ')');
-                    } else {
-                        $output->writeln('Treffpunkt ist bislang unbekannt');
-                    }
-
-                    $output->writeln('');
-                    $output->writeln('');
-
-                    $entityManager->persist($ride);
+                    $manager->persist($ride);
                 }
-            } else {
-                $output->writeln('Lege keine Tourdaten für diese Stadt an.');
             }
         }
 
-        $entityManager->flush();
+        $table->render();
+
+        if ($input->getOption('save')) {
+            $output->writeln('Saved all those rides');
+
+            $manager->flush();
+        } else {
+            $output->writeln('Did not save any of these rides, run with --save to persist.');
+        }
     }
 }

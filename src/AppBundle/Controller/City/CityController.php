@@ -13,32 +13,7 @@ class CityController extends AbstractController
 {
     use ViewStorageTrait;
 
-    public function listAction()
-    {
-        $this
-            ->getSeoPage()
-            ->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
-        $cities = $this->getCityRepository()->findCities();
-
-        $result = [];
-
-        /**
-         * @var City $city
-         */
-        foreach ($cities as $city) {
-            $result[$city->getSlug()]['city'] = $city;
-            $result[$city->getSlug()]['currentRide'] = $this->getRideRepository()->findCurrentRideForCity($city);
-            $result[$city->getSlug()]['countRides'] = $this->getRideRepository()->countRidesByCity($city);
-        }
-
-        return $this->render(
-            'AppBundle:City:city_list.html.twig',
-            [
-                'result' => $result
-            ]
-        );
-    }
 
     public function missingStatsAction($citySlug)
     {
@@ -59,7 +34,6 @@ class CityController extends AbstractController
     {
         $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
 
-        $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
         $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
 
@@ -72,7 +46,7 @@ class CityController extends AbstractController
             '50km'
         );
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $geoFilter, $enabledFilter, $selfFilter]);
+        $filter = new \Elastica\Filter\BoolAnd([$geoFilter, $enabledFilter, $selfFilter]);
 
         $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
 

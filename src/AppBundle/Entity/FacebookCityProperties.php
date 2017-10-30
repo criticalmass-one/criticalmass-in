@@ -121,7 +121,7 @@ class FacebookCityProperties
         return $this;
     }
 
-    public function getLikeNumber(): int
+    public function getLikeNumber(): ?int
     {
         return $this->likeNumber;
     }

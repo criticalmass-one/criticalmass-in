@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\EntityInterface\ArchiveableInterface;
+use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\PhotoInterface;
@@ -17,19 +17,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Diese Entitaet repraesentiert eine Stadt als Organisationseinheit, unterhalb
- * derer einzelne Critical-Mass-Touren stattfinden.
- *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, ArchiveableInterface, PhotoInterface, RouteableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
 {
     /**
-     * Numerische ID der Stadt.
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -45,7 +40,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     protected $region;
@@ -59,8 +54,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $mainSlug;
 
     /**
-     * Name der Stadt.
-     *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      * @JMS\Expose
@@ -70,9 +63,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $city;
 
     /**
-     * Bezeichnung der Critical Mass in dieser Stadt, etwa "Critical Mass Hamburg"
-     * oder "Critical Mass Bremen".
-     *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @JMS\Expose
@@ -81,8 +71,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $title;
 
     /**
-     * Kurze Beschreibung der Critical Mass dieser Stadt.
-     *
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -90,8 +78,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $description;
 
     /**
-     * Adresse der Webseite der Critical Mass in dieser Stadt.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
@@ -100,8 +86,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $url;
 
     /**
-     * Adresse der Critical-Mass-Seite auf facebook dieser Stadt.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
@@ -110,8 +94,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $facebook;
 
     /**
-     * Adresse der Twitter-Seite der Critical Mass dieser Stadt.
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
      * @JMS\Expose
@@ -120,8 +102,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $twitter;
 
     /**
-     * Breitengrad der Stadt.
-     *
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -129,8 +109,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $latitude = 0;
 
     /**
-     * Längengrad der Stadt.
-     *
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -143,22 +121,16 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $enabled = true;
 
     /**
-     * Array mit den Touren in dieser Stadt.
-     *
      * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
      */
     protected $rides;
 
     /**
-     * Array mit den Kommentaren zu dieser Stadt.
-     *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="city")
      */
     protected $posts;
 
     /**
-     * Array mit den Bildern zu dieser Stadt.
-     *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="city")
      */
     protected $photos;
@@ -171,58 +143,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $slugs;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
-    protected $isStandardable = false;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardDayOfWeek;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardWeekOfMonth;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     */
-    protected $isStandardableTime = false;
-
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardTime;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     */
-    protected $isStandardableLocation = false;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardLocation;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardLatitude = 0;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
-    protected $standardLongitude = 0;
+    protected $cycles;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -242,34 +165,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @JMS\Expose
      */
     protected $longDescription;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="archive_cities")
-     * @ORM\JoinColumn(name="archive_parent_id", referencedColumnName="id")
-     */
-    protected $archiveParent;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $isArchived = false;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $archiveDateTime;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="archive_rides")
-     * @ORM\JoinColumn(name="archive_user_id", referencedColumnName="id")
-     */
-    protected $archiveUser;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
-    protected $archiveMessage;
 
     /**
      * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName")
@@ -302,7 +197,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enableBoard;
+    protected $enableBoard = false;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -360,8 +255,8 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->slugs = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->cycles = new ArrayCollection();
 
-        $this->archiveDateTime = new \DateTime();
         $this->createdAt = new \DateTime();
     }
 
@@ -421,6 +316,13 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->getMainSlugString();
     }
 
+    public function setId(int $id): City
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -433,7 +335,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -587,126 +489,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->enabled;
     }
 
-    public function setIsStandardable(bool $isStandardable): City
-    {
-        $this->isStandardable = $isStandardable;
-
-        return $this;
-    }
-
-    public function getIsStandardable(): bool
-    {
-        return $this->isStandardable;
-    }
-
-    public function setStandardDayOfWeek(int $standardDayOfWeek): City
-    {
-        $this->standardDayOfWeek = $standardDayOfWeek;
-
-        return $this;
-    }
-
-    public function getStandardDayOfWeek(): int
-    {
-        return $this->standardDayOfWeek;
-    }
-
-    public function setStandardWeekOfMonth(int $standardWeekOfMonth): City
-    {
-        $this->standardWeekOfMonth = $standardWeekOfMonth;
-
-        return $this;
-    }
-
-    public function getStandardWeekOfMonth(): int
-    {
-        return $this->standardWeekOfMonth;
-    }
-
-    public function setStandardTime(\DateTime $standardTime): City
-    {
-        $this->standardTime = $standardTime;
-
-        return $this;
-    }
-
-    public function getStandardTime(): \DateTime
-    {
-        return $this->standardTime;
-    }
-
-    public function setStandardLocation(string $standardLocation = null): City
-    {
-        $this->standardLocation = $standardLocation;
-
-        return $this;
-    }
-
-    public function getStandardLocation(): ?string
-    {
-        return $this->standardLocation;
-    }
-
-    public function setStandardLatitude(float $standardLatitude = null): City
-    {
-        $this->standardLatitude = $standardLatitude;
-
-        return $this;
-    }
-
-    public function getStandardLatitude(): ?float
-    {
-        return $this->standardLatitude;
-    }
-
-    public function setStandardLongitude(float $standardLongitude = null): City
-    {
-        $this->standardLongitude = $standardLongitude;
-
-        return $this;
-    }
-
-    public function getStandardLongitude(): ?float
-    {
-        return $this->standardLongitude;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getEventDateTimeLocationString(): string
-    {
-        $result = $this->getEventDateTimeString();
-
-        if ($this->standardLocation) {
-            $result .= ': ' . $this->standardLocation;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getEventDateTimeString(): string
-    {
-        $weekDays = array(1 => 'Montag', 2 => 'Dienstag', 3 => 'Mittwoch', 4 => 'Donnerstag', 5 => 'Freitag', 6 => 'Sonnabend', 0 => 'Sonntag');
-        $monthWeeks = array(1 => 'ersten', 2 => 'zweiten', 3 => 'dritten', 4 => 'vierten', 0 => 'letzten');
-
-        $result = '';
-
-        if ($this->isStandardable) {
-            $result = 'jeweils am ' . $monthWeeks[$this->standardWeekOfMonth] . ' ' . $weekDays[$this->standardDayOfWeek];
-
-            if ($this->standardTime) {
-                $this->standardTime->setTimezone(new \DateTimeZone('UTC'));
-                $result .= ' um ' . $this->standardTime->format('H.i') . ' Uhr';
-            }
-        }
-
-        return $result;
-    }
-
     public function setCityPopulation(int $cityPopulation): City
     {
         $this->cityPopulation = $cityPopulation;
@@ -748,23 +530,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      */
     public function countRides(): int
     {
-        return count($this->getActiveRides());
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getActiveRides(): array
-    {
-        $result = array();
-
-        foreach ($this->rides as $ride) {
-            if (!$ride->getIsArchived()) {
-                $result[] = $ride;
-            }
-        }
-
-        return $result;
+        return count($this->rides);
     }
 
     /**
@@ -776,9 +542,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $dateTime = new \DateTime();
 
         foreach ($this->getRides() as $ride) {
-            if ($ride && !$currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() > $dateTime) {
+            if ($ride && !$currentRide && $ride->getDateTime() > $dateTime) {
                 $currentRide = $ride;
-            } elseif ($ride && $currentRide && $ride->getIsArchived() == 0 && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime) {
+            } elseif ($ride && $currentRide && $ride->getDateTime() < $currentRide->getDateTime() && $ride->getDateTime() > $dateTime) {
                 $currentRide = $ride;
             }
         }
@@ -803,97 +569,6 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getPosts(): Collection
     {
         return $this->posts;
-    }
-
-    public function setIsArchived(bool $isArchived): ArchiveableInterface
-    {
-        $this->isArchived = $isArchived;
-
-        return $this;
-    }
-
-    public function getIsArchived(): bool
-    {
-        return $this->isArchived;
-    }
-
-    public function setArchiveDateTime(\DateTime $archiveDateTime): ArchiveableInterface
-    {
-        $this->archiveDateTime = $archiveDateTime;
-
-        return $this;
-    }
-
-    public function getArchiveDateTime(): \DateTime
-    {
-        return $this->archiveDateTime;
-    }
-
-    public function setArchiveParent(ArchiveableInterface $archiveParent): ArchiveableInterface
-    {
-        $this->archiveParent = $archiveParent;
-
-        return $this;
-    }
-
-    public function getArchiveParent(): ArchiveableInterface
-    {
-        return $this->archiveParent;
-    }
-
-    public function setArchiveUser(User $archiveUser): ArchiveableInterface
-    {
-        $this->archiveUser = $archiveUser;
-
-        return $this;
-    }
-
-    public function getArchiveUser(): User
-    {
-        return $this->archiveUser;
-    }
-
-    public function setArchiveMessage(string $archiveMessage): ArchiveableInterface
-    {
-        $this->archiveMessage = $archiveMessage;
-
-        return $this;
-    }
-
-    public function getArchiveMessage(): ?string
-    {
-        return $this->archiveMessage;
-    }
-
-    public function __clone()
-    {
-        $this->id = null;
-        $this->setIsArchived(true);
-        $this->setArchiveDateTime(new \DateTime());
-    }
-
-    public function setIsStandardableLocation(bool $isStandardableLocation): City
-    {
-        $this->isStandardableLocation = $isStandardableLocation;
-
-        return $this;
-    }
-
-    public function getIsStandardableLocation(): bool
-    {
-        return $this->isStandardableLocation;
-    }
-
-    public function setIsStandardableTime(bool $isStandardableTime): City
-    {
-        $this->isStandardableTime = $isStandardableTime;
-
-        return $this;
-    }
-
-    public function getIsStandardableTime(): bool
-    {
-        return $this->isStandardableTime;
     }
 
     public function getPhotos(): Collection
@@ -953,7 +628,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getTimezone(): string
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
@@ -1115,21 +790,29 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return null;
     }
 
-    public function archive(User $user): ArchiveableInterface
+    public function addCycle(CityCycle $cityCycle): City
     {
-        $archivedCity = clone $this;
+        $this->cycles->add($cityCycle);
 
-        $archivedCity
-            ->setIsArchived(true)
-            ->setArchiveDateTime(new \DateTime())
-            ->setArchiveParent($this)
-            ->setArchiveUser($user)
-            ->setArchiveMessage($this->archiveMessage)
-            ->setImageFile(null)
-        ;
+        return $this;
+    }
 
-        $this->archiveMessage = '';
+    public function setCycles(Collection $cityCycles): City
+    {
+        $this->cycles = $cityCycles;
 
-        return $archivedCity;
+        return $this;
+    }
+
+    public function getCycles(): Collection
+    {
+        return $this->cycles;
+    }
+
+    public function removeCycle(CityCycle $cityCycle): City
+    {
+        $this->cycles->removeElement($cityCycle);
+
+        return $this;
     }
 }

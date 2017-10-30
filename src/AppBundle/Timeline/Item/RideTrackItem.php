@@ -7,184 +7,120 @@ use AppBundle\Entity\Track;
 
 class RideTrackItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     protected $username;
 
-    /**
-     * @var Ride $ride
-     */
+    /** @var Ride $ride */
     protected $ride;
 
-    /**
-     * @var string $rideTitle
-     */
+    /** @var string $rideTitle */
     protected $rideTitle;
 
-    /**
-     * @var Track $track
-     */
+    /** @var Track $track */
     protected $track;
 
-    /**
-     * @var float $distance
-     */
+    /** @var float $distance */
     protected $distance;
 
-    /**
-     * @var float $duration
-     */
+    /** @var float $duration */
     protected $duration;
 
-    /**
-     * @var string $polyline
-     */
+    /** @var string $polyline */
     protected $polyline;
 
-    /**
-     * @var string $polylineColor
-     */
+    /** @var string $polylineColor */
     protected $polylineColor;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): RideTrackItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * @param Ride $ride
-     */
-    public function setRide($ride)
+    public function setRide(Ride $ride): RideTrackItem
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRideTitle()
+    public function getRideTitle(): string
     {
         return $this->rideTitle;
     }
 
-    /**
-     * @param string $rideTitle
-     */
-    public function setRideTitle($rideTitle)
+    public function setRideTitle(string $rideTitle): RideTrackItem
     {
         $this->rideTitle = $rideTitle;
 
         return $this;
     }
 
-    /**
-     * @return Track
-     */
-    public function getTrack()
+    public function getTrack(): Track
     {
         return $this->track;
     }
 
-    /**
-     * @param Track $track
-     */
-    public function setTrack(Track $track)
+    public function setTrack(Track $track): RideTrackItem
     {
         $this->track = $track;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getDistance()
+    public function getDistance(): float
     {
         return $this->distance;
     }
 
-    /**
-     * @param float $distance
-     */
-    public function setDistance($distance)
+    public function setDistance(float $distance): RideTrackItem
     {
         $this->distance = $distance;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getDuration()
+    public function getDuration(): float
     {
         return $this->duration;
     }
 
-    /**
-     * @param float $duration
-     */
-    public function setDuration($duration)
+    public function setDuration(float $duration): RideTrackItem
     {
         $this->duration = $duration;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPolyline()
+    public function getPolyline(): string
     {
         return $this->polyline;
     }
 
-    /**
-     * @param string $polyline
-     */
-    public function setPolyline($polyline)
+    public function setPolyline(string $polyline): RideTrackItem
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPolylineColor()
+    public function getPolylineColor(): string
     {
         return $this->polylineColor;
     }
 
-    /**
-     * @param string $polylineColor
-     */
-    public function setPolylineColor($polylineColor)
+    public function setPolylineColor(string $polylineColor): RideTrackItem
     {
         $this->polylineColor = $polylineColor;
 

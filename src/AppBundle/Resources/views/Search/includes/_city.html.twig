@@ -34,7 +34,7 @@
                         </dt>
 
                         <dd>
-                            {{ city.getEventDateTimeString() }}
+                            jeweils am {{ ('criticalmass.city_list.event_date.month_week.' ~ city.standardWeekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ city.standardDayOfWeek)|trans }} um {{ city.standardTime|date('H:i', 'Europe/Berlin') }} Uhr
                         </dd>
                     </dl>
                 </div>

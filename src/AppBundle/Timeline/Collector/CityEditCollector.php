@@ -7,17 +7,9 @@ use AppBundle\Timeline\Item\CityEditItem;
 
 class CityEditCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
-    {
-        return $this->doctrine->getRepository('AppBundle:City')->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
-    }
+    protected $entityClass = City::class;
 
-    protected function groupEntities(array $entities)
-    {
-        return $entities;
-    }
-
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var City $city
@@ -26,13 +18,14 @@ class CityEditCollector extends AbstractTimelineCollector
             if ($city->getSlugs()) {
                 $item = new CityEditItem();
 
-                $item->setUsername($city->getArchiveUser()->getUsername());
+                $item->setUsername($city->getUser()->getUsername());
                 $item->setCityName($city->getCity());
                 $item->setCity($city);
-                $item->setDateTime($city->getArchiveDateTime());
-                $item->setArchiveMessage($city->getArchiveMessage());
+                $item->setDateTime($city->getUpdatedAt());
                 $this->addItem($item);
             }
         }
+
+        return $this;
     }
 }

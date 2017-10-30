@@ -6,94 +6,47 @@ use AppBundle\Entity\Ride;
 
 class RideEditItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     protected $username;
 
-    /**
-     * @var Ride $ride
-     */
+    /** @var Ride $ride */
     protected $ride;
 
-    /**
-     * @var string $rideTitle
-     */
+    /** @var string $rideTitle */
     protected $rideTitle;
 
-    /**
-     * @var string $archiveMessage
-     */
-    protected $archiveMessage;
-
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): RideEditItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * @param Ride $ride
-     */
-    public function setRide($ride)
+    public function setRide(Ride $ride): RideEditItem
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRideTitle()
+    public function getRideTitle(): string
     {
         return $this->rideTitle;
     }
 
-    /**
-     * @param string $rideTitle
-     */
-    public function setRideTitle($rideTitle)
+    public function setRideTitle(string $rideTitle): RideEditItem
     {
         $this->rideTitle = $rideTitle;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getArchiveMessage()
-    {
-        return $this->archiveMessage;
-    }
-
-    /**
-     * @param string $archiveMessage
-     */
-    public function setArchiveMessage($archiveMessage)
-    {
-        $this->archiveMessage = $archiveMessage;
 
         return $this;
     }

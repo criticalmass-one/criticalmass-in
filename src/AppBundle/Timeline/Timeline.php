@@ -4,33 +4,48 @@ namespace AppBundle\Timeline;
 
 use AppBundle\Timeline\Collector\AbstractTimelineCollector;
 use AppBundle\Timeline\Item\ItemInterface;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bridge\Twig\TwigEngine;
+use Symfony\Component\Templating\EngineInterface;
 
 class Timeline
 {
+    /** @var Registry $doctrine */
     protected $doctrine;
+
+    /** @var TwigEngine $templating */
     protected $templating;
 
+    /** @var array $collectorList */
     protected $collectorList = [];
+
+    /** @var array $items */
     protected $items = [];
+
+    /** @var string $content */
     protected $content = '';
 
+    /** @var \DateTime $startDateTime */
     protected $startDateTime = null;
+
+    /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    public function __construct($doctrine, $templating)
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
     }
 
-    public function addCollector(AbstractTimelineCollector $collector)
+    public function addCollector(AbstractTimelineCollector $collector): Timeline
     {
         array_push($this->collectorList, $collector);
 
         return $this;
     }
 
-    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime)
+    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): Timeline
     {
         $this->startDateTime = $startDateTime;
         $this->endDateTime = $endDateTime;
@@ -38,14 +53,14 @@ class Timeline
         return $this;
     }
 
-    public function execute()
+    public function execute(): Timeline
     {
         $this->process();
 
         return $this;
     }
 
-    protected function process()
+    protected function process(): Timeline
     {
         /**
          * @var AbstractTimelineCollector $collector
@@ -67,7 +82,7 @@ class Timeline
         return $this;
     }
 
-    protected function paginate()
+    protected function paginate(): Timeline
     {
         $lastDateTime = new \DateTime();
         $threeMonthDateInterval = new \DateInterval('P3M');
@@ -87,7 +102,7 @@ class Timeline
         return $this;
     }
 
-    protected function createContent()
+    protected function createContent(): Timeline
     {
         foreach ($this->items as $item) {
             $templateName = $this->templateNameForItem($item);
@@ -103,7 +118,7 @@ class Timeline
         return $this;
     }
 
-    protected function templateNameForItem(ItemInterface $item)
+    protected function templateNameForItem(ItemInterface $item): string
     {
         $itemFullClassName = get_class($item);
 
@@ -116,7 +131,7 @@ class Timeline
         return $templateName;
     }
 
-    public function getTimelineContent()
+    public function getTimelineContent(): string
     {
         return $this->content;
     }

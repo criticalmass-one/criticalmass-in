@@ -8,7 +8,7 @@ caldera_criticalmass_statistic_ride:
 
 caldera_criticalmass_statistic_facebook:
     path: /facebookstatistic
-    defaults: { _controller: AppBundle:Statistic:facebookstatistic }
+    defaults: { _controller: AppBundle:Statistic/FacebookCityStatistic:facebookstatistic }
 
 caldera_criticalmass_statistic_overview:
     path: /statistic
