@@ -54,7 +54,7 @@
         "simplethings/entity-audit-bundle": "^1.0",
         "cebe/markdown": "^1.1",
         "sonata-project/seo-bundle": "^2.2",
-        "mlehner/gelf-php": "^1.1"
+        "graylog2/gelf-php": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
