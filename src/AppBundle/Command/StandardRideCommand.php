@@ -4,9 +4,12 @@ namespace AppBundle\Command;
 
 use AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
 use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class StandardRideCommand extends ContainerAwareCommand
@@ -14,7 +17,7 @@ class StandardRideCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:standardrides')
+            ->setName('criticalmass:cycles:create')
             ->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'year',
@@ -25,6 +28,12 @@ class StandardRideCommand extends ContainerAwareCommand
                 'month',
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
+            )
+            ->addOption(
+                'save',
+                null,
+                InputOption::VALUE_NONE,
+                'Save the generated stuff'
             );
     }
 
@@ -47,10 +56,13 @@ class StandardRideCommand extends ContainerAwareCommand
 
         $cities = $doctrine->getRepository('AppBundle:City')->findCities();
 
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'DateTime', 'Location'])
+        ;
+
         /** @var City $city */
         foreach ($cities as $city) {
-            $output->writeln(sprintf('Stadt: <info>%s</info>', $city->getCity()));
-
             $rides = $generator
                 ->setCity($city)
                 ->execute()
@@ -58,16 +70,27 @@ class StandardRideCommand extends ContainerAwareCommand
             ;
 
             if (count($rides)) {
+                /** @var Ride $ride */
                 foreach ($rides as $ride) {
-                    $output->writeln(sprintf('Tour: <comment>%s</comment> (%s)', $ride->getDateTime()->format('Y-m-d H:i'), $ride->getLocation()));
+                    $table->addRow([
+                        $city->getCity(),
+                        $ride->getDateTime()->format('Y-m-d H:i'),
+                        $ride->getLocation(),
+                    ]);
 
                     $manager->persist($ride);
                 }
-            } else {
-                $output->writeln('No rides for this city.');
             }
         }
 
-        $manager->flush();
+        $table->render();
+
+        if ($input->getOption('save')) {
+            $output->writeln('Saved all those rides');
+
+            $manager->flush();
+        } else {
+            $output->writeln('Did not save any of these rides, run with --save to persist.');
+        }
     }
 }

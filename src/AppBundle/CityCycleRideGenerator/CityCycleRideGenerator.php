@@ -65,8 +65,13 @@ class CityCycleRideGenerator
 
         $cycles = $this->findCylces();
 
+        /** @var CityCycle $cycle */
         foreach ($cycles as $cycle) {
             if ($this->wasRideCreated($cycle)) {
+                continue;
+            }
+
+            if (!$cycle->getCity()->getTimezone()) {
                 continue;
             }
 
@@ -132,12 +137,18 @@ class CityCycleRideGenerator
     protected function calculateTime(CityCycle $cityCycle, Ride $ride): Ride
     {
         $time = $cityCycle->getTime();
+        $timezone = new \DateTimeZone($cityCycle->getCity()->getTimezone());
+
+        $time->setTimezone(new \DateTimeZone('UTC'));
+
         $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));
         $timeInterval = new \DateInterval($intervalSpec);
 
         $dateTimeSpec = sprintf('%d-%d-%d 00:00:00', $ride->getDateTime()->format('Y'), $ride->getDateTime()->format('m'), $ride->getDateTime()->format('d'));
         $rideDateTime = new \DateTime($dateTimeSpec);
         $rideDateTime->add($timeInterval);
+
+        $rideDateTime->setTimezone($timezone);
 
         $ride->setDateTime($rideDateTime);
 

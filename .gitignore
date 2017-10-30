@@ -45,3 +45,9 @@
 **/Entity/*~
 criticalmass.iml
 .idea
+src/AppBundle/Resources/public/css/external/bootstrap-app-4/toolkit.css
+src/AppBundle/Resources/public/css/external/bootstrap-app-4/toolkit.css.map
+src/AppBundle/Resources/public/js/external/bootstrap-app-4/toolkit.js
+src/AppBundle/Resources/public/js/external/bootstrap-app-4/toolkit.min.css
+src/AppBundle/Resources/public/js/external/bootstrap-app-4/toolkit.min.css.map
+src/AppBundle/Resources/public/js/external/bootstrap-app-4/toolkit.min.js
