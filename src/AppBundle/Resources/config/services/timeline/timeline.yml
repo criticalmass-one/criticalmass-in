@@ -3,6 +3,10 @@ services:
         autoconfigure: true
         autowire: true
         public: true
+        # this works for Symfony 3.4
+        # bind:
+        #    $ttl: '%timeline.ttl%'
 
-    AppBundle\Timeline\:
-        resource: '%kernel.project_dir%/src/AppBundle/Timeline/*'
+    AppBundle\Timeline\Timeline: ~
+    AppBundle\Timeline\CachedTimeline:
+        arguments: ['@doctrine', '@templating', '%timeline.ttl%']
