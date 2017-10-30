@@ -65,8 +65,13 @@ class CityCycleRideGenerator
 
         $cycles = $this->findCylces();
 
+        /** @var CityCycle $cycle */
         foreach ($cycles as $cycle) {
             if ($this->wasRideCreated($cycle)) {
+                continue;
+            }
+
+            if (!$cycle->getCity()->getTimezone()) {
                 continue;
             }
 
