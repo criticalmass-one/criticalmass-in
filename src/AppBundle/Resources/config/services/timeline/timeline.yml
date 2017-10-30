@@ -1,8 +1,8 @@
 services:
-    caldera.criticalmass.timeline.cached:
-        class: AppBundle\Timeline\CachedTimeline
-        arguments: [ '@doctrine', '@templating', '%timeline.ttl%' ]
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: true
 
-    caldera.criticalmass.timeline:
-        class: AppBundle\Timeline\Timeline
-        arguments: [ '@doctrine', '@templating' ]
+    AppBundle\Timeline\:
+        resource: '%kernel.project_dir%/src/AppBundle/Timeline/*'
