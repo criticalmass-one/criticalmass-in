@@ -3,17 +3,23 @@
 namespace AppBundle\Timeline\Collector;
 
 use AppBundle\Timeline\Item\ItemInterface;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 abstract class AbstractTimelineCollector
 {
+    /** @var Doctrine $doctrine */
     protected $doctrine;
 
+    /** @var array $items */
     protected $items = [];
 
+    /** @var \DateTime $startDateTime */
     protected $startDateTime = null;
+
+    /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    public function __construct($doctrine)
+    public function __construct(Doctrine $doctrine)
     {
         $this->doctrine = $doctrine;
     }
