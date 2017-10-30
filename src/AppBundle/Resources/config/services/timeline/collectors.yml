@@ -2,9 +2,8 @@ services:
     _defaults:
         autoconfigure: true
         public: false
-        arguments: ['@doctrine']
         tags:
             - { name: timeline.collector }
 
     AppBundle\Timeline\Collector\:
-        resource: '%kernel.project_dir%/src/Timeline/Collector/*'
+        resource: '%kernel.project_dir%/src/AppBundle/Timeline/Collector/*'
