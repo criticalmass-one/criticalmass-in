@@ -2,7 +2,6 @@
 
 namespace AppBundle\DependencyInjection;
 
-use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -28,7 +27,5 @@ class AppExtension extends Extension
 
         $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $xmlLoader->load('services.xml');
-
-        $container->addCompilerPass(new TimelineCollectorPass());
     }
 }
