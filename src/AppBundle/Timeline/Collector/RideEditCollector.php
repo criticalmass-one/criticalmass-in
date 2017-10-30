@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\RideEditItem;
 
 class RideEditCollector extends AbstractTimelineCollector
 {
+    private $entityClass = Ride::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(Ride::class)->findForTimelineRideEditCollector($this->startDateTime, $this->endDateTime);

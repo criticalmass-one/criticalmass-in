@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\RidePhotoItem;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {
+    private $entityClass = Photo::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(Photo::class)->findForTimelinePhotoCollector($this->startDateTime, $this->endDateTime);

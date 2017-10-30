@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\ThreadPostItem;
 
 class ThreadPostCollector extends AbstractTimelineCollector
 {
+    private $entityClass = Post::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(Post::class)->findForTimelineThreadPostCollector($this->startDateTime, $this->endDateTime);

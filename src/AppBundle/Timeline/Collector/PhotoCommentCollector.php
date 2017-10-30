@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\PhotoCommentItem;
 
 class PhotoCommentCollector extends AbstractTimelineCollector
 {
+    private $entityClass = Post::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(Post::class)->findForTimelinePhotoCommentCollector($this->startDateTime, $this->endDateTime);

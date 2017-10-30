@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\CityEditItem;
 
 class CityEditCollector extends AbstractTimelineCollector
 {
+    private $entityClass = City::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(City::class)->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);

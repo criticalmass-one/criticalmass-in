@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {
+    private $entityClass = Thread::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(Thread::class)->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);

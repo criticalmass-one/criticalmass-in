@@ -7,6 +7,8 @@ use AppBundle\Timeline\Item\RideCommentItem;
 
 class RideCommentCollector extends AbstractTimelineCollector
 {
+    private $entityClass = Post::class;
+
     protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository(Post::class)->findForTimelineRideCommentCollector($this->startDateTime, $this->endDateTime);
