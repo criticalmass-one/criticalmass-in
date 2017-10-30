@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class StandardRideCommand extends ContainerAwareCommand
@@ -27,6 +28,12 @@ class StandardRideCommand extends ContainerAwareCommand
                 'month',
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
+            )
+            ->addOption(
+                'save',
+                null,
+                InputOption::VALUE_NONE,
+                'Save the generated stuff'
             );
     }
 
