@@ -65,7 +65,12 @@
                     <tbody>
                     <tr>
                         {% set daysInMonth = time|date('t') %}
-                        {% set startDow = time|date('F 1\\s\\t Y')|date('w') - 1%}
+                        {% set startDow = time|date('F 1\\s\\t Y')|date('w') - 1 %}
+
+                        {% if startDow < 0 %}
+                        {% set startDow = 6 %}
+                        {% endif %}
+
                         {% set dow = startDow %}
 
                         {% for day in range(1, startDow) %}
