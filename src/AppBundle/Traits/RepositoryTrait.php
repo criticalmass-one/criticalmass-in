@@ -6,6 +6,7 @@ use AppBundle\Repository\BlockedCityRepository;
 use AppBundle\Repository\BoardRepository;
 use AppBundle\Repository\CityCycleRepository;
 use AppBundle\Repository\CityRepository;
+use AppBundle\Repository\FacebookCityPropertiesRepository;
 use AppBundle\Repository\FacebookRidePropertiesRepository;
 use AppBundle\Repository\FrontpageTeaserRepository;
 use AppBundle\Repository\LocationRepository;
@@ -58,7 +59,7 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:City');
     }
 
-    protected function getFacebookCityPropertiesRepository(): ObjectRepository
+    protected function getFacebookCityPropertiesRepository(): FacebookCityPropertiesRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:FacebookCityProperties');
     }
