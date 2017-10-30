@@ -9,11 +9,6 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
     private $entityClass = RideEstimate::class;
 
-    protected function fetchEntities(): array
-    {
-        return $this->doctrine->getRepository(RideEstimate::class)->findForTimelineRideParticipantsEstimateCollector($this->startDateTime, $this->endDateTime);
-    }
-
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**

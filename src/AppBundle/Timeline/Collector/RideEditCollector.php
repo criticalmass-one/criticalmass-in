@@ -9,11 +9,6 @@ class RideEditCollector extends AbstractTimelineCollector
 {
     private $entityClass = Ride::class;
 
-    protected function fetchEntities(): array
-    {
-        return $this->doctrine->getRepository(Ride::class)->findForTimelineRideEditCollector($this->startDateTime, $this->endDateTime);
-    }
-
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**

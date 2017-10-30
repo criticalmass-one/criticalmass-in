@@ -7,6 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
+    /** @var string $entityClass */
+    private $entityClass;
+
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
@@ -41,7 +44,12 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
         return $this;
     }
 
-    protected abstract function fetchEntities(): array;
+    protected function fetchEntities(): array
+    {
+        $methodName = sprintf('findForTimeline%s', get_class());
+
+        return $this->doctrine->getRepository($this->entityClass)->$methodName($this->startDateTime, $this->endDateTime);
+    }
 
     protected function groupEntities(array $entities): array
     {

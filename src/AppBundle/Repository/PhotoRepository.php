@@ -294,7 +294,7 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelinePhotoCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
+    public function findForTimelineRidePhotoCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
     {
         $builder = $this->createQueryBuilder('photo');
 

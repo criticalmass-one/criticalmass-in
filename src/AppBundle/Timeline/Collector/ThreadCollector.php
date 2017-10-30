@@ -9,11 +9,6 @@ class ThreadCollector extends AbstractTimelineCollector
 {
     private $entityClass = Thread::class;
 
-    protected function fetchEntities(): array
-    {
-        return $this->doctrine->getRepository(Thread::class)->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);
-    }
-
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
