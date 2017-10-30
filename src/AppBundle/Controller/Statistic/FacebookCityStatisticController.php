@@ -11,6 +11,7 @@ class FacebookCityStatisticController extends AbstractController
 {
     public function facebookstatisticAction(Request $request)
     {
+        $utc = new \DateTimeZone('UTC');
         $cityPropertiesList = $this->getFacebookCityPropertiesRepository()->findForStatistic();
 
         $filteredProperties = [];
@@ -23,10 +24,15 @@ class FacebookCityStatisticController extends AbstractController
          */
         foreach ($cityPropertiesList as $facebookCityProperties) {
             $citySlug = $facebookCityProperties->getCity()->getSlug();
-            $day = $facebookCityProperties->getCreatedAt()->format('Y-m-d');
+            $createdAt = $facebookCityProperties->getCreatedAt();
 
-            $filteredProperties[$citySlug][$day] = $facebookCityProperties;
-            $dayList[$day] = $day;
+            $date = $createdAt
+                ->setTimezone($utc)
+                ->format('Y-m-d')
+            ;
+
+            $filteredProperties[$citySlug][$date] = $facebookCityProperties;
+            $dayList[$date] = $date;
             $cityList[$citySlug] = $facebookCityProperties->getCity();
         }
 
