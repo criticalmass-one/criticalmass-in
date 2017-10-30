@@ -43,7 +43,10 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 
     protected abstract function fetchEntities(): array;
 
-    protected abstract function groupEntities(array $entities): array;
+    protected function groupEntities(array $entities): array
+    {
+        return $entities;
+    }
 
     protected abstract function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector;
 

@@ -12,11 +12,6 @@ class ThreadPostCollector extends AbstractTimelineCollector
         return $this->doctrine->getRepository('AppBundle:Post')->findForTimelineThreadPostCollector($this->startDateTime, $this->endDateTime);
     }
 
-    protected function groupEntities(array $entities): array
-    {
-        return $entities;
-    }
-
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
