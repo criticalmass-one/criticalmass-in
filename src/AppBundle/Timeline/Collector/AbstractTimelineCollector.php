@@ -5,7 +5,7 @@ namespace AppBundle\Timeline\Collector;
 use AppBundle\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
-abstract class AbstractTimelineCollector
+abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
     /** @var Doctrine $doctrine */
     protected $doctrine;
