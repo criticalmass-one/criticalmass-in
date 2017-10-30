@@ -2,21 +2,22 @@
 
 namespace AppBundle\Timeline\Collector;
 
+use AppBundle\Entity\Post;
 use AppBundle\Timeline\Item\ThreadPostItem;
 
 class ThreadPostCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
+    protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository('AppBundle:Post')->findForTimelineThreadPostCollector($this->startDateTime, $this->endDateTime);
     }
 
-    protected function groupEntities(array $entities)
+    protected function groupEntities(array $entities): array
     {
         return $entities;
     }
 
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var Post $threadEntity
@@ -32,5 +33,7 @@ class ThreadPostCollector extends AbstractTimelineCollector
 
             $this->addItem($item);
         }
+
+        return $this;
     }
 }

@@ -7,17 +7,17 @@ use AppBundle\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
+    protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository('AppBundle:Track')->findForTimelineRideTrackCollector($this->startDateTime, $this->endDateTime);
     }
 
-    protected function groupEntities(array $entities)
+    protected function groupEntities(array $entities): array
     {
         return $entities;
     }
 
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var Track $trackEntity
@@ -37,5 +37,7 @@ class RideTrackCollector extends AbstractTimelineCollector
 
             $this->addItem($item);
         }
+
+        return $this;
     }
 }

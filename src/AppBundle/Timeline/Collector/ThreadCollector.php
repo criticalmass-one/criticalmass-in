@@ -7,17 +7,17 @@ use AppBundle\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
+    protected function fetchEntities(): array
     {
         return $this->doctrine->getRepository('AppBundle:Thread')->findForTimelineThreadCollector($this->startDateTime, $this->endDateTime);
     }
 
-    protected function groupEntities(array $entities)
+    protected function groupEntities(array $entities): array
     {
         return $entities;
     }
 
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var Thread $threadEntity
@@ -33,5 +33,7 @@ class ThreadCollector extends AbstractTimelineCollector
 
             $this->addItem($item);
         }
+
+        return $this;
     }
 }
