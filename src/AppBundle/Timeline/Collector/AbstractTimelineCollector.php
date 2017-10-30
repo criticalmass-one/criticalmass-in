@@ -46,7 +46,9 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 
     protected function fetchEntities(): array
     {
-        $methodName = sprintf('findForTimeline%s', get_class());
+        $tmp = explode('\\', get_class($this));
+        $className = array_pop($tmp);
+        $methodName = sprintf('findForTimeline%s', $className);
 
         return $this->doctrine->getRepository($this->entityClass)->$methodName($this->startDateTime, $this->endDateTime);
     }
