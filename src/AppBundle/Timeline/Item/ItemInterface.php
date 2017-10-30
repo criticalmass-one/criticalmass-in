@@ -6,7 +6,7 @@ interface ItemInterface
 {
     public function setDateTime(\DateTime $dateTime);
 
-    public function getDateTime();
+    public function getDateTime(): \DateTime;
 
-    public function getUniqId();
+    public function getUniqId(): string;
 }

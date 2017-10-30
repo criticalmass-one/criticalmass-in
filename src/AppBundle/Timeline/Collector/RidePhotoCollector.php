@@ -7,12 +7,9 @@ use AppBundle\Timeline\Item\RidePhotoItem;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
-    {
-        return $this->doctrine->getRepository('AppBundle:Photo')->findForTimelinePhotoCollector($this->startDateTime, $this->endDateTime);
-    }
+    protected $entityClass = Photo::class;
 
-    protected function groupEntities(array $photoEntities)
+    protected function groupEntities(array $photoEntities): array
     {
         $groupedEntities = [];
 
@@ -34,7 +31,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
         return $groupedEntities;
     }
 
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         foreach ($groupedEntities as $userGroup) {
             foreach ($userGroup as $rideGroup) {
@@ -56,5 +53,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
                 $this->addItem($item);
             }
         }
+
+        return $this;
     }
 }

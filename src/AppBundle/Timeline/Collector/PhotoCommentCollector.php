@@ -7,17 +7,9 @@ use AppBundle\Timeline\Item\PhotoCommentItem;
 
 class PhotoCommentCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
-    {
-        return $this->doctrine->getRepository('AppBundle:Post')->findForTimelinePhotoCommentCollector($this->startDateTime, $this->endDateTime);
-    }
+    protected $entityClass = Post::class;
 
-    protected function groupEntities(array $entities)
-    {
-        return $entities;
-    }
-
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var Post $threadEntity
@@ -33,5 +25,7 @@ class PhotoCommentCollector extends AbstractTimelineCollector
 
             $this->addItem($item);
         }
+
+        return $this;
     }
 }

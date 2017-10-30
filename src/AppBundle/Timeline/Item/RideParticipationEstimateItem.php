@@ -26,72 +26,48 @@ class RideParticipationEstimateItem extends AbstractItem
      */
     protected $estimatedParticipants;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): RideParticipationEstimateItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Ride
-     */
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    /**
-     * @param Ride $ride
-     */
-    public function setRide($ride)
+    public function setRide(Ride $ride): RideParticipationEstimateItem
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRideTitle()
+    public function getRideTitle(): string
     {
         return $this->rideTitle;
     }
 
-    /**
-     * @param string $rideTitle
-     */
-    public function setRideTitle($rideTitle)
+    public function setRideTitle(string $rideTitle): RideParticipationEstimateItem
     {
         $this->rideTitle = $rideTitle;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getEstimatedParticipants()
+    public function getEstimatedParticipants(): int
     {
         return $this->estimatedParticipants;
     }
 
-    /**
-     * @param int $estimatedParticipants
-     */
-    public function setEstimatedParticipants($estimatedParticipants)
+    public function setEstimatedParticipants(int $estimatedParticipants): RideParticipationEstimateItem
     {
         $this->estimatedParticipants = $estimatedParticipants;
 

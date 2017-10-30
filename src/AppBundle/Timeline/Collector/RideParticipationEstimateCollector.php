@@ -7,17 +7,9 @@ use AppBundle\Timeline\Item\RideParticipationEstimateItem;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
-    {
-        return $this->doctrine->getRepository('AppBundle:RideEstimate')->findForTimelineRideParticipantsEstimateCollector($this->startDateTime, $this->endDateTime);
-    }
+    protected $entityClass = RideEstimate::class;
 
-    protected function groupEntities(array $entities)
-    {
-        return $entities;
-    }
-
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var RideEstimate $estimateEntity
@@ -33,5 +25,7 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
 
             $this->addItem($item);
         }
+
+        return $this;
     }
 }

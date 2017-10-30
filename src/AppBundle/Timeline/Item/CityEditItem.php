@@ -6,69 +6,45 @@ use AppBundle\Entity\City;
 
 class CityEditItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     protected $username;
 
-    /**
-     * @var City $city
-     */
+    /** @var City $city */
     protected $city;
 
-    /**
-     * @var string $cityName
-     */
+    /** @var string $cityName */
     protected $cityName;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): CityEditItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
-    /**
-     * @param City $city
-     */
-    public function setCity(City $city)
+    public function setCity(City $city): CityEditItem
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCityName()
+    public function getCityName(): string
     {
         return $this->cityName;
     }
 
-    /**
-     * @param string $cityTitle
-     */
-    public function setCityName($cityName)
+    public function setCityName(string $cityName): CityEditItem
     {
         $this->cityName = $cityName;
 

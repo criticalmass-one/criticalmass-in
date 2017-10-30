@@ -6,92 +6,60 @@ use AppBundle\Entity\Photo;
 
 class PhotoCommentItem extends AbstractItem
 {
-    /**
-     * @var string $username
-     */
+    /** @var string $username */
     public $username;
 
-    /**
-     * @var Photo $photo
-     */
+    /** @var Photo $photo */
     public $photo;
 
-    /**
-     * @var string $rideTitle
-     */
+    /** @var string $rideTitle */
     public $rideTitle;
 
-    /**
-     * @var string $text
-     */
+    /** @var string $text */
     public $text;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): PhotoCommentItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return Photo
-     */
-    public function getPhoto()
+    public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
-    /**
-     * @param Photo $photo
-     */
-    public function setPhoto($photo)
+    public function setPhoto(Photo $photo): PhotoCommentItem
     {
         $this->photo = $photo;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRideTitle()
+    public function getRideTitle(): string
     {
         return $this->rideTitle;
     }
 
-    /**
-     * @param string $rideTitle
-     */
-    public function setRideTitle($rideTitle)
+    public function setRideTitle(string $rideTitle): PhotoCommentItem
     {
         $this->rideTitle = $rideTitle;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @param string $text
-     */
-    public function setText($text)
+    public function setText(string $text): PhotoCommentItem
     {
         $this->text = $text;
 

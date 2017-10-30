@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository
 {
-    public function findForTimelineRideParticipantsEstimateCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    public function findForTimelineRideParticipationEstimateCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
     {
         $builder = $this->createQueryBuilder('e');
 

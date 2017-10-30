@@ -7,17 +7,9 @@ use AppBundle\Timeline\Item\RideCommentItem;
 
 class RideCommentCollector extends AbstractTimelineCollector
 {
-    protected function fetchEntities()
-    {
-        return $this->doctrine->getRepository('AppBundle:Post')->findForTimelineRideCommentCollector($this->startDateTime, $this->endDateTime);
-    }
+    protected $entityClass = Post::class;
 
-    protected function groupEntities(array $entities)
-    {
-        return $entities;
-    }
-
-    protected function convertGroupedEntities(array $groupedEntities)
+    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /**
          * @var Post $threadEntity
@@ -33,5 +25,7 @@ class RideCommentCollector extends AbstractTimelineCollector
 
             $this->addItem($item);
         }
+
+        return $this;
     }
 }
