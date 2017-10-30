@@ -14,7 +14,7 @@ class StandardRideCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:standardrides')
+            ->setName('criticalmass:cycles:create')
             ->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'year',
