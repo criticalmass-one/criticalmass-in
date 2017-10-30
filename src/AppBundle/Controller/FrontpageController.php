@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ride;
+use AppBundle\Timeline\CachedTimeline;
 use AppBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +26,11 @@ class FrontpageController extends AbstractController
          * @var Timeline $timeline
          */
         $timelineContent = $this
-            ->get('caldera.criticalmass.timeline.cached')
+            ->get(CachedTimeline::class)
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
-            ->getTimelineContent();
+            ->getTimelineContent()
+        ;
 
         return $this->render(
             'AppBundle:Frontpage:index.html.twig',

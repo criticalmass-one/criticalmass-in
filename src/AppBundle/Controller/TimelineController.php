@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Timeline\CachedTimeline;
 use AppBundle\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +24,7 @@ class TimelineController extends AbstractController
          * @var Timeline $timeline
          */
         $timelineContent = $this
-            ->get('caldera.criticalmass.timeline.cached')
+            ->get(CachedTimeline::class)
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();
