@@ -1,6 +1,7 @@
 services:
     _defaults:
         autoconfigure: true
+        autowire: true
         public: false
         tags:
             - { name: timeline.collector }
