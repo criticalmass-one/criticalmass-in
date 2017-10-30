@@ -9,7 +9,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities(): array
     {
-        return $this->doctrine->getRepository('AppBundle:Photo')->findForTimelinePhotoCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository(Photo::class)->findForTimelinePhotoCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function groupEntities(array $photoEntities): array

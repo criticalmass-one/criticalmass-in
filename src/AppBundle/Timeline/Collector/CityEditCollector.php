@@ -9,7 +9,7 @@ class CityEditCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities(): array
     {
-        return $this->doctrine->getRepository('AppBundle:City')->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository(City::class)->findForTimelineCityEditCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector

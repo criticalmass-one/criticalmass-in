@@ -9,7 +9,7 @@ class PhotoCommentCollector extends AbstractTimelineCollector
 {
     protected function fetchEntities(): array
     {
-        return $this->doctrine->getRepository('AppBundle:Post')->findForTimelinePhotoCommentCollector($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository(Post::class)->findForTimelinePhotoCommentCollector($this->startDateTime, $this->endDateTime);
     }
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
