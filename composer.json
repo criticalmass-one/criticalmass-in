@@ -19,7 +19,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "symfony/symfony": "3.2.*",
+        "symfony/symfony": "3.3.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "twig/extensions": "^1.4",
