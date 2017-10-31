@@ -21,25 +21,53 @@
     <div class="row">
         <div class="col-md-6">
             {% for category in helpCategories %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>
-                            {{ category.title }}
-                        </h3>
+                {% if category.side == 'left' %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                {{ category.title }}
+                            </h3>
 
-                        <p class="lead">
-                            {{ category.intro }}
-                        </p>
+                            <p class="lead">
+                                {{ category.intro }}
+                            </p>
 
-                        {% for item in category.items %}
-                            <h4>
-                                {{ item.title }}
-                            </h4>
+                            {% for item in category.items %}
+                                <h4>
+                                    {{ item.title }}
+                                </h4>
 
-                            {{ item.text|markdown }}
-                        {% endfor %}
+                                {{ item.text|markdown }}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+            {% for category in helpCategories %}
+                {% if category.side == 'right' %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                {{ category.title }}
+                            </h3>
+
+                            <p class="lead">
+                                {{ category.intro }}
+                            </p>
+
+                            {% for item in category.items %}
+                                <h4>
+                                    {{ item.title }}
+                                </h4>
+
+                                {{ item.text|markdown }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
