@@ -37,14 +37,20 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                Häufig gestellte Fragen zu dieser Webseite
+                {{ mainCategory.title }}
             </h1>
+
+            {% if mainCategory.intro %}
+                <p class="lead">
+                    {{ mainCategory.intro }}
+                </p>
+            {% endif %}
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            {% for category in helpCategories %}
+            {% for category in mainCategory.children %}
                 {% if category.side == 'left' %}
                     {{ categoryMacro.renderCategory(category) }}
                 {% endif %}
@@ -52,7 +58,7 @@
         </div>
 
         <div class="col-md-6">
-            {% for category in helpCategories %}
+            {% for category in mainCategory.children %}
                 {% if category.side == 'right' %}
                     {{ categoryMacro.renderCategory(category) }}
                 {% endif %}

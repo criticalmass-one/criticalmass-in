@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HelpController extends AbstractController
 {
+    const HELP_CATEGORY_ID = 7;
+
     public function indexAction(Request $request): Response
     {
-        $categories = $this->getHelpCategoryRepository()->findAll();
+        $mainCategory = $this->getHelpCategoryRepository()->find(self::HELP_CATEGORY_ID);
 
         return $this->render('AppBundle:Help:help.html.twig', [
-                'helpCategories' => $categories
+                'mainCategory' => $mainCategory,
             ]);
     }
 }
