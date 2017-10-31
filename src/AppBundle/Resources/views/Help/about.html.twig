@@ -1,8 +1,9 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% macro renderCategory(category) %}
+{% macro renderCategory(category, header = false) %}
     <div class="row">
         <div class="col-md-12">
+            {% if header %}
             <h3>
                 {{ category.title }}
             </h3>
@@ -10,7 +11,8 @@
             <p class="lead">
                 {{ category.intro }}
             </p>
-
+            {% endif %}
+            
             {% for item in category.items %}
                 <h4>
                     {{ item.title }}
