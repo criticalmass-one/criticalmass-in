@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Facebook\Facebook;
 use Facebook\GraphNodes\GraphEvent;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,13 +43,14 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
 
         $rides = $this->doctrine->getRepository(Ride::class )->findFutureRides();
 
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'DateTime', 'EventId', 'Status'])
+        ;
+
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $output->writeln('Looking up current ride for: ' . $ride->getCity()->getCity());
-
             if (!$ride->getFacebook()) {
-                $output->writeln($ride->getFancyTitle() . ' has no facebook details.');
-
                 /** @var GraphEvent $event */
                 $event = $fera->getEventForRide($ride);
 
@@ -59,15 +61,37 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
 
                     $ride->setFacebook($link);
 
-                    $output->writeln('Saved ' . $eventId . ' as ride id.');
+                    $table
+                        ->addRow([
+                            $ride->getCity()->getCity(),
+                            $ride->getDateTime()->format('Y-m-d H:i'),
+                            $eventId,
+                            'saved'
+                        ])
+                    ;
                 } else {
-                    $output->writeln('Could not auto-detect facebook event for this ride.');
+                    $table
+                        ->addRow([
+                            $ride->getCity()->getCity(),
+                            $ride->getDateTime()->format('Y-m-d H:i'),
+                            'not found',
+                            'not found'
+                        ])
+                    ;
                 }
             } else {
-                $output->writeln($ride->getFancyTitle() . ' already has facebook details.');
+                $table
+                    ->addRow([
+                        $ride->getCity()->getCity(),
+                        $ride->getDateTime()->format('Y-m-d H:i'),
+                        $this->getEventId($ride),
+                        'already exists'
+                    ])
+                ;
             }
         }
 
+        $table->render();
         $this->manager->flush();
     }
 
