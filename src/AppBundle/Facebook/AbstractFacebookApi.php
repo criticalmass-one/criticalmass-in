@@ -36,31 +36,24 @@ abstract class AbstractFacebookApi
 
     protected function getRideEventId(Ride $ride): ?string
     {
-        $facebook = $ride->getFacebook();
-
-        if (0 === strpos($facebook, 'https://www.facebook.com/')) {
-            $facebook = rtrim($facebook, "/");
-
-            $parts = explode('/', $facebook);
-
-            $eventId = array_pop($parts);
-
-            return $eventId;
-        }
-
-        return null;
+        return $this->getIdFromUrl($ride->getFacebook());
     }
 
     protected function getCityPageId(City $city): ?string
     {
-        $facebook = $city->getFacebook();
+        return $this->getIdFromUrl($city->getFacebook());
+    }
 
-        if (0 === strpos($facebook, 'https://www.facebook.com/')) {
-            $facebook = rtrim($facebook, "/");
+    protected function getIdFromUrl(string $url): ?string
+    {
+        preg_match_all(
+            '/^(http\:\/\/|https\:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/',
+            $url,
+            $matches
+        );
 
-            $parts = explode('/', $facebook);
-
-            $pageId = array_pop($parts);
+        if (3 === count($matches)) {
+            $pageId = array_pop($matches[2]);
 
             return $pageId;
         }
