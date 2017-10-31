@@ -2,11 +2,11 @@
 
 {% import '@App/Help/_macro.html.twig' as categoryMacro %}
 
-{% block title %}Häufig gestellte Fragen zu criticalmass.in{% endblock %}
+{% block title %}{{ mainCategory.title }}{% endblock %}
 
 {% block breadcrumb %}
     <li class="active">
-        Hilfe
+        {{ mainCategory.title }}
     </li>
 {% endblock %}
 
