@@ -44,7 +44,7 @@ class HelpCategory
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\HelpItem", mappedBy="category")
@@ -61,19 +61,19 @@ class HelpCategory
         return $this->id;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language): string
+    public function setLanguage(string $language): HelpCategory
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -85,7 +85,7 @@ class HelpCategory
         return $this;
     }
 
-    public function getIntro(): string
+    public function getIntro(): ?string
     {
         return $this->intro;
     }
@@ -97,7 +97,7 @@ class HelpCategory
         return $this;
     }
 
-    public function getSide(): string
+    public function getSide(): ?string
     {
         return $this->side;
     }
