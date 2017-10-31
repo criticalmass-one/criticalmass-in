@@ -38,7 +38,7 @@ abstract class AbstractFacebookApi
     {
         $facebook = $ride->getFacebook();
 
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
+        if (0 === strpos($facebook, 'https://www.facebook.com/')) {
             $facebook = rtrim($facebook, "/");
 
             $parts = explode('/', $facebook);
@@ -55,7 +55,7 @@ abstract class AbstractFacebookApi
     {
         $facebook = $city->getFacebook();
 
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
+        if (0 === strpos($facebook, 'https://www.facebook.com/')) {
             $facebook = rtrim($facebook, "/");
 
             $parts = explode('/', $facebook);
