@@ -52,9 +52,21 @@ class HelpCategory
      */
     protected $items;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\HelpCategory", mappedBy="parent")
+     */
+    protected $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelpCategory", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    protected $parent;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,7 +159,45 @@ class HelpCategory
 
         return $this;
     }
-    
+
+    public function setParent(HelpCategory $parent): HelpCategory
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getParent(): ?HelpCategory
+    {
+        return $this->parent;
+    }
+
+    public function addChild(HelpCategory $child): HelpCategory
+    {
+        $this->children->add($child);
+
+        return $this;
+    }
+
+    public function setChildren(Collection $children): HelpCategory
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function removeChild(HelpCategory $child): HelpCategory
+    {
+        $this->children->removeElement($child);
+
+        return $this;
+    }
+
     public function __toString(): string
     {
         return sprintf('%s (%s)', $this->title, $this->language);
