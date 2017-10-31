@@ -19,7 +19,7 @@ class HelpCategoryAdmin extends AbstractAdmin
         $formMapper
             ->with('Content', ['class' => 'col-md-6'])
             ->add('title', TextType::class)
-            ->add('intro', TextAreaType::class)
+            ->add('intro', TextAreaType::class, ['required' => false])
             ->end()
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('parent', EntityType::class, [
