@@ -36,14 +36,14 @@ class HelpItem
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $position;
+    protected $position = 0;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -55,7 +55,7 @@ class HelpItem
         return $this;
     }
 
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -75,6 +75,18 @@ class HelpItem
     public function setPosition(int $position): HelpItem
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getCategory(): ?HelpCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(HelpCategory $category): HelpItem
+    {
+        $this->category = $category;
 
         return $this;
     }
