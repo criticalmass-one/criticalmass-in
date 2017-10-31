@@ -216,16 +216,18 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findFutureRides()
+    public function findFutureRides(): array
     {
         $dateTime = new \DateTime();
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->orderBy('ride.dateTime', 'ASC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $dateTime)
+            ->orderBy('r.dateTime', 'ASC')
+        ;
 
         $query = $builder->getQuery();
 
