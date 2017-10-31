@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,7 +50,7 @@ class HelpCategory
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\HelpItem", mappedBy="category")
      */
-    private $items;
+    protected $items;
 
     public function __construct()
     {
@@ -121,6 +122,32 @@ class HelpCategory
         return $this;
     }
 
+    public function addItem(HelpItem $item): HelpCategory
+    {
+        $this->items->add($item);
+
+        return $this;
+    }
+
+    public function setItems(Collection $items): HelpCategory
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function removeItem(HelpItem $item): HelpCategory
+    {
+        $this->items->removeElement($item);
+
+        return $this;
+    }
+    
     public function __toString(): string
     {
         return sprintf('%s (%s)', $this->title, $this->language);
