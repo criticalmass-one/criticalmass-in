@@ -10,6 +10,10 @@ class HelpController extends AbstractController
 {
     public function indexAction(Request $request): Response
     {
-        return $this->render('AppBundle:Help:help.html.twig');
+        $categories = $this->getHelpCategoryRepository()->findAll();
+
+        return $this->render('AppBundle:Help:help.html.twig', [
+                'helpCategories' => $categories
+            ]);
     }
 }
