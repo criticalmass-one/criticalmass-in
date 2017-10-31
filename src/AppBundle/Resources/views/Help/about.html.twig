@@ -27,20 +27,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            {% for category in mainCategory.children %}
-                {% if category.side == 'left' %}
-                    {{ categoryMacro.renderCategory(category) }}
-                {% endif %}
-            {% endfor %}
-        </div>
-
-        <div class="col-md-6">
-            {% for category in mainCategory.children %}
-                {% if category.side == 'right' %}
-                    {{ categoryMacro.renderCategory(category) }}
-                {% endif %}
-            {% endfor %}
+        <div class="col-md-8 col-md-offset-2">
+            {{ categoryMacro.renderCategory(mainCategory) }}
         </div>
     </div>
 </div>
