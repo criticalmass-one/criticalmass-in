@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Facebook\Facebook;
 use Facebook\GraphNodes\GraphEvent;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,6 +48,8 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
         $table
             ->setHeaders(['City', 'DateTime', 'EventId', 'Status'])
         ;
+
+        $progress = new ProgressBar($output, count($rides));
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
@@ -89,9 +92,14 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
                     ])
                 ;
             }
+
+            $progress->advance();
         }
 
+        $progress->finish();
+        $output->writeln('');
         $table->render();
+
         $this->manager->flush();
     }
 
