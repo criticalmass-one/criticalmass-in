@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\HelpCategory;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -16,10 +17,16 @@ class HelpItemAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('category', EntityType::class)
+            ->with('Content', ['class' => 'col-md-6'])
             ->add('title', TextType::class)
             ->add('text', TextAreaType::class)
+            ->end()
+            ->with('Settings', ['class' => 'col-md-6'])
+            ->add('category', EntityType::class, [
+                'class' => HelpCategory::class
+            ])
             ->add('position', NumberType::class, ['required' => false])
+            ->end()
         ;
     }
 
