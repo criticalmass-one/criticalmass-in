@@ -10,7 +10,7 @@ class HelpController extends AbstractController
 {
     const HELP_CATEGORY_ID = 7;
 
-    public function indexAction(Request $request): Response
+    public function helpAction(Request $request): Response
     {
         $mainCategory = $this->getHelpCategoryRepository()->find(self::HELP_CATEGORY_ID);
 
