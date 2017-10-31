@@ -4,6 +4,8 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\City;
 use AppBundle\Facebook\FacebookPageApi;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,9 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FacebookPagePropertiesCommand extends ContainerAwareCommand
 {
-    /**
-     * @var Facebook $facebook
-     */
+    /** @var Registry $doctrine */
+    protected $doctrine;
+
+    /** @var ObjectManager $manager */
+    protected $manager;
+
+    /** @var Facebook $facebook */
     protected $facebook;
 
     protected function configure()
@@ -30,19 +36,15 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        /**
-         * @var FacebookPageApi $fpa
-         */
+        /** @var FacebookPageApi $fpa */
         $fpa = $this->getContainer()->get('caldera.criticalmass.facebookapi.citypageproperties');
 
         $cities = $this->doctrine->getRepository('AppBundle:City')->findCitiesWithFacebook();
 
-        /**
-         * @var City $city
-         */
         foreach ($cities as $city) {
             $output->writeln('Looking up ' . $city->getCity());
 
+        /** @var City $city */
             $pageId = $this->getPageId($city);
 
             if ($pageId) {
@@ -62,7 +64,7 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
         $this->manager->flush();
     }
 
-    protected function getPageId(City $city)
+    protected function getPageId(City $city): ?string
     {
         $facebook = $city->getFacebook();
 
