@@ -6,7 +6,7 @@ use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
 use Facebook\Facebook;
 
-abstract class FacebookApi
+abstract class AbstractFacebookApi
 {
     /**
      * @var Facebook $facebook

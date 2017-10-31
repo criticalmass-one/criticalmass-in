@@ -6,7 +6,7 @@ use AppBundle\Entity\City;
 use AppBundle\Entity\FacebookCityProperties;
 use Facebook\GraphNodes\GraphPage;
 
-class FacebookPageApi extends FacebookApi
+class FacebookPageApi extends AbstractFacebookApi
 {
     public function getPagePropertiesForCity(City $city)
     {

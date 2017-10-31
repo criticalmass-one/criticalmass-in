@@ -8,7 +8,7 @@ use AppBundle\Utils\DateTimeUtils;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 
-class FacebookEventApi extends FacebookApi
+class FacebookEventApi extends AbstractFacebookApi
 {
     protected $standardFields = [
         'name',
