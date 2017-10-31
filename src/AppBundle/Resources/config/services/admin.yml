@@ -33,13 +33,13 @@ services:
         class: AppBundle\Admin\HelpCategoryAdmin
         arguments: [~, AppBundle\Entity\HelpAdmin, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: HelpCategory }
+            - { name: sonata.admin, manager_type: orm, group: Help, label: HelpCategory }
 
     admin.help_item:
         class: AppBundle\Admin\HelpItemAdmin
         arguments: [~, AppBundle\Entity\HelpItem, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: HelpItem }
+            - { name: sonata.admin, manager_type: orm, group: Help, label: HelpItem }
 
     admin.location:
         class: AppBundle\Admin\LocationAdmin
