@@ -4,6 +4,8 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphEdge;
@@ -16,9 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FacebookRideHandleCommand extends ContainerAwareCommand
 {
-    /**
-     * @var Facebook $facebook
-     */
+    /** @var Registry $doctrine */
+    protected $doctrine;
+
+    /** @var ObjectManager $manager */
+    protected $manager;
+
+    /** @var Facebook $facebook */
     protected $facebook;
 
     protected function configure()
