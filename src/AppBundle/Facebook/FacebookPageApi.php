@@ -8,22 +8,22 @@ use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends AbstractFacebookApi
 {
+    protected $standardFields = [
+        'name',
+        'about',
+        'description',
+        'likes',
+        'were_here_count',
+        'general_info',
+        'website',
+    ];
+
     public function getPagePropertiesForCity(City $city): ?FacebookCityProperties
     {
         $pageId = $this->getCityPageId($city);
 
-        $fields = [
-            'name',
-            'about',
-            'description',
-            'likes',
-            'were_here_count',
-            'general_info',
-            'website',
-        ];
-
         /** @var GraphPage $page */
-        $page = $this->queryPage($pageId, $fields);
+        $page = $this->queryPage($pageId, $this->standardFields);
 
         if ($page) {
             return $this->createCityProperties($city, $page);
