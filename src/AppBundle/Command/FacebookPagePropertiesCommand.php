@@ -8,6 +8,8 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -41,25 +43,43 @@ class FacebookPagePropertiesCommand extends ContainerAwareCommand
 
         $cities = $this->doctrine->getRepository('AppBundle:City')->findCitiesWithFacebook();
 
-        foreach ($cities as $city) {
-            $output->writeln('Looking up ' . $city->getCity());
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'PageId', 'Status'])
+        ;
+
+        $progress = new ProgressBar($output, count($cities));
 
         /** @var City $city */
+        foreach ($cities as $city) {
             $pageId = $this->getPageId($city);
 
             if ($pageId) {
-                $output->writeln('Page ID is: ' . $pageId);
-
                 $properties = $fpa->getPagePropertiesForCity($city);
 
                 if ($properties) {
                     $this->manager->persist($properties);
-
-                    $output->writeln('Saved properties');
-                    $output->writeln('');
                 }
+
+                $table->addRow([
+                    $city->getCity(),
+                    $pageId,
+                    'saved'
+                ]);
+            } else {
+                $table->addRow([
+                    $city->getCity(),
+                    'not found',
+                    'not found'
+                ]);
             }
+
+            $progress->advance();
         }
+
+        $progress->finish();
+        $output->writeln('');
+        $table->render();
 
         $this->manager->flush();
     }
