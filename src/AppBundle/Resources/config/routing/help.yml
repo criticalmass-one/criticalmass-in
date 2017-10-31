@@ -5,3 +5,7 @@ caldera_criticalmass_help_index:
 caldera_criticalmass_help_faq:
     path:     /faq
     defaults: { _controller: AppBundle:Help:faq }
+
+caldera_criticalmass_help_about:
+    path:     /about
+    defaults: { _controller: AppBundle:Help:about }

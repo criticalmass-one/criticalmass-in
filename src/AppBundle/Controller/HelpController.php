@@ -10,6 +10,7 @@ class HelpController extends AbstractController
 {
     const HELP_CATEGORY_ID = 7;
     const FAQ_CATEGORY_ID = 8;
+    const ABOUT_CATEGORY_ID = 9;
 
     public function helpAction(Request $request): Response
     {
@@ -25,6 +26,15 @@ class HelpController extends AbstractController
         $mainCategory = $this->getHelpCategoryRepository()->find(self::FAQ_CATEGORY_ID);
 
         return $this->render('AppBundle:Help:faq.html.twig', [
+            'mainCategory' => $mainCategory,
+        ]);
+    }
+
+    public function aboutAction(Request $request): Response
+    {
+        $mainCategory = $this->getHelpCategoryRepository()->find(self::ABOUT_CATEGORY_ID);
+
+        return $this->render('AppBundle:Help:about.html.twig', [
             'mainCategory' => $mainCategory,
         ]);
     }
