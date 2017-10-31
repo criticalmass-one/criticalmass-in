@@ -55,11 +55,9 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
                 if ($event) {
                     $eventId = $event->getId();
 
-                    $link = 'https://www.facebook.com/events/' . $eventId;
+                    $link = sprintf('https://www.facebook.com/events/%s', $eventId);
 
                     $ride->setFacebook($link);
-
-                    $this->manager->persist($ride);
 
                     $output->writeln('Saved ' . $eventId . ' as ride id.');
                 } else {
