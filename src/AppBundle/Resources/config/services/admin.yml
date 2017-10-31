@@ -31,7 +31,7 @@ services:
 
     admin.help_category:
         class: AppBundle\Admin\HelpCategoryAdmin
-        arguments: [~, AppBundle\Entity\HelpAdmin, ~]
+        arguments: [~, AppBundle\Entity\HelpCategory, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Help, label: HelpCategory }
 
