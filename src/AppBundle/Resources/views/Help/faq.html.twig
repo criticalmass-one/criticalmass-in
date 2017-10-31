@@ -1,0 +1,57 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% macro renderCategory(category) %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                {{ category.title }}
+            </h3>
+
+            <p class="lead">
+                {{ category.intro }}
+            </p>
+
+            {% for item in category.items %}
+                <h4>
+                    {{ item.title }}
+                </h4>
+
+                {{ item.text|markdown }}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as categoryMacro %}
+
+{% block title %}Häufig gestellte Fragen zu criticalmass.in{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Häufig gestellte Fragen
+    </li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                {{ mainCategory.title }}
+            </h1>
+
+            {% if mainCategory.intro %}
+                <p class="lead">
+                    {{ mainCategory.intro }}
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            {{ categoryMacro.renderCategory(mainCategory) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
