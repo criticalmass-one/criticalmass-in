@@ -8,7 +8,7 @@ use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends AbstractFacebookApi
 {
-    public function getPagePropertiesForCity(City $city)
+    public function getPagePropertiesForCity(City $city): ?FacebookCityProperties
     {
         $pageId = $this->getCityPageId($city);
 
@@ -19,12 +19,10 @@ class FacebookPageApi extends AbstractFacebookApi
             'likes',
             'were_here_count',
             'general_info',
-            'website'
+            'website',
         ];
 
-        /**
-         * @var GraphPage $page
-         */
+        /** @var GraphPage $page */
         $page = $this->queryPage($pageId, $fields);
 
         if ($page) {
@@ -47,22 +45,13 @@ class FacebookPageApi extends AbstractFacebookApi
         return null;
     }
 
-    protected function queryPage($pageId, array $fields = [])
+    protected function queryPage($pageId, array $fields = []): ?GraphPage
     {
-        $fieldString = implode(',', $fields);
+        $queryString = sprintf('/%s?fields=%s', $pageId,  implode(',', $fields));
 
         try {
-            $response = $this->facebook->get('/' . $pageId . '?fields=' . $fieldString);
-        } catch (\Exception $e) {
-            return null;
-        }
+            $response = $this->facebook->get($queryString);
 
-        /**
-         * @var GraphPage $page
-         */
-        $page = null;
-
-        try {
             $page = $response->getGraphPage();
         } catch (\Exception $e) {
             return null;
