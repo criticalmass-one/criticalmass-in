@@ -16,7 +16,7 @@ class HelpController extends AbstractController
     {
         $mainCategory = $this->getHelpCategoryRepository()->find(self::HELP_CATEGORY_ID);
 
-        return $this->render('AppBundle:Help:help.html.twig', [
+        return $this->render('AppBundle:Help:two_columns.html.twig', [
             'mainCategory' => $mainCategory,
         ]);
     }
@@ -25,7 +25,7 @@ class HelpController extends AbstractController
     {
         $mainCategory = $this->getHelpCategoryRepository()->find(self::FAQ_CATEGORY_ID);
 
-        return $this->render('AppBundle:Help:faq.html.twig', [
+        return $this->render('AppBundle:Help:one_column.html.twig', [
             'mainCategory' => $mainCategory,
         ]);
     }
@@ -34,7 +34,7 @@ class HelpController extends AbstractController
     {
         $mainCategory = $this->getHelpCategoryRepository()->find(self::ABOUT_CATEGORY_ID);
 
-        return $this->render('AppBundle:Help:about.html.twig', [
+        return $this->render('AppBundle:Help:one_column.html.twig', [
             'mainCategory' => $mainCategory,
         ]);
     }
