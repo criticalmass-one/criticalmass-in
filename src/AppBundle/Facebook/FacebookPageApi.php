@@ -26,20 +26,7 @@ class FacebookPageApi extends AbstractFacebookApi
         $page = $this->queryPage($pageId, $fields);
 
         if ($page) {
-            $properties = new FacebookCityProperties();
-
-            $properties->setCity($city);
-
-            $properties
-                ->setName($page->getName())
-                ->setAbout($page->getField('about'))
-                ->setDescription($page->getField('description'))
-                ->setGeneralInfo($page->getField('general_info'))
-                ->setCheckinNumber($page->getField('were_here_count'))
-                ->setLikeNumber($page->getField('likes'))
-                ->setWebsite($page->getField('website'));
-
-            return $properties;
+            return $this->createCityProperties($city, $page);
         }
 
         return null;
@@ -58,5 +45,23 @@ class FacebookPageApi extends AbstractFacebookApi
         }
 
         return $page;
+    }
+
+    protected function createCityProperties(City $city, GraphPage $page): FacebookCityProperties
+    {
+        $properties = new FacebookCityProperties();
+
+        $properties->setCity($city);
+
+        $properties
+            ->setName($page->getName())
+            ->setAbout($page->getField('about'))
+            ->setDescription($page->getField('description'))
+            ->setGeneralInfo($page->getField('general_info'))
+            ->setCheckinNumber($page->getField('were_here_count'))
+            ->setLikeNumber($page->getField('likes'))
+            ->setWebsite($page->getField('website'));
+
+        return $properties;
     }
 }
