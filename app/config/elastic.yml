@@ -17,6 +17,28 @@ fos_elastica:
                             umlauts_filter:
                                 type: "asciifolding"
             types:
+                help_category:
+                    mappings:
+                        id: ~
+                        title: ~
+                        intro: ~
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\HelpCategory
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                help_item:
+                    mappings:
+                        id: ~
+                        title: ~
+                        text: ~
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\HelpItem
+                        provider: ~
+                        listener: ~
+                        finder: ~
                 ride:
                     mappings:
                         id: ~
