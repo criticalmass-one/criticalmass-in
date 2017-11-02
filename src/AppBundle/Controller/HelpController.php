@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HelpController extends AbstractController
 {
-    const HELP_CATEGORY_ID = 7;
-    const FAQ_CATEGORY_ID = 8;
-    const ABOUT_CATEGORY_ID = 9;
+    const HELP_CATEGORY_ID = 3;
+    const FAQ_CATEGORY_ID = 2;
+    const ABOUT_CATEGORY_ID = 1;
 
     public function helpAction(Request $request): Response
     {
