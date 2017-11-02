@@ -18,6 +18,12 @@ class HelpItem
     protected $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="helpItems")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
      * @ORM\ManyToOne(targetEntity="HelpCategory", inversedBy="items")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
@@ -42,6 +48,19 @@ class HelpItem
     {
         return $this->id;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): HelpItem
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 
     public function getTitle(): ?string
     {

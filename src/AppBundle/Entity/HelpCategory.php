@@ -23,6 +23,12 @@ class HelpCategory
     protected $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="helpCategories")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
      * @ORM\Column(type="string", length=16)
      */
     protected $language;
@@ -73,6 +79,19 @@ class HelpCategory
     {
         return $this->id;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): HelpCategory
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 
     public function getLanguage(): ?string
     {
