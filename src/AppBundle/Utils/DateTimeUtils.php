@@ -6,23 +6,30 @@ class DateTimeUtils
 {
     public static function getMonthStartDateTime(\DateTime $month)
     {
-        return new \DateTime($month->format('Y') . '-' . $month->format('m') . '-01 00:00:00');
+        $dateTime = sprintf('%d-%d-01 00:00:00', $month->format('Y'), $month->format('m'));
+
+        return new \DateTime($dateTime);
     }
 
     public static function getMonthEndDateTime(\DateTime $month)
     {
         $monthDays = $month->format('t');
+        $dateTime = sprintf('%d-%d-01 23:59:59', $month->format('Y'), $month->format('m'));
 
-        return new \DateTime($month->format('Y') . '-' . $month->format('m') . '-' . $monthDays . ' 23:59:59');
+        return new \DateTime($dateTime);
     }
 
     public static function getDayStartDateTime(\DateTime $day)
     {
-        return new \DateTime($day->format('Y') . '-' . $day->format('m') . '-' . $day->format('d') . ' 00:00:00');
+        $dateTime = sprintf('%d-%d-01 00:00:00', $day->format('Y'), $day->format('m'));
+
+        return new \DateTime($dateTime);
     }
 
     public function getDayEndDateTime(\DateTime $day)
     {
-        return new \DateTime($day->format('Y') . '-' . $day->format('m') . '-' . $day->format('d') . ' 23:59:59');
+        $dateTime = sprintf('%d-%d-%d 23:59:59', $day->format('Y'), $day->format('m'), $day->format('d'));
+
+        return new \DateTime($dateTime);
     }
 }
