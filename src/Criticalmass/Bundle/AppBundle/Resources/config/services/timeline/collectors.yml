@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+        tags:
+            - { name: timeline.collector }
+
+    Criticalmass\Bundle\AppBundle\Timeline\Collector\:
+        resource: '%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Timeline/Collector/*'

@@ -8,9 +8,9 @@ doctrine:
         password: %database_password%
         charset:  UTF8
         types:
-            datetime: AppBundle\DBAL\Type\UTCDateTimeType
-            date: AppBundle\DBAL\Type\UTCDateType
-            time: AppBundle\DBAL\Type\UTCTimeType
+            datetime: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCDateTimeType
+            date: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCDateType
+            time: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCTimeType
         mapping_types:
             enum: string
     orm:
@@ -18,10 +18,10 @@ doctrine:
         auto_mapping: true
         dql:
             datetime_functions:
-                day: AppBundle\DQL\DayFunction
-                date: AppBundle\DQL\DateFunction
-                month: AppBundle\DQL\MonthFunction
-                year: AppBundle\DQL\YearFunction
-                dayofweek: AppBundle\DQL\DayOfWeekFunction
+                day: Criticalmass\Bundle\AppBundle\DQL\DayFunction
+                date: Criticalmass\Bundle\AppBundle\DQL\DateFunction
+                month: Criticalmass\Bundle\AppBundle\DQL\MonthFunction
+                year: Criticalmass\Bundle\AppBundle\DQL\YearFunction
+                dayofweek: Criticalmass\Bundle\AppBundle\DQL\DayOfWeekFunction
             numeric_functions:
-                rand: AppBundle\DQL\RandFunction
+                rand: Criticalmass\Bundle\AppBundle\DQL\RandFunction
