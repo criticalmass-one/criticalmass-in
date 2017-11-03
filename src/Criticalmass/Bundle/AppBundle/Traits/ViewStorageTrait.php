@@ -14,7 +14,7 @@ trait ViewStorageTrait
     protected function countView(ViewableInterface $viewable)
     {
         /** @var ViewStorageCacheInterface $viewStorage */
-        $viewStorage = $this->get('caldera.view_storage.cache');
+        $viewStorage = $this->get('Criticalmass\Component\ViewStorage\ViewStorageCache');
 
         $viewStorage->countView($viewable);
     }
