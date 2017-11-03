@@ -3,11 +3,6 @@
     <imports>
         <import resource="services/manager.xml" />
         <import resource="services/factory.xml" />
+        <import resource="services/ride_generator.xml" />
     </imports>
-
-    <services>
-        <service id="app.city_cycle_ride_generator" class="Criticalmass\Bundle\AppBundle\CityCycleRideGenerator\CityCycleRideGenerator">
-            <argument type="service" id="doctrine" />
-        </service>
-    </services>
 </container>
