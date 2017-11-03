@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BlockedCityRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\BlockedCityRepository")
  * @ORM\Table(name="city_blocked")
  */
 class BlockedCity

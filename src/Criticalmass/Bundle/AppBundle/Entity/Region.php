@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="region")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\RegionRepository")
  */
 class Region implements RouteableInterface, AuditableInterface
 {

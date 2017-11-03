@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Table(name="photo")
  * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
 class Photo implements ViewableInterface, PhotoInterface, RouteableInterface

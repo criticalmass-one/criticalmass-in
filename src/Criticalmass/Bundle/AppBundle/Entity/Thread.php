@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="thread")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\ThreadRepository")
  */
 class Thread implements ViewableInterface, RouteableInterface
 {

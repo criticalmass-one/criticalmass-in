@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="ride")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RideRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable

@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")

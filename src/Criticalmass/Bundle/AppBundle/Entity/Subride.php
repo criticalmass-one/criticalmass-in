@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SubrideRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\SubrideRepository")
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */

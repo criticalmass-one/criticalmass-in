@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="weather")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WeatherRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\WeatherRepository")
  */
 class Weather
 {

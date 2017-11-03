@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\FacebookRidePropertiesRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\FacebookRidePropertiesRepository")
  * @ORM\Table(name="facebook_ride_properties")
  */
 class FacebookRideProperties

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="board")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BoardRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\BoardRepository")
  */
 class Board implements BoardInterface, RouteableInterface
 {

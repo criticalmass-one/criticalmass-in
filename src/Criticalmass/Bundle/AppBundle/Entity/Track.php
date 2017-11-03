@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TrackRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\TrackRepository")
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
