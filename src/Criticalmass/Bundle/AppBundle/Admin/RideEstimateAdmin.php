@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Admin;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Entity\User;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;

@@ -2,10 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Gps\GpxReader;
 
-use AppBundle\Entity\Position;
-use AppBundle\Gps\BoundingBox;
-use AppBundle\Gps\Coord;
-use AppBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
+use Criticalmass\Bundle\AppBundle\Entity\Position;
+use Criticalmass\Bundle\AppBundle\Gps\BoundingBox;
+use Criticalmass\Bundle\AppBundle\Gps\Coord;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Gps\GpxReader;
 
-use AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
 
 /**
  * @deprecated

@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException;
 
-use AppBundle\UploadValidator\UploadValidatorException\UploadValidatorException;
+use Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\UploadValidatorException;
 
 abstract class TrackValidatorException extends UploadValidatorException
 {

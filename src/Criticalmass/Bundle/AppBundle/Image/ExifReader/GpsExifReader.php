@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Image\ExifReader;
 
-use AppBundle\Gps\GpsConverter;
+use Criticalmass\Bundle\AppBundle\Gps\GpsConverter;
 
 /**
  * @deprecated

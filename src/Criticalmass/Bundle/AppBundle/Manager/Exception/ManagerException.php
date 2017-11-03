@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Manager\Exception;
 
-use AppBundle\Exception\CalderaException;
+use Criticalmass\Bundle\AppBundle\Exception\CalderaException;
 
 /**
  * @deprecated

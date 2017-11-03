@@ -3,12 +3,12 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Entity\Weather;
-use AppBundle\Traits\ViewStorageTrait;
-use AppBundle\Form\Type\RideEstimateType;
-use AppBundle\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Entity\Weather;
+use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
+use Criticalmass\Bundle\AppBundle\Form\Type\RideEstimateType;
+use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Manager\PostManager;
 
-use AppBundle\Manager\AbstractManager;
-use AppBundle\Repository\PostRepository;
+use Criticalmass\Bundle\AppBundle\Manager\AbstractManager;
+use Criticalmass\Bundle\AppBundle\Repository\PostRepository;
 
 /**
  * @deprecated

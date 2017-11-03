@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Entity\Track;
-use AppBundle\Timeline\Item\RideTrackItem;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {

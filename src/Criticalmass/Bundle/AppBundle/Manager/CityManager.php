@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Manager;
 
-use AppBundle\Model\CityListModel;
+use Criticalmass\Bundle\AppBundle\Model\CityListModel;
 
 class CityManager extends AbstractManager
 {

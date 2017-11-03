@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
+use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
+use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractController extends Controller

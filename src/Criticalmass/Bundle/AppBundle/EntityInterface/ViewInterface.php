@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\EntityInterface;
 
-use AppBundle\Entity\User;
+use Criticalmass\Bundle\AppBundle\Entity\User;
 
 interface ViewInterface
 {

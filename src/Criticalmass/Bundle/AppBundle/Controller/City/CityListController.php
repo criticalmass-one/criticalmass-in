@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Factory\CityListFactory;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Factory\CityListFactory;
 
 class CityListController extends AbstractController
 {

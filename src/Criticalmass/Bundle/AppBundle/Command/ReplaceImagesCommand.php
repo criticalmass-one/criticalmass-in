@@ -2,11 +2,11 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Entity\User;
-use AppBundle\Image\PhotoGps\PhotoGps;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Entity\User;
+use Criticalmass\Bundle\AppBundle\Image\PhotoGps\PhotoGps;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

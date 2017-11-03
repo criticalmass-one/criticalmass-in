@@ -2,11 +2,11 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\Entity\Ride;
-use AppBundle\Router\ObjectRouter;
-use AppBundle\Seo\SeoPage;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Router\ObjectRouter;
+use Criticalmass\Bundle\AppBundle\Seo\SeoPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

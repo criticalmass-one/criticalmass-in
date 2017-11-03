@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use AppBundle\EntityInterface\AuditableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;

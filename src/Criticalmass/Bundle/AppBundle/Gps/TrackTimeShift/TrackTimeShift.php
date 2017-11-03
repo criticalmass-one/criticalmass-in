@@ -2,10 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Gps\TrackTimeShift;
 
-use AppBundle\Entity\Position;
-use AppBundle\Entity\Track;
-use AppBundle\Gps\GpxExporter\GpxExporter;
-use AppBundle\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Entity\Position;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Gps\GpxExporter\GpxExporter;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
 
 /**
  * @deprecated

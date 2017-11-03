@@ -2,11 +2,11 @@
 
 namespace Criticalmass\Bundle\AppBundle\Image\PhotoGps;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Track;
-use AppBundle\Gps\GpxReader\TrackReader;
-use AppBundle\Image\ExifReader\DateTimeExifReader;
-use AppBundle\Image\ExifReader\GpsExifReader;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Image\ExifReader\DateTimeExifReader;
+use Criticalmass\Bundle\AppBundle\Image\ExifReader\GpsExifReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**

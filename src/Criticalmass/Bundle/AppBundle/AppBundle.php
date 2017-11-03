@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle;
 
-use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
+use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -2,12 +2,12 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Model\CreateEstimateModel;
-use AppBundle\Statistic\RideEstimate\RideEstimateService;
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Model\CreateEstimateModel;
+use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
+use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;

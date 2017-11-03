@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Liip\ImagineBundle\Controller\ImagineController;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

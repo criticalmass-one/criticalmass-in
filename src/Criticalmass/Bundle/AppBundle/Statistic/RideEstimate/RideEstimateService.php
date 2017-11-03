@@ -2,10 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Statistic\RideEstimate;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Entity\Track;
-use AppBundle\Gps\GpxReader\GpxReader;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxReader;
 use Doctrine\ORM\EntityManager;
 
 class RideEstimateService

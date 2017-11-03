@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

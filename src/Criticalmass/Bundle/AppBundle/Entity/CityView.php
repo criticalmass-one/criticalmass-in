@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use AppBundle\EntityInterface\ViewInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

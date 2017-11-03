@@ -2,14 +2,14 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
-use AppBundle\Gps\GpxReader\TrackReader;
-use AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use AppBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use AppBundle\Gps\TrackPolyline\TrackPolyline;
-use AppBundle\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Gps\TrackPolyline\TrackPolyline;
+use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 
 trait TrackHandlingTrait
 {

@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\ViewStorage;
 
-use AppBundle\Entity\User;
-use AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Bundle\AppBundle\Entity\User;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

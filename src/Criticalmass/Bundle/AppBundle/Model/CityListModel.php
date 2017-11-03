@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Model;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 
 class CityListModel
 {

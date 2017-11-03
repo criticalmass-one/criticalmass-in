@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\City;
-use AppBundle\Traits\ViewStorageTrait;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

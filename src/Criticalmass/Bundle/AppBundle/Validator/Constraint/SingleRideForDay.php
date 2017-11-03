@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Validator\Constraint;
 
-use AppBundle\Validator\SingleRideForDayValidator;
+use Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

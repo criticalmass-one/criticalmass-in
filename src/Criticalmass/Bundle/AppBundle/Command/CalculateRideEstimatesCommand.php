@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

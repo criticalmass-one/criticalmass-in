@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use AppBundle\Entity\FacebookCityProperties;
-use AppBundle\Entity\Region;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
+use Criticalmass\Bundle\AppBundle\Entity\Region;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

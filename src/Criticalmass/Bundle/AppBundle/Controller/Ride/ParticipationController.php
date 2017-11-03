@@ -3,9 +3,9 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Participation;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Participation;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class ParticipationController extends AbstractController

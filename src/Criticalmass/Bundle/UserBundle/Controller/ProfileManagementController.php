@@ -10,8 +10,8 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use UserBundle\Form\Type\UserEmailType;
-use UserBundle\Form\Type\UsernameType;
+use Criticalmass\Bundle\UserBundle\Form\Type\UserEmailType;
+use Criticalmass\Bundle\UserBundle\Form\Type\UsernameType;
 
 class ProfileManagementController extends Controller
 {

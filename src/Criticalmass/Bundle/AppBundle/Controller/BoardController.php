@@ -3,11 +3,11 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Post;
-use AppBundle\Entity\Thread;
-use AppBundle\EntityInterface\BoardInterface;
-use AppBundle\Traits\ViewStorageTrait;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Post;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
+use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
 use Malenki\Slug;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

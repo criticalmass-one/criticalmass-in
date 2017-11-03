@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Entity\Thread;
-use AppBundle\Timeline\Item\ThreadItem;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {

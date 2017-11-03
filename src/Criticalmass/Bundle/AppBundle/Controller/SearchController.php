@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Elastica\ResultSet;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

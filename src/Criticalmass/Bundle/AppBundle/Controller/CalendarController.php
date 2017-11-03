@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class CalendarController extends AbstractController

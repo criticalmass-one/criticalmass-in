@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Statistic;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\FacebookCityProperties;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class FacebookCityStatisticController extends AbstractController

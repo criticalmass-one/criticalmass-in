@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Gps\TrackPolyline;
 
-use AppBundle\Entity\Track;
-use AppBundle\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
 
 /**
  * @deprecated

@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
 
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 
 class RideCommentItem extends AbstractItem
 {

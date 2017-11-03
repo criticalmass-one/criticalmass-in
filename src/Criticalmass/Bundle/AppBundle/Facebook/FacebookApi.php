@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Facebook;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Facebook\Facebook;
 
 abstract class FacebookApi

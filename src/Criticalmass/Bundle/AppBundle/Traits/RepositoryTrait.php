@@ -2,24 +2,24 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use AppBundle\Repository\BlockedCityRepository;
-use AppBundle\Repository\BoardRepository;
-use AppBundle\Repository\CityCycleRepository;
-use AppBundle\Repository\CityRepository;
-use AppBundle\Repository\FacebookCityPropertiesRepository;
-use AppBundle\Repository\FacebookRidePropertiesRepository;
-use AppBundle\Repository\FrontpageTeaserRepository;
-use AppBundle\Repository\LocationRepository;
-use AppBundle\Repository\ParticipationRepository;
-use AppBundle\Repository\PhotoRepository;
-use AppBundle\Repository\PostRepository;
-use AppBundle\Repository\RegionRepository;
-use AppBundle\Repository\RideEstimateRepository;
-use AppBundle\Repository\RideRepository;
-use AppBundle\Repository\SubrideRepository;
-use AppBundle\Repository\ThreadRepository;
-use AppBundle\Repository\TrackRepository;
-use AppBundle\Repository\WeatherRepository;
+use Criticalmass\Bundle\AppBundle\Repository\BlockedCityRepository;
+use Criticalmass\Bundle\AppBundle\Repository\BoardRepository;
+use Criticalmass\Bundle\AppBundle\Repository\CityCycleRepository;
+use Criticalmass\Bundle\AppBundle\Repository\CityRepository;
+use Criticalmass\Bundle\AppBundle\Repository\FacebookCityPropertiesRepository;
+use Criticalmass\Bundle\AppBundle\Repository\FacebookRidePropertiesRepository;
+use Criticalmass\Bundle\AppBundle\Repository\FrontpageTeaserRepository;
+use Criticalmass\Bundle\AppBundle\Repository\LocationRepository;
+use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
+use Criticalmass\Bundle\AppBundle\Repository\PhotoRepository;
+use Criticalmass\Bundle\AppBundle\Repository\PostRepository;
+use Criticalmass\Bundle\AppBundle\Repository\RegionRepository;
+use Criticalmass\Bundle\AppBundle\Repository\RideEstimateRepository;
+use Criticalmass\Bundle\AppBundle\Repository\RideRepository;
+use Criticalmass\Bundle\AppBundle\Repository\SubrideRepository;
+use Criticalmass\Bundle\AppBundle\Repository\ThreadRepository;
+use Criticalmass\Bundle\AppBundle\Repository\TrackRepository;
+use Criticalmass\Bundle\AppBundle\Repository\WeatherRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 
 trait RepositoryTrait

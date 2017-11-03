@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Timeline\Item\RideParticipationEstimateItem;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\RideParticipationEstimateItem;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {

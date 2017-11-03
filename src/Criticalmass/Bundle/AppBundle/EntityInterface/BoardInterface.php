@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\EntityInterface;
 
-use AppBundle\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
 
 interface BoardInterface
 {

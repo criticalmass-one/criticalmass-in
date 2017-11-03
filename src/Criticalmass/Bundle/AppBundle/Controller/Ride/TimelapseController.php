@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Track;
-use AppBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

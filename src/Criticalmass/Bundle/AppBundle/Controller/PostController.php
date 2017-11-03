@@ -3,12 +3,12 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Post;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Thread;
-use AppBundle\EntityInterface\BoardInterface;
-use AppBundle\Form\Type\PostType;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Post;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
+use Criticalmass\Bundle\AppBundle\Form\Type\PostType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

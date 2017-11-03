@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Photo;
-use AppBundle\Form\Type\PhotoCoordType;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Form\Type\PhotoCoordType;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;

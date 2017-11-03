@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
 
-use AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\City;
 
 class CityEditItem extends AbstractItem
 {

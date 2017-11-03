@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use AppBundle\Entity\Location;
+use Criticalmass\Bundle\AppBundle\Entity\Location;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Timeline\Item\ItemInterface;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface

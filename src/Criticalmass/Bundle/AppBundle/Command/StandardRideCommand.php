@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;

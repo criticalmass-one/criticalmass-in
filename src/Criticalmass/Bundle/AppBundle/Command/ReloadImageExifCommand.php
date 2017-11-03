@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Image\ExifReader\DateTimeExifReader;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Image\ExifReader\DateTimeExifReader;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

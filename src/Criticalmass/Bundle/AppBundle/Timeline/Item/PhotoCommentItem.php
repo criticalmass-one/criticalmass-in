@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
 
-use AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
 
 class PhotoCommentItem extends AbstractItem
 {

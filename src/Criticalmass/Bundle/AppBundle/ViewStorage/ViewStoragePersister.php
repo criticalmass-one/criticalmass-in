@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\ViewStorage;
 
-use AppBundle\Entity\User;
-use AppBundle\EntityInterface\ViewableInterface;
-use AppBundle\EntityInterface\ViewInterface;
+use Criticalmass\Bundle\AppBundle\Entity\User;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;

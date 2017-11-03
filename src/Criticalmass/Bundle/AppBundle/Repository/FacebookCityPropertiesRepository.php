@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class FacebookCityPropertiesRepository extends EntityRepository

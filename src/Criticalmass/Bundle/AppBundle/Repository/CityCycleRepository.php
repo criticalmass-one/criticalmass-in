@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Region;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
 class CityCycleRepository extends EntityRepository

@@ -2,11 +2,11 @@
 
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Location;
-use AppBundle\Entity\Region;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
+use Criticalmass\Bundle\AppBundle\Entity\Location;
+use Criticalmass\Bundle\AppBundle\Entity\Region;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository

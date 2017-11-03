@@ -3,13 +3,13 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Traits\TrackHandlingTrait;
-use AppBundle\Gps\TrackTimeShift\TrackTimeShift;
-use AppBundle\UploadValidator\TrackValidator;
-use AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
+use Criticalmass\Bundle\AppBundle\Gps\TrackTimeShift\TrackTimeShift;
+use Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator;
+use Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;

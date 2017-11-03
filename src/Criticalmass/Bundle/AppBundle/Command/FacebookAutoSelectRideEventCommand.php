@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Facebook\FacebookEventRideApi;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Facebook\FacebookEventRideApi;
 use Facebook\Facebook;
 use Facebook\GraphNodes\GraphEvent;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

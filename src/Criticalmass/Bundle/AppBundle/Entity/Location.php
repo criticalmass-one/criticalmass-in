@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use AppBundle\EntityInterface\AuditableInterface;
-use AppBundle\EntityInterface\RouteableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

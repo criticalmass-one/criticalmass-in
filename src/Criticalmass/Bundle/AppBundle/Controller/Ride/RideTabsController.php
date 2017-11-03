@@ -2,11 +2,11 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Entity\Weather;
-use AppBundle\Form\Type\RideEstimateType;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Entity\Weather;
+use Criticalmass\Bundle\AppBundle\Form\Type\RideEstimateType;
 use Symfony\Component\HttpFoundation\Request;
 
 class RideTabsController extends AbstractController

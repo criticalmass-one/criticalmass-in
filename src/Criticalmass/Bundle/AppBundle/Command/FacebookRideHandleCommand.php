@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphEdge;

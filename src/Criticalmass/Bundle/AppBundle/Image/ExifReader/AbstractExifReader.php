@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Image\ExifReader;
 
-use AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**

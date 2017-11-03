@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Timeline\Item\RidePhotoItem;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\RidePhotoItem;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {

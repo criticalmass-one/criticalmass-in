@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {

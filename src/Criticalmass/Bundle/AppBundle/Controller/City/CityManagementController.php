@@ -3,11 +3,11 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\Entity\Region;
-use AppBundle\Form\Type\StandardCityType;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
+use Criticalmass\Bundle\AppBundle\Entity\Region;
+use Criticalmass\Bundle\AppBundle\Form\Type\StandardCityType;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

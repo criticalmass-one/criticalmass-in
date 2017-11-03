@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
 
-use AppBundle\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
 
 class ThreadItem extends AbstractItem
 {

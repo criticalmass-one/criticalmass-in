@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
-use AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 class BlockedCityRepository extends EntityRepository

@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use AppBundle\ViewStorage\ViewStoragePersisterInterface;
+use Criticalmass\Bundle\AppBundle\ViewStorage\ViewStoragePersisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

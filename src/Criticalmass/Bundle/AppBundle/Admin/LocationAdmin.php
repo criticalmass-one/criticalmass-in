@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Admin;
 
-use AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;

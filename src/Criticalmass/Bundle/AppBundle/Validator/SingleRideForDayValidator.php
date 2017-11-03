@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Validator;
 
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

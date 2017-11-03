@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\CityCycleRideGenerator;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class CityCycleRideGenerator

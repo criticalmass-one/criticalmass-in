@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Statistic\RideEstimate;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 
 class RideEstimateCalculator
 {

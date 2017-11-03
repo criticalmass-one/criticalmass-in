@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Facebook;
 
-use AppBundle\Entity\FacebookRideProperties;
-use AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;
 use Facebook\GraphNodes\GraphPage;

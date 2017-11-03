@@ -2,18 +2,18 @@
 
 namespace Criticalmass\Bundle\AppBundle\Router;
 
-use AppBundle\Entity\BlogPost;
-use AppBundle\Entity\Board;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Content;
-use AppBundle\Entity\Event;
-use AppBundle\Entity\Location;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Region;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Thread;
-use AppBundle\Entity\Track;
-use AppBundle\EntityInterface\RouteableInterface;
+use Criticalmass\Bundle\AppBundle\Entity\BlogPost;
+use Criticalmass\Bundle\AppBundle\Entity\Board;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Content;
+use Criticalmass\Bundle\AppBundle\Entity\Event;
+use Criticalmass\Bundle\AppBundle\Entity\Location;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Region;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 

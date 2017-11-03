@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Entity\Post;
-use AppBundle\Timeline\Item\ThreadPostItem;
+use Criticalmass\Bundle\AppBundle\Entity\Post;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\ThreadPostItem;
 
 class ThreadPostCollector extends AbstractTimelineCollector
 {

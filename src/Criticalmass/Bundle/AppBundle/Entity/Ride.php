@@ -2,19 +2,19 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use AppBundle\EntityInterface\AuditableInterface;
-use AppBundle\EntityInterface\ElasticSearchPinInterface;
-use AppBundle\EntityInterface\ParticipateableInterface;
-use AppBundle\EntityInterface\PhotoInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ParticipateableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Validator\Constraint as CriticalAssert;
+use Criticalmass\Bundle\AppBundle\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**

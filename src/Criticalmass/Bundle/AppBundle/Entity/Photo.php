@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use AppBundle\EntityInterface\PhotoInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;

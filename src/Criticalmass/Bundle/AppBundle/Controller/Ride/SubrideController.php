@@ -3,9 +3,9 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Subride;
-use AppBundle\Form\Type\SubrideType;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Subride;
+use Criticalmass\Bundle\AppBundle\Form\Type\SubrideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

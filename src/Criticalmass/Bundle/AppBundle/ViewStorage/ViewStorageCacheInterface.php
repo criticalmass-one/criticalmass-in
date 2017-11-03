@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\ViewStorage;
 
-use AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 
 interface ViewStorageCacheInterface
 {

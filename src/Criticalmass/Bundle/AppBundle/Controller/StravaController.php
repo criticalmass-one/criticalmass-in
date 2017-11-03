@@ -3,11 +3,11 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Position;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Traits\TrackHandlingTrait;
-use AppBundle\Gps\GpxExporter\GpxExporter;
+use Criticalmass\Bundle\AppBundle\Entity\Position;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
+use Criticalmass\Bundle\AppBundle\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;

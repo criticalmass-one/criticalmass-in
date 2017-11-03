@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxCoordLoop;
 
-use AppBundle\Gps\GpxReader\GpxReader;
+use Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxReader;
 
 /**
  * @deprecated

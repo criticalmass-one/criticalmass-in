@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
-use AppBundle\Entity\User;
-use AppBundle\HtmlMetadata\Metadata;
-use AppBundle\Parser\ParserInterface;
+use Criticalmass\Bundle\AppBundle\Entity\User;
+use Criticalmass\Bundle\AppBundle\HtmlMetadata\Metadata;
+use Criticalmass\Bundle\AppBundle\Parser\ParserInterface;
 use cebe\markdown\Parser;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;

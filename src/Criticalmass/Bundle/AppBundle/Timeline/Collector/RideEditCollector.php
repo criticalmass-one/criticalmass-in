@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Timeline\Item\RideEditItem;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Timeline\Item\RideEditItem;
 
 class RideEditCollector extends AbstractTimelineCollector
 {

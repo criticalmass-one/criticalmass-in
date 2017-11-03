@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Manager\ContentManager\Exception;
 
-use AppBundle\Manager\Exception\ManagerException;
+use Criticalmass\Bundle\AppBundle\Manager\Exception\ManagerException;
 
 /**
  * @deprecated

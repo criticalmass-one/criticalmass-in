@@ -3,9 +3,9 @@
 namespace Criticalmass\Bundle\AppBundle\Gps\GpxExporter;
 
 
-use AppBundle\Entity\CriticalmapsUser;
-use AppBundle\Entity\Position;
-use AppBundle\Entity\Ticket;
+use Criticalmass\Bundle\AppBundle\Entity\CriticalmapsUser;
+use Criticalmass\Bundle\AppBundle\Entity\Position;
+use Criticalmass\Bundle\AppBundle\Entity\Ticket;
 
 /**
  * @deprecated

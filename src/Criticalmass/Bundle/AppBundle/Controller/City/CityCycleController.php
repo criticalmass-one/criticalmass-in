@@ -2,10 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
-use AppBundle\Entity\CityCycle;
-use AppBundle\Form\Type\CityCycleType;
+use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
+use Criticalmass\Bundle\AppBundle\Form\Type\CityCycleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

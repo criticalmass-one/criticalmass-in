@@ -2,9 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Facebook;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
-use AppBundle\Utils\DateTimeUtils;
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 
