@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Gps\GpxReader\GpxCoordLoop;
+namespace Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxCoordLoop;
 
 use AppBundle\Gps\GpxReader\GpxReader;
 

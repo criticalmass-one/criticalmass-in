@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\ContentManager\Exception;
+namespace Criticalmass\Bundle\AppBundle\Manager\ContentManager\Exception;
 
 use AppBundle\Manager\Exception\ManagerException;
 

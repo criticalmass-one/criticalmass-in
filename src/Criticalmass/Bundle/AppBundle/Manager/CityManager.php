@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager;
+namespace Criticalmass\Bundle\AppBundle\Manager;
 
 use AppBundle\Model\CityListModel;
 

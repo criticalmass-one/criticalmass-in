@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EntityInterface;
+namespace Criticalmass\Bundle\AppBundle\EntityInterface;
 
 interface PhotoInterface
 {

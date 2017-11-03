@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\PostManager;
+namespace Criticalmass\Bundle\AppBundle\Manager\PostManager;
 
 use AppBundle\Manager\AbstractManager;
 use AppBundle\Repository\PostRepository;

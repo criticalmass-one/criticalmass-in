@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
 use AppBundle\Entity\CityCycle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

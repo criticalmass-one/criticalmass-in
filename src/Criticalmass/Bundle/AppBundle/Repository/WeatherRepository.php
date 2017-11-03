@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace Criticalmass\Bundle\AppBundle\Repository;
 
 use Application\Sonata\UserBundle\Entity\User;
 use AppBundle\Entity\Ride;

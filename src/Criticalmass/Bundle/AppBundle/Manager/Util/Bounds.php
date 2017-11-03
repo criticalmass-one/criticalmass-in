@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\Util;
+namespace Criticalmass\Bundle\AppBundle\Manager\Util;
 
 /**
  * @deprecated

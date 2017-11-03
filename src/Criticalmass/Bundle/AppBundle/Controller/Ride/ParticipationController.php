@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Ride;
+namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;

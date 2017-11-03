@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Timeline;
+namespace Criticalmass\Bundle\AppBundle\Timeline;
 
 use AppBundle\Timeline\Collector\AbstractTimelineCollector;
 use AppBundle\Timeline\Item\ItemInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Photo;
+namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;

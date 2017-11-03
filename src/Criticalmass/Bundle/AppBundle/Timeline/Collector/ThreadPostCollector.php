@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Timeline\Collector;
+namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
 use AppBundle\Entity\Post;
 use AppBundle\Timeline\Item\ThreadPostItem;

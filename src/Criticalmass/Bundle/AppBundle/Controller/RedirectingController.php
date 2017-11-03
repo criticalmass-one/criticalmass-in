@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

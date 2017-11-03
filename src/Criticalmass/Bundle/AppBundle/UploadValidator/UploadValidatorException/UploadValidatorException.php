@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\UploadValidator\UploadValidatorException;
+namespace Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException;
 
 use Exception;
 

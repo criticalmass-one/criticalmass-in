@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Traits;
+namespace Criticalmass\Bundle\AppBundle\Traits;
 
 use AppBundle\Entity\BlogPost;
 use AppBundle\Entity\City;

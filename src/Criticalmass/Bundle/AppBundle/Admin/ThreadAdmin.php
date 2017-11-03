@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Admin;
+namespace Criticalmass\Bundle\AppBundle\Admin;
 
 use AppBundle\Entity\Board;
 use AppBundle\Entity\City;

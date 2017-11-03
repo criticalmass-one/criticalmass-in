@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\City;
+namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;

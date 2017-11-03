@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Facebook;
+namespace Criticalmass\Bundle\AppBundle\Facebook;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\FacebookCityProperties;

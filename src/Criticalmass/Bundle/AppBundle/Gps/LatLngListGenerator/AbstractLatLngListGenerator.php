@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Gps\LatLngListGenerator;
+namespace Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator;
 
 use AppBundle\Entity\Track;
 use AppBundle\Gps\GpxReader\TrackReader;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Image\PhotoGps;
+namespace Criticalmass\Bundle\AppBundle\Image\PhotoGps;
 
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Track;

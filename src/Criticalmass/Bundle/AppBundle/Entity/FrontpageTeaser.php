@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Criticalmass\Bundle\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

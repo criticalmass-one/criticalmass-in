@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Router;
+namespace Criticalmass\Bundle\AppBundle\Router;
 
 use AppBundle\Entity\BlogPost;
 use AppBundle\Entity\Board;

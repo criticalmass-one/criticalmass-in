@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\DBAL\Type;
+namespace Criticalmass\Bundle\AppBundle\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;

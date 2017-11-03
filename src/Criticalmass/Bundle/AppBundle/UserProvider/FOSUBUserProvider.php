@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\UserProvider;
+namespace Criticalmass\Bundle\AppBundle\UserProvider;
 
 use AppBundle\Entity\User;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\CityCycleRideGenerator;
+namespace Criticalmass\Bundle\AppBundle\CityCycleRideGenerator;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\CityCycle;

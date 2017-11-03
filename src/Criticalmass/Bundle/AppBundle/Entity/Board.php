@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Criticalmass\Bundle\AppBundle\Entity;
 
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\RouteableInterface;

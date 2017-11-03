@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Photo;
+namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
 
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\City;

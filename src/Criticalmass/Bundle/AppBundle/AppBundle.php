@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle;
+namespace Criticalmass\Bundle\AppBundle;
 
 use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

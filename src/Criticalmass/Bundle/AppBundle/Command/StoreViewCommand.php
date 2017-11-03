@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command;
 
 use AppBundle\ViewStorage\ViewStoragePersisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

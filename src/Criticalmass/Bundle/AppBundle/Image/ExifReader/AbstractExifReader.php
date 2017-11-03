@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Image\ExifReader;
+namespace Criticalmass\Bundle\AppBundle\Image\ExifReader;
 
 use AppBundle\Entity\Photo;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;

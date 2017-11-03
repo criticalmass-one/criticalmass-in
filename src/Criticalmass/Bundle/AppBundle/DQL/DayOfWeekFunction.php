@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\DQL;
+namespace Criticalmass\Bundle\AppBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Lexer;

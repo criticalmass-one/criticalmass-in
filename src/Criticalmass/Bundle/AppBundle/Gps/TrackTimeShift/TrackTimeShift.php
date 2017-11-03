@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Gps\TrackTimeShift;
+namespace Criticalmass\Bundle\AppBundle\Gps\TrackTimeShift;
 
 use AppBundle\Entity\Position;
 use AppBundle\Entity\Track;

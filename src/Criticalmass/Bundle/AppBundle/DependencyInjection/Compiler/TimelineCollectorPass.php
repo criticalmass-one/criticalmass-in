@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\DependencyInjection\Compiler;
+namespace Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler;
 
 use AppBundle\Timeline\CachedTimeline;
 use AppBundle\Timeline\Timeline;

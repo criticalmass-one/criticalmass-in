@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Controller;
+namespace Criticalmass\Bundle\UserBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;

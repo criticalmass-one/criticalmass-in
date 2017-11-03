@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\ContentManager;
+namespace Criticalmass\Bundle\AppBundle\Manager\ContentManager;
 
 use AppBundle\Entity\Content;
 use AppBundle\Manager\AbstractManager;

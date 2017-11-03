@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Model;
+namespace Criticalmass\Bundle\AppBundle\Model;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;

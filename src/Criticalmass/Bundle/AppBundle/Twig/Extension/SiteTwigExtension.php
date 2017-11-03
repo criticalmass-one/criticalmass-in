@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Twig\Extension;
+namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
 use AppBundle\Entity\User;
 use AppBundle\HtmlMetadata\Metadata;

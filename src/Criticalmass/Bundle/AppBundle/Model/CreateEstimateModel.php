@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Model;
+namespace Criticalmass\Bundle\AppBundle\Model;
 
 use JMS\Serializer\Annotation as JMS;
 

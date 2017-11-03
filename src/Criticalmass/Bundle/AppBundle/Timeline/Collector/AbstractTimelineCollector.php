@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Timeline\Collector;
+namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
 
 use AppBundle\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Flow;
+namespace Criticalmass\Bundle\AppBundle\Form\Flow;
 
 use Craue\FormFlowBundle\Form\FormFlow;
 

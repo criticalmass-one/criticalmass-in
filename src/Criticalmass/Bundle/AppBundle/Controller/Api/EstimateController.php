@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;

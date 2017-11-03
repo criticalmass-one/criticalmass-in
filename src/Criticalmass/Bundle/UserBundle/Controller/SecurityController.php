@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Controller;
+namespace Criticalmass\Bundle\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

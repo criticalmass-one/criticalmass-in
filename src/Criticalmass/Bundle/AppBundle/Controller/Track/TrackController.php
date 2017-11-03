@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Track;
+namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;

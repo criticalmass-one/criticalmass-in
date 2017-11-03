@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Gps\DistanceCalculator;
+namespace Criticalmass\Bundle\AppBundle\Gps\DistanceCalculator;
 
 /**
  * @deprecated

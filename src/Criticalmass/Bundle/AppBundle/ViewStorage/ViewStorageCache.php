@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\ViewStorage;
+namespace Criticalmass\Bundle\AppBundle\ViewStorage;
 
 use AppBundle\Entity\User;
 use AppBundle\EntityInterface\ViewableInterface;

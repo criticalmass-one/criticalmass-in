@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Validator;
+namespace Criticalmass\Bundle\AppBundle\Validator;
 
 use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityManager;

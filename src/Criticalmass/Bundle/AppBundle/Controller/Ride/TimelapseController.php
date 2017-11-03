@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Ride;
+namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Track;

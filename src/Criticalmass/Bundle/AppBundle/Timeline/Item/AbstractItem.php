@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Timeline\Item;
+namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
 
 abstract class AbstractItem implements ItemInterface
 {

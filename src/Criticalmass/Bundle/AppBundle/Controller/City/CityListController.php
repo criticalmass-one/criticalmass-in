@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\City;
+namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use AppBundle\Controller\AbstractController;
 use AppBundle\Factory\CityListFactory;

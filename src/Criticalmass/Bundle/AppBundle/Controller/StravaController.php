@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Position;

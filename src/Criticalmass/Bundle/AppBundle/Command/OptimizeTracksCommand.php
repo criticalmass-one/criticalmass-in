@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command;
 
 use AppBundle\Entity\Track;
 use AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator;

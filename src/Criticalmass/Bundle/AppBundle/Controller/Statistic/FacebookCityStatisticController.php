@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Statistic;
+namespace Criticalmass\Bundle\AppBundle\Controller\Statistic;
 
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\FacebookCityProperties;

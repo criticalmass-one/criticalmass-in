@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\Exception;
+namespace Criticalmass\Bundle\AppBundle\Manager\Exception;
 
 use AppBundle\Exception\CalderaException;
 

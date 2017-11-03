@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace Criticalmass\Bundle\AppBundle\Repository;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\CityCycle;
