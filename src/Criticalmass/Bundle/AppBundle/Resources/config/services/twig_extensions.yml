@@ -1,6 +1,6 @@
 services:
     caldera_criticalmass.twig.extension:
-        class: AppBundle\Twig\Extension\SiteTwigExtension
+        class: Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension
         arguments:
             - '@translator'
             - '@router'
@@ -9,7 +9,7 @@ services:
             - { name: twig.extension }
 
     caldera_criticalmass.twig.router_extension:
-        class: AppBundle\Twig\Extension\RouterTwigExtension
+        class: Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension
         arguments:
             - '@caldera.criticalmass.routing.object_router'
         tags:

@@ -6,7 +6,7 @@
     </imports>
 
     <services>
-        <service id="app.city_cycle_ride_generator" class="AppBundle\CityCycleRideGenerator\CityCycleRideGenerator">
+        <service id="app.city_cycle_ride_generator" class="Criticalmass\Bundle\AppBundle\CityCycleRideGenerator\CityCycleRideGenerator">
             <argument type="service" id="doctrine" />
         </service>
     </services>
