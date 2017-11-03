@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
+namespace Criticalmass\Component\Timeline\Item;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\Entity\Ride;
 
 class RideCommentItem extends AbstractItem
 {

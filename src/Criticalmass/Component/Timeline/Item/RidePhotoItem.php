@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
+namespace Criticalmass\Component\Timeline\Item;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\Entity\City;
+use Criticalmass\Component\Entity\Photo;
+use Criticalmass\Component\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {

@@ -6,5 +6,5 @@ services:
         tags:
             - { name: timeline.collector }
 
-    Criticalmass\Bundle\AppBundle\Timeline\Collector\:
-        resource: '%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Timeline/Collector/*'
+    Criticalmass\Component\Timeline\Collector\:
+        resource: '%kernel.project_dir%/src/Criticalmass/Component/Timeline/Collector/*'
