@@ -5,7 +5,7 @@ namespace Criticalmass\Component\RideGenerator\RideGenerator;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
-abstract class AbstractRideGenerator
+abstract class AbstractRideGenerator implements RideGeneratorInterface
 {
     /** @var int year */
     protected $year;
@@ -33,21 +33,21 @@ abstract class AbstractRideGenerator
         $this->doctrine = $doctrine;
     }
 
-    public function setCity(City $city): AbstractRideGenerator
+    public function setCity(City $city): RideGeneratorInterface
     {
         $this->city = $city;
 
         return $this;
     }
 
-    public function setYear(int $year): AbstractRideGenerator
+    public function setYear(int $year): RideGeneratorInterface
     {
         $this->year = $year;
 
         return $this;
     }
 
-    public function setMonth(int $month): AbstractRideGenerator
+    public function setMonth(int $month): RideGeneratorInterface
     {
         $this->month = $month;
 
@@ -59,5 +59,5 @@ abstract class AbstractRideGenerator
         return $this->rideList;
     }
 
-    public abstract function execute(): AbstractRideGenerator;
+    public abstract function execute(): RideGeneratorInterface;
 }

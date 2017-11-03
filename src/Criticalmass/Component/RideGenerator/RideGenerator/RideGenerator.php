@@ -7,7 +7,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Ride;
 
 class RideGenerator extends AbstractRideGenerator
 {
-    public function execute(): AbstractRideGenerator
+    public function execute(): RideGeneratorInterface
     {
         $this->rideList = [];
 
