@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\CityCycleRideGenerator;
+namespace Criticalmass\Component\RideGenerator\RideGenerator;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
-class CityCycleRideGenerator
+class RideGenerator
 {
     /** @var int year */
     protected $year;
@@ -35,28 +35,28 @@ class CityCycleRideGenerator
         $this->doctrine = $doctrine;
     }
 
-    public function setCity(City $city): CityCycleRideGenerator
+    public function setCity(City $city): RideGenerator
     {
         $this->city = $city;
 
         return $this;
     }
 
-    public function setYear(int $year): CityCycleRideGenerator
+    public function setYear(int $year): RideGenerator
     {
         $this->year = $year;
 
         return $this;
     }
 
-    public function setMonth(int $month): CityCycleRideGenerator
+    public function setMonth(int $month): RideGenerator
     {
         $this->month = $month;
 
         return $this;
     }
 
-    public function execute(): CityCycleRideGenerator
+    public function execute(): RideGenerator
     {
         $this->rideList = [];
 
