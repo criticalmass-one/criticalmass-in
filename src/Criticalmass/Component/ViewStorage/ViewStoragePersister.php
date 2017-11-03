@@ -99,7 +99,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getView(string $className): ViewInterface
     {
-        $viewClassName = 'AppBundle\Entity\\' . $className . 'View';
+        $viewClassName = 'Criticalmass\Bundle\AppBundle\Entity\\' . $className . 'View';
 
         $view = new $viewClassName;
 
