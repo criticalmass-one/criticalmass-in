@@ -2,15 +2,12 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use Criticalmass\Bundle\AppBundle\Entity\BlogPost;
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Content;
-use Criticalmass\Bundle\AppBundle\Entity\Event;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
-use Criticalmass\Bundle\AppBundle\ViewStorage\ViewStorageCacheInterface;
+use Criticalmass\Component\ViewStorage\ViewStorageCacheInterface;
 
 trait ViewStorageTrait
 {
