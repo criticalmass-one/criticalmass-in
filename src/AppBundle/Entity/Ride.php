@@ -88,7 +88,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="datetime")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @JMS\Type("DateTime<U>")
+     * @JMS\Type("DateTime<'U'>")
      */
     protected $dateTime;
 
