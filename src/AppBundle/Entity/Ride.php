@@ -88,7 +88,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="datetime")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @JMS\Type("DateTime")
+     * @JMS\Type("DateTime<U>")
      */
     protected $dateTime;
 
@@ -505,16 +505,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("timestamp")
-     * @JMS\Type("integer")
-     */
-    public function getTimestamp(): int
-    {
-        return $this->dateTime->format('U');
     }
 
     /** @deprecated */
