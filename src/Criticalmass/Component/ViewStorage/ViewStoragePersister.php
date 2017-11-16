@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\ViewStorage;
+namespace Criticalmass\Component\ViewStorage;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
@@ -99,7 +99,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getView(string $className): ViewInterface
     {
-        $viewClassName = 'AppBundle\Entity\\' . $className . 'View';
+        $viewClassName = 'Criticalmass\Bundle\AppBundle\Entity\\' . $className . 'View';
 
         $view = new $viewClassName;
 
