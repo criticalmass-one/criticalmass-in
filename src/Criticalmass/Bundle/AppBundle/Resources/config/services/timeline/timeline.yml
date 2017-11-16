@@ -7,6 +7,6 @@ services:
         # bind:
         #    $ttl: '%timeline.ttl%'
 
-    Criticalmass\Bundle\AppBundle\Timeline\Timeline: ~
-    Criticalmass\Bundle\AppBundle\Timeline\CachedTimeline:
+    Criticalmass\Component\Timeline\Timeline: ~
+    Criticalmass\Component\Timeline\CachedTimeline:
         arguments: ['@doctrine', '@templating', '%timeline.ttl%']

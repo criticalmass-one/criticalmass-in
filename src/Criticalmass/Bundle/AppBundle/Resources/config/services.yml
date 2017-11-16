@@ -13,14 +13,6 @@ services:
         class: Criticalmass\Bundle\AppBundle\Manager\PostManager\PostManager
         arguments: ['@doctrine']
 
-    caldera.view_storage.cache:
-        class: Criticalmass\Bundle\AppBundle\ViewStorage\ViewStorageCache
-        arguments: ['@security.token_storage']
-
-    caldera.view_storage.persister:
-        class: Criticalmass\Bundle\AppBundle\ViewStorage\ViewStoragePersister
-        arguments: ['@doctrine']
-
     caldera.criticalmass.routing.object_router:
         class: Criticalmass\Bundle\AppBundle\Router\ObjectRouter
         arguments:

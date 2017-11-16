@@ -45,7 +45,7 @@ class StandardRideCommand extends ContainerAwareCommand
         /** @var int $month */
         $month = $input->getArgument('month');
 
-        $generator = $this->getContainer()->get('app.city_cycle_ride_generator');
+        $generator = $this->getContainer()->get('Criticalmass\Component\RideGenerator\RideGenerator\RideGenerator');
         $generator
             ->setMonth($month)
             ->setYear($year)

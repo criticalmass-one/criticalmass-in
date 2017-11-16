@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use Criticalmass\Bundle\AppBundle\ViewStorage\ViewStoragePersisterInterface;
+use Criticalmass\Component\ViewStorage\ViewStoragePersisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,7 +24,7 @@ class StoreViewCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var ViewStoragePersisterInterface $persister */
-        $persister = $this->getContainer()->get('caldera.view_storage.persister');
+        $persister = $this->getContainer()->get('Criticalmass\Component\ViewStorage\ViewStoragePersister');
 
         $persister
             ->setOutput($output)
