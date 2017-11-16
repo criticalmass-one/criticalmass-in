@@ -1,43 +1,43 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline\Item;
+namespace Criticalmass\Component\Timeline\Item;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Component\Entity\Ride;
 
-class PhotoCommentItem extends AbstractItem
+class RideCommentItem extends AbstractItem
 {
     /** @var string $username */
-    public $username;
+    protected $username;
 
-    /** @var Photo $photo */
-    public $photo;
+    /* @var Ride $ride */
+    protected $ride;
 
     /** @var string $rideTitle */
-    public $rideTitle;
+    protected $rideTitle;
 
     /** @var string $text */
-    public $text;
+    protected $text;
 
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): PhotoCommentItem
+    public function setUsername(string $username): RideCommentItem
     {
         $this->username = $username;
 
         return $this;
     }
 
-    public function getPhoto(): Photo
+    public function getRide(): Ride
     {
-        return $this->photo;
+        return $this->ride;
     }
 
-    public function setPhoto(Photo $photo): PhotoCommentItem
+    public function setRide(Ride $ride): RideCommentItem
     {
-        $this->photo = $photo;
+        $this->ride = $ride;
 
         return $this;
     }
@@ -47,7 +47,7 @@ class PhotoCommentItem extends AbstractItem
         return $this->rideTitle;
     }
 
-    public function setRideTitle(string $rideTitle): PhotoCommentItem
+    public function setRideTitle(string $rideTitle): RideCommentItem
     {
         $this->rideTitle = $rideTitle;
 
@@ -59,7 +59,7 @@ class PhotoCommentItem extends AbstractItem
         return $this->text;
     }
 
-    public function setText(string $text): PhotoCommentItem
+    public function setText(string $text): RideCommentItem
     {
         $this->text = $text;
 

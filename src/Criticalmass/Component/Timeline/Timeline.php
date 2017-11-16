@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline;
+namespace Criticalmass\Component\Timeline;
 
-use Criticalmass\Bundle\AppBundle\Timeline\Collector\AbstractTimelineCollector;
-use Criticalmass\Bundle\AppBundle\Timeline\Item\ItemInterface;
+use Criticalmass\Component\Timeline\Collector\AbstractTimelineCollector;
+use Criticalmass\Component\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Twig\TwigEngine;

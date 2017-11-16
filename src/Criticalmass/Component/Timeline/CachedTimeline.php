@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline;
+namespace Criticalmass\Component\Timeline;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;

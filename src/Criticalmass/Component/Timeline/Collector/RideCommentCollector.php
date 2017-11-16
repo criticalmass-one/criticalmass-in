@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
+namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Bundle\AppBundle\Entity\Post;
-use Criticalmass\Bundle\AppBundle\Timeline\Item\ThreadPostItem;
+use Criticalmass\Component\Entity\Post;
+use Criticalmass\Component\Timeline\Item\RideCommentItem;
 
-class ThreadPostCollector extends AbstractTimelineCollector
+class RideCommentCollector extends AbstractTimelineCollector
 {
     protected $entityClass = Post::class;
 
@@ -15,11 +15,11 @@ class ThreadPostCollector extends AbstractTimelineCollector
          * @var Post $threadEntity
          */
         foreach ($groupedEntities as $postEntity) {
-            $item = new ThreadPostItem();
+            $item = new RideCommentItem();
 
             $item->setUsername($postEntity->getUser()->getUsername());
-            $item->setThreadTitle($postEntity->getThread()->getTitle());
-            $item->setThread($postEntity->getThread());
+            $item->setRideTitle($postEntity->getRide()->getFancyTitle());
+            $item->setRide($postEntity->getRide());
             $item->setText($postEntity->getMessage());
             $item->setDateTime($postEntity->getDateTime());
 

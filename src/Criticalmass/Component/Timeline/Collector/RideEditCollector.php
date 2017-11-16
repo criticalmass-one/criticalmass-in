@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
+namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Timeline\Item\RideEditItem;
+use Criticalmass\Component\Entity\Ride;
+use Criticalmass\Component\Timeline\Item\RideEditItem;
 
 class RideEditCollector extends AbstractTimelineCollector
 {

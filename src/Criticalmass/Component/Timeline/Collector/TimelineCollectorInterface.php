@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Timeline\Collector;
+namespace Criticalmass\Component\Timeline\Collector;
 
 interface TimelineCollectorInterface
 {
