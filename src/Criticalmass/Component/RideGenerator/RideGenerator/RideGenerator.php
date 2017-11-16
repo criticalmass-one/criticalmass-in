@@ -1,62 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\CityCycleRideGenerator;
+namespace Criticalmass\Component\RideGenerator\RideGenerator;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
-class CityCycleRideGenerator
+class RideGenerator extends AbstractRideGenerator
 {
-    /** @var int year */
-    protected $year;
-
-    /** @var int $month */
-    protected $month;
-
-    /** @var \DateTime $endDateTime */
-    protected $startDateTime;
-
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime;
-
-    /** @var City $city */
-    protected $city;
-
-    /** @var array $rideList */
-    protected $rideList = [];
-
-    /** @var Doctrine $doctrine */
-    protected $doctrine;
-
-    public function __construct(Doctrine $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
-
-    public function setCity(City $city): CityCycleRideGenerator
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function setYear(int $year): CityCycleRideGenerator
-    {
-        $this->year = $year;
-
-        return $this;
-    }
-
-    public function setMonth(int $month): CityCycleRideGenerator
-    {
-        $this->month = $month;
-
-        return $this;
-    }
-
-    public function execute(): CityCycleRideGenerator
+    public function execute(): RideGeneratorInterface
     {
         $this->rideList = [];
 
@@ -89,11 +40,6 @@ class CityCycleRideGenerator
         }
 
         return $this;
-    }
-
-    public function getList(): array
-    {
-        return $this->rideList;
     }
 
     protected function findCylces(): array
