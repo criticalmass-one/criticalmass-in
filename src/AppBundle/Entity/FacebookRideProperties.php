@@ -18,7 +18,7 @@ class FacebookRideProperties
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="facebookProperties")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
@@ -94,7 +94,7 @@ class FacebookRideProperties
     protected $longitude;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 

@@ -21,7 +21,7 @@ class Board implements BoardInterface, RouteableInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $title;
@@ -32,33 +32,33 @@ class Board implements BoardInterface, RouteableInterface
     protected $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $threadNumber = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $postNumber = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="Thread")
-     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Thread")
+     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id", unique=true)
      */
     protected $lastThread;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $position = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = true;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $slug;
 

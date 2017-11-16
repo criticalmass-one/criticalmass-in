@@ -18,23 +18,23 @@ class BlockedCity
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="blocked_cities", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $blockStart;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $blockEnd;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -54,12 +54,12 @@ class BlockedCity
     protected $twitter;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $photosLink;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $rideListLink;
 

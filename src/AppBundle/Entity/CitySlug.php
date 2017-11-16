@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="cityslug")
  * @JMS\ExclusionPolicy("all")
  */
@@ -22,14 +22,14 @@ class CitySlug
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="slugs")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;

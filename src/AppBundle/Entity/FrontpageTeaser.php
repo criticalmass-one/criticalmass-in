@@ -23,13 +23,13 @@ class FrontpageTeaser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="frontpageTeasers")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="frontpageTeasers")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
@@ -55,7 +55,7 @@ class FrontpageTeaser
     protected $imageName;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $position = 0;
 
@@ -80,8 +80,8 @@ class FrontpageTeaser
     protected $validUntil;
 
     /**
-     * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
-     * @ORM\OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FrontpageTeaserButton", mappedBy="frontpageTeaser")
+     * @ORM\OrderBy({"position":"ASC"})
      */
     protected $buttons;
 

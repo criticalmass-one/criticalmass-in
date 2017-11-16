@@ -27,19 +27,19 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
@@ -63,28 +63,28 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
     protected $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $views = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = true;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $deleted = false;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
     protected $creationDateTime;
@@ -97,7 +97,7 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
     protected $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */
@@ -111,14 +111,14 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
     protected $backupName;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
      */
     protected $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
+     * 
      */
     protected $featuredRides;
 

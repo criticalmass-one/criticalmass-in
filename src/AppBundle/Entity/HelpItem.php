@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="help_item")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class HelpItem
 {
@@ -18,13 +18,13 @@ class HelpItem
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="helpItems")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelpCategory", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HelpCategory", inversedBy="items")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
@@ -40,7 +40,7 @@ class HelpItem
     protected $text;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $position = 0;
 

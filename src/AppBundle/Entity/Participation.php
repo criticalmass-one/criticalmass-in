@@ -18,36 +18,41 @@ class Participation
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="participations")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="participations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $goingYes = true;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $goingMaybe = true;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $goingNo = true;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $blafeld;
 
     public function __construct()
     {

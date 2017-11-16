@@ -20,13 +20,13 @@ class Location implements RouteableInterface, AuditableInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $slug;
 
@@ -41,7 +41,7 @@ class Location implements RouteableInterface, AuditableInterface
     protected $longitude;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $title;
 

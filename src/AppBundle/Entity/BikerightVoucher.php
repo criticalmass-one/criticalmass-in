@@ -18,18 +18,18 @@ class BikerightVoucher
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="bikerightVouchers")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="bikerightVouchers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\Column(type="string", length=16)
+     * @ORM\Column(type="string", length=16, nullable=true)
      */
     protected $code;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $priority;
 

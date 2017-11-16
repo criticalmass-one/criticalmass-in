@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="thread_view")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class ThreadView implements ViewInterface
 {
@@ -19,19 +19,19 @@ class ThreadView implements ViewInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="thread_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected $thread;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 

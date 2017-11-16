@@ -21,42 +21,42 @@ class Post
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="parent")
      */
     protected $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="posts")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="posts")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Photo")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
@@ -72,18 +72,18 @@ class Post
     protected $longitude;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $message;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = true;
 

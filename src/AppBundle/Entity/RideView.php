@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="ride_view")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class RideView implements ViewInterface
 {
@@ -19,19 +19,19 @@ class RideView implements ViewInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="ride_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="ride_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 

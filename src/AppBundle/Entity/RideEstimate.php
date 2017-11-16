@@ -19,20 +19,20 @@ class RideEstimate
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="estimates", fetch="LAZY")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"}, fetch="LAZY")
-     * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
+     * 
+     * 
      */
     protected $track;
 
@@ -65,7 +65,7 @@ class RideEstimate
     protected $estimatedDuration;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 

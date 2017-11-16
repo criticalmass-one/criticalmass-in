@@ -35,88 +35,88 @@ class User extends BaseUser
     protected $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Track", mappedBy="user", cascade={"persist","remove"})
      */
     protected $tracks;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $colorRed = 0;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $colorGreen = 0;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $colorBlue = 0;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" = 0})
+     * @ORM\Column(type="boolean", nullable=true, options={"default":0})
      */
     protected $blurGalleries = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Participation", mappedBy="user")
      */
     protected $participations;
 
     /**
-     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BikerightVoucher", mappedBy="user")
      */
     protected $bikerightVouchers;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
     /**
-     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_id")
      */
     protected $facebookId;
 
     /**
-     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_access_token")
      */
     protected $facebookAccessToken;
 
     /**
-     * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="strava_id")
      */
     protected $stravaId;
 
     /**
-     * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="strava_access_token")
      */
     protected $stravaAccessToken;
 
     /**
-     * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="runkeeper_id")
      */
     protected $runkeeperId;
 
     /**
-     * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="runkeeper_access_token")
      */
     protected $runkeeperAccessToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
+     * 
      */
     protected $cycles;
 
@@ -236,7 +236,7 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\PrePersist()
+     * @ORM\PrePersist
      */
     public function prePersist(): User
     {
@@ -247,7 +247,7 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\PreUpdate()
+     * @ORM\PreUpdate
      */
     public function preUpdate(): User
     {

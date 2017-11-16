@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="help_category")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class HelpCategory
 {
@@ -23,13 +23,13 @@ class HelpCategory
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="helpCategories")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\Column(type="string", length=16)
+     * @ORM\Column(type="string", length=16, nullable=true)
      */
     protected $language;
 
@@ -49,7 +49,7 @@ class HelpCategory
     protected $side;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $position = 0;
 
@@ -64,7 +64,7 @@ class HelpCategory
     protected $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelpCategory", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HelpCategory", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;

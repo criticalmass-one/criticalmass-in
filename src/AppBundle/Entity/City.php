@@ -34,19 +34,19 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     protected $region;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CitySlug")
      * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -54,7 +54,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $mainSlug;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\SerializedName("name")
@@ -63,7 +63,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $city;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -102,48 +102,48 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $twitter;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected $latitude = 0;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected $longitude = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = true;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ride", mappedBy="city")
      */
     protected $rides;
 
     /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="city")
      */
     protected $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="city")
      */
     protected $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CitySlug", mappedBy="city", cascade={"persist","remove"})
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected $slugs;
 
     /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CityCycle", mappedBy="city", cascade={"persist","remove"})
      */
     protected $cycles;
 
@@ -195,12 +195,12 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enableBoard = false;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      * @JMS\Expose
@@ -209,43 +209,43 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $timezone;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected $threadNumber = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected $postNumber = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected $colorRed = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected $colorGreen = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected $colorBlue = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="cities")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
      * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
      */
     protected $lastThread;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $views = 0;
 

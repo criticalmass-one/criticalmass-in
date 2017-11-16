@@ -20,19 +20,19 @@ class CityCycle
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="cityCycles")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="cycles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="cityCycles")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="cycle", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ride", mappedBy="cycle", cascade={"persist","remove"})
      */
     protected $rides;
 

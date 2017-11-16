@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Table(name="frontpage_teaser_button")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class FrontpageTeaserButton
 {
@@ -19,7 +19,7 @@ class FrontpageTeaserButton
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="FrontpageTeaser", inversedBy="buttons")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FrontpageTeaser", inversedBy="buttons")
      * @ORM\JoinColumn(name="teaser_id", referencedColumnName="id")
      */
     protected $frontpageTeaser;
@@ -45,7 +45,7 @@ class FrontpageTeaserButton
     protected $class;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $position = 0;
 

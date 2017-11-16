@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="photo_view")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class PhotoView implements ViewInterface
 {
@@ -19,19 +19,19 @@ class PhotoView implements ViewInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Photo")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
 

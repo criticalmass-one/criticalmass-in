@@ -21,52 +21,52 @@ class Thread implements ViewableInterface, RouteableInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Board")
      * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
      */
     protected $board;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $slug;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $views = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $postNumber = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id", unique=true)
      */
     protected $firstPost;
 
     /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id", unique=true)
      */
     protected $lastPost;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = true;
 

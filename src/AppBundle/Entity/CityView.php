@@ -7,22 +7,22 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="city_view")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class CityView implements ViewInterface
 {
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $dateTime;
     /**

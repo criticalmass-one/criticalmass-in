@@ -23,7 +23,7 @@ class Subride implements AuditableInterface
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @JMS\Expose
      */
@@ -43,7 +43,7 @@ class Subride implements AuditableInterface
     protected $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
     protected $dateTime;
@@ -68,13 +68,13 @@ class Subride implements AuditableInterface
     protected $location;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
     protected $latitude;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
     protected $longitude;
@@ -101,7 +101,7 @@ class Subride implements AuditableInterface
     protected $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;

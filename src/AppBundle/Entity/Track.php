@@ -35,20 +35,20 @@ class Track implements RouteableInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected $username;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
@@ -56,12 +56,12 @@ class Track implements RouteableInterface
     protected $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
+     * 
      */
     protected $rideEstimate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
@@ -115,12 +115,12 @@ class Track implements RouteableInterface
     protected $md5Hash;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = true;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $deleted = false;
 
@@ -153,7 +153,7 @@ class Track implements RouteableInterface
     protected $trackFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */
@@ -167,7 +167,11 @@ class Track implements RouteableInterface
     protected $updatedAt;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=true,
+     *     columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')"
+     * )
      */
     protected $source = self::TRACK_SOURCE_UNKNOWN;
 

@@ -18,7 +18,7 @@ class FacebookCityProperties
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="facebookProperties")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
@@ -59,7 +59,7 @@ class FacebookCityProperties
     protected $website;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
