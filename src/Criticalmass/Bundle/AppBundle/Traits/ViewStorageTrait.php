@@ -2,22 +2,19 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use Criticalmass\Bundle\AppBundle\Entity\BlogPost;
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Content;
-use Criticalmass\Bundle\AppBundle\Entity\Event;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
-use Criticalmass\Bundle\AppBundle\ViewStorage\ViewStorageCacheInterface;
+use Criticalmass\Component\ViewStorage\ViewStorageCacheInterface;
 
 trait ViewStorageTrait
 {
     protected function countView(ViewableInterface $viewable)
     {
         /** @var ViewStorageCacheInterface $viewStorage */
-        $viewStorage = $this->get('caldera.view_storage.cache');
+        $viewStorage = $this->get('Criticalmass\Component\ViewStorage\ViewStorageCache');
 
         $viewStorage->countView($viewable);
     }
@@ -50,38 +47,11 @@ trait ViewStorageTrait
     }
 
     /**
-     * @param Event $event
-     * @deprecated
-     */
-    protected function countEventView(Event $event)
-    {
-        $this->countView($event);
-    }
-
-    /**
      * @param City $city
      * @deprecated
      */
     protected function countCityView(City $city)
     {
         $this->countView($city);
-    }
-
-    /**
-     * @param BlogPost $blogPost
-     * @deprecated
-     */
-    protected function countBlogPostView(BlogPost $blogPost)
-    {
-        $this->countView($blogPost);
-    }
-
-    /**
-     * @param Content $content
-     * @deprecated
-     */
-    protected function countContentView(Content $content)
-    {
-        $this->countView($content);
     }
 }
