@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <skipper version="3.2.10.1370" mvc="Symfony3" orm="Doctrine2">
-  <module name="\src/AppBundle/Entity" local-name="src/AppBundle/Entity" namespace="\AppBundle\Entity" local-namespace="\AppBundle\Entity" export-format="Doctrine2Php" export-path="." uuid="37ec9169-ddf4-4622-b035-af4b08bff4d8">
+  <module name="\src/AppBundle/Entity" local-name="src/AppBundle/Entity" namespace="\AppBundle\Entity" local-namespace="\AppBundle\Entity" export-format="Doctrine2Xml" export-path="../../Resources/config/doctrine" uuid="37ec9169-ddf4-4622-b035-af4b08bff4d8">
     <entity name="\AppBundle\Entity\BikerightVoucher" local-name="BikerightVoucher" namespace="\AppBundle\Entity" uuid="94b48c1e-9523-44a0-b534-969f6b756005">
       <field name="id" type="integer" required="true" primary="true" uuid="9f99cdb0-de1f-42ac-9948-b9245ba1128f">
         <orm-attributes>
