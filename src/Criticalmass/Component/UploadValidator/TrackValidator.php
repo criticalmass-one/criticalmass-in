@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\UploadValidator;
+namespace Criticalmass\Component\UploadValidator;
 
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\NoDateTimeException;
