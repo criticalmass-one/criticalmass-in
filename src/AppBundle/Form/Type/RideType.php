@@ -29,13 +29,13 @@ class RideType extends AbstractType
                 'compound' => true
             ])
             ->add('location', TextType::class, ['required' => false])
-            ->add('latitude', HiddenType::class)
-            ->add('longitude', HiddenType::class)
+            ->add('latitude', HiddenType::class, ['required' => false])
+            ->add('longitude', HiddenType::class, ['required' => false])
             ->add('facebook', TextType::class, ['required' => false])
             ->add('twitter', TextType::class, ['required' => false])
             ->add('url', TextType::class, ['required' => false])
-            ->add('hasLocation', CheckboxType::class)
-            ->add('hasTime', CheckboxType::class)
+            ->add('hasLocation', CheckboxType::class, ['required' => false])
+            ->add('hasTime', CheckboxType::class, ['required' => false])
             ->add('save', SubmitType::class)
             ->add('imageFile',
                 VichFileType::class,
