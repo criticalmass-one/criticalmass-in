@@ -54,12 +54,12 @@ class HelpCategory
     protected $position = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\HelpItem", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="HelpItem", mappedBy="category")
      */
     protected $items;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\HelpCategory", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="HelpCategory", mappedBy="parent")
      */
     protected $children;
 
