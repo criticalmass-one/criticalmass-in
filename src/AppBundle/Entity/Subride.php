@@ -296,5 +296,7 @@ class Subride implements AuditableInterface
     public function setTime(\DateTime $time): Subride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+
+        return $this;
     }
 }
