@@ -128,7 +128,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -140,7 +140,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -186,7 +186,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -198,7 +198,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
