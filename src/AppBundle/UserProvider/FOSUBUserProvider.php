@@ -9,10 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function connect(UserInterface $user, UserResponseInterface $response)
+    public function connect(UserInterface $user, UserResponseInterface $response): void
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
@@ -28,21 +25,14 @@ class FOSUBUserProvider extends BaseClass
         $this->userManager->updateUser($user);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response)
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
     {
         $user = $this->findUserByUsername($response);
 
         if (null === $user) {
-            if (null === $user) {
-                $user = $this->findUserByEmail($response);
-            } else {
-                $user = $this->userManager->createUser();
+            $user = $this->userManager->createUser();
 
-                $user = $this->setUserData($user, $response);
-            }
+            $user = $this->setUserData($user, $response);
 
             $user = $this->setServiceData($user, $response);
 
@@ -78,17 +68,20 @@ class FOSUBUserProvider extends BaseClass
         $username = $response->getUsername();
         $service = $response->getResourceOwner()->getName();
 
-        $setter = 'set' . ucfirst($service);
-        $setterId = $setter . 'Id';
-        $setterToken = $setter . 'AccessToken';
+        $setter = sprintf('set%s', ucfirst($service));
+        $setterId = sprintf('%sId', $setter);
+        $setterToken = sprintf('%sAccessToken', $setter);
 
         if ($clear) {
-            $user->$setterId(null);
-            $user->$setterToken(null);
-
+            $user
+                ->$setterId(null)
+                ->$setterToken(null)
+            ;
         } else {
-            $user->$setterId($username);
-            $user->$setterToken($response->getAccessToken());
+            $user
+                ->$setterId($username)
+                ->$setterToken($response->getAccessToken())
+            ;
         }
 
         return $user;
@@ -96,7 +89,10 @@ class FOSUBUserProvider extends BaseClass
 
     protected function findUserByUsername(UserResponseInterface $response): ?UserInterface
     {
-        return $this->userManager->findUserBy(['username' => $response->getUsername()]);
+        $service = $response->getResourceOwner()->getName();
+        $serviceId = sprintf('%sId', strtolower($service));
+
+        return $this->userManager->findUserBy([$serviceId => $response->getUsername()]);
     }
 
     protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
