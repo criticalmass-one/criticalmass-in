@@ -69,6 +69,16 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:FacebookRideProperties');
     }
 
+    protected function getHelpCategoryRepository(): ObjectRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:HelpCategory');
+    }
+
+    protected function getHelpItemRepository(): ObjectRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:HelpItem');
+    }
+
     protected function getLocationRepository(): LocationRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Location');

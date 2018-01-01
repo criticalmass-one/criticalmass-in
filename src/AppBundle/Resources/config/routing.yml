@@ -30,6 +30,10 @@ caldera_criticalmass_profile:
     resource: "@AppBundle/Resources/config/routing/profile.yml"
     prefix:   /profile
 
+caldera_criticalmass_help:
+    resource: "@AppBundle/Resources/config/routing/help.yml"
+    prefix:   /help
+
 caldera_criticalmass_photo:
     resource: "@AppBundle/Resources/config/routing/photo.yml"
     prefix:   /
