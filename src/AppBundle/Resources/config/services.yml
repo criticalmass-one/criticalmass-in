@@ -105,14 +105,6 @@ services:
     fos_user.doctrine_registry:
         alias: doctrine
 
-    caldera.criticalmass.facebookapi.eventride:
-        class: AppBundle\Facebook\FacebookEventRideApi
-        arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
-
-    caldera.criticalmass.facebookapi.citypageproperties:
-        class: AppBundle\Facebook\FacebookPageApi
-        arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
-
     caldera.criticalmass.flow.create_city:
         class: AppBundle\Form\Flow\CreateCityFlow
         parent: craue.form.flow
