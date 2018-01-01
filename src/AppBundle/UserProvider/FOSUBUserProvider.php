@@ -89,7 +89,10 @@ class FOSUBUserProvider extends BaseClass
 
     protected function findUserByUsername(UserResponseInterface $response): ?UserInterface
     {
-        return $this->userManager->findUserBy(['username' => $response->getUsername()]);
+        $service = $response->getResourceOwner()->getName();
+        $serviceId = sprintf('%sId', strtolower($service));
+
+        return $this->userManager->findUserBy([$serviceId => $response->getUsername()]);
     }
 
     protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
