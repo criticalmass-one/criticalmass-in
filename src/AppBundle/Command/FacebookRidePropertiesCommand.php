@@ -13,9 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FacebookRidePropertiesCommand extends ContainerAwareCommand
 {
-    /**
-     * @var Facebook $facebook
-     */
+    /** @var Registry $doctrine */
+    protected $doctrine;
+
+    /** @var ObjectManager $manager */
+    protected $manager;
+
+    /** @var Facebook $facebook */
     protected $facebook;
 
     protected function configure()
@@ -30,16 +34,12 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        /**
-         * @var FacebookEventRideApi $fera
-         */
+        /** @var FacebookEventRideApi $fera */
         $fera = $this->getContainer()->get('caldera.criticalmass.facebookapi.eventride');
 
         $rides = $this->doctrine->getRepository('AppBundle:Ride')->findRidesWithFacebookInInterval();
 
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $output->writeln('Looking up ' . $ride->getFancyTitle());
 
@@ -62,7 +62,7 @@ class FacebookRidePropertiesCommand extends ContainerAwareCommand
         $this->manager->flush();
     }
 
-    protected function getEventId(Ride $ride)
+    protected function getEventId(Ride $ride): ?string
     {
         $facebook = $ride->getFacebook();
 

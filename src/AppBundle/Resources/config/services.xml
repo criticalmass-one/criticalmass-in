@@ -3,6 +3,7 @@
     <imports>
         <import resource="services/manager.xml" />
         <import resource="services/factory.xml" />
+        <import resource="services/facebook.xml" />
     </imports>
 
     <services>

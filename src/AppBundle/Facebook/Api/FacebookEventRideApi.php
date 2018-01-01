@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Facebook;
+namespace AppBundle\Facebook\Api;
 
 use AppBundle\Entity\FacebookRideProperties;
 use AppBundle\Entity\Ride;

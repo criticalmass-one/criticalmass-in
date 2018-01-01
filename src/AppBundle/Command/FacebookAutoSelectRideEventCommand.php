@@ -4,9 +4,13 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Ride;
 use AppBundle\Facebook\FacebookEventRideApi;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Facebook\Facebook;
 use Facebook\GraphNodes\GraphEvent;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,9 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
 {
-    /**
-     * @var Facebook $facebook
-     */
+    /** @var Registry $doctrine */
+    protected $doctrine;
+
+    /** @var ObjectManager $manager */
+    protected $manager;
+
+    /** @var Facebook $facebook */
     protected $facebook;
 
     protected function configure()
@@ -31,49 +39,71 @@ class FacebookAutoSelectRideEventCommand extends ContainerAwareCommand
         $this->doctrine = $this->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager();
 
-        /**
-         * @var FacebookEventRideApi $fera
-         */
+        /** @var FacebookEventRideApi $fera */
         $fera = $this->getContainer()->get('caldera.criticalmass.facebookapi.eventride');
 
-        $rides = $this->doctrine->getRepository('AppBundle:Ride')->findFutureRides();
+        $rides = $this->doctrine->getRepository(Ride::class )->findFutureRides();
 
-        /**
-         * @var Ride $ride
-         */
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'DateTime', 'EventId', 'Status'])
+        ;
+
+        $progress = new ProgressBar($output, count($rides));
+
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $output->writeln('Looking up current ride for: ' . $ride->getCity()->getCity());
-
             if (!$ride->getFacebook()) {
-                $output->writeln($ride->getFancyTitle() . ' has no facebook details.');
-
-                /**
-                 * @var GraphEvent $event
-                 */
+                /** @var GraphEvent $event */
                 $event = $fera->getEventForRide($ride);
 
                 if ($event) {
                     $eventId = $event->getId();
 
-                    $link = 'https://www.facebook.com/events/' . $eventId;
+                    $link = sprintf('https://www.facebook.com/events/%s', $eventId);
 
                     $ride->setFacebook($link);
 
-                    $this->manager->persist($ride);
-
-                    $output->writeln('Saved ' . $eventId . ' as ride id.');
+                    $table
+                        ->addRow([
+                            $ride->getCity()->getCity(),
+                            $ride->getDateTime()->format('Y-m-d H:i'),
+                            $eventId,
+                            'saved'
+                        ])
+                    ;
                 } else {
-                    $output->writeln('Could not auto-detect facebook event for this ride.');
+                    $table
+                        ->addRow([
+                            $ride->getCity()->getCity(),
+                            $ride->getDateTime()->format('Y-m-d H:i'),
+                            'not found',
+                            'not found'
+                        ])
+                    ;
                 }
             } else {
-                $output->writeln($ride->getFancyTitle() . ' already has facebook details.');
+                $table
+                    ->addRow([
+                        $ride->getCity()->getCity(),
+                        $ride->getDateTime()->format('Y-m-d H:i'),
+                        $this->getEventId($ride),
+                        'already exists'
+                    ])
+                ;
             }
+
+            $progress->advance();
         }
+
+        $progress->finish();
+        $output->writeln('');
+        $table->render();
 
         $this->manager->flush();
     }
 
-    protected function getEventId(Ride $ride)
+    protected function getEventId(Ride $ride): ?string
     {
         $facebook = $ride->getFacebook();
 
