@@ -9,10 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function connect(UserInterface $user, UserResponseInterface $response)
+    public function connect(UserInterface $user, UserResponseInterface $response): void
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
@@ -28,10 +25,7 @@ class FOSUBUserProvider extends BaseClass
         $this->userManager->updateUser($user);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response)
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
     {
         $user = $this->findUserByUsername($response);
 
