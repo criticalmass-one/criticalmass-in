@@ -24,7 +24,7 @@ class FacebookEventApi extends AbstractFacebookApi
         'place'
     ];
 
-    public function getEventForCityMonth(City $city, \DateTime $month)
+    public function getEventForCityMonth(City $city, \DateTime $month): ?GraphEvent
     {
         $pageId = $this->getCityPageId($city);
         $since = DateTimeUtils::getMonthStartDateTime($month)->format('U');
@@ -33,7 +33,7 @@ class FacebookEventApi extends AbstractFacebookApi
         return $this->queryEvents($pageId, $since, $until);
     }
 
-    public function getEventForRide(Ride $ride)
+    public function getEventForRide(Ride $ride): ?GraphEvent
     {
         if ($ride->getFacebook()) {
             $eventId = $this->getRideEventId($ride);
@@ -50,7 +50,7 @@ class FacebookEventApi extends AbstractFacebookApi
         return $this->queryEvents($pageId, $since, $until);
     }
 
-    protected function queryEvents($pageId, $since, $until)
+    protected function queryEvents($pageId, $since, $until): ?GraphEvent
     {
         try {
             $response = $this->facebook->get('/' . $pageId . '/events?since=' . $since . '&until=' . $until);
@@ -59,17 +59,13 @@ class FacebookEventApi extends AbstractFacebookApi
         }
 
         try {
-            /**
-             * @var GraphEdge $eventEdge
-             */
+            /** @var GraphEdge $eventEdge */
             $eventEdge = $response->getGraphEdge('GraphEvent');
         } catch (\Exception $e) {
             return null;
         }
 
-        /**
-         * @var GraphEvent $event
-         */
+        /** @var GraphEvent $event */
         $event = null;
 
         foreach ($eventEdge as $event) {
@@ -78,7 +74,7 @@ class FacebookEventApi extends AbstractFacebookApi
         return $event;
     }
 
-    protected function queryEvent($eventId, array $fields = [])
+    protected function queryEvent($eventId, array $fields = []): ?GraphEvent
     {
         $fieldString = implode(',', $fields);
 
@@ -89,9 +85,7 @@ class FacebookEventApi extends AbstractFacebookApi
         }
 
         try {
-            /**
-             * @var GraphEvent $event
-             */
+            /** @var GraphEvent $event */
             $event = $response->getGraphEvent();
         } catch (\Exception $e) {
             return null;

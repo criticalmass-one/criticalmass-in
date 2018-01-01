@@ -59,14 +59,15 @@ class FacebookEventRideApi extends FacebookEventApi
         return null;
     }
 
-    protected function createRideFromEvent(GraphEvent $event)
+    protected function createRideFromEvent(GraphEvent $event): Ride
     {
         $ride = new Ride();
 
         $ride
             ->setTitle($event->getName())
             ->setDescription($event->getDescription())
-            ->setDateTime($event->getStartTime());
+            ->setDateTime($event->getStartTime())
+        ;
 
         /**
          * @var GraphPage $place
@@ -79,17 +80,20 @@ class FacebookEventRideApi extends FacebookEventApi
 
             $ride
                 ->setHasLocation(true)
-                ->setLocation($place->getName());
+                ->setLocation($place->getName())
+            ;
 
             if ($location) {
                 $ride
                     ->setLatitude($location->getLatitude())
-                    ->setLongitude($location->getLongitude());
+                    ->setLongitude($location->getLongitude())
+                ;
             }
         } else {
             $ride
                 ->setHasLocation(false)
-                ->setLocation(null);
+                ->setLocation(null)
+            ;
         }
 
         if (!$event->getIsDateOnly()) {
@@ -101,7 +105,7 @@ class FacebookEventRideApi extends FacebookEventApi
         return $ride;
     }
 
-    public function createRideForRide(Ride $ride)
+    public function createRideForRide(Ride $ride): ?Ride
     {
         $event = $this->getEventForRide($ride);
 
