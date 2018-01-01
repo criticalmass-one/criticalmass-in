@@ -74,17 +74,20 @@ class FOSUBUserProvider extends BaseClass
         $username = $response->getUsername();
         $service = $response->getResourceOwner()->getName();
 
-        $setter = 'set' . ucfirst($service);
-        $setterId = $setter . 'Id';
-        $setterToken = $setter . 'AccessToken';
+        $setter = sprintf('set%s', ucfirst($service));
+        $setterId = sprintf('%sId', $setter);
+        $setterToken = sprintf('%sAccessToken', $setter);
 
         if ($clear) {
-            $user->$setterId(null);
-            $user->$setterToken(null);
-
+            $user
+                ->$setterId(null)
+                ->$setterToken(null)
+            ;
         } else {
-            $user->$setterId($username);
-            $user->$setterToken($response->getAccessToken());
+            $user
+                ->$setterId($username)
+                ->$setterToken($response->getAccessToken())
+            ;
         }
 
         return $user;
