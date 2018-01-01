@@ -7,16 +7,8 @@
     </imports>
 
     <services>
-        <service id="caldera.criticalmass.facebookapi.eventride" class="AppBundle\Facebook\FacebookEventRideApi">
-            <argument type="string">%facebook.app_id%</argument>
-            <argument type="string">%facebook.app_secret%</argument>
-            <argument type="string">%facebook.default_token%</argument>
-        </service>
-
-        <service id="caldera.criticalmass.facebookapi.citypageproperties" class="AppBundle\Facebook\FacebookPageApi">
-            <argument type="string">%facebook.app_id%</argument>
-            <argument type="string">%facebook.app_secret%</argument>
-            <argument type="string">%facebook.default_token%</argument>
+        <service id="app.city_cycle_ride_generator" class="AppBundle\CityCycleRideGenerator\CityCycleRideGenerator">
+            <argument type="service" id="doctrine" />
         </service>
     </services>
 </container>
