@@ -27,9 +27,3 @@ monolog:
             type: service
             id: monolog.gelf_handler
             level: error
-
-#assetic:
-#    use_controller: true
-
-#swiftmailer:
-#    delivery_address: me@example.com
