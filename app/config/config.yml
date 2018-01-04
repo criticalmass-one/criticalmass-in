@@ -14,7 +14,6 @@ imports:
     - { resource: criticalmass/vich.yml }
     - { resource: criticalmass/liip.yml }
     - { resource: criticalmass/knp.yml }
-    - { resource: criticalmass/translation.yml }
     - { resource: services.yml }
     - { resource: "@UserBundle/Resources/config/services.xml" }
 

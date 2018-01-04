@@ -1,5 +1,5 @@
 framework:
-    translator:      { fallback: '%locale%' }
+    translator: { fallbacks: [de] }
     secret:          '%kernel.secret%'
     form: ~
     csrf_protection:
