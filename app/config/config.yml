@@ -15,5 +15,6 @@ imports:
     - { resource: criticalmass/liip.yml }
     - { resource: criticalmass/knp.yml }
     - { resource: criticalmass/nelmio.yml }
+    - { resource: criticalmass/hwi.yml }
     - { resource: services.yml }
     - { resource: "@UserBundle/Resources/config/services.xml" }
