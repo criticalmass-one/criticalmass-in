@@ -5,7 +5,7 @@ imports:
     - { resource: criticalmass/sonata.yml }
     - { resource: criticalmass/audit.yml }
     - { resource: criticalmass/doctrine.yml }
-    - { resource: criticalmass/fos.yml }
+    - { resource: criticalmass/fos_elastica.yml }
     - { resource: criticalmass/framework.yml }
     - { resource: criticalmass/sonata.yml }
     - { resource: criticalmass/jms.yml }
@@ -14,7 +14,6 @@ imports:
     - { resource: criticalmass/vich.yml }
     - { resource: criticalmass/liip.yml }
     - { resource: criticalmass/knp.yml }
-    - { resource: criticalmass/elastic.yml }
     - { resource: criticalmass/translation.yml }
     - { resource: services.yml }
     - { resource: "@UserBundle/Resources/config/services.xml" }
