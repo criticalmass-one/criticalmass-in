@@ -16,7 +16,7 @@ services:
             - { name: twig.extension }
 
     caldera_criticalmass.twig.staticmaps:
-        class: AppBundle\Twig\Extension\StaticmapsTwigExtension
+        class: Criticalmass\Bundle\AppBundle\Twig\Extension\StaticmapsTwigExtension
         arguments:
             - '%staticmaps.host%'
         tags:

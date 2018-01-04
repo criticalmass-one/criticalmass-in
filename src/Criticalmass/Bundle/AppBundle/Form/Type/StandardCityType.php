@@ -82,7 +82,7 @@ class StandardCityType extends AbstractType
                 EntityType::class,
                 [
                     'class' => 'AppBundle:Region',
-                    'query_builder' => function (\AppBundle\Repository\RegionRepository $er) {
+                    'query_builder' => function (\Criticalmass\Bundle\AppBundle\Repository\RegionRepository $er) {
                         $builder = $er->createQueryBuilder('region');
 
                         $builder->join('region.parent', 'region2');
