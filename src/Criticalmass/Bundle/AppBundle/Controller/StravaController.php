@@ -7,7 +7,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Position;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
-use Criticalmass\Bundle\AppBundle\Gps\GpxExporter\GpxExporter;
+use Criticalmass\Component\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;

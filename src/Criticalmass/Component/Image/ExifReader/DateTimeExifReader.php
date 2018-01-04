@@ -1,6 +1,6 @@
 <?php
 
-namespace CCriticalmass\Component\Image\ExifReader;
+namespace Criticalmass\Component\Image\ExifReader;
 
 /**
  * @deprecated

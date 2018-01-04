@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Gps\TrackChecker;
+namespace Criticalmass\Component\Gps\TrackChecker;
 
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 

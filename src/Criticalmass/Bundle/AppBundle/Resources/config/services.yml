@@ -3,7 +3,7 @@ parameters:
 
 services:
     critical_markdown:
-        class: CCriticalmass\Component\Markdown\CriticalMarkdown
+        class: Criticalmass\Component\Markdown\CriticalMarkdown
 
     caldera.user_provider:
         class: Criticalmass\Bundle\AppBundle\UserProvider\FOSUBUserProvider
@@ -14,36 +14,36 @@ services:
         arguments: ['@doctrine']
 
     caldera.criticalmass.routing.object_router:
-        class: CCriticalmass\Component\Router\ObjectRouter
+        class: Criticalmass\Component\Router\ObjectRouter
         arguments:
             - '@router.default'
 
     caldera.criticalmass.gps.gpxexporter:
-        class: Criticalmass\Bundle\AppBundle\Gps\GpxExporter\GpxExporter
+        class: Criticalmass\Component\Gps\GpxExporter\GpxExporter
         arguments: [ '@doctrine.orm.entity_manager', '@doctrine' ]
 
     caldera.criticalmass.gps.gpxreader:
-        class: Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxReader
+        class: Criticalmass\Component\Gps\GpxReader\GpxReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.gps.trackreader:
-        class: Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader
+        class: Criticalmass\Component\Gps\GpxReader\TrackReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.simple:
-        class: Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator
+        class: Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.range:
-        class: Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator
+        class: Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.latlnglistgenerator.time:
-        class: Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\TimeLatLngListGenerator
+        class: Criticalmass\Component\Gps\LatLngListGenerator\TimeLatLngListGenerator
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.gps.polyline.track:
-        class: Criticalmass\Bundle\AppBundle\Gps\TrackPolyline\TrackPolyline
+        class: Criticalmass\Component\Gps\TrackPolyline\TrackPolyline
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
     caldera.criticalmass.uploadvalidator.track:
@@ -67,19 +67,19 @@ services:
         arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.gpxreader' ]
 
     caldera.criticalmass.image.photogps:
-        class: CCriticalmass\Component\Image\PhotoGps\PhotoGps
+        class: Criticalmass\Component\Image\PhotoGps\PhotoGps
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.image.exifreader.gps:
-        class: CCriticalmass\Component\Image\ExifReader\GpsExifReader
+        class: Criticalmass\Component\Image\ExifReader\GpsExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader.datetime:
-        class: CCriticalmass\Component\Image\ExifReader\DateTimeExifReader
+        class: Criticalmass\Component\Image\ExifReader\DateTimeExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader:
-        class: CCriticalmass\Component\Image\ExifReader\ExifReader
+        class: Criticalmass\Component\Image\ExifReader\ExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.board.builder.boardbuilder:
@@ -87,11 +87,11 @@ services:
         arguments: [ '@doctrine' ]
 
     caldera.criticalmass.gps.distancecalculator.track:
-        class: Criticalmass\Bundle\AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator
+        class: Criticalmass\Component\Gps\DistanceCalculator\TrackDistanceCalculator
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.gps.timeshift.track:
-        class: Criticalmass\Bundle\AppBundle\Gps\TrackTimeShift\TrackTimeShift
+        class: Criticalmass\Component\Gps\TrackTimeShift\TrackTimeShift
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader', '@caldera.criticalmass.gps.gpxexporter' ]
 
     fos_user.doctrine_registry:
@@ -116,12 +116,12 @@ services:
             - { name: validator.constraint_validator }
 
     caldera.criticalmass.image.filter.blur:
-        class: CCriticalmass\Component\Image\Filter\BlurFilter
+        class: Criticalmass\Component\Image\Filter\BlurFilter
         tags:
             - { name: "liip_imagine.filter.loader", loader: blur_filter }
 
     caldera.criticalmass.image.filter.fast_blur:
-        class: CCriticalmass\Component\Image\Filter\FastBlurFilter
+        class: Criticalmass\Component\Image\Filter\FastBlurFilter
         tags:
             - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }
 

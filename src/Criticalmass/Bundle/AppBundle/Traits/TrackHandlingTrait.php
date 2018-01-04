@@ -4,11 +4,11 @@ namespace Criticalmass\Bundle\AppBundle\Traits;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
-use Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Criticalmass\Bundle\AppBundle\Gps\TrackPolyline\TrackPolyline;
+use Criticalmass\Component\Gps\DistanceCalculator\TrackDistanceCalculator;
+use Criticalmass\Component\Gps\GpxReader\TrackReader;
+use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Criticalmass\Component\Gps\TrackPolyline\TrackPolyline;
 use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 
 trait TrackHandlingTrait

@@ -7,7 +7,7 @@ use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
-use Criticalmass\Bundle\AppBundle\Gps\TrackTimeShift\TrackTimeShift;
+use Criticalmass\Component\Gps\TrackTimeShift\TrackTimeShift;
 use Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator;
 use Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

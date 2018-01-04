@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Gps\GpxExporter;
+namespace Criticalmass\Component\Gps\GpxExporter;
 
 
 use Criticalmass\Bundle\AppBundle\Entity\CriticalmapsUser;

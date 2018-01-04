@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator;
+namespace Criticalmass\Component\Gps\LatLngListGenerator;
 
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
+use Criticalmass\Component\Gps\GpxReader\TrackReader;
 
 /**
  * @deprecated

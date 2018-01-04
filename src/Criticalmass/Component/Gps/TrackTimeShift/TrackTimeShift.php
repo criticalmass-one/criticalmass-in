@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Gps\TrackTimeShift;
+namespace Criticalmass\Component\Gps\TrackTimeShift;
 
 use Criticalmass\Bundle\AppBundle\Entity\Position;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Gps\GpxExporter\GpxExporter;
-use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
+use Criticalmass\Component\Gps\GpxExporter\GpxExporter;
+use Criticalmass\Component\Gps\GpxReader\TrackReader;
 
 /**
  * @deprecated

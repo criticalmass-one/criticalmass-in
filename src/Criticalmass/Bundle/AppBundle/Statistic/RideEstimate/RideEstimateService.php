@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Statistic\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Gps\GpxReader\GpxReader;
+use Criticalmass\Component\Gps\GpxReader\GpxReader;
 use Doctrine\ORM\EntityManager;
 
 class RideEstimateService

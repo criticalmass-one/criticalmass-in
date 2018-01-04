@@ -6,14 +6,13 @@ use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use CCriticalmass\Component\Image\ExifReader\DateTimeExifReader;
-use CCriticalmass\Component\Image\PhotoGps\PhotoGps;
+use Criticalmass\Component\Image\ExifReader\DateTimeExifReader;
+use Criticalmass\Component\Image\PhotoGps\PhotoGps;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportImagesCommand extends ContainerAwareCommand

@@ -1,12 +1,12 @@
 <?php
 
-namespace CCriticalmass\Component\Image\PhotoGps;
+namespace Criticalmass\Component\Image\PhotoGps;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Gps\GpxReader\TrackReader;
-use CCriticalmass\Component\Image\ExifReader\DateTimeExifReader;
-use CCriticalmass\Component\Image\ExifReader\GpsExifReader;
+use Criticalmass\Component\Gps\GpxReader\TrackReader;
+use Criticalmass\Component\Image\ExifReader\DateTimeExifReader;
+use Criticalmass\Component\Image\ExifReader\GpsExifReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**

@@ -1,23 +1,20 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Gps\LatLngListGenerator;
+namespace Criticalmass\Component\Gps\LatLngListGenerator;
 
 /**
  * @deprecated
  */
-class RangeLatLngListGenerator extends AbstractLatLngListGenerator
+class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
 {
     public function execute()
     {
-        $start = $this->track->getStartPoint();
-        $end = $this->track->getEndPoint();
-
         $result = array();
 
         $counter = 0;
 
         foreach ($this->xmlRootNode->trk->trkseg->trkpt as $point) {
-            if ($counter >= $start && $counter < $end && $counter % $this->gapWidth == 0) {
+            if ($counter % $this->gapWidth == 0) {
                 $result[] = '[' . $point['lat'] . ',' . $point['lon'] . ']';
             }
 
