@@ -1,12 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Router;
+namespace CCriticalmass\Component\Router;
 
-use Criticalmass\Bundle\AppBundle\Entity\BlogPost;
 use Criticalmass\Bundle\AppBundle\Entity\Board;
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Content;
-use Criticalmass\Bundle\AppBundle\Entity\Event;
 use Criticalmass\Bundle\AppBundle\Entity\Location;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Region;

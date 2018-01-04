@@ -14,7 +14,7 @@ services:
         arguments: ['@doctrine']
 
     caldera.criticalmass.routing.object_router:
-        class: Criticalmass\Bundle\AppBundle\Router\ObjectRouter
+        class: CCriticalmass\Component\Router\ObjectRouter
         arguments:
             - '@router.default'
 

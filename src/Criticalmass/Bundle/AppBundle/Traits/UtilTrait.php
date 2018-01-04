@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Traits;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Router\ObjectRouter;
+use CCriticalmass\Component\Router\ObjectRouter;
 use Criticalmass\Component\SeoPage\SeoPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
