@@ -3,7 +3,7 @@ parameters:
 
 services:
     critical_markdown:
-        class: Criticalmass\Bundle\AppBundle\Markdown\CriticalMarkdown
+        class: CCriticalmass\Component\Markdown\CriticalMarkdown
 
     caldera.user_provider:
         class: Criticalmass\Bundle\AppBundle\UserProvider\FOSUBUserProvider
