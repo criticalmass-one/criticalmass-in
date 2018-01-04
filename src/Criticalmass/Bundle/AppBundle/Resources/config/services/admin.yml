@@ -1,0 +1,96 @@
+services:
+    admin.bikeright_voucher:
+        class: Criticalmass\Bundle\AppBundle\Admin\BikerightVoucherAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\BikerightVoucher, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Campaign, label: Bikeright Voucher }
+
+    admin.board:
+        class: Criticalmass\Bundle\AppBundle\Admin\BoardAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Board, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Board }
+
+    admin.city:
+        class: Criticalmass\Bundle\AppBundle\Admin\CityAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\City, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Critical Mass, label: City }
+
+    admin.frontpage_teaser:
+        class: Criticalmass\Bundle\AppBundle\Admin\FrontpageTeaserAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\FrontpageTeaser, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Frontpage Teaser, label: Teaser }
+
+    admin.frontpage_teaser_button:
+        class: Criticalmass\Bundle\AppBundle\Admin\FrontpageTeaserButtonAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\FrontpageTeaserButton, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Frontpage Teaser, label: Button }
+
+    admin.help_category:
+        class: Criticalmass\Bundle\AppBundle\Admin\HelpCategoryAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\HelpCategory, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Help, label: HelpCategory }
+
+    admin.help_item:
+        class: Criticalmass\Bundle\AppBundle\Admin\HelpItemAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\HelpItem, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Help, label: HelpItem }
+
+    admin.location:
+        class: Criticalmass\Bundle\AppBundle\Admin\LocationAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Location, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Geo, label: Location, audit: true }
+
+    admin.photo:
+        class: Criticalmass\Bundle\AppBundle\Admin\PhotoAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Photo, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Photo }
+
+    admin.post:
+        class: Criticalmass\Bundle\AppBundle\Admin\PostAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Post, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Post }
+
+    admin.region:
+        class: Criticalmass\Bundle\AppBundle\Admin\RegionAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Region, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Geo, label: Region }
+
+    admin.ride:
+        class: Criticalmass\Bundle\AppBundle\Admin\RideAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Ride, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Critical Mass,, label: Ride }
+
+    admin.ride_estimate:
+        class: Criticalmass\Bundle\AppBundle\Admin\RideEstimateAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\RideEstimate, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Statistic, label: RideEstimate }
+
+    admin.thread:
+        class: Criticalmass\Bundle\AppBundle\Admin\ThreadAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Thread, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Community, label: Thread }
+
+    admin.track:
+        class: Criticalmass\Bundle\AppBundle\Admin\TrackAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\Track, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Statistic, label: Track }
+
+    admin.user:
+        class: Criticalmass\Bundle\AppBundle\Admin\UserAdmin
+        arguments: [~, Criticalmass\Bundle\AppBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Community, label: User }
