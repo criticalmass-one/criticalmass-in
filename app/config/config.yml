@@ -2,20 +2,20 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-    - { resource: sonata.yml }
-    - { resource: audit.yml }
-    - { resource: doctrine.yml }
-    - { resource: fos.yml }
-    - { resource: framework.yml }
-    - { resource: sonata.yml }
-    - { resource: jms.yml }
-    - { resource: swiftmailer.yml }
-    - { resource: twig.yml }
-    - { resource: vich.yml }
-    - { resource: liip.yml }
-    - { resource: knp.yml }
-    - { resource: elastic.yml }
-    - { resource: translation.yml }
+    - { resource: criticalmass/sonata.yml }
+    - { resource: criticalmass/audit.yml }
+    - { resource: criticalmass/doctrine.yml }
+    - { resource: criticalmass/fos.yml }
+    - { resource: criticalmass/framework.yml }
+    - { resource: criticalmass/sonata.yml }
+    - { resource: criticalmass/jms.yml }
+    - { resource: criticalmass/swiftmailer.yml }
+    - { resource: criticalmass/twig.yml }
+    - { resource: criticalmass/vich.yml }
+    - { resource: criticalmass/liip.yml }
+    - { resource: criticalmass/knp.yml }
+    - { resource: criticalmass/elastic.yml }
+    - { resource: criticalmass/translation.yml }
     - { resource: services.yml }
     - { resource: "@UserBundle/Resources/config/services.xml" }
 
