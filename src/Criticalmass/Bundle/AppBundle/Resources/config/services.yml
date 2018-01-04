@@ -67,19 +67,19 @@ services:
         arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.gpxreader' ]
 
     caldera.criticalmass.image.photogps:
-        class: Criticalmass\Bundle\AppBundle\Image\PhotoGps\PhotoGps
+        class: CCriticalmass\Component\Image\PhotoGps\PhotoGps
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
 
     caldera.criticalmass.image.exifreader.gps:
-        class: Criticalmass\Bundle\AppBundle\Image\ExifReader\GpsExifReader
+        class: CCriticalmass\Component\Image\ExifReader\GpsExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader.datetime:
-        class: Criticalmass\Bundle\AppBundle\Image\ExifReader\DateTimeExifReader
+        class: CCriticalmass\Component\Image\ExifReader\DateTimeExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.image.exifreader:
-        class: Criticalmass\Bundle\AppBundle\Image\ExifReader\ExifReader
+        class: CCriticalmass\Component\Image\ExifReader\ExifReader
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
     caldera.criticalmass.board.builder.boardbuilder:
@@ -116,12 +116,12 @@ services:
             - { name: validator.constraint_validator }
 
     caldera.criticalmass.image.filter.blur:
-        class: Criticalmass\Bundle\AppBundle\Image\Filter\BlurFilter
+        class: CCriticalmass\Component\Image\Filter\BlurFilter
         tags:
             - { name: "liip_imagine.filter.loader", loader: blur_filter }
 
     caldera.criticalmass.image.filter.fast_blur:
-        class: Criticalmass\Bundle\AppBundle\Image\Filter\FastBlurFilter
+        class: CCriticalmass\Component\Image\Filter\FastBlurFilter
         tags:
             - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }
 

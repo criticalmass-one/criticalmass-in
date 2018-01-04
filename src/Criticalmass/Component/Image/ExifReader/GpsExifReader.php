@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Image\ExifReader;
+namespace CCriticalmass\Component\Image\ExifReader;
 
 use Criticalmass\Bundle\AppBundle\Gps\GpsConverter;
 
