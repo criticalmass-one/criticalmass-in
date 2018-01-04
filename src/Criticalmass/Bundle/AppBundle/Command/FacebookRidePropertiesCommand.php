@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Facebook\FacebookEventRideApi;
+use Criticalmass\Component\Facebook\FacebookEventRideApi;
 use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Facebook;
+namespace Criticalmass\Component\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;

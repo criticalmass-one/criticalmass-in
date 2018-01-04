@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Facebook\FacebookEventRideApi;
+use Criticalmass\Component\Facebook\FacebookEventRideApi;
 use Criticalmass\Bundle\AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

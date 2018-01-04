@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Facebook\FacebookPageApi;
+use Criticalmass\Component\Facebook\FacebookPageApi;
 use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;

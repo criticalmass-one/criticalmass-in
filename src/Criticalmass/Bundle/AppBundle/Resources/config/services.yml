@@ -98,11 +98,11 @@ services:
         alias: doctrine
 
     caldera.criticalmass.facebookapi.eventride:
-        class: Criticalmass\Bundle\AppBundle\Facebook\FacebookEventRideApi
+        class: Criticalmass\Component\Facebook\FacebookEventRideApi
         arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
 
     caldera.criticalmass.facebookapi.citypageproperties:
-        class: Criticalmass\Bundle\AppBundle\Facebook\FacebookPageApi
+        class: Criticalmass\Component\Facebook\FacebookPageApi
         arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
 
     caldera.criticalmass.flow.create_city:
