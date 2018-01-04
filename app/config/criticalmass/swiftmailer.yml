@@ -1,4 +1,3 @@
-# Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
     host:      %mailer_host%
