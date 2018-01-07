@@ -284,7 +284,7 @@ class RideRepository extends EntityRepository
 
         return $this->findRidesInInterval($startDateTime, $endDateTime);
     }
-    
+
     public function findRidesByDateTimeMonth(\DateTime $dateTime): array
     {
         $startDateTime = new \DateTime($dateTime->format('Y-m-1 00:0:00'));
