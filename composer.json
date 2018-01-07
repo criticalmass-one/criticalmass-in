@@ -19,6 +19,7 @@
     },
     "require": {
         "php": ">=7.2",
+        "ext-intl": "*",
         "symfony/symfony": "^3.4",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.7",
@@ -28,7 +29,6 @@
         "liip/imagine-bundle": "^1.8",
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "3.2.*",
-        "basvandorst/StravaPHP": "1.0.1",
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
         "facebook/php-sdk-v4" : "~5.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
@@ -54,7 +54,8 @@
         "simplethings/entity-audit-bundle": "^1.0",
         "cebe/markdown": "^1.1",
         "sonata-project/seo-bundle": "^2.2",
-        "graylog2/gelf-php": "^1.5"
+        "graylog2/gelf-php": "^1.5",
+        "basvandorst/stravaphp": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

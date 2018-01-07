@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Model\CreateEstimateModel;
+use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
 use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
@@ -26,6 +27,14 @@ class EstimateController extends BaseController
      * <pre>{
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
+     *   "estimation": 6554,
+     *   "dateTime": 1506710306
+     * }</pre>
+     *
+     * You can also provide a city instead of coordinates:
+     *
+     * <pre>{
+     *   "citySlug": "hamburg",
      *   "estimation": 6554,
      *   "dateTime": 1506710306
      * }</pre>
@@ -60,7 +69,11 @@ class EstimateController extends BaseController
 
     protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
     {
-        $ride = $this->findNearestRide($model);
+        if (!$model->getDateTime()) {
+            $model->setDateTime(new \DateTime());
+        }
+
+        $ride = $this->guessRide($model);
 
         $estimate = new RideEstimate();
 
@@ -68,16 +81,30 @@ class EstimateController extends BaseController
             ->setEstimatedParticipants($model->getEstimation())
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
+            ->setDateTime($model->getDateTime())
             ->setRide($ride)
         ;
 
-        if ($model->getDateTime()) {
-            $estimate
-                ->setDateTime($model->getDateTime())
-            ;
+        return $estimate;
+    }
+
+    protected function guessRide(CreateEstimateModel $model): ?Ride
+    {
+        $ride = null;
+
+        if ($model->getCitySlug()) {
+            $city = $this->getCityBySlug($model->getCitySlug());
+
+            if (!$city) {
+                return null;
+            }
+
+            $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
+        } elseif ($model->getLatitude() && $model->getLongitude()) {
+            $ride = $this->findNearestRide($model);
         }
 
-        return $estimate;
+        return $ride;
     }
 
     protected function findNearestRide(CreateEstimateModel $model): ?Ride
