@@ -305,7 +305,7 @@ class RideRepository extends EntityRepository
 
         $builder
             ->select('ride')
-            ->where($builder->expr()->eq('city', ':city'))
+            ->where($builder->expr()->eq('ride.city', ':city'))
             ->andWhere($builder->expr()->gt('ride.dateTime', ':fromDateTime'))
             ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
             ->setParameter('city', $city)
