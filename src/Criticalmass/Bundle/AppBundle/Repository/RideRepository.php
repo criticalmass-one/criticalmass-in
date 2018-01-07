@@ -106,18 +106,6 @@ class RideRepository extends EntityRepository
         return null;
     }
 
-    public function findCityRideByDate(City $city, \DateTime $dateTime)
-    {
-        $query = $this->getEntityManager()->createQuery('SELECT r AS ride FROM AppBundle:Ride r WHERE DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' AND r.city = ' . $city->getId())->setMaxResults(1);
-
-        $result = $query->getResult();
-
-        $result = @array_pop($result);
-        $result = @array_pop($result);
-
-        return $result;
-    }
-
     /**
      * Fetches all rides in a datetime range of three weeks before and three days after.
      *
@@ -305,10 +293,37 @@ class RideRepository extends EntityRepository
         return $this->findRidesInInterval($startDateTime, $endDateTime);
     }
 
+    public function findCityRideByDate(City $city, \DateTime $dateTime): ?Ride
+    {
+        $fromDateTime = clone $dateTime;
+        $fromDateTime->setTime(0, 0, 0);
+
+        $untilDateTime = clone $dateTime;
+        $untilDateTime->setTime(23, 59, 59);
+
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder
+            ->select('ride')
+            ->where($builder->expr()->eq('ride.city', ':city'))
+            ->andWhere($builder->expr()->gt('ride.dateTime', ':fromDateTime'))
+            ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
+            ->setParameter('city', $city)
+            ->setParameter('fromDateTime', $fromDateTime)
+            ->setParameter('untilDateTime', $untilDateTime)
+            ->setMaxResults(1)
+        ;
+
+        $query = $builder->getQuery();
+
+        return $query->getOneOrNullResult();
+    }
+
     /**
      * @param $citySlug string
      * @param $rideDate string
      * @return Ride
+     * @deprecated
      */
     public function findByCitySlugAndRideDate($citySlug, $rideDate)
     {
