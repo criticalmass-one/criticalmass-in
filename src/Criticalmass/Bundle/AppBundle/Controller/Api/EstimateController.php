@@ -31,6 +31,14 @@ class EstimateController extends BaseController
      *   "dateTime": 1506710306
      * }</pre>
      *
+     * You can also provide a city instead of coordinates:
+     *
+     * <pre>{
+     *   "citySlug": "hamburg",
+     *   "estimation": 6554,
+     *   "dateTime": 1506710306
+     * }</pre>
+     *
      * If you do not provide <code>dateTime</code> it will use the current time.
      * 
      * @ApiDoc(
