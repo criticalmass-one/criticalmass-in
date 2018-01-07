@@ -43,7 +43,7 @@ class CreateEstimateModel
      */
     protected $estimation;
 
-    public function __construct(\DateTime $dateTime = null, string $citySlug = null, float $latitude = null, float $longitude = null, int $estimation = null)
+    public function __construct(\DateTime $dateTime = null, string $citySlug = null, float $latitude = null, float $longitude = null, int $estimation)
     {
         $this->dateTime = $dateTime;
         $this->citySlug = $citySlug;
@@ -107,7 +107,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getEstimation(): float
+    public function getEstimation(): int
     {
         return $this->estimation;
     }
