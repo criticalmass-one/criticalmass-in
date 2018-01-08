@@ -12,6 +12,10 @@ class FacebookPageApi extends FacebookApi
     {
         $pageId = $this->getCityPageId($city);
 
+        if (!$pageId) {
+            return null;
+        }
+
         $fields = [
             'name',
             'about',
@@ -22,17 +26,14 @@ class FacebookPageApi extends FacebookApi
             'website'
         ];
 
-        /**
-         * @var GraphPage $page
-         */
+        /** @var GraphPage $page */
         $page = $this->queryPage($pageId, $fields);
 
         if ($page) {
             $properties = new FacebookCityProperties();
 
-            $properties->setCity($city);
-
             $properties
+                ->setCity($city)
                 ->setName($page->getName())
                 ->setAbout($page->getField('about'))
                 ->setDescription($page->getField('description'))
@@ -57,9 +58,7 @@ class FacebookPageApi extends FacebookApi
             return null;
         }
 
-        /**
-         * @var GraphPage $page
-         */
+        /** @var GraphPage $page */
         $page = null;
 
         try {
