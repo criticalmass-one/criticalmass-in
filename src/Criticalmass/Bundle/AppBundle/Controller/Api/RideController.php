@@ -63,7 +63,52 @@ class RideController extends BaseController
      */
     public function listAction(Request $request): Response
     {
-        $rideList = $this->getRideRepository()->findRides();
+        $region = null;
+        $city = null;
+        $dateTime = new \DateTime();
+        $fullMonth = true;
+
+        if ($request->query->get('region')) {
+            $region = $this->getRegionRepository()->findOneBySlug($request->query->get('region'));
+
+            if (!$region) {
+                throw $this->createNotFoundException('Region not found');
+            }
+        }
+
+        if ($request->query->get('city')) {
+            $city = $this->getRegionRepository()->findOneBySlug($request->query->get('city'));
+
+            if (!$city) {
+                throw $this->createNotFoundException('Region not found');
+            }
+        }
+
+        if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
+            $dateTime = new \DateTime(
+                sprintf('%d-%d-%d',
+                    $request->query->get('year'),
+                    $request->query->get('month'),
+                    $request->query->get('day')
+                )
+            );
+
+            $fullMonth = false;
+        } elseif ($request->query->get('year') && $request->query->get('month')) {
+            $dateTime = new \DateTime(
+                sprintf('%d-%d-01',
+                    $request->query->get('year'),
+                    $request->query->get('month')
+                )
+            );
+        }
+
+        $rideList = $this->getRideRepository()->findRides(
+            $dateTime,
+            $fullMonth,
+            $city,
+            $region
+        );
 
         $context = new Context();
         $context
