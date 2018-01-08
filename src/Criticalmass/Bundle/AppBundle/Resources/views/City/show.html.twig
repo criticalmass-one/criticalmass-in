@@ -40,34 +40,23 @@
         <div class="row">
             <div class="col-12">
                 {% if city.imageName %}
-                    <div class="jumbotron" id="city-jumbotron"
-                         style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
-                        <div class="row">
-                            <div class="col-12">
-                                <h1 class="pull-right no-margin-top">
-                                    {{ city.title }}
-                                </h1>
-                            </div>
-                        </div>
-
-                        {% if city.punchline %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="lead pull-right no-margin-top">
-                                        {{ city.punchline }}
-                                    </p>
-                                </div>
-                            </div>
-                        {% endif %}
-
+                <div class="profile-header" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                    <div class="container">
                         {% if app.getUser() %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ block('optionsButton') }}
-                                </div>
+                            <div class="float-right">
+                                {{ block('optionsButton') }}
                             </div>
                         {% endif %}
+                        <div class="container-inner">
+                            <h3 class="profile-header-user">
+                                {{ city.title }}
+                            </h3>
+                            <p class="profile-header-bio">
+                                {{ city.punchline }}
+                            </p>
+                        </div>
                     </div>
+                </div>
                 {% else %}
                     {% if app.getUser() %}
                         {{ block('optionsButton') }}
@@ -79,7 +68,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-12 col-md-8">
                 <div class="row mb-3">
                     <div class="col-12">
