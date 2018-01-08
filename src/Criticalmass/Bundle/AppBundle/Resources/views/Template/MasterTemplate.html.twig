@@ -39,7 +39,7 @@
     {% block additionalHeaderElements %}{% endblock %}
 </head>
 
-<body class="{% block bodyClass %}{% endblock %}">
+<body class="{% block bodyClass %}{% endblock %} with-top-navbar">
 {% if not app.user %}
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
