@@ -10,13 +10,14 @@ use Facebook\GraphNodes\GraphPage;
 
 class FacebookEventRideApi extends FacebookEventApi
 {
-    public function getEventPropertiesForRide(Ride $ride)
+    public function getEventPropertiesForRide(Ride $ride): ?FacebookRideProperties
     {
         $eventId = $this->getRideEventId($ride);
 
-        /**
-         * @var GraphEvent $event
-         */
+        if (!$eventId) {
+            return null;
+        }
+
         $event = $this->queryEvent($eventId, $this->standardFields);
 
         if ($event) {
@@ -33,24 +34,23 @@ class FacebookEventRideApi extends FacebookEventApi
                 ->setNumberDeclined($event->getField('declined_count'))
                 ->setNumberInterested($event->getField('interested_count'))
                 ->setNumberMaybe($event->getField('maybe_count'))
-                ->setNumberNoreply($event->getField('noreply_count'));
+                ->setNumberNoreply($event->getField('noreply_count'))
+            ;
 
-            /**
-             * @var GraphPage $place
-             */
+            /** @var GraphPage $place */
             if ($place = $event->getPlace()) {
                 $properties
-                    ->setLocation($place->getName());
+                    ->setLocation($place->getName())
+                ;
             }
 
-            /**
-             * @var GraphLocation $location
-             */
+            /** @var GraphLocation $location */
             if ($place && $location = $place->getLocation()) {
                 $properties
                     ->setLocationAddress($location->getStreet() . ', ' . $location->getZip() . ' ' . $location->getCity() . ', ' . $location->getCountry())
                     ->setLatitude($location->getLongitude())
-                    ->setLongitude($location->getLongitude());
+                    ->setLongitude($location->getLongitude())
+                ;
             }
 
             return $properties;
@@ -59,14 +59,15 @@ class FacebookEventRideApi extends FacebookEventApi
         return null;
     }
 
-    protected function createRideFromEvent(GraphEvent $event)
+    protected function createRideFromEvent(GraphEvent $event): Ride
     {
         $ride = new Ride();
 
         $ride
             ->setTitle($event->getName())
             ->setDescription($event->getDescription())
-            ->setDateTime($event->getStartTime());
+            ->setDateTime($event->getStartTime())
+        ;
 
         /**
          * @var GraphPage $place
@@ -84,12 +85,14 @@ class FacebookEventRideApi extends FacebookEventApi
             if ($location) {
                 $ride
                     ->setLatitude($location->getLatitude())
-                    ->setLongitude($location->getLongitude());
+                    ->setLongitude($location->getLongitude())
+                ;
             }
         } else {
             $ride
                 ->setHasLocation(false)
-                ->setLocation(null);
+                ->setLocation(null)
+            ;
         }
 
         if (!$event->getIsDateOnly()) {

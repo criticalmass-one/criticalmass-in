@@ -23,7 +23,7 @@ class EventPropertyReader
         $this->facebookEventRideApi = $facebookEventRideApi;
     }
 
-    public function read()
+    public function read(): EventPropertyReader
     {
         $rides = $this->doctrine->getRepository(Ride::class)->findRidesWithFacebookInInterval();
 
@@ -39,6 +39,8 @@ class EventPropertyReader
         }
 
         $this->doctrine->getManager()->flush();
+
+        return $this;
     }
 
     public function getPropertyList(): array

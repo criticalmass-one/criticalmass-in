@@ -8,7 +8,7 @@ use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends FacebookApi
 {
-    public function getPagePropertiesForCity(City $city)
+    public function getPagePropertiesForCity(City $city): ?FacebookCityProperties
     {
         $pageId = $this->getCityPageId($city);
 
@@ -26,7 +26,6 @@ class FacebookPageApi extends FacebookApi
             'fan_count',
         ];
 
-        /** @var GraphPage $page */
         $page = $this->queryPage($pageId, $fields);
 
         if ($page) {
@@ -49,7 +48,7 @@ class FacebookPageApi extends FacebookApi
         return null;
     }
 
-    protected function queryPage($pageId, array $fields = [])
+    protected function queryPage($pageId, array $fields = []): ?GraphPage
     {
         $fieldString = implode(',', $fields);
 

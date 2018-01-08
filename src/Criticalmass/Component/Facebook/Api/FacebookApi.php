@@ -8,12 +8,10 @@ use Facebook\Facebook;
 
 abstract class FacebookApi
 {
-    /**
-     * @var Facebook $facebook
-     */
+    /** @var Facebook $facebook */
     protected $facebook;
 
-    public function __construct($facebookAppId, $facebookAppSecret, $facebookDefaultToken)
+    public function __construct(string $facebookAppId, string $facebookAppSecret, string $facebookDefaultToken)
     {
         $this->initFacebook(
             $facebookAppId,
@@ -22,7 +20,7 @@ abstract class FacebookApi
         );
     }
 
-    protected function initFacebook($facebookAppId, $facebookAppSecret, $facebookDefaultToken)
+    protected function initFacebook(string $facebookAppId, string $facebookAppSecret, string $facebookDefaultToken): FacebookApi
     {
         $this->facebook = new Facebook(
             [
@@ -33,14 +31,15 @@ abstract class FacebookApi
             ]
         );
 
+        return $this;
     }
 
-    protected function getRideEventId(Ride $ride)
+    protected function getRideEventId(Ride $ride): ?string
     {
         $facebook = $ride->getFacebook();
 
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
-            $facebook = rtrim($facebook, "/");
+        if ($facebook) {
+            $facebook = rtrim($facebook, '/');
 
             $parts = explode('/', $facebook);
 
@@ -52,12 +51,12 @@ abstract class FacebookApi
         return null;
     }
 
-    protected function getCityPageId(City $city)
+    protected function getCityPageId(City $city): ?string
     {
         $facebook = $city->getFacebook();
 
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
-            $facebook = rtrim($facebook, "/");
+        if ($facebook) {
+            $facebook = rtrim($facebook, '/');
 
             $parts = explode('/', $facebook);
 

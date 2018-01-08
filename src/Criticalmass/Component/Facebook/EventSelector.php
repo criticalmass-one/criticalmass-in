@@ -1,4 +1,4 @@
-<?php declare(strict_types=1); declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Component\Facebook;
 
@@ -24,7 +24,7 @@ class EventSelector
         $this->facebookEventRideApi = $facebookEventRideApi;
     }
 
-    public function autoselect()
+    public function autoselect(): EventSelector
     {
         $rides = $this->doctrine->getRepository(Ride::class )->findFutureRides();
 
@@ -47,6 +47,8 @@ class EventSelector
         }
 
         $this->doctrine->getManager()->flush();
+
+        return $this;
     }
 
     public function getAssignedRides(): array

@@ -23,7 +23,7 @@ class PagePropertyReader
         $this->facebookPageApi = $facebookPageApi;
     }
 
-    public function read()
+    public function read(): PagePropertyReader
     {
         $cities = $this->doctrine->getRepository(City::class)->findCitiesWithFacebook();
 
@@ -39,6 +39,8 @@ class PagePropertyReader
         }
 
         $this->doctrine->getManager()->flush();
+
+        return $this;
     }
 
     public function getPropertyList(): array
