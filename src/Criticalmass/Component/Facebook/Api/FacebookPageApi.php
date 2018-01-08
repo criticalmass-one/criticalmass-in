@@ -20,10 +20,10 @@ class FacebookPageApi extends FacebookApi
             'name',
             'about',
             'description',
-            'likes',
             'were_here_count',
             'general_info',
-            'website'
+            'website',
+            'fan_count',
         ];
 
         /** @var GraphPage $page */
@@ -39,8 +39,9 @@ class FacebookPageApi extends FacebookApi
                 ->setDescription($page->getField('description'))
                 ->setGeneralInfo($page->getField('general_info'))
                 ->setCheckinNumber($page->getField('were_here_count'))
-                ->setLikeNumber($page->getField('likes'))
-                ->setWebsite($page->getField('website'));
+                ->setWebsite($page->getField('website'))
+                ->setLikeNumber($page->getField('fan_count'))
+            ;
 
             return $properties;
         }
