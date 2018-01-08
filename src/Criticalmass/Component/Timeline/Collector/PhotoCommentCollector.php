@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\Post;
+use Criticalmass\Bundle\AppBundle\Entity\Post;
 use Criticalmass\Component\Timeline\Item\PhotoCommentItem;
 
 class PhotoCommentCollector extends AbstractTimelineCollector
@@ -11,9 +11,7 @@ class PhotoCommentCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /**
-         * @var Post $threadEntity
-         */
+        /** @var Post $postEntity */
         foreach ($groupedEntities as $postEntity) {
             $item = new PhotoCommentItem();
 
