@@ -1,6 +1,7 @@
 define(['readmorejs'], function () {
-
     ReadMore = function (context, additionalOptions) {
+        this._loadStyles();
+
         var options = {
             moreLink: '',
             lessLink: ''
@@ -17,6 +18,16 @@ define(['readmorejs'], function () {
             $(context).readmore('destroy');
             $(context).removeClass('readmore');
         });
+    };
+
+    ReadMore.prototype._loadStyles = function() {
+        var $link = $('<link>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: '/bundles/app/css/readmore.css'
+        });
+
+        $link.appendTo('head');
     };
 
     return ReadMore;
