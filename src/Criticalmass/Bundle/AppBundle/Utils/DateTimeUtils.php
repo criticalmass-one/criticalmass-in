@@ -20,7 +20,7 @@ class DateTimeUtils
 
     public static function getDayStartDateTime(\DateTime $day): \DateTime
     {
-        $dateTime = sprintf('%d-%d-01 00:00:00', $day->format('Y'), $day->format('m'));
+        $dateTime = sprintf('%d-%d-01 00:00:00', $day->format('Y'), $day->format('m'), $day->format('d'));
 
         return new \DateTime($dateTime);
     }
