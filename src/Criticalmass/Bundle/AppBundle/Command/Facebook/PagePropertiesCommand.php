@@ -42,7 +42,6 @@ class PagePropertiesCommand extends Command
 
         /** @var FacebookCityProperties $property */
         foreach ($properties as $property) {
-            $output->writeln($property->getName());
             $table
                 ->addRow([
                     $property->getCity()->getCity(),
@@ -53,5 +52,4 @@ class PagePropertiesCommand extends Command
 
         $table->render();
     }
-
 }

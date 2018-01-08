@@ -2,23 +2,26 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
+use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Facebook\FacebookEventRideApi;
+use Criticalmass\Component\Facebook\EventPropertyReader;
 use Facebook\Facebook;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RidePropertiesCommand extends ContainerAwareCommand
+class RidePropertiesCommand extends Command
 {
-    /** @var Registry $doctrine */
-    protected $doctrine;
+    /** @var EventPropertyReader $eventPropertyReader */
+    protected $eventPropertyReader;
 
-    /** @var ObjectManager $manager */
-    protected $manager;
+    public function __construct(EventPropertyReader $eventPropertyReader)
+    {
+        $this->eventPropertyReader = $eventPropertyReader;
 
-    /** @var Facebook $facebook */
-    protected $facebook;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -29,52 +32,25 @@ class RidePropertiesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->doctrine = $this->getContainer()->get('doctrine');
-        $this->manager = $this->doctrine->getManager();
+        $this->eventPropertyReader->read();
 
-        /** @var FacebookEventRideApi $fera */
-        $fera = $this->getContainer()->get('caldera.criticalmass.facebookapi.eventride');
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'Title', 'Attendings'])
+        ;
 
-        $rides = $this->doctrine->getRepository('AppBundle:Ride')->findRidesWithFacebookInInterval();
+        $properties = $this->eventPropertyReader->getPropertyList();
 
-        /** @var Ride $ride */
-        foreach ($rides as $ride) {
-            $output->writeln('Looking up ' . $ride->getFancyTitle());
-
-            $eventId = $this->getEventId($ride);
-
-            if ($eventId) {
-                $output->writeln('Event ID is: ' . $eventId);
-
-                $properties = $fera->getEventPropertiesForRide($ride);
-
-                if ($properties) {
-                    $this->manager->persist($properties);
-
-                    $output->writeln('Saved properties');
-                    $output->writeln('');
-                }
-            }
+        /** @var FacebookRideProperties $property */
+        foreach ($properties as $property) {
+            $table
+                ->addRow([
+                    $property->getRide()->getCity()->getCity(),
+                    $property->getName(),
+                    $property->getNumberAttending(),
+                ]);
         }
 
-        $this->manager->flush();
+        $table->render();
     }
-
-    protected function getEventId(Ride $ride): ?string
-    {
-        $facebook = $ride->getFacebook();
-
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
-            $facebook = rtrim($facebook, "/");
-
-            $parts = explode('/', $facebook);
-
-            $eventId = array_pop($parts);
-
-            return $eventId;
-        }
-
-        return null;
-    }
-
 }
