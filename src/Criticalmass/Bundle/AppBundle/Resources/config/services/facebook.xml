@@ -6,5 +6,6 @@
         <defaults autowire="true" autoconfigure="true" public="false" />
 
         <prototype namespace="Criticalmass\Component\Facebook\" resource="%kernel.project_dir%/src/Criticalmass/Component/Facebook/*" />
+        <prototype namespace="Criticalmass\Component\Facebook\Api\" resource="%kernel.project_dir%/src/Criticalmass/Component/Facebook/Api/*" />
     </services>
 </container>

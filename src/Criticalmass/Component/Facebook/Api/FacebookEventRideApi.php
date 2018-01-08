@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Facebook;
+namespace Criticalmass\Component\Facebook\Api;
 
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
