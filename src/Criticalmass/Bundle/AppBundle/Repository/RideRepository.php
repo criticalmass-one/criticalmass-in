@@ -7,6 +7,7 @@ use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Location;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
@@ -582,22 +583,62 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRides($pastOnly = true)
+    public function findRides(\DateTime $dateTime = null, bool $fullMonth = true, City $city = null, Region $region = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder
+            ->select('ride')
+            ->join('ride.city', 'city')
+            ->where($builder->expr()->eq('city.enabled', ':enabled'))
+            ->andWhere($builder->expr()->eq('ride.enabled',':enabled'))
+            ->setParameter('enabled', true)
+        ;
 
-        $builder->join('ride.city', 'city');
-
-        if ($pastOnly) {
-            $dateTime = new \DateTime();
-
-            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
+        if ($city) {
+            $builder
+                ->where($builder->expr()->eq('city', ':city'))
+                ->setParameter('city', $city)
+            ;
         }
 
-        $builder->addOrderBy('city.city', 'ASC');
-        $builder->addOrderBy('ride.dateTime', 'DESC');
+        if ($region) {
+            $builder
+                ->leftJoin('city.region', 'region1')
+                ->leftJoin('region1.parent', 'region2')
+                ->leftJoin('region2.parent', 'region3')
+                ->andWhere(
+                    $builder->expr()->orX(
+                        $builder->expr()->eq('region1', ':region'),
+                        $builder->expr()->eq('region2', ':region'),
+                        $builder->expr()->eq('region3', ':region')
+                    )
+                )
+                ->setParameter('region', $region)
+            ;
+        }
+
+        if ($dateTime) {
+            if ($fullMonth) {
+                $fromDateTime = DateTimeUtils::getMonthStartDateTime($dateTime);
+                $endDateTime = DateTimeUtils::getMonthEndDateTime($dateTime);
+            } else {
+                $fromDateTime = DateTimeUtils::getDayStartDateTime($dateTime);
+                $endDateTime = DateTimeUtils::getDayEndDateTime($dateTime);
+            }
+
+            $builder
+                ->andWhere($builder->expr()->gt('ride.dateTime', ':fromDateTime'))
+                ->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
+                ->setParameter('fromDateTime', $fromDateTime)
+                ->setParameter('endDateTime', $endDateTime)
+            ;
+        }
+
+        $builder
+            ->addOrderBy('city.city', 'ASC')
+            ->addOrderBy('ride.dateTime', 'DESC')
+        ;
 
         $query = $builder->getQuery();
 
