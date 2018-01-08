@@ -98,22 +98,30 @@ class RideController extends BaseController
         }
 
         if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
-            $dateTime = new \DateTime(
-                sprintf('%d-%d-%d',
-                    $request->query->get('year'),
-                    $request->query->get('month'),
-                    $request->query->get('day')
-                )
-            );
+            try {
+                $dateTime = new \DateTime(
+                    sprintf('%d-%d-%d',
+                        $request->query->get('year'),
+                        $request->query->get('month'),
+                        $request->query->get('day')
+                    )
+                );
+            } catch (\Exception $e) {
+                throw $this->createNotFoundException('Date not found');
+            }
 
             $fullMonth = false;
         } elseif ($request->query->get('year') && $request->query->get('month')) {
-            $dateTime = new \DateTime(
-                sprintf('%d-%d-01',
-                    $request->query->get('year'),
-                    $request->query->get('month')
-                )
-            );
+            try {
+                $dateTime = new \DateTime(
+                    sprintf('%d-%d-01',
+                        $request->query->get('year'),
+                        $request->query->get('month')
+                    )
+                );
+            } catch (\Exception $e) {
+                throw $this->createNotFoundException('Date not found');
+            }
         }
 
         $rideList = $this->getRideRepository()->findRides(
