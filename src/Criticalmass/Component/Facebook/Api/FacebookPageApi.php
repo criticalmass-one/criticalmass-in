@@ -54,7 +54,9 @@ class FacebookPageApi extends FacebookApi
         $fieldString = implode(',', $fields);
 
         try {
-            $response = $this->facebook->get('/' . $pageId . '?fields=' . $fieldString);
+            $endpoint = sprintf('/%s?fields=%s', $pageId, $fieldString);
+
+            $response = $this->facebook->get($endpoint);
         } catch (\Exception $e) {
             return null;
         }

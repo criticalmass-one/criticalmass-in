@@ -15,7 +15,7 @@ class PagePropertyReader
     protected $facebookPageApi;
 
     /** @var array $readCities */
-    protected $readCities = [];
+    protected $propertyList = [];
 
     public function __construct(Doctrine $doctrine, FacebookPageApi $facebookPageApi)
     {
@@ -33,16 +33,16 @@ class PagePropertyReader
 
             if ($properties) {
                 $this->doctrine->getManager()->persist($properties);
-            }
 
-            $this->readCities[] = $city;
+                $this->propertyList[] = $properties;
+            }
         }
 
         $this->doctrine->getManager()->flush();
     }
 
-    public function getReadCities(): array
+    public function getPropertyList(): array
     {
-        return $this->readCities;
+        return $this->propertyList;
     }
 }

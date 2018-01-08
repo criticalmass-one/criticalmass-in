@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Component\Facebook\PagePropertyReader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -34,17 +35,19 @@ class PagePropertiesCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['City', 'Properties'])
+            ->setHeaders(['City', 'Title', 'Likes'])
         ;
 
-        $assignedCities = $this->pagePropertyReader->getReadCities();
+        $properties = $this->pagePropertyReader->getPropertyList();
 
-        /** @var City $city */
-        foreach ($assignedCities as $city) {
+        /** @var FacebookCityProperties $property */
+        foreach ($properties as $property) {
+            $output->writeln($property->getName());
             $table
                 ->addRow([
-                    $city->getCity(),
-                    'read',
+                    $property->getCity()->getCity(),
+                    $property->getName(),
+                    $property->getLikeNumber(),
                 ]);
         }
 
