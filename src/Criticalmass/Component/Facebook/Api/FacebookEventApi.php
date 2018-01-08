@@ -44,6 +44,11 @@ class FacebookEventApi extends FacebookApi
         }
 
         $pageId = $this->getCityPageId($ride->getCity());
+
+        if (!$pageId) {
+            return null;
+        }
+
         $since = DateTimeUtils::getMonthStartDateTime($ride->getDateTime())->format('U');
         $until = DateTimeUtils::getMonthEndDateTime($ride->getDateTime())->format('U');
 
@@ -53,15 +58,15 @@ class FacebookEventApi extends FacebookApi
     protected function queryEvents($pageId, $since, $until)
     {
         try {
-            $response = $this->facebook->get('/' . $pageId . '/events?since=' . $since . '&until=' . $until);
-        } catch (\Exception $e) {
+            $endpoint = sprintf('/%s/events?since=%d&d&until=%d', $pageId, $since, $until);
+
+            $response = $this->facebook->get($endpoint);
+        } catch(\Exception $exception) {
             return null;
         }
 
         try {
-            /**
-             * @var GraphEdge $eventEdge
-             */
+            /** @var GraphEdge $eventEdge */
             $eventEdge = $response->getGraphEdge('GraphEvent');
         } catch (\Exception $e) {
             return null;

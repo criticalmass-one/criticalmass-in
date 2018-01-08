@@ -28,8 +28,8 @@ abstract class FacebookApi
             [
                 'app_id' => $facebookAppId,
                 'app_secret' => $facebookAppSecret,
-                'default_graph_version' => 'v2.5',
-                'default_access_token' => $facebookDefaultToken
+                'default_graph_version' => 'v2.11',
+                'default_access_token' => $facebookDefaultToken,
             ]
         );
 

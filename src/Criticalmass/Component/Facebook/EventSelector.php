@@ -49,23 +49,6 @@ class EventSelector
         $this->doctrine->getManager()->flush();
     }
 
-    protected function getEventId(Ride $ride): ?string
-    {
-        $facebook = $ride->getFacebook();
-
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
-            $facebook = rtrim($facebook, "/");
-
-            $parts = explode('/', $facebook);
-
-            $eventId = array_pop($parts);
-
-            return $eventId;
-        }
-
-        return null;
-    }
-
     public function getAssignedRides(): array
     {
         return $this->assignedRides;
