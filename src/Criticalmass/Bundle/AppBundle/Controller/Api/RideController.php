@@ -56,9 +56,22 @@ class RideController extends BaseController
     }
 
     /**
+     * Get a list of critical mass rides.
+     *
+     * This list may be limited to city or region by providing a city or region slug. You may also limit the list to a specific month or a specific day.
+     *
+     * If you do not provide <code>year</code> and <code>month</code>, results will be limited to the current month.
+     *
      * @ApiDoc(
      *  resource=true,
-     *  description="Lists all next rides"
+     *  description="Lists rides",
+     *  parameters={
+     *     {"name"="region", "dataType"="string", "required"=false, "description"="Provide a region slug"},
+     *     {"name"="city", "dataType"="string", "required"=false, "description"="Provide a city slug"},
+     *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
+     *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
+     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."}
+     *  }
      * )
      */
     public function listAction(Request $request): Response
