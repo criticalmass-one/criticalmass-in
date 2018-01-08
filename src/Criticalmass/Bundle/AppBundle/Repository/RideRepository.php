@@ -591,13 +591,12 @@ class RideRepository extends EntityRepository
             ->select('ride')
             ->join('ride.city', 'city')
             ->where($builder->expr()->eq('city.enabled', ':enabled'))
-            ->andWhere($builder->expr()->eq('ride.enabled',':enabled'))
             ->setParameter('enabled', true)
         ;
 
         if ($city) {
             $builder
-                ->where($builder->expr()->eq('city', ':city'))
+                ->andWhere($builder->expr()->eq('city', ':city'))
                 ->setParameter('city', $city)
             ;
         }
