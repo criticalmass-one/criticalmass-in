@@ -1,17 +1,15 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Facebook\FacebookEventRideApi;
 use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FacebookRidePropertiesCommand extends ContainerAwareCommand
+class RidePropertiesCommand extends ContainerAwareCommand
 {
     /** @var Registry $doctrine */
     protected $doctrine;

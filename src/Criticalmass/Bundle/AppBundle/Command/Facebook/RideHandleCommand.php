@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FacebookRideHandleCommand extends ContainerAwareCommand
+class RideHandleCommand extends ContainerAwareCommand
 {
     /** @var Registry $doctrine */
     protected $doctrine;
