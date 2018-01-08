@@ -2,7 +2,6 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Component\Facebook\PagePropertyReader;
 use Symfony\Component\Console\Command\Command;

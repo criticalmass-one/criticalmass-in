@@ -3,9 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Facebook\EventPropertyReader;
-use Facebook\Facebook;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

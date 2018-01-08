@@ -2,7 +2,6 @@
 
 namespace Criticalmass\Component\Facebook;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Facebook\Api\FacebookEventRideApi;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
