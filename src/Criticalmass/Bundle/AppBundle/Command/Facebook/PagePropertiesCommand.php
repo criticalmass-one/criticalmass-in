@@ -3,10 +3,24 @@
 namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Component\Facebook\PagePropertyReader;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class PagePropertiesCommand extends Command
 {
+    /** @var PagePropertyReader $pagePropertyReader */
+    protected $pagePropertyReader;
+
+    public function __construct(PagePropertyReader $pagePropertyReader)
+    {
+        $this->pagePropertyReader = $pagePropertyReader;
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -14,21 +28,27 @@ class PagePropertiesCommand extends Command
             ->setDescription('');
     }
 
-    protected function getPageId(City $city): ?string
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        $facebook = $city->getFacebook();
+        $this->pagePropertyReader->read();
 
-        if (strpos($facebook, 'https://www.facebook.com/') == 0) {
-            $facebook = rtrim($facebook, "/");
+        $table = new Table($output);
+        $table
+            ->setHeaders(['City', 'Properties'])
+        ;
 
-            $parts = explode('/', $facebook);
+        $assignedCities = $this->pagePropertyReader->getReadCities();
 
-            $pageId = array_pop($parts);
-
-            return $pageId;
+        /** @var City $city */
+        foreach ($assignedCities as $city) {
+            $table
+                ->addRow([
+                    $city->getCity(),
+                    'read',
+                ]);
         }
 
-        return null;
+        $table->render();
     }
 
 }
