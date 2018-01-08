@@ -96,7 +96,10 @@ class RideGenerator extends AbstractRideGenerator
 
         $rideDateTime->setTimezone($timezone);
 
-        $ride->setDateTime($rideDateTime);
+        $ride
+            ->setDateTime($rideDateTime)
+            ->setHasTime(true)
+        ;
 
         return $ride;
     }
@@ -107,6 +110,7 @@ class RideGenerator extends AbstractRideGenerator
             ->setLatitude($cityCycle->getLatitude())
             ->setLongitude($cityCycle->getLongitude())
             ->setLocation($cityCycle->getLocation())
+            ->setHasLocation(true)
         ;
 
         return $ride;
