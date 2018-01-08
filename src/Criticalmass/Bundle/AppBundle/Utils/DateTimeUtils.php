@@ -13,8 +13,7 @@ class DateTimeUtils
 
     public static function getMonthEndDateTime(\DateTime $month): \DateTime
     {
-        $monthDays = $month->format('t');
-        $dateTime = sprintf('%d-%d-01 23:59:59', $month->format('Y'), $month->format('m'));
+        $dateTime = sprintf('%d-%d-%d 23:59:59', $month->format('Y'), $month->format('m'), $month->format('t'));
 
         return new \DateTime($dateTime);
     }
