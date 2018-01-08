@@ -6,6 +6,7 @@ use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -60,9 +61,9 @@ class RideController extends BaseController
      *  description="Lists all next rides"
      * )
      */
-    public function listAction(): Response
+    public function listAction(Request $request): Response
     {
-        $rideList = $this->getRideRepository()->findCurrentRides();
+        $rideList = $this->getRideRepository()->findRides();
 
         $context = new Context();
         $context
