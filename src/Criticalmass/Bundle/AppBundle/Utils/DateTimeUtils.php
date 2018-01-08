@@ -26,7 +26,7 @@ class DateTimeUtils
         return new \DateTime($dateTime);
     }
 
-    public function getDayEndDateTime(\DateTime $day)
+    public static function getDayEndDateTime(\DateTime $day)
     {
         $dateTime = sprintf('%d-%d-%d 23:59:59', $day->format('Y'), $day->format('m'), $day->format('d'));
 
