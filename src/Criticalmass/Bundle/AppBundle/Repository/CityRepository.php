@@ -181,19 +181,19 @@ class CityRepository extends EntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->isNull('c.updatedAt'))
-            ->addOrderBy('c.updatedAt', 'DESC')
+            ->addOrderBy('c.createdAt', 'DESC')
         ;
 
         if ($startDateTime) {
             $builder
-                ->andWhere($builder->expr()->gte('c.updatedAt', ':startDateTime'))
+                ->andWhere($builder->expr()->gte('c.createdAt', ':startDateTime'))
                 ->setParameter('startDateTime', $startDateTime)
             ;
         }
 
         if ($endDateTime) {
             $builder
-                ->andWhere($builder->expr()->lte('c.updatedAt', ':endDateTime'))
+                ->andWhere($builder->expr()->lte('c.createdAt', ':endDateTime'))
                 ->setParameter('endDateTime', $endDateTime)
             ;
         }
