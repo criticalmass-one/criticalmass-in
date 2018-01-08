@@ -134,7 +134,6 @@ services:
             - '@caldera.criticalmass.routing.object_router'
 
 imports:
-  - { resource: ./services/timeline/timeline.yml }
   - { resource: ./services/timeline/collectors.yml }
   - { resource: ./services/admin.yml }
   - { resource: ./services/twig_extensions.yml }
