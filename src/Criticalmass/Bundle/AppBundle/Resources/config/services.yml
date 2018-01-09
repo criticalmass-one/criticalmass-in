@@ -50,22 +50,6 @@ services:
         class: Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
-    caldera.criticalmass.statistic.rideestimatecalculator:
-        class: Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateCalculator
-        arguments: []
-
-    caldera.criticalmass.statistic.rideestimate:
-        class: Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
-
-    caldera.criticalmass.statistic.rideestimate.track:
-        class: Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.trackreader' ]
-
-    caldera.criticalmass.statistic.rideestimate.gpx:
-        class: Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService
-        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.criticalmass.gps.gpxreader' ]
-
     caldera.criticalmass.image.photogps:
         class: Criticalmass\Component\Image\PhotoGps\PhotoGps
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
