@@ -71,7 +71,7 @@ class RideEstimateService
     protected function calculateDurationInSeconds(Track $track): int
     {
         if ($track->getStartDateTime() && $track->getEndDateTime()) {
-            return $track->getStartDateTime()->getTimestamp() - $track->getEndDateTime()->getTimestamp();
+            return $track->getEndDateTime()->getTimestamp() - $track->getStartDate()->getTimestamp();
         }
 
         return 0;
