@@ -23,7 +23,7 @@ class RideEstimateController extends AbstractController
 
         $rideEstimate = new RideEstimate();
         $rideEstimate
-            ->setUser($this->getUser())
+            ->setUser($user)
             ->setRide($ride)
         ;
 
