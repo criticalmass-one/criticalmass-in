@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="caldera.criticalmass.facebookapi.eventride" class="AppBundle\Facebook\Api\FacebookEventRideApi">
+            <argument type="string">%facebook.app_id%</argument>
+            <argument type="string">%facebook.app_secret%</argument>
+            <argument type="string">%facebook.default_token%</argument>
+        </service>
+
+        <service id="caldera.criticalmass.facebookapi.citypageproperties" class="AppBundle\Facebook\Api\FacebookPageApi">
+            <argument type="string">%facebook.app_id%</argument>
+            <argument type="string">%facebook.app_secret%</argument>
+            <argument type="string">%facebook.default_token%</argument>
+        </service>
+    </services>
+</container>

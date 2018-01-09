@@ -205,16 +205,18 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findFutureRides()
+    public function findFutureRides(): array
     {
         $dateTime = new \DateTime();
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->orderBy('ride.dateTime', 'ASC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $dateTime)
+            ->orderBy('r.dateTime', 'ASC')
+        ;
 
         $query = $builder->getQuery();
 
@@ -531,7 +533,7 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRidesWithFacebookInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
+    public function findRidesWithFacebookInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
     {
         if (!$startDateTime) {
             $startDateTime = new \DateTime();
@@ -543,15 +545,17 @@ class RideRepository extends EntityRepository
             $endDateTime = $endDate->add($dayInterval);
         }
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
-        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
-
-        $builder->andWhere($builder->expr()->isNotNull('ride.facebook'));
-
-        $builder->orderBy('ride.dateTime', 'DESC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lt('r.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->isNotNull('r.facebook'))
+            ->orderBy('r.dateTime', 'DESC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime)
+        ;
 
         $query = $builder->getQuery();
 

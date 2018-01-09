@@ -30,7 +30,6 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "3.2.*",
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
-        "facebook/php-sdk-v4" : "~5.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "jms/serializer-bundle": "^1.1",
         "craue/formflow-bundle": "~3.0@dev",
@@ -55,6 +54,7 @@
         "cebe/markdown": "^1.1",
         "sonata-project/seo-bundle": "^2.2",
         "graylog2/gelf-php": "^1.5",
+        "facebook/graph-sdk": "^5.6",
         "basvandorst/stravaphp": "^1.0"
     },
     "require-dev": {

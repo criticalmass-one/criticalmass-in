@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1de466838a5f2523dc9c3189ab1f6dc",
+    "content-hash": "8ed818bbb7574fab238f9409b8cf8ad1",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -1359,7 +1359,7 @@
             "time": "2016-04-05T01:18:39+00:00"
         },
         {
-            "name": "facebook/php-sdk-v4",
+            "name": "facebook/graph-sdk",
             "version": "5.6.1",
             "source": {
                 "type": "git",
@@ -1414,7 +1414,6 @@
                 "facebook",
                 "sdk"
             ],
-            "abandoned": "facebook/graph-sdk",
             "time": "2017-08-16T17:28:07+00:00"
         },
         {
@@ -1712,12 +1711,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "6fd8db31d23dc89d147ce6a5dcc5ada001b2fca6"
+                "reference": "587c9bba704d13b7243849eda32af2ca4df8b806"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/6fd8db31d23dc89d147ce6a5dcc5ada001b2fca6",
-                "reference": "6fd8db31d23dc89d147ce6a5dcc5ada001b2fca6",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/587c9bba704d13b7243849eda32af2ca4df8b806",
+                "reference": "587c9bba704d13b7243849eda32af2ca4df8b806",
                 "shasum": ""
             },
             "require": {
@@ -1780,7 +1779,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2018-01-04T11:35:03+00:00"
+            "time": "2018-01-08T11:40:06+00:00"
         },
         {
             "name": "graylog2/gelf-php",
@@ -4495,16 +4494,16 @@
         },
         {
             "name": "sonata-project/block-bundle",
-            "version": "3.9.1",
+            "version": "3.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "e27970611477203cf7c129ea90adc2ff0567f6df"
+                "reference": "904d35f99c05ee3eda3b1dec1f169fe4220eb5b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/e27970611477203cf7c129ea90adc2ff0567f6df",
-                "reference": "e27970611477203cf7c129ea90adc2ff0567f6df",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/904d35f99c05ee3eda3b1dec1f169fe4220eb5b8",
+                "reference": "904d35f99c05ee3eda3b1dec1f169fe4220eb5b8",
                 "shasum": ""
             },
             "require": {
@@ -4514,6 +4513,7 @@
                 "sonata-project/core-bundle": "^3.4",
                 "symfony/form": "^2.8 || ^3.2 || ^4.0",
                 "symfony/http-kernel": "^2.8 || ^3.2 || ^4.0",
+                "symfony/twig-bundle": "^2.8 || ^3.2 || ^4.0",
                 "twig/twig": "^1.34 || ^2.0"
             },
             "conflict": {
@@ -4565,7 +4565,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2018-01-07T10:22:28+00:00"
+            "time": "2018-01-08T09:34:31+00:00"
         },
         {
             "name": "sonata-project/cache",
@@ -4988,33 +4988,32 @@
         },
         {
             "name": "sonata-project/seo-bundle",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataSeoBundle.git",
-                "reference": "1e444d99d7fbc75b6ade8a5e6207cd96d2a9f48b"
+                "reference": "a4daa6c4b77406440e72c105ad22b85b73314b5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataSeoBundle/zipball/1e444d99d7fbc75b6ade8a5e6207cd96d2a9f48b",
-                "reference": "1e444d99d7fbc75b6ade8a5e6207cd96d2a9f48b",
+                "url": "https://api.github.com/repos/sonata-project/SonataSeoBundle/zipball/a4daa6c4b77406440e72c105ad22b85b73314b5e",
+                "reference": "a4daa6c4b77406440e72c105ad22b85b73314b5e",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
                 "sonata-project/exporter": "^1.2.2",
-                "symfony/framework-bundle": "^2.8 || ^3.2",
-                "symfony/options-resolver": "^2.8 || ^3.2",
+                "symfony/framework-bundle": "^2.8 || ^3.2 || ^4.0",
+                "symfony/options-resolver": "^2.8 || ^3.2 || ^4.0",
                 "twig/twig": "^1.14.2 || ^2.0"
             },
             "require-dev": {
                 "guzzle/guzzle": "3.*",
-                "sllh/php-cs-fixer-styleci-bridge": "^2.0",
                 "sonata-project/admin-bundle": "^3.0",
                 "sonata-project/block-bundle": "^3.7",
-                "symfony/console": "^2.8 || ^3.2",
-                "symfony/finder": "^2.8 || ^3.2",
-                "symfony/phpunit-bridge": "^3.3"
+                "symfony/console": "^2.8 || ^3.2 || ^4.0",
+                "symfony/finder": "^2.8 || ^3.2 || ^4.0",
+                "symfony/phpunit-bridge": "^3.3 || ^4.0"
             },
             "suggest": {
                 "guzzle/guzzle": "3.*",
@@ -5052,7 +5051,7 @@
                 "seo",
                 "sonata"
             ],
-            "time": "2017-11-30T10:59:14+00:00"
+            "time": "2018-01-07T10:05:46+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
