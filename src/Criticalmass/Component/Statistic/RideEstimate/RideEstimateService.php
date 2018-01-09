@@ -5,19 +5,19 @@ namespace Criticalmass\Component\Statistic\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class RideEstimateService
 {
-    /** @var EntityManager $entityManager */
-    protected $entityManager;
+    /** @var Doctrine $doctrine */
+    protected $doctrine;
 
     /** @var RideEstimateCalculator $calculator */
     protected $calculator;
 
-    public function __construct(EntityManager $entityManager, RideEstimateCalculator $calculator)
+    public function __construct(Doctrine $doctrine, RideEstimateCalculator $calculator)
     {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->calculator = $calculator;
     }
 
@@ -29,14 +29,14 @@ class RideEstimateService
             ->setEstimatedParticipants(0)
         ;
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
 
         return $this;
     }
 
     public function calculateEstimates(Ride $ride): RideEstimateService
     {
-        $estimates = $this->entityManager->getRepository(RideEstimate::class)->findByRide($ride);
+        $estimates = $this->doctrine->getRepository(RideEstimate::class)->findByRide($ride);
 
         $this->calculator
             ->setRide($ride)
@@ -44,7 +44,7 @@ class RideEstimateService
             ->calculate()
         ;
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
 
         return $this;
     }
@@ -62,8 +62,8 @@ class RideEstimateService
 
         $track->setRideEstimate($re);
 
-        $this->entityManager->persist($re);
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->persist($re);
+        $this->doctrine->getManager()->flush();
 
         return $this;
     }

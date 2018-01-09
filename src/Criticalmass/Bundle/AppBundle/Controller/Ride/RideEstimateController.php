@@ -1,21 +1,31 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Form\Type\RideEstimateType;
+use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideEstimateController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function addestimateAction(Request $request, $citySlug, $rideDate)
+    public function addestimateAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $rideEstimate = new RideEstimate();
-        $rideEstimate->setUser($this->getUser());
-        $rideEstimate->setRide($ride);
+        $rideEstimate
+            ->setUser($this->getUser())
+            ->setRide($ride)
+        ;
 
         $estimateForm = $this->createForm(
             RideEstimateType::class,
@@ -34,17 +44,18 @@ class RideEstimateController extends AbstractController
         $estimateForm->handleRequest($request);
 
         if ($estimateForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($estimateForm->getData());
-            $em->flush();
+            $this->getManager()->persist($estimateForm->getData());
+            $this->getManager()->flush();
 
-            /**
-             * @var RideEstimateService $estimateService
-             */
-            $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate');
-            $estimateService->calculateEstimates($ride);
+            $this->recalculateEstimates($ride);
         }
 
         return $this->redirectToObject($ride);
+    }
+
+    protected function recalculateEstimates(Ride $ride): void
+    {
+        $estimateService = $this->get(RideEstimateService::class);
+        $estimateService->calculateEstimates($ride);
     }
 }
