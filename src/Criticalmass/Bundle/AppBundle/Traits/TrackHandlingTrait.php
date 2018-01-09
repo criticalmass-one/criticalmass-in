@@ -44,7 +44,7 @@ trait TrackHandlingTrait
     {
         $estimateService = $this->get(RideEstimateService::class);
         $estimateService
-            ->addEstimate($track)
+            ->addEstimateFromTrack($track)
             ->calculateEstimates($ride)
         ;
     }
