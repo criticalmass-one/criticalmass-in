@@ -8,49 +8,19 @@ use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends FacebookApi
 {
-    public function getPagePropertiesForCity(City $city): ?FacebookCityProperties
+    protected $standardFields = [
+        'name',
+        'about',
+        'description',
+        'were_here_count',
+        'general_info',
+        'website',
+        'fan_count',
+    ];
+
+    public function queryPage($pageId, array $fields = []): ?GraphPage
     {
-        $pageId = $this->getCityPageId($city);
-
-        if (!$pageId) {
-            return null;
-        }
-
-        $fields = [
-            'name',
-            'about',
-            'description',
-            'were_here_count',
-            'general_info',
-            'website',
-            'fan_count',
-        ];
-
-        $page = $this->queryPage($pageId, $fields);
-
-        if ($page) {
-            $properties = new FacebookCityProperties();
-
-            $properties
-                ->setCity($city)
-                ->setName($page->getName())
-                ->setAbout($page->getField('about'))
-                ->setDescription($page->getField('description'))
-                ->setGeneralInfo($page->getField('general_info'))
-                ->setCheckinNumber($page->getField('were_here_count'))
-                ->setWebsite($page->getField('website'))
-                ->setLikeNumber($page->getField('fan_count'))
-            ;
-
-            return $properties;
-        }
-
-        return null;
-    }
-
-    protected function queryPage($pageId, array $fields = []): ?GraphPage
-    {
-        $fieldString = implode(',', $fields);
+        $fieldString = implode(',', $this->getQueryFields($fields));
 
         try {
             $endpoint = sprintf('/%s?fields=%s', $pageId, $fieldString);

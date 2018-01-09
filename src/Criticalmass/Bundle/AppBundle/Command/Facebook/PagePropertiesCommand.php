@@ -25,7 +25,8 @@ class PagePropertiesCommand extends Command
     {
         $this
             ->setName('criticalmass:facebook:pageproperties')
-            ->setDescription('');
+            ->setDescription('')
+        ;
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

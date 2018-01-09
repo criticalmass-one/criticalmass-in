@@ -4,6 +4,7 @@ namespace Criticalmass\Component\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Component\Facebook\Api\FacebookPageApi;
+use Criticalmass\Component\Facebook\Bridge\CityBridge;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class PagePropertyReader
@@ -11,16 +12,16 @@ class PagePropertyReader
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    /** @var FacebookPageApi $facebookPageApi */
-    protected $facebookPageApi;
+    /** @var CityBridge $cityBridge */
+    protected $cityBridge;
 
     /** @var array $readCities */
     protected $propertyList = [];
 
-    public function __construct(Doctrine $doctrine, FacebookPageApi $facebookPageApi)
+    public function __construct(Doctrine $doctrine, CityBridge $cityBridge)
     {
         $this->doctrine = $doctrine;
-        $this->facebookPageApi = $facebookPageApi;
+        $this->cityBridge = $cityBridge;
     }
 
     public function read(): PagePropertyReader
@@ -29,7 +30,7 @@ class PagePropertyReader
 
         /** @var City $city */
         foreach ($cities as $city) {
-            $properties = $this->facebookPageApi->getPagePropertiesForCity($city);
+            $properties = $this->cityBridge->getPagePropertiesForCity($city);
 
             if ($properties) {
                 $this->doctrine->getManager()->persist($properties);

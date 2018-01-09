@@ -25,7 +25,8 @@ class RidePropertiesCommand extends Command
     {
         $this
             ->setName('criticalmass:facebook:rideproperties')
-            ->setDescription('');
+            ->setDescription('')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

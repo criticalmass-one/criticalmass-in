@@ -1,15 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Facebook\Api;
+namespace Criticalmass\Component\Facebook\Bridge;
 
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
+use Criticalmass\Component\Facebook\Api\FacebookEventApi;
+use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;
 use Facebook\GraphNodes\GraphPage;
 
-class FacebookEventRideApi extends FacebookEventApi
+class RideBridge extends AbstractBridge
 {
+    protected $facebookEventApi;
+
+    public function __construct(FacebookEventApi $facebookEventApi)
+    {
+        $this->facebookEventApi = $facebookEventApi;
+    }
+
     public function getEventPropertiesForRide(Ride $ride): ?FacebookRideProperties
     {
         $eventId = $this->getRideEventId($ride);
@@ -18,7 +28,7 @@ class FacebookEventRideApi extends FacebookEventApi
             return null;
         }
 
-        $event = $this->queryEvent($eventId, $this->standardFields);
+        $event = $this->facebookEventApi->queryEvent($eventId);
 
         if ($event) {
             $properties = new FacebookRideProperties();
@@ -40,17 +50,23 @@ class FacebookEventRideApi extends FacebookEventApi
             /** @var GraphPage $place */
             if ($place = $event->getPlace()) {
                 $properties
-                    ->setLocation($place->getName())
-                ;
+                    ->setLocation($place->getName());
             }
 
             /** @var GraphLocation $location */
             if ($place && $location = $place->getLocation()) {
+                $address = sprintf(
+                    '%s, %s %s, %s',
+                    $location->getStreet(),
+                    $location->getZip(),
+                    $location->getCity(),
+                    $location->getCountry()
+                );
+
                 $properties
-                    ->setLocationAddress($location->getStreet() . ', ' . $location->getZip() . ' ' . $location->getCity() . ', ' . $location->getCountry())
+                    ->setLocationAddress($address)
                     ->setLatitude($location->getLongitude())
-                    ->setLongitude($location->getLongitude())
-                ;
+                    ->setLongitude($location->getLongitude());
             }
 
             return $properties;
@@ -66,8 +82,7 @@ class FacebookEventRideApi extends FacebookEventApi
         $ride
             ->setTitle($event->getName())
             ->setDescription($event->getDescription())
-            ->setDateTime($event->getStartTime())
-        ;
+            ->setDateTime($event->getStartTime());
 
         /**
          * @var GraphPage $place
@@ -85,14 +100,12 @@ class FacebookEventRideApi extends FacebookEventApi
             if ($location) {
                 $ride
                     ->setLatitude($location->getLatitude())
-                    ->setLongitude($location->getLongitude())
-                ;
+                    ->setLongitude($location->getLongitude());
             }
         } else {
             $ride
                 ->setHasLocation(false)
-                ->setLocation(null)
-            ;
+                ->setLocation(null);
         }
 
         if (!$event->getIsDateOnly()) {
@@ -104,7 +117,7 @@ class FacebookEventRideApi extends FacebookEventApi
         return $ride;
     }
 
-    public function createRideForRide(Ride $ride)
+    public function createRideForRide(Ride $ride): Ride
     {
         $event = $this->getEventForRide($ride);
 
@@ -113,5 +126,64 @@ class FacebookEventRideApi extends FacebookEventApi
         }
 
         return null;
+    }
+
+    public function getEventForRide(Ride $ride): ?GraphEvent
+    {
+        if ($ride->getFacebook()) {
+            $eventId = $this->getRideEventId($ride);
+
+            $event = $this->facebookEventApi->queryEvent($eventId);
+
+            return $event;
+        }
+
+        $graphEdge = $this->queryRideEventOnDay($ride);
+
+        if (!$graphEdge) {
+            return null;
+        }
+
+        /** @var GraphEvent $graphEvent */
+        foreach ($graphEdge as $graphEvent) {
+            if ($ride->getDateTime()->format('Y-m-d') === $graphEvent->getStartTime()->format('Y-m-d')) {
+                return $graphEvent;
+            }
+        }
+
+        return null;
+    }
+
+    protected function queryRideEventOnDay(Ride $ride): ?GraphEdge
+    {
+        $pageId = $this->getCityPageIdByRide($ride);
+
+        if (!$pageId) {
+            return null;
+        }
+
+        $since = DateTimeUtils::getDayStartDateTime($ride->getDateTime());
+        $until = DateTimeUtils::getDayEndDateTime($ride->getDateTime());
+
+        return $this->facebookEventApi->queryEvents($pageId, $since, $until);
+    }
+
+    protected function queryRideEventOnMonth(Ride $ride): ?GraphEdge
+    {
+        $pageId = $this->getCityPageIdByRide($ride);
+
+        if (!$pageId) {
+            return null;
+        }
+
+        $since = DateTimeUtils::getMonthStartDateTime($ride->getDateTime());
+        $until = DateTimeUtils::getMonthEndDateTime($ride->getDateTime());
+
+        return $this->facebookEventApi->queryEvents($pageId, $since, $until);
+    }
+
+    protected function getCityPageIdByRide(Ride $ride): ?string
+    {
+        return $this->getCityPageId($ride->getCity());
     }
 }
