@@ -1,43 +1,44 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Statistic\RideEstimate;
+namespace Criticalmass\Component\Statistic\RideEstimate;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 
 class RideEstimateCalculator
 {
+    /** @var Ride $ride */
     protected $ride;
-    protected $estimates = array();
 
-    public function __construct()
-    {
+    /** @var array $estimates */
+    protected $estimates = [];
 
-    }
-
-    public function setEstimates($estimates)
+    public function setEstimates(array $estimates): RideEstimateCalculator
     {
         $this->estimates = $estimates;
+
+        return $this;
     }
 
-    public function calculate()
+    public function calculate(): RideEstimateCalculator
     {
         $this->calculateDistance();
         $this->calculateDuration();
         $this->calculateParticipants();
+
+        return $this;
     }
 
-    protected function calculateDistance()
+    protected function calculateDistance(): RideEstimateCalculator
     {
-        $distance = 0;
+        $distance = 0.0;
         $distanceCounter = 0;
 
-        /**
-         * @var RideEstimate $estimate
-         */
+        /** @var RideEstimate $estimate */
         foreach ($this->estimates as $estimate) {
             if ($estimate->getEstimatedDistance()) {
                 $distance += $estimate->getEstimatedDistance();
+
                 ++$distanceCounter;
             }
         }
@@ -47,16 +48,19 @@ class RideEstimateCalculator
         }
 
         $this->ride->setEstimatedDistance($distance);
+
+        return $this;
     }
 
-    protected function calculateDuration()
+    protected function calculateDuration(): RideEstimateCalculator
     {
-        $duration = 0;
+        $duration = 0.0;
         $durationCounter = 0;
 
         foreach ($this->estimates as $estimate) {
             if ($estimate->getEstimatedDuration()) {
                 $duration += $estimate->getEstimatedDuration();
+
                 ++$durationCounter;
             }
         }
@@ -66,9 +70,11 @@ class RideEstimateCalculator
         }
 
         $this->ride->setEstimatedDuration($duration);
+
+        return $this;
     }
 
-    protected function calculateParticipants()
+    protected function calculateParticipants(): RideEstimateCalculator
     {
         $participants = 0;
         $participantsCounter = 0;
@@ -76,6 +82,7 @@ class RideEstimateCalculator
         foreach ($this->estimates as $estimate) {
             if ($estimate->getEstimatedParticipants()) {
                 $participants += $estimate->getEstimatedParticipants();
+
                 ++$participantsCounter;
             }
         }
@@ -85,15 +92,19 @@ class RideEstimateCalculator
         }
 
         $this->ride->setEstimatedParticipants($participants);
+
+        return $this;
     }
 
-    public function getRide()
+    public function getRide(): Ride
     {
         return $this->ride;
     }
 
-    public function setRide(Ride $ride)
+    public function setRide(Ride $ride): RideEstimateCalculator
     {
         $this->ride = $ride;
+
+        return $this;
     }
 } 
