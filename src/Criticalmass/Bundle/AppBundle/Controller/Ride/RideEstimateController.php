@@ -53,6 +53,48 @@ class RideEstimateController extends AbstractController
         return $this->redirectToObject($ride);
     }
 
+    public function anonymousestimateAction(Request $request, UserInterface $user = null, string $citySlug, string $rideDate): Response
+    {
+        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+
+        $rideEstimate = new RideEstimate();
+        $rideEstimate
+            ->setUser($this->getUser())
+            ->setRide($ride)
+        ;
+
+        $estimateForm = $this->createForm(
+            RideEstimateType::class,
+            $rideEstimate,
+            [
+                'action' => $this->generateUrl(
+                    'caldera_criticalmass_ride_addestimate',
+                    [
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
+                        'rideDate' => $ride->getFormattedDate()
+                    ]
+                )
+            ]
+        );
+
+        $estimateForm->handleRequest($request);
+
+        if ($estimateForm->isValid()) {
+            $this->getManager()->persist($estimateForm->getData());
+            $this->getManager()->flush();
+
+            $this->recalculateEstimates($ride);
+        }
+
+        return $this->render(
+            'AppBundle:RideEstimate:anonymous.html.twig',
+            [
+                'estimateForm' => $estimateForm->createView(),
+                'ride' => $ride,
+            ]
+        );
+    }
+
     protected function recalculateEstimates(Ride $ride): void
     {
         $estimateService = $this->get(RideEstimateService::class);
