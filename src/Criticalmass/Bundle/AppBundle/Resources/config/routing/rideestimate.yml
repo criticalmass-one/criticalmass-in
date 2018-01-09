@@ -1,0 +1,3 @@
+caldera_criticalmass_ride_addestimate:
+    path:  /{citySlug}/{rideDate}/addestimate
+    defaults: { _controller: AppBundle:Ride/RideEstimate:addestimate }
