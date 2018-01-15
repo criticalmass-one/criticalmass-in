@@ -131,18 +131,21 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $estimatedParticipants;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $estimatedDistance;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $estimatedDuration;
@@ -256,8 +259,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @var string
      */
     private $imageName;
-
-
+    
     public function __construct()
     {
         $this->dateTime = new \DateTime();
