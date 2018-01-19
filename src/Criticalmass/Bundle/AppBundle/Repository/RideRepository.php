@@ -587,7 +587,7 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRides(\DateTime $dateTime = null, bool $fullMonth = true, City $city = null, Region $region = null): array
+    public function findRides(\DateTime $fromDateTime = null, \DateTime $untilDateTime = null, City $city = null, Region $region = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -621,20 +621,17 @@ class RideRepository extends EntityRepository
             ;
         }
 
-        if ($dateTime) {
-            if ($fullMonth) {
-                $fromDateTime = DateTimeUtils::getMonthStartDateTime($dateTime);
-                $endDateTime = DateTimeUtils::getMonthEndDateTime($dateTime);
-            } else {
-                $fromDateTime = DateTimeUtils::getDayStartDateTime($dateTime);
-                $endDateTime = DateTimeUtils::getDayEndDateTime($dateTime);
-            }
-
+        if ($fromDateTime) {
             $builder
                 ->andWhere($builder->expr()->gt('ride.dateTime', ':fromDateTime'))
-                ->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
                 ->setParameter('fromDateTime', $fromDateTime)
-                ->setParameter('endDateTime', $endDateTime)
+            ;
+        }
+
+        if ($fromDateTime) {
+            $builder
+                ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
+                ->setParameter('untilDateTime', $untilDateTime)
             ;
         }
 

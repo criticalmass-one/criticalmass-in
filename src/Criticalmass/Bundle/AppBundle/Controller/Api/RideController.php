@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
+use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,7 +80,8 @@ class RideController extends BaseController
         $region = null;
         $city = null;
         $dateTime = new \DateTime();
-        $fullMonth = true;
+        $fromDateTime = null;
+        $untilDateTime = null;
 
         if ($request->query->get('region')) {
             $region = $this->getRegionRepository()->findOneBySlug($request->query->get('region'));
@@ -90,10 +92,10 @@ class RideController extends BaseController
         }
 
         if ($request->query->get('city')) {
-            $city = $this->getRegionRepository()->findOneBySlug($request->query->get('city'));
+            $city = $this->getCityBySlug($request->query->get('city'));
 
             if (!$city) {
-                throw $this->createNotFoundException('Region not found');
+                throw $this->createNotFoundException('City not found');
             }
         }
 
@@ -106,11 +108,12 @@ class RideController extends BaseController
                         $request->query->get('day')
                     )
                 );
+
+                $fromDateTime = DateTimeUtils::getDayStartDateTime($dateTime);
+                $untilDateTime = DateTimeUtils::getDayEndDateTime($dateTime);
             } catch (\Exception $e) {
                 throw $this->createNotFoundException('Date not found');
             }
-
-            $fullMonth = false;
         } elseif ($request->query->get('year') && $request->query->get('month')) {
             try {
                 $dateTime = new \DateTime(
@@ -119,14 +122,30 @@ class RideController extends BaseController
                         $request->query->get('month')
                     )
                 );
+
+                $fromDateTime = DateTimeUtils::getMonthStartDateTime($dateTime);
+                $untilDateTime = DateTimeUtils::getMonthEndDateTime($dateTime);
+            } catch (\Exception $e) {
+                throw $this->createNotFoundException('Date not found');
+            }
+        } elseif ($request->query->get('year')) {
+            try {
+                $dateTime = new \DateTime(
+                    sprintf('%d-01-01',
+                        $request->query->get('year')
+                    )
+                );
+
+                $fromDateTime = DateTimeUtils::getYearStartDateTime($dateTime);
+                $untilDateTime = DateTimeUtils::getYearEndDateTime($dateTime);
             } catch (\Exception $e) {
                 throw $this->createNotFoundException('Date not found');
             }
         }
 
         $rideList = $this->getRideRepository()->findRides(
-            $dateTime,
-            $fullMonth,
+            $fromDateTime,
+            $untilDateTime,
             $city,
             $region
         );
