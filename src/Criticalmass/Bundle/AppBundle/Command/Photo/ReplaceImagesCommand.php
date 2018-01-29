@@ -32,7 +32,7 @@ class ReplaceImagesCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('criticalmass:images:replaces')
+            ->setName('criticalmass:photos:relocate')
             ->setDescription('Regenerate LatLng Tracks')
             ->addArgument(
                 'citySlug',

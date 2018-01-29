@@ -29,8 +29,8 @@ class PrepareImagesCommand extends ContainerAwareCommand
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:images:prepare')
-            ->setDescription('Create thumbnails for images')
+            ->setName('criticalmass:photos:prepare')
+            ->setDescription('Create thumbnails for photos')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
