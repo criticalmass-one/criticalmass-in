@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command\Photo;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Component\Image\ExifReader\DateTimeExifReader;
