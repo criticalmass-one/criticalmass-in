@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Component\Timeline\Item\CityEditItem;
 
 class CityEditCollector extends AbstractTimelineCollector
@@ -11,9 +11,7 @@ class CityEditCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /**
-         * @var City $city
-         */
+        /** @var City $city */
         foreach ($groupedEntities as $city) {
             if ($city->getSlugs()) {
                 $item = new CityEditItem();

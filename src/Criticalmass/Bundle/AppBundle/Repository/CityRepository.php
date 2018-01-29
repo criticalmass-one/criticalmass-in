@@ -169,7 +169,40 @@ class CityRepository extends EntityRepository
             ;
         }
 
+        $query = $builder->getQuery();
 
+        return $query->getResult();
+    }
+
+    public function findForTimelineCityCreatedCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, int $limit = null): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNull('c.updatedAt'))
+            ->addOrderBy('c.createdAt', 'DESC')
+        ;
+
+        if ($startDateTime) {
+            $builder
+                ->andWhere($builder->expr()->gte('c.createdAt', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime)
+            ;
+        }
+
+        if ($endDateTime) {
+            $builder
+                ->andWhere($builder->expr()->lte('c.createdAt', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime)
+            ;
+        }
+
+        if ($limit) {
+            $builder
+                ->setMaxResults($limit)
+            ;
+        }
 
         $query = $builder->getQuery();
 

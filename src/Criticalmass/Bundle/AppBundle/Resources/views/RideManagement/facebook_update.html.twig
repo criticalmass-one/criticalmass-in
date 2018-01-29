@@ -179,7 +179,7 @@
                         <label class="control-label" for="date">
                             Datum:
                         </label>
-                        {{ form_widget(form.date, { 'attr' : { 'class': 'form-control date-value' } }) }}
+                        {{ form_widget(form.dateTime.date, { 'attr' : { 'class': 'form-control date-value' } }) }}
                     </div>
                 </div>
 
@@ -228,7 +228,7 @@
                         <span class="input-group-addon">
                             {{ form_widget(form.hasTime) }}
                         </span>
-                        {{ form_widget(form.time, { 'attr' : { 'class': 'form-control time-value' } }) }}
+                        {{ form_widget(form.dateTime.time, { 'attr' : { 'class': 'form-control time-value' } }) }}
                     </div>
                 </div>
 

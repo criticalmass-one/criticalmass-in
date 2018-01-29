@@ -5,10 +5,9 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Model\CreateEstimateModel;
-use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
-use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
+use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
@@ -157,10 +156,7 @@ class EstimateController extends BaseController
     protected function recalculateEstimates(RideEstimate $rideEstimate): void
     {
         if ($rideEstimate->getRide()) {
-            /**
-             * @var RideEstimateService $estimateService
-             */
-            $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate');
+            $estimateService = $this->get(RideEstimateService::class);
             $estimateService->calculateEstimates($rideEstimate->getRide());
         }
     }

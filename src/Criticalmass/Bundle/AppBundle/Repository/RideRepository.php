@@ -7,6 +7,7 @@ use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Location;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
@@ -211,16 +212,18 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findFutureRides()
+    public function findFutureRides(): array
     {
         $dateTime = new \DateTime();
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->orderBy('ride.dateTime', 'ASC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $dateTime)
+            ->orderBy('r.dateTime', 'ASC')
+        ;
 
         $query = $builder->getQuery();
 
@@ -537,7 +540,7 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRidesWithFacebookInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
+    public function findRidesWithFacebookInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
     {
         if (!$startDateTime) {
             $startDateTime = new \DateTime();
@@ -549,15 +552,17 @@ class RideRepository extends EntityRepository
             $endDateTime = $endDate->add($dayInterval);
         }
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
-        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
-
-        $builder->andWhere($builder->expr()->isNotNull('ride.facebook'));
-
-        $builder->orderBy('ride.dateTime', 'DESC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lt('r.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->isNotNull('r.facebook'))
+            ->orderBy('r.dateTime', 'DESC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime)
+        ;
 
         $query = $builder->getQuery();
 
@@ -589,22 +594,58 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRides($pastOnly = true)
+    public function findRides(\DateTime $fromDateTime = null, \DateTime $untilDateTime = null, City $city = null, Region $region = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder
+            ->select('ride')
+            ->join('ride.city', 'city')
+            ->where($builder->expr()->eq('city.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+        ;
 
-        $builder->join('ride.city', 'city');
-
-        if ($pastOnly) {
-            $dateTime = new \DateTime();
-
-            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
+        if ($city) {
+            $builder
+                ->andWhere($builder->expr()->eq('city', ':city'))
+                ->setParameter('city', $city)
+            ;
         }
 
-        $builder->addOrderBy('city.city', 'ASC');
-        $builder->addOrderBy('ride.dateTime', 'DESC');
+        if ($region) {
+            $builder
+                ->leftJoin('city.region', 'region1')
+                ->leftJoin('region1.parent', 'region2')
+                ->leftJoin('region2.parent', 'region3')
+                ->andWhere(
+                    $builder->expr()->orX(
+                        $builder->expr()->eq('region1', ':region'),
+                        $builder->expr()->eq('region2', ':region'),
+                        $builder->expr()->eq('region3', ':region')
+                    )
+                )
+                ->setParameter('region', $region)
+            ;
+        }
+
+        if ($fromDateTime) {
+            $builder
+                ->andWhere($builder->expr()->gt('ride.dateTime', ':fromDateTime'))
+                ->setParameter('fromDateTime', $fromDateTime)
+            ;
+        }
+
+        if ($fromDateTime) {
+            $builder
+                ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
+                ->setParameter('untilDateTime', $untilDateTime)
+            ;
+        }
+
+        $builder
+            ->addOrderBy('city.city', 'ASC')
+            ->addOrderBy('ride.dateTime', 'DESC')
+        ;
 
         $query = $builder->getQuery();
 

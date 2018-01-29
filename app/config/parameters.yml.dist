@@ -15,16 +15,6 @@ parameters:
     database_user: root
     database_password: root
 
-    domain.cycleways: cycleways.cw
-    domain.criticalmass: criticalmass.cm
-    domain.caldera: caldera.cm
-    domain.criticalmass: criticalmass.cm
-    domain.criticalmassrocks: criticalrocks.cm
-    domain.criticalmassphoto: criticalphotos.cm
-    domain.criticalmassone: criticalone.cm
-    domain.criticalmasslive: criticallive.cm
-    domain.criticalmasstips: criticaltips.cm
-    
     track.gap_width: 10
 
     openweather.appid: 234qt35zr6tjzrgrergerg

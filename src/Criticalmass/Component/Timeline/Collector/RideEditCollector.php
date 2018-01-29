@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Timeline\Item\RideEditItem;
 
 class RideEditCollector extends AbstractTimelineCollector
@@ -11,9 +11,7 @@ class RideEditCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($groupedEntities as $ride) {
             $item = new RideEditItem();
 

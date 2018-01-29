@@ -9,7 +9,7 @@ use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Criticalmass\Component\Gps\TrackPolyline\TrackPolyline;
-use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
 
 trait TrackHandlingTrait
 {
@@ -21,13 +21,13 @@ trait TrackHandlingTrait
         $gr = $this->get('caldera.criticalmass.gps.trackreader');
         $gr->loadTrack($track);
 
-        $track->setPoints($gr->countPoints());
-
-        $track->setStartPoint(0);
-        $track->setEndPoint($gr->countPoints() - 1);
-
-        $track->setStartDateTime($gr->getStartDateTime());
-        $track->setEndDateTime($gr->getEndDateTime());
+        $track
+            ->setPoints($gr->countPoints())
+            ->setStartPoint(0)
+            ->setEndPoint($gr->countPoints() - 1)
+            ->setStartDateTime($gr->getStartDateTime())
+            ->setEndDateTime($gr->getEndDateTime())
+        ;
 
         /**
          * @var TrackDistanceCalculator $tdc
@@ -42,12 +42,11 @@ trait TrackHandlingTrait
 
     protected function addRideEstimate(Track $track, Ride $ride)
     {
-        /**
-         * @var RideEstimateService $estimateService
-         */
-        $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-        $estimateService->addEstimate($track);
-        $estimateService->calculateEstimates($ride);
+        $estimateService = $this->get(RideEstimateService::class);
+        $estimateService
+            ->addEstimateFromTrack($track)
+            ->calculateEstimates($ride)
+        ;
     }
 
     protected function generateSimpleLatLngList(Track $track)

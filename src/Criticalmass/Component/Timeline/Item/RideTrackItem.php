@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Component\Timeline\Item;
 
-use Criticalmass\Component\Entity\Ride;
-use Criticalmass\Component\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
 
 class RideTrackItem extends AbstractItem
 {

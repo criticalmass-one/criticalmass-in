@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\Thread;
+use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Component\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
@@ -11,9 +11,7 @@ class ThreadCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /**
-         * @var Thread $threadEntity
-         */
+        /** @var Thread $threadEntity */
         foreach ($groupedEntities as $threadEntity) {
             $item = new ThreadItem();
 

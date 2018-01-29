@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\RideEstimate;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Component\Timeline\Item\RideParticipationEstimateItem;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
@@ -11,9 +11,7 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /**
-         * @var RideEstimate $estimateEntity
-         */
+        /** @var RideEstimate $estimateEntity */
         foreach ($groupedEntities as $estimateEntity) {
             $item = new RideParticipationEstimateItem();
 

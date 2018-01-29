@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Component\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
@@ -11,9 +11,7 @@ class RideTrackCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /**
-         * @var Track $trackEntity
-         */
+        /** @var Track $trackEntity */
         foreach ($groupedEntities as $trackEntity) {
             $item = new RideTrackItem();
 

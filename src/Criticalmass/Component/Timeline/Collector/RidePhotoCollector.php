@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Component\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Component\Timeline\Item\RidePhotoItem;
 
 class RidePhotoCollector extends AbstractTimelineCollector
@@ -13,9 +13,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
     {
         $groupedEntities = [];
 
-        /**
-         * @var Photo $photoEntity
-         */
+        /** @var Photo $photoEntity */
         foreach ($photoEntities as $photoEntity) {
             $userKey = $photoEntity->getUser()->getId();
             $rideKey = $photoEntity->getRide()->getId();
