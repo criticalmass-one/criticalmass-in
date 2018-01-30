@@ -5,8 +5,6 @@ namespace Criticalmass\Component\Image\PhotoGps;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
-use Criticalmass\Component\Image\ExifReader\DateTimeExifReader;
-use Criticalmass\Component\Image\ExifReader\GpsExifReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
@@ -44,25 +42,13 @@ class PhotoGps
      */
     protected $trackReader;
 
-    /**
-     * @var GpsExifReader $gpsExifReader
-     */
-    protected $gpsExifReader;
-
-    /**
-     * @var DateTimeExifReader $dateTimeExifReader
-     */
-    protected $dateTimeExifReader;
-
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(UploaderHelper $uploaderHelper, $rootDirectory, GpsExifReader $gpsExifReader, DateTimeExifReader $dateTimeExifReader, TrackReader $trackReader)
+    public function __construct(UploaderHelper $uploaderHelper, $rootDirectory, TrackReader $trackReader)
     {
         $this->uploaderHelper = $uploaderHelper;
         $this->rootDirectory = $rootDirectory . '/../web';
-        $this->gpsExifReader = $gpsExifReader;
-        $this->dateTimeExifReader = $dateTimeExifReader;
         $this->trackReader = $trackReader;
     }
 
