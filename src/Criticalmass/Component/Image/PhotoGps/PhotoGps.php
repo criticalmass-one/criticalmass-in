@@ -74,7 +74,7 @@ class PhotoGps
         return $this->photo;
     }
 
-    public function setTrack(Track $track): PhotoGps
+    public function setTrack(Track $track = null): PhotoGps
     {
         $this->track = $track;
 
