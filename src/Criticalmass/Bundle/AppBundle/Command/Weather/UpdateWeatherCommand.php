@@ -6,6 +6,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Weather;
 use Criticalmass\Component\Weather\WeatherForecastRetriever;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,12 +33,33 @@ class UpdateWeatherCommand extends Command
         $this
             ->setName('criticalmass:weather:update')
             ->setDescription('Retrieve weather forecasts for parameterized range')
+            ->addArgument(
+                'startDateTime',
+                InputArgument::OPTIONAL,
+                'Range start date time'
+            )
+            ->addArgument(
+                'endDateTime',
+                InputArgument::OPTIONAL,
+                'Range end date time'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->weatherForecastRetriever->retrieve();
+        $startDateTime = null;
+        $endDateTime = null;
+
+        if ($input->getArgument('startDateTime')) {
+            $startDateTime = new \DateTime($input->getArgument('startDateTime'));
+        }
+
+        if ($input->getArgument('endDateTime')) {
+            $endDateTime = new \DateTime($input->getArgument('endDateTime'));
+        }
+
+        $this->weatherForecastRetriever->retrieve($startDateTime, $endDateTime);
 
         $newForecasts = $this->weatherForecastRetriever->getNewWeatherForecasts();
 

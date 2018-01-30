@@ -29,15 +29,20 @@ class WeatherForecastRetriever
     {
         $this->doctrine = $doctrine;
         $this->openWeatherMap = $openWeatherMap;
+        $this->logger = $logger;
     }
 
-    public function retrieve(): array
+    public function retrieve(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
     {
-        $startDateTime = new \DateTime();
+        if (!$startDateTime) {
+            $startDateTime = new \DateTime();
+        }
 
-        $endDateInterval = new \DateInterval('P1W');
-        $endDateTime = new \DateTime();
-        $endDateTime->add($endDateInterval);
+        if (!$endDateTime) {
+            $endDateInterval = new \DateInterval('P1W');
+            $endDateTime = new \DateTime();
+            $endDateTime->add($endDateInterval);
+        }
 
         $halfDayInterval = new \DateInterval('PT12H');
         $halfDateTime = new \DateTime();
@@ -50,11 +55,19 @@ class WeatherForecastRetriever
             $currentWeather = $this->findCurrentWeatherForRide($ride);
 
             if (!$currentWeather || $currentWeather->getCreationDateTime() < $halfDateTime) {
-                $this->retrieveWeather($ride);
+                $weather = $this->retrieveWeather($ride);
 
-                $this->newWeatherList[] = $ride;
+                if ($weather) {
+                    $this->newWeatherList[] = $weather;
 
-                $this->logger->info(sprintf('Loaded weather data for city %s and ride %s', $ride->getCity()->getCity(), $ride->getDateTime()->format('Y-m-d')));
+                    $this->logger->info(
+                        sprintf(
+                            'Loaded weather data for city %s and ride %s',
+                            $ride->getCity()->getCity(),
+                            $ride->getDateTime()->format('Y-m-d')
+                        )
+                    );
+                }
             }
         }
 
