@@ -2,32 +2,31 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command\Photo;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\Image\PhotoGps\PhotoGps;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Criticalmass\Component\Image\PhotoLocator\PhotoLocator;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ReplaceImagesCommand extends ContainerAwareCommand
+class ReplaceImagesCommand extends Command
 {
-    /** @var Registry $doctrine */
+    /** @var PhotoLocator $photoLocator */
+    protected $photoLocator;
+
+    /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    /** @var PhotoGps $photoGps */
-    protected $photoGps;
+    public function __construct(PhotoLocator $photoLocator, Doctrine $doctrine)
+    {
+        $this->photoLocator = $photoLocator;
+        $this->doctrine = $doctrine;
 
-    /** @var EntityManager $manager */
-    protected $manager;
-
-    /** @var \DateTimeZone $dateTimeZone */
-    protected $dateTimeZone = null;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -53,49 +52,33 @@ class ReplaceImagesCommand extends ContainerAwareCommand
                 'photoDateTimeZone',
                 InputArgument::OPTIONAL,
                 'Timezone of the photos datetime values'
-            );
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->doctrine = $this->getContainer()->get('doctrine');
-        $this->photoGps = $this->getContainer()->get('caldera.criticalmass.image.photogps');
-        $this->manager = $this->doctrine->getManager();
-
         if ($input->hasArgument('photoDateTimeZone') && $input->getArgument('photoDateTimeZone')) {
-            $this->dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
+            $dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
 
-            $this->photoGps->setDateTimeZone($this->dateTimeZone);
+            $this->photoLocator->setDateTimeZone($dateTimeZone);
         }
 
         /** @var Ride $ride */
-        $ride = $this->doctrine->getRepository('AppBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
 
         /** @var User $user */
-        $user = $this->doctrine->getRepository('AppBundle:User')->findOneByUsername($input->getArgument('username'));
+        $user = $this->doctrine->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
 
         /** @var Track $track */
-        $track = $this->doctrine->getRepository('AppBundle:Track')->findByUserAndRide($ride, $user);
+        $track = $this->doctrine->getRepository(Track::class)->findByUserAndRide($ride, $user);
 
-        $photos = $this->doctrine->getRepository('AppBundle:Photo')->findPhotosByRide($ride);
-
-        /** @var Photo $photo */
-        foreach ($photos as $photo) {
-            $this->photoGps->setPhoto($photo);
-            $this->photoGps->setTrack($track);
-
-            $this->photoGps->execute();
-
-            $output->writeln(sprintf(
-                'Updated location of photo <comment>#%d</comment> to <info>%f,%f</info>',
-                $photo->getId(),
-                $photo->getLatitude(),
-                $photo->getLongitude()
-            ));
-
-            $this->manager->merge($photo);
-        }
-
-        $this->manager->flush();
+        $this->photoLocator
+            ->setRide($ride)
+            ->setUser($user)
+            ->setTrack($track)
+            ->setOutput($output)
+            ->relocate()
+        ;
     }
 }
