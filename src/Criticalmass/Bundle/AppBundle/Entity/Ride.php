@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
+use Caldera\GeoBasic\Coord\Coord;
 use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ParticipateableInterface;
@@ -684,6 +685,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         }
         
         return $this->latitude . ',' . $this->longitude;
+    }
+
+    public function getCoord(): Coord
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime

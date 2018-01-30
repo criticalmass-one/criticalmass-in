@@ -6,5 +6,6 @@
     <imports>
         <import resource="command/facebook.xml" />
         <import resource="command/photo.xml" />
+        <import resource="command/weather.xml" />
     </imports>
 </container>
