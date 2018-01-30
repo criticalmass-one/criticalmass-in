@@ -5,6 +5,8 @@ namespace Criticalmass\Component\Image\PhotoGps;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
+use PHPExif\Exif;
+use PHPExif\Reader\Reader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
@@ -52,7 +54,7 @@ class PhotoGps
         $this->trackReader = $trackReader;
     }
 
-    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
+    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGps
     {
         $this->dateTimeZone = $dateTimeZone;
         $this->trackReader->setDateTimeZone($dateTimeZone);
@@ -60,33 +62,36 @@ class PhotoGps
         return $this;
     }
 
-    public function setPhoto(Photo $photo)
+    public function setPhoto(Photo $photo): PhotoGps
     {
         $this->photo = $photo;
 
         return $this;
     }
 
-    public function getPhoto(Photo $photo)
+    public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
-    public function setTrack(Track $track)
+    public function setTrack(Track $track): PhotoGps
     {
         $this->track = $track;
 
         return $this;
     }
 
-    public function execute()
+    public function execute(): PhotoGps
     {
-        $this->gpsExifReader->setPhoto($this->photo);
+        if ($gps = $this->getExifCoords()) {
+            var_dump($gps);
 
-        if ($this->gpsExifReader->hasGpsExifData()) {
-            $this->gpsExifReader->execute();
+            /** @todo check keys of gps array */
 
-            $this->photo = $this->gpsExifReader->getPhoto();
+            $this->photo
+                ->setLatitude($gps['lat'])
+                ->setLongitude($gps['lon'])
+            ;
         } elseif ($this->track) {
             $this->approximateCoordinates();
         }
@@ -94,30 +99,51 @@ class PhotoGps
         return $this;
     }
 
-    protected function readExifData()
-    {
-        $filename = $this->uploaderHelper->asset($this->photo, 'imageFile');
-
-        $this->exifData = exif_read_data($filename, 0, true);
-    }
-
-    protected function xmlToDateTime($xml)
-    {
-        return new \DateTime(str_replace("T", " ", str_replace("Z", "", $xml)));
-    }
-
-    public function approximateCoordinates()
+    public function approximateCoordinates(): PhotoGps
     {
         $this->trackReader->loadTrack($this->track);
 
-        $dateTime = $this->dateTimeExifReader
-            ->setPhoto($this->photo)
-            ->execute()
-            ->getDateTime();
+        $dateTime = $this->getExifDateTime();
 
-        $result = $this->trackReader->findCoordNearDateTime($dateTime);
+        if ($dateTime) {
+            $result = $this->trackReader->findCoordNearDateTime($dateTime);
 
-        $this->photo->setLatitude($result['latitude']);
-        $this->photo->setLongitude($result['longitude']);
+            $this->photo->setLatitude($result['latitude']);
+            $this->photo->setLongitude($result['longitude']);
+        }
+
+        return $this;
+    }
+
+    protected function getExifDateTime(): ?\DateTime
+    {
+        $exif = $this->readExifData();
+
+        if ($dateTime = $exif->getCreationDate()) {
+            return $dateTime;
+        }
+
+        return null;
+    }
+
+    protected function getExifCoords(): ?array
+    {
+        $exif = $this->readExifData();
+
+        if ($gps = $exif->getGPS()) {
+            return $gps;
+        }
+
+        return null;
+    }
+
+    protected function readExifData(): Exif
+    {
+        $filename = $this->uploaderHelper->asset($this->photo, 'imageFile');
+
+        $reader = Reader::factory(Reader::TYPE_NATIVE);
+        $exif = $reader->read($filename);
+
+        return $exif;
     }
 }
