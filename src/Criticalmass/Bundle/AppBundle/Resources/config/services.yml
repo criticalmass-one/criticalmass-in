@@ -50,22 +50,6 @@ services:
         class: Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator
         arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
 
-    caldera.criticalmass.image.photogps:
-        class: Criticalmass\Component\Image\PhotoGps\PhotoGps
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.criticalmass.gps.trackreader' ]
-
-    caldera.criticalmass.image.exifreader.gps:
-        class: Criticalmass\Component\Image\ExifReader\GpsExifReader
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
-
-    caldera.criticalmass.image.exifreader.datetime:
-        class: Criticalmass\Component\Image\ExifReader\DateTimeExifReader
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
-
-    caldera.criticalmass.image.exifreader:
-        class: Criticalmass\Component\Image\ExifReader\ExifReader
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
-
     caldera.criticalmass.board.builder.boardbuilder:
         class: Criticalmass\Bundle\AppBundle\Board\Builder\BoardBuilder
         arguments: [ '@doctrine' ]
