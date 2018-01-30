@@ -3,13 +3,11 @@
 namespace Criticalmass\Bundle\AppBundle\Command;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Component\Image\ExifReader\DateTimeExifReader;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use PHPExif\Reader\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ReloadImageExifCommand extends ContainerAwareCommand
@@ -37,24 +35,20 @@ class ReloadImageExifCommand extends ContainerAwareCommand
         $this->manager = $this->doctrine->getManager();
 
         $photos = $this->doctrine->getRepository('AppBundle:Photo')->findAll();
-
-        /**
-         * @var DateTimeExifReader $dter
-         */
-        $dter = $this->getContainer()->get('caldera.criticalmass.image.exifreader.datetime');
+        
+        $reader = Reader::factory(Reader::TYPE_NATIVE);
 
         /**
          * @var Photo $photo
          */
         foreach ($photos as $photo) {
-            $dateTime = $dter
-                ->setPhoto($photo)
-                ->execute()
-                ->getDateTime();
+            $path = $this->getContainer()->getParameter('kernel.root_dir') . '/../web/photos/' . $photo->getImageName();
 
-            $photo->setDateTime($dateTime);
+            $exif = $reader->getExifFromFile($path);
 
-            $this->manager->merge($photo);
+            if ($dateTime = $exif->getCreationDate()) {
+                $photo->setDateTime($dateTime);
+            }
         }
 
         $this->manager->flush();
