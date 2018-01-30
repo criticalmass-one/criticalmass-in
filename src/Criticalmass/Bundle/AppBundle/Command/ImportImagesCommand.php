@@ -6,10 +6,10 @@ use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\Image\ExifReader\DateTimeExifReader;
 use Criticalmass\Component\Image\PhotoGps\PhotoGps;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use PHPExif\Reader\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,9 +34,6 @@ class ImportImagesCommand extends ContainerAwareCommand
 
     /** @var Track $track */
     protected $track;
-
-    /** @var DateTimeExifReader $dter */
-    protected $dter;
 
     /** @var PhotoGps $pgps */
     protected $pgps;
@@ -77,7 +74,6 @@ class ImportImagesCommand extends ContainerAwareCommand
         $this->ride = $this->doctrine->getRepository('AppBundle:Ride')->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
         $this->user = $this->doctrine->getRepository('AppBundle:User')->findOneByUsername($input->getArgument('username'));
 
-        $this->dter = $this->getContainer()->get('caldera.criticalmass.image.exifreader.datetime');
         $this->pgps = $this->getContainer()->get('caldera.criticalmass.image.photogps');
 
         $this->track = $this->doctrine->getRepository('AppBundle:Track')->findByUserAndRide($this->ride, $this->user);
@@ -112,15 +108,19 @@ class ImportImagesCommand extends ContainerAwareCommand
         return $imageFileList;
     }
 
-    protected function calculateDateTime(Photo $photo)
+    protected function calculateDateTime(Photo $photo): Photo
     {
-        $dateTime = $this
-            ->dter
-            ->setPhoto($photo)
-            ->execute()
-            ->getDateTime();
+        $path = $this->getContainer()->getParameter('kernel.root_dir') . '/../web/photos/' . $photo->getImageName();
 
-        $photo->setDateTime($dateTime);
+        $reader = Reader::factory(Reader::TYPE_NATIVE);
+
+        $exif = $reader->getExifFromFile($path);
+
+        if ($dateTime = $exif->getCreationDate()) {
+            $photo->setDateTime($dateTime);
+        }
+
+        return $photo;
     }
 
     protected function calculateLocation(Photo $photo)
