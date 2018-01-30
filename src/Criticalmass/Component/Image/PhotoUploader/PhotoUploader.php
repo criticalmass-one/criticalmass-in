@@ -55,7 +55,7 @@ class PhotoUploader
         return $this;
     }
 
-    public function setTrack(Track $track): PhotoUploader
+    public function setTrack(Track $track = null): PhotoUploader
     {
         $this->track = $track;
 
