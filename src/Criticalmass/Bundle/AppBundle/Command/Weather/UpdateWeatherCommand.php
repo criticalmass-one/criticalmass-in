@@ -31,7 +31,8 @@ class UpdateWeatherCommand extends Command
     {
         $this
             ->setName('criticalmass:weather:update')
-            ->setDescription('Create rides for a parameterized year and month automatically');
+            ->setDescription('Retrieve weather forecasts for parameterized range')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
