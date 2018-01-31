@@ -16,8 +16,8 @@ class PhotoUploader
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    /** @var string $uploadPhotoDirectory */
-    protected $uploadPhotoDirectory;
+    /** @var string $uploadDestinationPhoto */
+    protected $uploadDestinationPhoto;
 
     /** @var User $user */
     protected $user;
@@ -34,11 +34,11 @@ class PhotoUploader
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(Doctrine $doctrine, PhotoGps $photoGps, string $uploadPhotoDirectory)
+    public function __construct(Doctrine $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto)
     {
         $this->doctrine = $doctrine;
         $this->photoGps = $photoGps;
-        $this->uploadPhotoDirectory = $uploadPhotoDirectory;
+        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
     }
 
     public function setUser(User $user): PhotoUploader
@@ -88,7 +88,7 @@ class PhotoUploader
 
     protected function calculateDateTime(Photo $photo): Photo
     {
-        $photoFilename = sprintf('%s%s', $this->uploadPhotoDirectory, $photo->getImageName());
+        $photoFilename = sprintf('%s%s', $this->uploadDestinationPhoto, $photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
 
@@ -118,7 +118,7 @@ class PhotoUploader
 
         $imageFilename = uniqid() . '.jpg';
 
-        $destinationFilename = sprintf('%s%s', $this->uploadPhotoDirectory, $imageFilename);
+        $destinationFilename = sprintf('%s%s', $this->uploadDestinationPhoto, $imageFilename);
 
         copy($sourceFilename, $destinationFilename);
 
