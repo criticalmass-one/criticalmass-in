@@ -6,12 +6,10 @@ use Criticalmass\Bundle\AppBundle\Repository\RegionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
@@ -23,43 +21,37 @@ class StandardCityType extends AbstractType
         $builder
             ->add(
                 'city',
-                TextType::class,
-                [
+                TextType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'title',
-                TextType::class,
-                [
+                TextType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'description',
-                TextareaType::class,
-                [
+                TextareaType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'url',
-                TextType::class,
-                [
+                TextType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'facebook',
-                TextType::class,
-                [
+                TextType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'twitter',
-                TextType::class,
-                [
+                TextType::class, [
                     'required' => false
                 ]
             )
@@ -73,8 +65,7 @@ class StandardCityType extends AbstractType
             )
             ->add(
                 'cityPopulation',
-                IntegerType::class,
-                [
+                IntegerType::class, [
                     'required' => false
                 ]
             )
@@ -101,22 +92,19 @@ class StandardCityType extends AbstractType
             )
             ->add(
                 'punchLine',
-                TextType::class,
-                [
+                TextType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'longDescription',
-                TextareaType::class,
-                [
+                TextareaType::class, [
                     'required' => false
                 ]
             )
             ->add(
                 'enableBoard',
-                CheckboxType::class,
-                [
+                CheckboxType::class, [
                     'required' => false
                 ]
             )
@@ -126,8 +114,7 @@ class StandardCityType extends AbstractType
             )
             ->add(
                 'imageFile',
-                VichFileType::class,
-                [
+                VichFileType::class, [
                     'required' => false
                 ]
             )
