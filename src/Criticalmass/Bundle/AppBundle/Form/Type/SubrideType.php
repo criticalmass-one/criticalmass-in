@@ -20,9 +20,6 @@ class SubrideType extends AbstractType
             ->add('location', TextType::class, array('required' => false))
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class)
-            ->add('facebook', TextType::class, array('required' => false))
-            ->add('twitter', TextType::class, array('required' => false))
-            ->add('url', TextType::class, array('required' => false))
         ;
     }
 
