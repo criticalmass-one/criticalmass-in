@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
+use Criticalmass\Bundle\AppBundle\Repository\RegionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -82,7 +83,7 @@ class StandardCityType extends AbstractType
                 EntityType::class,
                 [
                     'class' => 'AppBundle:Region',
-                    'query_builder' => function (\AppBundle\Repository\RegionRepository $er) {
+                    'query_builder' => function (RegionRepository $er) {
                         $builder = $er->createQueryBuilder('region');
 
                         $builder->join('region.parent', 'region2');
