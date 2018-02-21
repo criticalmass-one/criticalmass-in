@@ -54,7 +54,7 @@ class SocialNetworkProfile
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $mainNetwork;
+    protected $mainNetwork = false;
 
     public function getId(): ?int
     {
@@ -116,7 +116,7 @@ class SocialNetworkProfile
         return $this;
     }
 
-    public function getIdentifier(): string
+    public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
@@ -128,7 +128,7 @@ class SocialNetworkProfile
         return $this;
     }
 
-    public function getNetwork(): string
+    public function getNetwork(): ?string
     {
         return $this->network;
     }
