@@ -8,6 +8,7 @@ simple_things_entity_audit:
         - Criticalmass\Bundle\AppBundle\Entity\Region
         - Criticalmass\Bundle\AppBundle\Entity\Ride
         - Criticalmass\Bundle\AppBundle\Entity\Subride
+        - Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile
 
     global_ignore_columns:
         - created_at
