@@ -5,14 +5,10 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <defaults autowire="true" autoconfigure="true" public="true" />
-
-        <service id="Criticalmass\Bundle\AppBundle\Command\Weather\UpdateWeatherCommand">
+        <defaults autowire="true" autoconfigure="true" public="true">
             <tag name="console.command" />
-        </service>
+        </defaults>
 
-        <service id="Cmfcmf\OpenWeatherMap">
-            <argument type="string">%openweather.appid%</argument>
-        </service>
+        <prototype namespace="Criticalmass\Bundle\AppBundle\Command\Photo\" resource="%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Command/Photo/*" />
     </services>
 </container>

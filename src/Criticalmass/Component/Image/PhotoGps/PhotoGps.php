@@ -35,9 +35,9 @@ class PhotoGps
     protected $uploaderHelper;
 
     /**
-     * @var string $rootDirectory
+     * @var string $uploadDestinationPhoto
      */
-    protected $rootDirectory;
+    protected $uploadDestinationPhoto;
 
     /**
      * @var TrackReader $trackReader
@@ -47,10 +47,10 @@ class PhotoGps
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(UploaderHelper $uploaderHelper, $rootDirectory, TrackReader $trackReader)
+    public function __construct(UploaderHelper $uploaderHelper, TrackReader $trackReader, string $uploadDestinationPhoto)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory . '/../web';
+        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
         $this->trackReader = $trackReader;
     }
 
@@ -74,7 +74,7 @@ class PhotoGps
         return $this->photo;
     }
 
-    public function setTrack(Track $track): PhotoGps
+    public function setTrack(Track $track = null): PhotoGps
     {
         $this->track = $track;
 
