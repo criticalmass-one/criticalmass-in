@@ -5,8 +5,8 @@ namespace Criticalmass\Bundle\AppBundle\EntityInterface;
 
 interface SocialNetworkInterface
 {
-    const FACEBOOK = 'facebook';
-    const TWITTER = 'twitter';
-    const HOMEPAGE = 'homepage';
-    const INSTAGRAM = 'instagram';
+    const NETWORK_FACEBOOK = 'facebook';
+    const NETWORK_TWITTER = 'twitter';
+    const NETWORK_HOMEPAGE = 'homepage';
+    const NETWORK_INSTAGRAM = 'instagram';
 }
