@@ -4,11 +4,21 @@ namespace Criticalmass\Component\RideGenerator\RideCalculator;
 
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\RideGenerator\Exception\InvalidMonthException;
+use Criticalmass\Component\RideGenerator\Exception\InvalidYearException;
 
 class RideCalculator extends AbstractRideCalculator
 {
     public function execute(): RideCalculatorInterface
     {
+        if (!$this->year) {
+            throw new InvalidYearException();
+        }
+
+        if (!$this->month) {
+            throw new InvalidMonthException();
+        }
+
         foreach ($this->cycleList as $cycle) {
             $ride = $this->createRide($cycle);
 

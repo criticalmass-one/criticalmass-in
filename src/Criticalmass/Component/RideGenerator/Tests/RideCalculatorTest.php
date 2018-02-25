@@ -41,6 +41,8 @@ class RideCalculatorTest extends TestCase
     public function testRideCalculatorCalculatedRides(): void
     {
         $rideList = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
             ->addCycle($this->createCycle())
             ->execute()
             ->getRideList()
@@ -52,6 +54,27 @@ class RideCalculatorTest extends TestCase
     public function testRideCalculatorLocation(): void
     {
         $rideList = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->addCycle($this->createCycle())
+            ->execute()
+            ->getRideList()
+        ;
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
+        $this->assertEquals(53.596812, $ride->getLatitude());
+        $this->assertEquals(10.011008, $ride->getLongitude());
+        $this->assertTrue($ride->getHasLocation());
+    }
+
+    public function testRideCalculatorDate1(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
             ->addCycle($this->createCycle())
             ->execute()
             ->getRideList()
