@@ -28,7 +28,7 @@ class RideCalculatorTest extends TestCase
         $cityCycle
             ->setWeekOfMonth(CityCycle::WEEK_LAST)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('19:00:00'))
+            ->setTime(new \DateTime('18:00:00'))
             ->setLocation('Stadtpark Hamburg')
             ->setLatitude(53.596812)
             ->setLongitude(10.011008)
@@ -38,7 +38,7 @@ class RideCalculatorTest extends TestCase
         return $cityCycle;
     }
 
-    public function testRideCalculatorCalculatedRides(): void
+    public function testCalculatedRides(): void
     {
         $rideList = $this->getRideCalculator()
             ->setYear(2018)
@@ -51,7 +51,7 @@ class RideCalculatorTest extends TestCase
         $this->assertEquals(1, count($rideList));
     }
 
-    public function testRideCalculatorLocation(): void
+    public function testLocation(): void
     {
         $rideList = $this->getRideCalculator()
             ->setYear(2018)
@@ -70,7 +70,7 @@ class RideCalculatorTest extends TestCase
         $this->assertTrue($ride->getHasLocation());
     }
 
-    public function testRideCalculatorDate1(): void
+    public function testTimezone(): void
     {
         $rideList = $this->getRideCalculator()
             ->setYear(2018)
@@ -83,9 +83,44 @@ class RideCalculatorTest extends TestCase
         /** @var Ride $ride */
         $ride = array_pop($rideList);
 
-        $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
-        $this->assertEquals(53.596812, $ride->getLatitude());
-        $this->assertEquals(10.011008, $ride->getLongitude());
-        $this->assertTrue($ride->getHasLocation());
+        $this->assertEquals(new \DateTimeZone('Europe/Berlin'), $ride->getDateTime()->getTimezone());
+    }
+
+    public function testTime(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->addCycle($this->createCycle())
+            ->execute()
+            ->getRideList()
+        ;
+
+        $utc = new \DateTimeZone('UTC');
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2018-09-28 18:00:00', $utc), $ride->getDateTime()->setTimezone($utc));
+        $this->assertTrue($ride->getHasTime());
+    }
+
+    public function testDaylightSavingTime(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(2)
+            ->addCycle($this->createCycle())
+            ->execute()
+            ->getRideList()
+        ;
+
+        $europeBerlin = new \DateTimeZone('Europe/Berlin');
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
+        $this->assertTrue($ride->getHasTime());
     }
 }
