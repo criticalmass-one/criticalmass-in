@@ -4,6 +4,7 @@ namespace Criticalmass\Component\RideGenerator\Tests;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\RideGenerator\RideCalculator\RideCalculator;
 use Criticalmass\Component\RideGenerator\RideCalculator\RideCalculatorInterface;
 use PHPUnit\Framework\TestCase;
@@ -37,12 +38,31 @@ class RideCalculatorTest extends TestCase
         return $cityCycle;
     }
 
-    public function testRideCalculator1(): void
+    public function testRideCalculatorCalculatedRides(): void
     {
-        $this->getRideCalculator()
+        $rideList = $this->getRideCalculator()
             ->addCycle($this->createCycle())
             ->execute()
             ->getRideList()
         ;
+
+        $this->assertEquals(1, count($rideList));
+    }
+
+    public function testRideCalculatorLocation(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->addCycle($this->createCycle())
+            ->execute()
+            ->getRideList()
+        ;
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
+        $this->assertEquals(53.596812, $ride->getLatitude());
+        $this->assertEquals(10.011008, $ride->getLongitude());
+        $this->assertTrue($ride->getHasLocation());
     }
 }
