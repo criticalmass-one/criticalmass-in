@@ -7,7 +7,7 @@ use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Location;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
+use Criticalmass\Compontent\Util\DateTimeUtil;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
@@ -330,12 +330,9 @@ class RideRepository extends EntityRepository
      */
     public function findByCitySlugAndRideDate($citySlug, $rideDate)
     {
-        // Maybe this datetime computation stuff is stupid. Will look for a better solution.
-        $fromDateTime = new \DateTime($rideDate);
-        $fromDateTime->setTime(0, 0, 0);
-
-        $untilDateTime = new \DateTime($rideDate);
-        $untilDateTime->setTime(23, 59, 59);
+        $rideDateTime = new \DateTime($rideDate);
+        $fromDateTime = DateTimeUtil::getDayStartDateTime($rideDateTime);
+        $untilDateTime = DateTimeUtil::getDayEndDateTime($rideDateTime);
 
         $builder = $this->createQueryBuilder('ride');
 
