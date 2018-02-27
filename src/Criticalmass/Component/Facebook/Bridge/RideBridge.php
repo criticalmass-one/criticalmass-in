@@ -5,7 +5,7 @@ namespace Criticalmass\Component\Facebook\Bridge;
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Facebook\Api\FacebookEventApi;
-use Criticalmass\Compontent\Util\DateTimeUtil;
+use Criticalmass\Component\Util\DateTimeUtil;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;

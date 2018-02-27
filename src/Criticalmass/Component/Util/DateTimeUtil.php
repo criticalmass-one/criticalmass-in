@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Compontent\Util;
+namespace Criticalmass\Component\Util;
 
 class DateTimeUtil
 {

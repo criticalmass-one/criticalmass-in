@@ -4,7 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
-use Criticalmass\Compontent\Util\DateTimeUtil;
+use Criticalmass\Component\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
