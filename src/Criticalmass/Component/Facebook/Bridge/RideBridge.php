@@ -4,8 +4,8 @@ namespace Criticalmass\Component\Facebook\Bridge;
 
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
 use Criticalmass\Component\Facebook\Api\FacebookEventApi;
+use Criticalmass\Component\Util\DateTimeUtil;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;
@@ -162,8 +162,8 @@ class RideBridge extends AbstractBridge
             return null;
         }
 
-        $since = DateTimeUtils::getDayStartDateTime($ride->getDateTime());
-        $until = DateTimeUtils::getDayEndDateTime($ride->getDateTime());
+        $since = DateTimeUtil::getDayStartDateTime($ride->getDateTime());
+        $until = DateTimeUtil::getDayEndDateTime($ride->getDateTime());
 
         return $this->facebookEventApi->queryEvents($pageId, $since, $until);
     }
@@ -176,8 +176,8 @@ class RideBridge extends AbstractBridge
             return null;
         }
 
-        $since = DateTimeUtils::getMonthStartDateTime($ride->getDateTime());
-        $until = DateTimeUtils::getMonthEndDateTime($ride->getDateTime());
+        $since = DateTimeUtil::getMonthStartDateTime($ride->getDateTime());
+        $until = DateTimeUtil::getMonthEndDateTime($ride->getDateTime());
 
         return $this->facebookEventApi->queryEvents($pageId, $since, $until);
     }

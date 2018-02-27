@@ -4,7 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
-use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
+use Criticalmass\Component\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,8 +109,8 @@ class RideController extends BaseController
                     )
                 );
 
-                $fromDateTime = DateTimeUtils::getDayStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtils::getDayEndDateTime($dateTime);
+                $fromDateTime = DateTimeUtil::getDayStartDateTime($dateTime);
+                $untilDateTime = DateTimeUtil::getDayEndDateTime($dateTime);
             } catch (\Exception $e) {
                 throw $this->createNotFoundException('Date not found');
             }
@@ -123,8 +123,8 @@ class RideController extends BaseController
                     )
                 );
 
-                $fromDateTime = DateTimeUtils::getMonthStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtils::getMonthEndDateTime($dateTime);
+                $fromDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+                $untilDateTime = DateTimeUtil::getMonthEndDateTime($dateTime);
             } catch (\Exception $e) {
                 throw $this->createNotFoundException('Date not found');
             }
@@ -136,8 +136,8 @@ class RideController extends BaseController
                     )
                 );
 
-                $fromDateTime = DateTimeUtils::getYearStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtils::getYearEndDateTime($dateTime);
+                $fromDateTime = DateTimeUtil::getYearStartDateTime($dateTime);
+                $untilDateTime = DateTimeUtil::getYearEndDateTime($dateTime);
             } catch (\Exception $e) {
                 throw $this->createNotFoundException('Date not found');
             }
