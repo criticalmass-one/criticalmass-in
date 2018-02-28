@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    {% set month = calendr_month(2017, 02) %}
+    {% set month = calendr_month(year, month) %}
 
     <div class="container">
         <div class="row">
@@ -29,6 +29,8 @@
                 </h3>
             </div>
         </div>
+
+        {% include('AppBundle:Calendar:_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
         <div class="row">
             <div class="col-md-12">
@@ -96,6 +98,8 @@
             </div>
         </div>
     </div>
+
+    {% include('AppBundle:Calendar:_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
     <script type="text/javascript">
         CriticalMass.loadModule('CalendarPage', '#calendar');

@@ -2,21 +2,34 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Calendar\EventProvider\RideProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
+        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $month = $request->query->getInt('month', (new \DateTime())->format('m'));
+
+        $dateTimeSpec = sprintf('%d-%d-01', $year, $month);
+        $dateTime = new \DateTimeImmutable($dateTimeSpec);
+
+        $monthInterval = new \DateInterval('P1M');
+        $previousMonth = $dateTime->sub($monthInterval);
+        $nextMonth = $dateTime->add($monthInterval);
+
         $this->getSeoPage()
             ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
         ;
 
         return $this->render(
             'AppBundle:Calendar:index.html.twig', [
-                'time' => new \DateTime()
+                'year' => $year,
+                'month' => $month,
+                'time' => $dateTime,
+                'previousMonth' => $previousMonth,
+                'nextMonth' => $nextMonth,
             ]
         );
     }
