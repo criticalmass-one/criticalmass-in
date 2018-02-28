@@ -16,23 +16,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 trait UtilTrait
 {
-    /**
-     * Returns a city entity identified by its slug.
-     *
-     * @param $citySlug
-     * @return City
-     * @throws NotFoundHttpException
-     */
-    protected function getCityBySlug($citySlug): City
+    protected function getCityBySlug(string $citySlugString): ?City
     {
         /** @var CitySlug $citySlug */
-        $citySlug = $this->getCitySlugRepository()->findOneBySlug($citySlug);
+        $citySlug = $this->getCitySlugRepository()->findOneBySlug($citySlugString);
 
-        if ($citySlug) {
-            return $citySlug->getCity();
-        } else {
-            throw new NotFoundHttpException();
+        if (!$citySlug) {
+            return null;
         }
+
+        return $citySlug->getCity();
     }
 
     protected function getSeoPage(): SeoPage

@@ -13,8 +13,6 @@ class CityController extends AbstractController
 {
     use ViewStorageTrait;
 
-
-
     public function missingStatsAction($citySlug)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -103,9 +101,13 @@ class CityController extends AbstractController
         );
     }
 
-    public function showAction(Request $request, $citySlug)
+    public function showAction(Request $request, string $citySlug): Response
     {
         $city = $this->getCityBySlug($citySlug);
+
+        if (!$city) {
+            return $this->forward('AppBundle:City/MissingCity:missing', ['citySlug' => $citySlug]);
+        }
 
         if (!$city->getEnabled()) {
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
