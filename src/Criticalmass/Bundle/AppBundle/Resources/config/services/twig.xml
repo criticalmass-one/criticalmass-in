@@ -9,5 +9,6 @@
 
         <service id="Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension" />
         <service id="Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension" />
+        <service id="CalendR\Extension\Twig\CalendRExtension" />
     </services>
 </container>
