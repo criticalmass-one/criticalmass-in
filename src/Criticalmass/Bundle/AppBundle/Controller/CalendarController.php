@@ -10,9 +10,6 @@ class CalendarController extends AbstractController
 {
     public function indexAction(Request $request)
     {
-        $factory = new \CalendR\Calendar;
-        $factory->getEventManager()->addProvider('ride_provider', new RideProvider());
-
         $this->getSeoPage()
             ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
         ;
