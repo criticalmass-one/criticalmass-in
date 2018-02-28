@@ -95,4 +95,3 @@ services:
 
 imports:
   - { resource: ./services/admin.yml }
-  - { resource: ./services/twig_extensions.yml }
