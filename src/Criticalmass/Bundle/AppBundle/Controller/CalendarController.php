@@ -29,9 +29,7 @@ class CalendarController extends AbstractController
 
         return $this->render(
             'AppBundle:Calendar:index.html.twig', [
-                'year' => $year,
-                'month' => $month,
-                'time' => $dateTime,
+                'dateTime' => $dateTime,
                 'previousMonth' => $previousMonth,
                 'nextMonth' => $nextMonth,
             ]
