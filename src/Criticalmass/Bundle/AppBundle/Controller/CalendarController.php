@@ -12,8 +12,12 @@ class CalendarController extends AbstractController
         $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
         $month = $request->query->getInt('month', (new \DateTime())->format('m'));
 
-        $dateTimeSpec = sprintf('%d-%d-01', $year, $month);
-        $dateTime = new \DateTimeImmutable($dateTimeSpec);
+        try {
+            $dateTimeSpec = sprintf('%d-%d-01', $year, $month);
+            $dateTime = new \DateTimeImmutable($dateTimeSpec);
+        } catch (\Exception $exception) {
+            $dateTime = new \DateTimeImmutable();
+        }
 
         $monthInterval = new \DateInterval('P1M');
         $previousMonth = $dateTime->sub($monthInterval);
