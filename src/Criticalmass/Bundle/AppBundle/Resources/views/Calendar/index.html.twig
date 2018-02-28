@@ -77,7 +77,10 @@
                                 <ul class="ride-list list-unstyled">
                                 {% for event in calendr_events(day).all %}
                                     <li>
-                                        {{ event.uid }}
+                                        {% set ride = event.ride %}
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.city.city }}
+                                        </a>
                                     </li>
                                 {% endfor %}
                                 </ul>

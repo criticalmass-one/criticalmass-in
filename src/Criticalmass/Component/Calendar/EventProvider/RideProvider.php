@@ -4,7 +4,7 @@ namespace Criticalmass\Component\Calendar\EventProvider;
 
 use CalendR\Event\Provider\ProviderInterface;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Calendar\Event\Event;
+use Criticalmass\Component\Calendar\Event\RideEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class RideProvider implements ProviderInterface
@@ -33,10 +33,8 @@ class RideProvider implements ProviderInterface
         return $this->doctrine->getRepository(Ride::class)->findRides($begin, $end);
     }
 
-    protected function convertRideToEvent(Ride $ride): Event
+    protected function convertRideToEvent(Ride $ride): RideEvent
     {
-        $event = new Event($ride->getCity()->getCity(), $ride->getDateTime(), $ride->getDateTime());
-
-        return $event;
+        return new RideEvent($ride);
     }
 }
