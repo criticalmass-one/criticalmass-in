@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller;
 use Criticalmass\Bundle\AppBundle\Entity\Location;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LocationController extends AbstractController
@@ -48,7 +49,7 @@ class LocationController extends AbstractController
         );
     }
 
-    public function rideAction(Request $request, $citySlug, $rideDate)
+    public function rideAction(Request $request, string $citySlug, string $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -62,21 +63,18 @@ class LocationController extends AbstractController
 
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
-        return $this->render(
-            'AppBundle:Location:show.html.twig',
-            [
-                'location' => $location,
-                'locations' => $locations,
-                'rides' => $rides,
-                'ride' => $ride
-            ]
-        );
+        return $this->render('AppBundle:Location:show.html.twig', [
+            'location' => $location,
+            'locations' => $locations,
+            'rides' => $rides,
+            'ride' => $ride
+        ]);
     }
 
-    protected function findRidesForLocation(Location $location)
+    protected function findRidesForLocation(Location $location): array
     {
         if (!$location->getLatitude() || !$location->getLongitude()) {
-            return false;
+            return [];
         }
 
         /** @var FinderInterface $finder */
