@@ -33,12 +33,10 @@ class CityManagementController extends AbstractController
         ;
 
         $form = $this->createForm(
-            new StandardCityType(),
-            $city,
-            [
+            StandardCityType::class,
+            $city, [
                 'action' => $this->generateUrl(
-                    'caldera_criticalmass_desktop_city_add',
-                    [
+                    'caldera_criticalmass_desktop_city_add', [
                         'slug1' => $slug1,
                         'slug2' => $slug2,
                         'slug3' => $slug3
