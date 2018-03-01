@@ -30,7 +30,9 @@ class MissingCityController extends AbstractController
             ]);
         }
 
-        throw $this->createNotFoundException();
+        return $this->render('AppBundle:CityManagement:missing.html.twig', [
+            'citySlug' => $citySlug,
+        ]);
     }
 
     protected function lookupCity(string $citySlug): ?City
