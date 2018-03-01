@@ -122,8 +122,8 @@ fos_elastica:
                         id: ~
                         title: ~
                         description: ~
-                        city: { type: text, index: false }
-                        country: { type: text, index: false }
+                        city: { type: keyword }
+                        country: { type: keyword }
                         location: ~
                         isEnabled: ~
                         dateTime: ~
@@ -159,7 +159,7 @@ fos_elastica:
                         longDescription: ~
                         punchLine: ~
                         isEnabled: ~
-                        country: { type: text, index: false }
+                        country: { type: keyword }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
