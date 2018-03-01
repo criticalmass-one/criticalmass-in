@@ -111,38 +111,36 @@ class EstimateController extends BaseController
         /** @var FinderInterface $finder */
         $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
-        $geoFilter = new \Elastica\Filter\GeoDistance(
-            'pin',
-            [
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
                 'lat' => $model->getLatitude(),
-                'lon' => $model->getLongitude()
+                'lon' => $model->getLongitude(),
             ],
             '25km'
         );
 
-        $dateTimeFilter = new \Elastica\Filter\Term(['simpleDate' => $model->getDateTime()->format('Y-m-d')]);
+        $dateTimeQuery = new \Elastica\Query\Term([
+            'simpleDate' => $model->getDateTime()->format('Y-m-d')
+        ]);
 
-        $boolFilter = new \Elastica\Filter\BoolAnd([$geoFilter, $dateTimeFilter]);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($geoQuery)
+            ->addMust($dateTimeQuery)
+        ;
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $boolFilter);
-
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(1);
-        $query->setSort(
-            [
-                '_geo_distance' =>
-                    [
-                        'pin' =>
-                            [
-                                $model->getLatitude(),
-                                $model->getLongitude()
-                            ],
-                        'order' => 'asc',
-                        'unit' => 'km'
-                    ]
+        $query->setSort([
+            '_geo_distance' => [
+                'pin' => [
+                    $model->getLatitude(),
+                    $model->getLongitude(),
+                ],
+                'order' => 'asc',
+                'unit' => 'km',
             ]
-        );
+        ]);
 
         $results = $finder->find($query, 1);
 
