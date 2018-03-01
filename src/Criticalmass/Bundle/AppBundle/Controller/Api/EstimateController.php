@@ -109,7 +109,7 @@ class EstimateController extends BaseController
     protected function findNearestRide(CreateEstimateModel $model): ?Ride
     {
         /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.ride');
+        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
         $geoFilter = new \Elastica\Filter\GeoDistance(
             'pin',

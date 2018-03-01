@@ -30,7 +30,7 @@ class CityController extends AbstractController
 
     protected function findNearCities(City $city)
     {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
+        $finder = $this->container->get('fos_elastica.finder.criticalmass_city.city');
 
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
         $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
