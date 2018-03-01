@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Location;
+use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -78,27 +79,27 @@ class LocationController extends AbstractController
             return false;
         }
 
+        /** @var FinderInterface $finder */
         $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
-        $geoFilter = new \Elastica\Filter\GeoDistance(
-            'pin',
-            [
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
                 'lat' => $location->getLatitude(),
-                'lon' => $location->getLongitude()
+                'lon' => $location->getLongitude(),
             ],
             '500m'
         );
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($geoQuery)
+        ;
 
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(25);
-        $query->setSort(
-            [
-                'dateTime'
-            ]
-        );
+        $query->setSort([
+            'simpleDate'
+        ]);
 
         $result = $finder->find($query);
 
