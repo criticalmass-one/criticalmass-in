@@ -57,7 +57,8 @@
         "basvandorst/stravaphp": "^1.0",
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
-        "maxh/php-nominatim": "^1.2"
+        "maxh/php-nominatim": "^1.2",
+        "jublonet/codebird-php": "^3.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
