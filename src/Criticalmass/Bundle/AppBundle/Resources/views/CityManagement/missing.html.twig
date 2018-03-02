@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    {% if city is defined %}
+    {% if city %}
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -35,6 +35,16 @@
             <div class="col-md-8 col-md-offset-2">
                 <p>
                     Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in {{ city.city }} in unserer Datenbank.
+                </p>
+
+                <p>
+                    Du kannst aber jetzt eine Critical Mass für {{ city.city }} hinzufügen:
+                </p>
+
+                <p class="text-center">
+                    <a href="{{ path('caldera_criticalmass_desktop_city_add_slug', { citySlug: citySlug }) }}" class="btn btn-primary">
+                        {{ city.city }} hinzufügen
+                    </a>
                 </p>
             </div>
         </div>
