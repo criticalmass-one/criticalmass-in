@@ -77,15 +77,15 @@ class PhotoLocator
 
     public function relocate(): PhotoLocator
     {
-        $photoList = $this->doctrine->getRepository(Photo::class)->findPhotosByRide($this->ride); /** @todo only lookup users photos */
+        $photoList = $this->doctrine->getRepository(Photo::class)->findPhotosByRide($this->ride);
+        /** @todo only lookup users photos */
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
             $this->photoGps
                 ->setDateTimeZone($this->dateTimeZone)
                 ->setPhoto($photo)
-                ->setTrack($this->track)
-            ;
+                ->setTrack($this->track);
 
             $this->photoGps->execute();
 

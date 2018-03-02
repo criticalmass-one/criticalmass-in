@@ -11,8 +11,7 @@ class UsernameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class)
-        ;
+            ->add('username', TextType::class);
     }
 
     public function getName(): string

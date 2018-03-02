@@ -44,8 +44,7 @@ class RideBridge extends AbstractBridge
                 ->setNumberDeclined($event->getField('declined_count'))
                 ->setNumberInterested($event->getField('interested_count'))
                 ->setNumberMaybe($event->getField('maybe_count'))
-                ->setNumberNoreply($event->getField('noreply_count'))
-            ;
+                ->setNumberNoreply($event->getField('noreply_count'));
 
             /** @var GraphPage $place */
             if ($place = $event->getPlace()) {

@@ -24,8 +24,7 @@ class CalendarController extends AbstractController
         $nextMonth = $dateTime->add($monthInterval);
 
         $this->getSeoPage()
-            ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.')
-        ;
+            ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.');
 
         return $this->render(
             'AppBundle:Calendar:index.html.twig', [

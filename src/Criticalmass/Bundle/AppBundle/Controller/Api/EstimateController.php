@@ -39,7 +39,7 @@ class EstimateController extends BaseController
      * }</pre>
      *
      * If you do not provide <code>dateTime</code> it will use the current time.
-     * 
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Adds an estimation to statistic"
@@ -60,8 +60,7 @@ class EstimateController extends BaseController
         $view
             ->setData($rideEstimation)
             ->setFormat('json')
-            ->setStatusCode(200)
-        ;
+            ->setStatusCode(200);
 
         return $this->handleView($view);
     }
@@ -81,8 +80,7 @@ class EstimateController extends BaseController
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
             ->setDateTime($model->getDateTime())
-            ->setRide($ride)
-        ;
+            ->setRide($ride);
 
         return $estimate;
     }
@@ -112,9 +110,9 @@ class EstimateController extends BaseController
         $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
         $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-                'lat' => $model->getLatitude(),
-                'lon' => $model->getLongitude(),
-            ],
+            'lat' => $model->getLatitude(),
+            'lon' => $model->getLongitude(),
+        ],
             '25km'
         );
 
@@ -125,8 +123,7 @@ class EstimateController extends BaseController
         $boolQuery = new \Elastica\Query\BoolQuery();
         $boolQuery
             ->addMust($geoQuery)
-            ->addMust($dateTimeQuery)
-        ;
+            ->addMust($dateTimeQuery);
 
         $query = new \Elastica\Query($boolQuery);
 

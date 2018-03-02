@@ -24,8 +24,12 @@ class SeoPage
     /** @var ObjectRouter $objectRouter */
     protected $objectRouter;
 
-    public function __construct(SeoPageInterface $sonataSeoPage, UploaderHelper $uploaderHelper, CacheManager $cacheManager, ObjectRouter $objectRouter)
-    {
+    public function __construct(
+        SeoPageInterface $sonataSeoPage,
+        UploaderHelper $uploaderHelper,
+        CacheManager $cacheManager,
+        ObjectRouter $objectRouter
+    ) {
         $this->sonataSeoPage = $sonataSeoPage;
         $this->uploaderHelper = $uploaderHelper;
         $this->cacheManager = $cacheManager;
@@ -36,8 +40,7 @@ class SeoPage
     {
         $this->sonataSeoPage
             ->setTitle($title)
-            ->addMeta('property', 'og:title', $title)
-        ;
+            ->addMeta('property', 'og:title', $title);
 
         return $this;
     }
@@ -45,9 +48,8 @@ class SeoPage
     public function setDescription(string $description): SeoPage
     {
         $this->sonataSeoPage
-            ->addMeta('name', 'description',$description)
-            ->addMeta('property', 'og:description', $description)
-        ;
+            ->addMeta('name', 'description', $description)
+            ->addMeta('property', 'og:description', $description);
 
         return $this;
     }
@@ -57,7 +59,7 @@ class SeoPage
         if (!$object->getImageName()) {
             return $this;
         }
-        
+
         $imageFilename = $this->uploaderHelper->asset($object, 'imageFile');
 
         $facebookPreviewPath = $this->cacheManager->getBrowserPath($imageFilename, 'facebook_preview_image');
@@ -66,8 +68,7 @@ class SeoPage
         $this->sonataSeoPage
             ->addMeta('property', 'og:image', $facebookPreviewPath)
             ->addMeta('name', 'twitter:image', $twitterPreviewPath)
-            ->addMeta('name', 'twitter:card', 'summary_large_image')
-        ;
+            ->addMeta('name', 'twitter:card', 'summary_large_image');
 
         return $this;
     }
@@ -76,8 +77,7 @@ class SeoPage
     {
         $this->sonataSeoPage
             ->setLinkCanonical($link)
-            ->addMeta('property', 'og:url', $link)
-        ;
+            ->addMeta('property', 'og:url', $link);
 
         return $this;
     }

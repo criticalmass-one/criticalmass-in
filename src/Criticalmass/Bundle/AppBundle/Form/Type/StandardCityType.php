@@ -102,8 +102,7 @@ class StandardCityType extends AbstractType
                 VichFileType::class, [
                     'required' => false
                 ]
-            )
-        ;
+            );
     }
 
     public function getName()

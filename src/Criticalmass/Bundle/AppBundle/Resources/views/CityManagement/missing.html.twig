@@ -26,7 +26,7 @@
                      data-map-marker-color="red"
                      data-map-marker-shape="circle"
                      data-map-marker-icon="fa-university"
-                    >
+                >
                 </div>
             </div>
         </div>
@@ -50,37 +50,37 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        CriticalMass.loadModule('AutoMap', 'map');
-    </script>
+        <script type="text/javascript">
+            CriticalMass.loadModule('AutoMap', 'map');
+        </script>
     {% else %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h2>
-                    Keine Masse gefunden
-                </h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h2>
+                        Keine Masse gefunden
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row margin-top-medium">
+                <div class="col-md-8 col-md-offset-2">
+                    <p>
+                        Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>{{ citySlug }}</code>
+                        finden.
+                    </p>
+
+                    <p>
+                        Bitte versuche, die gesuchte Stadt im Verzeichnis zu finden.
+                    </p>
+
+                    <p class="text-center">
+                        <a href="{{ path('caldera_criticalmass_region_world') }}" class="btn btn-primary">
+                            zum Verzeichnis
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
-
-        <div class="row margin-top-medium">
-            <div class="col-md-8 col-md-offset-2">
-                <p>
-                    Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>{{ citySlug }}</code> finden.
-                </p>
-
-                <p>
-                    Bitte versuche, die gesuchte Stadt im Verzeichnis zu finden.
-                </p>
-
-                <p class="text-center">
-                    <a href="{{ path('caldera_criticalmass_region_world') }}" class="btn btn-primary">
-                        zum Verzeichnis
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
     {% endif %}
 {% endblock %}
-

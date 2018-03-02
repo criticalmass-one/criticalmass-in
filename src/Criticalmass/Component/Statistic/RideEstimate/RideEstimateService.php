@@ -26,8 +26,7 @@ class RideEstimateService
         $ride
             ->setEstimatedDistance(0.0)
             ->setEstimatedDuration(0.0)
-            ->setEstimatedParticipants(0)
-        ;
+            ->setEstimatedParticipants(0);
 
         $this->doctrine->getManager()->flush();
 
@@ -41,8 +40,7 @@ class RideEstimateService
         $this->calculator
             ->setRide($ride)
             ->setEstimates($estimates)
-            ->calculate()
-        ;
+            ->calculate();
 
         $this->doctrine->getManager()->flush();
 
@@ -57,8 +55,7 @@ class RideEstimateService
             ->setUser($track->getUser())
             ->setTrack($track)
             ->setEstimatedDistance($track->getDistance())
-            ->setEstimatedDuration($this->calculateDurationInHours($track))
-        ;
+            ->setEstimatedDuration($this->calculateDurationInHours($track));
 
         $track->setRideEstimate($re);
 

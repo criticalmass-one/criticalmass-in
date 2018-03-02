@@ -8,8 +8,8 @@
 
 L.Control.SleepMapControl = L.Control.extend({
 
-    initialize: function(opts){
-        L.setOptions(this,opts);
+    initialize: function (opts) {
+        L.setOptions(this, opts);
     },
 
     options: {
@@ -22,15 +22,15 @@ L.Control.SleepMapControl = L.Control.extend({
         }
     },
 
-    buildContainer: function(){
+    buildContainer: function () {
         var self = this;
         var container = L.DomUtil.create('p', 'sleep-button');
         var boundEvent = this._nonBoundEvent.bind(this);
-        container.appendChild( document.createTextNode( this.options.prompt ));
+        container.appendChild(document.createTextNode(this.options.prompt));
         L.DomEvent.addListener(container, 'click', boundEvent);
         L.DomEvent.addListener(container, 'touchstart', boundEvent);
 
-        Object.keys(this.options.styles).map(function(key) {
+        Object.keys(this.options.styles).map(function (key) {
             container.style[key] = self.options.styles[key];
         });
 
@@ -41,7 +41,7 @@ L.Control.SleepMapControl = L.Control.extend({
         return this._container || this.buildContainer();
     },
 
-    _nonBoundEvent: function(e) {
+    _nonBoundEvent: function (e) {
         L.DomEvent.stop(e);
         if (this._map) this._map.sleep._sleepMap();
         return false;
@@ -49,7 +49,7 @@ L.Control.SleepMapControl = L.Control.extend({
 
 });
 
-L.Control.sleepMapControl = function(){
+L.Control.sleepMapControl = function () {
     return new L.Control.SleepMapControl();
 };
 
@@ -65,7 +65,7 @@ L.Map.mergeOptions({
     wakeMessageTouch: 'Touch to Wake',
     sleepNote: true,
     hoverToWake: true,
-    sleepOpacity:.7,
+    sleepOpacity: .7,
     sleepButton: L.Control.sleepMapControl
 });
 
@@ -100,20 +100,20 @@ L.Map.Sleep = L.Handler.extend({
     },
 
     removeHooks: function () {
-        if (!this._map.scrollWheelZoom.enabled()){
+        if (!this._map.scrollWheelZoom.enabled()) {
             this._map.scrollWheelZoom.enable();
         }
-        L.DomUtil.setOpacity( this._map._container, 1);
-        L.DomUtil.setOpacity( this.sleepNote, 0);
+        L.DomUtil.setOpacity(this._map._container, 1);
+        L.DomUtil.setOpacity(this.sleepNote, 0);
         this._removeSleepingListeners();
         this._removeAwakeListeners();
     },
 
-    _setSleepNoteStyle: function() {
+    _setSleepNoteStyle: function () {
         var noteString = '';
         var style = this.sleepNote.style;
 
-        if(this._map.tap) {
+        if (this._map.tap) {
             noteString = this._map.options.wakeMessageTouch;
         } else if (this._map.options.wakeMessage) {
             noteString = this._map.options.wakeMessage;
@@ -123,8 +123,8 @@ L.Map.Sleep = L.Handler.extend({
             noteString = 'click to wake';
         }
 
-        if( this._map.options.sleepNote ){
-            this.sleepNote.appendChild(document.createTextNode( noteString ));
+        if (this._map.options.sleepNote) {
+            this.sleepNote.appendChild(document.createTextNode(noteString));
             style.pointerEvents = 'none';
             style.maxWidth = '150px';
             style.transitionDuration = '.2s';
@@ -139,9 +139,9 @@ L.Map.Sleep = L.Handler.extend({
             style.border = 'solid 2px black';
             style.background = 'white';
 
-            if(this._map.options.sleepNoteStyle) {
+            if (this._map.options.sleepNoteStyle) {
                 var noteStyleOverrides = this._map.options.sleepNoteStyle;
-                Object.keys(noteStyleOverrides).map(function(key) {
+                Object.keys(noteStyleOverrides).map(function (key) {
                     style[key] = noteStyleOverrides[key];
                 });
             }
@@ -157,7 +157,7 @@ L.Map.Sleep = L.Handler.extend({
             this._map.tap.enable();
             this._map.addControl(this._sleepButton);
         }
-        L.DomUtil.setOpacity( this._map._container, 1);
+        L.DomUtil.setOpacity(this._map._container, 1);
         this.sleepNote.style.opacity = 0;
         this._addAwakeListeners();
     },
@@ -173,43 +173,43 @@ L.Map.Sleep = L.Handler.extend({
             this._map.removeControl(this._sleepButton);
         }
 
-        L.DomUtil.setOpacity( this._map._container, this._map.options.sleepOpacity);
+        L.DomUtil.setOpacity(this._map._container, this._map.options.sleepOpacity);
         this.sleepNote.style.opacity = .4;
         this._addSleepingListeners();
     },
 
     _wakePending: function () {
         this._map.once('mousedown', this._wakeMap, this);
-        if (this._map.options.hoverToWake){
+        if (this._map.options.hoverToWake) {
             var self = this;
             this._map.once('mouseout', this._sleepMap, this);
-            self._enterTimeout = setTimeout(function(){
+            self._enterTimeout = setTimeout(function () {
                 self._map.off('mouseout', self._sleepMap, self);
                 self._wakeMap();
-            } , self._map.options.wakeTime);
+            }, self._map.options.wakeTime);
         }
     },
 
     _sleepPending: function () {
         var self = this;
         self._map.once('mouseover', self._wakeMap, self);
-        self._exitTimeout = setTimeout(function(){
+        self._exitTimeout = setTimeout(function () {
             self._map.off('mouseover', self._wakeMap, self);
             self._sleepMap();
-        } , self._map.options.sleepTime);
+        }, self._map.options.sleepTime);
     },
 
-    _addSleepingListeners: function(){
+    _addSleepingListeners: function () {
         this._map.once('mouseover', this._wakePending, this);
         this._map.tap &&
         this._map.once('click', this._wakeMap, this);
     },
 
-    _addAwakeListeners: function(){
+    _addAwakeListeners: function () {
         this._map.once('mouseout', this._sleepPending, this);
     },
 
-    _removeSleepingListeners: function(){
+    _removeSleepingListeners: function () {
         this._map.options.hoverToWake &&
         this._map.off('mouseover', this._wakePending, this);
         this._map.off('mousedown', this._wakeMap, this);
@@ -217,7 +217,7 @@ L.Map.Sleep = L.Handler.extend({
         this._map.off('click', this._wakeMap, this);
     },
 
-    _removeAwakeListeners: function(){
+    _removeAwakeListeners: function () {
         this._map.off('mouseout', this._sleepPending, this);
     },
 
@@ -225,8 +225,8 @@ L.Map.Sleep = L.Handler.extend({
         this._removeSleepingListeners();
         this._removeAwakeListeners();
         var self = this;
-        if(this._enterTimeout) clearTimeout(self._enterTimeout);
-        if(this._exitTimeout) clearTimeout(self._exitTimeout);
+        if (this._enterTimeout) clearTimeout(self._enterTimeout);
+        if (this._exitTimeout) clearTimeout(self._exitTimeout);
         this._enterTimeout = null;
         this._exitTimeout = null;
     }

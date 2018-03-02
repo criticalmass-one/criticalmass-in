@@ -317,8 +317,7 @@ class PhotoManagementController extends AbstractController
         $blurImage
             ->crop($topLeftPoint, $dimension)
             ->resize($pixelateDimension, ImageInterface::FILTER_CUBIC)
-            ->resize($dimension, ImageInterface::FILTER_CUBIC)
-        ;
+            ->resize($dimension, ImageInterface::FILTER_CUBIC);
 
         $image->paste($blurImage, $topLeftPoint);
     }
@@ -328,13 +327,13 @@ class PhotoManagementController extends AbstractController
         $path = $this->getParameter('kernel.root_dir') . '/../web';
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
-        return $path.$filename;
+        return $path . $filename;
     }
 
     protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
     {
         if (!$photo->getBackupName()) {
-            $newFilename = uniqid().'.JPG';
+            $newFilename = uniqid() . '.JPG';
 
             $photo->setBackupName($photo->getImageName());
 

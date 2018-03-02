@@ -25,8 +25,7 @@ class RideManagementController extends AbstractController
         $ride = new Ride();
         $ride
             ->setCity($city)
-            ->setUser($user)
-        ;
+            ->setUser($user);
 
         $form = $this->createForm(
             RideType::class,
@@ -65,8 +64,13 @@ class RideManagementController extends AbstractController
         );
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
-    {
+    protected function addPostAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         $form->handleRequest($request);
@@ -142,8 +146,13 @@ class RideManagementController extends AbstractController
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
-    {
+    protected function editGetAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render(
@@ -159,8 +168,13 @@ class RideManagementController extends AbstractController
         );
     }
 
-    protected function editPostAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
-    {
+    protected function editPostAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         $form->handleRequest($request);
@@ -171,8 +185,7 @@ class RideManagementController extends AbstractController
         if ($form->isValid()) {
             $ride
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user)
-            ;
+                ->setUser($user);
 
             $this->getDoctrine()->getManager()->flush();
 

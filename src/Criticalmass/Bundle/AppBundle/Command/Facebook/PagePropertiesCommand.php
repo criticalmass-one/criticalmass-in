@@ -25,8 +25,7 @@ class PagePropertiesCommand extends Command
     {
         $this
             ->setName('criticalmass:facebook:pageproperties')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -35,8 +34,7 @@ class PagePropertiesCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['City', 'Title', 'Likes'])
-        ;
+            ->setHeaders(['City', 'Title', 'Likes']);
 
         $properties = $this->pagePropertyReader->getPropertyList();
 

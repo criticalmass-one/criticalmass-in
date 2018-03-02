@@ -90,8 +90,7 @@ class CityCycleType extends AbstractType
                     'format' => 'dd.MM.yyyy',
                     'required' => false,
                 ]
-            )
-        ;
+            );
     }
 
     public function getName(): string

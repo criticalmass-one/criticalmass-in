@@ -3,9 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Component\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
-use maxh\Nominatim\Nominatim;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

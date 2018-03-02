@@ -21,7 +21,11 @@
                 <h1>Einloggen und losfahren!</h1>
 
                 <p class="lead">
-                    Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast, kannst du dir <a href="{{ path('fos_user_resetting_request') }}">ein neues zusenden lassen</a>. Und falls du noch kein Benutzerkonto hast, kannst du dich <a href="{{ path('fos_user_registration_register') }}">hier registrieren</a>.
+                    Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle
+                    Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast,
+                    kannst du dir <a href="{{ path('fos_user_resetting_request') }}">ein neues zusenden lassen</a>. Und
+                    falls du noch kein Benutzerkonto hast, kannst du dich <a
+                            href="{{ path('fos_user_registration_register') }}">hier registrieren</a>.
                 </p>
             </div>
         </div>
@@ -36,7 +40,8 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <p>
-                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen Klick!
+                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen
+                                    Klick!
                                 </p>
 
                                 <div class="btn-group" role="group" aria-label="...">
@@ -51,7 +56,8 @@
                                        title="Sign in with Strava">
                                         Strava
                                     </a>
-                                    <a class="btn btn-default" style="background-color: rgb(57, 201, 214); color: white;"
+                                    <a class="btn btn-default"
+                                       style="background-color: rgb(57, 201, 214); color: white;"
                                        href="{{ path('hwi_oauth_service_redirect', {'service': 'runkeeper' }) }}"
                                        title="Sign in with Runkeeper">
                                         Runkeeper
@@ -69,7 +75,8 @@
                         E-Mail-Adresse
                     </div>
                     <div class="panel-body">
-                        <form action="{{ path("fos_user_security_check") }}" method="post" role="form" class="form-horizontal">
+                        <form action="{{ path("fos_user_security_check") }}" method="post" role="form"
+                              class="form-horizontal">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
                             <div class="row">
@@ -77,7 +84,8 @@
                                     <label for="username" class="control-label">
                                         Dein Benutzername:
                                     </label>
-                                    <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
+                                    <input type="text" class="form-control" id="username" name="_username"
+                                           value="{{ last_username }}"/>
                                 </div>
                             </div>
 
@@ -86,7 +94,7 @@
                                     <label for="password" class="control-label">
                                         Dein Kennwort:
                                     </label>
-                                    <input type="password" class="form-control" id="password" name="_password" />
+                                    <input type="password" class="form-control" id="password" name="_password"/>
                                 </div>
                             </div>
 
@@ -94,7 +102,8 @@
                                 <div class="col-md-12">
                                     <div class="checkbox control-group">
                                         <label for="remember_me">
-                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> eingeloggt bleiben
+                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                                            eingeloggt bleiben
                                         </label>
                                     </div>
                                 </div>

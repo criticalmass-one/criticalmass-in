@@ -59,7 +59,6 @@
   }
 }
 
-
 //
 // Left/right controls for nav
 //
@@ -88,9 +87,11 @@
     opacity: .9;
   }
 }
+
 .carousel-control-prev {
   left: 0;
 }
+
 .carousel-control-next {
   right: 0;
 }
@@ -104,13 +105,14 @@
   background: transparent no-repeat center center;
   background-size: 100% 100%;
 }
+
 .carousel-control-prev-icon {
   background-image: $carousel-control-prev-icon-bg;
 }
+
 .carousel-control-next-icon {
   background-image: $carousel-control-next-icon-bg;
 }
-
 
 // Optional indicator pips
 //
@@ -166,7 +168,6 @@
     background-color: $carousel-indicator-active-bg;
   }
 }
-
 
 // Optional captions
 //

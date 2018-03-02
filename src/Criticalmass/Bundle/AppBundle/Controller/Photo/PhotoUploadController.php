@@ -65,7 +65,7 @@ class PhotoUploadController extends AbstractController
     {
         try {
             $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-            $path = $this->getParameter('kernel.root_dir').'/../web/'.$helper->asset($photo, 'imageFile');
+            $path = $this->getParameter('kernel.root_dir') . '/../web/' . $helper->asset($photo, 'imageFile');
 
             $reader = Reader::factory(Reader::TYPE_NATIVE);
 
@@ -101,8 +101,7 @@ class PhotoUploadController extends AbstractController
                 $pgps
                     ->setPhoto($photo)
                     ->setTrack($track)
-                    ->execute()
-                ;
+                    ->execute();
             } catch (\Exception $e) {
                 return false;
             }

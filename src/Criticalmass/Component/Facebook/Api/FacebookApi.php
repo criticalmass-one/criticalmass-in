@@ -22,8 +22,11 @@ abstract class FacebookApi
         );
     }
 
-    protected function initFacebook(string $facebookAppId, string $facebookAppSecret, string $facebookDefaultToken): FacebookApi
-    {
+    protected function initFacebook(
+        string $facebookAppId,
+        string $facebookAppSecret,
+        string $facebookDefaultToken
+    ): FacebookApi {
         $this->facebook = new Facebook(
             [
                 'app_id' => $facebookAppId,

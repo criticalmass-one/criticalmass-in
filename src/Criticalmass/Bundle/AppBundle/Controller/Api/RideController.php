@@ -159,8 +159,7 @@ class RideController extends BaseController
             ->setData($rideList)
             ->setFormat('json')
             ->setStatusCode(200)
-            ->setContext($context)
-        ;
+            ->setContext($context);
 
         return $this->handleView($view);
     }

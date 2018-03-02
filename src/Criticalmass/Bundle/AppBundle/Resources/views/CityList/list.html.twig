@@ -67,16 +67,18 @@
                             <td>
                                 {% if city.currentRide %}
                                     <a href="{{ objectPath(city.currentRide) }}">
-                                        {{ city.currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}&nbsp;Uhr
+                                        {{ city.currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}
+                                        &nbsp;Uhr
                                     </a>
                                 {% endif %}
                             </td>
                             <td>
                                 <ul class="list-unstyled">
                                     {% for cycle in city.cycles %}
-                                    <li>
-                                        am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', 'Europe/Berlin') }} Uhr
-                                    </li>
+                                        <li>
+                                            am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }}
+                                            um {{ cycle.time|date('H:i', 'Europe/Berlin') }} Uhr
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             </td>

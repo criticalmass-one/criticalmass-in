@@ -71,7 +71,7 @@
             return points;
         },
 
-        encodeDeltas: function(numbers, options) {
+        encodeDeltas: function (numbers, options) {
             options = defaultOptions(options);
 
             var lastNumbers = [];
@@ -89,7 +89,7 @@
             return this.encodeFloats(numbers, options);
         },
 
-        decodeDeltas: function(encoded, options) {
+        decodeDeltas: function (encoded, options) {
             options = defaultOptions(options);
 
             var lastNumbers = [];
@@ -104,7 +104,7 @@
             return numbers;
         },
 
-        encodeFloats: function(numbers, options) {
+        encodeFloats: function (numbers, options) {
             options = defaultOptions(options);
 
             for (var i = 0, len = numbers.length; i < len; ++i) {
@@ -114,7 +114,7 @@
             return this.encodeSignedIntegers(numbers);
         },
 
-        decodeFloats: function(encoded, options) {
+        decodeFloats: function (encoded, options) {
             options = defaultOptions(options);
 
             var numbers = this.decodeSignedIntegers(encoded);
@@ -127,7 +127,7 @@
 
         /* jshint bitwise:false */
 
-        encodeSignedIntegers: function(numbers) {
+        encodeSignedIntegers: function (numbers) {
             for (var i = 0, len = numbers.length; i < len; ++i) {
                 var num = numbers[i];
                 numbers[i] = (num < 0) ? ~(num << 1) : (num << 1);
@@ -136,7 +136,7 @@
             return this.encodeUnsignedIntegers(numbers);
         },
 
-        decodeSignedIntegers: function(encoded) {
+        decodeSignedIntegers: function (encoded) {
             var numbers = this.decodeUnsignedIntegers(encoded);
 
             for (var i = 0, len = numbers.length; i < len; ++i) {
@@ -147,7 +147,7 @@
             return numbers;
         },
 
-        encodeUnsignedIntegers: function(numbers) {
+        encodeUnsignedIntegers: function (numbers) {
             var encoded = '';
             for (var i = 0, len = numbers.length; i < len; ++i) {
                 encoded += this.encodeUnsignedInteger(numbers[i]);
@@ -155,7 +155,7 @@
             return encoded;
         },
 
-        decodeUnsignedIntegers: function(encoded) {
+        decodeUnsignedIntegers: function (encoded) {
             var numbers = [];
 
             var current = 0;
