@@ -18,65 +18,56 @@ class CityAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Städteinformationen', ['class' => 'col-md-6'])
-                ->add('city')
-                ->add('cityPopulation')
+            ->add('city')
+            ->add('cityPopulation')
             ->end()
-
             ->with('Critical Mass', ['class' => 'col-md-6'])
-                ->add('title')
-                ->add('description')
-                ->add('longdescription', TextType::class)
-                ->add('punchline', TextType::class)
+            ->add('title')
+            ->add('description')
+            ->add('longdescription', TextType::class)
+            ->add('punchline', TextType::class)
             ->end()
-
             ->with('Geografie', ['class' => 'col-md-6'])
-                ->add('region')
-                ->add('latitude')
-                ->add('longitude')
+            ->add('region')
+            ->add('latitude')
+            ->add('longitude')
             ->end()
-
             ->with('Technisches', ['class' => 'col-md-6'])
-                ->add('mainSlug')
-                ->add('timezone')
+            ->add('mainSlug')
+            ->add('timezone')
             ->end()
-
             ->with('Soziale Netzwerke', ['class' => 'col-md-6'])
-                ->add('url')
-                ->add('facebook')
-                ->add('twitter')
-                ->add('enableBoard')
+            ->add('url')
+            ->add('facebook')
+            ->add('twitter')
+            ->add('enableBoard')
             ->end()
-
             ->with('Headergrafik', ['class' => 'col-md-6'])
-                ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class)
             ->end()
-
             ->with('Wiederkehrende Touren', ['class' => 'col-md-6'])
-                ->add('isStandardable')
-                ->add('standardDayOfWeek')
-                ->add('standardWeekOfMonth')
-                ->add('isStandardableTime')
-                ->add('standardTime')
-                ->add('isStandardableLocation')
-                ->add('standardLocation')
-                ->add('standardLatitude')
-                ->add('standardLongitude')
-            ->end()
-        ;
+            ->add('isStandardable')
+            ->add('standardDayOfWeek')
+            ->add('standardWeekOfMonth')
+            ->add('isStandardableTime')
+            ->add('standardTime')
+            ->add('isStandardableLocation')
+            ->add('standardLocation')
+            ->add('standardLatitude')
+            ->add('standardLongitude')
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('title')
-            ->add('description')
-        ;
+            ->add('description');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title')
-        ;
+            ->addIdentifier('title');
     }
 }

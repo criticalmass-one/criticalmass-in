@@ -40,8 +40,7 @@ class CityCycleController extends AbstractController
         $cityCycle = new CityCycle();
         $cityCycle
             ->setCity($city)
-            ->setUser($user)
-        ;
+            ->setUser($user);
 
         $form = $this->createForm(
             CityCycleType::class,
@@ -75,9 +74,9 @@ class CityCycleController extends AbstractController
         );
     }
 
-    protected function addPostAction(Request $request,UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function addPostAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
     {
-        $city =  $cityCycle->getCity();
+        $city = $cityCycle->getCity();
 
         $form->handleRequest($request);
 
@@ -99,7 +98,8 @@ class CityCycleController extends AbstractController
                 ]
             );
 
-            return $this->redirectToRoute('caldera_criticalmass_citycycle_list', ['citySlug' => $city->getMainSlugString()]);
+            return $this->redirectToRoute('caldera_criticalmass_citycycle_list',
+                ['citySlug' => $city->getMainSlugString()]);
         }
 
         return $this->render(
@@ -125,8 +125,7 @@ class CityCycleController extends AbstractController
         }
 
         $cityCycle
-            ->setUser($user)
-        ;
+            ->setUser($user);
 
         $form = $this->createForm(
             CityCycleType::class,
@@ -161,9 +160,9 @@ class CityCycleController extends AbstractController
         );
     }
 
-    protected function editPostAction(Request $request,UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function editPostAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
     {
-        $city =  $cityCycle->getCity();
+        $city = $cityCycle->getCity();
 
         $form->handleRequest($request);
 

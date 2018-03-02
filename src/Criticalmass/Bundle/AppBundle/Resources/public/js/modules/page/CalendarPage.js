@@ -2,7 +2,7 @@ define([], function () {
     CalendarPage = function (selector) {
         var $calendar = $(selector);
 
-        $calendar.find('.day').each(function() {
+        $calendar.find('.day').each(function () {
             var $day = $(this);
             var $rideList = $day.find('ul.ride-list');
 

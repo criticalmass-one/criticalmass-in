@@ -57,7 +57,8 @@
                     {% for track in tracks %}
                         <tr>
                             <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}" checked="checked"/>
+                                <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}"
+                                       checked="checked"/>
                             </td>
                             <td>
                                 {{ track.username }}
@@ -77,7 +78,7 @@
                                     {{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde
                                 {% endif %}
                             </td>
-                         </tr>
+                        </tr>
                         {% set trackNumber = trackNumber + 1 %}
                     {% endfor %}
                 </table>

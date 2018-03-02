@@ -25,8 +25,7 @@ class AutoSelectRideEventCommand extends Command
     {
         $this
             ->setName('criticalmass:facebook:autoselectrideevent')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -35,8 +34,7 @@ class AutoSelectRideEventCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['City', 'DateTime', 'EventId'])
-        ;
+            ->setHeaders(['City', 'DateTime', 'EventId']);
 
         $assignedRides = $this->eventSelector->getAssignedRides();
 

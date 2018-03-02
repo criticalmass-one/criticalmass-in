@@ -294,7 +294,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         });
     };
 
-    EditRidePage.prototype._initDatePicker = function() {
+    EditRidePage.prototype._initDatePicker = function () {
         $('.datepicker').datepicker({
             format: 'dd.mm.yyyy',
             autoclose: true,

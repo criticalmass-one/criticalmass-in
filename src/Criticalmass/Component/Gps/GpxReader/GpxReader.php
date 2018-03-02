@@ -129,7 +129,10 @@ class GpxReader
         $counter = 0;
 
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
-            $result[] = array('lat' => (float)$point['lat'], 'lng' => (float)$point['lon']);//'['.$point['lat'].','.$point['lon'].']';
+            $result[] = array(
+                'lat' => (float)$point['lat'],
+                'lng' => (float)$point['lon']
+            );//'['.$point['lat'].','.$point['lon'].']';
 
             ++$counter;
 

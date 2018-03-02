@@ -12,7 +12,8 @@ class RideGenerator extends AbstractRideGenerator
         $this->rideList = [];
 
         $this->startDateTime = new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month));
-        $this->endDateTime = new \DateTime(sprintf('%d-%d-%d 23:59:59', $this->year, $this->month, $this->startDateTime->format('t')));
+        $this->endDateTime = new \DateTime(sprintf('%d-%d-%d 23:59:59', $this->year, $this->month,
+            $this->startDateTime->format('t')));
 
         $cycles = $this->findCylces();
 
@@ -29,8 +30,7 @@ class RideGenerator extends AbstractRideGenerator
             $ride = new Ride();
             $ride
                 ->setCity($this->city)
-                ->setCycle($cycle)
-            ;
+                ->setCycle($cycle);
 
             $ride = $this->calculateDate($cycle, $ride);
             $ride = $this->calculateTime($cycle, $ride);
@@ -44,7 +44,8 @@ class RideGenerator extends AbstractRideGenerator
 
     protected function findCylces(): array
     {
-        return $this->doctrine->getRepository(CityCycle::class)->findByCity($this->city, $this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository(CityCycle::class)->findByCity($this->city, $this->startDateTime,
+            $this->endDateTime);
     }
 
     protected function calculateDate(CityCycle $cityCycle, Ride $ride): Ride
@@ -90,7 +91,8 @@ class RideGenerator extends AbstractRideGenerator
         $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));
         $timeInterval = new \DateInterval($intervalSpec);
 
-        $dateTimeSpec = sprintf('%d-%d-%d 00:00:00', $ride->getDateTime()->format('Y'), $ride->getDateTime()->format('m'), $ride->getDateTime()->format('d'));
+        $dateTimeSpec = sprintf('%d-%d-%d 00:00:00', $ride->getDateTime()->format('Y'),
+            $ride->getDateTime()->format('m'), $ride->getDateTime()->format('d'));
         $rideDateTime = new \DateTime($dateTimeSpec);
         $rideDateTime->add($timeInterval);
 
@@ -98,8 +100,7 @@ class RideGenerator extends AbstractRideGenerator
 
         $ride
             ->setDateTime($rideDateTime)
-            ->setHasTime(true)
-        ;
+            ->setHasTime(true);
 
         return $ride;
     }
@@ -110,15 +111,15 @@ class RideGenerator extends AbstractRideGenerator
             ->setLatitude($cityCycle->getLatitude())
             ->setLongitude($cityCycle->getLongitude())
             ->setLocation($cityCycle->getLocation())
-            ->setHasLocation(true)
-        ;
+            ->setHasLocation(true);
 
         return $ride;
     }
 
     public function wasRideCreated(CityCycle $cityCycle): bool
     {
-        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $this->startDateTime, $this->endDateTime);
+        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle,
+            $this->startDateTime, $this->endDateTime);
 
         return count($existingRides) > 0;
     }

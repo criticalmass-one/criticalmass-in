@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
+use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -12,8 +13,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CityController extends AbstractController
 {
     use ViewStorageTrait;
-
-
 
     public function missingStatsAction($citySlug)
     {
@@ -32,41 +31,41 @@ class CityController extends AbstractController
 
     protected function findNearCities(City $city)
     {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
+        /** @var FinderInterface $finder */
+        $finder = $this->container->get('fos_elastica.finder.criticalmass_city.city');
 
-        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
-        $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
+        $enabledQuery = new \Elastica\Query\Term(['isEnabled' => true]);
 
-        $geoFilter = new \Elastica\Filter\GeoDistance(
-            'pin',
-            [
-                'lat' => $city->getLatitude(),
-                'lon' => $city->getLongitude()
-            ],
+        $selfTerm = new \Elastica\Query\Term(['id' => $city->getId()]);
+        $selfQuery = new \Elastica\Query\BoolQuery();
+        $selfQuery->addMustNot($selfTerm);
+
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
+            'lat' => $city->getLatitude(),
+            'lon' => $city->getLongitude(),
+        ],
             '50km'
         );
 
-        $filter = new \Elastica\Filter\BoolAnd([$geoFilter, $enabledFilter, $selfFilter]);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($geoQuery)
+            ->addMust($enabledQuery)
+            ->addMust($selfQuery);
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
-
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(15);
-        $query->setSort(
-            [
-                '_geo_distance' =>
-                    [
-                        'pin' =>
-                            [
-                                $city->getLatitude(),
-                                $city->getLongitude()
-                            ],
-                        'order' => 'desc',
-                        'unit' => 'km'
-                    ]
+        $query->setSort([
+            '_geo_distance' => [
+                'pin' => [
+                    $city->getLatitude(),
+                    $city->getLongitude(),
+                ],
+                'order' => 'desc',
+                'unit' => 'km',
             ]
-        );
+        ]);
 
         $results = $finder->find($query);
 
@@ -103,9 +102,13 @@ class CityController extends AbstractController
         );
     }
 
-    public function showAction(Request $request, $citySlug)
+    public function showAction(Request $request, string $citySlug): Response
     {
         $city = $this->getCityBySlug($citySlug);
+
+        if (!$city) {
+            return $this->forward('AppBundle:City/MissingCity:missing', ['citySlug' => $citySlug]);
+        }
 
         if (!$city->getEnabled()) {
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
@@ -141,8 +144,7 @@ class CityController extends AbstractController
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setPreviewPhoto($city)
             ->setCanonicalForObject($city)
-            ->setTitle($city->getTitle())
-        ;
+            ->setTitle($city->getTitle());
 
         return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,

@@ -48,8 +48,7 @@ class StandardRideCommand extends ContainerAwareCommand
         $generator = $this->getContainer()->get('Criticalmass\Component\RideGenerator\RideGenerator\RideGenerator');
         $generator
             ->setMonth($month)
-            ->setYear($year)
-        ;
+            ->setYear($year);
 
         $doctrine = $this->getContainer()->get('doctrine');
         $manager = $doctrine->getManager();
@@ -58,16 +57,14 @@ class StandardRideCommand extends ContainerAwareCommand
 
         $table = new Table($output);
         $table
-            ->setHeaders(['City', 'DateTime', 'Location'])
-        ;
+            ->setHeaders(['City', 'DateTime', 'Location']);
 
         /** @var City $city */
         foreach ($cities as $city) {
             $rides = $generator
                 ->setCity($city)
                 ->execute()
-                ->getList()
-            ;
+                ->getList();
 
             if (count($rides)) {
                 /** @var Ride $ride */

@@ -21,18 +21,15 @@ class UserAdmin extends AbstractAdmin
             ->add('plainPassword', TextType::class, ['required' => false])
             ->add('description', TextareaType::class, ['required' => false])
             ->end()
-
             ->with('Color', ['class' => 'col-md-6'])
             ->add('colorRed')
             ->add('colorGreen')
             ->add('colorBlue')
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('blurGalleries', CheckboxType::class, ['required' => false])
             ->add('enabled', CheckboxType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -40,8 +37,7 @@ class UserAdmin extends AbstractAdmin
         $datagridMapper
             ->add('username')
             ->add('email')
-            ->add('enabled')
-        ;
+            ->add('enabled');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -51,7 +47,6 @@ class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('createdAt')
             ->add('lastLogin')
-            ->add('enabled')
-        ;
+            ->add('enabled');
     }
 }

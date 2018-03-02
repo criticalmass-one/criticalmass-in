@@ -5,10 +5,10 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <defaults autowire="true" autoconfigure="true" public="true" />
+        <defaults autowire="true" autoconfigure="true" public="true"/>
 
         <service id="Criticalmass\Bundle\AppBundle\Command\Weather\UpdateWeatherCommand">
-            <tag name="console.command" />
+            <tag name="console.command"/>
         </service>
 
         <service id="Cmfcmf\OpenWeatherMap">

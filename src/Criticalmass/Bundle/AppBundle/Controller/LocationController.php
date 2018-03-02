@@ -3,7 +3,9 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Location;
+use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LocationController extends AbstractController
@@ -47,7 +49,7 @@ class LocationController extends AbstractController
         );
     }
 
-    public function rideAction(Request $request, $citySlug, $rideDate)
+    public function rideAction(Request $request, string $citySlug, string $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -61,44 +63,40 @@ class LocationController extends AbstractController
 
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
-        return $this->render(
-            'AppBundle:Location:show.html.twig',
-            [
-                'location' => $location,
-                'locations' => $locations,
-                'rides' => $rides,
-                'ride' => $ride
-            ]
-        );
+        return $this->render('AppBundle:Location:show.html.twig', [
+            'location' => $location,
+            'locations' => $locations,
+            'rides' => $rides,
+            'ride' => $ride
+        ]);
     }
 
-    protected function findRidesForLocation(Location $location)
+    protected function findRidesForLocation(Location $location): array
     {
         if (!$location->getLatitude() || !$location->getLongitude()) {
-            return false;
+            return [];
         }
 
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.ride');
+        /** @var FinderInterface $finder */
+        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
-        $geoFilter = new \Elastica\Filter\GeoDistance(
-            'pin',
-            [
-                'lat' => $location->getLatitude(),
-                'lon' => $location->getLongitude()
-            ],
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
+            'lat' => $location->getLatitude(),
+            'lon' => $location->getLongitude(),
+        ],
             '500m'
         );
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $geoFilter);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($geoQuery);
 
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(25);
-        $query->setSort(
-            [
-                'dateTime'
-            ]
-        );
+        $query->setSort([
+            'simpleDate'
+        ]);
 
         $result = $finder->find($query);
 

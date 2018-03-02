@@ -27,7 +27,7 @@ class FacebookEventApi extends FacebookApi
             $endpoint = sprintf('/%s/events?since=%d&d&until=%d', $pageId, $since->format('U'), $until->format('U'));
 
             $response = $this->query($endpoint);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return null;
         }
 

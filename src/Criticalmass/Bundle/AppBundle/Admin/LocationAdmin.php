@@ -21,17 +21,14 @@ class LocationAdmin extends AbstractAdmin
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('city', EntityType::class, ['class' => City::class])
             ->add('slug', TextType::class)
             ->end()
-
             ->with('Coords', ['class' => 'col-md-6'])
             ->add('latitude', TextType::class, ['required' => false])
             ->add('longitude', TextType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
 
     }
 
@@ -40,15 +37,13 @@ class LocationAdmin extends AbstractAdmin
         $datagridMapper
             ->add('title')
             ->add('city')
-            ->add('description')
-        ;
+            ->add('description');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('city')
-        ;
+            ->add('city');
     }
 }

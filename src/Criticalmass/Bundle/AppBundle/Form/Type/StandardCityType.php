@@ -19,40 +19,33 @@ class StandardCityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'city',
+            ->add('city',
                 TextType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'title',
+            ->add('title',
                 TextType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'description',
+            ->add('description',
                 TextareaType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'longitude',
+            ->add('longitude',
                 HiddenType::class
             )
-            ->add(
-                'latitude',
+            ->add('latitude',
                 HiddenType::class
             )
-            ->add(
-                'cityPopulation',
+            ->add('cityPopulation',
                 IntegerType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'region',
+            ->add('region',
                 EntityType::class,
                 [
                     'class' => 'AppBundle:Region',
@@ -72,35 +65,29 @@ class StandardCityType extends AbstractType
                     'group_by' => 'parent'
                 ]
             )
-            ->add(
-                'punchLine',
+            ->add('punchLine',
                 TextType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'longDescription',
+            ->add('longDescription',
                 TextareaType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'enableBoard',
+            ->add('enableBoard',
                 CheckboxType::class, [
                     'required' => false
                 ]
             )
-            ->add(
-                'timezone',
+            ->add('timezone',
                 TimezoneType::class
             )
-            ->add(
-                'imageFile',
+            ->add('imageFile',
                 VichFileType::class, [
                     'required' => false
                 ]
-            )
-        ;
+            );
     }
 
     public function getName()

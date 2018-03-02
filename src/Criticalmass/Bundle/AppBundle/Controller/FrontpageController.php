@@ -29,8 +29,7 @@ class FrontpageController extends AbstractController
             ->get(CachedTimeline::class)
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
-            ->getTimelineContent()
-        ;
+            ->getTimelineContent();
 
         return $this->render(
             'AppBundle:Frontpage:index.html.twig',

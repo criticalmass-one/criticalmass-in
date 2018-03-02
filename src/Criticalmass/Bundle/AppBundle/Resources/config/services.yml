@@ -65,10 +65,6 @@ services:
     fos_user.doctrine_registry:
         alias: doctrine
 
-    caldera.criticalmass.flow.create_city:
-        class: Criticalmass\Bundle\AppBundle\Form\Flow\CreateCityFlow
-        parent: craue.form.flow
-
     caldera.criticalmass.validator.single_ride_day:
         class: Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator
         arguments: [ '@doctrine.orm.entity_manager' ]
@@ -95,4 +91,3 @@ services:
 
 imports:
   - { resource: ./services/admin.yml }
-  - { resource: ./services/twig_extensions.yml }

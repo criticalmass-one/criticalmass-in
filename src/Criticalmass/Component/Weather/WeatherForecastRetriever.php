@@ -80,7 +80,8 @@ class WeatherForecastRetriever
     {
         try {
             /** @var WeatherForecast $owmWeatherForecast */
-            $owmWeatherForecast = $this->openWeatherMap->getWeatherForecast($this->getLatLng($ride), 'metric', 'de', null, 7);
+            $owmWeatherForecast = $this->openWeatherMap->getWeatherForecast($this->getLatLng($ride), 'metric', 'de',
+                null, 7);
 
             /** @var Forecast $owmWeather */
             while ($owmWeather = $owmWeatherForecast->current()) {
@@ -99,9 +100,11 @@ class WeatherForecastRetriever
                 return $weather;
             }
         } catch (OWMException $e) {
-            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(), $e->getCode()));
+            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(),
+                $e->getCode()));
         } catch (\Exception $e) {
-            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(), $e->getCode()));
+            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(),
+                $e->getCode()));
         }
 
         return null;
@@ -131,8 +134,7 @@ class WeatherForecastRetriever
             ->setWindSpeed($owmWeather->wind->speed->getValue())
             ->setWindDeg($owmWeather->wind->direction->getValue())
             ->setClouds($owmWeather->clouds->getValue())
-            ->setRain($owmWeather->precipitation->getValue())
-        ;
+            ->setRain($owmWeather->precipitation->getValue());
 
         return $weather;
     }

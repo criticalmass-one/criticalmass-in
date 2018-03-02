@@ -40,8 +40,10 @@ class ParticipationController extends AbstractController
 
     protected function recalculateRideParticipations(Ride $ride)
     {
-        $ride->setParticipationsNumberYes($this->getParticipationRepository()->countParticipationsForRide($ride, 'yes'));
-        $ride->setParticipationsNumberMaybe($this->getParticipationRepository()->countParticipationsForRide($ride, 'maybe'));
+        $ride->setParticipationsNumberYes($this->getParticipationRepository()->countParticipationsForRide($ride,
+            'yes'));
+        $ride->setParticipationsNumberMaybe($this->getParticipationRepository()->countParticipationsForRide($ride,
+            'maybe'));
         $ride->setParticipationsNumberNo($this->getParticipationRepository()->countParticipationsForRide($ride, 'no'));
 
         $em = $this->getDoctrine()->getManager();

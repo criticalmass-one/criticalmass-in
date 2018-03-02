@@ -19,8 +19,7 @@ class SubrideType extends AbstractType
             ->add('time', TimeType::class)
             ->add('location', TextType::class, array('required' => false))
             ->add('latitude', HiddenType::class)
-            ->add('longitude', HiddenType::class)
-        ;
+            ->add('longitude', HiddenType::class);
     }
 
     public function getName()
