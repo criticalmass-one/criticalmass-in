@@ -201,63 +201,6 @@ class CityManagementController extends AbstractController
         );
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function createCityFlowAction(Request $request, $slug1, $slug2, $slug3): Response
-    {
-        /** WTF is this? */
-        if ($this->container->has('profiler')) {
-            $this->container->get('profiler')->disable();
-        }
-
-        /**
-         * @var Region $region
-         */
-        $region = $this->getRegionRepository()->findOneBySlug($slug3);
-
-        $city = new City();
-        $city
-            ->setRegion($region)
-            ->setUser($this->getUser())
-        ;
-
-        $flow = $this->get('caldera.criticalmass.flow.create_city');
-        $flow->bind($city);
-
-        $form = $flow->createForm();
-
-        if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData($form);
-
-            if ($flow->nextStep()) {
-                $form = $flow->createForm();
-            } else {
-                $em = $this->getDoctrine()->getManager();
-
-                $citySlug = $this->createCitySlug($city);
-                $city->addSlug($citySlug);
-
-                $em->persist($citySlug);
-                $em->persist($city);
-                $em->flush();
-
-                $flow->reset();
-
-                return $this->redirectToObject($city);
-            }
-        }
-
-        return $this->render('AppBundle:CityManagement:create.html.twig', array(
-            'form' => $form->createView(),
-            'flow' => $flow,
-            'city' => $city,
-            'country' => $region->getParent()->getName(),
-            'state' => $region->getName(),
-            'region' => $region
-        ));
-    }
-
     protected function createCitySlug(City $city): CitySlug
     {
         $slugString = new Slug($city->getCity());
