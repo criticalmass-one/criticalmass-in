@@ -30,6 +30,10 @@ parameters:
     runkeeper.client_id: 234qt35zr6tjzrgrergerg
     runkeeper.secret: 234qt35zr6tjzrgrergerg
 
+    twitter.client_id: 234qt35zr6tjzrgrergerg
+    twitter.token: 234qt35zr6tjzrgrergerg
+    twitter.secret: 234qt35zr6tjzrgrergerg
+
     timeline.ttl: 60
 
     messagebird.api_key: 234qt35zr6tjzrgrergerg
