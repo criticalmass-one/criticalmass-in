@@ -106,8 +106,7 @@ class PhotoUploader
         $this->photoGps
             ->setPhoto($photo)
             ->setTrack($this->track)
-            ->execute()
-        ;
+            ->execute();
 
         return $this;
     }
@@ -126,8 +125,7 @@ class PhotoUploader
             ->setImageName($imageFilename)
             ->setUser($this->user)
             ->setRide($this->ride)
-            ->setCity($this->ride->getCity())
-        ;
+            ->setCity($this->ride->getCity());
 
         $this->calculateDateTime($photo);
         $this->calculateLocation($photo);

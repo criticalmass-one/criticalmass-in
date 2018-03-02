@@ -3,8 +3,11 @@ define(['leaflet', 'leaflet-markercluster', 'LocalContainer', 'leaflet-extramark
         this._list = [];
         this._layer = L.markerClusterGroup({
             showCoverageOnHover: false,
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({ className: 'cluster-counter-outer', html: '<div class="cluster-counter-inner">' + cluster.getChildCount() + '</div>' });
+            iconCreateFunction: function (cluster) {
+                return L.divIcon({
+                    className: 'cluster-counter-outer',
+                    html: '<div class="cluster-counter-inner">' + cluster.getChildCount() + '</div>'
+                });
             }
         });
     };

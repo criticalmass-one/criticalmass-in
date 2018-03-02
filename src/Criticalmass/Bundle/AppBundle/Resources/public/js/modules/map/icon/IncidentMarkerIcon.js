@@ -2,7 +2,7 @@ define(['leaflet', 'leaflet-extramarkers'], function () {
     IncidentMarkerIcon = function () {
     };
 
-    IncidentMarkerIcon.prototype.createMarkerIcon = function(incidentType, dangerLevel) {
+    IncidentMarkerIcon.prototype.createMarkerIcon = function (incidentType, dangerLevel) {
         var markerColor = 'blue';
         var markerIcon = 'fa-bomb';
         var markerIconColor = 'white';

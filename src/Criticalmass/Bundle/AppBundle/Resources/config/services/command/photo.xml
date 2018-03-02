@@ -6,9 +6,10 @@
 
     <services>
         <defaults autowire="true" autoconfigure="true" public="true">
-            <tag name="console.command" />
+            <tag name="console.command"/>
         </defaults>
 
-        <prototype namespace="Criticalmass\Bundle\AppBundle\Command\Photo\" resource="%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Command/Photo/*" />
+        <prototype namespace="Criticalmass\Bundle\AppBundle\Command\Photo\"
+                   resource="%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Command/Photo/*"/>
     </services>
 </container>

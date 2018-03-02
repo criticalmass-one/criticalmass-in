@@ -10,14 +10,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected function createQuery($queryPhrase, \Elastica\Filter\AbstractFilter $cityFilter, \Elastica\Filter\AbstractFilter $countryFilter)
-    {
+    protected function createQuery(
+        $queryPhrase,
+        \Elastica\Filter\AbstractFilter $cityFilter,
+        \Elastica\Filter\AbstractFilter $countryFilter
+    ) {
         if ($queryPhrase) {
-            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'location']);
+            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
+                ['title', 'description', 'location']);
         } else {
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
-        
+
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
 
         $filter = new \Elastica\Filter\BoolAnd([$enabledFilter, $cityFilter, $countryFilter]);

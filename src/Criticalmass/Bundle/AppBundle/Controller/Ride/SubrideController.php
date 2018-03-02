@@ -199,7 +199,8 @@ class SubrideController extends AbstractController
 
         $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($newRide);
 
-        return $this->render('AppBundle:Subride:preparecopy.html.twig', array('oldRide' => $oldRide, 'newRide' => $newRide));
+        return $this->render('AppBundle:Subride:preparecopy.html.twig',
+            array('oldRide' => $oldRide, 'newRide' => $newRide));
     }
 
     /**

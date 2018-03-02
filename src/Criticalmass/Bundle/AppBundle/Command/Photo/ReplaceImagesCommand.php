@@ -52,8 +52,7 @@ class ReplaceImagesCommand extends Command
                 'photoDateTimeZone',
                 InputArgument::OPTIONAL,
                 'Timezone of the photos datetime values'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,7 +64,8 @@ class ReplaceImagesCommand extends Command
         }
 
         /** @var Ride $ride */
-        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'),
+            $input->getArgument('rideDate'));
 
         /** @var User $user */
         $user = $this->doctrine->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
@@ -78,7 +78,6 @@ class ReplaceImagesCommand extends Command
             ->setUser($user)
             ->setTrack($track)
             ->setOutput($output)
-            ->relocate()
-        ;
+            ->relocate();
     }
 }

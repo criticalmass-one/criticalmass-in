@@ -107,7 +107,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'bootstrap-datepicker'], function
         $(this.settings.longitudeInputSelector).val(position.lng);
     };
 
-    EditCityCyclePage.prototype._initDatePicker = function() {
+    EditCityCyclePage.prototype._initDatePicker = function () {
         $('.datepicker').datepicker({
             format: 'dd.mm.yyyy',
             autoclose: true,

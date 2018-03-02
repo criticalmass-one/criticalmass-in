@@ -129,7 +129,8 @@ class TrackController extends AbstractController
             $this->generateSimpleLatLngList($track);
             $this->generatePolyline($track);
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', ['trackId' => $track->getId()]));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view',
+                ['trackId' => $track->getId()]));
         }
 
         return $this->render(
@@ -181,7 +182,8 @@ class TrackController extends AbstractController
 
             $response->headers->add([
                 'Content-disposition' => 'attachment; filename=track.gpx',
-                'Content-type', 'text/plain'
+                'Content-type',
+                'text/plain'
             ]);
 
             $response->setContent($trackContent);

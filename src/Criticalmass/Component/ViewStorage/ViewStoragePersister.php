@@ -125,7 +125,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         if ($this->output) {
             $this->output->writeln($message);
         } else {
-            echo $message."\n";
+            echo $message . "\n";
         }
 
         return $this;

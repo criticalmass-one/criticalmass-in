@@ -16,7 +16,7 @@ class PhotoFilterer
     /** @var Doctrine $doctrine */
     protected $doctrine = null;
 
-    /** @var UploaderHelper $uploaderHelper*/
+    /** @var UploaderHelper $uploaderHelper */
     protected $uploaderHelper = null;
 
     /** @var ImagineController $imagineController */
@@ -28,8 +28,11 @@ class PhotoFilterer
     /** @var OutputInterface $output */
     protected $output;
 
-    public function __construct(Doctrine $doctrine, UploaderHelper $uploaderHelper, ImagineController $imagineController)
-    {
+    public function __construct(
+        Doctrine $doctrine,
+        UploaderHelper $uploaderHelper,
+        ImagineController $imagineController
+    ) {
         $this->doctrine = $doctrine;
         $this->uploaderHelper = $uploaderHelper;
         $this->imagineController = $imagineController;
@@ -87,8 +90,7 @@ class PhotoFilterer
                 new Request(),
                 $filename,
                 $filter
-            )
-        ;
+            );
 
         return $this;
     }

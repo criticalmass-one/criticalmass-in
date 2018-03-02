@@ -47,8 +47,11 @@ class PhotoGps
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(UploaderHelper $uploaderHelper, TrackReader $trackReader, string $uploadDestinationPhoto)
-    {
+    public function __construct(
+        UploaderHelper $uploaderHelper,
+        TrackReader $trackReader,
+        string $uploadDestinationPhoto
+    ) {
         $this->uploaderHelper = $uploaderHelper;
         $this->uploadDestinationPhoto = $uploadDestinationPhoto;
         $this->trackReader = $trackReader;
@@ -90,8 +93,7 @@ class PhotoGps
 
             $this->photo
                 ->setLatitude($gps['lat'])
-                ->setLongitude($gps['lon'])
-            ;
+                ->setLongitude($gps['lon']);
         } elseif ($this->track) {
             $this->approximateCoordinates();
         }

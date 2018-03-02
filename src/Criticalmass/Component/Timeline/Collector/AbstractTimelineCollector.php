@@ -50,7 +50,8 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
         $className = array_pop($tmp);
         $methodName = sprintf('findForTimeline%s', $className);
 
-        return $this->doctrine->getRepository($this->entityClass)->$methodName($this->startDateTime, $this->endDateTime);
+        return $this->doctrine->getRepository($this->entityClass)->$methodName($this->startDateTime,
+            $this->endDateTime);
     }
 
     protected function groupEntities(array $entities): array

@@ -37,8 +37,7 @@ class CityBridge extends AbstractBridge
                 ->setGeneralInfo($page->getField('general_info'))
                 ->setCheckinNumber($page->getField('were_here_count'))
                 ->setWebsite($page->getField('website'))
-                ->setLikeNumber($page->getField('fan_count'))
-            ;
+                ->setLikeNumber($page->getField('fan_count'));
 
             return $properties;
         }

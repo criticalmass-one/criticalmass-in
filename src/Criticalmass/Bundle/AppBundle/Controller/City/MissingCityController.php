@@ -63,8 +63,7 @@ class MissingCityController extends AbstractController
         $city
             ->setLatitude($result['lat'])
             ->setLongitude($result['lon'])
-            ->setCity($result['address']['city'])
-        ;
+            ->setCity($result['address']['city']);
 
         return $city;
     }

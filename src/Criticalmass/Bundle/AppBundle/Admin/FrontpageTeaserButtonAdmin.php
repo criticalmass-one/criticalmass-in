@@ -17,28 +17,24 @@ class FrontpageTeaserButtonAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Teaser', ['class' => 'col-md-6'])
-            ->add('frontpageTeaser', EntityType::class, ['required' => true, 'class' => FrontpageTeaser::class  ])
+            ->add('frontpageTeaser', EntityType::class, ['required' => true, 'class' => FrontpageTeaser::class])
             ->add('position', NumberType::class, ['required' => true])
             ->end()
-
             ->with('Button', ['class' => 'col-md-6'])
             ->add('caption', TextType::class, ['required' => false])
             ->add('link', TextType::class, ['required' => false])
             ->end()
-
             ->with('Layout', ['class' => 'col-md-6'])
             ->add('icon', TextType::class, ['required' => false])
             ->add('class', TextType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('caption')
-            ->add('frontpageTeaser')
-        ;
+            ->add('frontpageTeaser');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -46,7 +42,6 @@ class FrontpageTeaserButtonAdmin extends AbstractAdmin
         $listMapper
             ->addIdentifier('caption')
             ->add('frontpageTeaser')
-            ->add('link')
-        ;
+            ->add('link');
     }
 }

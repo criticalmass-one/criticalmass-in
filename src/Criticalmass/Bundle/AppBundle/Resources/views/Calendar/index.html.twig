@@ -69,29 +69,29 @@
                     <tbody>
                     {% for week in month %}
                         <tr>
-                        {% for day in week %}
-                            {% if month.includes(day) %}
-                            <td class="day">
-                                <div class="day-number">
-                                    {{ day.format('d') }}
-                                </div>
+                            {% for day in week %}
+                                {% if month.includes(day) %}
+                                    <td class="day">
+                                        <div class="day-number">
+                                            {{ day.format('d') }}
+                                        </div>
 
-                                <ul class="ride-list list-unstyled">
-                                {% for event in calendr_events(day).all %}
-                                    <li>
-                                        {% set ride = event.ride %}
-                                        <a href="{{ objectPath(ride) }}">
-                                            {{ ride.city.city }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                                </ul>
-                            </td>
-                            {% else %}
-                            <td></td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
+                                        <ul class="ride-list list-unstyled">
+                                            {% for event in calendr_events(day).all %}
+                                                <li>
+                                                    {% set ride = event.ride %}
+                                                    <a href="{{ objectPath(ride) }}">
+                                                        {{ ride.city.city }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
