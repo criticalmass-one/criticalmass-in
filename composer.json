@@ -58,7 +58,9 @@
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
-        "jublonet/codebird-php": "^3.1"
+        "jublonet/codebird-php": "^3.1",
+        "zendframework/zend-http": "^2.7",
+        "zendframework/zend-feed": "^2.9"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
