@@ -26,8 +26,7 @@ class SiteTwigExtension extends \Twig_Extension
         TranslatorInterface $translator,
         RouterInterface $router,
         Parser $markdownParser
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->router = $router;
         $this->markdownParser = $markdownParser;
@@ -103,7 +102,7 @@ class SiteTwigExtension extends \Twig_Extension
         return $diffDays;
     }
 
-    public function instanceof($var, $instance)
+    public function instanceof ($var, $instance)
     {
         return $var instanceof $instance;
     }

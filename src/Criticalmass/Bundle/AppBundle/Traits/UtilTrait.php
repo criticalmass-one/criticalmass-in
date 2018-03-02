@@ -39,7 +39,7 @@ trait UtilTrait
 
         if (!$city) {
             throw new NotFoundHttpException(
-                'Wir haben leider keine Stadt in der Datenbank, die sich mit '.$citySlug.' identifiziert.'
+                'Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.'
             );
         }
 
@@ -61,7 +61,7 @@ trait UtilTrait
 
         if (!$ride) {
             throw new NotFoundHttpException(
-                'Wir haben leider keine Tour in '.$city->getCity().' am '.$rideDateTime->format('d. m. Y').' gefunden.'
+                'Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.'
             );
         }
 

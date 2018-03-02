@@ -63,7 +63,8 @@ class TrackManagementController extends AbstractController
 
         $response->headers->add([
             'Content-disposition' => 'attachment; filename=track.gpx',
-            'Content-type', 'text/plain'
+            'Content-type',
+            'text/plain'
         ]);
 
         $response->setContent($trackContent);
@@ -118,8 +119,7 @@ class TrackManagementController extends AbstractController
             ))
             ->add('startPoint', HiddenType::class)
             ->add('endPoint', HiddenType::class)
-            ->getForm()
-        ;
+            ->getForm();
 
         if ($request->isMethod(Request::METHOD_POST)) {
             return $this->rangePostAction($request, $track, $form);
@@ -133,8 +133,7 @@ class TrackManagementController extends AbstractController
         $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
         $llag
             ->loadTrack($track)
-            ->execute()
-        ;
+            ->execute();
 
         return $this->render('AppBundle:Track:range.html.twig',
             [
@@ -178,8 +177,7 @@ class TrackManagementController extends AbstractController
             ))
             ->add('startDate', DateType::class)
             ->add('startTime', TimeType::class)
-            ->getForm()
-        ;
+            ->getForm();
 
         if ($request->isMethod(Request::METHOD_POST)) {
             return $this->timePostAction($request, $track, $form);
@@ -221,8 +219,7 @@ class TrackManagementController extends AbstractController
             $tts
                 ->loadTrack($newTrack)
                 ->shift($interval)
-                ->saveTrack()
-            ;
+                ->saveTrack();
 
             $this->updateTrackProperties($track);
         }

@@ -24,8 +24,7 @@ class PostController extends AbstractController
         int $rideId = null,
         int $photoId = null,
         int $threadId = null
-    ): Response
-    {
+    ): Response {
         /**
          * @var Ride $ride
          * @var City $city
@@ -37,13 +36,17 @@ class PostController extends AbstractController
         $thread = null;
 
         if ($cityId) {
-            $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', ['cityId' => $cityId])]);
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', ['cityId' => $cityId])
+            ]);
             $city = $this->getCityRepository()->find($cityId);
             $post->setCity($city);
 
             $redirectUrl = $this->generateObjectUrl($city);
         } elseif ($rideId) {
-            $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', ['rideId' => $rideId])]);
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', ['rideId' => $rideId])
+            ]);
             $ride = $this->getRideRepository()->find($rideId);
             $city = $this->getCityRepository()->find($ride->getCity());
             $post->setCity($city);
@@ -51,20 +54,27 @@ class PostController extends AbstractController
 
             $redirectUrl = $this->generateObjectUrl($ride);
         } elseif ($photoId) {
-            $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo', ['photoId' => $photoId])]);
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo',
+                    ['photoId' => $photoId])
+            ]);
             $photo = $this->getPhotoRepository()->find($photoId);
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateObjectUrl($photo);
         } elseif ($threadId) {
-            $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread', ['threadId' => $threadId])]);
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread',
+                    ['threadId' => $threadId])
+            ]);
 
             $thread = $this->getThreadRepository()->find($threadId);
             $post->setThread($thread);
 
             $redirectUrl = $this->generateObjectUrl($thread);
         } else {
-            $form = $this->createForm(PostType::class, $post, ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')]);
+            $form = $this->createForm(PostType::class, $post,
+                ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')]);
 
             $redirectUrl = $this->generateUrl('caldera_criticalmass_frontpage');
         }
@@ -101,7 +111,8 @@ class PostController extends AbstractController
                redirected there again. */
             return new RedirectResponse($redirectUrl);
         } elseif ($form->isSubmitted()) {
-            return $this->render('AppBundle:Post:writefailed.html.twig', ['form' => $form->createView(), 'ride' => $ride, 'city' => $city]);
+            return $this->render('AppBundle:Post:writefailed.html.twig',
+                ['form' => $form->createView(), 'ride' => $ride, 'city' => $city]);
         }
 
         return $this->render('AppBundle:Post:write.html.twig', ['form' => $form->createView()]);
@@ -125,8 +136,7 @@ class PostController extends AbstractController
         int $cityId = null,
         int $rideId = null,
         int $photoId = null
-    ): Response
-    {
+    ): Response {
         /* We do not want disabled posts. */
         $criteria = ['enabled' => true];
 

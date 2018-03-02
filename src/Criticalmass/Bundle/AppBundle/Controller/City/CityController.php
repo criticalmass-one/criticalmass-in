@@ -41,9 +41,9 @@ class CityController extends AbstractController
         $selfQuery->addMustNot($selfTerm);
 
         $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-                'lat' => $city->getLatitude(),
-                'lon' => $city->getLongitude(),
-            ],
+            'lat' => $city->getLatitude(),
+            'lon' => $city->getLongitude(),
+        ],
             '50km'
         );
 
@@ -51,8 +51,7 @@ class CityController extends AbstractController
         $boolQuery
             ->addMust($geoQuery)
             ->addMust($enabledQuery)
-            ->addMust($selfQuery)
-        ;
+            ->addMust($selfQuery);
 
         $query = new \Elastica\Query($boolQuery);
 
@@ -145,8 +144,7 @@ class CityController extends AbstractController
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setPreviewPhoto($city)
             ->setCanonicalForObject($city)
-            ->setTitle($city->getTitle())
-        ;
+            ->setTitle($city->getTitle());
 
         return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,

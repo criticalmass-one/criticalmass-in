@@ -27,7 +27,7 @@ class EventSelector
 
     public function autoselect(): EventSelector
     {
-        $rides = $this->doctrine->getRepository(Ride::class )->findFutureRides();
+        $rides = $this->doctrine->getRepository(Ride::class)->findFutureRides();
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {

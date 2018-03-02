@@ -19,17 +19,14 @@ class ThreadAdmin extends AbstractAdmin
             ->with('Thread', ['class' => 'col-md-6'])
             ->add('title')
             ->end()
-
             ->with('Context', ['class' => 'col-md-6'])
             ->add('board', EntityType::class, ['class' => Board::class, 'required' => false])
             ->add('city', EntityType::class, ['class' => City::class, 'required' => false])
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('slug')
             ->add('enabled', CheckboxType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -39,8 +36,7 @@ class ThreadAdmin extends AbstractAdmin
             ->add('firstPost.user')
             ->add('board')
             ->add('city')
-            ->add('enabled')
-        ;
+            ->add('enabled');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -51,7 +47,6 @@ class ThreadAdmin extends AbstractAdmin
             ->add('firstPost.dateTime')
             ->add('board')
             ->add('city')
-            ->add('enabled')
-        ;
+            ->add('enabled');
     }
 }

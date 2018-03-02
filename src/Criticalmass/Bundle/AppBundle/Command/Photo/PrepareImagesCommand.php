@@ -40,8 +40,7 @@ class PrepareImagesCommand extends Command
                 'rideDate',
                 InputArgument::REQUIRED,
                 'Date of the ride'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -58,8 +57,7 @@ class PrepareImagesCommand extends Command
         $this->photoFilterer
             ->setOutput($output)
             ->setRide($ride)
-            ->filter()
-        ;
+            ->filter();
     }
 
     protected function getRide(string $citySlug, string $rideDate): ?Ride

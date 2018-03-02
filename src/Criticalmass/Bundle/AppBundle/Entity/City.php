@@ -467,7 +467,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->description;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function isEqual(City $city): bool
     {
         return $city->getId() === $this->getId();

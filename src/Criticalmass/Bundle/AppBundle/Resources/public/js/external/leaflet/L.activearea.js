@@ -10,11 +10,11 @@ if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
 
 
 L.Map.include({
-    getViewport: function() {
+    getViewport: function () {
         return this._viewport;
     },
 
-    getViewportBounds: function() {
+    getViewportBounds: function () {
         var vp = this._viewport,
             topleft = L.point(vp.offsetLeft, vp.offsetTop),
             vpsize = L.point(vp.clientWidth, vp.clientHeight);
@@ -28,12 +28,12 @@ L.Map.include({
         return L.bounds(topleft, topleft.add(vpsize));
     },
 
-    getViewportLatLngBounds: function() {
+    getViewportLatLngBounds: function () {
         var bounds = this.getViewportBounds();
         return L.latLngBounds(this.containerPointToLatLng(bounds.min), this.containerPointToLatLng(bounds.max));
     },
 
-    getOffset: function() {
+    getOffset: function () {
         var mCenter = this.getSize().divideBy(2),
             vCenter = this.getViewportBounds().getCenter();
 

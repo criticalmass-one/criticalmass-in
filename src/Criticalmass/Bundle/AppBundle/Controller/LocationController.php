@@ -81,16 +81,15 @@ class LocationController extends AbstractController
         $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
         $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-                'lat' => $location->getLatitude(),
-                'lon' => $location->getLongitude(),
-            ],
+            'lat' => $location->getLatitude(),
+            'lon' => $location->getLongitude(),
+        ],
             '500m'
         );
 
         $boolQuery = new \Elastica\Query\BoolQuery();
         $boolQuery
-            ->addMust($geoQuery)
-        ;
+            ->addMust($geoQuery);
 
         $query = new \Elastica\Query($boolQuery);
 

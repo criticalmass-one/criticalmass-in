@@ -57,14 +57,16 @@ class FOSUBUserProvider extends BaseClass
             ->setUsername($username)
             ->setEmail($email)
             ->setPassword('')
-            ->setEnabled(true)
-        ;
+            ->setEnabled(true);
 
         return $user;
     }
 
-    protected function setServiceData(UserInterface $user, UserResponseInterface $response, bool $clear = false): UserInterface
-    {
+    protected function setServiceData(
+        UserInterface $user,
+        UserResponseInterface $response,
+        bool $clear = false
+    ): UserInterface {
         $username = $response->getUsername();
         $service = $response->getResourceOwner()->getName();
 
@@ -75,13 +77,11 @@ class FOSUBUserProvider extends BaseClass
         if ($clear) {
             $user
                 ->$setterId(null)
-                ->$setterToken(null)
-            ;
+                ->$setterToken(null);
         } else {
             $user
                 ->$setterId($username)
-                ->$setterToken($response->getAccessToken())
-            ;
+                ->$setterToken($response->getAccessToken());
         }
 
         return $user;

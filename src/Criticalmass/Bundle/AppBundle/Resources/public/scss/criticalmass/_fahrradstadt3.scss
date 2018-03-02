@@ -1,8 +1,8 @@
-$fahrradstadt-color: rgb(239,200,40);
+$fahrradstadt-color: rgb(239, 200, 40);
 
-$panel-fahrradstadt-text:          $gray-dark !default;
-$panel-fahrradstadt-border:        $fahrradstadt-color !default;
-$panel-fahrradstadt-heading-bg:    $fahrradstadt-color !default;
+$panel-fahrradstadt-text: $gray-dark !default;
+$panel-fahrradstadt-border: $fahrradstadt-color !default;
+$panel-fahrradstadt-heading-bg: $fahrradstadt-color !default;
 
 .panel-fahrradstadt {
   @include panel-variant($panel-fahrradstadt-border, $panel-fahrradstadt-text, $panel-fahrradstadt-heading-bg, $panel-fahrradstadt-border);
@@ -20,9 +20,9 @@ $panel-fahrradstadt-heading-bg:    $fahrradstadt-color !default;
   }
 }
 
-$btn-fahrradstadt-color:              #333 !default;
-$btn-fahrradstadt-bg:                 $fahrradstadt-color !default;
-$btn-fahrradstadt-border:             $fahrradstadt-color !default;
+$btn-fahrradstadt-color: #333 !default;
+$btn-fahrradstadt-bg: $fahrradstadt-color !default;
+$btn-fahrradstadt-border: $fahrradstadt-color !default;
 
 .btn-fahrradstadt {
   @include button-variant($btn-fahrradstadt-color, $btn-fahrradstadt-bg, $btn-fahrradstadt-border);

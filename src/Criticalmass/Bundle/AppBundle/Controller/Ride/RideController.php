@@ -61,8 +61,7 @@ class RideController extends AbstractController
         $this
             ->getSeoPage()
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
-            ->setCanonicalForObject($ride)
-        ;
+            ->setCanonicalForObject($ride);
 
         if ($ride->getImageName()) {
             $this->getSeoPage()->setPreviewPhoto($ride);
@@ -88,7 +87,8 @@ class RideController extends AbstractController
         }
 
         if ($this->getUser()) {
-            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(), $ride);
+            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(),
+                $ride);
         } else {
             $participation = null;
         }

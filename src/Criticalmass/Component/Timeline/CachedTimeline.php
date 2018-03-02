@@ -17,6 +17,7 @@ class CachedTimeline extends Timeline
         $this->templating = $templating;
         $this->ttl = $ttl;
     }
+
     public function execute(): Timeline
     {
         $cacheKey = 'criticalmass-timeline-content';
@@ -44,8 +45,7 @@ class CachedTimeline extends Timeline
 
             $timeline
                 ->set($this->content)
-                ->expiresAfter($this->ttl)
-            ;
+                ->expiresAfter($this->ttl);
 
             $cache->save($timeline);
         } else {

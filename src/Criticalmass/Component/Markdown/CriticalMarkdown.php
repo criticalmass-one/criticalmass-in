@@ -39,7 +39,7 @@ class CriticalMarkdown extends Parser
      */
     protected function renderText($text): string
     {
-         $br = $this->html5 ? "<br>\n" : "<br />\n";
+        $br = $this->html5 ? "<br>\n" : "<br />\n";
 
         return strtr($text[1], ["  \n" => $br, "\n" => $br]);
     }

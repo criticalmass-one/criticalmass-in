@@ -53,8 +53,7 @@ class BikerightController extends Controller
 
         $bikerightVoucher
             ->setUser($user)
-            ->setAssignedAt(new \DateTime())
-        ;
+            ->setAssignedAt(new \DateTime());
 
         $this->getDoctrine()->getManager()->flush();
 

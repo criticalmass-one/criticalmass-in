@@ -104,7 +104,8 @@ class TrackUploadController extends AbstractController
             $this->generateSimpleLatLngList($track);
             $this->generatePolyline($track);
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', ['trackId' => $track->getId()]));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view',
+                ['trackId' => $track->getId()]));
         }
 
         return $this->render(

@@ -41,8 +41,7 @@ class RideType extends AbstractType
                 VichFileType::class,
                 [
                     'required' => false
-                ])
-        ;
+                ]);
     }
 
     public function getName(): string

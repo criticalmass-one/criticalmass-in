@@ -17,15 +17,18 @@ class RideEstimateController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function addestimateAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
-    {
+    public function addestimateAction(
+        Request $request,
+        UserInterface $user,
+        string $citySlug,
+        string $rideDate
+    ): Response {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $rideEstimate = new RideEstimate();
         $rideEstimate
             ->setUser($user)
-            ->setRide($ride)
-        ;
+            ->setRide($ride);
 
         $estimateForm = $this->createForm(
             RideEstimateType::class,
@@ -51,15 +54,18 @@ class RideEstimateController extends AbstractController
         return $this->redirectToObject($ride);
     }
 
-    public function anonymousestimateAction(Request $request, UserInterface $user = null, string $citySlug, string $rideDate): Response
-    {
+    public function anonymousestimateAction(
+        Request $request,
+        UserInterface $user = null,
+        string $citySlug,
+        string $rideDate
+    ): Response {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $rideEstimate = new RideEstimate();
         $rideEstimate
             ->setUser($this->getUser())
-            ->setRide($ride)
-        ;
+            ->setRide($ride);
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
                 'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate_anonymous', [

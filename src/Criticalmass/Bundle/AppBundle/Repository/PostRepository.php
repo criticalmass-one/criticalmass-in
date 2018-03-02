@@ -118,8 +118,11 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineThreadPostCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
+    public function findForTimelineThreadPostCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ) {
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
@@ -131,11 +134,13 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->neq('post', 'thread.firstPost'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime',
+                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime',
+                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -151,8 +156,11 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineBlogPostCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
+    public function findForTimelineBlogPostCommentCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ) {
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
@@ -161,11 +169,13 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNotNull('post.blogPost'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime',
+                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime',
+                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -181,8 +191,11 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineRideCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
+    public function findForTimelineRideCommentCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ) {
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
@@ -191,11 +204,13 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNotNull('post.ride'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime',
+                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime',
+                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -211,8 +226,11 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelinePhotoCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
+    public function findForTimelinePhotoCommentCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ) {
         $builder = $this->createQueryBuilder('post');
 
         $builder->select('post');
@@ -221,11 +239,13 @@ class PostRepository extends EntityRepository
         $builder->andWhere($builder->expr()->isNotNull('post.photo'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->gte('post.dateTime',
+                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lte('post.dateTime',
+                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {

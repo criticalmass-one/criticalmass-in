@@ -19,8 +19,13 @@ class CityManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function addAction(Request $request, UserInterface $user, string $slug1, string $slug2, string $slug3): Response
-    {
+    public function addAction(
+        Request $request,
+        UserInterface $user,
+        string $slug1,
+        string $slug2,
+        string $slug3
+    ): Response {
         /**
          * @var Region $region
          */
@@ -29,8 +34,7 @@ class CityManagementController extends AbstractController
         $city = new City();
         $city
             ->setRegion($region)
-            ->setUser($this->getUser())
-        ;
+            ->setUser($this->getUser());
 
         $form = $this->createForm(
             StandardCityType::class,
@@ -178,8 +182,7 @@ class CityManagementController extends AbstractController
         if ($form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user)
-            ;
+                ->setUser($user);
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -208,8 +211,7 @@ class CityManagementController extends AbstractController
         $citySlug = new CitySlug();
         $citySlug
             ->setCity($city)
-            ->setSlug($slugString)
-        ;
+            ->setSlug($slugString);
 
         return $citySlug;
     }

@@ -22,8 +22,7 @@ class SubrideType extends AbstractType
             ->add('longitude', HiddenType::class)
             ->add('facebook', TextType::class, array('required' => false))
             ->add('twitter', TextType::class, array('required' => false))
-            ->add('url', TextType::class, array('required' => false))
-        ;
+            ->add('url', TextType::class, array('required' => false));
     }
 
     public function getName()
