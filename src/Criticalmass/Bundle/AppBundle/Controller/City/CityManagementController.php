@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
+use Criticalmass\Component\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
@@ -22,34 +23,31 @@ class CityManagementController extends AbstractController
     public function addAction(
         Request $request,
         UserInterface $user,
-        string $slug1,
-        string $slug2,
-        string $slug3
+        string $slug1 = null,
+        string $slug2 = null,
+        string $slug3 = null,
+        string $citySlug = null
     ): Response {
-        /**
-         * @var Region $region
-         */
-        $region = $this->getRegionRepository()->findOneBySlug($slug3);
+        $region = $this->getRegion($slug3, $citySlug);
 
-        $city = new City();
-        $city
-            ->setRegion($region)
-            ->setUser($this->getUser());
+        if ($citySlug) {
+            $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
+        } else {
+            $city = new City();
+            $city->setRegion($region);
+        }
+
+        $city->setUser($this->getUser());
 
         $form = $this->createForm(
             StandardCityType::class,
             $city, [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_desktop_city_add', [
-                        'slug1' => $slug1,
-                        'slug2' => $slug2,
-                        'slug3' => $slug3
-                    ]
-                )
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add',
+                    $this->getRegionSlugParameterArray($region))
             ]
         );
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST == $request->getMethod()) {
             return $this->addPostAction($request, $user, $city, $region, $form);
         } else {
             return $this->addGetAction($request, $user, $city, $region, $form);
@@ -214,5 +212,31 @@ class CityManagementController extends AbstractController
             ->setSlug($slugString);
 
         return $citySlug;
+    }
+
+    protected function getRegion(string $regionSlug = null, string $citySlug = null): ?Region
+    {
+        if ($regionSlug) {
+            return $this->getRegionRepository()->findOneBySlug($regionSlug);
+        }
+
+        if ($citySlug) {
+            $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
+
+            if ($city) {
+                return $city->getRegion();
+            }
+        }
+
+        return null;
+    }
+
+    protected function getRegionSlugParameterArray(Region $region): array
+    {
+        return [
+            'slug1' => $region->getParent()->getParent()->getSlug(),
+            'slug2' => $region->getParent()->getSlug(),
+            'slug3' => $region->getSlug(),
+        ];
     }
 }
