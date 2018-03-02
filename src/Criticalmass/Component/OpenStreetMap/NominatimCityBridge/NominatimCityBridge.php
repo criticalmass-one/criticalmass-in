@@ -4,21 +4,10 @@ namespace Criticalmass\Component\OpenStreetMap\NominatimCityBridge;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use maxh\Nominatim\Nominatim;
 
-class NominatimCityBridge
+class NominatimCityBridge extends AbstractNominatimCityBridge
 {
-    const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/';
-
-    /** @var Doctrine $doctrine */
-    protected $doctrine;
-
-    public function __construct(Doctrine $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
-
     public function lookupCity(string $citySlug): ?City
     {
         $nominatim = new Nominatim(self::NOMINATIM_URL);
