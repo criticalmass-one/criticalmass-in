@@ -2,19 +2,21 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
-        <import resource="services/calendar.xml" />
-        <import resource="services/command.xml" />
-        <import resource="services/manager.xml" />
-        <import resource="services/factory.xml" />
-        <import resource="services/facebook.xml" />
-        <import resource="services/statistic.xml" />
-        <import resource="services/photo.xml" />
-        <import resource="services/twig.xml" />
-        <import resource="services/seo_page.xml" />
-        <import resource="services/ride_generator.xml" />
-        <import resource="services/view_storage.xml" />
-        <import resource="services/openstreetmap.xml" />
-        <import resource="services/timeline/timeline.xml" />
-        <import resource="services/timeline/collectors.xml" />
+        <import resource="services/calendar.xml"/>
+        <import resource="services/command.xml"/>
+        <import resource="services/manager.xml"/>
+        <import resource="services/factory.xml"/>
+        <import resource="services/facebook.xml"/>
+        <import resource="services/statistic.xml"/>
+        <import resource="services/photo.xml"/>
+        <import resource="services/twig.xml"/>
+        <import resource="services/seo_page.xml"/>
+        <import resource="services/ride_generator.xml"/>
+        <import resource="services/view_storage.xml"/>
+        <import resource="services/openstreetmap.xml"/>
+        <import resource="services/timeline/timeline.xml"/>
+        <import resource="services/timeline/collectors.xml"/>
+        <import resource="services/social_network/fetcher.xml"/>
+        <import resource="services/social_network/network_fetcher.xml"/>
     </imports>
 </container>

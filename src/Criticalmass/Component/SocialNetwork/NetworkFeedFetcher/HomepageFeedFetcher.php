@@ -1,22 +1,24 @@
 <?php
 
-namespace Criticalmass\Component\SocialNetwork\FeedFetcher;
+namespace Criticalmass\Component\SocialNetwork\NetworkFeedFetcher;
 
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Component\SocialNetwork\Entity\FeedItem;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Reader;
 
-class HomepageFeedFetcher
+class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 {
     public function __construct()
     {
 
     }
 
-    public function fetch(SocialNetworkProfile $socialNetworkProfile)
+    public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
         $this->fetchFeed($socialNetworkProfile);
+
+        return $this;
     }
 
     protected function getFeedLink(SocialNetworkProfile $socialNetworkProfile): ?string

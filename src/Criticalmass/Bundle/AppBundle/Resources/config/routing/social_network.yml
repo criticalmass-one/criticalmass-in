@@ -1,3 +1,7 @@
+criticalmass_socialnetwork_list_city:
+    path:  /{citySlug}/socialnetwork/list
+    defaults: { _controller: AppBundle:SocialNetwork:list }
+
 criticalmass_socialnetwork_add_city:
     path:  /{citySlug}/socialnetwork/add
     defaults: { _controller: AppBundle:SocialNetwork:add }
