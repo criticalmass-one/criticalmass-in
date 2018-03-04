@@ -21,7 +21,6 @@ class Version20180304032527 extends AbstractMigration
         $this->addSql('ALTER TABLE feed_item ADD CONSTRAINT FK_9F8CCE49302A8A70 FOREIGN KEY (ride_id) REFERENCES ride (id)');
         $this->addSql('ALTER TABLE feed_item ADD CONSTRAINT FK_9F8CCE497B4822BF FOREIGN KEY (subride_id) REFERENCES subride (id)');
         $this->addSql('ALTER TABLE feed_item ADD CONSTRAINT FK_9F8CCE4946FDDF24 FOREIGN KEY (social_network_profile_id) REFERENCES social_network_profile (id)');
-        $this->addSql('ALTER TABLE track CHANGE source source ENUM(\'TRACK_SOURCE_GPX\', \'TRACK_SOURCE_STRAVA\', \'TRACK_SOURCE_RUNKEEPER\', \'TRACK_SOURCE_RUNTASTIC\', \'TRACK_SOURCE_DRAW\', \'TRACK_SOURCE_GLYMPSE\', \'TRACK_SOURCE_CRITICALMAPS\', \'TRACK_SOURCE_UNKNOWN\')');
     }
 
     public function down(Schema $schema)
@@ -30,6 +29,5 @@ class Version20180304032527 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP TABLE feed_item');
-        $this->addSql('ALTER TABLE track CHANGE source source VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
     }
 }
