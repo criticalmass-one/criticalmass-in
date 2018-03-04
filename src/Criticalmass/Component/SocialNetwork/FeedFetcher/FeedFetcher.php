@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Component\SocialNetwork\FeedFetcher;
 
+use Criticalmass\Bundle\AppBundle\Entity\FeedItem;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Component\SocialNetwork\Network\NetworkInterface;
 use Criticalmass\Component\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
@@ -78,12 +79,28 @@ class FeedFetcher
         $em = $this->doctrine->getManager();
 
         foreach ($this->feedItemList as $feedItem) {
-            $em->persist($feedItem);
+            if (!$this->feedItemExists($feedItem)) {
+                $em->persist($feedItem);
+            }
         }
 
-        $em->flush();
+        try {
+            $em->flush();
+        } catch (\Exception $exception) {
+        }
+
 
         return $this;
+    }
+
+    protected function feedItemExists(FeedItem $feedItem): bool
+    {
+        $existingItem = $this->doctrine->getRepository(FeedItem::class)->findOneBy([
+            'socialNetworkProfile' => $feedItem->getSocialNetworkProfile(),
+            'uniqueIdentifier' => $feedItem->getUniqueIdentifier()
+        ]);
+
+        return $existingItem !== null;
     }
 
     public function getFeedItemList(): array
