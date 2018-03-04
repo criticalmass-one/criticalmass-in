@@ -2,9 +2,6 @@
 
 namespace Criticalmass\Component\SocialNetwork\Network;
 
-use AppBundle\Share\Metadata\Metadata;
-use AppBundle\Share\ShareableInterface\Shareable;
-
 abstract class AbstractNetwork implements NetworkInterface
 {
     /** @var string $name */
@@ -19,45 +16,10 @@ abstract class AbstractNetwork implements NetworkInterface
     /** @var string $textColor */
     protected $textColor;
 
-    /** @var Metadata $metadata */
-    protected $metadata;
-
-    /** @var bool $openSharewindow */
-    protected $openSharewindow;
-
-    public function __construct(Metadata $metadata)
+    public function __construct()
     {
-        $this->metadata = $metadata;
     }
 
-    public function getIdentifier(): string
-    {
-        $reflection = new \ReflectionClass($this);
-
-        $shortname = $reflection->getShortName();
-
-        $identifier = strtolower(str_replace('ShareNetwork', '', $shortname));
-
-        return $identifier;
-    }
-
-    protected function getShareUrl(Shareable $shareable): string
-    {
-        $shareableUrl = $this->metadata->getShareUrl($shareable);
-
-        return str_replace('http://', 'https://', $shareableUrl);
-    }
-
-    protected function getShareTitle(Shareable $shareable): ?string
-    {
-        return $this->metadata->getShareTitle($shareable);
-    }
-
-    protected function getShareIntro(Shareable $shareable): ?string
-    {
-        return $this->metadata->getShareIntro($shareable);
-    }
-    
     public function getName(): string
     {
         return $this->name;
@@ -76,10 +38,5 @@ abstract class AbstractNetwork implements NetworkInterface
     public function getTextColor(): string
     {
         return $this->textColor;
-    }
-
-    public function openShareWindow(): bool
-    {
-        return $this->openSharewindow;
     }
 }

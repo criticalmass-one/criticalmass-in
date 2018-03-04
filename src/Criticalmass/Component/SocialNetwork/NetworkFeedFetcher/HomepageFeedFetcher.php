@@ -42,12 +42,15 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         return null;
     }
 
-    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): array
+    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
         $feedLink = $this->getFeedLink($socialNetworkProfile);
-        $feed = Reader::import($feedLink);
 
-        $feedItemList = [];
+        if (!$feedLink) {
+            return $this;
+        }
+
+        $feed = Reader::import($feedLink);
 
         /** @var EntryInterface $entry */
         foreach ($feed as $entry) {
@@ -56,11 +59,11 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
             if ($feedItem) {
                 $feedItem->setSocialNetworkProfile($socialNetworkProfile);
 
-                $feedItemList[] = $feedItem;
+                $this->feedItemList[] = $feedItem;
             }
         }
 
-        return $feedItemList;
+        return $this;
     }
 
     protected function convertEntryToFeedItem(EntryInterface $entry): ?FeedItem
