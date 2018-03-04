@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="feed_item", uniqueConstraints={
  *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
  *    })
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\FeedItemRepository")
  */
 class FeedItem
 {
