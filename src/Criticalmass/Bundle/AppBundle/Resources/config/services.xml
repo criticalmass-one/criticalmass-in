@@ -9,6 +9,7 @@
         <import resource="services/facebook.xml"/>
         <import resource="services/statistic.xml"/>
         <import resource="services/photo.xml"/>
+        <import resource="services/form.xml"/>
         <import resource="services/twig.xml"/>
         <import resource="services/seo_page.xml"/>
         <import resource="services/ride_generator.xml"/>
@@ -18,5 +19,7 @@
         <import resource="services/timeline/collectors.xml"/>
         <import resource="services/social_network/fetcher.xml"/>
         <import resource="services/social_network/network_fetcher.xml"/>
+        <import resource="services/social_network/manager.xml"/>
+        <import resource="services/social_network/network.xml"/>
     </imports>
 </container>

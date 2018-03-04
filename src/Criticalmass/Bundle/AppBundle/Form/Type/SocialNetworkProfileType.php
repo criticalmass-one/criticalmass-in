@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
 use Criticalmass\Bundle\AppBundle\EntityInterface\SocialNetworkInterface;
+use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -11,6 +12,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SocialNetworkProfileType extends AbstractType
 {
+    protected $networkManager;
+
+    public function __construct(NetworkManager $networkManager)
+    {
+        $this->networkManager = $networkManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $networkList = $this->getNetworkList();
@@ -29,15 +37,9 @@ class SocialNetworkProfileType extends AbstractType
 
     protected function getNetworkList(): array
     {
-        $reflection = new \ReflectionClass(SocialNetworkInterface::class);
-        $networkList = [];
+        $networkList = $this->networkManager->getNetworkList();
 
-        foreach ($reflection->getConstants() as $name => $value) {
-            if (0 === strpos($name, 'NETWORK_')) {
-                $networkList[$value] = $name;
-            }
-        }
-
+        var_dump($networkList);
         return $networkList;
     }
 }
