@@ -2,15 +2,12 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Bundle\AppBundle\Entity\Subride;
-use Criticalmass\Bundle\AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="feed_item")
+ * @ORM\Table(name="feed_item", uniqueConstraints={
+ *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
+ *    })
  * @ORM\Entity()
  */
 class FeedItem
@@ -53,7 +50,7 @@ class FeedItem
     protected $socialNetworkProfile;
 
     /**
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $uniqueIdentifier;
 
