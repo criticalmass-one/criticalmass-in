@@ -24,7 +24,7 @@ class SocialNetworkProfile
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="social_networks")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="social_networks")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
