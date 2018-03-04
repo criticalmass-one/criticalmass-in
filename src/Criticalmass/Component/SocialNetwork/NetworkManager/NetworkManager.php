@@ -10,7 +10,7 @@ class NetworkManager
 
     public function addNetwork(NetworkInterface $network): NetworkManager
     {
-        $this->networkList[] = $network;
+        $this->networkList[get_class($network)] = $network;
 
         return $this;
     }

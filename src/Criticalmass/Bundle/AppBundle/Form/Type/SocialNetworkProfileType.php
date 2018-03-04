@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
 use Criticalmass\Bundle\AppBundle\EntityInterface\SocialNetworkInterface;
+use Criticalmass\Component\SocialNetwork\Network\NetworkInterface;
 use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -21,25 +22,20 @@ class SocialNetworkProfileType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $networkList = $this->getNetworkList();
-
         $builder
             ->add('identifier', TextType::class, ['required' => false])
-            ->add('network', ChoiceType::class, ['required' => false, 'choices' => $networkList])
-            ->add('mainNetwork', CheckboxType::class, ['required' => false])
-        ;
+            ->add('network', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->networkManager->getNetworkList(),
+                'choice_label' => function (NetworkInterface $value, string $key, int $index) {
+                    return $value->getName();
+                },
+            ])
+            ->add('mainNetwork', CheckboxType::class, ['required' => false]);
     }
 
     public function getName(): string
     {
         return 'social_network_profile';
-    }
-
-    protected function getNetworkList(): array
-    {
-        $networkList = $this->networkManager->getNetworkList();
-
-        var_dump($networkList);
-        return $networkList;
     }
 }
