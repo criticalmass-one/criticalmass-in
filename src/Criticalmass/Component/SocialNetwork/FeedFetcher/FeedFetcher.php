@@ -81,6 +81,8 @@ class FeedFetcher
             $em->persist($feedItem);
         }
 
+        $em->flush();
+
         return $this;
     }
 

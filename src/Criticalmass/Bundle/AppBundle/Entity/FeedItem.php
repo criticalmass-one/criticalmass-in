@@ -1,41 +1,88 @@
 <?php
 
-namespace Criticalmass\Component\SocialNetwork\Entity;
+namespace Criticalmass\Bundle\AppBundle\Entity;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Bundle\AppBundle\Entity\Subride;
 use Criticalmass\Bundle\AppBundle\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Table(name="feed_item")
+ * @ORM\Entity()
+ */
 class FeedItem
 {
-    /** @var User $user */
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="feedItems")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
     protected $user;
 
-    /** @var City $city */
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="feedItems")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
     protected $city;
 
-    /** @var Ride $ride */
+    /**
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="feedItems")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     */
     protected $ride;
 
-    /** @var Subride $subride */
+    /**
+     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="feedItems")
+     * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
+     */
     protected $subride;
 
-    /** @var SocialNetworkProfile $socialNetworkProfile */
+    /**
+     * @ORM\ManyToOne(targetEntity="SocialNetworkProfile", inversedBy="feedItems")
+     * @ORM\JoinColumn(name="social_network_profile_id", referencedColumnName="id")
+     */
     protected $socialNetworkProfile;
 
-    /** @var string $uniqueIdentifier */
+    /**
+     * @ORM\Column(type="text", nullable=false)
+     */
     protected $uniqueIdentifier;
 
-    /** @var string $title */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     protected $title;
 
-    /** @var string $text */
+    /**
+     * @ORM\Column(type="text", nullable=false)
+     */
     protected $text;
 
-    /** @var \DateTime $dateTime */
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
     protected $dateTime;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): FeedItem
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getUser(): ?User
     {

@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Component\SocialNetwork\NetworkFeedFetcher;
 
+use Criticalmass\Bundle\AppBundle\Entity\FeedItem;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Component\SocialNetwork\Entity\FeedItem;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Reader;
 
