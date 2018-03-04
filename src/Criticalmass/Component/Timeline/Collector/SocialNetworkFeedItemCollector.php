@@ -2,18 +2,18 @@
 
 namespace Criticalmass\Component\Timeline\Collector;
 
-use Criticalmass\Bundle\AppBundle\Entity\FeedItem;
-use Criticalmass\Component\Timeline\Item\FeedItemItem;
+use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkFeedItem;
+use Criticalmass\Component\Timeline\Item\SocialNetworkFeedItemItem;
 
-class FeedItemCollector extends AbstractTimelineCollector
+class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = FeedItem::class;
+    protected $entityClass = SocialNetworkFeedItem::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        /** @var FeedItemItem $itemEntity */
+        /** @var SocialNetworkFeedItemItem $itemEntity */
         foreach ($groupedEntities as $itemEntity) {
-            $item = new FeedItemItem();
+            $item = new SocialNetworkFeedItemItem();
 
             $item
                 ->setUser($itemEntity->getSocialNetworkProfile()->getUser())

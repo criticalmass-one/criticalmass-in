@@ -4,9 +4,9 @@ namespace Criticalmass\Bundle\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class FeedItemRepository extends EntityRepository
+class SocialNetworkFeedItemRepository extends EntityRepository
 {
-    public function findForTimelineFeedItemCollector(
+    public function findForTimelineSocialNetworkFeedItemCollector(
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,
         $limit = null

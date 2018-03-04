@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\SocialNetwork\NetworkFeedFetcher;
 
-use Criticalmass\Bundle\AppBundle\Entity\FeedItem;
+use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkFeedItem;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Reader;
@@ -66,9 +66,9 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         return $this;
     }
 
-    protected function convertEntryToFeedItem(EntryInterface $entry): ?FeedItem
+    protected function convertEntryToFeedItem(EntryInterface $entry): ?SocialNetworkFeedItem
     {
-        $feedItem = new FeedItem();
+        $feedItem = new SocialNetworkFeedItem();
 
         try {
             $feedItem

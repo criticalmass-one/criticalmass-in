@@ -5,12 +5,12 @@ namespace Criticalmass\Bundle\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="feed_item", uniqueConstraints={
+ * @ORM\Table(name="social_network_feed_item", uniqueConstraints={
  *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
  *    })
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\FeedItemRepository")
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\SocialNetworkFeedItemRepository")
  */
-class FeedItem
+class SocialNetworkFeedItem
 {
     /**
      * @ORM\Id
@@ -50,7 +50,7 @@ class FeedItem
         return $this->id;
     }
 
-    public function setId(int $id): FeedItem
+    public function setId(int $id): SocialNetworkFeedItem
     {
         $this->id = $id;
 
@@ -62,7 +62,7 @@ class FeedItem
         return $this->socialNetworkProfile;
     }
 
-    public function setSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): FeedItem
+    public function setSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): SocialNetworkFeedItem
     {
         $this->socialNetworkProfile = $socialNetworkProfile;
 
@@ -74,7 +74,7 @@ class FeedItem
         return $this->uniqueIdentifier;
     }
 
-    public function setUniqueIdentifier(string $uniqueIdentifier): FeedItem
+    public function setUniqueIdentifier(string $uniqueIdentifier): SocialNetworkFeedItem
     {
         $this->uniqueIdentifier = $uniqueIdentifier;
 
@@ -86,7 +86,7 @@ class FeedItem
         return $this->title;
     }
 
-    public function setTitle(string $title): FeedItem
+    public function setTitle(string $title): SocialNetworkFeedItem
     {
         $this->title = $title;
 
@@ -98,7 +98,7 @@ class FeedItem
         return $this->text;
     }
 
-    public function setText(string $text): FeedItem
+    public function setText(string $text): SocialNetworkFeedItem
     {
         $this->text = $text;
 
@@ -110,7 +110,7 @@ class FeedItem
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): FeedItem
+    public function setDateTime(\DateTime $dateTime): SocialNetworkFeedItem
     {
         $this->dateTime = $dateTime;
 

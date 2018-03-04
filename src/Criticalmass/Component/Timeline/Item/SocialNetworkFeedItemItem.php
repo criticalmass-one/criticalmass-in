@@ -8,7 +8,7 @@ use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Bundle\AppBundle\Entity\Subride;
 use Criticalmass\Bundle\AppBundle\Entity\User;
 
-class FeedItemItem extends AbstractItem
+class SocialNetworkFeedItemItem extends AbstractItem
 {
     /** @var City $city */
     protected $city;
@@ -36,7 +36,7 @@ class FeedItemItem extends AbstractItem
         return $this->city;
     }
 
-    public function setCity(City $city = null): FeedItemItem
+    public function setCity(City $city = null): SocialNetworkFeedItemItem
     {
         $this->city = $city;
 
@@ -48,7 +48,7 @@ class FeedItemItem extends AbstractItem
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): FeedItemItem
+    public function setRide(Ride $ride = null): SocialNetworkFeedItemItem
     {
         $this->ride = $ride;
 
@@ -60,7 +60,7 @@ class FeedItemItem extends AbstractItem
         return $this->subride;
     }
 
-    public function setSubride(Subride $subride = null): FeedItemItem
+    public function setSubride(Subride $subride = null): SocialNetworkFeedItemItem
     {
         $this->subride = $subride;
 
@@ -72,7 +72,7 @@ class FeedItemItem extends AbstractItem
         return $this->user;
     }
 
-    public function setUser(User $user = null): FeedItemItem
+    public function setUser(User $user = null): SocialNetworkFeedItemItem
     {
         $this->user = $user;
 
@@ -84,7 +84,7 @@ class FeedItemItem extends AbstractItem
         return $this->socialNetworkProfile;
     }
 
-    public function setSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): FeedItemItem
+    public function setSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): SocialNetworkFeedItemItem
     {
         $this->socialNetworkProfile = $socialNetworkProfile;
 
@@ -96,7 +96,7 @@ class FeedItemItem extends AbstractItem
         return $this->title;
     }
 
-    public function setTitle(string $title): FeedItemItem
+    public function setTitle(string $title): SocialNetworkFeedItemItem
     {
         $this->title = $title;
 
@@ -108,7 +108,7 @@ class FeedItemItem extends AbstractItem
         return $this->text;
     }
 
-    public function setText(string $text): FeedItemItem
+    public function setText(string $text): SocialNetworkFeedItemItem
     {
         $this->text = $text;
 
