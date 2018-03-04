@@ -73,6 +73,7 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         try {
             $feedItem
                 ->setUniqueIdentifier($entry->getId())
+                ->setPermalink($entry->getPermalink())
                 ->setTitle($entry->getTitle())
                 ->setText($entry->getContent())
                 ->setDateTime($entry->getDateCreated());

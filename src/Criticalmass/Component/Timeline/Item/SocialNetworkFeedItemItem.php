@@ -25,6 +25,9 @@ class SocialNetworkFeedItemItem extends AbstractItem
     /** @var SocialNetworkProfile */
     protected $socialNetworkProfile;
 
+    /** @var string $permalink */
+    protected $permalink;
+
     /** @var string $title */
     protected $title;
 
@@ -87,6 +90,18 @@ class SocialNetworkFeedItemItem extends AbstractItem
     public function setSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): SocialNetworkFeedItemItem
     {
         $this->socialNetworkProfile = $socialNetworkProfile;
+
+        return $this;
+    }
+
+    public function getPermalink(): string
+    {
+        return $this->permalink;
+    }
+
+    public function setPermalink(string $permalink): SocialNetworkFeedItemItem
+    {
+        $this->permalink = $permalink;
 
         return $this;
     }

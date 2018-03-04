@@ -35,13 +35,13 @@
                 <strong>
                     {{ sourceName }}
                 </strong>
-                hat ein neues Diskussionsthema begonnen:
+                hat einen Blog-Beitrag veröffentlicht:
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <a href="">
+                <a href="{{ item.permalink }}">
                     <h4>
                         {{ item.title }}
                     </h4>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    {{ item.text }}
+                    {{ item.text|striptags('<p><br><ol><ul><li><b><i><em><strong>')|slice(0, 350)|raw }}…
                 </p>
             </div>
         </div>

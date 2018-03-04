@@ -20,6 +20,7 @@ class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
                 ->setCity($itemEntity->getSocialNetworkProfile()->getCity())
                 ->setRide($itemEntity->getSocialNetworkProfile()->getRide())
                 ->setSubride($itemEntity->getSocialNetworkProfile()->getSubride())
+                ->setPermalink($itemEntity->getPermalink())
                 ->setTitle($itemEntity->getTitle())
                 ->setText($itemEntity->getText())
                 ->setDateTime($itemEntity->getDateTime());

@@ -33,6 +33,11 @@ class SocialNetworkFeedItem
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    protected $permalink;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     protected $title;
 
     /**
@@ -77,6 +82,18 @@ class SocialNetworkFeedItem
     public function setUniqueIdentifier(string $uniqueIdentifier): SocialNetworkFeedItem
     {
         $this->uniqueIdentifier = $uniqueIdentifier;
+
+        return $this;
+    }
+
+    public function getPermalink(): string
+    {
+        return $this->permalink;
+    }
+
+    public function setPermalink(string $permalink): SocialNetworkFeedItem
+    {
+        $this->permalink = $permalink;
 
         return $this;
     }
