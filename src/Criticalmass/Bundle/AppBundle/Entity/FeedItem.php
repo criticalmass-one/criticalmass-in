@@ -20,30 +20,6 @@ class FeedItem
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="feedItems")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="feedItems")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $city;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="feedItems")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
-    protected $ride;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="feedItems")
-     * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
-     */
-    protected $subride;
-
-    /**
      * @ORM\ManyToOne(targetEntity="SocialNetworkProfile", inversedBy="feedItems")
      * @ORM\JoinColumn(name="social_network_profile_id", referencedColumnName="id")
      */
@@ -77,54 +53,6 @@ class FeedItem
     public function setId(int $id): FeedItem
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): FeedItem
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(City $city): FeedItem
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getRide(): ?Ride
-    {
-        return $this->ride;
-    }
-
-    public function setRide(Ride $ride): FeedItem
-    {
-        $this->ride = $ride;
-
-        return $this;
-    }
-
-    public function getSubride(): ?Subride
-    {
-        return $this->subride;
-    }
-
-    public function setSubride(Subride $subride): FeedItem
-    {
-        $this->subride = $subride;
 
         return $this;
     }
