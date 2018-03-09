@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\AppBundle\UploadValidator\UploadValidatorException;
+namespace Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException;
 
 use Exception;
 
