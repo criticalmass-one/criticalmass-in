@@ -89,5 +89,3 @@ services:
             - '@liip_imagine.cache.manager'
             - '@caldera.criticalmass.routing.object_router'
 
-imports:
-  - { resource: ./services/admin.yml }
