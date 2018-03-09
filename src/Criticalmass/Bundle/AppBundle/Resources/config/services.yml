@@ -2,21 +2,9 @@ parameters:
 #    caldera.example.class: Criticalmass\Bundle\AppBundle\Example
 
 services:
-    critical_markdown:
-        class: Criticalmass\Component\Markdown\CriticalMarkdown
-
     caldera.user_provider:
         class: Criticalmass\Bundle\AppBundle\UserProvider\FOSUBUserProvider
         arguments: ['@fos_user.user_manager', {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
-
-    caldera.manager.post_manager:
-        class: Criticalmass\Bundle\AppBundle\Manager\PostManager\PostManager
-        arguments: ['@doctrine']
-
-    caldera.criticalmass.routing.object_router:
-        class: Criticalmass\Component\Router\ObjectRouter
-        arguments:
-            - '@router.default'
 
     caldera.criticalmass.gps.gpxexporter:
         class: Criticalmass\Component\Gps\GpxExporter\GpxExporter
@@ -56,19 +44,3 @@ services:
 
     fos_user.doctrine_registry:
         alias: doctrine
-
-    caldera.criticalmass.validator.single_ride_day:
-        class: Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator
-        arguments: [ '@doctrine.orm.entity_manager' ]
-        tags:
-            - { name: validator.constraint_validator }
-
-    caldera.criticalmass.image.filter.blur:
-        class: Criticalmass\Component\Image\Filter\BlurFilter
-        tags:
-            - { name: "liip_imagine.filter.loader", loader: blur_filter }
-
-    caldera.criticalmass.image.filter.fast_blur:
-        class: Criticalmass\Component\Image\Filter\FastBlurFilter
-        tags:
-            - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }

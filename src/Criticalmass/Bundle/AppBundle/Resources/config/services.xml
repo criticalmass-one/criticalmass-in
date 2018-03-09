@@ -18,4 +18,28 @@
         <import resource="services/timeline/timeline.xml"/>
         <import resource="services/timeline/collectors.xml"/>
     </imports>
+
+    <services>
+        <service id="critical_markdown" class="Criticalmass\Component\Markdown\CriticalMarkdown"/>
+
+        <service id="caldera.criticalmass.validator.single_ride_day"
+                 class="Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator">
+            <argument type="service" id="doctrine"/>
+            <tag name="validator.constraint_validator"/>
+        </service>
+
+        <service id="caldera.criticalmass.image.filter.blur" class="Criticalmass\Component\Image\Filter\BlurFilter">
+            <tag name="liip_imagine.filter.loader" loader="blur_filter"/>
+        </service>
+
+        <service id="caldera.criticalmass.image.filter.fast_blur"
+                 class="Criticalmass\Component\Image\Filter\FastBlurFilter">
+            <tag name="liip_imagine.filter.loader" loader="fast_blur_filter"/>
+        </service>
+
+        <service id="caldera.criticalmass.routing.object_router" class="Criticalmass\Component\Router\ObjectRouter">
+            <argument type="service" id="router.default"/>
+        </service>
+
+    </services>
 </container>
