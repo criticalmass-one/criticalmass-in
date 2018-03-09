@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(Request $request, SeoPage $seoPage): Response
+    public function indexAction(Request $request, SeoPage $seoPage, CachedTimeline $cachedTimeline): Response
     {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
@@ -23,11 +23,7 @@ class FrontpageController extends AbstractController
         $monthInterval = new \DateInterval('P1M');
         $startDateTime->sub($monthInterval);
 
-        /**
-         * @var Timeline $timeline
-         */
-        $timelineContent = $this
-            ->get(CachedTimeline::class)
+        $timelineContent = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();
