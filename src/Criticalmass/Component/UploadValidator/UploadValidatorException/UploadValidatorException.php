@@ -4,7 +4,7 @@ namespace Criticalmass\Component\UploadValidator\UploadValidatorException\TrackV
 
 use Exception;
 
-abstract class UploadValidatorException extends Exception
+class UploadValidatorException extends Exception
 {
 
 }

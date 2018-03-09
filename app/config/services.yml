@@ -2,11 +2,11 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: false
+        public: true
 
     Criticalmass\Bundle\AppBundle\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/*'
-        exclude: '../../src/Criticalmass/Bundle/AppBundle/{Entity,Repository,Tests}'
+        exclude: '../../src/Criticalmass/Bundle/AppBundle/{Admin,DQL,Entity,Manager,Model,Repository,Tests,UserProvider,Validator}'
 
     Criticalmass\Bundle\AppBundle\Controller\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/Controller'
@@ -15,10 +15,12 @@ services:
 
     Criticalmass\Component\:
         resource: '../../src/Criticalmass/Component/*'
+        exclude: '../../src/Criticalmass/Component/{Facebook,Image,Gps,UploadValidator}'
 
     Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
+
     Criticalmass\Component\Image\PhotoGps\PhotoGps:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
