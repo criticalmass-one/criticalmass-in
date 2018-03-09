@@ -10,5 +10,19 @@
         <service id="Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension"/>
         <service id="Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension"/>
         <service id="CalendR\Extension\Twig\CalendRExtension"/>
+
+        <service id="caldera_criticalmass.twig.extension"
+                 class="Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="critical_markdown"/>
+        </service>
+
+        <service id="caldera_criticalmass.twig.router_extension"
+                 class="Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension">
+            <argument type="service" id="caldera.criticalmass.routing.object_router"/>
+        </service>
+
+        <service id="twig.extension.text" class="Twig_Extensions_Extension_Text"/>
     </services>
 </container>
