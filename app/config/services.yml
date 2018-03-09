@@ -1,4 +1,29 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Criticalmass\Bundle\AppBundle\:
+        resource: '../../src/Criticalmass/Bundle/AppBundle/*'
+        exclude: '../../src/Criticalmass/Bundle/AppBundle/{Entity,Repository,Tests}'
+
+    Criticalmass\Bundle\AppBundle\Controller\:
+        resource: '../../src/Criticalmass/Bundle/AppBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    #Criticalmass\Component\:
+    #    resource: '../../src/Criticalmass/Component/*'
+
+
+
+    # add more services, or override services that need manual wiring
+    # AppBundle\Service\ExampleService:
+    #     arguments:
+    #         $someArgument: 'some_value'
+
+
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags:
