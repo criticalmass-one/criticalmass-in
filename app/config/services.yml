@@ -13,8 +13,8 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    #Criticalmass\Component\:
-    #    resource: '../../src/Criticalmass/Component/*'
+    Criticalmass\Component\:
+        resource: '../../src/Criticalmass/Component/*'
 
     Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
         arguments:
