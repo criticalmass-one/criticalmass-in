@@ -46,14 +46,6 @@ services:
         class: Criticalmass\Component\Gps\TrackPolyline\TrackPolyline
         arguments: [ '@caldera.criticalmass.gps.trackreader', '%track.gap_width%' ]
 
-    caldera.criticalmass.uploadvalidator.track:
-        class: Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator
-        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
-
-    caldera.criticalmass.board.builder.boardbuilder:
-        class: Criticalmass\Bundle\AppBundle\Board\Builder\BoardBuilder
-        arguments: [ '@doctrine' ]
-
     caldera.criticalmass.gps.distancecalculator.track:
         class: Criticalmass\Component\Gps\DistanceCalculator\TrackDistanceCalculator
         arguments: [ '@doctrine', '@caldera.criticalmass.gps.trackreader' ]
@@ -80,12 +72,3 @@ services:
         class: Criticalmass\Component\Image\Filter\FastBlurFilter
         tags:
             - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }
-
-    app.seo_page:
-        class: Criticalmass\Bundle\AppBundle\Seo\SeoPage
-        arguments:
-            - '@sonata.seo.page.default'
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '@liip_imagine.cache.manager'
-            - '@caldera.criticalmass.routing.object_router'
-
