@@ -3,26 +3,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <defaults autowire="true" autoconfigure="true" public="false">
-            <tag name="twig.extension"/>
-        </defaults>
+        <defaults autowire="true" autoconfigure="true" public="false"/>
 
-        <service id="Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension"/>
-        <service id="Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension"/>
         <service id="CalendR\Extension\Twig\CalendRExtension"/>
-
-        <service id="caldera_criticalmass.twig.extension"
-                 class="Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="router"/>
-            <argument type="service" id="critical_markdown"/>
-        </service>
-
-        <service id="caldera_criticalmass.twig.router_extension"
-                 class="Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension">
-            <argument type="service" id="caldera.criticalmass.routing.object_router"/>
-        </service>
-
-        <service id="twig.extension.text" class="Twig_Extensions_Extension_Text"/>
     </services>
 </container>

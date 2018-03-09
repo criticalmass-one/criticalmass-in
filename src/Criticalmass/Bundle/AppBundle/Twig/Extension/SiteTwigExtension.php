@@ -4,8 +4,6 @@ namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Criticalmass\Bundle\AppBundle\HtmlMetadata\Metadata;
-use Criticalmass\Bundle\AppBundle\Parser\ParserInterface;
-use cebe\markdown\Parser;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -20,16 +18,10 @@ class SiteTwigExtension extends \Twig_Extension
     /** @var RouterInterface $router */
     protected $router;
 
-    protected $markdownParser;
-
-    public function __construct(
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        Parser $markdownParser
-    ) {
+    public function __construct(TranslatorInterface $translator, RouterInterface $router)
+    {
         $this->translator = $translator;
         $this->router = $router;
-        $this->markdownParser = $markdownParser;
     }
 
     public function getFilters()
@@ -38,9 +30,6 @@ class SiteTwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
-            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], array(
-                'is_safe' => array('html')
-            ))
         ];
     }
 
@@ -147,30 +136,6 @@ class SiteTwigExtension extends \Twig_Extension
         $hostname = str_replace('www.', '', $hostname);
 
         return $hostname;
-    }
-
-    public function hashtagToCity($string)
-    {
-        preg_match_all('/#([a-zA-Z0-9]*)/', $string, $result);
-
-        foreach ($result[0] as $hashtag) {
-            $lcHashtag = strtolower($hashtag);
-
-            $citySlug = substr($lcHashtag, 1, strlen($hashtag) - 1);
-
-            $path = $this->router->generate('caldera_criticalmass_desktop_city_show', ['citySlug' => $citySlug]);
-
-            $link = '<a href="' . $path . '">' . $hashtag . '</a>';
-
-            $string = str_replace($hashtag, $link, $string);
-        }
-
-        return $string;
-    }
-
-    public function markdown(string $text): string
-    {
-        return $this->markdownParser->parse($text);
     }
 
     public function getName()
