@@ -11,7 +11,6 @@
         <import resource="services/seo_page.xml" />
         <import resource="services/ride_generator.xml" />
         <import resource="services/view_storage.xml" />
-        <import resource="services/openstreetmap.xml" />
         <import resource="services/timeline/timeline.xml" />
         <import resource="services/timeline/collectors.xml" />
     </imports>
