@@ -22,6 +22,6 @@
             </call>
         </service>
 
-        <service id="Criticalmass\Component\Calendar\EventProvider\RideProvider"/>
+        <service id="CalendR\Extension\Twig\CalendRExtension"/>
     </services>
 </container>

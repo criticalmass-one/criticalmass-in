@@ -8,7 +8,6 @@
         <import resource="services/manager.xml"/>
         <import resource="services/facebook.xml"/>
         <import resource="services/statistic.xml"/>
-        <import resource="services/twig.xml"/>
         <import resource="services/seo_page.xml"/>
         <import resource="services/ride_generator.xml"/>
         <import resource="services/view_storage.xml"/>
