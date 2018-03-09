@@ -2,21 +2,15 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
+use Criticalmass\Component\UploadValidator\TrackValidator;
+use Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
-use Criticalmass\Component\Gps\TrackTimeShift\TrackTimeShift;
-use Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator;
-use Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackUploadController extends AbstractController
