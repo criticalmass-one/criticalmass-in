@@ -4,7 +4,6 @@
     <imports>
         <import resource="services/calendar.xml" />
         <import resource="services/manager.xml" />
-        <import resource="services/factory.xml" />
         <import resource="services/facebook.xml" />
         <import resource="services/statistic.xml" />
         <import resource="services/twig.xml" />
