@@ -23,6 +23,7 @@ services:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
 
+    Cmfcmf\OpenWeatherMap: ~
 
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
