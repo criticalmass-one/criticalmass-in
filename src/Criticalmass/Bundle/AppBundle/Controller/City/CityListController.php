@@ -4,14 +4,13 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Factory\CityListFactory;
+use Criticalmass\Component\SeoPage\SeoPage;
 
 class CityListController extends AbstractController
 {
-    public function listAction()
+    public function listAction(SeoPage $seoPage)
     {
-        $this
-            ->getSeoPage()
-            ->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
+        $seoPage->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
         /** @var CityListFactory $cityListFactory */
         $cityListFactory = $this->get('app.factory.city_list');

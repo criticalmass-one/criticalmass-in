@@ -8,6 +8,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
+use Criticalmass\Component\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +16,7 @@ class PhotoController extends AbstractController
 {
     use ViewStorageTrait;
 
-    public function showAction(Request $request, int $photoId): Response
+    public function showAction(Request $request, SeoPage $seoPage, int $photoId): Response
     {
         /** @var Photo $photo */
         $photo = $this->getPhotoRepository()->find($photoId);
@@ -41,7 +42,7 @@ class PhotoController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 
-        $this->getSeoPage()->setPreviewPhoto($photo);
+        $seoPage->setPreviewPhoto($photo);
 
         return $this->render(
             'AppBundle:Photo:show.html.twig',

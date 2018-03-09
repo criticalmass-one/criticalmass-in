@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
+use Criticalmass\Component\SeoPage\SeoPage;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,11 +87,11 @@ class CityController extends AbstractController
         );
     }
 
-    public function listGalleriesAction(Request $request, $citySlug)
+    public function listGalleriesAction(Request $request, SeoPage $seoPage, $citySlug)
     {
         $city = $this->getCityBySlug($citySlug);
 
-        $this->getSeoPage()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
+        $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
@@ -102,7 +103,7 @@ class CityController extends AbstractController
         );
     }
 
-    public function showAction(Request $request, string $citySlug): Response
+    public function showAction(Request $request, SeoPage $seoPage, string $citySlug): Response
     {
         $city = $this->getCityBySlug($citySlug);
 
@@ -140,7 +141,7 @@ class CityController extends AbstractController
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
 
-        $this->getSeoPage()
+        $seoPage
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setPreviewPhoto($city)
             ->setCanonicalForObject($city)

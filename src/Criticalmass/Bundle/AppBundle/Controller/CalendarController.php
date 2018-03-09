@@ -2,12 +2,13 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
+use Criticalmass\Component\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends AbstractController
 {
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, SeoPage $seoPage): Response
     {
         $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
         $month = $request->query->getInt('month', (new \DateTime())->format('m'));
@@ -23,8 +24,7 @@ class CalendarController extends AbstractController
         $previousMonth = $dateTime->sub($monthInterval);
         $nextMonth = $dateTime->add($monthInterval);
 
-        $this->getSeoPage()
-            ->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.');
+        $seoPage->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.');
 
         return $this->render(
             'AppBundle:Calendar:index.html.twig', [
