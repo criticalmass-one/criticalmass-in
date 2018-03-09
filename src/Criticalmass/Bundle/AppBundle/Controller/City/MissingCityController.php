@@ -9,12 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MissingCityController extends AbstractController
 {
-    public function missingAction(Request $request, string $citySlug): Response
+    public function missingAction(Request $request, NominatimCityBridge $nominatimCityBridge, string $citySlug): Response
     {
-        $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
-
         return $this->render('AppBundle:CityManagement:missing.html.twig', [
-            'city' => $city,
+            'city' => $nominatimCityBridge->lookupCity($citySlug),
             'citySlug' => $citySlug,
         ]);
     }
