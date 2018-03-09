@@ -3,6 +3,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
         <import resource="services/admin.xml"/>
+        <import resource="services/logging.xml"/>
         <import resource="services/calendar.xml"/>
         <import resource="services/command.xml"/>
         <import resource="services/manager.xml"/>
@@ -20,6 +21,10 @@
     </imports>
 
     <services>
+        <service id="twig.extension.text" class="Twig_Extensions_Extension_Text">
+            <tag name="twig.extension"/>
+        </service>
+
         <service id="critical_markdown" class="Criticalmass\Component\Markdown\CriticalMarkdown"/>
 
         <service id="caldera.criticalmass.validator.single_ride_day"
