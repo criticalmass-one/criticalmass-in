@@ -8,7 +8,6 @@
         <import resource="services/factory.xml" />
         <import resource="services/facebook.xml" />
         <import resource="services/statistic.xml" />
-        <import resource="services/photo.xml" />
         <import resource="services/twig.xml" />
         <import resource="services/seo_page.xml" />
         <import resource="services/ride_generator.xml" />

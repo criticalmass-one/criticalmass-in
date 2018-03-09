@@ -16,12 +16,12 @@ services:
     #Criticalmass\Component\:
     #    resource: '../../src/Criticalmass/Component/*'
 
-
-
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+    Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
+        arguments:
+            $uploadDestinationPhoto: %upload_destination.photo%
+    Criticalmass\Component\Image\PhotoGps\PhotoGps:
+        arguments:
+            $uploadDestinationPhoto: %upload_destination.photo%
 
 
     twig.extension.text:
