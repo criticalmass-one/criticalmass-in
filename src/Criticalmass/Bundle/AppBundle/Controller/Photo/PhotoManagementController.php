@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Form\Type\PhotoCoordType;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
@@ -12,6 +13,7 @@ use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
 use Knp\Component\Pager\Paginator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +37,11 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function ridelistAction(Request $request, Paginator $paginator, $citySlug, $rideDate): Response
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function ridelistAction(Request $request, Paginator $paginator, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
 
         $pagination = $paginator->paginate(
@@ -47,13 +50,10 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render(
-            'AppBundle:PhotoManagement:ride_list.html.twig',
-            [
-                'ride' => $ride,
-                'pagination' => $pagination
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:ride_list.html.twig', [
+            'ride' => $ride,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
@@ -74,11 +74,10 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function manageAction(Request $request, Paginator $paginator, $citySlug, $rideDate): Response
+    public function manageAction(Request $request, Paginator $paginator, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
 
         $pagination = $paginator->paginate(
@@ -87,12 +86,10 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render('AppBundle:PhotoManagement:manage.html.twig',
-            [
-                'ride' => $ride,
-                'pagination' => $pagination
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:manage.html.twig', [
+            'ride' => $ride,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
@@ -207,22 +204,19 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function relocateAction(Request $request, $citySlug, $rideDate): Response
+    public function relocateAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
 
-        return $this->render('AppBundle:PhotoManagement:relocate.html.twig',
-            [
-                'ride' => $ride,
-                'photos' => $photos,
-                'track' => $track
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:relocate.html.twig', [
+            'ride' => $ride,
+            'photos' => $photos,
+            'track' => $track
+        ]);
     }
 
     /**

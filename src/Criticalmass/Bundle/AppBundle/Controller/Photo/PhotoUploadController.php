@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
@@ -16,26 +17,22 @@ class PhotoUploadController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
+    public function uploadAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
-        if ($request->getMethod() == 'POST') {
-            return $this->uploadPostAction($request, $user, $ride);
+        if (Request::METHOD_POST === $request->getMethod()) {
+            return $this->uploadPostAction($request, $user, $photoGps, $ride);
         } else {
-            return $this->uploadGetAction($request, $user, $ride);
+            return $this->uploadGetAction($request, $user, $photoGps, $ride);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user, Ride $ride): Response
+    protected function uploadGetAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
-        return $this->render(
-            'AppBundle:PhotoUpload:upload.html.twig',
-            [
-                'ride' => $ride,
-            ]
-        );
+        return $this->render('AppBundle:PhotoUpload:upload.html.twig', [
+            'ride' => $ride,
+        ]);
     }
 
     protected function uploadPostAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response

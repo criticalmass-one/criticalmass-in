@@ -2,11 +2,14 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
+use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
 use Criticalmass\Component\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -21,11 +24,10 @@ class RideController extends BaseController
      *  resource=true,
      *  description="Returns ride details"
      * )
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function showAction(string $citySlug, string $rideDate): Response
+    public function showAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $view = View::create();
         $view
             ->setData($ride)
@@ -40,11 +42,10 @@ class RideController extends BaseController
      *  resource=true,
      *  description="Returns details of the next ride in the city"
      * )
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function showCurrentAction(string $citySlug): Response
+    public function showCurrentAction(City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $ride = $this->getRideRepository()->findCurrentRideForCity($city);
 
         $view = View::create();
@@ -151,8 +152,7 @@ class RideController extends BaseController
         );
 
         $context = new Context();
-        $context
-            ->addGroup('ride-list');
+        $context->addGroup('ride-list');
 
         $view = View::create();
         $view

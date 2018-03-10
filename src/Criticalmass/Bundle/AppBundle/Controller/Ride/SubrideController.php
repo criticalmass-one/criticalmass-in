@@ -168,10 +168,10 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("newRide", class="AppBundle:Ride")
      */
-    public function copyAction(string $citySlug, string $oldDate, string $newDate): Response
+    public function copyAction(Ride $newRide, string $oldDate): Response
     {
-        $newRide = $this->getCheckedCitySlugRideDateRide($citySlug, $newDate);
         $oldDateTime = $this->getCheckedDateTime($oldDate);
 
         $oldRide = $this->getRideRepository()->findCityRideByDate($newRide->getCity(), $oldDateTime);
@@ -194,12 +194,9 @@ class SubrideController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToRoute(
-            'caldera_criticalmass_ride_show',
-            [
-                'citySlug' => $newRide->getCity()->getMainSlugString(),
-                'rideDate' => $newRide->getFormattedDate()
-            ]
-        );
+        return $this->redirectToRoute('caldera_criticalmass_ride_show', [
+            'citySlug' => $newRide->getCity()->getMainSlugString(),
+            'rideDate' => $newRide->getFormattedDate()
+        ]);
     }
 }
