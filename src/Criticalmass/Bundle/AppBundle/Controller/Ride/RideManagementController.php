@@ -18,30 +18,22 @@ class RideManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, string $citySlug): Response
+    public function addAction(Request $request, UserInterface $user, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $ride = new Ride();
         $ride
             ->setCity($city)
             ->setUser($user);
 
-        $form = $this->createForm(
-            RideType::class,
-            $ride,
-            [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_desktop_ride_add',
-                    [
-                        'citySlug' => $city->getMainSlugString()
-                    ]
-                )
-            ]
-        );
+        $form = $this->createForm(RideType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', [
+                'citySlug' => $city->getMainSlugString(),
+            ])
+        ]);
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->addPostAction($request, $user, $ride, $city, $form);
         } else {
             return $this->addGetAction($request, $user, $ride, $city, $form);

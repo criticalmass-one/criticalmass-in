@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
@@ -12,21 +13,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
 {
-    public function citystatisticAction(Request $request, SeoPage $seoPage, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function citystatisticAction(Request $request, SeoPage $seoPage, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
         $seoPage->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
-        return $this->render(
-            'AppBundle:Statistic:city_statistic.html.twig',
-            [
-                'city' => $city,
-                'rides' => $rides
-            ]
-        );
+        return $this->render('AppBundle:Statistic:city_statistic.html.twig', [
+            'city' => $city,
+            'rides' => $rides,
+        ]);
     }
 
     /**
