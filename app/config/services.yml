@@ -31,3 +31,7 @@ services:
         tags:
             - { name: request.param_converter, priority: 10, converter: ride_converter }
 
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\CityParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: city_converter }
+
