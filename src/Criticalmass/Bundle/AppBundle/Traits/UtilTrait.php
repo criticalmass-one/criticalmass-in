@@ -42,29 +42,6 @@ trait UtilTrait
         return $city;
     }
 
-    /**
-     * Returns a ride entity for a city entity and a datetime parameter. Will throw an exception if the ride does not exist.
-     *
-     * @param City $city
-     * @param \DateTime $rideDateTime
-     * @throws NotFoundHttpException
-     * @return Ride
-     * @deprecated
-     */
-    protected function getCheckedRide(City $city, \DateTime $rideDateTime): Ride
-    {
-        /** @var Ride $ride */
-        $ride = $this->getRideRepository()->findCityRideByDate($city, $rideDateTime);
-
-        if (!$ride) {
-            throw new NotFoundHttpException(
-                'Wir haben leider keine Tour in ' . $city->getCity() . ' am ' . $rideDateTime->format('d. m. Y') . ' gefunden.'
-            );
-        }
-
-        return $ride;
-    }
-
     protected function getSession(): Session
     {
         $session = new Session();
