@@ -38,7 +38,7 @@ class PhotoUploadController extends AbstractController
         );
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user, Ride $ride): Response
+    protected function uploadPostAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -54,7 +54,7 @@ class PhotoUploadController extends AbstractController
         $em->flush();
 
         $this->findDateTime($photo);
-        $this->findCoords($ride, $photo, $user);
+        $this->findCoords($photoGps, $ride, $photo, $user);
 
         $em->flush();
 
@@ -83,7 +83,7 @@ class PhotoUploadController extends AbstractController
         return true;
     }
 
-    protected function findCoords(Ride $ride, Photo $photo, UserInterface $user): bool
+    protected function findCoords(PhotoGps $photoGps, Ride $ride, Photo $photo, UserInterface $user): bool
     {
         $track = null;
 
@@ -93,12 +93,7 @@ class PhotoUploadController extends AbstractController
 
         if ($ride && $track) {
             try {
-                /**
-                 * @var PhotoGps $pgps
-                 */
-                $pgps = $this->get('caldera.criticalmass.image.photogps');
-
-                $pgps
+                $photoGps
                     ->setPhoto($photo)
                     ->setTrack($track)
                     ->execute();

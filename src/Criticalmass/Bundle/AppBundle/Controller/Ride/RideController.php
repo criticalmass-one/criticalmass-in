@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Component\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;
@@ -47,7 +49,7 @@ class RideController extends AbstractController
         return $this->redirectToObject($ride);
     }
 
-    public function showAction(Request $request, $citySlug, $rideDate)
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
         $rideDateTime = $this->getCheckedDateTime($rideDate);
@@ -56,23 +58,22 @@ class RideController extends AbstractController
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
 
-        $this->countRideView($ride);
+        $viewStorageCache->countView($ride);
 
-        $this
-            ->getSeoPage()
+        $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
             ->setCanonicalForObject($ride);
 
         if ($ride->getImageName()) {
-            $this->getSeoPage()->setPreviewPhoto($ride);
+            $seoPage->setPreviewPhoto($ride);
         } elseif ($ride->getFeaturedPhoto()) {
-            $this->getSeoPage()->setPreviewPhoto($ride->getFeaturedPhoto());
+            $seoPage->setPreviewPhoto($ride->getFeaturedPhoto());
         }
 
         if ($ride->getSocialDescription()) {
-            $this->getSeoPage()->setDescription($ride->getSocialDescription());
+            $seoPage->setDescription($ride->getSocialDescription());
         } elseif ($ride->getDescription()) {
-            $this->getSeoPage()->setDescription($ride->getDescription());
+            $seoPage->setDescription($ride->getDescription());
         }
 
         /**

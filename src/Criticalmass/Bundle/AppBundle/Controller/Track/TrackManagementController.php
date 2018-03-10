@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
+use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
@@ -69,7 +70,7 @@ class TrackManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function toggleAction(Request $request, UserInterface $user, int $trackId): Response
+    public function toggleAction(Request $request, UserInterface $user, int $trackId, RideEstimateService $rideEstimateService): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
@@ -77,7 +78,7 @@ class TrackManagementController extends AbstractController
 
         $this->getManager()->flush();
 
-        $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($track->getRide());
+        $rideEstimateService->calculateEstimates($track->getRide());
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
@@ -85,7 +86,7 @@ class TrackManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function deleteAction(Request $request, UserInterface $user, int $trackId): Response
+    public function deleteAction(Request $request, UserInterface $user, int $trackId, RideEstimateService $rideEstimateService): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
@@ -93,7 +94,7 @@ class TrackManagementController extends AbstractController
 
         $this->getManager()->flush();
 
-        $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($track->getRide());
+        $rideEstimateService->calculateEstimates($track->getRide());
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
@@ -158,7 +159,7 @@ class TrackManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function timeAction(Request $request, UserInterface $user, int $trackId): Response
+    public function timeAction(Request $request, UserInterface $user, int $trackId, TrackTimeShift $trackTimeShift): Response
     {
         $track = $this->getCredentialsCheckedTrack($user, $trackId);
 
@@ -174,13 +175,13 @@ class TrackManagementController extends AbstractController
             ->getForm();
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->timePostAction($request, $track, $form);
+            return $this->timePostAction($request, $track, $form, $trackTimeShift);
         } else {
-            return $this->timeGetAction($request, $track, $form);
+            return $this->timeGetAction($request, $track, $form, $trackTimeShift);
         }
     }
 
-    protected function timeGetAction(Request $request, Track $track, FormInterface $form): Response
+    protected function timeGetAction(Request $request, Track $track, FormInterface $form, TrackTimeShift $trackTimeShift): Response
     {
         return $this->render('AppBundle:Track:time.html.twig',
             [
@@ -190,7 +191,7 @@ class TrackManagementController extends AbstractController
         );
     }
 
-    protected function timePostAction(Request $request, Track $track, FormInterface $form): Response
+    protected function timePostAction(Request $request, Track $track, FormInterface $form, TrackTimeShift $trackTimeShift): Response
     {
         // catch the old dateTime before it is overridden by the form submit
         $oldDateTime = $track->getStartDateTime();
@@ -206,11 +207,7 @@ class TrackManagementController extends AbstractController
 
             $interval = $newTrack->getStartDateTime()->diff($oldDateTime);
 
-            /**
-             * @var TrackTimeShift $tts
-             */
-            $tts = $this->get('caldera.criticalmass.gps.timeshift.track');
-            $tts
+            $trackTimeShift
                 ->loadTrack($newTrack)
                 ->shift($interval)
                 ->saveTrack();

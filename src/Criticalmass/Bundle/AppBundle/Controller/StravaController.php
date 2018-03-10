@@ -13,6 +13,7 @@ use Strava\API\Client;
 use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StravaController extends AbstractController
 {
@@ -124,7 +125,7 @@ class StravaController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listridesAction(Request $request, $citySlug, $rideDate)
+    public function listridesAction($citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
@@ -152,7 +153,7 @@ class StravaController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function importAction(Request $request, $citySlug, $rideDate)
+    public function importAction(Request $request, GpxExporter $exporter, string $citySlug, string $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $activityId = $request->get('activityId');
@@ -195,11 +196,6 @@ class StravaController extends AbstractController
 
             $positionArray[] = $position;
         }
-
-        /**
-         * @var GpxExporter $exporter
-         */
-        $exporter = $this->get('caldera.criticalmass.gps.gpxexporter');
 
         $exporter->setPositionArray($positionArray);
 

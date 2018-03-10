@@ -6,13 +6,14 @@ use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoGalleryController extends AbstractController
 {
-    public function galleryAction(Request $request, string $citySlug, string $rideDate): Response
+    public function galleryAction(Request $request, PaginatorInterface $paginator, string $citySlug, string $rideDate): Response
     {
         /** @var Ride $ride */
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
@@ -22,8 +23,6 @@ class PhotoGalleryController extends AbstractController
         }
 
         $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
-
-        $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query,

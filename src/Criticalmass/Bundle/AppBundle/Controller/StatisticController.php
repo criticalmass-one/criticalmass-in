@@ -5,18 +5,19 @@ namespace Criticalmass\Bundle\AppBundle\Controller;
 use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
 {
-    public function citystatisticAction(Request $request, $citySlug)
+    public function citystatisticAction(Request $request, SeoPage $seoPage, $citySlug)
     {
         $city = $this->getCheckedCity($citySlug);
 
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        $this->getSeoPage()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $seoPage->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
             'AppBundle:Statistic:city_statistic.html.twig',
@@ -73,7 +74,7 @@ class StatisticController extends AbstractController
         );
     }
 
-    public function overviewAction(Request $request)
+    public function overviewAction(Request $request, SeoPage $seoPage)
     {
         /**
          * @var Region $region
@@ -106,7 +107,7 @@ class StatisticController extends AbstractController
 
         rsort($rideMonths);
 
-        $this->getSeoPage()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $seoPage->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
             'AppBundle:Statistic:overview.html.twig',

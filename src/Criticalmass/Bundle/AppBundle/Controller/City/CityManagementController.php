@@ -23,15 +23,16 @@ class CityManagementController extends AbstractController
     public function addAction(
         Request $request,
         UserInterface $user,
+        NominatimCityBridge $nominatimCityBridge,
         string $slug1 = null,
         string $slug2 = null,
         string $slug3 = null,
         string $citySlug = null
     ): Response {
-        $region = $this->getRegion($slug3, $citySlug);
+        $region = $this->getRegion($nominatimCityBridge, $slug3, $citySlug);
 
         if ($citySlug) {
-            $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
+            $city = $nominatimCityBridge->lookupCity($citySlug);
         } else {
             $city = new City();
             $city->setRegion($region);
@@ -214,14 +215,14 @@ class CityManagementController extends AbstractController
         return $citySlug;
     }
 
-    protected function getRegion(string $regionSlug = null, string $citySlug = null): ?Region
+    protected function getRegion(NominatimCityBridge $nominatimCityBridge, string $regionSlug = null, string $citySlug = null): ?Region
     {
         if ($regionSlug) {
             return $this->getRegionRepository()->findOneBySlug($regionSlug);
         }
 
         if ($citySlug) {
-            $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
+            $city = $nominatimCityBridge->lookupCity($citySlug);
 
             if ($city) {
                 return $city->getRegion();

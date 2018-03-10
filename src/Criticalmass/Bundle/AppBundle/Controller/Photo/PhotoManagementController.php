@@ -11,6 +11,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
+use Knp\Component\Pager\Paginator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,13 +35,11 @@ class PhotoManagementController extends AbstractController
         );
     }
 
-    public function ridelistAction(Request $request, $citySlug, $rideDate): Response
+    public function ridelistAction(Request $request, Paginator $paginator, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
-
-        $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query,
@@ -76,13 +75,11 @@ class PhotoManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function manageAction(Request $request, $citySlug, $rideDate): Response
+    public function manageAction(Request $request, Paginator $paginator, $citySlug, $rideDate): Response
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
 
         $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
-
-        $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query,

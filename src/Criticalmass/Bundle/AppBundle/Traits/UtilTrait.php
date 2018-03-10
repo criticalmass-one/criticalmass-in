@@ -6,7 +6,6 @@ use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Router\ObjectRouter;
-use Criticalmass\Component\SeoPage\SeoPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +25,6 @@ trait UtilTrait
         }
 
         return $citySlug->getCity();
-    }
-
-    protected function getSeoPage(): SeoPage
-    {
-        return $this->get('Criticalmass\Component\SeoPage\SeoPage');
     }
 
     protected function getCheckedCity($citySlug): City
