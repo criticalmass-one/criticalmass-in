@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConve
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class RideParamConverter extends DoctrineParamConverter
+class RideParamConverter extends AbstractParamConverter
 {
     public function apply(Request $request, ParamConverter $configuration): void
     {
@@ -32,10 +32,5 @@ class RideParamConverter extends DoctrineParamConverter
         } else {
             throw new NotFoundHttpException(sprintf('%s object not found.', $configuration->getClass()));
         }
-    }
-
-    public function supports(ParamConverter $configuration): bool
-    {
-        return $configuration->getClass() === 'AppBundle:Ride';
     }
 }

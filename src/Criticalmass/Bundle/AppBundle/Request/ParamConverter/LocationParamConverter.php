@@ -4,11 +4,10 @@ namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
 use Criticalmass\Bundle\AppBundle\Entity\Location;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class LocationParamConverter extends DoctrineParamConverter
+class LocationParamConverter extends AbstractParamConverter
 {
     public function apply(Request $request, ParamConverter $configuration): void
     {
@@ -25,10 +24,5 @@ class LocationParamConverter extends DoctrineParamConverter
         } else {
             throw new NotFoundHttpException(sprintf('%s object not found.', $configuration->getClass()));
         }
-    }
-
-    public function supports(ParamConverter $configuration): bool
-    {
-        return $configuration->getClass() === 'AppBundle:Location';
     }
 }

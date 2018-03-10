@@ -5,11 +5,10 @@ namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class CityParamConverter extends DoctrineParamConverter
+class CityParamConverter extends AbstractParamConverter
 {
     public function apply(Request $request, ParamConverter $configuration): void
     {
@@ -36,10 +35,5 @@ class CityParamConverter extends DoctrineParamConverter
         } else {
             throw new NotFoundHttpException(sprintf('%s object not found.', $configuration->getClass()));
         }
-    }
-
-    public function supports(ParamConverter $configuration): bool
-    {
-        return $configuration->getClass() === 'AppBundle:City';
     }
 }
