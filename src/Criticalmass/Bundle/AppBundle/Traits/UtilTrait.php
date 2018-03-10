@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 trait UtilTrait
 {
+    /** @deprecated  */
     protected function getCityBySlug(string $citySlugString): ?City
     {
         /** @var CitySlug $citySlug */
@@ -27,6 +28,7 @@ trait UtilTrait
         return $citySlug->getCity();
     }
 
+    /** @deprecated  */
     protected function getCheckedCity($citySlug): City
     {
         $city = $this->getCityBySlug($citySlug);
@@ -47,6 +49,7 @@ trait UtilTrait
      * @param \DateTime $rideDateTime
      * @throws NotFoundHttpException
      * @return Ride
+     * @deprecated
      */
     protected function getCheckedRide(City $city, \DateTime $rideDateTime): Ride
     {
@@ -62,6 +65,11 @@ trait UtilTrait
         return $ride;
     }
 
+    /**
+     * @param string $dateTime
+     * @return \DateTime
+     * @deprecated
+     */
     protected function getCheckedDateTime(string $dateTime): \DateTime
     {
         try {
@@ -75,6 +83,12 @@ trait UtilTrait
         return $dateTime;
     }
 
+    /**
+     * @param string $citySlug
+     * @param string $dateTime
+     * @return Ride
+     * @deprecated
+     */
     protected function getCheckedCitySlugRideDateRide(string $citySlug, string $dateTime): Ride
     {
         /** @var City $city */
