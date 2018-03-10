@@ -2,9 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\SeoPage\SeoPage;
 use Criticalmass\Component\ViewStorage\ViewStorageCache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;
 use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
@@ -33,7 +34,7 @@ class RideController extends AbstractController
         );
     }
 
-    public function showMonthAction(Request $request, string $citySlug, string $rideDate): Response
+    public function showMonthAction(string $citySlug, string $rideDate): Response
     {
         $city = $this->getCheckedCity($citySlug);
         $dateTime = new \DateTime(sprintf('%s-01', $rideDate));
@@ -49,19 +50,18 @@ class RideController extends AbstractController
         return $this->redirectToObject($ride);
     }
 
-    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, $citySlug, $rideDate)
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, Ride $ride): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-        $rideDateTime = $this->getCheckedDateTime($rideDate);
-        $ride = $this->getCheckedRide($city, $rideDateTime);
-
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
 
         $viewStorageCache->countView($ride);
 
         $seoPage
-            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
+            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
             ->setCanonicalForObject($ride);
 
         if ($ride->getImageName()) {
@@ -94,20 +94,17 @@ class RideController extends AbstractController
             $participation = null;
         }
 
-        return $this->render(
-            'AppBundle:Ride:show.html.twig',
-            array(
-                'city' => $city,
-                'ride' => $ride,
-                'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
-                'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
-                'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
-                'nextRide' => $nextRide,
-                'previousRide' => $previousRide,
-                'dateTime' => new \DateTime(),
-                'weatherForecast' => $weatherForecast,
-                'participation' => $participation
-            )
-        );
+        return $this->render('AppBundle:Ride:show.html.twig', [
+            'city' => $ride->getCity(),
+            'ride' => $ride,
+            'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
+            'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
+            'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
+            'nextRide' => $nextRide,
+            'previousRide' => $previousRide,
+            'dateTime' => new \DateTime(),
+            'weatherForecast' => $weatherForecast,
+            'participation' => $participation,
+        ]);
     }
 }
