@@ -2,12 +2,12 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
+use Criticalmass\Component\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Post;
 use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
-use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
 use Malenki\Slug;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BoardController extends AbstractController
 {
-    use ViewStorageTrait;
-
     public function overviewAction(Request $request)
     {
         $boards = $this->getBoardRepository()->findEnabledBoards();
@@ -76,7 +74,7 @@ class BoardController extends AbstractController
         );
     }
 
-    public function viewthreadAction(Request $request, $boardSlug = null, $citySlug = null, $threadSlug)
+    public function viewthreadAction(Request $request, ViewStorageCache $viewStorageCache, $boardSlug = null, $citySlug = null, $threadSlug)
     {
         /**
          * @var BoardInterface $board
@@ -94,7 +92,7 @@ class BoardController extends AbstractController
         $thread = $this->getThreadRepository()->findThreadBySlug($threadSlug);
         $posts = $this->getPostRepository()->findPostsForThread($thread);
 
-        $this->countThreadView($thread);
+        $viewStorageCache->countView($thread);
 
         return $this->render(
             'AppBundle:Board:view_thread.html.twig',

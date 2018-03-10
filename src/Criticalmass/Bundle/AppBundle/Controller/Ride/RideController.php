@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Component\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;
@@ -48,7 +49,7 @@ class RideController extends AbstractController
         return $this->redirectToObject($ride);
     }
 
-    public function showAction(Request $request, SeoPage $seoPage, $citySlug, $rideDate)
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, $citySlug, $rideDate)
     {
         $city = $this->getCheckedCity($citySlug);
         $rideDateTime = $this->getCheckedDateTime($rideDate);
@@ -57,7 +58,7 @@ class RideController extends AbstractController
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
 
-        $this->countRideView($ride);
+        $viewStorageCache->countView($ride);
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))

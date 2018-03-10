@@ -6,6 +6,7 @@ use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
 use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Component\ViewStorage\ViewStorageCache;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CityController extends AbstractController
 {
-    use ViewStorageTrait;
-
     public function missingStatsAction($citySlug)
     {
         $city = $this->getCheckedCity($citySlug);
@@ -103,7 +102,7 @@ class CityController extends AbstractController
         );
     }
 
-    public function showAction(Request $request, SeoPage $seoPage, string $citySlug): Response
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, string $citySlug): Response
     {
         $city = $this->getCityBySlug($citySlug);
 
@@ -115,7 +114,7 @@ class CityController extends AbstractController
             throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
         }
 
-        $this->countCityView($city);
+        $viewStorageCache->countView($city);
 
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 

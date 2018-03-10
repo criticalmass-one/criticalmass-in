@@ -8,19 +8,12 @@ use Criticalmass\Component\SeoPage\SeoPage;
 
 class CityListController extends AbstractController
 {
-    public function listAction(SeoPage $seoPage)
+    public function listAction(SeoPage $seoPage, CityListFactory $cityListFactory)
     {
         $seoPage->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
-        /** @var CityListFactory $cityListFactory */
-        $cityListFactory = $this->get('app.factory.city_list');
-        $cityList = $cityListFactory->getList();
-
-        return $this->render(
-            'AppBundle:CityList:list.html.twig',
-            [
-                'cityList' => $cityList,
-            ]
-        );
+        return $this->render('AppBundle:CityList:list.html.twig', [
+            'cityList' => $cityListFactory->getList(),
+        ]);
     }
 }
