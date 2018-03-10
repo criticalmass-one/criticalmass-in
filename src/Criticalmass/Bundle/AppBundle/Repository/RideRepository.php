@@ -322,27 +322,24 @@ class RideRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
-    /**
-     * @param $citySlug string
-     * @param $rideDate string
-     * @return Ride
-     * @deprecated
-     */
-    public function findByCitySlugAndRideDate($citySlug, $rideDate)
+    public function findByCitySlugAndRideDate(string $citySlug, string $rideDate): ?Ride
     {
         $rideDateTime = new \DateTime($rideDate);
         $fromDateTime = DateTimeUtil::getDayStartDateTime($rideDateTime);
         $untilDateTime = DateTimeUtil::getDayEndDateTime($rideDateTime);
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->join('ride.city', 'city');
-        $builder->join('city.slugs', 'citySlug');
-
-        $builder->where($builder->expr()->eq('citySlug.slug', '\'' . $citySlug . '\''));
-        $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $fromDateTime->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $untilDateTime->format('Y-m-d H:i:s') . '\''));
+        $builder
+            ->select('r')
+            ->join('r.city', 'c')
+            ->join('c.slugs', 'cs')
+            ->where($builder->expr()->eq('cs.slug', ':citySlug'))
+            ->andWhere($builder->expr()->gt('r.dateTime', ':fromDateTime'))
+            ->andWhere($builder->expr()->lt('r.dateTime', ':untilDateTime'))
+            ->setParameter('citySlug', $citySlug)
+            ->setParameter('fromDateTime', $fromDateTime)
+            ->setParameter('untilDateTime', $untilDateTime);
 
         $query = $builder->getQuery();
 
