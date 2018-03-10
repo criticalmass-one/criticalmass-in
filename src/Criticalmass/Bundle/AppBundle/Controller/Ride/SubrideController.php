@@ -156,25 +156,24 @@ class SubrideController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function preparecopyAction(Ride $newRide): Response
+    public function preparecopyAction(Ride $ride): Response
     {
-        $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($newRide);
+        $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($ride);
 
         return $this->render('AppBundle:Subride:preparecopy.html.twig', [
             'oldRide' => $oldRide,
-            'newRide' => $newRide
+            'newRide' => $ride
         ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("newRide", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("oldDate", options={"format": "Y-m-d"})
      */
-    public function copyAction(Ride $newRide, string $oldDate): Response
+    public function copyAction(Ride $ride, \DateTime $oldDate): Response
     {
-        $oldDateTime = $this->getCheckedDateTime($oldDate);
-
-        $oldRide = $this->getRideRepository()->findCityRideByDate($newRide->getCity(), $oldDateTime);
+        $oldRide = $this->getRideRepository()->findCityRideByDate($ride->getCity(), $oldDate);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -184,9 +183,9 @@ class SubrideController extends AbstractController
         foreach ($oldRide->getSubrides() as $oldSubride) {
             $newSubride = clone $oldSubride;
             $newSubride->setUser($this->getUser());
-            $newSubride->setRide($newRide);
+            $newSubride->setRide($ride);
 
-            $newSubrideDateTime = new \DateTime($newRide->getDateTime()->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
+            $newSubrideDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
             $newSubride->setDateTime($newSubrideDateTime);
 
             $em->persist($newSubride);
@@ -195,8 +194,8 @@ class SubrideController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('caldera_criticalmass_ride_show', [
-            'citySlug' => $newRide->getCity()->getMainSlugString(),
-            'rideDate' => $newRide->getFormattedDate()
+            'citySlug' => $ride->getCity()->getMainSlugString(),
+            'rideDate' => $ride->getFormattedDate()
         ]);
     }
 }

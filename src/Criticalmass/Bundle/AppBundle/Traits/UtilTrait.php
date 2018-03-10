@@ -65,24 +65,6 @@ trait UtilTrait
         return $ride;
     }
 
-    /**
-     * @param string $dateTime
-     * @return \DateTime
-     * @deprecated
-     */
-    protected function getCheckedDateTime(string $dateTime): \DateTime
-    {
-        try {
-            $dateTime = new \DateTime($dateTime);
-        } catch (\Exception $e) {
-            throw new NotFoundHttpException(
-                'Mit diesem Datum können wir leider nichts anfange. Bitte gib ein Datum im Format YYYY-MM-DD an.'
-            );
-        }
-
-        return $dateTime;
-    }
-    
     protected function getSession(): Session
     {
         $session = new Session();
