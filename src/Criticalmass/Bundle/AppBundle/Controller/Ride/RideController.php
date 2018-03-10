@@ -8,14 +8,11 @@ use Criticalmass\Component\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;
-use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
-    use ViewStorageTrait;
-
     public function listAction(Request $request)
     {
         $ridesResult = $this->getRideRepository()->findRidesInInterval();
