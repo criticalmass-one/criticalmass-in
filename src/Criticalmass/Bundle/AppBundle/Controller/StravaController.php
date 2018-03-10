@@ -152,7 +152,7 @@ class StravaController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function importAction(Request $request, $citySlug, $rideDate)
+    public function importAction(Request $request, GpxExporter $exporter, $citySlug, $rideDate)
     {
         $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $activityId = $request->get('activityId');
@@ -195,11 +195,6 @@ class StravaController extends AbstractController
 
             $positionArray[] = $position;
         }
-
-        /**
-         * @var GpxExporter $exporter
-         */
-        $exporter = $this->get('caldera.criticalmass.gps.gpxexporter');
 
         $exporter->setPositionArray($positionArray);
 
