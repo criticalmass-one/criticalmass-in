@@ -27,3 +27,7 @@ services:
 
     Cmfcmf\OpenWeatherMap: ~
 
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\RideParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: ride_converter }
+
