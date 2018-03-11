@@ -39,3 +39,7 @@ services:
         tags:
             - { name: request.param_converter, priority: 10, converter: location_converter }
 
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\BoardParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: board_converter }
+

@@ -24,7 +24,6 @@ class LocationController extends AbstractController
         ]);
     }
 
-
     /**
      * @ParamConverter("location", class="AppBundle:Location", options={"slug": "locationSlug"})
      */
