@@ -2,32 +2,15 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Router\ObjectRouter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 trait UtilTrait
 {
-    /** @deprecated  */
-    protected function getCityBySlug(string $citySlugString): ?City
-    {
-        /** @var CitySlug $citySlug */
-        $citySlug = $this->getCitySlugRepository()->findOneBySlug($citySlugString);
-
-        if (!$citySlug) {
-            return null;
-        }
-
-        return $citySlug->getCity();
-    }
-
     protected function getSession(): Session
     {
         $session = new Session();

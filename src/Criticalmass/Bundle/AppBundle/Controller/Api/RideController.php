@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
@@ -93,7 +94,12 @@ class RideController extends BaseController
         }
 
         if ($request->query->get('city')) {
-            $city = $this->getCityBySlug($request->query->get('city'));
+            /** @var CitySlug $citySlug */
+            $citySlug = $this->getCitySlugRepository()->findOneBySlug($request->query->get('city'));
+
+            if ($citySlug) {
+                $city = $citySlug->getCity();
+            }
 
             if (!$city) {
                 throw $this->createNotFoundException('City not found');
