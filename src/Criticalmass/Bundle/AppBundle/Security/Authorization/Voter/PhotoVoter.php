@@ -9,7 +9,12 @@ class PhotoVoter extends AbstractVoter
 {
     protected function canView(Photo $photo, User $user): bool
     {
-        return false;
+        return true;
+    }
+
+    protected function canUpload(Photo $photo, User $user): bool
+    {
+        return true;
     }
 
     protected function canEdit(Photo $photo, User $user): bool

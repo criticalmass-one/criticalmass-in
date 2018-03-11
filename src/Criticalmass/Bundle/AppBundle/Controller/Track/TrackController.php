@@ -32,21 +32,16 @@ class TrackController extends AbstractController
         /**
          * @var array Track
          */
-        $tracks = $this->getTrackRepository()->findBy(
-            [
-                'user' => $this->getUser()->getId(),
-                'deleted' => false
-            ],
-            [
-                'startDateTime' => 'DESC'
-            ]
-        );
+        $tracks = $this->getTrackRepository()->findBy([
+            'user' => $this->getUser()->getId(),
+            'deleted' => false,
+        ], [
+            'startDateTime' => 'DESC'
+        ]);
 
-        return $this->render('AppBundle:Track:list.html.twig',
-            array(
-                'tracks' => $tracks
-            )
-        );
+        return $this->render('AppBundle:Track:list.html.twig', [
+            'tracks' => $tracks,
+        ]);
     }
 
     /**
@@ -138,288 +133,40 @@ class TrackController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('view', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
     public function viewAction(Track $track): Response
     {
-        if ($track && $track->getUser()->equals($this->getUser())) {
-            return $this->render('AppBundle:Track:view.html.twig', [
-                'track' => $track,
-                'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
-                'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track),
-            ]);
-        }
-
-        throw $this->createAccessDeniedException();
+        return $this->render('AppBundle:Track:view.html.twig', [
+            'track' => $track,
+            'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
+            'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track),
+        ]);
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('download', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
     public function downloadAction(Track $track): Response
     {
-        if ($track->getUser()->equals($this->getUser())) {
-            $path = $this->getParameter('kernel.root_dir');
-            $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-            $filename = $helper->asset($track, 'trackFile');
+        $path = $this->getParameter('kernel.root_dir');
+        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+        $filename = $helper->asset($track, 'trackFile');
 
-            $trackContent = file_get_contents($path . '/../web' . $filename);
+        $trackContent = file_get_contents($path . '/../web' . $filename);
 
-            $response = new Response();
+        $response = new Response();
 
-            $response->headers->add([
-                'Content-disposition' => 'attachment; filename=track.gpx',
-                'Content-type',
-                'text/plain',
-            ]);
-
-            $response->setContent($trackContent);
-
-            return $response;
-        }
-
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_track_list'));
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
-     */
-    public function toggleAction(Track $track): Response
-    {
-        $ride = $track->getRide();
-
-        if ($track->getUser()->equals($this->getUser())) {
-            $em = $this->getDoctrine()->getManager();
-            $track->setEnabled(!$track->getEnabled());
-            $em->merge($track);
-            $em->flush();
-
-            $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($ride);
-        }
-
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
-     */
-    public function deleteAction(Request $request, Track $track): Response
-    {
-        $ride = $track->getRide();
-
-        if ($track->getUser()->equals($this->getUser())) {
-            $track->setDeleted(true);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($track);
-            $em->flush();
-
-            $this->get('caldera.criticalmass.statistic.rideestimate.track')->calculateEstimates($ride);
-        }
-
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
-     */
-    public function rangeAction(Request $request, Track $track): Response
-    {
-        $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_range', [
-                'trackId' => $track->getId()
-            ]))
-            ->add('startPoint', HiddenType::class)
-            ->add('endPoint', HiddenType::class)
-            ->getForm();
-
-        if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->rangePostAction($request, $track, $form);
-        } else {
-            return $this->rangeGetAction($request, $track, $form);
-        }
-    }
-
-    protected function rangeGetAction(Request $request, Track $track, Form $form): Response
-    {
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
-        $llag->loadTrack($track);
-        $llag->execute();
-
-        return $this->render('AppBundle:Track:range.html.twig',
-            [
-                'form' => $form->createView(),
-                'track' => $track,
-                'latLngList' => $llag->getList(),
-                'gapWidth' => $this->getParameter('track.gap_width')
-            ]
-        );
-    }
-
-    protected function rangePostAction(Request $request, Track $track, Form $form): Response
-    {
-        $form->handleRequest($request);
-
-        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser())) {
-            /**
-             * @var Track $track
-             */
-            $track = $form->getData();
-
-            $this->generatePolyline($track);
-            $this->saveLatLngList($track);
-            $this->updateTrackProperties($track);
-            $this->calculateRideEstimates($track);
-        }
-
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
-     */
-    public function timeAction(Request $request, Track $track): Response
-    {
-        $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_time', [
-                'trackId' => $track->getId()
-            ]))
-            ->add('startDate', DateType::class)
-            ->add('startTime', TimeType::class)
-            ->getForm();
-
-        if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->timePostAction($request, $track, $form);
-        } else {
-            return $this->timeGetAction($request, $track, $form);
-        }
-    }
-
-    protected function timeGetAction(Request $request, Track $track, Form $form): Response
-    {
-        return $this->render('AppBundle:Track:time.html.twig', [
-            'form' => $form->createView(),
-            'track' => $track,
+        $response->headers->add([
+            'Content-disposition' => 'attachment; filename=track.gpx',
+            'Content-type',
+            'text/plain',
         ]);
-    }
 
-    protected function timePostAction(Request $request, Track $track, Form $form): Response
-    {
-        // catch the old dateTime before it is overridden by the form submit
-        $oldDateTime = $track->getStartDateTime();
+        $response->setContent($trackContent);
 
-        // now get the new values
-        $form->handleRequest($request);
-
-        if ($form->isValid() && $track && $track->getUser()->equals($this->getUser())) {
-            /**
-             * @var Track $newTrack
-             */
-            $newTrack = $form->getData();
-
-            $interval = $newTrack->getStartDateTime()->diff($oldDateTime);
-
-            /**
-             * @var TrackTimeShift $tts
-             */
-            $tts = $this->get('caldera.criticalmass.gps.timeshift.track');
-
-            $tts->loadTrack($newTrack)->shift($interval)->saveTrack();
-
-            $this->updateTrackProperties($track);
-        }
-
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
-     */
-    public function drawAction(Request $request, Ride $ride): Response
-    {
-        if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->drawPostAction($request, $ride);
-        } else {
-            return $this->drawGetAction($request, $ride);
-        }
-    }
-
-    protected function drawGetAction(Request $request, Ride $ride): Response
-    {
-        return $this->render('AppBundle:Track:draw.html.twig', [
-            'ride' => $ride,
-        ]);
-    }
-
-    protected function drawPostAction(Request $request, Ride $ride): Response
-    {
-        $polyline = $request->request->get('polyline');
-        $geojson = $request->request->get('geojson');
-
-        $track = new Track();
-
-        $track->setCreationDateTime(new \DateTime());
-        $track->setPolyline($polyline);
-        $track->setGeoJson($geojson);
-        $track->setRide($ride);
-        $track->setSource(Track::TRACK_SOURCE_DRAW);
-        $track->setUser($this->getUser());
-        $track->setUsername($this->getUser()->getUsername());
-        $track->setTrackFilename('foo');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
-
-        return $this->redirectToRoute('caldera_criticalmass_track_list');
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
-     */
-    public function editAction(Request $request, Track $track): Response
-    {
-        $ride = $track->getRide();
-
-        if ($track->getUser() !== $track->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $ride, $track);
-        } else {
-            return $this->editGetAction($request, $ride, $track);
-        }
-    }
-
-    protected function editGetAction(Request $request, Ride $ride, Track $track): Response
-    {
-        return $this->render('AppBundle:Track:draw.html.twig', [
-            'ride' => $ride,
-            'track' => $track
-        ]);
-    }
-
-    protected function editPostAction(Request $request, Ride $ride, Track $track): Response
-    {
-        $polyline = $request->request->get('polyline');
-        $geojson = $request->request->get('geojson');
-
-        $track->setPolyline($polyline);
-        $track->setGeoJson($geojson);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
-
-        return $this->redirectToRoute('caldera_criticalmass_track_list');
+        return $response;
     }
 }

@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
@@ -28,30 +29,24 @@ class TrackManagementController extends AbstractController
         /**
          * @var array Track
          */
-        $tracks = $this->getTrackRepository()->findBy(
-            [
-                'user' => $this->getUser()->getId(),
-                'deleted' => false
-            ],
-            [
-                'startDateTime' => 'DESC'
-            ]
-        );
+        $tracks = $this->getTrackRepository()->findBy([
+            'user' => $this->getUser()->getId(),
+            'deleted' => false
+        ], [
+            'startDateTime' => 'DESC'
+        ]);
 
-        return $this->render('AppBundle:Track:list.html.twig',
-            array(
-                'tracks' => $tracks
-            )
-        );
+        return $this->render('AppBundle:Track:list.html.twig', [
+            'tracks' => $tracks,
+        ]);
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', track)")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function downloadAction(Request $request, UserInterface $user, int $trackId): Response
+    public function downloadAction(Request $request, UserInterface $user, Track $track): Response
     {
-        $track = $this->getCredentialsCheckedTrack($user, $trackId);
-
         $trackContent = file_get_contents($this->getTrackFilename($track));
 
         $response = new Response();
@@ -59,7 +54,7 @@ class TrackManagementController extends AbstractController
         $response->headers->add([
             'Content-disposition' => 'attachment; filename=track.gpx',
             'Content-type',
-            'text/plain'
+            'text/plain',
         ]);
 
         $response->setContent($trackContent);
@@ -68,12 +63,11 @@ class TrackManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', track)")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function toggleAction(Request $request, UserInterface $user, int $trackId, RideEstimateService $rideEstimateService): Response
+    public function toggleAction(Request $request, UserInterface $user, Track $track, RideEstimateService $rideEstimateService): Response
     {
-        $track = $this->getCredentialsCheckedTrack($user, $trackId);
-
         $track->setEnabled(!$track->getEnabled());
 
         $this->getManager()->flush();
@@ -84,12 +78,11 @@ class TrackManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', track)")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function deleteAction(Request $request, UserInterface $user, int $trackId, RideEstimateService $rideEstimateService): Response
+    public function deleteAction(Request $request, UserInterface $user, Track $track, RideEstimateService $rideEstimateService): Response
     {
-        $track = $this->getCredentialsCheckedTrack($user, $trackId);
-
         $track->setDeleted(true);
 
         $this->getManager()->flush();
@@ -100,23 +93,20 @@ class TrackManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', track)")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function rangeAction(Request $request, UserInterface $user, int $trackId): Response
+    public function rangeAction(Request $request, UserInterface $user, Track $track): Response
     {
-        $track = $this->getCredentialsCheckedTrack($user, $trackId);
-
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_range',
-                [
-                    'trackId' => $track->getId()
-                ]
-            ))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_range', [
+                'trackId' => $track->getId()
+            ]))
             ->add('startPoint', HiddenType::class)
             ->add('endPoint', HiddenType::class)
             ->getForm();
 
-        if ($request->isMethod(Request::METHOD_POST)) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->rangePostAction($request, $track, $form);
         } else {
             return $this->rangeGetAction($request, $track, $form);
@@ -157,24 +147,20 @@ class TrackManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', track)")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function timeAction(Request $request, UserInterface $user, int $trackId, TrackTimeShift $trackTimeShift): Response
+    public function timeAction(Request $request, UserInterface $user, Track $track, TrackTimeShift $trackTimeShift): Response
     {
-        $track = $this->getCredentialsCheckedTrack($user, $trackId);
-
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl(
-                'caldera_criticalmass_track_time',
-                [
-                    'trackId' => $track->getId()
-                ]
-            ))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_time', [
+                'trackId' => $track->getId()
+            ]))
             ->add('startDate', DateType::class)
             ->add('startTime', TimeType::class)
             ->getForm();
 
-        if ($request->isMethod(Request::METHOD_POST)) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->timePostAction($request, $track, $form, $trackTimeShift);
         } else {
             return $this->timeGetAction($request, $track, $form, $trackTimeShift);
@@ -183,12 +169,10 @@ class TrackManagementController extends AbstractController
 
     protected function timeGetAction(Request $request, Track $track, FormInterface $form, TrackTimeShift $trackTimeShift): Response
     {
-        return $this->render('AppBundle:Track:time.html.twig',
-            [
-                'form' => $form->createView(),
-                'track' => $track,
-            ]
-        );
+        return $this->render('AppBundle:Track:time.html.twig', [
+            'form' => $form->createView(),
+            'track' => $track,
+        ]);
     }
 
     protected function timePostAction(Request $request, Track $track, FormInterface $form, TrackTimeShift $trackTimeShift): Response
@@ -216,24 +200,6 @@ class TrackManagementController extends AbstractController
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
-    }
-
-    protected function getCredentialsCheckedTrack(UserInterface $user, int $trackId): Track
-    {
-        /**
-         * @var Track $track
-         */
-        $track = $this->getTrackRepository()->find($trackId);
-
-        if (!$track) {
-            throw $this->createNotFoundException();
-        }
-
-        if ($track->getUser() !== $user) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return $track;
     }
 
     protected function getTrackFilename(Track $track): string
