@@ -43,3 +43,7 @@ services:
         tags:
             - { name: request.param_converter, priority: 10, converter: board_converter }
 
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\ThreadParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: thread_converter }
+

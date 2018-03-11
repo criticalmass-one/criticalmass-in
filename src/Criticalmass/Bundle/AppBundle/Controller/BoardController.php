@@ -59,53 +59,31 @@ class BoardController extends AbstractController
         ]);
     }
 
-    public function viewthreadAction(Request $request, ViewStorageCache $viewStorageCache, $boardSlug = null, $citySlug = null, $threadSlug)
+    /**
+     * @ParamConverter("thread", class="AppBundle:Thread")
+     */
+    public function viewthreadAction(ViewStorageCache $viewStorageCache, Thread $thread): Response
     {
-        /**
-         * @var BoardInterface $board
-         */
-        $board = null;
-
-        if ($boardSlug) {
-            $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
-        }
-
-        if ($citySlug) {
-            $board = $this->getCheckedCity($citySlug);
-        }
-
-        $thread = $this->getThreadRepository()->findThreadBySlug($threadSlug);
         $posts = $this->getPostRepository()->findPostsForThread($thread);
+        $board = $thread->getCity() ?? $thread->getBoard();
 
         $viewStorageCache->countView($thread);
 
-        return $this->render(
-            'AppBundle:Board:view_thread.html.twig',
-            [
-                'board' => $board,
-                'thread' => $thread,
-                'posts' => $posts
-            ]
-        );
+        return $this->render('AppBundle:Board:view_thread.html.twig', [
+            'board' => $board,
+            'thread' => $thread,
+            'posts' => $posts,
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City", isOptional="true")
+     * @ParamConverter("board", class="AppBundle:Board", isOptional="true")
      */
-    public function addthreadAction(Request $request, $boardSlug = null, $citySlug = null)
+    public function addThreadAction(Request $request, Board $board = null, City $city = null): Response
     {
-        /**
-         * @var BoardInterface $board
-         */
-        $board = null;
-
-        if ($boardSlug) {
-            $board = $this->getBoardRepository()->findBoardBySlug($boardSlug);
-        }
-
-        if ($citySlug) {
-            $board = $this->getCheckedCity($citySlug);
-        }
+        $board = $board ?? $city;
 
         $data = [];
         $form = $this->createFormBuilder($data)
@@ -113,25 +91,22 @@ class BoardController extends AbstractController
             ->add('message', TextareaType::class)
             ->getForm();
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->addThreadPostAction($request, $board, $form);
         } else {
             return $this->addThreadGetAction($request, $board, $form);
         }
     }
 
-    protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form)
+    protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form): Response
     {
-        return $this->render(
-            'AppBundle:Board:add_thread.html.twig',
-            [
-                'board' => $board,
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('AppBundle:Board:add_thread.html.twig', [
+            'board' => $board,
+            'form' => $form->createView(),
+        ]);
     }
 
-    protected function addThreadPostAction(Request $request, BoardInterface $board, Form $form)
+    protected function addThreadPostAction(Request $request, BoardInterface $board, Form $form): Response
     {
         $form->handleRequest($request);
 
@@ -175,12 +150,9 @@ class BoardController extends AbstractController
             return $this->redirectToObject($thread);
         }
 
-        return $this->render(
-            'AppBundle:Board:add_thread.html.twig',
-            [
-                'board' => $board,
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('AppBundle:Board:add_thread.html.twig', [
+            'board' => $board,
+            'form' => $form->createView(),
+        ]);
     }
 }
