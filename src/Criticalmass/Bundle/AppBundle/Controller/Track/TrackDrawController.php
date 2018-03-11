@@ -59,16 +59,12 @@ class TrackDrawController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
     public function editAction(Request $request, Track $track): Response
     {
         $ride = $track->getRide();
-
-        if ($track->getUser() != $track->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->editPostAction($request, $ride, $track);
