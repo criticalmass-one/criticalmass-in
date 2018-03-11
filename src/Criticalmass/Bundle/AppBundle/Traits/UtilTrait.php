@@ -28,20 +28,6 @@ trait UtilTrait
         return $citySlug->getCity();
     }
 
-    /** @deprecated  */
-    protected function getCheckedCity($citySlug): City
-    {
-        $city = $this->getCityBySlug($citySlug);
-
-        if (!$city) {
-            throw new NotFoundHttpException(
-                'Wir haben leider keine Stadt in der Datenbank, die sich mit ' . $citySlug . ' identifiziert.'
-            );
-        }
-
-        return $city;
-    }
-
     protected function getSession(): Session
     {
         $session = new Session();
