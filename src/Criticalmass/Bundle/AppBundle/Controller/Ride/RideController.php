@@ -13,38 +13,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
-    public function listAction(Request $request)
+    public function listAction(): Response
     {
         $ridesResult = $this->getRideRepository()->findRidesInInterval();
 
-        $rides = array();
+        $rides = [];
 
         foreach ($ridesResult as $ride) {
             $rides[$ride->getFormattedDate()][] = $ride;
         }
 
-        return $this->render(
-            'AppBundle:Ride:list.html.twig',
-            array(
-                'rides' => $rides
-            )
-        );
-    }
-
-    public function showMonthAction(string $citySlug, string $rideDate): Response
-    {
-        $city = $this->getCheckedCity($citySlug);
-        $dateTime = new \DateTime(sprintf('%s-01', $rideDate));
-
-        $rideList = $this->getRideRepository()->findByCityAndMonth($city, $dateTime);
-
-        if (count($rideList) !== 1) {
-            throw $this->createNotFoundException();
-        }
-
-        $ride = array_pop($rideList);
-
-        return $this->redirectToObject($ride);
+        return $this->render('AppBundle:Ride:list.html.twig', [
+            'rides' => $rides,
+        ]);
     }
 
     /**

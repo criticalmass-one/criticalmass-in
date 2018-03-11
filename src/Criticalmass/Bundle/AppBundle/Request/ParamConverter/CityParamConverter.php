@@ -3,7 +3,6 @@
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,15 +19,15 @@ class CityParamConverter extends AbstractParamConverter
             $city = $this->registry->getRepository(City::class)->find($cityId);
         }
 
+        if ($city) {
+            $request->attributes->set($configuration->getName(), $city);
+
+            return;
+        }
+
         $citySlug = $request->get('citySlug');
 
-        if ($citySlug) {
-            $cs = $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlug);
-
-            if ($cs) {
-                $city = $cs->getCity();
-            }
-        }
+        $city = $this->findCityBySlug($citySlug);
 
         if ($city) {
             $request->attributes->set($configuration->getName(), $city);

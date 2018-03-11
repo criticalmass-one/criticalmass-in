@@ -299,19 +299,16 @@ class RideRepository extends EntityRepository
 
     public function findCityRideByDate(City $city, \DateTime $dateTime): ?Ride
     {
-        $fromDateTime = clone $dateTime;
-        $fromDateTime->setTime(0, 0, 0);
+        $fromDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+        $untilDateTime = DateTimeUtil::getMonthEndDateTime($dateTime);
 
-        $untilDateTime = clone $dateTime;
-        $untilDateTime->setTime(23, 59, 59);
-
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
         $builder
-            ->select('ride')
-            ->where($builder->expr()->eq('ride.city', ':city'))
-            ->andWhere($builder->expr()->gt('ride.dateTime', ':fromDateTime'))
-            ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
+            ->select('r')
+            ->where($builder->expr()->eq('r.city', ':city'))
+            ->andWhere($builder->expr()->gt('r.dateTime', ':fromDateTime'))
+            ->andWhere($builder->expr()->lt('r.dateTime', ':untilDateTime'))
             ->setParameter('city', $city)
             ->setParameter('fromDateTime', $fromDateTime)
             ->setParameter('untilDateTime', $untilDateTime)
