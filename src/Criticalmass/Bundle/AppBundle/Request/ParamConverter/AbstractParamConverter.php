@@ -6,6 +6,8 @@ use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractParamConverter extends DoctrineParamConverter
 {
@@ -26,21 +28,33 @@ abstract class AbstractParamConverter extends DoctrineParamConverter
         return array_pop($matches);
     }
 
-    protected function findCitySlug(string $citySlug): ?CitySlug
+    protected function findCityBySlug(Request $request): ?City
     {
-        return $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlug);
-    }
+        $citySlugString = $request->get('citySlug');
 
-    protected function findCityBySlug(string $citySlug): ?City
-    {
-        $cs = $this->findCitySlug($citySlug);
+        if (!$citySlugString) {
+            return null;
+        }
 
-        if ($cs) {
-            $city = $cs->getCity();
+        $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugString);
+
+        if (!$citySlug) {
+            return null;
+        }
+
+        if ($citySlug) {
+            $city = $citySlug->getCity();
 
             return $city;
         }
 
         return null;
+    }
+
+    protected function notFound(ParamConverter $configuration): void
+    {
+        if (!$configuration->isOptional()) {
+            throw new NotFoundHttpException(sprintf('%s object not found.', $configuration->getClass()));
+        }
     }
 }
