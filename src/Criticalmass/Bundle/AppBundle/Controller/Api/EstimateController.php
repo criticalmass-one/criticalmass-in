@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Api;
 
+use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Model\CreateEstimateModel;
@@ -91,13 +92,18 @@ class EstimateController extends BaseController
         $ride = null;
 
         if ($model->getCitySlug()) {
-            $city = $this->getCityBySlug($model->getCitySlug());
+            /** @var CitySlug $citySlug */
+            $citySlug = $this->getCitySlugRepository()->findOneBySlug($model->getCitySlug());
 
-            if (!$city) {
-                return null;
+            if ($citySlug) {
+                $city = $citySlug->getCity();
+
+                if ($city) {
+                    $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
+                }
             }
 
-            $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
+            return null;
         } elseif ($model->getLatitude() && $model->getLongitude()) {
             $ride = $this->findNearestRide($model);
         }

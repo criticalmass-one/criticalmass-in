@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Criticalmass\Component\UploadValidator\TrackValidator;
 use Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
@@ -50,39 +51,37 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function uploadAction(Request $request, $citySlug, $rideDate, $embed = false)
+    public function uploadAction(Request $request, Ride $ride, $embed = false): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_upload',
-                [
-                    'citySlug' => $ride->getCity()->getMainSlugString(),
-                    'rideDate' => $ride->getFormattedDate()
-                ]))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_upload', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate(),
+            ]))
             ->add('trackFile', VichFileType::class)
             ->getForm();
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->uploadPostAction($request, $track, $ride, $form, $embed);
         } else {
             return $this->uploadGetAction($request, $ride, $form, $embed);
         }
     }
 
-    protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed)
+    protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed): Response
     {
-        return $this->render('AppBundle:Track:upload.html.twig',
-            [
-                'form' => $form->createView(),
-                'ride' => $ride,
-                'errorMessage' => null
-            ]);
+        return $this->render('AppBundle:Track:upload.html.twig', [
+            'form' => $form->createView(),
+            'ride' => $ride,
+            'errorMessage' => null,
+        ]);
     }
 
-    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed)
+    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed): Response
     {
         $form->handleRequest($request);
 
@@ -106,14 +105,11 @@ class TrackController extends AbstractController
             try {
                 $trackValidator->validate();
             } catch (TrackValidatorException $e) {
-                return $this->render(
-                    'AppBundle:Track:upload.html.twig',
-                    [
-                        'form' => $form->createView(),
-                        'ride' => $ride,
-                        'errorMessage' => $e->getMessage()
-                    ]
-                );
+                return $this->render('AppBundle:Track:upload.html.twig', [
+                    'form' => $form->createView(),
+                    'ride' => $ride,
+                    'errorMessage' => $e->getMessage(),
+                ]);
             }
 
             $this->loadTrackProperties($track);
@@ -129,49 +125,42 @@ class TrackController extends AbstractController
             $this->generateSimpleLatLngList($track);
             $this->generatePolyline($track);
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view',
-                ['trackId' => $track->getId()]));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', [
+                'trackId' => $track->getId()
+            ]));
         }
 
-        return $this->render(
-            'AppBundle:Track:upload.html.twig',
-            [
-                'form' => $form->createView(),
-                'ride' => $ride,
-                'errorMessage' => null
-            ]
-        );
+        return $this->render('AppBundle:Track:upload.html.twig', [
+            'form' => $form->createView(),
+            'ride' => $ride,
+            'errorMessage' => null,
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function viewAction(Request $request, $trackId)
+    public function viewAction(Track $track): Response
     {
-        $track = $this->getTrackRepository()->findOneById($trackId);
-
         if ($track && $track->getUser()->equals($this->getUser())) {
-            return $this->render(
-                'AppBundle:Track:view.html.twig',
-                [
-                    'track' => $track,
-                    'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
-                    'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track)
-                ]
-            );
+            return $this->render('AppBundle:Track:view.html.twig', [
+                'track' => $track,
+                'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
+                'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track),
+            ]);
         }
 
-        throw new AccessDeniedException('');
+        throw $this->createAccessDeniedException();
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function downloadAction(Request $request, $trackId)
+    public function downloadAction(Track $track): Response
     {
-        $track = $this->getTrackRepository()->find($trackId);
-
-        if ($track && $track->getUser()->equals($this->getUser())) {
+        if ($track->getUser()->equals($this->getUser())) {
             $path = $this->getParameter('kernel.root_dir');
             $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
             $filename = $helper->asset($track, 'trackFile');
@@ -183,7 +172,7 @@ class TrackController extends AbstractController
             $response->headers->add([
                 'Content-disposition' => 'attachment; filename=track.gpx',
                 'Content-type',
-                'text/plain'
+                'text/plain',
             ]);
 
             $response->setContent($trackContent);
@@ -196,13 +185,13 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function toggleAction(Request $request, $trackId)
+    public function toggleAction(Track $track): Response
     {
-        $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
 
-        if ($track && $track->getUser()->equals($this->getUser())) {
+        if ($track->getUser()->equals($this->getUser())) {
             $em = $this->getDoctrine()->getManager();
             $track->setEnabled(!$track->getEnabled());
             $em->merge($track);
@@ -216,14 +205,13 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function deleteAction(Request $request, $trackId)
+    public function deleteAction(Request $request, Track $track): Response
     {
-        /** @var Track $track */
-        $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
 
-        if ($track && $track->getUser()->equals($this->getUser())) {
+        if ($track->getUser()->equals($this->getUser())) {
             $track->setDeleted(true);
 
             $em = $this->getDoctrine()->getManager();
@@ -238,30 +226,26 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function rangeAction(Request $request, $trackId)
+    public function rangeAction(Request $request, Track $track): Response
     {
-        /** @var Track $track */
-        $track = $this->getTrackRepository()->findOneById($trackId);
-
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_range',
-                [
-                    'trackId' => $track->getId()
-                ]
-            ))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_range', [
+                'trackId' => $track->getId()
+            ]))
             ->add('startPoint', HiddenType::class)
             ->add('endPoint', HiddenType::class)
             ->getForm();
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->rangePostAction($request, $track, $form);
         } else {
             return $this->rangeGetAction($request, $track, $form);
         }
     }
 
-    protected function rangeGetAction(Request $request, Track $track, Form $form)
+    protected function rangeGetAction(Request $request, Track $track, Form $form): Response
     {
         $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
         $llag->loadTrack($track);
@@ -277,7 +261,7 @@ class TrackController extends AbstractController
         );
     }
 
-    protected function rangePostAction(Request $request, Track $track, Form $form)
+    protected function rangePostAction(Request $request, Track $track, Form $form): Response
     {
         $form->handleRequest($request);
 
@@ -298,40 +282,34 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function timeAction(Request $request, $trackId)
+    public function timeAction(Request $request, Track $track): Response
     {
-        $track = $this->getTrackRepository()->findOneById($trackId);
-
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl(
-                'caldera_criticalmass_track_time',
-                [
-                    'trackId' => $track->getId()
-                ]
-            ))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_time', [
+                'trackId' => $track->getId()
+            ]))
             ->add('startDate', DateType::class)
             ->add('startTime', TimeType::class)
             ->getForm();
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->timePostAction($request, $track, $form);
         } else {
             return $this->timeGetAction($request, $track, $form);
         }
     }
 
-    protected function timeGetAction(Request $request, Track $track, Form $form)
+    protected function timeGetAction(Request $request, Track $track, Form $form): Response
     {
-        return $this->render('AppBundle:Track:time.html.twig',
-            [
-                'form' => $form->createView(),
-                'track' => $track,
-            ]
-        );
+        return $this->render('AppBundle:Track:time.html.twig', [
+            'form' => $form->createView(),
+            'track' => $track,
+        ]);
     }
 
-    protected function timePostAction(Request $request, Track $track, Form $form)
+    protected function timePostAction(Request $request, Track $track, Form $form): Response
     {
         // catch the old dateTime before it is overridden by the form submit
         $oldDateTime = $track->getStartDateTime();
@@ -362,29 +340,25 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function drawAction(Request $request, $citySlug, $rideDate)
+    public function drawAction(Request $request, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->drawPostAction($request, $ride);
         } else {
             return $this->drawGetAction($request, $ride);
         }
     }
 
-    protected function drawGetAction(Request $request, Ride $ride)
+    protected function drawGetAction(Request $request, Ride $ride): Response
     {
-        return $this->render(
-            'AppBundle:Track:draw.html.twig',
-            [
-                'ride' => $ride
-            ]
-        );
+        return $this->render('AppBundle:Track:draw.html.twig', [
+            'ride' => $ride,
+        ]);
     }
 
-    protected function drawPostAction(Request $request, Ride $ride)
+    protected function drawPostAction(Request $request, Ride $ride): Response
     {
         $polyline = $request->request->get('polyline');
         $geojson = $request->request->get('geojson');
@@ -409,36 +383,32 @@ class TrackController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function editAction(Request $request, int $trackId)
+    public function editAction(Request $request, Track $track): Response
     {
-        /** @var Track $track */
-        $track = $this->getTrackRepository()->find($trackId);
         $ride = $track->getRide();
 
-        if ($track->getUser() != $track->getUser()) {
-            return $this->createAccessDeniedException();
+        if ($track->getUser() !== $track->getUser()) {
+            throw $this->createAccessDeniedException();
         }
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->editPostAction($request, $ride, $track);
         } else {
             return $this->editGetAction($request, $ride, $track);
         }
     }
 
-    protected function editGetAction(Request $request, Ride $ride, Track $track)
+    protected function editGetAction(Request $request, Ride $ride, Track $track): Response
     {
-        return $this->render(
-            'AppBundle:Track:draw.html.twig',
-            [
-                'ride' => $ride,
-                'track' => $track
-            ]
-        );
+        return $this->render('AppBundle:Track:draw.html.twig', [
+            'ride' => $ride,
+            'track' => $track
+        ]);
     }
 
-    protected function editPostAction(Request $request, Ride $ride, Track $track)
+    protected function editPostAction(Request $request, Ride $ride, Track $track): Response
     {
         $polyline = $request->request->get('polyline');
         $geojson = $request->request->get('geojson');

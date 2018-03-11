@@ -9,14 +9,15 @@ use Criticalmass\Component\SeoPage\SeoPage;
 use Criticalmass\Component\ViewStorage\ViewStorageCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PhotoController extends AbstractController
 {
-    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, int $photoId): Response
+    /**
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id" = "photoId"})
+     */
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, Photo $photo): Response
     {
-        /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
         $city = $photo->getCity();
 
         $ride = $photo->getRide();

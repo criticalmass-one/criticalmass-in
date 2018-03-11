@@ -15,7 +15,7 @@
 
         <service id="caldera.criticalmass.validator.single_ride_day"
                  class="Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator">
-            <argument type="service" id="doctrine"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="validator.constraint_validator"/>
         </service>
 
