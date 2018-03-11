@@ -52,7 +52,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', photo)")
+     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
     public function deleteAction(Request $request, Photo $photo): Response
@@ -87,7 +87,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', photo)")
+     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
     public function toggleAction(Request $request, Photo $photo): Response
@@ -102,7 +102,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', photo)")
+     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
     public function featuredPhotoAction(Request $request, Photo $photo): Response
@@ -117,7 +117,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', photo)")
+     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
     public function placeSingleAction(Request $request, Photo $photo): Response
@@ -184,7 +184,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', photo)")
+     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
     public function rotateAction(Request $request, Photo $photo): Response
@@ -209,7 +209,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', photo)")
+     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
     public function censorAction(Request $request, UserInterface $user, Photo $photo): Response
