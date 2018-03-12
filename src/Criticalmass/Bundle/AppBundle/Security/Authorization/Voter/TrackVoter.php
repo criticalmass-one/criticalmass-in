@@ -7,26 +7,26 @@ use Criticalmass\Bundle\AppBundle\Entity\User;
 
 class TrackVoter extends AbstractVoter
 {
-    protected function canView(Track $track, User $user): bool
+    protected function canView(Track $track, User $user): int
     {
         return $this->canEdit($track, $user);
     }
 
-    protected function canDownload(Track $track, User $user): bool
+    protected function canDownload(Track $track, User $user): int
     {
         return $this->canEdit($track, $user);
     }
 
-    protected function canEdit(Track $track, User $user): bool
+    protected function canEdit(Track $track, User $user): int
     {
         if ($user->hasRole('ROLE_ADMIN')) {
-            return true;
+            return self::ACCESS_GRANTED;
         }
 
         if ($user === $track->getUser()) {
-            return true;
+            return self::ACCESS_GRANTED;
         }
 
-        return false;
+        return self::ACCESS_ABSTAIN;
     }
 }
