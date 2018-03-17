@@ -3,7 +3,9 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-
+        bind:
+            $openWeatherMapApiKey: '%openweather.appid%'
+            
     Criticalmass\Bundle\AppBundle\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/*'
         exclude: '../../src/Criticalmass/Bundle/AppBundle/{Admin,DQL,Entity,Manager,Model,Repository,Tests,UserProvider,Validator}'
