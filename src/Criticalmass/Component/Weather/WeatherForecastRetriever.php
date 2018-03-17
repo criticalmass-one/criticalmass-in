@@ -25,11 +25,13 @@ class WeatherForecastRetriever
     /** @var LoggerInterface $logger */
     protected $logger;
 
-    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger)
+    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
     {
         $this->doctrine = $doctrine;
-        $this->openWeatherMap = $openWeatherMap;
         $this->logger = $logger;
+
+        $this->openWeatherMap = $openWeatherMap;
+        $this->openWeatherMap->setApiKey($openWeatherMapApiKey);
     }
 
     public function retrieve(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
