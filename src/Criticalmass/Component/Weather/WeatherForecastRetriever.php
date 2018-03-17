@@ -153,7 +153,7 @@ class WeatherForecastRetriever
         return $this->doctrine->getRepository(Ride::class)->findRidesInInterval($startDateTime, $endDateTime);
     }
 
-    protected function findCurrentWeatherForRide(Ride $ride): Weather
+    protected function findCurrentWeatherForRide(Ride $ride): ?Weather
     {
         return $this->doctrine->getRepository(Weather::class)->findCurrentWeatherForRide($ride);
     }
