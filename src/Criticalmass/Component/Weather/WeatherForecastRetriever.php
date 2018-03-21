@@ -25,11 +25,13 @@ class WeatherForecastRetriever
     /** @var LoggerInterface $logger */
     protected $logger;
 
-    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger)
+    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
     {
         $this->doctrine = $doctrine;
-        $this->openWeatherMap = $openWeatherMap;
         $this->logger = $logger;
+
+        $this->openWeatherMap = $openWeatherMap;
+        $this->openWeatherMap->setApiKey($openWeatherMapApiKey);
     }
 
     public function retrieve(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
@@ -153,7 +155,7 @@ class WeatherForecastRetriever
         return $this->doctrine->getRepository(Ride::class)->findRidesInInterval($startDateTime, $endDateTime);
     }
 
-    protected function findCurrentWeatherForRide(Ride $ride): Weather
+    protected function findCurrentWeatherForRide(Ride $ride): ?Weather
     {
         return $this->doctrine->getRepository(Weather::class)->findCurrentWeatherForRide($ride);
     }

@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\SeoPage\SeoPage;
 use Criticalmass\Component\Timeline\CachedTimeline;
 use Criticalmass\Component\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, SeoPage $seoPage, CachedTimeline $cachedTimeline): Response
     {
-        $this->getSeoPage()->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
+        $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $rideList = $this->getFrontpageRideList();
         $frontpageTeaserList = $this->getFrontpageTeaserRepository()->findForFrontpage();
@@ -22,11 +23,7 @@ class FrontpageController extends AbstractController
         $monthInterval = new \DateInterval('P1M');
         $startDateTime->sub($monthInterval);
 
-        /**
-         * @var Timeline $timeline
-         */
-        $timelineContent = $this
-            ->get(CachedTimeline::class)
+        $timelineContent = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();

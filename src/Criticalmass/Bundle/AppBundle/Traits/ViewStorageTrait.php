@@ -9,8 +9,10 @@ use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Criticalmass\Component\ViewStorage\ViewStorageCacheInterface;
 
+/** @deprecated  */
 trait ViewStorageTrait
 {
+    /** @deprecated  */
     protected function countView(ViewableInterface $viewable)
     {
         /** @var ViewStorageCacheInterface $viewStorage */

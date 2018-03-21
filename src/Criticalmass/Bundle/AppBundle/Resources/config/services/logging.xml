@@ -5,8 +5,20 @@
     <services>
         <defaults autowire="true" autoconfigure="true" public="true"/>
 
-        <service id="CalendR\Extension\Twig\CalendRExtension">
-            <tag name="twig.extension"/>
+        <service id="gelf.transport" class="Gelf\Transport\UdpTransport">
+            <argument type="string">%graylog.hostname%</argument>
+            <argument type="string">%graylog.port%</argument>
+        </service>
+
+        <service id="gelf.publisher" class="Gelf\Publisher">
+            <call method="addTransport">
+                <argument type="service" id="gelf.transport"/>
+            </call>
+        </service>
+
+        <service id="monolog.gelf_handler" class="Monolog\Handler\GelfHandler">
+            <argument type="service" id="gelf.publisher"/>
+            <argument type="string">error</argument>
         </service>
 
         <service id="CalendR\Calendar">
@@ -22,6 +34,6 @@
             </call>
         </service>
 
-        <service id="CalendR\Extension\Twig\CalendRExtension"/>
+        <service id="Criticalmass\Component\Calendar\EventProvider\RideProvider"/>
     </services>
 </container>

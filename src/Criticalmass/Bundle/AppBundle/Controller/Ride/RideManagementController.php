@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
@@ -17,30 +18,22 @@ class RideManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, string $citySlug): Response
+    public function addAction(Request $request, UserInterface $user, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $ride = new Ride();
         $ride
             ->setCity($city)
             ->setUser($user);
 
-        $form = $this->createForm(
-            RideType::class,
-            $ride,
-            [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_desktop_ride_add',
-                    [
-                        'citySlug' => $city->getMainSlugString()
-                    ]
-                )
-            ]
-        );
+        $form = $this->createForm(RideType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', [
+                'citySlug' => $city->getMainSlugString(),
+            ])
+        ]);
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->addPostAction($request, $user, $ride, $city, $form);
         } else {
             return $this->addGetAction($request, $user, $ride, $city, $form);
@@ -119,30 +112,27 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function editAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
+    public function editAction(Request $request, UserInterface $user, Ride $ride): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-        $rideDateTime = $this->getCheckedDateTime($rideDate);
-        $ride = $this->getCheckedRide($city, $rideDateTime);
-
         $form = $this->createForm(
             RideType::class,
             $ride,
             array(
                 'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit',
                     array(
-                        'citySlug' => $city->getMainSlugString(),
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
                         'rideDate' => $ride->getDateTime()->format('Y-m-d')
                     )
                 )
             )
         );
 
-        if ('POST' == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $ride, $city, $form);
+        if (Request::METHOD_POST == $request->getMethod()) {
+            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form);
         } else {
-            return $this->editGetAction($request, $user, $ride, $city, $form);
+            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form);
         }
     }
 
@@ -211,11 +201,10 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function facebookUpdateAction(Request $request, string $citySlug, string $rideDate): Response
+    public function facebookUpdateAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         /**
          * @var FacebookEventRideApi $fera
          */

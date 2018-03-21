@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Component\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
@@ -23,15 +24,16 @@ class CityManagementController extends AbstractController
     public function addAction(
         Request $request,
         UserInterface $user,
+        NominatimCityBridge $nominatimCityBridge,
         string $slug1 = null,
         string $slug2 = null,
         string $slug3 = null,
         string $citySlug = null
     ): Response {
-        $region = $this->getRegion($slug3, $citySlug);
+        $region = $this->getRegion($nominatimCityBridge, $slug3, $citySlug);
 
         if ($citySlug) {
-            $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
+            $city = $nominatimCityBridge->lookupCity($citySlug);
         } else {
             $city = new City();
             $city->setRegion($region);
@@ -39,13 +41,9 @@ class CityManagementController extends AbstractController
 
         $city->setUser($this->getUser());
 
-        $form = $this->createForm(
-            StandardCityType::class,
-            $city, [
-                'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add',
-                    $this->getRegionSlugParameterArray($region))
-            ]
-        );
+        $form = $this->createForm(StandardCityType::class, $city, [
+            'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add', $this->getRegionSlugParameterArray($region)),
+        ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
             return $this->addPostAction($request, $user, $city, $region, $form);
@@ -56,20 +54,17 @@ class CityManagementController extends AbstractController
 
     protected function addGetAction(Request $request, UserInterface $user, City $city, Region $region, Form $form)
     {
-        return $this->render(
-            'AppBundle:CityManagement:edit.html.twig',
-            [
-                'city' => null,
-                'form' => $form->createView(),
-                'hasErrors' => null,
-                'country' => $region->getParent()->getName(),
-                'state' => $region->getName(),
-                'region' => $region
-            ]
-        );
+        return $this->render('AppBundle:CityManagement:edit.html.twig', [
+            'city' => null,
+            'form' => $form->createView(),
+            'hasErrors' => null,
+            'country' => $region->getParent()->getName(),
+            'state' => $region->getName(),
+            'region' => $region,
+        ]);
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, City $city, Region $region, Form $form)
+    protected function addPostAction(Request $request, UserInterface $user, City $city, Region $region, Form $form): Response
     {
         $form->handleRequest($request);
 
@@ -88,68 +83,47 @@ class CityManagementController extends AbstractController
 
             $hasErrors = false;
 
-            $form = $this->createForm(
-                StandardCityType::class,
-                $city,
-                [
-                    'action' => $this->generateUrl(
-                        'caldera_criticalmass_desktop_city_edit',
-                        [
-                            'citySlug' => $citySlug->getSlug()
-                        ]
-                    )
-                ]
-            );
+            $form = $this->createForm(StandardCityType::class, $city, [
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', [
+                    'citySlug' => $citySlug->getSlug(),
+                ])
+            ]);
 
-            return $this->render(
-                'AppBundle:CityManagement:edit.html.twig',
-                [
-                    'city' => $city,
-                    'form' => $form->createView(),
-                    'hasErrors' => $hasErrors,
-                    'country' => $region->getParent()->getName(),
-                    'state' => $region->getName(),
-                    'region' => $region
-                ]
-            );
-        } elseif ($form->isSubmitted()) {
-            $hasErrors = true;
-        }
-
-        return $this->render(
-            'AppBundle:CityManagement:edit.html.twig',
-            [
-                'city' => null,
+            return $this->render('AppBundle:CityManagement:edit.html.twig', [
+                'city' => $city,
                 'form' => $form->createView(),
                 'hasErrors' => $hasErrors,
                 'country' => $region->getParent()->getName(),
                 'state' => $region->getName(),
-                'region' => $region
-            ]
-        );
+                'region' => $region,
+            ]);
+        } elseif ($form->isSubmitted()) {
+            $hasErrors = true;
+        }
+
+        return $this->render('AppBundle:CityManagement:edit.html.twig', [
+            'city' => null,
+            'form' => $form->createView(),
+            'hasErrors' => $hasErrors,
+            'country' => $region->getParent()->getName(),
+            'state' => $region->getName(),
+            'region' => $region,
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function editAction(Request $request, UserInterface $user, string $citySlug): Response
+    public function editAction(Request $request, UserInterface $user, City $city): Response
     {
-        $city = $this->getCityBySlug($citySlug);
+        $form = $this->createForm(StandardCityType::class, $city, [
+            'action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', [
+                'citySlug' => $city->getMainSlugString()
+            ])
+        ]);
 
-        $form = $this->createForm(
-            StandardCityType::class,
-            $city,
-            [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_desktop_city_edit',
-                    [
-                        'citySlug' => $city->getMainSlugString()
-                    ]
-                )
-            ]
-        );
-
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->editPostAction($request, $user, $city, $form);
         } else {
             return $this->editGetAction($request, $user, $city, $form);
@@ -158,17 +132,14 @@ class CityManagementController extends AbstractController
 
     protected function editGetAction(Request $request, UserInterface $user, City $city, Form $form): Response
     {
-        return $this->render(
-            'AppBundle:CityManagement:edit.html.twig',
-            [
-                'city' => $city,
-                'form' => $form->createView(),
-                'hasErrors' => null,
-                'country' => $city->getRegion()->getParent()->getName(),
-                'state' => $city->getRegion()->getName(),
-                'region' => $city->getRegion()
-            ]
-        );
+        return $this->render('AppBundle:CityManagement:edit.html.twig', [
+            'city' => $city,
+            'form' => $form->createView(),
+            'hasErrors' => null,
+            'country' => $city->getRegion()->getParent()->getName(),
+            'state' => $city->getRegion()->getName(),
+            'region' => $city->getRegion(),
+        ]);
     }
 
     protected function editPostAction(Request $request, UserInterface $user, City $city, Form $form): Response
@@ -189,17 +160,14 @@ class CityManagementController extends AbstractController
             $hasErrors = true;
         }
 
-        return $this->render(
-            'AppBundle:CityManagement:edit.html.twig',
-            [
-                'city' => $city,
-                'form' => $form->createView(),
-                'hasErrors' => $hasErrors,
-                'country' => $city->getRegion()->getParent()->getName(),
-                'state' => $city->getRegion()->getName(),
-                'region' => $city->getRegion()
-            ]
-        );
+        return $this->render('AppBundle:CityManagement:edit.html.twig', [
+            'city' => $city,
+            'form' => $form->createView(),
+            'hasErrors' => $hasErrors,
+            'country' => $city->getRegion()->getParent()->getName(),
+            'state' => $city->getRegion()->getName(),
+            'region' => $city->getRegion(),
+        ]);
     }
 
     protected function createCitySlug(City $city): CitySlug
@@ -214,14 +182,14 @@ class CityManagementController extends AbstractController
         return $citySlug;
     }
 
-    protected function getRegion(string $regionSlug = null, string $citySlug = null): ?Region
+    protected function getRegion(NominatimCityBridge $nominatimCityBridge, string $regionSlug = null, string $citySlug = null): ?Region
     {
         if ($regionSlug) {
             return $this->getRegionRepository()->findOneBySlug($regionSlug);
         }
 
         if ($citySlug) {
-            $city = $this->get(NominatimCityBridge::class)->lookupCity($citySlug);
+            $city = $nominatimCityBridge->lookupCity($citySlug);
 
             if ($city) {
                 return $city->getRegion();
