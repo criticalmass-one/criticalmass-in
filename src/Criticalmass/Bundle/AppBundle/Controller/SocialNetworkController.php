@@ -38,6 +38,7 @@ class SocialNetworkController extends AbstractController
 
     public function addAction(
         Request $request,
+        NetworkDetector $networkDetector,
         UserInterface $user,
         City $city = null,
         Ride $ride = null,
@@ -57,13 +58,13 @@ class SocialNetworkController extends AbstractController
         );
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $form);
+            return $this->addPostAction($request, $user, $form, $networkDetector);
         } else {
-            return $this->addGetAction($request, $user, $form);
+            return $this->addGetAction($request, $user, $form, $networkDetector);
         }
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, FormInterface $form): Response
+    protected function addPostAction(Request $request, UserInterface $user, FormInterface $form, NetworkDetector $networkDetector): Response
     {
         $form->handleRequest($request);
 
@@ -72,13 +73,15 @@ class SocialNetworkController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $socialNetworkProfile = $form->getData();
 
+            $networkDetector->detect($socialNetworkProfile);
+
             $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
         }
 
         return new Response('asdf');
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, FormInterface $form): Response
+    protected function addGetAction(Request $request, UserInterface $user, FormInterface $form, NetworkDetector $networkDetector): Response
     {
         return $this->render('AppBundle:SocialNetwork:edit.html.twig', [
                 'form' => $form->createView(),
@@ -98,12 +101,5 @@ class SocialNetworkController extends AbstractController
         );
 
         return $form;
-    }
-
-    protected function detectNetwork(SocialNetworkProfile $socialNetworkProfile)
-    {
-        $networkDetector = $this->get(NetworkDetector::class);
-
-        $networkDetector->detect($socialNetworkProfile);
     }
 }

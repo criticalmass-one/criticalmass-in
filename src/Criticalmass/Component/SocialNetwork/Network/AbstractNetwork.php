@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Component\SocialNetwork\Network;
 
+use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
+
 abstract class AbstractNetwork implements NetworkInterface
 {
     /** @var string $name */
@@ -46,5 +48,10 @@ abstract class AbstractNetwork implements NetworkInterface
     public function getDetectorPriority(): int
     {
         return $this->detectorPriority;
+    }
+
+    public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
+    {
+        return false;
     }
 }
