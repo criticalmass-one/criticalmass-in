@@ -18,6 +18,8 @@ class NetworkDetector
     {
         $this->networkManager = $networkManager;
         $this->networkList = $networkManager->getNetworkList();
+
+        $this->sortNetworkList();
     }
 
     public function detect(SocialNetworkProfile $socialNetworkProfile): ?NetworkInterface
@@ -31,5 +33,15 @@ class NetworkDetector
         }
 
         return null;
+    }
+
+    protected function sortNetworkList(): NetworkDetector
+    {
+        usort($this->networkList, function(NetworkInterface $a, NetworkInterface$b)
+        {
+            return $b->getDetectorPriority() <=> $a->getDetectorPriority();
+        });
+
+        return $this;
     }
 }
