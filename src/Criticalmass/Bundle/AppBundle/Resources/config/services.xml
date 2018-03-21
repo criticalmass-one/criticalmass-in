@@ -9,10 +9,6 @@
         <import resource="services/facebook.xml"/>
         <import resource="services/timeline/timeline.xml"/>
         <import resource="services/timeline/collectors.xml"/>
-        <import resource="services/social_network/fetcher.xml"/>
-        <import resource="services/social_network/network_fetcher.xml"/>
-        <import resource="services/social_network/manager.xml"/>
-        <import resource="services/social_network/network.xml"/>
     </imports>
 
     <services>

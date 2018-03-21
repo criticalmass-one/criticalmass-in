@@ -13,7 +13,7 @@ class SocialNetworkPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $this->processNetworkFeedFetcher($container);
-        $this->processNetworManager($container);
+        $this->processNetworkManager($container);
     }
 
     protected function processNetworkFeedFetcher(ContainerBuilder $container): void
@@ -31,7 +31,7 @@ class SocialNetworkPass implements CompilerPassInterface
         }
     }
 
-    protected function processNetworManager(ContainerBuilder $container): void
+    protected function processNetworkManager(ContainerBuilder $container): void
     {
         if (!$container->has(NetworkManager::class)) {
             return;
