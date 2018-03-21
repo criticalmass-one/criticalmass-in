@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class SocialNetworkProfileType extends AbstractType
+class   SocialNetworkProfileType extends AbstractType
 {
     protected $networkManager;
 
@@ -24,13 +24,6 @@ class SocialNetworkProfileType extends AbstractType
     {
         $builder
             ->add('identifier', TextType::class, ['required' => false])
-            ->add('network', ChoiceType::class, [
-                'required' => false,
-                'choices' => $this->networkManager->getNetworkList(),
-                'choice_label' => function (NetworkInterface $value, string $key, int $index) {
-                    return $value->getName();
-                },
-            ])
             ->add('mainNetwork', CheckboxType::class, ['required' => false]);
     }
 

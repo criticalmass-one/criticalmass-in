@@ -3,6 +3,14 @@
 {% block content %}
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
+                    <i class="fa fa-plus"></i>
+                    Profil ergänzen
+                </button>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <table class="table">
                     <thead>
@@ -23,6 +31,50 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                {{ form_start(addProfileForm) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="profile-add-modal-label">
+                        Profil ergänzen
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
+                    </p>
+                    <div class="form-group">
+                        <label class="control-label" for="identifier">
+                            Link zum Profil:
+                        </label>
+                        {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="mainNetwork">
+                            Hauptprofil:
+                        </label>
+                        {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            Speichern
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(addProfileForm) }}
             </div>
         </div>
     </div>

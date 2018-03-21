@@ -9,6 +9,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Subride;
 use Criticalmass\Bundle\AppBundle\Form\Type\SocialNetworkProfileType;
 use Criticalmass\Component\SocialNetwork\FeedFetcher\HomepageFeedFetcher;
 use Criticalmass\Component\SocialNetwork\FeedFetcher\TwitterFeedFetcher;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,16 +17,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractController
 {
-    public function listAction(Request $request, UserInterface $user, string $citySlug): Response
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function listAction(City $city, UserInterface $user): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $list = $this->getDoctrine()->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
+        $socialNetworkProfile = new SocialNetworkProfile();
+        $socialNetworkProfile->setCity($city);
+        $addProfileForm = $this->getAddProfileForm($socialNetworkProfile);
+
         return $this->render('AppBundle:SocialNetwork:list.html.twig', [
-                'list' => $list,
-            ]
-        );
+            'list' => $list,
+            'addProfileForm' => $addProfileForm->createView(),
+        ]);
     }
 
     public function addAction(
@@ -76,5 +82,19 @@ class SocialNetworkController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    protected function getAddProfileForm(SocialNetworkProfile $socialNetworkProfile): FormInterface
+    {
+        $form = $this->createForm(
+            SocialNetworkProfileType::class,
+            $socialNetworkProfile, [
+                'action' => $this->generateUrl('criticalmass_socialnetwork_add_city', [
+                    'citySlug' => $socialNetworkProfile->getCity()->getMainSlugString(),
+                ])
+            ]
+        );
+
+        return $form;
     }
 }
