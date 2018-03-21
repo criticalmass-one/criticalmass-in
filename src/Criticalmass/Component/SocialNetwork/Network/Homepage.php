@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Component\SocialNetwork\Network;
 
+use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
+
 class Homepage extends AbstractNetwork
 {
     protected $name = 'Homepage';
@@ -13,4 +15,9 @@ class Homepage extends AbstractNetwork
     protected $textColor = 'white';
 
     protected $detectorPriority = -100;
+
+    public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
+    {
+        return filter_var($socialNetworkProfile->getIdentifier(), FILTER_VALIDATE_URL);
+    }
 }

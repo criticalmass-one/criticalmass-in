@@ -71,9 +71,13 @@ class SocialNetworkController extends AbstractController
         $hasErrors = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            $networkDetector->detect($socialNetworkProfile);
+            $network = $networkDetector->detect($socialNetworkProfile);
+            if ($network) {
+            //    $socialNetworkProfile->setNetwork($network);
+            }
 
             $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
         }
