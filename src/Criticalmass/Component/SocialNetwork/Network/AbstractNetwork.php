@@ -16,6 +16,9 @@ abstract class AbstractNetwork implements NetworkInterface
     /** @var string $textColor */
     protected $textColor;
 
+    /** @var int $detectorPriority */
+    protected $detectorPriority = 0;
+
     public function __construct()
     {
     }
@@ -38,5 +41,10 @@ abstract class AbstractNetwork implements NetworkInterface
     public function getTextColor(): string
     {
         return $this->textColor;
+    }
+
+    public function getDetectorPriority(): int
+    {
+        return $this->detectorPriority;
     }
 }

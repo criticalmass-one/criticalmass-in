@@ -11,4 +11,6 @@ class Homepage extends AbstractNetwork
     protected $backgroundColor = 'rgb(85, 172, 238)';
 
     protected $textColor = 'white';
+
+    protected $detectorPriority = -100;
 }

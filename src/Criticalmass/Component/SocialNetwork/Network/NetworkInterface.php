@@ -8,4 +8,6 @@ interface NetworkInterface
     public function getIcon(): string;
     public function getBackgroundColor(): string;
     public function getTextColor(): string;
+
+    public function getDetectorPriority(): int;
 }

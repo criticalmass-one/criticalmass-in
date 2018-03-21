@@ -9,6 +9,8 @@ use Criticalmass\Bundle\AppBundle\Entity\Subride;
 use Criticalmass\Bundle\AppBundle\Form\Type\SocialNetworkProfileType;
 use Criticalmass\Component\SocialNetwork\FeedFetcher\HomepageFeedFetcher;
 use Criticalmass\Component\SocialNetwork\FeedFetcher\TwitterFeedFetcher;
+use Criticalmass\Component\SocialNetwork\NetworkDetector\NetworkDetector;
+use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,5 +98,12 @@ class SocialNetworkController extends AbstractController
         );
 
         return $form;
+    }
+
+    protected function detectNetwork(SocialNetworkProfile $socialNetworkProfile)
+    {
+        $networkDetector = $this->get(NetworkDetector::class);
+
+        $networkDetector->detect($socialNetworkProfile);
     }
 }

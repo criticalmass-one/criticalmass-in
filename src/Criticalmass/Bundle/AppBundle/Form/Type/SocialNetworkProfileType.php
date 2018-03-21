@@ -2,12 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\SocialNetworkInterface;
-use Criticalmass\Component\SocialNetwork\Network\NetworkInterface;
 use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
