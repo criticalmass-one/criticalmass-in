@@ -1,5 +1,25 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
+{% block breadcrumb %}
+    {% if profileAbleType == 'city' %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+                Städteliste
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble) }}">
+                {{ profileAble.city }}
+            </a>
+        </li>
+
+        <li class="active">
+            Soziale Netzwerke
+        </li>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
