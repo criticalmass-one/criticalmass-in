@@ -25,14 +25,14 @@ class FetchFeedCommand extends Command
 
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('criticalmass:social-network:fetch-feed')
             ->setDescription('Fetch feeds');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->feedFetcher->fetch()->persist();
     }
