@@ -99,7 +99,7 @@ class SocialNetworkController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
         }
 
-        return $this->redirectToRoute('criticalmass_socialnetwork_list_city', [
+        return $this->redirectToRoute('criticalmass_socialnetwork_city_list', [
             'citySlug' => $socialNetworkProfile->getCity()->getMainSlugString(),
         ]);
     }
@@ -121,7 +121,7 @@ class SocialNetworkController extends AbstractController
         $form = $this->createForm(
             SocialNetworkProfileType::class,
             $socialNetworkProfile, [
-                'action' => $this->generateUrl('criticalmass_socialnetwork_add_city', [
+                'action' => $this->generateUrl('criticalmass_socialnetwork_city_add', [
                     'citySlug' => $socialNetworkProfile->getCity()->getMainSlugString(),
                 ])
             ]
