@@ -9,6 +9,7 @@ use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id

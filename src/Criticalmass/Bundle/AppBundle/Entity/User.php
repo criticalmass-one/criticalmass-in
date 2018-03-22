@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser
+class User extends BaseUser implements SocialNetworkProfileAble
 {
     /**
      * @ORM\Id

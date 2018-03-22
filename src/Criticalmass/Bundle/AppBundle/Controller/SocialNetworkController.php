@@ -6,7 +6,9 @@ use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Bundle\AppBundle\Entity\Subride;
+use Criticalmass\Bundle\AppBundle\Entity\User;
 use Criticalmass\Bundle\AppBundle\Form\Type\SocialNetworkProfileType;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Criticalmass\Component\SocialNetwork\FeedFetcher\HomepageFeedFetcher;
 use Criticalmass\Component\SocialNetwork\FeedFetcher\TwitterFeedFetcher;
 use Criticalmass\Component\SocialNetwork\NetworkDetector\NetworkDetector;
@@ -20,18 +22,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SocialNetworkController extends AbstractController
 {
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
+     * @ParamConverter("ride", class="AppBundle:Ride", isOptional=true)
      */
-    public function listAction(City $city, UserInterface $user): Response
-    {
-        $list = $this->getDoctrine()->getRepository(SocialNetworkProfile::class)->findByCity($city);
+    public function listAction(
+        City $city = null,
+        Ride $ride = null,
+        Subride $subride = null,
+        User $user = null
+    ): Response {
+        $profileAble = $this->getProfileAbleObject($ride, $subride, $city, $user);
 
         $socialNetworkProfile = new SocialNetworkProfile();
         $socialNetworkProfile->setCity($city);
         $addProfileForm = $this->getAddProfileForm($socialNetworkProfile);
 
         return $this->render('AppBundle:SocialNetwork:list.html.twig', [
-            'list' => $list,
+            'list' => $this->getProfileList($profileAble),
             'addProfileForm' => $addProfileForm->createView(),
         ]);
     }
@@ -67,8 +74,12 @@ class SocialNetworkController extends AbstractController
         }
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, FormInterface $form, NetworkDetector $networkDetector): Response
-    {
+    protected function addPostAction(
+        Request $request,
+        UserInterface $user,
+        FormInterface $form,
+        NetworkDetector $networkDetector
+    ): Response {
         $form->handleRequest($request);
 
         $hasErrors = null;
@@ -93,8 +104,12 @@ class SocialNetworkController extends AbstractController
         ]);
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, FormInterface $form, NetworkDetector $networkDetector): Response
-    {
+    protected function addGetAction(
+        Request $request,
+        UserInterface $user,
+        FormInterface $form,
+        NetworkDetector $networkDetector
+    ): Response {
         return $this->render('AppBundle:SocialNetwork:edit.html.twig', [
                 'form' => $form->createView(),
             ]
@@ -113,5 +128,25 @@ class SocialNetworkController extends AbstractController
         );
 
         return $form;
+    }
+
+    protected function getProfileAbleObject(
+        Ride $ride = null,
+        Subride $subride = null,
+        City $city = null,
+        User $user = null
+    ): SocialNetworkProfileAble {
+        return $user ?? $city ?? $subride ?? $ride;
+    }
+
+    protected function getProfileList(SocialNetworkProfileAble $profileAble): array
+    {
+        $reflection = new \ReflectionClass($profileAble);
+
+        $methodName = sprintf('findBy%s', $reflection->getShortName());
+
+        $list = $this->getDoctrine()->getRepository(SocialNetworkProfile::class)->$methodName($profileAble);
+
+        return $list;
     }
 }

@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
 use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
-class Subride implements AuditableInterface
+class Subride implements AuditableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id

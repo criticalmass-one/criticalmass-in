@@ -5,3 +5,15 @@ criticalmass_socialnetwork_list_city:
 criticalmass_socialnetwork_add_city:
     path:  /{citySlug}/socialnetwork/add
     defaults: { _controller: AppBundle:SocialNetwork:add }
+
+criticalmass_socialnetwork_list_ride:
+    path:  /{citySlug}/{rideDate}/socialnetwork/list
+    defaults: { _controller: AppBundle:SocialNetwork:list }
+    requirements:
+        rideDate: '([0-9]{4,4})\-([0-9]{2,2})\-([0-9]{1,2})'
+
+criticalmass_socialnetwork_add_ride:
+    path:  /{citySlug}/{rideDate}/socialnetwork/add
+    defaults: { _controller: AppBundle:SocialNetwork:add }
+    requirements:
+        rideDate: '([0-9]{4,4})\-([0-9]{2,2})\-([0-9]{1,2})'

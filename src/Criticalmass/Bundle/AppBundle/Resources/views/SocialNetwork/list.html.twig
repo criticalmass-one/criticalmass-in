@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-3">
                 <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
                     <i class="fa fa-plus"></i>
                     Profil ergänzen
@@ -16,19 +16,31 @@
                     <thead>
                         <tr>
                             <th>
-
+                                #
+                            </th>
+                            <th>
+                                Netzwerk
+                            </th>
+                            <th>
+                                Benutzername
                             </th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        {% for profile in list %}
                         <tr>
                             <td>
-                                {% for profile in list %}
-                                    {{ profile.id }}
-                                {% endfor %}
+                                {{ profile.id }}
+                            </td>
+                            <td>
+                                {{ profile.network }}
+                            </td>
+                            <td>
+                                {{ profile.identifier }}
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

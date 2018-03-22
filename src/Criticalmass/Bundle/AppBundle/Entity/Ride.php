@@ -9,6 +9,7 @@ use Criticalmass\Bundle\AppBundle\EntityInterface\ParticipateableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,7 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id
