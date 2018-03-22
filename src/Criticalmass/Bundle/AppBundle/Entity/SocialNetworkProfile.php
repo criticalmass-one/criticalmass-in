@@ -133,7 +133,7 @@ class SocialNetworkProfile
         return $this->network;
     }
 
-    public function setNetwork(string $network): SocialNetworkProfile
+    public function setNetwork($network): SocialNetworkProfile
     {
         $this->network = $network;
 

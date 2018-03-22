@@ -3,6 +3,7 @@
 namespace Criticalmass\Component\SocialNetwork\Network;
 
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
+use Criticalmass\Component\Util\StringUtil;
 
 abstract class AbstractNetwork implements NetworkInterface
 {
@@ -43,6 +44,13 @@ abstract class AbstractNetwork implements NetworkInterface
     public function getTextColor(): string
     {
         return $this->textColor;
+    }
+
+    public function getIdentifier(): string
+    {
+        $reflection = new \ReflectionClass($this);
+
+        return StringUtil::camelCaseToUnderscore($reflection->getShortName());
     }
 
     public function getDetectorPriority(): int

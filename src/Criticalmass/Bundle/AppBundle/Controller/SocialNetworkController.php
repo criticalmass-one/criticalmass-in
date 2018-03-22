@@ -36,6 +36,9 @@ class SocialNetworkController extends AbstractController
         ]);
     }
 
+    /**
+     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
+     */
     public function addAction(
         Request $request,
         NetworkDetector $networkDetector,
@@ -75,14 +78,19 @@ class SocialNetworkController extends AbstractController
             $socialNetworkProfile = $form->getData();
 
             $network = $networkDetector->detect($socialNetworkProfile);
+
             if ($network) {
-            //    $socialNetworkProfile->setNetwork($network);
+                $socialNetworkProfile->setNetwork($network->getIdentifier());
             }
 
             $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
+
+            $this->getDoctrine()->getManager()->flush();
         }
 
-        return new Response('asdf');
+        return $this->redirectToRoute('criticalmass_socialnetwork_list_city', [
+            'citySlug' => $socialNetworkProfile->getCity()->getMainSlugString(),
+        ]);
     }
 
     protected function addGetAction(Request $request, UserInterface $user, FormInterface $form, NetworkDetector $networkDetector): Response

@@ -11,7 +11,7 @@ class StringUtil
         if ($avoidDoubleUnderscore) {
             $output = str_replace('__', '_', $output);
         }
-        
+
         return $output;
     }
 }
