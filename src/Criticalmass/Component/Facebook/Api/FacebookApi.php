@@ -5,7 +5,7 @@ namespace Criticalmass\Component\Facebook\Api;
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
 
-abstract class FacebookApi
+class FacebookApi
 {
     /** @var Facebook $facebook */
     protected $facebook;
@@ -37,7 +37,7 @@ abstract class FacebookApi
         return $this;
     }
 
-    protected function query(string $endpoint): FacebookResponse
+    public function query(string $endpoint): FacebookResponse
     {
         return $this->facebook->get($endpoint);
     }
