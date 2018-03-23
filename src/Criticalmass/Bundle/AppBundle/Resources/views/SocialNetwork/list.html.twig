@@ -35,10 +35,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>
-                                #
-                            </th>
-                            <th>
+                            <th colspan="2">
                                 Netzwerk
                             </th>
                             <th>
@@ -49,15 +46,19 @@
 
                     <tbody>
                         {% for profile in list %}
+                        {% set network = getNetwork(profile.network) %}
+
                         <tr>
-                            <td>
-                                {{ profile.id }}
+                            <td class="text-center" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                                <i class="fa {{ network.icon }}"></i>
                             </td>
                             <td>
-                                {{ profile.network }}
+                                {{ network.name }}
                             </td>
                             <td>
-                                {{ profile.identifier }}
+                                <a href="{{ profile.identifier }}">
+                                    {{ profile.identifier }}
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
