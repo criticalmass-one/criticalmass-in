@@ -27,14 +27,12 @@ abstract class FacebookApi
         string $facebookAppSecret,
         string $facebookDefaultToken
     ): FacebookApi {
-        $this->facebook = new Facebook(
-            [
-                'app_id' => $facebookAppId,
-                'app_secret' => $facebookAppSecret,
-                'default_graph_version' => 'v2.11',
-                'default_access_token' => $facebookDefaultToken,
-            ]
-        );
+        $this->facebook = new Facebook([
+            'app_id' => $facebookAppId,
+            'app_secret' => $facebookAppSecret,
+            'default_graph_version' => 'v2.11',
+            'default_access_token' => $facebookDefaultToken,
+        ]);
 
         return $this;
     }
