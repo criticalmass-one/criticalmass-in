@@ -52,6 +52,9 @@
                             <th>
                                 Benutzername
                             </th>
+                            <th>
+                                Verwaltung
+                            </th>
                         </tr>
                     </thead>
 
@@ -69,6 +72,11 @@
                             <td>
                                 <a href="{{ profile.identifier }}">
                                     {{ profile.identifier }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                    <i class="fa fa-trash-o"></i>
                                 </a>
                             </td>
                         </tr>

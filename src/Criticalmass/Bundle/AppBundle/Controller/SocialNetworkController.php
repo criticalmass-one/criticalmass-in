@@ -9,14 +9,13 @@ use Criticalmass\Bundle\AppBundle\Entity\Subride;
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Criticalmass\Bundle\AppBundle\Form\Type\SocialNetworkProfileType;
 use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use Criticalmass\Component\SocialNetwork\FeedFetcher\HomepageFeedFetcher;
-use Criticalmass\Component\SocialNetwork\FeedFetcher\TwitterFeedFetcher;
 use Criticalmass\Component\SocialNetwork\NetworkDetector\NetworkDetector;
-use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractController
@@ -53,7 +52,7 @@ class SocialNetworkController extends AbstractController
     public function addAction(
         Request $request,
         NetworkDetector $networkDetector,
-        UserInterface $user,
+        User $user = null,
         City $city = null,
         Ride $ride = null,
         Subride $subride = null
@@ -72,15 +71,14 @@ class SocialNetworkController extends AbstractController
         );
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $form, $networkDetector);
+            return $this->addPostAction($request, $form, $networkDetector);
         } else {
-            return $this->addGetAction($request, $user, $form, $networkDetector);
+            return $this->addGetAction($request, $form, $networkDetector);
         }
     }
 
     protected function addPostAction(
         Request $request,
-        UserInterface $user,
         FormInterface $form,
         NetworkDetector $networkDetector
     ): Response {
@@ -110,7 +108,6 @@ class SocialNetworkController extends AbstractController
 
     protected function addGetAction(
         Request $request,
-        UserInterface $user,
         FormInterface $form,
         NetworkDetector $networkDetector
     ): Response {
@@ -134,6 +131,21 @@ class SocialNetworkController extends AbstractController
         return $form;
     }
 
+    /**
+     * @ParamConverter("socialNetworkProfile", class="AppBundle:SocialNetworkProfile", options={"id" = "profileId"})
+     */
+    public function disableAction(
+        RouterInterface $router,
+        EntityManagerInterface $entityManager,
+        SocialNetworkProfile $socialNetworkProfile
+    ): Response {
+        $socialNetworkProfile->setEnabled(false);
+
+        $entityManager->flush();
+
+        return $this->redirect($this->getListRoute($router, $this->getProfileAble($socialNetworkProfile)));
+    }
+
     protected function getProfileAbleObject(
         Ride $ride = null,
         Subride $subride = null,
@@ -141,6 +153,11 @@ class SocialNetworkController extends AbstractController
         User $user = null
     ): SocialNetworkProfileAble {
         return $user ?? $city ?? $subride ?? $ride;
+    }
+
+    protected function getProfileAble(SocialNetworkProfile $socialNetworkProfile): SocialNetworkProfileAble
+    {
+        return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getCity() ?? $socialNetworkProfile->getSubride() ?? $socialNetworkProfile->getRide();
     }
 
     protected function getProfileAbleShortname(SocialNetworkProfileAble $profileAble): string
@@ -157,5 +174,35 @@ class SocialNetworkController extends AbstractController
         $list = $this->getDoctrine()->getRepository(SocialNetworkProfile::class)->$methodName($profileAble);
 
         return $list;
+    }
+
+    protected function getListRoute(RouterInterface $router, SocialNetworkProfileAble $profileAble): string
+    {
+        $lcShortname = strtolower($this->getProfileAbleShortname($profileAble));
+
+        $routeName = sprintf('criticalmass_socialnetwork_%s_list', $lcShortname);
+
+        $parameters = [];
+
+        if ($profileAble instanceof City) {
+            $parameters = ['citySlug' => $profileAble->getMainSlugString()];
+        } elseif ($profileAble instanceof Ride) {
+            $parameters = [
+                'citySlug' => $profileAble->getCity()->getMainSlugString(),
+                'rideDate' => $profileAble->getFormattedDate(),
+            ];
+        } elseif ($profileAble instanceof Subride) {
+            $parameters = [
+                'citySlug' => $profileAble->getRide()->getCity()->getMainSlugString(),
+                'rideDate' => $profileAble->getRide()->getFormattedDate(),
+                'subrideId' => $profileAble->getId(),
+            ];
+        } elseif ($profileAble instanceof User) {
+            $parameters = [
+                'username' => $profileAble->getUsernameCanonical(),
+            ];
+        }
+
+        return $router->generate($routeName, $parameters);
     }
 }

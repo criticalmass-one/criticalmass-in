@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="social_network_profile")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\SocialNetworkProfileRepository")
  */
 class SocialNetworkProfile
 {
@@ -55,6 +55,11 @@ class SocialNetworkProfile
      * @ORM\Column(type="boolean")
      */
     protected $mainNetwork = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled = true;
 
     public function getId(): ?int
     {
@@ -152,4 +157,15 @@ class SocialNetworkProfile
         return $this;
     }
 
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): SocialNetworkProfile
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
 }
