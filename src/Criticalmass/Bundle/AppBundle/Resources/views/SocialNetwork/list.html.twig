@@ -28,8 +28,19 @@
                     <i class="fa fa-plus"></i>
                     Profil ergänzen
                 </button>
+
+                <h2>
+                    Soziale Netzwerke
+                </h2>
+
+                {% if profileAbleType == 'city' %}
+                <p class="lead">
+                    Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in {{ profileAble.city }} in Verbindung stehen.
+                </p>
+                {% endif %}
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <table class="table">
