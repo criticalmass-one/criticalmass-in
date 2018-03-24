@@ -27,6 +27,7 @@ class SocialNetworkController extends AbstractController
      * @ParamConverter("user", class="AppBundle:User", isOptional=true)
      */
     public function listAction(
+        RouterInterface $router,
         City $city = null,
         Ride $ride = null,
         Subride $subride = null,
@@ -34,9 +35,7 @@ class SocialNetworkController extends AbstractController
     ): Response {
         $profileAble = $this->getProfileAbleObject($ride, $subride, $city, $user);
 
-        $socialNetworkProfile = new SocialNetworkProfile();
-        $socialNetworkProfile->setCity($city);
-        $addProfileForm = $this->getAddProfileForm($socialNetworkProfile);
+        $addProfileForm = $this->getAddProfileForm($router, $profileAble);
 
         return $this->render('AppBundle:SocialNetwork:list.html.twig', [
             'list' => $this->getProfileList($profileAble),
@@ -117,14 +116,17 @@ class SocialNetworkController extends AbstractController
         );
     }
 
-    protected function getAddProfileForm(SocialNetworkProfile $socialNetworkProfile): FormInterface
+    protected function getAddProfileForm(RouterInterface $router, SocialNetworkProfileAble $profileAble): FormInterface
     {
+        $socialNetworkProfile = new SocialNetworkProfile();
+
+        $setMethodName = sprintf('set%s', $this->getProfileAbleShortname($profileAble));
+        $socialNetworkProfile->$setMethodName($profileAble);
+
         $form = $this->createForm(
             SocialNetworkProfileType::class,
             $socialNetworkProfile, [
-                'action' => $this->generateUrl('criticalmass_socialnetwork_city_add', [
-                    'citySlug' => $socialNetworkProfile->getCity()->getMainSlugString(),
-                ])
+                'action' => $this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'add'),
             ]
         );
 
@@ -143,7 +145,7 @@ class SocialNetworkController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->redirect($this->getListRoute($router, $this->getProfileAble($socialNetworkProfile)));
+        return $this->redirect($this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'list'));
     }
 
     protected function getProfileAbleObject(
@@ -152,12 +154,14 @@ class SocialNetworkController extends AbstractController
         City $city = null,
         User $user = null
     ): SocialNetworkProfileAble {
-        return $user ?? $city ?? $subride ?? $ride;
+        $profileAble = $user ?? $ride ?? $city ?? $subride;
+
+        return $profileAble;
     }
 
     protected function getProfileAble(SocialNetworkProfile $socialNetworkProfile): SocialNetworkProfileAble
     {
-        return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getCity() ?? $socialNetworkProfile->getSubride() ?? $socialNetworkProfile->getRide();
+        return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getRide() ?? $socialNetworkProfile->getCity() ?? $socialNetworkProfile->getSubride();
     }
 
     protected function getProfileAbleShortname(SocialNetworkProfileAble $profileAble): string
@@ -176,11 +180,11 @@ class SocialNetworkController extends AbstractController
         return $list;
     }
 
-    protected function getListRoute(RouterInterface $router, SocialNetworkProfileAble $profileAble): string
+    protected function getRouteName(RouterInterface $router, SocialNetworkProfileAble $profileAble, string $actionName): string
     {
         $lcShortname = strtolower($this->getProfileAbleShortname($profileAble));
 
-        $routeName = sprintf('criticalmass_socialnetwork_%s_list', $lcShortname);
+        $routeName = sprintf('criticalmass_socialnetwork_%s_%s', $lcShortname, $actionName);
 
         $parameters = [];
 

@@ -19,6 +19,12 @@
                                 von facebook aktualisieren
                             </a>
                         </li>
+
+                        <li>
+                            <a href="{{ path('criticalmass_socialnetwork_ride_list', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">
+                                soziale Netzwerke verwalten
+                            </a>
+                        </li>
                     </ul>
                 </div>
             {% endif %}

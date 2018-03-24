@@ -18,6 +18,30 @@
             Soziale Netzwerke
         </li>
     {% endif %}
+
+    {% if profileAbleType == 'ride' %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+                Städteliste
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble.city) }}">
+                {{ profileAble.city.city }}
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble) }}">
+                {{ profileAble.fancyTitle }}
+            </a>
+        </li>
+
+        <li class="active">
+            Soziale Netzwerke
+        </li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -34,9 +58,19 @@
                 </h2>
 
                 {% if profileAbleType == 'city' %}
-                <p class="lead">
-                    Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in {{ profileAble.city }} in Verbindung stehen.
-                </p>
+                    <p class="lead">
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in {{ profileAble.city }} in Verbindung stehen.
+                    </p>
+                {% endif %}
+
+                {% if profileAbleType == 'ride' %}
+                    <p class="lead">
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am {{ profileAble.dateTime|date('d.m.Y') }} in Verbindung stehen.
+                    </p>
+
+                    <p class="lead">
+                        Die Profile der
+                    </p>
                 {% endif %}
             </div>
         </div>
