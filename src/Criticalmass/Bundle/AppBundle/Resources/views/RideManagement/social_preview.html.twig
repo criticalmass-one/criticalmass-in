@@ -43,27 +43,37 @@
                 <h2>
                     Details für soziale Netzwerke
                 </h2>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <p>Hier kannst du die Details einer Tour editieren.</p>
+                <p class="lead">
+                    Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das beispielsweise bei facebook und twitter gemeinsam mit Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.
+                </p>
             </div>
         </div>
 
         {{ form_start(form) }}
 
         <div class="row margin-top-medium">
-            <div class="col-md-6 form-group">
-                <label class="control-label" for="">
-                    Datei:
-                </label>
-                {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                <p class="help-block">
-                    Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour auf facebook und twitter angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
-                    <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>
-                </p>
+            <div class="col-md-6">
+                {% if ride.imageName %}
+                <div class="row margin-bottom-medium">
+                    <div class="col-md-12">
+                        <img id="photo" class="img-thumbnail img-responsive" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label" for="">
+                            Datei:
+                        </label>
+                        {{ form_widget(form.imageFile) }}
+                        <p class="help-block">
+                            Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour auf facebook und twitter angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
+                            <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-6 form-group">

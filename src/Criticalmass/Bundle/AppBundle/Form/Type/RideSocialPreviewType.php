@@ -15,8 +15,10 @@ class RideSocialPreviewType extends AbstractType
             ->add('socialDescription', TextareaType::class, [
                 'required' => false,
             ])
-            ->add('imageFile', VichFileType::class, [
-                'required' => false
+            ->add('imageFile', VichFileType::class, [ // @TODO use VichImageType after getting liip filters working
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => true,
             ]);
     }
 
