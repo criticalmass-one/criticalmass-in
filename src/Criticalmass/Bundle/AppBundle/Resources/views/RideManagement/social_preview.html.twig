@@ -1,14 +1,6 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% if ride %}
-    {% set title = 'Tour editieren' %}
-    {% set mode = 'edit' %}
-{% else %}
-    {% set title = 'Tour hinzufügen' %}
-    {% set mode = 'create' %}
-{% endif %}
-
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Details für soziale Netzwerke{% endblock %}
 
 {% block breadcrumb %}
     <li>
@@ -18,33 +10,39 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.city }}
         </a>
     </li>
 
-    {% if ride %}
-        <li>
-            <a href="{{ objectPath(ride) }}">
-                {{ ride.getFancyTitle() }}
-            </a>
-        </li>
+    <li>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
+    </li>
 
-        <li class="active">
-            Tour editieren
-        </li>
-    {% else %}
-        <li class="active">
-            Tour hinzufügen
-        </li>
-    {% endif %}
+    <li class="active">
+        Details für soziale Netzwerke
+    </li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
         <div class="row">
             <div class="col-md-12">
-                <h1>{{ title }}</h1>
+                <h2>
+                    Details für soziale Netzwerke
+                </h2>
             </div>
         </div>
 
@@ -82,15 +80,9 @@
         <div class="row">
             <div class="col-md-12 form-group">
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    {% if ride %}
                     <a href="{{ objectPath(ride) }}" class="btn btn-default">
                         Abbrechen
                     </a>
-                    {% else %}
-                    <a href="{{ objectPath(city) }}" class="btn btn-default">
-                        Abbrechen
-                    </a>
-                    {% endif %}
                     <button type="submit" class="btn btn-success" id="rideSubmitButton">
                         Speichern
                     </button>
