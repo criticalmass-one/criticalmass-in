@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Criticalmass\Bundle\AppBundle\Form\Type\RideSocialPreviewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
@@ -234,5 +235,91 @@ class RideManagementController extends AbstractController
                 'form' => $form->createView()
             ]
         );
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function socialPreviewAction(Request $request, UserInterface $user, Ride $ride): Response
+    {
+        $form = $this->createForm(RideSocialPreviewType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_ride_socialpreview', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getDateTime()->format('Y-m-d')
+            ])
+        ]);
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->socialPreviewPostAction($request, $user, $ride, $ride->getCity(), $form);
+        } else {
+            return $this->socialPreviewGetAction($request, $user, $ride, $ride->getCity(), $form);
+        }
+    }
+
+    protected function socialPreviewGetAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
+        $oldRides = $this->getRideRepository()->findRidesForCity($city);
+
+        return $this->render(
+            'AppBundle:RideManagement:social_preview.html.twig',
+            array(
+                'ride' => $ride,
+                'city' => $city,
+                'form' => $form->createView(),
+                'hasErrors' => null,
+                'dateTime' => new \DateTime(),
+                'oldRides' => $oldRides
+            )
+        );
+    }
+
+    protected function socialPreviewPostAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
+        $oldRides = $this->getRideRepository()->findRidesForCity($city);
+
+        $form->handleRequest($request);
+
+        // TODO: remove this shit and test the validation in the template
+        $hasErrors = null;
+
+        if ($form->isValid()) {
+            $ride
+                ->setUpdatedAt(new \DateTime())
+                ->setUser($user);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            // TODO: remove also this
+            $hasErrors = false;
+        } elseif ($form->isSubmitted()) {
+            // TODO: remove even more shit
+            $hasErrors = true;
+        }
+
+        return $this->render('AppBundle:RideManagement:social_preview.html.twig', [
+            'ride' => $ride,
+            'city' => $city,
+            'form' => $form->createView(),
+        ]);
     }
 }
