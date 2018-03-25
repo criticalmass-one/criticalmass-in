@@ -1,0 +1,102 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% if ride %}
+    {% set title = 'Tour editieren' %}
+    {% set mode = 'edit' %}
+{% else %}
+    {% set title = 'Tour hinzufügen' %}
+    {% set mode = 'create' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    {% if ride %}
+        <li>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.getFancyTitle() }}
+            </a>
+        </li>
+
+        <li class="active">
+            Tour editieren
+        </li>
+    {% else %}
+        <li class="active">
+            Tour hinzufügen
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Hier kannst du die Details einer Tour editieren.</p>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6 form-group">
+                <label class="control-label" for="">
+                    Datei:
+                </label>
+                {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
+                <p class="help-block">
+                    Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour auf facebook und twitter angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
+                    <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>
+                </p>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label class="control-label" for="socialDescription">
+                    Social-Beschreibung:
+                </label>
+                {{ form_widget(form.socialDescription, { 'attr' : { 'class': 'form-control', 'rows': 4 } }) }}
+                <p class="help-block">
+                    Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken wie facebook und twitter angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    {% if ride %}
+                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    {% else %}
+                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    {% endif %}
+                    <button type="submit" class="btn btn-success" id="rideSubmitButton">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
