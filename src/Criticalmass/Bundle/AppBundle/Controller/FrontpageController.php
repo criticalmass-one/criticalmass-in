@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(Request $request, SeoPage $seoPage, CachedTimeline $cachedTimeline): Response
+    public function indexAction(SeoPage $seoPage, CachedTimeline $cachedTimeline): Response
     {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
@@ -28,14 +28,11 @@ class FrontpageController extends AbstractController
             ->execute()
             ->getTimelineContent();
 
-        return $this->render(
-            'AppBundle:Frontpage:index.html.twig',
-            [
-                'timelineContent' => $timelineContent,
-                'rideList' => $rideList,
-                'frontpageTeaserList' => $frontpageTeaserList,
-            ]
-        );
+        return $this->render('AppBundle:Frontpage:index.html.twig', [
+            'timelineContent' => $timelineContent,
+            'rideList' => $rideList,
+            'frontpageTeaserList' => $frontpageTeaserList,
+        ]);
     }
 
     protected function getFrontpageRideList(): array
