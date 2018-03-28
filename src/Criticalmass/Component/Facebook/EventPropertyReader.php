@@ -25,7 +25,8 @@ class EventPropertyReader
 
     public function read(\DateTime $startDateTime = null, \DateTime $endDateTime = null): EventPropertyReader
     {
-        $rides = $this->doctrine->getRepository(Ride::class)->findRidesWithFacebookInInterval($startDateTime, $endDateTime);
+        $rides = $this->doctrine->getRepository(Ride::class)->findRidesWithFacebookInInterval($startDateTime,
+            $endDateTime);
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {

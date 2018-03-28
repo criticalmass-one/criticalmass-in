@@ -25,8 +25,7 @@ class RidePropertiesCommand extends Command
     {
         $this
             ->setName('criticalmass:facebook:rideproperties')
-            ->setDescription('')
-        ;
+            ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -35,8 +34,7 @@ class RidePropertiesCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['City', 'Title', 'Attendings'])
-        ;
+            ->setHeaders(['City', 'Title', 'Attendings']);
 
         $properties = $this->eventPropertyReader->getPropertyList();
 

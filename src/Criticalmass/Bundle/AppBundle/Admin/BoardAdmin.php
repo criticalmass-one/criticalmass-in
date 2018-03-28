@@ -20,21 +20,18 @@ class BoardAdmin extends AbstractAdmin
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('slug', TextType::class)
             ->add('position', NumberType::class, ['required' => false])
             ->add('enabled', CheckboxType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('title')
-            ->add('description')
-        ;
+            ->add('description');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -44,7 +41,6 @@ class BoardAdmin extends AbstractAdmin
             ->add('threadNumber')
             ->add('postNumber')
             ->add('position')
-            ->add('enabled')
-        ;
+            ->add('enabled');
     }
 }

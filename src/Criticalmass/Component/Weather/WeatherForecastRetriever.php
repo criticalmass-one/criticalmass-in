@@ -25,11 +25,13 @@ class WeatherForecastRetriever
     /** @var LoggerInterface $logger */
     protected $logger;
 
-    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger)
+    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
     {
         $this->doctrine = $doctrine;
-        $this->openWeatherMap = $openWeatherMap;
         $this->logger = $logger;
+
+        $this->openWeatherMap = $openWeatherMap;
+        $this->openWeatherMap->setApiKey($openWeatherMapApiKey);
     }
 
     public function retrieve(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
@@ -80,7 +82,8 @@ class WeatherForecastRetriever
     {
         try {
             /** @var WeatherForecast $owmWeatherForecast */
-            $owmWeatherForecast = $this->openWeatherMap->getWeatherForecast($this->getLatLng($ride), 'metric', 'de', null, 7);
+            $owmWeatherForecast = $this->openWeatherMap->getWeatherForecast($this->getLatLng($ride), 'metric', 'de',
+                null, 7);
 
             /** @var Forecast $owmWeather */
             while ($owmWeather = $owmWeatherForecast->current()) {
@@ -99,9 +102,11 @@ class WeatherForecastRetriever
                 return $weather;
             }
         } catch (OWMException $e) {
-            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(), $e->getCode()));
+            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(),
+                $e->getCode()));
         } catch (\Exception $e) {
-            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(), $e->getCode()));
+            $this->logger->alert(sprintf('Cannot retrieve weather data: %s (Code %s).', $e->getMessage(),
+                $e->getCode()));
         }
 
         return null;
@@ -131,15 +136,14 @@ class WeatherForecastRetriever
             ->setWindSpeed($owmWeather->wind->speed->getValue())
             ->setWindDeg($owmWeather->wind->direction->getValue())
             ->setClouds($owmWeather->clouds->getValue())
-            ->setRain($owmWeather->precipitation->getValue())
-        ;
+            ->setRain($owmWeather->precipitation->getValue());
 
         return $weather;
     }
 
     protected function getLatLng(Ride $ride): array
     {
-        if ($ride->getHasLocation()) {
+        if ($ride->getHasLocation() && $ride->getCoord()) {
             $ride->getCoord()->toLatLonArray();
         }
 
@@ -151,7 +155,7 @@ class WeatherForecastRetriever
         return $this->doctrine->getRepository(Ride::class)->findRidesInInterval($startDateTime, $endDateTime);
     }
 
-    protected function findCurrentWeatherForRide(Ride $ride): Weather
+    protected function findCurrentWeatherForRide(Ride $ride): ?Weather
     {
         return $this->doctrine->getRepository(Weather::class)->findCurrentWeatherForRide($ride);
     }

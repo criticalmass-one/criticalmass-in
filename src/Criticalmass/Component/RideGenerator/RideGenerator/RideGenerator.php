@@ -42,18 +42,21 @@ class RideGenerator extends AbstractRideGenerator
         );
     }
 
-    protected function processCityCycles(): array
+    protected function processCityCycles(array $cycles): array
     {
-
+// TODO hier geht’s weiter
+        return [];
     }
 
     protected function hasRideAlreadyBeenCreated(CityCycle $cityCycle): bool
     {
+
         $dateTimeSpec = sprintf('%d-%d-01 00:00:00');
         $startDateTime = new \DateTime($dateTimeSpec);
         $endDateTime = DateTimeUtils::getMonthEndDateTime($startDateTime);
 
         $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $this->startDateTime, $this->endDateTime);
+
 
         return count($existingRides) > 0;
     }

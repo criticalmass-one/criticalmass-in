@@ -6,9 +6,10 @@
 
     <services>
         <defaults autowire="true" autoconfigure="true" public="true">
-            <tag name="timeline.collector" />
+            <tag name="timeline.collector"/>
         </defaults>
 
-        <prototype namespace="Criticalmass\Component\Timeline\Collector\" resource="%kernel.project_dir%/src/Criticalmass/Component/Timeline/Collector/*" />
+        <prototype namespace="Criticalmass\Component\Timeline\Collector\"
+                   resource="%kernel.project_dir%/src/Criticalmass/Component/Timeline/Collector/*"/>
     </services>
 </container>

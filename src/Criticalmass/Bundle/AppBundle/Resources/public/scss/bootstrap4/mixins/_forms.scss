@@ -20,7 +20,6 @@
   }
 }
 
-
 @mixin form-validation-state($state, $color) {
 
   .form-control,
@@ -30,7 +29,7 @@
       border-color: $color;
 
       &:focus {
-        box-shadow: 0 0 0 .2rem rgba($color,.25);
+        box-shadow: 0 0 0 .2rem rgba($color, .25);
       }
 
       ~ .invalid-feedback,
@@ -39,7 +38,6 @@
       }
     }
   }
-
 
   // TODO: redo check markup lol crap
   .form-check-input {
@@ -71,10 +69,12 @@
       ~ .custom-file-control {
         border-color: $color;
 
-        &::before { border-color: inherit; }
+        &::before {
+          border-color: inherit;
+        }
       }
       &:focus {
-        box-shadow: 0 0 0 .2rem rgba($color,.25);
+        box-shadow: 0 0 0 .2rem rgba($color, .25);
       }
     }
   }

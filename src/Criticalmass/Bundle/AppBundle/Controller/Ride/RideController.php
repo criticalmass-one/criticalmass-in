@@ -2,78 +2,56 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Component\ViewStorage\ViewStorageCache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;
-use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
-    use ViewStorageTrait;
-
-    public function listAction(Request $request)
+    public function listAction(): Response
     {
         $ridesResult = $this->getRideRepository()->findRidesInInterval();
 
-        $rides = array();
+        $rides = [];
 
         foreach ($ridesResult as $ride) {
             $rides[$ride->getFormattedDate()][] = $ride;
         }
 
-        return $this->render(
-            'AppBundle:Ride:list.html.twig',
-            array(
-                'rides' => $rides
-            )
-        );
+        return $this->render('AppBundle:Ride:list.html.twig', [
+            'rides' => $rides,
+        ]);
     }
 
-    public function showMonthAction(Request $request, string $citySlug, string $rideDate): Response
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, Ride $ride): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-        $dateTime = new \DateTime(sprintf('%s-01', $rideDate));
-
-        $rideList = $this->getRideRepository()->findByCityAndMonth($city, $dateTime);
-
-        if (count($rideList) !== 1) {
-            throw $this->createNotFoundException();
-        }
-
-        $ride = array_pop($rideList);
-
-        return $this->redirectToObject($ride);
-    }
-
-    public function showAction(Request $request, $citySlug, $rideDate)
-    {
-        $city = $this->getCheckedCity($citySlug);
-        $rideDateTime = $this->getCheckedDateTime($rideDate);
-        $ride = $this->getCheckedRide($city, $rideDateTime);
-
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
 
-        $this->countRideView($ride);
+        $viewStorageCache->countView($ride);
 
-        $this
-            ->getSeoPage()
-            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $city->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
-            ->setCanonicalForObject($ride)
-        ;
+        $seoPage
+            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
+            ->setCanonicalForObject($ride);
 
         if ($ride->getImageName()) {
-            $this->getSeoPage()->setPreviewPhoto($ride);
+            $seoPage->setPreviewPhoto($ride);
         } elseif ($ride->getFeaturedPhoto()) {
-            $this->getSeoPage()->setPreviewPhoto($ride->getFeaturedPhoto());
+            $seoPage->setPreviewPhoto($ride->getFeaturedPhoto());
         }
 
         if ($ride->getSocialDescription()) {
-            $this->getSeoPage()->setDescription($ride->getSocialDescription());
+            $seoPage->setDescription($ride->getSocialDescription());
         } elseif ($ride->getDescription()) {
-            $this->getSeoPage()->setDescription($ride->getDescription());
+            $seoPage->setDescription($ride->getDescription());
         }
 
         /**
@@ -88,25 +66,23 @@ class RideController extends AbstractController
         }
 
         if ($this->getUser()) {
-            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(), $ride);
+            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(),
+                $ride);
         } else {
             $participation = null;
         }
 
-        return $this->render(
-            'AppBundle:Ride:show.html.twig',
-            array(
-                'city' => $city,
-                'ride' => $ride,
-                'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
-                'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
-                'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
-                'nextRide' => $nextRide,
-                'previousRide' => $previousRide,
-                'dateTime' => new \DateTime(),
-                'weatherForecast' => $weatherForecast,
-                'participation' => $participation
-            )
-        );
+        return $this->render('AppBundle:Ride:show.html.twig', [
+            'city' => $ride->getCity(),
+            'ride' => $ride,
+            'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
+            'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
+            'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
+            'nextRide' => $nextRide,
+            'previousRide' => $previousRide,
+            'dateTime' => new \DateTime(),
+            'weatherForecast' => $weatherForecast,
+            'participation' => $participation,
+        ]);
     }
 }

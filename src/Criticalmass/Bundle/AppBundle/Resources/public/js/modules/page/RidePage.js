@@ -182,7 +182,7 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
             if (!blurred) {
                 that._photoViewModal.showPhoto(photo.getId());
             } else {
-                var url = Routing.generate('caldera_criticalmass_photo_show', { photoId: photo.getId() });
+                var url = Routing.generate('caldera_criticalmass_photo_show', {photoId: photo.getId()});
                 window.location.href = url;
             }
         });

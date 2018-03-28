@@ -42,8 +42,7 @@ class UpdateWeatherCommand extends Command
                 'endDateTime',
                 InputArgument::OPTIONAL,
                 'Range end date time'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,8 +64,7 @@ class UpdateWeatherCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['City', 'DateTime'])
-        ;
+            ->setHeaders(['City', 'DateTime']);
 
         /** @var Weather $weather */
         foreach ($newForecasts as $weather) {

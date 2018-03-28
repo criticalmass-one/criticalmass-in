@@ -28,8 +28,7 @@ class HelpCategoryAdmin extends AbstractAdmin
             ->add('language', TextType::class)
             ->add('side', TextType::class, ['required' => false])
             ->add('position', NumberType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -37,15 +36,13 @@ class HelpCategoryAdmin extends AbstractAdmin
         $datagridMapper
             ->add('title')
             ->add('intro')
-            ->add('language')
-        ;
+            ->add('language');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('language')
-        ;
+            ->add('language');
     }
 }

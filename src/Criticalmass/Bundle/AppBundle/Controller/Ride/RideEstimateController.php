@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
@@ -16,28 +17,24 @@ class RideEstimateController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function addestimateAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
-    {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
+    public function addestimateAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride
+    ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
             ->setUser($user)
-            ->setRide($ride)
-        ;
+            ->setRide($ride);
 
-        $estimateForm = $this->createForm(
-            RideEstimateType::class,
-            $rideEstimate,
-            [
-                'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate', [
-                        'citySlug' => $ride->getCity()->getMainSlugString(),
-                        'rideDate' => $ride->getFormattedDate()
-                    ]
-                )
-            ]
-        );
+        $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
+            'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate()
+            ])
+        ]);
 
         $estimateForm->handleRequest($request);
 
@@ -51,24 +48,25 @@ class RideEstimateController extends AbstractController
         return $this->redirectToObject($ride);
     }
 
-    public function anonymousestimateAction(Request $request, UserInterface $user = null, string $citySlug, string $rideDate): Response
-    {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function anonymousestimateAction(
+        Request $request,
+        UserInterface $user = null,
+        Ride $ride
+    ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
             ->setUser($this->getUser())
-            ->setRide($ride)
-        ;
+            ->setRide($ride);
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
-                'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate_anonymous', [
-                        'citySlug' => $ride->getCity()->getMainSlugString(),
-                        'rideDate' => $ride->getFormattedDate()
-                    ]
-                )
-            ]
-        );
+            'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate_anonymous', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate()
+            ])
+        ]);
 
         $estimateForm->handleRequest($request);
 
@@ -82,10 +80,9 @@ class RideEstimateController extends AbstractController
         }
 
         return $this->render('AppBundle:RideEstimate:anonymous.html.twig', [
-                'estimateForm' => $estimateForm->createView(),
-                'ride' => $ride,
-            ]
-        );
+            'estimateForm' => $estimateForm->createView(),
+            'ride' => $ride,
+        ]);
     }
 
     protected function recalculateEstimates(Ride $ride): void

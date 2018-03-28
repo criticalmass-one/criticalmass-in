@@ -117,8 +117,7 @@
 
         removeLayer: function (layer) {
 
-            if (layer instanceof L.LayerGroup)
-            {
+            if (layer instanceof L.LayerGroup) {
                 var array = [];
                 for (var i in layer._layers) {
                     array.push(layer._layers[i]);
@@ -508,7 +507,6 @@
             }
 
 
-
             //Clean up all the layers we added to the map
             this._hideCoverage();
             this._featureGroup.onRemove(map);
@@ -636,7 +634,11 @@
                 c += 'large';
             }
 
-            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+            return new L.DivIcon({
+                html: '<div><span>' + childCount + '</span></div>',
+                className: 'marker-cluster' + c,
+                iconSize: new L.Point(40, 40)
+            });
         },
 
         _bindEvents: function () {
@@ -744,7 +746,9 @@
             //a simple function to return that number. Otherwise, we just have to
             //use the function we've passed in.
             if (typeof radius !== "function") {
-                radiusFn = function () { return radius; };
+                radiusFn = function () {
+                    return radius;
+                };
             }
 
             if (this.options.disableClusteringAtZoom) {
@@ -1096,7 +1100,7 @@
     L.MarkerCluster = L.Marker.extend({
         initialize: function (group, zoom, a, b) {
 
-            L.Marker.prototype.initialize.call(this, a ? (a._cLatLng || a.getLatLng()) : new L.LatLng(0, 0), { icon: this });
+            L.Marker.prototype.initialize.call(this, a ? (a._cLatLng || a.getLatLng()) : new L.LatLng(0, 0), {icon: this});
 
 
             this._group = group;
@@ -1464,12 +1468,11 @@
     });
 
 
-
     L.DistanceGrid = function (cellSize) {
         this._cellSize = cellSize;
         this._sqCellSize = cellSize * cellSize;
         this._grid = {};
-        this._objectPoint = { };
+        this._objectPoint = {};
     };
 
     L.DistanceGrid.prototype = {
@@ -1652,7 +1655,7 @@
                     }
                 }
 
-                return { maxPoint: maxPt, newPoints: newPoints };
+                return {maxPoint: maxPt, newPoints: newPoints};
             },
 
 
@@ -1738,7 +1741,7 @@
         _circleFootSeparation: 25, //related to circumference of circle
         _circleStartAngle: Math.PI / 6,
 
-        _spiralFootSeparation:  28, //related to size of spiral (experiment!)
+        _spiralFootSeparation: 28, //related to size of spiral (experiment!)
         _spiralLengthStart: 11,
         _spiralLengthFactor: 5,
 
@@ -1868,7 +1871,7 @@
                 fg.addLayer(m);
 
 
-                leg = new L.Polyline([this._latlng, newPos], { weight: 1.5, color: '#222' });
+                leg = new L.Polyline([this._latlng, newPos], {weight: 1.5, color: '#222'});
                 map.addLayer(leg);
                 m._spiderLeg = leg;
             }
@@ -1932,7 +1935,7 @@
 
 
                 //Add Legs.
-                leg = new L.Polyline([me._latlng, newPos], { weight: 1.5, color: '#222', opacity: initialLegOpacity });
+                leg = new L.Polyline([me._latlng, newPos], {weight: 1.5, color: '#222', opacity: initialLegOpacity});
                 map.addLayer(leg);
                 m._spiderLeg = leg;
 

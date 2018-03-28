@@ -260,7 +260,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @var string
      */
     private $imageName;
-    
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -326,7 +326,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         return $this->dateTime->format('Y-m-d');
     }
-    
+
     public function setHasTime(bool $hasTime): Ride
     {
         $this->hasTime = $hasTime;
@@ -531,7 +531,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /** @deprecated */
     public function setDate(\DateTime $date): Ride
     {
-        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'), $date->getTimezone());
+        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'),
+            $date->getTimezone());
 
         return $this;
     }
@@ -539,7 +540,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /** @deprecated */
     public function setTime(\DateTime $time): Ride
     {
-        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'), $time->getTimezone());
+        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'),
+            $time->getTimezone());
 
         return $this;
     }
@@ -683,12 +685,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         if (!$this->latitude || !$this->longitude) {
             return '0,0';
         }
-        
+
         return $this->latitude . ',' . $this->longitude;
     }
 
-    public function getCoord(): Coord
+    public function getCoord(): ?Coord
     {
+        return null;
         return new Coord($this->latitude, $this->longitude);
     }
 

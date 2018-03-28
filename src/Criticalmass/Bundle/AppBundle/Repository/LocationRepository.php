@@ -17,8 +17,7 @@ class LocationRepository extends EntityRepository
             ->select('l')
             ->where($builder->expr()->eq('l.city', ':city'))
             ->orderBy('l.title', 'ASC')
-            ->setParameter('city', $city)
-        ;
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
@@ -38,8 +37,7 @@ class LocationRepository extends EntityRepository
             ->andWhere($builder->expr()->eq('l.city', ':city'))
             ->setParameter('locationTitle', $ride->getLocation())
             ->setParameter('city', $ride->getCity())
-            ->setMaxResults(1)
-        ;
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 

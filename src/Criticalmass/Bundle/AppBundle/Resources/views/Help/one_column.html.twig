@@ -11,25 +11,25 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h1>
-                {{ mainCategory.title }}
-            </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h1>
+                    {{ mainCategory.title }}
+                </h1>
 
-            {% if mainCategory.intro %}
-                <p class="lead">
-                    {{ mainCategory.intro }}
-                </p>
-            {% endif %}
+                {% if mainCategory.intro %}
+                    <p class="lead">
+                        {{ mainCategory.intro }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {{ categoryMacro.renderCategory(mainCategory) }}
+            </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            {{ categoryMacro.renderCategory(mainCategory) }}
-        </div>
-    </div>
-</div>
 {% endblock %}

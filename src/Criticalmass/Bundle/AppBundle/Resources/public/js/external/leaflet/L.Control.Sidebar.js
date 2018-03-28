@@ -135,7 +135,7 @@ L.Control.Sidebar = L.Control.extend({
             }
             this.fire('hide');
         }
-        if(e) {
+        if (e) {
             L.DomEvent.stopPropagation(e);
         }
     },

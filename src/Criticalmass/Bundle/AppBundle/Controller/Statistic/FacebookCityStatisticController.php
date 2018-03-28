@@ -28,8 +28,7 @@ class FacebookCityStatisticController extends AbstractController
 
             $date = $createdAt
                 ->setTimezone($utc)
-                ->format('Y-m-d')
-            ;
+                ->format('Y-m-d');
 
             $filteredProperties[$citySlug][$date] = $facebookCityProperties;
             $dayList[$date] = $date;

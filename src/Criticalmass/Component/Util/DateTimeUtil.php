@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Utils;
+namespace Criticalmass\Component\Util;
 
-class DateTimeUtils
+class DateTimeUtil
 {
     public static function getYearStartDateTime(\DateTime $year): \DateTime
     {

@@ -11,8 +11,7 @@ class BlurFilter implements LoaderInterface
     {
         $image
             ->effects()
-            ->blur(5)
-        ;
+            ->blur(5);
 
         return $image;
     }

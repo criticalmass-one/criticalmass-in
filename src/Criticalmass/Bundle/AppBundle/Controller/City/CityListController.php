@@ -4,24 +4,17 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Factory\CityListFactory;
+use Criticalmass\Component\SeoPage\SeoPage;
+use Symfony\Component\HttpFoundation\Response;
 
 class CityListController extends AbstractController
 {
-    public function listAction()
+    public function listAction(SeoPage $seoPage, CityListFactory $cityListFactory): Response
     {
-        $this
-            ->getSeoPage()
-            ->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
+        $seoPage->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
-        /** @var CityListFactory $cityListFactory */
-        $cityListFactory = $this->get('app.factory.city_list');
-        $cityList = $cityListFactory->getList();
-
-        return $this->render(
-            'AppBundle:CityList:list.html.twig',
-            [
-                'cityList' => $cityList,
-            ]
-        );
+        return $this->render('AppBundle:CityList:list.html.twig', [
+            'cityList' => $cityListFactory->getList(),
+        ]);
     }
 }

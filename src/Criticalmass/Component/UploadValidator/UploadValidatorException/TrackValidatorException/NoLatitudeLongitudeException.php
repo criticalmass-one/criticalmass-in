@@ -1,7 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException;
-
+namespace Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException;
 
 class NoLatitudeLongitudeException extends TrackValidatorException
 {

@@ -26,8 +26,7 @@ trait TrackHandlingTrait
             ->setStartPoint(0)
             ->setEndPoint($gr->countPoints() - 1)
             ->setStartDateTime($gr->getStartDateTime())
-            ->setEndDateTime($gr->getEndDateTime())
-        ;
+            ->setEndDateTime($gr->getEndDateTime());
 
         /**
          * @var TrackDistanceCalculator $tdc
@@ -45,8 +44,7 @@ trait TrackHandlingTrait
         $estimateService = $this->get(RideEstimateService::class);
         $estimateService
             ->addEstimateFromTrack($track)
-            ->calculateEstimates($ride)
-        ;
+            ->calculateEstimates($ride);
     }
 
     protected function generateSimpleLatLngList(Track $track)

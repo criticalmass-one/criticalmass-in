@@ -11,8 +11,7 @@ class RideEstimateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('estimatedParticipants', TextType::class, ['required' => true])
-        ;
+            ->add('estimatedParticipants', TextType::class, ['required' => true]);
     }
 
     public function getName(): string

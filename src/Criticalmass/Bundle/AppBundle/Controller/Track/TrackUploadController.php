@@ -2,19 +2,15 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
+use Criticalmass\Component\UploadValidator\TrackValidator;
+use Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
-use Criticalmass\Component\Gps\TrackTimeShift\TrackTimeShift;
-use Criticalmass\Bundle\AppBundle\UploadValidator\TrackValidator;
-use Criticalmass\Bundle\AppBundle\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Vich\UploaderBundle\Form\Type\VichFileType;
@@ -25,39 +21,37 @@ class TrackUploadController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function uploadAction(Request $request, $citySlug, $rideDate, $embed = false)
+    public function uploadAction(Request $request, Ride $ride, $embed = false): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_upload',
-                [
-                    'citySlug' => $ride->getCity()->getMainSlugString(),
-                    'rideDate' => $ride->getFormattedDate()
-                ]))
+            ->setAction($this->generateUrl('caldera_criticalmass_track_upload', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate()
+            ]))
             ->add('trackFile', VichFileType::class)
             ->getForm();
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->uploadPostAction($request, $track, $ride, $form, $embed);
         } else {
             return $this->uploadGetAction($request, $ride, $form, $embed);
         }
     }
 
-    protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed)
+    protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed): Response
     {
-        return $this->render('AppBundle:Track:upload.html.twig',
-            [
-                'form' => $form->createView(),
-                'ride' => $ride,
-                'errorMessage' => null
-            ]);
+        return $this->render('AppBundle:Track:upload.html.twig', [
+            'form' => $form->createView(),
+            'ride' => $ride,
+            'errorMessage' => null,
+        ]);
     }
 
-    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed)
+    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed): Response
     {
         $form->handleRequest($request);
 
@@ -81,14 +75,11 @@ class TrackUploadController extends AbstractController
             try {
                 $trackValidator->validate();
             } catch (TrackValidatorException $e) {
-                return $this->render(
-                    'AppBundle:Track:upload.html.twig',
-                    [
-                        'form' => $form->createView(),
-                        'ride' => $ride,
-                        'errorMessage' => $e->getMessage()
-                    ]
-                );
+                return $this->render('AppBundle:Track:upload.html.twig', [
+                    'form' => $form->createView(),
+                    'ride' => $ride,
+                    'errorMessage' => $e->getMessage(),
+                ]);
             }
 
             $this->loadTrackProperties($track);
@@ -104,16 +95,15 @@ class TrackUploadController extends AbstractController
             $this->generateSimpleLatLngList($track);
             $this->generatePolyline($track);
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', ['trackId' => $track->getId()]));
+            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', [
+                'trackId' => $track->getId(),
+            ]));
         }
 
-        return $this->render(
-            'AppBundle:Track:upload.html.twig',
-            [
-                'form' => $form->createView(),
-                'ride' => $ride,
-                'errorMessage' => null
-            ]
-        );
+        return $this->render('AppBundle:Track:upload.html.twig', [
+            'form' => $form->createView(),
+            'ride' => $ride,
+            'errorMessage' => null,
+        ]);
     }
 }

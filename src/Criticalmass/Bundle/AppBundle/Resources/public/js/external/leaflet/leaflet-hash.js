@@ -1,11 +1,11 @@
-(function(window) {
-    var HAS_HASHCHANGE = (function() {
+(function (window) {
+    var HAS_HASHCHANGE = (function () {
         var doc_mode = window.documentMode;
         return ('onhashchange' in window) &&
             (doc_mode === undefined || doc_mode > 7);
     })();
 
-    L.Hash = function(map) {
+    L.Hash = function (map) {
         this.onHashChange = L.Util.bind(this.onHashChange, this);
 
         if (map) {
@@ -13,8 +13,8 @@
         }
     };
 
-    L.Hash.parseHash = function(hash) {
-        if(hash.indexOf('#') === 0) {
+    L.Hash.parseHash = function (hash) {
+        if (hash.indexOf('#') === 0) {
             hash = hash.substr(1);
         }
         var args = hash.split("/");
@@ -35,7 +35,7 @@
         }
     };
 
-    L.Hash.formatHash = function(map) {
+    L.Hash.formatHash = function (map) {
         var center = map.getCenter(),
             zoom = map.getZoom(),
             precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2));
@@ -53,7 +53,7 @@
             parseHash: L.Hash.parseHash,
             formatHash: L.Hash.formatHash,
 
-            init: function(map) {
+            init: function (map) {
                 this.map = map;
 
                 // reset the hash
@@ -65,7 +65,7 @@
                 }
             },
 
-            removeFrom: function(map) {
+            removeFrom: function (map) {
                 if (this.changeTimeout) {
                     clearTimeout(this.changeTimeout);
                 }
@@ -77,7 +77,7 @@
                 this.map = null;
             },
 
-            onMapMove: function() {
+            onMapMove: function () {
                 // bail if we're moving the map (updating from a hash),
                 // or if the map is not yet loaded
 
@@ -93,7 +93,7 @@
             },
 
             movingMap: false,
-            update: function() {
+            update: function () {
                 var hash = location.hash;
                 if (hash === this.lastHash) {
                     return;
@@ -113,12 +113,12 @@
             // defer hash change updates every 100ms
             changeDefer: 100,
             changeTimeout: null,
-            onHashChange: function() {
+            onHashChange: function () {
                 // throttle calls to update() so that they only happen every
                 // `changeDefer` ms
                 if (!this.changeTimeout) {
                     var that = this;
-                    this.changeTimeout = setTimeout(function() {
+                    this.changeTimeout = setTimeout(function () {
                         that.update();
                         that.changeTimeout = null;
                     }, this.changeDefer);
@@ -127,7 +127,7 @@
 
             isListening: false,
             hashChangeInterval: null,
-            startListening: function() {
+            startListening: function () {
                 this.map.on("moveend", this.onMapMove, this);
 
                 if (HAS_HASHCHANGE) {
@@ -139,7 +139,7 @@
                 this.isListening = true;
             },
 
-            stopListening: function() {
+            stopListening: function () {
                 this.map.off("moveend", this.onMapMove, this);
 
                 if (HAS_HASHCHANGE) {
@@ -150,13 +150,13 @@
                 this.isListening = false;
             }
         };
-    L.hash = function(map) {
+    L.hash = function (map) {
         return new L.Hash(map);
     };
-    L.Map.prototype.addHash = function() {
+    L.Map.prototype.addHash = function () {
         this._hash = L.hash(this);
     };
-    L.Map.prototype.removeHash = function() {
+    L.Map.prototype.removeHash = function () {
         this._hash.removeFrom();
     };
 })(window);

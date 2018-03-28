@@ -26,8 +26,7 @@ class HelpItemAdmin extends AbstractAdmin
                 'class' => HelpCategory::class
             ])
             ->add('position', NumberType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -35,15 +34,13 @@ class HelpItemAdmin extends AbstractAdmin
         $datagridMapper
             ->add('category')
             ->add('title')
-            ->add('text')
-        ;
+            ->add('text');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('category')
-        ;
+            ->add('category');
     }
 }

@@ -56,13 +56,13 @@ class ImportImagesCommand extends ContainerAwareCommand
                 'path',
                 InputArgument::REQUIRED,
                 'Path of the image directory'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'),
+            $input->getArgument('rideDate'));
         $user = $this->doctrine->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
         $track = $this->doctrine->getRepository(Track::class)->findByUserAndRide($ride, $user);
 
@@ -70,7 +70,6 @@ class ImportImagesCommand extends ContainerAwareCommand
             ->setRide($ride)
             ->setUser($user)
             ->setTrack($track)
-            ->addDirectory($input->getArgument('path'))
-        ;
+            ->addDirectory($input->getArgument('path'));
     }
 }
