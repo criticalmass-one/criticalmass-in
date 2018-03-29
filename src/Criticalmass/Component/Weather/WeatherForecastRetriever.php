@@ -143,7 +143,7 @@ class WeatherForecastRetriever
 
     protected function getLatLng(Ride $ride): array
     {
-        if ($ride->getHasLocation()) {
+        if ($ride->getHasLocation() && $ride->getCoord()) {
             $ride->getCoord()->toLatLonArray();
         }
 
