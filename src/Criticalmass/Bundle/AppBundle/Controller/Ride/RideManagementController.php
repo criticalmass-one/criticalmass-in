@@ -291,7 +291,7 @@ class RideManagementController extends AbstractController
 
             $entityManager->flush();
 
-            $request->getSession()->getFlashBag()->add('success', 'Details gespeichert.');
+            $request->getSession()->getFlashBag()->add('success', 'Änderungen gespeichert!');
         }
 
         return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
