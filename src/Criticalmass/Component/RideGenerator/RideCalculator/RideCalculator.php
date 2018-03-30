@@ -31,6 +31,7 @@ class RideCalculator extends AbstractRideCalculator
     protected function createRide(CityCycle $cycle): Ride
     {
         $ride = new Ride();
+        $ride->setCity($cycle->getCity());
 
         $ride = $this->calculateDate($cycle, $ride);
         $ride = $this->calculateTime($cycle, $ride);
@@ -76,8 +77,8 @@ class RideCalculator extends AbstractRideCalculator
     protected function calculateTime(CityCycle $cityCycle, Ride $ride): Ride
     {
         $time = $cityCycle->getTime();
-        $timezone = new \DateTimeZone($cityCycle->getCity()->getTimezone());
 
+        $timezone = new \DateTimeZone($cityCycle->getCity()->getTimezone());
         $time->setTimezone(new \DateTimeZone('UTC'));
 
         $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));

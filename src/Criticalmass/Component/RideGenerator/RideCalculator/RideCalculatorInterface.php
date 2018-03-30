@@ -13,4 +13,5 @@ interface RideCalculatorInterface
     public function setDateTime(\DateTime $dateTime): RideCalculatorInterface;
     public function getRideList(): array;
     public function execute(): RideCalculatorInterface;
+    public function reset(): RideCalculatorInterface;
 }

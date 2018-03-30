@@ -5,7 +5,7 @@ namespace Criticalmass\Component\RideGenerator\RideGenerator;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Utils\DateTimeUtils;
+use Criticalmass\Component\Util\DateTimeUtil;
 
 class RideGenerator extends AbstractRideGenerator
 {
@@ -18,7 +18,9 @@ class RideGenerator extends AbstractRideGenerator
         foreach ($this->cityList as $city) {
             $cycles = $this->findCyclesForCity($city);
 
-            $this->processCityCycles($cycles);
+            $createdRides = $this->processCityCycles($cycles);
+
+            $this->rideList = $this->rideList + $createdRides;
         }
 
         return $this;
@@ -31,9 +33,9 @@ class RideGenerator extends AbstractRideGenerator
 
     protected function findCyclesForCity(City $city): array
     {
-        $dateTimeSpec = sprintf('%d-%d-01 00:00:00');
+        $dateTimeSpec = sprintf('%d-%d-01 00:00:00', $this->year, $this->month);
         $startDateTime = new \DateTime($dateTimeSpec);
-        $endDateTime = DateTimeUtils::getMonthEndDateTime($startDateTime);
+        $endDateTime = DateTimeUtil::getMonthEndDateTime($startDateTime);
 
         return $this->doctrine->getRepository(CityCycle::class)->findByCity(
             $city,
@@ -44,16 +46,20 @@ class RideGenerator extends AbstractRideGenerator
 
     protected function processCityCycles(array $cycles): array
     {
-// TODO hier geht’s weiter
-        return [];
+        return $this->rideCalculator
+            ->reset()
+            ->setCycleList($cycles)
+            ->setYear($this->year)
+            ->setMonth($this->month)
+            ->execute()
+            ->getRideList();
     }
 
     protected function hasRideAlreadyBeenCreated(CityCycle $cityCycle): bool
     {
-
         $dateTimeSpec = sprintf('%d-%d-01 00:00:00');
         $startDateTime = new \DateTime($dateTimeSpec);
-        $endDateTime = DateTimeUtils::getMonthEndDateTime($startDateTime);
+        $endDateTime = DateTimeUtil::getMonthEndDateTime($startDateTime);
 
         $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $this->startDateTime, $this->endDateTime);
 
