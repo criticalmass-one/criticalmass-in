@@ -46,6 +46,8 @@ class RideGenerator extends AbstractRideGenerator
 
     protected function processCityCycles(array $cycles): array
     {
+        $cycles = $this->removeCreatedCycles($cycles);
+
         return $this->rideCalculator
             ->reset()
             ->setCycleList($cycles)
@@ -55,14 +57,24 @@ class RideGenerator extends AbstractRideGenerator
             ->getRideList();
     }
 
+    protected function removeCreatedCycles(array $cycles): array
+    {
+        foreach ($cycles as $key => $cycle) {
+            if ($this->hasRideAlreadyBeenCreated($cycle)) {
+                unset($cycles[$key]);
+            }
+        }
+
+        return $cycles;
+    }
+
     protected function hasRideAlreadyBeenCreated(CityCycle $cityCycle): bool
     {
-        $dateTimeSpec = sprintf('%d-%d-01 00:00:00');
+        $dateTimeSpec = sprintf('%d-%d-01 00:00:00', $this->year, $this->month);
         $startDateTime = new \DateTime($dateTimeSpec);
         $endDateTime = DateTimeUtil::getMonthEndDateTime($startDateTime);
 
-        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $this->startDateTime, $this->endDateTime);
-
+        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $startDateTime, $endDateTime);
 
         return count($existingRides) > 0;
     }
