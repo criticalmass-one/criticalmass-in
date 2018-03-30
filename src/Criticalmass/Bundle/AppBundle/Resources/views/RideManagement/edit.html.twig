@@ -257,37 +257,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="">Datei:</label>
-                            {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">
-                                Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour auf facebook und
-                                twitter angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
-                                <strong>Bitte beachte, dassdu das Urheber- oder Nutzungsrecht an dieser Datei
-                                    besitzt.</strong>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="socialDescription">
-                                Social-Beschreibung:
-                            </label>
-                            {{ form_widget(form.socialDescription, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
-                                Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken wie facebook
-                                und twitter angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen
-                                angezeigt und der Rest des Textes abgeschnitten werden.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
                                     <a href="{{ objectPath(ride) }}" class="btn btn-default">

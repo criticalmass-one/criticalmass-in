@@ -17,3 +17,7 @@
   content: "/\00a0";
   color: $breadcrumb-color;
 }
+
+input[type="file"] {
+  display: inline !important;
+}
