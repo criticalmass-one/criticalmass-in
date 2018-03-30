@@ -87,8 +87,6 @@ class PhotoGps
     public function execute(): PhotoGps
     {
         if ($gps = $this->getExifCoords()) {
-            var_dump($gps);
-
             /** @todo check keys of gps array */
 
             $this->photo
@@ -133,6 +131,15 @@ class PhotoGps
         $exif = $this->readExifData();
 
         if ($gps = $exif->getGPS()) {
+            if (is_string($gps)) {
+                list($lat, $lon) = explode(',', $gps);
+
+                $gps = [
+                    'lat' => $lat,
+                    'lon' => $lon,
+                ];
+            }
+
             return $gps;
         }
 
@@ -141,7 +148,8 @@ class PhotoGps
 
     protected function readExifData(): Exif
     {
-        $filename = $this->uploaderHelper->asset($this->photo, 'imageFile');
+        // @TODO fix this
+        $filename = sprintf('%s/..%s', $this->uploadDestinationPhoto, $this->uploaderHelper->asset($this->photo, 'imageFile'));
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         $exif = $reader->read($filename);

@@ -77,7 +77,7 @@ class PhotoUploader
 
         foreach ($dir as $fileinfo) {
             if (!$fileinfo->isDot()) {
-                $this->addFile($fileinfo->getFilename());
+                $this->addFile($fileinfo->getPathname());
             }
         }
 
@@ -88,10 +88,9 @@ class PhotoUploader
 
     protected function calculateDateTime(Photo $photo): Photo
     {
-        $photoFilename = sprintf('%s%s', $this->uploadDestinationPhoto, $photo->getImageName());
+        $photoFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
-
         $exif = $reader->getExifFromFile($photoFilename);
 
         if ($dateTime = $exif->getCreationDate()) {
@@ -117,7 +116,7 @@ class PhotoUploader
 
         $imageFilename = uniqid() . '.jpg';
 
-        $destinationFilename = sprintf('%s%s', $this->uploadDestinationPhoto, $imageFilename);
+        $destinationFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $imageFilename);
 
         copy($sourceFilename, $destinationFilename);
 
@@ -131,5 +130,7 @@ class PhotoUploader
         $this->calculateLocation($photo);
 
         $this->doctrine->getManager()->persist($photo);
+
+        return $photo;
     }
 }
