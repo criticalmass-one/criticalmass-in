@@ -20,7 +20,7 @@ class RideGenerator extends AbstractRideGenerator
 
             $createdRides = $this->processCityCycles($cycles);
 
-            $this->rideList = $this->rideList + $createdRides;
+            $this->rideList = array_merge($this->rideList, $createdRides);
         }
 
         return $this;
