@@ -86,6 +86,11 @@ class PhotoUploader
         return $this;
     }
 
+    public function getAddedPhotoList(): array
+    {
+        return $this->addedPhotoList;
+    }
+
     protected function calculateDateTime(Photo $photo): Photo
     {
         $photoFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
@@ -130,6 +135,8 @@ class PhotoUploader
         $this->calculateLocation($photo);
 
         $this->doctrine->getManager()->persist($photo);
+
+        $this->addedPhotoList[] = $photo;
 
         return $photo;
     }
