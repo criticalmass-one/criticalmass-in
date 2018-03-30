@@ -55,4 +55,9 @@ class FrontpageController extends AbstractController
 
         return $rideList;
     }
+
+    public function introAction(): Response
+    {
+        return $this->render('AppBundle:Frontpage:intro.html.twig');
+    }
 }
