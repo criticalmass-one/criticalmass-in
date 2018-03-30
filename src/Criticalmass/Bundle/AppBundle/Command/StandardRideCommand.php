@@ -60,37 +60,31 @@ class StandardRideCommand extends Command
         /** @var int $month */
         $month = $input->getArgument('month');
 
-        $this->rideGenerator
-            ->setMonth($month)
-            ->setYear($year);
-
         $manager = $this->registry->getManager();
 
         $cities = $this->registry->getRepository(City::class)->findCities();
 
+        $this->rideGenerator
+            ->setMonth($month)
+            ->setYear($year)
+            ->setCityList($cities)
+            ->execute();
+
         $table = new Table($output);
-        $table
-            ->setHeaders(['City', 'DateTime', 'Location']);
+        $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location']);
 
-        /** @var City $city */
-        foreach ($cities as $city) {
-            $rides = $this->rideGenerator
-                ->setCity($city)
-                ->execute()
-                ->getList();
+        $utc = new \DateTimeZone('UTC');
 
-            if (count($rides)) {
-                /** @var Ride $ride */
-                foreach ($rides as $ride) {
-                    $table->addRow([
-                        $city->getCity(),
-                        $ride->getDateTime()->format('Y-m-d H:i'),
-                        $ride->getLocation(),
-                    ]);
+        /** @var Ride $ride */
+        foreach ($this->rideGenerator->getRideList() as $ride) {
+            $table->addRow([
+                $ride->getCity()->getCity(),
+                $ride->getDateTime()->format('Y-m-d H:i'),
+                $ride->getDateTime()->setTimezone($utc)->format('Y-m-d H:i'),
+                $ride->getLocation(),
+            ]);
 
-                    $manager->persist($ride);
-                }
-            }
+            $manager->persist($ride);
         }
 
         $table->render();
