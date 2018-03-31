@@ -7,8 +7,6 @@
         <import resource="services/logging.xml"/>
         <import resource="services/calendar.xml"/>
         <import resource="services/facebook.xml"/>
-        <import resource="services/timeline/timeline.xml"/>
-        <import resource="services/timeline/collectors.xml"/>
     </imports>
 
     <services>

@@ -690,8 +690,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->latitude . ',' . $this->longitude;
     }
 
-    public function getCoord(): Coord
+    public function getCoord(): ?Coord
     {
+        return null;
         return new Coord($this->latitude, $this->longitude);
     }
 

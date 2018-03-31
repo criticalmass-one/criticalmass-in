@@ -2,16 +2,18 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Criticalmass\Bundle\AppBundle\Form\Type\RideSocialPreviewType;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Facebook\FacebookEventRideApi;
 use Criticalmass\Bundle\AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideManagementController extends AbstractController
@@ -234,5 +236,64 @@ class RideManagementController extends AbstractController
                 'form' => $form->createView()
             ]
         );
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function socialPreviewAction(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        UserInterface $user,
+        Ride $ride
+    ): Response {
+        $form = $this->createForm(RideSocialPreviewType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_ride_socialpreview', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getDateTime()->format('Y-m-d')
+            ])
+        ]);
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->socialPreviewPostAction($entityManager, $request, $user, $ride, $form);
+        } else {
+            return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
+        }
+    }
+
+    protected function socialPreviewGetAction(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        Form $form
+    ): Response {
+        return $this->render('AppBundle:RideManagement:social_preview.html.twig', [
+            'ride' => $ride,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    protected function socialPreviewPostAction(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        Form $form
+    ): Response {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ride
+                ->setUpdatedAt(new \DateTime())
+                ->setUser($user);
+
+            $entityManager->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Änderungen gespeichert!');
+        }
+
+        return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
     }
 }
