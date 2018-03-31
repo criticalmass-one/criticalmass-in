@@ -2,93 +2,17 @@
 
 namespace Criticalmass\Component\Image\PhotoGps;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * @deprecated
  */
-class PhotoGps
+class PhotoGps extends AbstractPhotoGps
 {
-    /**
-     * @var Track $track
-     */
-    protected $track;
-
-    /**
-     * @var Photo $photo
-     */
-    protected $photo;
-
-    /**
-     * @var array $exifData
-     */
-    protected $exifData;
-
-    /**
-     * @var UploaderHelper $uploaderHelper
-     */
-    protected $uploaderHelper;
-
-    /**
-     * @var string $uploadDestinationPhoto
-     */
-    protected $uploadDestinationPhoto;
-
-    /**
-     * @var TrackReader $trackReader
-     */
-    protected $trackReader;
-
-    /** @var \DateTimeZone */
-    protected $dateTimeZone;
-
-    public function __construct(
-        UploaderHelper $uploaderHelper,
-        TrackReader $trackReader,
-        string $uploadDestinationPhoto
-    ) {
-        $this->uploaderHelper = $uploaderHelper;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
-        $this->trackReader = $trackReader;
-    }
-
-    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGps
-    {
-        $this->dateTimeZone = $dateTimeZone;
-        $this->trackReader->setDateTimeZone($dateTimeZone);
-
-        return $this;
-    }
-
-    public function setPhoto(Photo $photo): PhotoGps
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getPhoto(): Photo
-    {
-        return $this->photo;
-    }
-
-    public function setTrack(Track $track = null): PhotoGps
-    {
-        $this->track = $track;
-
-        return $this;
-    }
-
-    public function execute(): PhotoGps
+    public function execute(): PhotoGpsInterface
     {
         if ($gps = $this->getExifCoords()) {
-            /** @todo check keys of gps array */
-
             $this->photo
                 ->setLatitude($gps['lat'])
                 ->setLongitude($gps['lon']);
@@ -99,13 +23,11 @@ class PhotoGps
         return $this;
     }
 
-    public function approximateCoordinates(): PhotoGps
+    protected function approximateCoordinates(): PhotoGps
     {
         $this->trackReader->loadTrack($this->track);
 
-        $dateTime = $this->getExifDateTime();
-
-        if ($dateTime) {
+        if ($dateTime = $this->getExifDateTime()) {
             $result = $this->trackReader->findCoordNearDateTime($dateTime);
 
             $this->photo->setLatitude($result['latitude']);
@@ -148,8 +70,7 @@ class PhotoGps
 
     protected function readExifData(): Exif
     {
-        // @TODO fix this
-        $filename = sprintf('%s/..%s', $this->uploadDestinationPhoto, $this->uploaderHelper->asset($this->photo, 'imageFile'));
+        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $this->photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         $exif = $reader->read($filename);
