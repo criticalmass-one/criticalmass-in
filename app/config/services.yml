@@ -5,6 +5,7 @@ services:
         public: false
         bind:
             $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
             
     Criticalmass\Bundle\AppBundle\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/*'
@@ -17,7 +18,7 @@ services:
 
     Criticalmass\Component\:
         resource: '../../src/Criticalmass/Component/*'
-        exclude: '../../src/Criticalmass/Component/{Facebook,Image,Gps,UploadValidator}'
+        exclude: '../../src/Criticalmass/Component/{Facebook,Image,Gps,UploadValidator/UploadValidatorException}'
 
     Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
         arguments:

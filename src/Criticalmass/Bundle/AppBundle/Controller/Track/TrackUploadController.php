@@ -23,26 +23,26 @@ class TrackUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function uploadAction(Request $request, Ride $ride, $embed = false): Response
+    public function uploadAction(Request $request, Ride $ride, TrackValidator $trackValidator): Response
     {
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_track_upload', [
                 'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
+                'rideDate' => $ride->getFormattedDate(),
             ]))
             ->add('trackFile', VichFileType::class)
             ->getForm();
 
-        if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $track, $ride, $form, $embed);
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->uploadPostAction($request, $track, $ride, $form, $trackValidator);
         } else {
-            return $this->uploadGetAction($request, $ride, $form, $embed);
+            return $this->uploadGetAction($request, $ride, $form, $trackValidator);
         }
     }
 
-    protected function uploadGetAction(Request $request, Ride $ride, Form $form, $embed): Response
+    protected function uploadGetAction(Request $request, Ride $ride, Form $form, TrackValidator $trackValidator): Response
     {
         return $this->render('AppBundle:Track:upload.html.twig', [
             'form' => $form->createView(),
@@ -51,25 +51,19 @@ class TrackUploadController extends AbstractController
         ]);
     }
 
-    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, $embed): Response
+    public function uploadPostAction(Request $request, Track $track, Ride $ride, Form $form, TrackValidator $trackValidator): Response
     {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            /**
-             * @var Track $track
-             */
+            /** @var Track $track */
             $track = $form->getData();
 
             /* Save the track so the Uploader will place the file at the file system */
             $em->persist($track);
 
-            /**
-             * @var TrackValidator $trackValidator
-             */
-            $trackValidator = $this->get('caldera.criticalmass.uploadvalidator.track');
             $trackValidator->loadTrack($track);
 
             try {
@@ -84,9 +78,10 @@ class TrackUploadController extends AbstractController
 
             $this->loadTrackProperties($track);
 
-            $track->setRide($ride);
-            $track->setUser($this->getUser());
-            $track->setUsername($this->getUser()->getUsername());
+            $track
+                ->setRide($ride)
+                ->setUser($this->getUser())
+                ->setUsername($this->getUser()->getUsername());
 
             $em->persist($track);
             $em->flush();
@@ -100,10 +95,6 @@ class TrackUploadController extends AbstractController
             ]));
         }
 
-        return $this->render('AppBundle:Track:upload.html.twig', [
-            'form' => $form->createView(),
-            'ride' => $ride,
-            'errorMessage' => null,
-        ]);
+        return $this->uploadGetAction($request, $ride, $form, $trackValidator);
     }
 }
