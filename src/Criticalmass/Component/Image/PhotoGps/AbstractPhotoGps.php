@@ -52,6 +52,13 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
     {
         $this->photo = $photo;
 
+        if ($photo->getCity() && $photo->getCity()->getTimezone() && !$this->dateTimeZone) {
+            $timezone = $photo->getCity()->getTimezone();
+
+            $this->dateTimeZone = new \DateTimeZone($timezone);
+            $this->trackReader->setDateTimeZone($this->dateTimeZone);
+        }
+
         return $this;
     }
 

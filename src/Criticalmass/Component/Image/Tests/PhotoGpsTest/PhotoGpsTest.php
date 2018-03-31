@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Component\Util\Tests;
 
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Component\Image\PhotoGps\PhotoGps;
 use Criticalmass\Component\Image\PhotoGps\PhotoGpsInterface;
 use Criticalmass\Component\Image\Tests\PhotoGpsTest\Mocks\GpsPhoto;
@@ -49,6 +50,23 @@ class PhotoGpsTest extends KernelTestCase
         $track = new MockTrack();
 
         $this->getPhotoGps()->setPhoto($photo)->setDateTimeZone(new \DateTimeZone('Europe/Berlin'))->setTrack($track)->execute();
+
+        $this->assertTrue($photo->hasCoordinates());
+        $this->assertEquals(52.268021, $photo->getLatitude());
+        $this->assertEquals(10.500126, $photo->getLongitude());
+    }
+
+    public function testPhotoTrackCoordsAutoTimezone(): void
+    {
+        $city = new City();
+        $city->setTimezone('Europe/Berlin');
+
+        $photo = new NoGpsPhoto();
+        $photo->setCity($city);
+
+        $track = new MockTrack();
+
+        $this->getPhotoGps()->setPhoto($photo)->setTrack($track)->execute();
 
         $this->assertTrue($photo->hasCoordinates());
         $this->assertEquals(52.268021, $photo->getLatitude());
