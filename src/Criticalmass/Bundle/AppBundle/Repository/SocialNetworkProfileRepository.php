@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -19,14 +20,42 @@ class SocialNetworkProfileRepository extends EntityRepository
         return $builder;
     }
 
-    public function findByCity(City $city): array
+    public function findByProfileable(string $profileAble): array
     {
+        $reflection = new \ReflectionClass($profileAble);
+        $lcEntityClassname = lcfirst($reflection->getShortName());
+
+        $joinColumnName = sprintf('snp.%s', $lcEntityClassname);
+
         $queryBuilder = $this->getProfileAbleQueryBuilder();
 
         $queryBuilder
-            ->andWhere($queryBuilder->expr()->eq('snp.city', ':city'))
-            ->setParameter('city', $city);
+            ->andWhere($queryBuilder->expr()->eq($joinColumnName, ':profileAble'))
+            ->setParameter('profileAble', $profileAble);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $method
+     * @param array $arguments
+     */
+    public function __call($method, $arguments): array
+    {
+        $methodPrefix = 'findBy';
+        $entityNamespace = 'Criticalmass\\Bundle\\AppBundle\\Entity';
+
+        if (0 === strpos($method, $methodPrefix)) {
+            $entityClassname = substr($method, 6);
+
+            $fqcn = sprintf('%s\\%s', $entityNamespace, $entityClassname);
+            $class = new $fqcn;
+
+            if ($class instanceof SocialNetworkProfileAble) {
+                return $this->findByProfileable($arguments[0]);
+            }
+        }
+
+        return parent::__call($method, $arguments);
     }
 }
