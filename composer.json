@@ -39,7 +39,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/rest-bundle": "2.0.0",
-        "hwi/oauth-bundle": "0.5.*",
+        "hwi/oauth-bundle": "^0.6",
         "php-curl-class/php-curl-class": "^7.0",
         "malenki/slug": "1.0.0",
         "cmfcmf/openweathermap-php-api": "^2.1",
