@@ -13,8 +13,6 @@ class PhotoGps extends AbstractPhotoGps
     public function execute(): PhotoGpsInterface
     {
         if ($gps = $this->getExifCoords()) {
-            /** @todo check keys of gps array */
-
             $this->photo
                 ->setLatitude($gps['lat'])
                 ->setLongitude($gps['lon']);
@@ -29,9 +27,7 @@ class PhotoGps extends AbstractPhotoGps
     {
         $this->trackReader->loadTrack($this->track);
 
-        $dateTime = $this->getExifDateTime();
-
-        if ($dateTime) {
+        if ($dateTime = $this->getExifDateTime()) {
             $result = $this->trackReader->findCoordNearDateTime($dateTime);
 
             $this->photo->setLatitude($result['latitude']);
@@ -74,8 +70,7 @@ class PhotoGps extends AbstractPhotoGps
 
     protected function readExifData(): Exif
     {
-        // @TODO fix this
-        $filename = sprintf('%s/..%s', $this->uploadDestinationPhoto, $this->uploaderHelper->asset($this->photo, 'imageFile'));
+        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $this->photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         $exif = $reader->read($filename);
