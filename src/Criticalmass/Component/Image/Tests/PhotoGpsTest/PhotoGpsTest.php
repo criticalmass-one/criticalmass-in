@@ -48,10 +48,10 @@ class PhotoGpsTest extends KernelTestCase
         $photo = new NoGpsPhoto();
         $track = new MockTrack();
 
-        $this->getPhotoGps()->setPhoto($photo)->setTrack($track)->execute();
+        $this->getPhotoGps()->setPhoto($photo)->setDateTimeZone(new \DateTimeZone('Europe/Berlin'))->setTrack($track)->execute();
 
         $this->assertTrue($photo->hasCoordinates());
-        $this->assertEquals(52.26329, $photo->getLatitude());
-        $this->assertEquals(10.527089, $photo->getLongitude());
+        $this->assertEquals(52.268021, $photo->getLatitude());
+        $this->assertEquals(10.500126, $photo->getLongitude());
     }
 }
