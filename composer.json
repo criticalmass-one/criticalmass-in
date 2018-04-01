@@ -39,7 +39,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/rest-bundle": "2.0.0",
-        "hwi/oauth-bundle": "^0.6",
+        "hwi/oauth-bundle": "^0.6.2",
         "php-curl-class/php-curl-class": "^7.0",
         "malenki/slug": "1.0.0",
         "cmfcmf/openweathermap-php-api": "^2.1",
@@ -57,7 +57,9 @@
         "basvandorst/stravaphp": "^1.0",
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
-        "maxh/php-nominatim": "^1.2"
+        "maxh/php-nominatim": "^1.2",
+        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/httplug-bundle": "^1.10"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
