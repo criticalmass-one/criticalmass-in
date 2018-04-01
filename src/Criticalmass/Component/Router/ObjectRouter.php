@@ -24,8 +24,10 @@ class ObjectRouter
         $this->router = $router;
     }
 
-    public function generate(RouteableInterface $object, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    public function generate(
+        RouteableInterface $object,
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         $classNameParts = explode('\\', get_class($object));
         $className = array_pop($classNameParts);
 
@@ -71,8 +73,10 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    protected function generateLocationUrl(Location $location, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    protected function generateLocationUrl(
+        Location $location,
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         $route = 'caldera_criticalmass_location_show';
 
         $parameters = [
@@ -105,8 +109,10 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    protected function generateThreadUrl(Thread $thread, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    protected function generateThreadUrl(
+        Thread $thread,
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
             $route = 'caldera_criticalmass_board_viewcitythread';
@@ -127,8 +133,10 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, $referenceType);
     }
 
-    protected function generateRegionUrl(Region $region, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    protected function generateRegionUrl(
+        Region $region,
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         if ($region->getParent() == null) {
             return $this->router->generate(
                 'caldera_criticalmass_region_world', [], $referenceType);

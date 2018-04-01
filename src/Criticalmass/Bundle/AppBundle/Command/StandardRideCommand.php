@@ -2,18 +2,33 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command;
 
-use Criticalmass\Bundle\AppBundle\CityCycleRideGenerator\CityCycleRideGenerator;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Criticalmass\Component\RideGenerator\RideGenerator\RideGeneratorInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StandardRideCommand extends ContainerAwareCommand
+class StandardRideCommand extends Command
 {
+    /** @var RideGeneratorInterface $rideGenerator */
+    protected $rideGenerator;
+
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct($name = null, RideGeneratorInterface $rideGenerator, RegistryInterface $registry)
+    {
+        $this->rideGenerator = $rideGenerator;
+        $this->registry = $registry;
+
+        parent::__construct($name);
+    }
+
     protected function configure()
     {
         $this
@@ -45,42 +60,31 @@ class StandardRideCommand extends ContainerAwareCommand
         /** @var int $month */
         $month = $input->getArgument('month');
 
-        $generator = $this->getContainer()->get('Criticalmass\Component\RideGenerator\RideGenerator\RideGenerator');
-        $generator
+        $manager = $this->registry->getManager();
+
+        $cities = $this->registry->getRepository(City::class)->findCities();
+
+        $this->rideGenerator
             ->setMonth($month)
             ->setYear($year)
-        ;
-
-        $doctrine = $this->getContainer()->get('doctrine');
-        $manager = $doctrine->getManager();
-
-        $cities = $doctrine->getRepository('AppBundle:City')->findCities();
+            ->setCityList($cities)
+            ->execute();
 
         $table = new Table($output);
-        $table
-            ->setHeaders(['City', 'DateTime', 'Location'])
-        ;
+        $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location']);
 
-        /** @var City $city */
-        foreach ($cities as $city) {
-            $rides = $generator
-                ->setCity($city)
-                ->execute()
-                ->getList()
-            ;
+        $utc = new \DateTimeZone('UTC');
 
-            if (count($rides)) {
-                /** @var Ride $ride */
-                foreach ($rides as $ride) {
-                    $table->addRow([
-                        $city->getCity(),
-                        $ride->getDateTime()->format('Y-m-d H:i'),
-                        $ride->getLocation(),
-                    ]);
+        /** @var Ride $ride */
+        foreach ($this->rideGenerator->getRideList() as $ride) {
+            $table->addRow([
+                $ride->getCity()->getCity(),
+                $ride->getDateTime()->format('Y-m-d H:i'),
+                $ride->getDateTime()->setTimezone($utc)->format('Y-m-d H:i'),
+                $ride->getLocation(),
+            ]);
 
-                    $manager->persist($ride);
-                }
-            }
+            $manager->persist($ride);
         }
 
         $table->render();

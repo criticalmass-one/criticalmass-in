@@ -82,7 +82,6 @@ select.form-control {
   display: block;
 }
 
-
 //
 // Labels
 //
@@ -107,7 +106,6 @@ select.form-control {
   font-size: $font-size-sm;
 }
 
-
 //
 // Legends
 //
@@ -120,7 +118,6 @@ select.form-control {
   margin-bottom: 0;
   font-size: $font-size-base;
 }
-
 
 // Readonly controls as plain text
 //
@@ -141,7 +138,6 @@ select.form-control {
     padding-left: 0;
   }
 }
-
 
 // Form control sizing
 //
@@ -177,7 +173,6 @@ select.form-control-lg {
   }
 }
 
-
 // Form groups
 //
 // Designed to help with the organization and spacing of vertical forms. For
@@ -191,7 +186,6 @@ select.form-control-lg {
   display: block;
   margin-top: $form-text-margin-top;
 }
-
 
 // Form grid
 //
@@ -209,7 +203,6 @@ select.form-control-lg {
     padding-left: 5px;
   }
 }
-
 
 // Checkboxes and radios
 //
@@ -255,7 +248,6 @@ select.form-control-lg {
   }
 }
 
-
 // Form validation
 //
 // Provide feedback to users when form field values are valid or invalid. Works
@@ -281,7 +273,7 @@ select.form-control-lg {
   font-size: .875rem;
   line-height: 1;
   color: #fff;
-  background-color: rgba($form-feedback-invalid-color,.8);
+  background-color: rgba($form-feedback-invalid-color, .8);
   border-radius: .2rem;
 }
 

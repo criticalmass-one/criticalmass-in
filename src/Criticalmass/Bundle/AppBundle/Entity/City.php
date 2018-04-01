@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
+use Caldera\GeoBasic\Coord\Coord;
 use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
@@ -466,7 +467,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->description;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function isEqual(City $city): bool
     {
         return $city->getId() === $this->getId();
@@ -607,6 +608,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getPin(): string
     {
         return sprintf('%f,%f', $this->latitude, $this->longitude);
+    }
+
+    public function getCoord(): Coord
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 
     public function setEnableBoard(bool $enableBoard): City

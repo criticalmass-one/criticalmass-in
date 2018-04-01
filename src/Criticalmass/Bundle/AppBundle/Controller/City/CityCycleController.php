@@ -2,8 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Form\Type\CityCycleType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
@@ -15,48 +17,34 @@ class CityCycleController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function listAction(Request $request, UserInterface $user, string $citySlug): Response
+    public function listAction(UserInterface $user, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
-        $cycles = $this->getCityCycleRepository()->findByCity($city);
-
-        return $this->render(
-            'AppBundle:CityCycle:list.html.twig',
-            [
-                'cycles' => $cycles,
-                'city' => $city,
-            ]
-        );
+        return $this->render('AppBundle:CityCycle:list.html.twig', [
+            'cycles' => $this->getCityCycleRepository()->findByCity($city),
+            'city' => $city,
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, string $citySlug): Response
+    public function addAction(Request $request, UserInterface $user, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
         $cityCycle = new CityCycle();
         $cityCycle
             ->setCity($city)
-            ->setUser($user)
-        ;
+            ->setUser($user);
 
-        $form = $this->createForm(
-            CityCycleType::class,
-            $cityCycle,
-            [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_citycycle_add',
-                    [
-                        'citySlug' => $citySlug,
-                    ]
-                )
-            ]
-        );
+        $form = $this->createForm(CityCycleType::class, $cityCycle, [
+            'action' => $this->generateUrl('caldera_criticalmass_citycycle_add', [
+                'citySlug' => $city->getMainSlugString(),
+            ])
+        ]);
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->addPostAction($request, $user, $cityCycle, $form);
         } else {
             return $this->addGetAction($request, $user, $cityCycle, $form);
@@ -65,19 +53,16 @@ class CityCycleController extends AbstractController
 
     protected function addGetAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
     {
-        return $this->render(
-            'AppBundle:CityCycle:edit.html.twig',
-            [
-                'city' => $cityCycle->getCity(),
-                'cityCycle' => $cityCycle,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+            'city' => $cityCycle->getCity(),
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
     }
 
-    protected function addPostAction(Request $request,UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function addPostAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
     {
-        $city =  $cityCycle->getCity();
+        $city = $cityCycle->getCity();
 
         $form->handleRequest($request);
 
@@ -86,63 +71,34 @@ class CityCycleController extends AbstractController
             $em->persist($cityCycle);
             $em->flush();
 
-            $form = $this->createForm(
-                CityCycleType::class,
-                $cityCycle,
-                [
-                    'action' => $this->generateUrl(
-                        'caldera_criticalmass_citycycle_add',
-                        [
-                            'citySlug' => $city->getMainSlugString(),
-                        ]
-                    )
-                ]
-            );
-
-            return $this->redirectToRoute('caldera_criticalmass_citycycle_list', ['citySlug' => $city->getMainSlugString()]);
+            return $this->redirectToRoute('caldera_criticalmass_citycycle_list', [
+                'citySlug' => $city->getMainSlugString(),
+            ]);
         }
 
-        return $this->render(
-            'AppBundle:CityCycle:edit.html.twig',
-            [
-                'city' => $city,
-                'cityCycle' => $cityCycle,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+            'city' => $city,
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("cityCycle", class="AppBundle:CityCycle", options={"id" = "cycleId"})
      */
-    public function editAction(Request $request, UserInterface $user, string $citySlug, int $cycleId): Response
+    public function editAction(Request $request, UserInterface $user, CityCycle $cityCycle): Response
     {
-        /** @var CityCycle $cityCycle */
-        $cityCycle = $this->getCityCycleRepository()->find($cycleId);
+        $cityCycle->setUser($user);
 
-        if (!$cityCycle) {
-            throw $this->createNotFoundException();
-        }
+        $form = $this->createForm(CityCycleType::class, $cityCycle, [
+            'action' => $this->generateUrl('caldera_criticalmass_citycycle_edit', [
+                'citySlug' => $cityCycle->getCity()->getMainSlugString(),
+                'cycleId' => $cityCycle->getId(),
+            ])
+        ]);
 
-        $cityCycle
-            ->setUser($user)
-        ;
-
-        $form = $this->createForm(
-            CityCycleType::class,
-            $cityCycle,
-            [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_citycycle_edit',
-                    [
-                        'citySlug' => $citySlug,
-                        'cycleId' => $cycleId,
-                    ]
-                )
-            ]
-        );
-
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST == $request->getMethod()) {
             return $this->addPostAction($request, $user, $cityCycle, $form);
         } else {
             return $this->addGetAction($request, $user, $cityCycle, $form);
@@ -151,19 +107,16 @@ class CityCycleController extends AbstractController
 
     protected function editGetAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
     {
-        return $this->render(
-            'AppBundle:CityCycle:edit.html.twig',
-            [
-                'city' => $cityCycle->getCity(),
-                'cityCycle' => $cityCycle,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+            'city' => $cityCycle->getCity(),
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
     }
 
-    protected function editPostAction(Request $request,UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function editPostAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
     {
-        $city =  $cityCycle->getCity();
+        $city = $cityCycle->getCity();
 
         $form->handleRequest($request);
 
@@ -172,39 +125,26 @@ class CityCycleController extends AbstractController
             $em->persist($cityCycle);
             $em->flush();
 
-            $form = $this->createForm(
-                CityCycleType::class,
-                $cityCycle,
-                [
-                    'action' => $this->generateUrl(
-                        'caldera_criticalmass_citycycle_edit',
-                        [
-                            'citySlug' => $city->getMainSlugString(),
-                            'cycleId' => $cityCycle->getId(),
-                        ]
-                    )
-                ]
-            );
+            $form = $this->createForm(CityCycleType::class, $cityCycle, [
+                'action' => $this->generateUrl('caldera_criticalmass_citycycle_edit', [
+                    'citySlug' => $city->getMainSlugString(),
+                    'cycleId' => $cityCycle->getId(),
+                ])
+            ]);
 
-            return $this->render(
-                'AppBundle:CityCycle:edit.html.twig',
-                [
-                    'city' => $city,
-                    'cityCycle' => $cityCycle,
-                    'form' => $form->createView(),
-                ]
-            );
+            return $this->render('AppBundle:CityCycle:edit.html.twig', [
+                'city' => $city,
+                'cityCycle' => $cityCycle,
+                'form' => $form->createView(),
+            ]);
         } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
 
-        return $this->render(
-            'AppBundle:CityCycle:edit.html.twig',
-            [
-                'city' => $city,
-                'cityCycle' => $cityCycle,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+            'city' => $city,
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
     }
 }

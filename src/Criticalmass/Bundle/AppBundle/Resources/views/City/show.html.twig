@@ -85,31 +85,35 @@
                                 CriticalMass.loadModule('ReadMore', '.readmore');
                             </script>
                         {% else %}
-                        <div class="alert alert-info">
-                            <strong>Huch?</strong>
-                            Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du Lust und Zeit hast, kannst du {{ city.title }} <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}">hier beschreiben</a>:
+                            <div class="alert alert-info">
+                                <strong>Huch?</strong>
+                                Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
+                                Lust und Zeit hast, kannst du {{ city.title }} <a
+                                        href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}">hier
+                                    beschreiben</a>:
 
-                            <ul>
-                                <li>
-                                    Seit wann gibt es die Critical Mass in {{ city.city }}?
-                                </li>
-                                <li>
-                                    Wie lange dauern eure Touren?
-                                </li>
-                                <li>
-                                    Wo fahrt ihr ungefähr lang?
-                                </li>
-                                <li>
-                                    Welche Probleme gibt es in {{ city.city }} für den Radverkehr?
-                                </li>
-                            </ul>
+                                <ul>
+                                    <li>
+                                        Seit wann gibt es die Critical Mass in {{ city.city }}?
+                                    </li>
+                                    <li>
+                                        Wie lange dauern eure Touren?
+                                    </li>
+                                    <li>
+                                        Wo fahrt ihr ungefähr lang?
+                                    </li>
+                                    <li>
+                                        Welche Probleme gibt es in {{ city.city }} für den Radverkehr?
+                                    </li>
+                                </ul>
 
-                            <p class="text-center margin-top-medium">
-                                <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}" class="btn btn-primary btn-lg">
-                                    {{ city.city }} editieren
-                                </a>
-                            </p>
-                        </div>
+                                <p class="text-center margin-top-medium">
+                                    <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}"
+                                       class="btn btn-primary btn-lg">
+                                        {{ city.city }} editieren
+                                    </a>
+                                </p>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
@@ -184,7 +188,6 @@
                             CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
                         </script>
                     </div>
-                </div>
                 {% endif %}
 
                 {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}

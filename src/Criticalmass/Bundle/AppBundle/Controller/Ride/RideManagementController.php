@@ -2,46 +2,40 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
+use Criticalmass\Bundle\AppBundle\Form\Type\RideSocialPreviewType;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Facebook\FacebookEventRideApi;
 use Criticalmass\Bundle\AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, string $citySlug): Response
+    public function addAction(Request $request, UserInterface $user, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $ride = new Ride();
         $ride
             ->setCity($city)
-            ->setUser($user)
-        ;
+            ->setUser($user);
 
-        $form = $this->createForm(
-            RideType::class,
-            $ride,
-            [
-                'action' => $this->generateUrl(
-                    'caldera_criticalmass_desktop_ride_add',
-                    [
-                        'citySlug' => $city->getMainSlugString()
-                    ]
-                )
-            ]
-        );
+        $form = $this->createForm(RideType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', [
+                'citySlug' => $city->getMainSlugString(),
+            ])
+        ]);
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->addPostAction($request, $user, $ride, $city, $form);
         } else {
             return $this->addGetAction($request, $user, $ride, $city, $form);
@@ -65,8 +59,13 @@ class RideManagementController extends AbstractController
         );
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
-    {
+    protected function addPostAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         $form->handleRequest($request);
@@ -115,35 +114,37 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function editAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
+    public function editAction(Request $request, UserInterface $user, Ride $ride): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-        $rideDateTime = $this->getCheckedDateTime($rideDate);
-        $ride = $this->getCheckedRide($city, $rideDateTime);
-
         $form = $this->createForm(
             RideType::class,
             $ride,
             array(
                 'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit',
                     array(
-                        'citySlug' => $city->getMainSlugString(),
+                        'citySlug' => $ride->getCity()->getMainSlugString(),
                         'rideDate' => $ride->getDateTime()->format('Y-m-d')
                     )
                 )
             )
         );
 
-        if ('POST' == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $ride, $city, $form);
+        if (Request::METHOD_POST == $request->getMethod()) {
+            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form);
         } else {
-            return $this->editGetAction($request, $user, $ride, $city, $form);
+            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form);
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
-    {
+    protected function editGetAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render(
@@ -159,8 +160,13 @@ class RideManagementController extends AbstractController
         );
     }
 
-    protected function editPostAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
-    {
+    protected function editPostAction(
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        City $city,
+        Form $form
+    ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         $form->handleRequest($request);
@@ -171,8 +177,7 @@ class RideManagementController extends AbstractController
         if ($form->isValid()) {
             $ride
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user)
-            ;
+                ->setUser($user);
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -198,11 +203,10 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function facebookUpdateAction(Request $request, string $citySlug, string $rideDate): Response
+    public function facebookUpdateAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         /**
          * @var FacebookEventRideApi $fera
          */
@@ -232,5 +236,64 @@ class RideManagementController extends AbstractController
                 'form' => $form->createView()
             ]
         );
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function socialPreviewAction(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        UserInterface $user,
+        Ride $ride
+    ): Response {
+        $form = $this->createForm(RideSocialPreviewType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_ride_socialpreview', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getDateTime()->format('Y-m-d')
+            ])
+        ]);
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->socialPreviewPostAction($entityManager, $request, $user, $ride, $form);
+        } else {
+            return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
+        }
+    }
+
+    protected function socialPreviewGetAction(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        Form $form
+    ): Response {
+        return $this->render('AppBundle:RideManagement:social_preview.html.twig', [
+            'ride' => $ride,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    protected function socialPreviewPostAction(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        UserInterface $user,
+        Ride $ride,
+        Form $form
+    ): Response {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ride
+                ->setUpdatedAt(new \DateTime())
+                ->setUser($user);
+
+            $entityManager->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Änderungen gespeichert!');
+        }
+
+        return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
     }
 }

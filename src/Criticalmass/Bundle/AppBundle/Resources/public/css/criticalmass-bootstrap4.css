@@ -5862,49 +5862,49 @@ a.text-dark:hover {
 
 /* Sprites setup */
 .extra-marker-circle-red {
-  background-position: 0          0; }
+  background-position: 0 0; }
 
 .extra-marker-circle-orange-dark {
-  background-position: -36px      0; }
+  background-position: -36px 0; }
 
 .extra-marker-circle-orange {
-  background-position: -72px      0; }
+  background-position: -72px 0; }
 
 .extra-marker-circle-yellow {
-  background-position: -108px     0; }
+  background-position: -108px 0; }
 
 .extra-marker-circle-blue-dark {
-  background-position: -144px     0; }
+  background-position: -144px 0; }
 
 .extra-marker-circle-blue {
-  background-position: -180px     0; }
+  background-position: -180px 0; }
 
 .extra-marker-circle-cyan {
-  background-position: -216px     0; }
+  background-position: -216px 0; }
 
 .extra-marker-circle-purple {
-  background-position: -252px     0; }
+  background-position: -252px 0; }
 
 .extra-marker-circle-violet {
-  background-position: -288px     0; }
+  background-position: -288px 0; }
 
 .extra-marker-circle-pink {
-  background-position: -324px     0; }
+  background-position: -324px 0; }
 
 .extra-marker-circle-green-dark {
-  background-position: -360px     0; }
+  background-position: -360px 0; }
 
 .extra-marker-circle-green {
-  background-position: -396px     0; }
+  background-position: -396px 0; }
 
 .extra-marker-circle-green-light {
-  background-position: -432px     0; }
+  background-position: -432px 0; }
 
 .extra-marker-circle-black {
-  background-position: -468px     0; }
+  background-position: -468px 0; }
 
 .extra-marker-circle-white {
-  background-position: -504px     0; }
+  background-position: -504px 0; }
 
 .extra-marker-square-red {
   background-position: 0 -46px; }
@@ -6206,8 +6206,7 @@ body .transit-hvv-u4 {
 
 body .transit-hvv-a1,
 body .transit-hvv-a2,
-body
-.transit-hvv-a3 {
+body .transit-hvv-a3 {
   background-color: #e7873a; }
 
 .readmore {

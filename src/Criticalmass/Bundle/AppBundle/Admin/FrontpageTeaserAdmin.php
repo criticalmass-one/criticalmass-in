@@ -23,34 +23,28 @@ class FrontpageTeaserAdmin extends AbstractAdmin
             ->add('text', TextareaType::class, ['required' => false])
             ->add('position', NumberType::class, ['required' => true])
             ->end()
-
             ->with('Photo', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class, ['required' => false])
             ->end()
-
             ->with('Valid range', ['class' => 'col-md-6'])
             ->add('validFrom', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->add('validUntil', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->end()
-
             ->with('Buttons', ['class' => 'col-md-6'])
             ->add('buttons')
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('headline')
-            ->add('text')
-        ;
+            ->add('text');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('headline')
-        ;
+            ->addIdentifier('headline');
     }
 }

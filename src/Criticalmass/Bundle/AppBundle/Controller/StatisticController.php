@@ -2,44 +2,43 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
+use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Component\SeoPage\SeoPage;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
 {
-    public function citystatisticAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function citystatisticAction(Request $request, SeoPage $seoPage, City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        $this->getSeoPage()->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $seoPage->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
-        return $this->render(
-            'AppBundle:Statistic:city_statistic.html.twig',
-            [
-                'city' => $city,
-                'rides' => $rides
-            ]
-        );
+        return $this->render('AppBundle:Statistic:city_statistic.html.twig', [
+            'city' => $city,
+            'rides' => $rides,
+        ]);
     }
 
-    public function ridestatisticAction(Request $request, $citySlug, $rideDate)
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function ridestatisticAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $frp = $this->getFacebookRidePropertiesRepository()->findByRide($ride);
 
-        return $this->render(
-            'AppBundle:Statistic:ride_statistic.html.twig',
-            [
-                'ride' => $ride,
-                'frp' => $frp
-            ]
-        );
+        return $this->render('AppBundle:Statistic:ride_statistic.html.twig', [
+            'ride' => $ride,
+            'frp' => $frp
+        ]);
     }
 
     public function facebookstatisticAction(Request $request)
@@ -73,7 +72,7 @@ class StatisticController extends AbstractController
         );
     }
 
-    public function overviewAction(Request $request)
+    public function overviewAction(Request $request, SeoPage $seoPage)
     {
         /**
          * @var Region $region
@@ -106,7 +105,7 @@ class StatisticController extends AbstractController
 
         rsort($rideMonths);
 
-        $this->getSeoPage()->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $seoPage->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
             'AppBundle:Statistic:overview.html.twig',

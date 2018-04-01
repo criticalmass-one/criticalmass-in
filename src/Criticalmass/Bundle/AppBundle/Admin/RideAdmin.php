@@ -18,40 +18,34 @@ class RideAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Details', ['class' => 'col-md-6'])
-                ->add('city')
-                ->add('title')
-                ->add('description')
-                ->add('socialDescription')
-                ->add('restrictedPhotoAccess')
+            ->add('city')
+            ->add('title')
+            ->add('description')
+            ->add('socialDescription')
+            ->add('restrictedPhotoAccess')
             ->end()
-
             ->with('Vorschaubild', ['class' => 'col-md-6'])
-                ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class)
             ->end()
-
             ->with('Soziale Netze', ['class' => 'col-md-6'])
-                ->add('facebook')
-                ->add('twitter')
-                ->add('url')
+            ->add('facebook')
+            ->add('twitter')
+            ->add('url')
             ->end()
-
             ->with('Uhrzeit', ['class' => 'col-md-6'])
-                ->add('hasTime')
-                ->add('dateTime')
+            ->add('hasTime')
+            ->add('dateTime')
             ->end()
-
             ->with('Treffpunkt', ['class' => 'col-md-6'])
-                ->add('hasLocation')
-                ->add('location')
-                ->add('latitude')
-                ->add('longitude')
+            ->add('hasLocation')
+            ->add('location')
+            ->add('latitude')
+            ->add('longitude')
             ->end()
-
             ->with('Statistik', ['class' => 'col-md-6'])
-                ->add('estimatedParticipants')
-                ->add('estimatedDuration')
-            ->end()
-        ;
+            ->add('estimatedParticipants')
+            ->add('estimatedDuration')
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -60,8 +54,7 @@ class RideAdmin extends AbstractAdmin
             ->add('dateTime')
             ->add('title')
             ->add('description')
-            ->add('location')
-        ;
+            ->add('location');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -70,7 +63,6 @@ class RideAdmin extends AbstractAdmin
             ->addIdentifier('dateTime')
             ->add('title')
             ->add('city')
-            ->add('location')
-        ;
+            ->add('location');
     }
 }

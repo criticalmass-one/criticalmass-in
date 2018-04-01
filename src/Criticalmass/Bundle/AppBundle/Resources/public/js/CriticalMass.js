@@ -1,7 +1,7 @@
 var CriticalMass = CriticalMass || {};
 
-CriticalMass.loadModule = function(name, context, options, callback) {
-    require([name], function(Module) {
+CriticalMass.loadModule = function (name, context, options, callback) {
+    require([name], function (Module) {
         var module = new Module(context, options);
 
         if (callback) {
@@ -12,8 +12,7 @@ CriticalMass.loadModule = function(name, context, options, callback) {
 
 require.config({
     baseUrl: '/bundles/app/',
-    paths:
-    {
+    paths: {
         "CityEntity": "/bundles/app/js/modules/entity/CityEntity",
         "WritePost": "/bundles/app/js/modules/WritePost",
         "CriticalService": "/bundles/app/js/modules/CriticalService",
@@ -186,10 +185,10 @@ require.config({
             deps: ['leaflet'],
             exports: 'L.Polyline'
         },
-        typeahead:{
+        typeahead: {
             deps: ['jquery'],
             init: function ($) {
-                return require.s.contexts._.registry['typeahead.js'].factory( $ );
+                return require.s.contexts._.registry['typeahead.js'].factory($);
             }
         },
         bloodhound: {

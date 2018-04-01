@@ -239,7 +239,7 @@ class Subride implements AuditableInterface
         return $this->url;
     }
 
-   public function setRide(Ride $ride = null): Subride
+    public function setRide(Ride $ride = null): Subride
     {
         $this->ride = $ride;
 
@@ -292,7 +292,7 @@ class Subride implements AuditableInterface
         return $this->dateTime;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function setTime(\DateTime $time): Subride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));

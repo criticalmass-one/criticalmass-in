@@ -11,8 +11,7 @@ class UserEmailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class)
-        ;
+            ->add('email', EmailType::class);
     }
 
     public function getName(): string

@@ -14,8 +14,7 @@ class FastBlurFilter implements LoaderInterface
 
         $image
             ->resize($pixelateDimension, ImageInterface::FILTER_CUBIC)
-            ->resize($dimension, ImageInterface::FILTER_CUBIC)
-        ;
+            ->resize($dimension, ImageInterface::FILTER_CUBIC);
 
         return $image;
     }

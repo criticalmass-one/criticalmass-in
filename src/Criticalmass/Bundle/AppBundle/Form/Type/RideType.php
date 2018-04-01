@@ -19,7 +19,6 @@ class RideType extends AbstractType
         $builder
             ->add('title', TextType::class, ['required' => false])
             ->add('description', TextareaType::class, ['required' => false])
-            ->add('socialDescription', TextareaType::class, ['required' => false])
             ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'Europe/Berlin',
@@ -36,13 +35,7 @@ class RideType extends AbstractType
             ->add('url', TextType::class, ['required' => false])
             ->add('hasLocation', CheckboxType::class, ['required' => false])
             ->add('hasTime', CheckboxType::class, ['required' => false])
-            ->add('save', SubmitType::class)
-            ->add('imageFile',
-                VichFileType::class,
-                [
-                    'required' => false
-                ])
-        ;
+            ->add('save', SubmitType::class);
     }
 
     public function getName(): string

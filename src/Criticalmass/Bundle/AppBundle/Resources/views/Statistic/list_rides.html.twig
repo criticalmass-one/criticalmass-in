@@ -28,29 +28,29 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>
-                                Stadt
-                            </th>
-                            <th>
-                                Datum
-                            </th>
-                            <th>
-                                Teilnehmer
-                            </th>
-                            <th>
-                                Distanz
-                            </th>
-                            <th>
-                                Länge
-                            </th>
-                            <th>
-                                Durchschnittsgeschwindigkeit
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Stadt
+                        </th>
+                        <th>
+                            Datum
+                        </th>
+                        <th>
+                            Teilnehmer
+                        </th>
+                        <th>
+                            Distanz
+                        </th>
+                        <th>
+                            Länge
+                        </th>
+                        <th>
+                            Durchschnittsgeschwindigkeit
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for ride in rides %}
+                    {% for ride in rides %}
                         <tr>
                             <td>
                                 {{ ride.city.city }}
@@ -71,7 +71,7 @@
                                 {{ ride.getAverageVelocity()|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

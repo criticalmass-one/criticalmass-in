@@ -9,24 +9,24 @@ define(['jquery', 'localforage'], function ($, localforage) {
 
     FahrradstadtHamburg.prototype._$container = null;
 
-    FahrradstadtHamburg.prototype._initStorage = function() {
+    FahrradstadtHamburg.prototype._initStorage = function () {
         localforage.config({
-            driver      : localforage.LOCALSTORAGE,
-            name        : 'criticalmass',
-            storeName   : 'fahrradstadt-hamburg'
+            driver: localforage.LOCALSTORAGE,
+            name: 'criticalmass',
+            storeName: 'fahrradstadt-hamburg'
         });
     };
 
-    FahrradstadtHamburg.prototype._init = function() {
+    FahrradstadtHamburg.prototype._init = function () {
         var that = this;
 
-        localforage.length().then(function(rowCounter) {
+        localforage.length().then(function (rowCounter) {
             if (rowCounter > 1) {
-                localforage.getItem('last-update').then(function(lastUpdate) {
+                localforage.getItem('last-update').then(function (lastUpdate) {
                     var diff = 1800 * 1000;
 
                     if (lastUpdate < (Date.now() - diff)) {
-                        localforage.clear().then(function() {
+                        localforage.clear().then(function () {
                             that._fetchFeed();
 
                             console.log('Fahrradstadt: Refreshing feed');
@@ -45,7 +45,7 @@ define(['jquery', 'localforage'], function ($, localforage) {
         });
     };
 
-    FahrradstadtHamburg.prototype._fetchFeed = function() {
+    FahrradstadtHamburg.prototype._fetchFeed = function () {
         $.ajax({
             url: 'https://fahrradstadt.hamburg/feed',
             dataType: 'xml',
@@ -73,10 +73,10 @@ define(['jquery', 'localforage'], function ($, localforage) {
         });
     };
 
-    FahrradstadtHamburg.prototype._displayRandomEntry = function() {
+    FahrradstadtHamburg.prototype._displayRandomEntry = function () {
         var that = this;
 
-        localforage.keys().then(function(keys) {
+        localforage.keys().then(function (keys) {
             var randomKey = keys[Math.floor(Math.random() * keys.length)];
 
             localforage.getItem(randomKey).then(function(item) {

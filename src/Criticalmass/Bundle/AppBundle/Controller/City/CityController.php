@@ -4,114 +4,102 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Traits\ViewStorageTrait;
+use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Component\ViewStorage\ViewStorageCache;
+use FOS\ElasticaBundle\Finder\FinderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CityController extends AbstractController
 {
-    use ViewStorageTrait;
-
-
-
-    public function missingStatsAction($citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function missingStatsAction(City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
-        $rides = $this->getRideRepository()->findRidesWithoutStatisticsForCity($city);
-
-        return $this->render(
-            'AppBundle:City:missing_stats.html.twig',
-            [
-                'city' => $city,
-                'rides' => $rides
-            ]
-        );
+        return $this->render('AppBundle:City:missing_stats.html.twig', [
+            'city' => $city,
+            'rides' => $this->getRideRepository()->findRidesWithoutStatisticsForCity($city),
+        ]);
     }
 
     protected function findNearCities(City $city)
     {
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.city');
+        /** @var FinderInterface $finder */
+        $finder = $this->container->get('fos_elastica.finder.criticalmass_city.city');
 
-        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
-        $selfFilter = new \Elastica\Filter\BoolNot(new \Elastica\Filter\Term(['id' => $city->getId()]));
+        $enabledQuery = new \Elastica\Query\Term(['isEnabled' => true]);
 
-        $geoFilter = new \Elastica\Filter\GeoDistance(
-            'pin',
-            [
-                'lat' => $city->getLatitude(),
-                'lon' => $city->getLongitude()
-            ],
+        $selfTerm = new \Elastica\Query\Term(['id' => $city->getId()]);
+        $selfQuery = new \Elastica\Query\BoolQuery();
+        $selfQuery->addMustNot($selfTerm);
+
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
+            'lat' => $city->getLatitude(),
+            'lon' => $city->getLongitude(),
+        ],
             '50km'
         );
 
-        $filter = new \Elastica\Filter\BoolAnd([$geoFilter, $enabledFilter, $selfFilter]);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($geoQuery)
+            ->addMust($enabledQuery)
+            ->addMust($selfQuery);
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
-
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(15);
-        $query->setSort(
-            [
-                '_geo_distance' =>
-                    [
-                        'pin' =>
-                            [
-                                $city->getLatitude(),
-                                $city->getLongitude()
-                            ],
-                        'order' => 'desc',
-                        'unit' => 'km'
-                    ]
+        $query->setSort([
+            '_geo_distance' => [
+                'pin' => [
+                    $city->getLatitude(),
+                    $city->getLongitude(),
+                ],
+                'order' => 'desc',
+                'unit' => 'km',
             ]
-        );
+        ]);
 
         $results = $finder->find($query);
 
         return $results;
     }
 
-    public function listRidesAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function listRidesAction(City $city): Response
     {
-        $city = $this->getCityBySlug($citySlug);
-
-        $rides = $this->getRideRepository()->findRidesForCity($city);
-
-        return $this->render('AppBundle:City:ride_list.html.twig',
-            [
-                'city' => $city,
-                'rides' => $rides
-            ]
-        );
+        return $this->render('AppBundle:City:ride_list.html.twig', [
+            'city' => $city,
+            'rides' => $this->getRideRepository()->findRidesForCity($city),
+        ]);
     }
 
-    public function listGalleriesAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function listGalleriesAction(Request $request, SeoPage $seoPage, City $city): Response
     {
-        $city = $this->getCityBySlug($citySlug);
-
-        $this->getSeoPage()->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
+        $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
-        return $this->render('AppBundle:City:gallery_list.html.twig',
-            [
-                'city' => $city,
-                'result' => $result
-            ]
-        );
+        return $this->render('AppBundle:City:gallery_list.html.twig', [
+            'city' => $city,
+            'result' => $result,
+        ]);
     }
 
-    public function showAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function showAction(SeoPage $seoPage, ViewStorageCache $viewStorageCache, City $city): Response
     {
-        $city = $this->getCityBySlug($citySlug);
-
-        if (!$city->getEnabled()) {
-            throw new NotFoundHttpException('Wir konnten keine Stadt unter der Bezeichnung "' . $citySlug . '" finden :(');
-        }
-
-        $this->countCityView($city);
+        $viewStorageCache->countView($city);
 
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
@@ -139,12 +127,11 @@ class CityController extends AbstractController
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
 
-        $this->getSeoPage()
+        $seoPage
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setPreviewPhoto($city)
             ->setCanonicalForObject($city)
-            ->setTitle($city->getTitle())
-        ;
+            ->setTitle($city->getTitle());
 
         return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,
@@ -157,26 +144,23 @@ class CityController extends AbstractController
         ]);
     }
 
-    public function liveAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function liveAction(City $city): Response
     {
-        $city = $this->getCityBySlug($citySlug);
-
-        return $this->render('CalderaCriticalmassDesktopBundle:City:live.html.twig', array('city' => $city));
+        return $this->render('CalderaCriticalmassDesktopBundle:City:live.html.twig', [
+            'city' => $city,
+        ]);
     }
 
-    public function getlocationsAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function getlocationsAction(City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
-        $locations = $this->getRideRepository()->getLocationsForCity($city);
-
-        return new Response
-        (
-            json_encode($locations),
-            200,
-            [
-                'Content-Type' => 'text/json'
-            ]
-        );
+        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), 200, [
+            'Content-Type' => 'text/json',
+        ]);
     }
 }
