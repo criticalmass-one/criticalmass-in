@@ -6,6 +6,7 @@ services:
         bind:
             $openWeatherMapApiKey: '%openweather.appid%'
             $rootDirectory: '%kernel.root_dir%'
+            $staticmapsHost: '%staticmaps.host%'
             
     Criticalmass\Bundle\AppBundle\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/*'
