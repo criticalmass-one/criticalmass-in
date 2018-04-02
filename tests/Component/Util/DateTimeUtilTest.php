@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Util\Tests;
+namespace Tests\Component\Util;
 
 use Criticalmass\Component\Util\DateTimeUtil;
 use PHPUnit\Framework\TestCase;
