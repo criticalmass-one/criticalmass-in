@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Image\Tests\PhotoGpsTest\Mocks;
+namespace Tests\Component\Image\PhotoGps\Mocks;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 
@@ -8,6 +8,6 @@ class GpsPhoto extends Photo
 {
     public function getImageName(): ?string
     {
-        return '../../src/Criticalmass/Component/Image/Tests/PhotoGpsTest/Files/coords.jpeg';
+        return '../../tests/Component/Image/PhotoGps/Files/coords.jpeg';
     }
 }
