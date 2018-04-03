@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\EntityInterface;
 
-class AutoParamConverterAble
+interface AutoParamConverterAble
 {
 
 }

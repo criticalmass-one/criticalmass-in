@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
+use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,13 +24,17 @@ class AbstractCriticalmassParamConverter extends AbstractParamConverter
         }
     }
 
-    protected function autoGuess(Request $request, ParamConverter $configuration)
+    protected function autoGuess(Request $request, ParamConverter $configuration): ?AutoParamConverterAble
     {
-        foreach ($this->autoGuessOrder as $property) {
-            $requestParameterKey = sprintf('%s%s', $this->getLowercaseEntityShortName(), ucfirst($property));
+        foreach ($this->autoGuessOrder as $propertyName) {
+            if (!$this->hasEntityPropertyName($propertyName)) {
+                continue;
+            }
+
+            $requestParameterKey = sprintf('%s%s', $this->getLowercaseEntityShortName(), ucfirst($propertyName));
 
             if ($requestParameterValue = $request->get($requestParameterKey)) {
-                $repositoryMethod = sprintf('findOneBy%s', ucfirst($property));
+                $repositoryMethod = sprintf('findOneBy%s', ucfirst($propertyName));
 
                 return $this->getRepository()->$repositoryMethod($requestParameterValue);
             }
@@ -47,7 +52,11 @@ class AbstractCriticalmassParamConverter extends AbstractParamConverter
     {
         $reflectionClass = new \ReflectionClass($this->getEntityFqcn());
 
-        var_dump($reflectionClass->getProperties());
+        foreach ($reflectionClass->getProperties() as $property) {
+            if ($property->getName() === $propertyName) {
+                return true;
+            }
+        }
 
         return false;
     }
