@@ -2,58 +2,105 @@
 
 namespace Criticalmass\Component\Profile\Streak;
 
-use Criticalmass\Bundle\AppBundle\Entity\Participation;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class StreakCalculator
 {
-    /** @var User $user */
-    protected $user;
-
-    /** @var Registry $registry */
-    protected $registry;
-
     /** @var array $list */
     protected $list = [];
 
-    public function __construct(Registry $doctrine)
+    /** @var \DateTime $earliestDateTime */
+    protected $earliestDateTime = null;
+
+    /** @var \DateTime $latestDateTime */
+    protected $latestDateTime = null;
+
+    public function addRide(Ride $ride): StreakCalculator
     {
-        $this->doctrine = $doctrine;
+        $this->expandList($ride->getDateTime());
+
+        $key = $ride->getDateTime()->format('Y-m');
+
+        $this->list[$key][$ride->getDateTime()->format('Y-m-d')] = $ride;
+
+        return $this;
     }
 
-    public function setUser(User $user): StreakCalculator
+    protected function expandList(\DateTime $dateTime): StreakCalculator
     {
-        $this->user = $user;
+        if (!$this->earliestDateTime || $this->earliestDateTime > $dateTime) {
+            $this->earliestDateTime = $dateTime;
+        }
+
+        if (!$this->latestDateTime || $this->latestDateTime < $dateTime) {
+            $this->latestDateTime = $dateTime;
+        }
+
+        $this->fillGaps();
+
+        return $this;
+    }
+
+    protected function fillGaps(): StreakCalculator
+    {
+        $current = $this->earliestDateTime;
+        $month = new \DateInterval('P1M');
+
+        while ($current < $this->latestDateTime) {
+            $key = $current->format('Y-m');
+
+            if (!array_key_exists($key, $this->list)) {
+                $this->list[$key] = [];
+            }
+
+            $current->add($month);
+        }
 
         return $this;
     }
 
     public function calculateStreakList(): array
     {
-        $participationList = $this->registry->getRepository(Participation::class)->findByUser($this->user);
-
-        /** @var Participation $participation */
-        foreach ($participationList as $participation) {
-            $ride = $participation->getRide();
-
-            $this->addRide($ride);
-        }
-
-        return $this->list;
     }
 
-    protected function addRide(Ride $ride): StreakCalculator
+    public function calculateCurrentStreak(): Streak
     {
-        $key = $ride->getDateTime()->format('Y-m');
 
-        if (!array_key_exists($key, $this->list)) {
-            $this->list[$key] = [];
+    }
+
+    public function calculateLongestStreak(): Streak
+    {
+        $counter = 0;
+        $startDateTime = null;
+        $endDateTime = null;
+        $rideList = [];
+
+        foreach ($this->list as $month => $rides) {
+            if (!$startDateTime) {
+                $startDateTime = new \DateTime(sprintf('%s-01', $month));
+            }
+
+            if (count($rides) > 0) {
+                ++$counter;
+
+                $rideList = array_merge($rideList, $rides);
+
+                $endDateTime = new \DateTime(sprintf('%s-01', $month));
+            } else {
+                $startDateTime = null;
+                $endDateTime = null;
+
+                $rideList = [];
+            }
         }
 
-        $this->list[$key][$ride->getDateTime()->format('Y-m-d')] = $ride;
+        $streak = new Streak($startDateTime, $endDateTime, $rideList);
 
-        return $this;
+        return $streak;
+    }
+
+    public function getList(): array
+    {
+        return $this->list;
     }
 }
