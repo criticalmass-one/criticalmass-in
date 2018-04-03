@@ -6,7 +6,7 @@ use Criticalmass\Bundle\AppBundle\Entity\City;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
-class CityParamConverter extends AbstractParamConverter
+class CityParamConverter extends AbstractCriticalmassParamConverter
 {
     public function apply(Request $request, ParamConverter $configuration): void
     {
