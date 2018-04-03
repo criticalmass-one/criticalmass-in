@@ -43,10 +43,10 @@ class StreakCalculator
 
     protected function fillGaps(): StreakCalculator
     {
-        $current = $this->earliestDateTime;
+        $current = new \DateTime(sprintf('%s-01 00:00:00', $this->earliestDateTime->format('Y-m')));
         $month = new \DateInterval('P1M');
 
-        while ($current < $this->latestDateTime) {
+        while ($current->format('Y-m') < $this->latestDateTime->format('Y-m')) {
             $key = $current->format('Y-m');
 
             if (!array_key_exists($key, $this->list)) {
@@ -74,6 +74,8 @@ class StreakCalculator
         $startDateTime = null;
         $endDateTime = null;
         $rideList = [];
+
+        ksort($this->list);
 
         foreach ($this->list as $month => $rides) {
             if (!$startDateTime) {
