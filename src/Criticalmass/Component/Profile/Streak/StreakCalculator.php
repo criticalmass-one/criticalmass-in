@@ -63,14 +63,44 @@ class StreakCalculator
     {
     }
 
-    public function calculateCurrentStreak(): Streak
+    public function calculateCurrentStreak(\DateTime $dateTime = null, bool $includeCurrentMonth = false): Streak
     {
+        if (!$dateTime) {
+            $dateTime = new \DateTime();
+        }
 
+        $longestStreakCounter = null;
+        $longestStreak = null;
+
+        $startDateTime = null;
+        $endDateTime = null;
+        $rideList = [];
+
+        krsort($this->list);
+
+        foreach ($this->list as $month => $rides) {
+            if (count($rides) > 0) {
+                if (!$endDateTime) {
+                    $endDateTime = new \DateTime(sprintf('%s-01', $month));
+                }
+
+                $startDateTime = new \DateTime(sprintf('%s-01', $month));
+
+                $rideList = array_merge($rideList, $rides);
+            } else {
+                break;
+            }
+
+            return new Streak($startDateTime, $endDateTime, $rideList);
+        }
     }
 
     public function calculateLongestStreak(): Streak
     {
         $counter = 0;
+        $longestStreakCounter = null;
+        $longestStreak = null;
+
         $startDateTime = null;
         $endDateTime = null;
         $rideList = [];
@@ -88,7 +118,14 @@ class StreakCalculator
                 $rideList = array_merge($rideList, $rides);
 
                 $endDateTime = new \DateTime(sprintf('%s-01', $month));
+
+                if ($longestStreakCounter === null || $counter >= $longestStreakCounter) {
+                    $longestStreakCounter = $counter;
+                    $longestStreak = new Streak($startDateTime, $endDateTime, $rideList);
+                }
             } else {
+                $counter = 0;
+
                 $startDateTime = null;
                 $endDateTime = null;
 
@@ -96,9 +133,7 @@ class StreakCalculator
             }
         }
 
-        $streak = new Streak($startDateTime, $endDateTime, $rideList);
-
-        return $streak;
+        return $longestStreak;
     }
 
     public function getList(): array

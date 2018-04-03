@@ -3,7 +3,6 @@
 namespace Criticalmass\Component\Profile\Streak;
 
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
