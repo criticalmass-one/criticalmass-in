@@ -8,5 +8,4 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ThreadParamConverter extends AbstractCriticalmassParamConverter
 {
-
 }
