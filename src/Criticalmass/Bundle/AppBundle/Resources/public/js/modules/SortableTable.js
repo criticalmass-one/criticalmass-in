@@ -1,13 +1,16 @@
 define(['jquery', 'jquery-tablesorter'], function () {
-    var SortableTable = function (context, settings) {
+    var SortableTable = function (context) {
         this.context = context;
-        this.settings = settings;
 
         this._init();
     };
 
     SortableTable.prototype._init = function () {
-        $(this.context).tablesorter();
+        var options = {
+            dateFormat: 'dd/MM/yyyy hh:mm'
+        };
+
+        $(this.context).tablesorter(options);
     };
 
     return SortableTable;
