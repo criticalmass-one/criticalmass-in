@@ -16,7 +16,7 @@ class CityEditCollector extends AbstractTimelineCollector
             if ($city->getSlugs()) {
                 $item = new CityEditItem();
 
-                $item->setUsername($city->getUser()->getUsername());
+                $item->setUser($city->getUser());
                 $item->setCityName($city->getCity());
                 $item->setCity($city);
                 $item->setDateTime($city->getUpdatedAt());

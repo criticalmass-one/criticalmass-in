@@ -3,11 +3,12 @@
 namespace Criticalmass\Component\Timeline\Item;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\User;
 
 class CityEditItem extends AbstractItem
 {
-    /** @var string $username */
-    protected $username;
+    /** @var User $user */
+    protected $user;
 
     /** @var City $city */
     protected $city;
@@ -15,14 +16,14 @@ class CityEditItem extends AbstractItem
     /** @var string $cityName */
     protected $cityName;
 
-    public function getUsername(): string
+    public function getUser(): User
     {
-        return $this->username;
+        return $this->user;
     }
 
-    public function setUsername(string $username): CityEditItem
+    public function setUser(User $user): CityEditItem
     {
-        $this->username = $username;
+        $this->user = $user;
 
         return $this;
     }
