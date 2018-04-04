@@ -1,12 +1,10 @@
-{% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% set bootstrap4app = true %}
 
 {% block title %}criticalmass.in{% endblock %}
 
-{% block masterContent %}
-    <div class="navbar-wrapper">
-        {% include('AppBundle:Template/Navigation:_navigation.html.twig') %}
-    </div>
-
+{% block content %}
     <div class="container-fluid margin-bottom-medium">
         <div class="row">
             <div class="col-md-12">
@@ -81,9 +79,4 @@
         </div>
     </div>
 
-    {% include('AppBundle:Template:Includes/_adserver.html.twig') %}
-
-    {% include('AppBundle:Template:Includes/_footer.html.twig') %}
-
-    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
 {% endblock %}
