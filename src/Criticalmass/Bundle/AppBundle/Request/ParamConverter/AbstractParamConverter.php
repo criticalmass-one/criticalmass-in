@@ -2,11 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractParamConverter extends DoctrineParamConverter
@@ -19,7 +16,7 @@ abstract class AbstractParamConverter extends DoctrineParamConverter
         return $configuration->getClass() === $longname;
     }
 
-    protected function getEntityShortName(): ?string
+    protected function getEntityShortName(): string
     {
         $reflection = new \ReflectionClass($this);
 
@@ -28,27 +25,14 @@ abstract class AbstractParamConverter extends DoctrineParamConverter
         return array_pop($matches);
     }
 
-    protected function findCityBySlug(Request $request): ?City
+    protected function getLowercaseEntityShortName(): string
     {
-        $citySlugString = $request->get('citySlug');
+        return strtolower($this->getEntityShortName());
+    }
 
-        if (!$citySlugString) {
-            return null;
-        }
-
-        $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugString);
-
-        if (!$citySlug) {
-            return null;
-        }
-
-        if ($citySlug) {
-            $city = $citySlug->getCity();
-
-            return $city;
-        }
-
-        return null;
+    protected function getEntityFqcn(): string
+    {
+        return sprintf('Criticalmass\\Bundle\\AppBundle\\Entity\\%s', $this->getEntityShortName());
     }
 
     protected function notFound(ParamConverter $configuration): void

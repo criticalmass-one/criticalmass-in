@@ -6,7 +6,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
-class RideParamConverter extends AbstractParamConverter
+class RideParamConverter extends AbstractCriticalmassParamConverter
 {
     public function apply(Request $request, ParamConverter $configuration): void
     {

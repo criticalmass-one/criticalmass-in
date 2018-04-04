@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Entity;
 
 use Caldera\GeoBasic\Coord\Coord;
 use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
 use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
@@ -24,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, AutoParamConverterAble
 {
     /**
      * @ORM\Id
