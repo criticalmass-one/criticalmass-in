@@ -15,7 +15,7 @@ class RideEditCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $ride) {
             $item = new RideEditItem();
 
-            $item->setUsername($ride->getUser()->getUsername());
+            $item->setUser($ride->getUser());
             $item->setRideTitle($ride->getFancyTitle());
             $item->setRide($ride);
             $item->setDateTime($ride->getUpdatedAt());

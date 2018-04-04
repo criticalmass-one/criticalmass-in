@@ -10,6 +10,10 @@
             </h6>
         </div>
 
+        <p>
+            {{ item.user.username }} hat einen Track hochgeladen:
+        </p>
+
         <div class="card mb-3">
             <div class="card-img-top" id="map-{{ item.uniqId }}"
                  data-polyline="{{ item.polyline }}"
@@ -21,14 +25,16 @@
             </div>
 
             <div class="card-body">
-                <h5 class="card-title">
-                    {{ item.rideTitle }}
-                </h5>
+                <a href="{{ objectPath(item.ride) }}">
+                    <h5 class="card-title">
+                        {{ item.rideTitle }}
+                    </h5>
+                </a>
 
                 <p class="card-text">
-                    Datum: {{ item.ride.dateTime|date('d.m.Y') }}<br />
-                    Länge: {{ item.distance|number_format(2, ',', '.') }} Kilometer<br />
-                    Dauer: {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
+                    <strong>Datum:</strong> {{ item.ride.dateTime|date('d.m.Y') }}<br />
+                    <strong>Länge:</strong> {{ item.distance|number_format(2, ',', '.') }} Kilometer<br />
+                    <strong>Dauer:</strong> {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
                 </p>
             </div>
         </div>
