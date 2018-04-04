@@ -1,70 +1,61 @@
 {% if bikeright_visible %}
-
-    <div class="panel panel-bikeright">
-        <div class="panel-body">
-            <p>
-                <small class="pull-right">
+    <div class="card mt-3">
+        <div class="card-body">
+            <p class="float-right">
+                <small>
                     Anzeige
                 </small>
             </p>
 
+            <p class="text-center">
+                <a href="https://bikeright.de/">
+                    <img src="{{ asset('/bundles/app/images/bikeright/logo.png') }}" alt="BikeRight" style="width: 273px; height 51px; margin: 0 auto; clear: both;"/>
+                </a>
+            </p>
 
-            <a href="https://bikeright.de/">
-                <img class="media-object" src="{{ asset('/bundles/app/images/bikeright/logo.png') }}" alt="..."
-                     style="width: 273px; height 51px; margin: 0 auto; clear: both;"/>
-            </a>
+            <h5 class="text-center">
+                Die neue Online-Rechtsberatung<br />für Radfahrer
+            </h5>
 
-            <h3 class="h5 text-center">
-                Die neue Online-Rechtsberatung für Radfahrer
-            </h3>
+            <ul class="media-list">
+                <li class="media">
+                    <img class="media-object mr-3 align-self-start img-fluid" src="{{ asset('/bundles/app/images/bikeright/help.png') }}" style="width: 50px; height: 50px;">
+                    <div class="media-body">
+                        <strong>
+                            Fahrradunfall gehabt?
+                        </strong>
 
-            <div class="media">
-                <div class="media-left">
-                    <a href="https://bikeright.de/">
-                        <img class="media-object" src="{{ asset('/bundles/app/images/bikeright/help.png') }}" alt="..."
-                             style="width: 50px; height: 50px;"/>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        Fahrradunfall gehabt?
-                    </h4>
+                        <p>
+                            Unsere Anwälte beraten und vertreten euch kostenfrei!
+                        </p>
 
-                    <p>
-                        Unsere Anwälte beraten und vertreten euch kostenfrei!
-                    </p>
+                        <p>
+                            <a href="https://bikeright.de/" class="btn btn-primary">
+                                Zur Website
+                            </a>
+                        </p>
+                    </div>
+                </li>
 
-                    <p>
-                        <a href="https://bikeright.de/" class="btn btn-bikeright">
-                            Zur Website
-                        </a>
-                    </p>
-                </div>
-            </div>
+                <li class="media mt-3">
+                    <img class="media-object mr-3 align-self-start" src="{{ asset('/bundles/app/images/bikeright/questionmark.png') }}" style="width: 50px; height: 50px;">
+                    <div class="media-body">
+                        <strong>
+                            Fragen zum Fahrradrecht?
+                        </strong>
 
-            <div class="media">
-                <div class="media-left">
-                    <a href="{{ path('criticalmass_user_bikeright_view') }}">
-                        <img class="media-object" src="{{ asset('/bundles/app/images/bikeright/questionmark.png') }}"
-                             alt="..." style="width: 50px; height: 50px;"/>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        Fragen zum Fahrradrecht?
-                    </h4>
+                        <p>
+                            Ab sofort erhalten Community-Mitglieder kostenfreie Rechtsberatung bikeright.de!
+                        </p>
 
-                    <p>
-                        Ab sofort erhalten Community-Mitglieder kostenfreie Rechtsberatung bikeright.de!
-                    </p>
-
-                    <p>
-                        <a href="{{ path('criticalmass_user_bikeright_view') }}" class="btn btn-bikeright">
-                            Jetzt Rabatt-Code anfordern
-                        </a>
-                    </p>
-                </div>
-            </div>
+                        <p>
+                            <a href="{{ path('criticalmass_user_bikeright_view') }}" class="btn btn-primary">
+                                Jetzt Rabatt-Code anfordern
+                            </a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 {% endif %}
