@@ -1,79 +1,39 @@
-<div class="row margin-bottom-medium">
-    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        <time>{{ item.dateTime|date('d.m.Y') }}</time>
-        <time>{{ item.dateTime|date('H:i') }}&nbsp;Uhr</time>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-        <div id="map-{{ item.uniqId }}"
-             data-polyline="{{ item.polyline }}"
-             data-polyline-color="{{ item.polylineColor }}"
-             data-lock-map="true"
-             data-map-marker-clickable="false"
-             style="height: 150px;">
-
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-        <div class="row">
-            <div class="col-md-12">
-                <strong>
-                    {{ item.username }}
-                </strong>
-                hat einen Track hochgeladen:
-            </div>
+<li class="media list-group-item p-4">
+    <img class="media-object d-flex align-self-start mr-3" src="{{ gravatarUrl(item.user) }}" />
+    <div class="media-body">
+        <div class="media-heading">
+            <small class="float-right text-muted">
+                {{ item.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
+            </small>
+            <h6>
+                {{ item.user.username }}
+            </h6>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ objectPath(item.ride) }}">
-                    <h4>
-                        {{ item.rideTitle }}
-                    </h4>
-                </a>
-            </div>
-        </div>
+        <div class="card mb-3">
+            <div class="card-img-top" id="map-{{ item.uniqId }}"
+                 data-polyline="{{ item.polyline }}"
+                 data-polyline-color="{{ item.polylineColor }}"
+                 data-lock-map="true"
+                 data-map-marker-clickable="false"
+                 style="height: 150px;">
 
-        <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Datum:
-                    </dt>
-
-                    <dd>
-                        {{ item.ride.dateTime|date('d.m.Y') }}
-                    </dd>
-                </dl>
             </div>
 
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Länge:
-                    </dt>
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ item.rideTitle }}
+                </h5>
 
-                    <dd>
-                        {{ item.distance|number_format(2, ',', '.') }} Kilometer
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Dauer:
-                    </dt>
-
-                    <dd>
-                        {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
-                    </dd>
-                </dl>
+                <p class="card-text">
+                    Datum: {{ item.ride.dateTime|date('d.m.Y') }}<br />
+                    Länge: {{ item.distance|number_format(2, ',', '.') }} Kilometer<br />
+                    Dauer: {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
+                </p>
             </div>
         </div>
     </div>
-</div>
+</li>
 
 <script type="text/javascript">
     CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');

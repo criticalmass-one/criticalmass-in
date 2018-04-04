@@ -4,11 +4,12 @@ namespace Criticalmass\Component\Timeline\Item;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Entity\User;
 
 class RideTrackItem extends AbstractItem
 {
-    /** @var string $username */
-    protected $username;
+    /** @var User $user */
+    protected $user;
 
     /** @var Ride $ride */
     protected $ride;
@@ -31,14 +32,14 @@ class RideTrackItem extends AbstractItem
     /** @var string $polylineColor */
     protected $polylineColor;
 
-    public function getUsername(): string
+    public function getUser(): User
     {
-        return $this->username;
+        return $this->user;
     }
 
-    public function setUsername(string $username): RideTrackItem
+    public function setUser(User $user): RideTrackItem
     {
-        $this->username = $username;
+        $this->user = $user;
 
         return $this;
     }
