@@ -15,16 +15,6 @@ parameters:
     database_user: root
     database_password: root
 
-    domain.cycleways: cycleways.cw
-    domain.criticalmass: criticalmass.cm
-    domain.caldera: caldera.cm
-    domain.criticalmass: criticalmass.cm
-    domain.criticalmassrocks: criticalrocks.cm
-    domain.criticalmassphoto: criticalphotos.cm
-    domain.criticalmassone: criticalone.cm
-    domain.criticalmasslive: criticallive.cm
-    domain.criticalmasstips: criticaltips.cm
-    
     track.gap_width: 10
 
     openweather.appid: 234qt35zr6tjzrgrergerg
@@ -46,7 +36,7 @@ parameters:
     notification.pushover.token: 234qt35zr6tjzrgrergerg
     notification.mail.sender_address: 'malte@criticalmass.in'
 
-    jms_serializer.camel_case_naming_strategy.class: AppBundle\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
+    jms_serializer.camel_case_naming_strategy.class: Criticalmass\Bundle\AppBundle\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
 
     request_listener.http_port: 80
     request_listener.https_port: 443
@@ -56,3 +46,10 @@ parameters:
     sqibe.api_url: http://sqi.be/yourls-api.php
 
     bikeright.visible: false
+
+    staticmaps.host: https://staticmaps.caldera.cc/
+
+    graylog.hostname: anagnina.caldera.cc
+    graylog.port: 12201
+
+    upload_destination.photo: %kernel.root_dir%/../web/photos

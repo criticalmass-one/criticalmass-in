@@ -24,8 +24,8 @@ class AppKernel extends Kernel
             new \Liip\ImagineBundle\LiipImagineBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
@@ -36,8 +36,8 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new SimpleThings\EntityAudit\SimpleThingsEntityAuditBundle(),
             new Sonata\SeoBundle\SonataSeoBundle(),
-            new AppBundle\AppBundle(),
-            new UserBundle\UserBundle(),
+            new Criticalmass\Bundle\AppBundle\AppBundle(),
+            new Criticalmass\Bundle\UserBundle\UserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

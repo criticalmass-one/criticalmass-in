@@ -1,0 +1,27 @@
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        types:
+            datetime: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCDateTimeType
+            date: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCDateType
+            time: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCTimeType
+        mapping_types:
+            enum: string
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        dql:
+            datetime_functions:
+                day: Criticalmass\Bundle\AppBundle\DQL\DayFunction
+                date: Criticalmass\Bundle\AppBundle\DQL\DateFunction
+                month: Criticalmass\Bundle\AppBundle\DQL\MonthFunction
+                year: Criticalmass\Bundle\AppBundle\DQL\YearFunction
+                dayofweek: Criticalmass\Bundle\AppBundle\DQL\DayOfWeekFunction
+            numeric_functions:
+                rand: Criticalmass\Bundle\AppBundle\DQL\RandFunction

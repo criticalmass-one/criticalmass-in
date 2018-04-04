@@ -1,0 +1,89 @@
+{% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
+
+{% block title %}criticalmass.in{% endblock %}
+
+{% block masterContent %}
+    <div class="navbar-wrapper">
+        {% include('AppBundle:Template/Navigation:_navigation.html.twig') %}
+    </div>
+
+    <div class="container-fluid margin-bottom-medium">
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'AppBundle:Frontpage:_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container margin-top-medium">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="no-margin-top">
+                            Hej, wir fahren Fahrrad!
+                        </h1>
+
+                        <p class="lead">
+                            In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer
+                            gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row hidden-xs hidden-sm">
+                    <div class="col-md-12">
+                        {{ timelineContent|raw }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ include('AppBundle:Frontpage:_bikeright.html.twig') }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Bald unterwegs
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    {% for rideDate, rides in rideList %}
+                                        <li>
+                                            <h4>
+                                                {{ rideDate|format_date('dd. MMMM YYYY') }}
+                                            </h4>
+
+                                            <ul>
+                                                {% for ride in rides %}
+                                                    <li>
+                                                        <a href="{{ objectPath(ride) }}">
+                                                            {{ ride.getFancyTitle() }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include('AppBundle:Template:Includes/_adserver.html.twig') %}
+
+    {% include('AppBundle:Template:Includes/_footer.html.twig') %}
+
+    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
+{% endblock %}

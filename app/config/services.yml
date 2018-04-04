@@ -1,5 +1,53 @@
 services:
-    twig.extension.text:
-       class: Twig_Extensions_Extension_Text
-       tags:
-            - { name: twig.extension }
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
+            $staticmapsHost: '%staticmaps.host%'
+            
+    Criticalmass\Bundle\AppBundle\:
+        resource: '../../src/Criticalmass/Bundle/AppBundle/*'
+        exclude: '../../src/Criticalmass/Bundle/AppBundle/{Admin,DQL,Entity,Manager,Model,Repository,Tests,UserProvider,Validator}'
+
+    Criticalmass\Bundle\AppBundle\Controller\:
+        resource: '../../src/Criticalmass/Bundle/AppBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Criticalmass\Component\:
+        resource: '../../src/Criticalmass/Component/*'
+        exclude: '../../src/Criticalmass/Component/{Facebook,Image,Gps,UploadValidator/UploadValidatorException}'
+
+    Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
+        arguments:
+            $uploadDestinationPhoto: %upload_destination.photo%
+
+    Criticalmass\Component\Image\PhotoGps\PhotoGps:
+        arguments:
+            $uploadDestinationPhoto: %upload_destination.photo%
+
+    Cmfcmf\OpenWeatherMap: ~
+
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\RideParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: ride_converter }
+
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\CityParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: city_converter }
+
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\LocationParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: location_converter }
+
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\BoardParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: board_converter }
+
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\ThreadParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: thread_converter }
+
