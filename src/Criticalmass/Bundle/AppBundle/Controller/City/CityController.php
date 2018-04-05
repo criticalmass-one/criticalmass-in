@@ -95,10 +95,22 @@ class CityController extends AbstractController
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
      */
-    public function showAction(SeoPage $seoPage, ViewStorageCache $viewStorageCache, City $city): Response
+    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, City $city = null): Response
     {
+        if (!$city) {
+            $citySlug = $request->get('citySlug');
+
+            if (!$citySlug) {
+                throw $this->createNotFoundException('City not found');
+            }
+
+            return $this->forward('AppBundle:City/MissingCity:missing', [
+                'citySlug' => $citySlug,
+            ]);
+        }
+
         $viewStorageCache->countView($city);
 
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
