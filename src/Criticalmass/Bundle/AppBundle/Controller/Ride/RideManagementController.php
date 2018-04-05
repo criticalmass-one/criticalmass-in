@@ -73,7 +73,10 @@ class RideManagementController extends AbstractController
         // TODO: remove this shit and test the validation in the template
         $hasErrors = null;
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ride = $form->getData();
+
+            $this->getDoctrine()->getManager()->persist($ride);
             $this->getDoctrine()->getManager()->flush();
 
             // TODO: remove also this
