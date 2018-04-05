@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Criticalmass\Bundle\AppBundle\Form\Type\RideSocialPreviewType;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -23,7 +24,7 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, City $city): Response
+    public function addAction(Request $request, UserInterface $user, EntityManagerInterface $entityManager, City $city): Response
     {
         $ride = new Ride();
         $ride
@@ -37,13 +38,13 @@ class RideManagementController extends AbstractController
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->addPostAction($request, $user, $ride, $city, $form);
+            return $this->addPostAction($request, $user, $ride, $entityManager, $city, $form);
         } else {
-            return $this->addGetAction($request, $user, $ride, $city, $form);
+            return $this->addGetAction($request, $user, $ride, $entityManager, $city, $form);
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, Ride $ride, City $city, FormInterface $form): Response
+    protected function addGetAction(Request $request, UserInterface $user, Ride $ride, EntityManagerInterface $entityManager, City $city, FormInterface $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -61,6 +62,7 @@ class RideManagementController extends AbstractController
         Request $request,
         UserInterface $user,
         Ride $ride,
+        EntityManagerInterface $entityManager,
         City $city,
         FormInterface $form
     ): Response {
@@ -74,8 +76,8 @@ class RideManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $ride = $form->getData();
 
-            $this->getDoctrine()->getManager()->persist($ride);
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->persist($ride);
+            $entityManager->flush();
 
             // TODO: remove also this
             $hasErrors = false;
