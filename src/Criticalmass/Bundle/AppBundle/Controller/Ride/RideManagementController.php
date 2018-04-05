@@ -11,6 +11,7 @@ use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -35,28 +36,25 @@ class RideManagementController extends AbstractController
             ])
         ]);
 
-        if (Request::METHOD_POST === $request->getMethod()) {
+        if ($request->isMethod(Request::METHOD_POST)) {
             return $this->addPostAction($request, $user, $ride, $city, $form);
         } else {
             return $this->addGetAction($request, $user, $ride, $city, $form);
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, Ride $ride, City $city, Form $form): Response
+    protected function addGetAction(Request $request, UserInterface $user, Ride $ride, City $city, FormInterface $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render(
-            'AppBundle:RideManagement:edit.html.twig',
-            [
-                'hasErrors' => null,
-                'ride' => null,
-                'form' => $form->createView(),
-                'city' => $city,
-                'dateTime' => new \DateTime(),
-                'oldRides' => $oldRides
-            ]
-        );
+        return $this->render('AppBundle:RideManagement:edit.html.twig', [
+            'hasErrors' => null,
+            'ride' => null,
+            'form' => $form->createView(),
+            'city' => $city,
+            'dateTime' => new \DateTime(),
+            'oldRides' => $oldRides,
+        ]);
     }
 
     protected function addPostAction(
@@ -64,7 +62,7 @@ class RideManagementController extends AbstractController
         UserInterface $user,
         Ride $ride,
         City $city,
-        Form $form
+        FormInterface $form
     ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -84,35 +82,25 @@ class RideManagementController extends AbstractController
 
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
-            $form = $this->createForm(
-                RideType::class,
-                $ride,
-                [
-                    'action' => $this->generateUrl(
-                        'caldera_criticalmass_desktop_ride_edit',
-                        [
-                            'citySlug' => $city->getMainSlugString(),
-                            'rideDate' => $ride->getFormattedDate()
-                        ]
-                    )
-                ]
-            );
+            $form = $this->createForm(RideType::class, $ride, [
+                'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_edit', [
+                    'citySlug' => $city->getMainSlugString(),
+                    'rideDate' => $ride->getFormattedDate()
+                ])
+            ]);
         } elseif ($form->isSubmitted()) {
             // TODO: remove even more shit
             $hasErrors = true;
         }
 
-        return $this->render(
-            'AppBundle:RideManagement:edit.html.twig',
-            array(
-                'hasErrors' => $hasErrors,
-                'ride' => $ride,
-                'form' => $form->createView(),
-                'city' => $city,
-                'dateTime' => new \DateTime(),
-                'oldRides' => $oldRides
-            )
-        );
+        return $this->render('AppBundle:RideManagement:edit.html.twig', [
+            'hasErrors' => $hasErrors,
+            'ride' => $ride,
+            'form' => $form->createView(),
+            'city' => $city,
+            'dateTime' => new \DateTime(),
+            'oldRides' => $oldRides,
+        ]);
     }
 
     /**
