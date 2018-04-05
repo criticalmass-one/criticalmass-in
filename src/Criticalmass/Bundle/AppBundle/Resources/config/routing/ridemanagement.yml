@@ -1,5 +1,5 @@
 caldera_criticalmass_desktop_ride_add:
-    path:  /{citySlug}/add
+    path:  /{citySlug}/add-ride
     defaults: { _controller: AppBundle:Ride/RideManagement:add }
 
 caldera_criticalmass_desktop_ride_edit:
