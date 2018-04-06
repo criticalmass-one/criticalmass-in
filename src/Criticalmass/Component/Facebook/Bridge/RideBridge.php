@@ -20,60 +20,6 @@ class RideBridge extends AbstractBridge
         $this->facebookEventApi = $facebookEventApi;
     }
 
-    public function getEventPropertiesForRide(Ride $ride): ?FacebookRideProperties
-    {
-        $eventId = $this->getRideEventId($ride);
-
-        if (!$eventId) {
-            return null;
-        }
-
-        $event = $this->facebookEventApi->queryEvent($eventId);
-
-        if ($event) {
-            $properties = new FacebookRideProperties();
-
-            $properties
-                ->setRide($ride)
-                ->setName($event->getName())
-                ->setDescription($event->getField('description'))
-                ->setStartTime($event->getField('start_time'))
-                ->setEndTime($event->getField('end_time'))
-                ->setUpdatedTime($event->getField('updated_time'))
-                ->setNumberAttending($event->getField('attending_count'))
-                ->setNumberDeclined($event->getField('declined_count'))
-                ->setNumberInterested($event->getField('interested_count'))
-                ->setNumberMaybe($event->getField('maybe_count'))
-                ->setNumberNoreply($event->getField('noreply_count'));
-
-            /** @var GraphPage $place */
-            if ($place = $event->getPlace()) {
-                $properties
-                    ->setLocation($place->getName());
-            }
-
-            /** @var GraphLocation $location */
-            if ($place && $location = $place->getLocation()) {
-                $address = sprintf(
-                    '%s, %s %s, %s',
-                    $location->getStreet(),
-                    $location->getZip(),
-                    $location->getCity(),
-                    $location->getCountry()
-                );
-
-                $properties
-                    ->setLocationAddress($address)
-                    ->setLatitude($location->getLongitude())
-                    ->setLongitude($location->getLongitude());
-            }
-
-            return $properties;
-        }
-
-        return null;
-    }
-
     protected function createRideFromEvent(GraphEvent $event): Ride
     {
         $ride = new Ride();

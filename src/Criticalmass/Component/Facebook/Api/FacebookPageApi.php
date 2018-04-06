@@ -2,8 +2,6 @@
 
 namespace Criticalmass\Component\Facebook\Api;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Facebook\GraphNodes\GraphPage;
 
 class FacebookPageApi extends FacebookApi
