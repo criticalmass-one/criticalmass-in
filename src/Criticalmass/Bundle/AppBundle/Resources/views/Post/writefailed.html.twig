@@ -6,7 +6,7 @@
         {% if city %}
             <ol class="breadcrumb">
                 <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
-                <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+                <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
                 <li>
                     <a href="{{ path('caldera_criticalmass_desktop_city_show', { citySlug: city.getMainSlugString() }) }}">{{ city.getCity() }}</a>
                 </li>
@@ -17,7 +17,7 @@
         {% if ride %}
             <ol class="breadcrumb">
                 <li><a href="{{ path('caldera_criticalmass_desktop_index') }}">criticalmass.in</a></li>
-                <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+                <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
                 <li>
                     <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.getCity().getMainSlugString() }) }}">{{ ride.getCity().getTitle() }}</a>
                 </li>

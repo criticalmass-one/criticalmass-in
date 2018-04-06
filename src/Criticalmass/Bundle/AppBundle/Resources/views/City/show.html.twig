@@ -3,7 +3,7 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
     <li class="active">{{ city.city }}</li>
 {% endblock %}
 
@@ -133,7 +133,7 @@
 
                             <p>
                                 Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
-                                        href="{{ path('caldera_criticalmass_desktop_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
+                                        href="{{ path('caldera_criticalmass_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
                                     über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>
