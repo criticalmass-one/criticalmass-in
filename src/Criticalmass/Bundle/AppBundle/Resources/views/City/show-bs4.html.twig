@@ -17,7 +17,7 @@
         </button>
 
         <div class="dropdown-menu" aria-labelledby="city-dropdown">
-            <a class="dropdown-item" href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+            <a class="dropdown-item" href="{{ path('caldera_criticalmass_city_edit', { citySlug: city.getMainSlugString() } ) }}">
                 <i class="fa fa-cogs"></i>
                 Stadt editieren
             </a>
@@ -89,7 +89,7 @@
                                 <strong>Huch?</strong>
                                 Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
                                 Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}">hier
+                                        href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}">hier
                                     beschreiben</a>:
 
                                 <ul>
@@ -108,7 +108,7 @@
                                 </ul>
 
                                 <p class="text-center margin-top-medium">
-                                    <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}"
+                                    <a href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}"
                                        class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
                                     </a>
