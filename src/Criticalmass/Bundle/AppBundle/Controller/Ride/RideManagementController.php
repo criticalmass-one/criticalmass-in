@@ -32,7 +32,7 @@ class RideManagementController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(RideType::class, $ride, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_ride_add', [
+            'action' => $this->generateUrl('caldera_criticalmass_ride_add', [
                 'citySlug' => $city->getMainSlugString(),
             ])
         ]);
