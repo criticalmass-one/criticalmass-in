@@ -4,7 +4,7 @@
             {% if app.getUser() %}
                 <div class="btn-group pull-right" style="margin-top: 16px;">
                     <a class="btn btn-success"
-                       href="{{ path('caldera_criticalmass_desktop_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
+                       href="{{ path('caldera_criticalmass_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
                        title="Tour bearbeiten">
                         <i class="fa fa-cogs"></i> Tour editieren
                     </a>
@@ -84,7 +84,7 @@
                     <strong>Huch?</strong>
                     Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
                     hast, kannst du {{ ride.fancyTitle }} <a
-                            href="{{ path('caldera_criticalmass_desktop_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}">hier
+                            href="{{ path('caldera_criticalmass_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}">hier
                         editieren</a>:
 
                     <ul>
@@ -102,7 +102,7 @@
                     </ul>
 
                     <p class="text-center margin-top-medium">
-                        <a href="{{ path('caldera_criticalmass_desktop_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}"
+                        <a href="{{ path('caldera_criticalmass_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}"
                            class="btn btn-primary btn-lg">
                             Tour editieren
                         </a>
