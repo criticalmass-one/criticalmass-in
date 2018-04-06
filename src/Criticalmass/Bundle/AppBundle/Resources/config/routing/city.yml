@@ -1,4 +1,4 @@
-caldera_criticalmass_desktop_city_show:
+caldera_criticalmass_city_show:
     path:  /{citySlug}
     defaults: { _controller: AppBundle:City/City:show }
     options:

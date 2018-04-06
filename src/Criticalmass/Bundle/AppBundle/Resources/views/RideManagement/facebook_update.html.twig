@@ -5,7 +5,7 @@
 {% block breadcrumb %}
     <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
     <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a>
+        <a href="{{ path('caldera_criticalmass_city_show', { 'citySlug': city.getMainSlugString() }) }}">{{ city.getTitle() }}</a>
     </li>
 
 {% endblock %}

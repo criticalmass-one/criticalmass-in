@@ -37,7 +37,7 @@
                                 {{ photo.ride.dateTime.format('d. m. Y') }}
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': photo.ride.city.getMainSlugString() }) }}">
+                                <a href="{{ path('caldera_criticalmass_city_show', { 'citySlug': photo.ride.city.getMainSlugString() }) }}">
                                     {{ photo.ride.city.city }}
                                 </a>
                             </td>
