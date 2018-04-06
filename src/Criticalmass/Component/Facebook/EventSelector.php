@@ -3,7 +3,6 @@
 namespace Criticalmass\Component\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Facebook\Api\FacebookEventRideApi;
 use Criticalmass\Component\Facebook\Bridge\RideBridge;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Facebook\GraphNodes\GraphEvent;
