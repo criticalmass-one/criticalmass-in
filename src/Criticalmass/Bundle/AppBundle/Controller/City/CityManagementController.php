@@ -42,7 +42,7 @@ class CityManagementController extends AbstractController
         $city->setUser($this->getUser());
 
         $form = $this->createForm(StandardCityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add', $this->getRegionSlugParameterArray($region)),
+            'action' => $this->generateUrl('caldera_criticalmass_city_add', $this->getRegionSlugParameterArray($region)),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
