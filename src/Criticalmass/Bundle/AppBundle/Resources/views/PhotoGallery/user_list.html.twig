@@ -30,7 +30,7 @@
                                 {{ ride.dateTime.format('d. m. Y') }}
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_desktop_city_show', { 'citySlug': ride.city.getMainSlugString() }) }}">
+                                <a href="{{ path('caldera_criticalmass_city_show', { 'citySlug': ride.city.getMainSlugString() }) }}">
                                     {{ ride.city.getCity() }}
                                 </a>
                             </td>

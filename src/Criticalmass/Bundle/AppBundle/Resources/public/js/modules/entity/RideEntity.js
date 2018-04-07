@@ -70,7 +70,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         cityButton.setCaption('Städteseite');
         cityButton.setIcon('university');
         cityButton.setClass('btn-success');
-        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', {citySlug: this._city._slug}));
+        cityButton.setHref(Routing.generate('caldera_criticalmass_city_show', {citySlug: this._city._slug}));
 
         var rideButton = new ModalButton();
         rideButton.setCaption('Tourseite');
