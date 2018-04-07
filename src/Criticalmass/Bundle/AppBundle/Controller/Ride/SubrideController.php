@@ -69,7 +69,7 @@ class SubrideController extends AbstractController
             // TODO: remove also this
             $hasErrors = false;
 
-            $actionUrl = $this->generateUrl('caldera_criticalmass_desktop_subride_edit', [
+            $actionUrl = $this->generateUrl('caldera_criticalmass_subride_edit', [
                 'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
                 'rideDate' => $subride->getRide()->getFormattedDate(),
                 'subrideId' => $subride->getId(),
@@ -99,7 +99,7 @@ class SubrideController extends AbstractController
     public function editAction(Request $request, Subride $subride): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit', [
+            'action' => $this->generateUrl('caldera_criticalmass_subride_edit', [
                 'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
                 'rideDate' => $subride->getRide()->getFormattedDate(),
                 'subrideId' => $subride->getId()
