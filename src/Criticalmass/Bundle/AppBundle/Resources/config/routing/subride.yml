@@ -1,4 +1,4 @@
-caldera_criticalmass_desktop_subride_add:
+caldera_criticalmass_subride_add:
     path:  /{citySlug}/{rideDate}/addsubride
     defaults: { _controller: AppBundle:Ride/Subride:add }
 
