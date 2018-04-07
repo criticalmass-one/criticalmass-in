@@ -8,7 +8,7 @@ caldera_criticalmass_city_listrides:
     path:  /{citySlug}/list
     defaults: { _controller: AppBundle:City/City:listRides }
 
-caldera_criticalmass_desktop_city_missingstats:
+caldera_criticalmass_city_missingstats:
     path:  /{citySlug}/missingstats
     defaults: { _controller: AppBundle:City/City:missingStats }
 
