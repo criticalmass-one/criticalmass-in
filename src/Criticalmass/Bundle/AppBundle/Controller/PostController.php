@@ -11,6 +11,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
 use Criticalmass\Bundle\AppBundle\Form\Type\PostType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,9 +41,7 @@ class PostController extends AbstractController
         if ($cityId) {
             $city = $this->getCityRepository()->find($cityId);
 
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateActionUrl($city),
-            ]);
+            $form = $this->getPostForm($city, $post);
 
             $post->setCity($city);
 
@@ -51,9 +50,7 @@ class PostController extends AbstractController
             $ride = $this->getRideRepository()->find($rideId);
             $city = $this->getCityRepository()->find($ride->getCity());
 
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateActionUrl($ride),
-            ]);
+            $form = $this->getPostForm($ride, $post);
 
             $post->setCity($city);
             $post->setRide($ride);
@@ -62,9 +59,7 @@ class PostController extends AbstractController
         } elseif ($photoId) {
             $photo = $this->getPhotoRepository()->find($photoId);
 
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateActionUrl($photo),
-            ]);
+            $form = $this->getPostForm($photo, $post);
 
             $post->setPhoto($photo);
 
@@ -72,9 +67,7 @@ class PostController extends AbstractController
         } elseif ($threadId) {
             $thread = $this->getThreadRepository()->find($threadId);
 
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateActionUrl($thread),
-            ]);
+            $form = $this->getPostForm($thread, $post);
 
             $post->setThread($thread);
 
@@ -168,14 +161,27 @@ class PostController extends AbstractController
         return $this->render('AppBundle:Post:list.html.twig', ['posts' => $posts]);
     }
 
-    protected function generateActionUrl(PostableInterface $parentObject): string
+    protected function getPostForm(PostableInterface $postable, Post $post = null): FormInterface
     {
-        $lcShortname = ClassUtil::getLowercaseShortname($parentObject);
+        if (!$post) {
+            $post = new Post();
+        }
+
+        $form = $this->createForm(PostType::class, $post, [
+            'action' => $this->generateActionUrl($postable),
+        ]);
+
+        return $form;
+    }
+
+    protected function generateActionUrl(PostableInterface $postable): string
+    {
+        $lcShortname = ClassUtil::getLowercaseShortname($postable);
 
         $routeName = sprintf('caldera_criticalmass_timeline_post_write_%s', $lcShortname);
         $parameterName = sprintf('%sId', $lcShortname);
 
-        $parameter = [$parameterName => $parentObject->getId()];
+        $parameter = [$parameterName => $postable->getId()];
 
         return $this->generateUrl($routeName, $parameter);
     }
