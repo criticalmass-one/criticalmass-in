@@ -14,14 +14,6 @@ caldera_criticalmass_timeline_post_write_photo:
     path:     /write/photo/{photoId}
     defaults: { _controller: AppBundle:Post:write }
 
-caldera_criticalmass_timeline_post_write_content:
-    path:     /write/content/{contentId}
-    defaults: { _controller: AppBundle:Post:write }
-
 caldera_criticalmass_timeline_post_write_thread:
     path:     /write/thread/{threadId}
-    defaults: { _controller: AppBundle:Post:write }
-
-caldera_criticalmass_timeline_post_write_event:
-    path:     /write/event/{eventId}
     defaults: { _controller: AppBundle:Post:write }
