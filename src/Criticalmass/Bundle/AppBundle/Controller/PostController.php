@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
+use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
+use Criticalmass\Component\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Post;
@@ -36,39 +38,44 @@ class PostController extends AbstractController
         $thread = null;
 
         if ($cityId) {
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_city', ['cityId' => $cityId])
-            ]);
             $city = $this->getCityRepository()->find($cityId);
+
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateActionUrl($city),
+            ]);
+
             $post->setCity($city);
 
             $redirectUrl = $this->generateObjectUrl($city);
         } elseif ($rideId) {
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_ride', ['rideId' => $rideId])
-            ]);
             $ride = $this->getRideRepository()->find($rideId);
             $city = $this->getCityRepository()->find($ride->getCity());
+
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateActionUrl($ride),
+            ]);
+
             $post->setCity($city);
             $post->setRide($ride);
 
             $redirectUrl = $this->generateObjectUrl($ride);
         } elseif ($photoId) {
-            $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_photo',
-                    ['photoId' => $photoId])
-            ]);
             $photo = $this->getPhotoRepository()->find($photoId);
+
+            $form = $this->createForm(PostType::class, $post, [
+                'action' => $this->generateActionUrl($photo),
+            ]);
+
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateObjectUrl($photo);
         } elseif ($threadId) {
+            $thread = $this->getThreadRepository()->find($threadId);
+
             $form = $this->createForm(PostType::class, $post, [
-                'action' => $this->generateUrl('caldera_criticalmass_timeline_post_write_thread',
-                    ['threadId' => $threadId])
+                'action' => $this->generateActionUrl($thread),
             ]);
 
-            $thread = $this->getThreadRepository()->find($threadId);
             $post->setThread($thread);
 
             $redirectUrl = $this->generateObjectUrl($thread);
@@ -159,5 +166,17 @@ class PostController extends AbstractController
 
         /* And render our shit. */
         return $this->render('AppBundle:Post:list.html.twig', ['posts' => $posts]);
+    }
+
+    protected function generateActionUrl(PostableInterface $parentObject): string
+    {
+        $lcShortname = ClassUtil::getLowercaseShortname($parentObject);
+
+        $routeName = sprintf('caldera_criticalmass_timeline_post_write_%s', $lcShortname);
+        $parameterName = sprintf('%sId', $lcShortname);
+
+        $parameter = [$parameterName => $parentObject->getId()];
+
+        return $this->generateUrl($routeName, $parameter);
     }
 }
