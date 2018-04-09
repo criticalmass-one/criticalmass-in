@@ -31,17 +31,15 @@ class PostController extends AbstractController
         Request $request,
         City $city = null,
         Ride $ride = null,
-        Photo $photo = null,
-        Thread $thread = null
+        Photo $photo = null
     ): Response {
         $post = new Post();
+        $thread = null; // TODO: ParamConverter does not want
 
         if ($city) {
             $form = $this->getPostForm($city, $post);
 
             $post->setCity($city);
-
-            $redirectUrl = $this->generateObjectUrl($city);
         } elseif ($ride) {
             $city = $this->getCityRepository()->find($ride->getCity());
 
@@ -49,30 +47,35 @@ class PostController extends AbstractController
 
             $post->setCity($city);
             $post->setRide($ride);
-
-            $redirectUrl = $this->generateObjectUrl($ride);
         } elseif ($photo) {
             $form = $this->getPostForm($photo, $post);
 
             $post->setPhoto($photo);
-
-            $redirectUrl = $this->generateObjectUrl($photo);
         } elseif ($thread) {
             $form = $this->getPostForm($thread, $post);
 
             $post->setThread($thread);
-
-            $redirectUrl = $this->generateObjectUrl($thread);
-        } else {
-            $form = $this->createForm(PostType::class, $post,
-                ['action' => $this->generateUrl('caldera_criticalmass_timeline_post_write')]);
-
-            $redirectUrl = $this->generateUrl('caldera_criticalmass_frontpage');
         }
 
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return $this->addPostAction($request, $form, $post, $city, $ride, $photo, $thread);
+        } else {
+            return $this->addGetAction($request, $form, $post, $city, $ride, $photo, $thread);
+        }
+    }
+
+    protected function addGetAction(Request $request, FormInterface $form, Post $post, City $city = null, Ride $ride = null, Photo $photo = null, Thread $thread = null): Response
+    {
+        return $this->render('AppBundle:Post:write.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    protected function addPostAction(Request $request, FormInterface $form, Post $post, City $city = null, Ride $ride = null, Photo $photo = null, Thread $thread = null): Response
+    {
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $post->setUser($this->getUser());
@@ -98,15 +101,10 @@ class PostController extends AbstractController
 
             $em->flush();
 
-            /* Using the user’s referer will not work as the user might come from the writefailed page and would be
-               redirected there again. */
-            return new RedirectResponse($redirectUrl);
-        } elseif ($form->isSubmitted()) {
-            return $this->render('AppBundle:Post:writefailed.html.twig',
-                ['form' => $form->createView(), 'ride' => $ride, 'city' => $city]);
+            return new RedirectResponse($this->generateObjectUrl($thread ?? $photo ?? $ride ?? $city));
         }
 
-        return $this->render('AppBundle:Post:write.html.twig', ['form' => $form->createView()]);
+        return $this->addGetAction($request, $form, $post, $city, $ride, $photo, $thread);
     }
 
 
