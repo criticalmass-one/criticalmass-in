@@ -8,6 +8,7 @@ use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
 use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, PostableInterface
 {
     /**
      * @ORM\Id
