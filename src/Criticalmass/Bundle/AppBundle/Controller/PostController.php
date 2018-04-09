@@ -2,9 +2,11 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
+use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Component\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Post;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
@@ -20,34 +22,27 @@ class PostController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
+     * @ParamConverter("ride", class="AppBundle:Ride", isOptional=true)
+     * @ParamConverter("photo", class="AppBundle:Photo", isOptional=true)
+     * @ParamConverter("thread", class="AppBundle:Thread", isOptional=true)
      */
     public function writeAction(
         Request $request,
-        int $cityId = null,
-        int $rideId = null,
-        int $photoId = null,
-        int $threadId = null
+        City $city = null,
+        Ride $ride = null,
+        Photo $photo = null,
+        Thread $thread = null
     ): Response {
-        /**
-         * @var Ride $ride
-         * @var City $city
-         * @var Thread $thread
-         */
         $post = new Post();
-        $ride = null;
-        $city = null;
-        $thread = null;
 
-        if ($cityId) {
-            $city = $this->getCityRepository()->find($cityId);
-
+        if ($city) {
             $form = $this->getPostForm($city, $post);
 
             $post->setCity($city);
 
             $redirectUrl = $this->generateObjectUrl($city);
-        } elseif ($rideId) {
-            $ride = $this->getRideRepository()->find($rideId);
+        } elseif ($ride) {
             $city = $this->getCityRepository()->find($ride->getCity());
 
             $form = $this->getPostForm($ride, $post);
@@ -56,17 +51,13 @@ class PostController extends AbstractController
             $post->setRide($ride);
 
             $redirectUrl = $this->generateObjectUrl($ride);
-        } elseif ($photoId) {
-            $photo = $this->getPhotoRepository()->find($photoId);
-
+        } elseif ($photo) {
             $form = $this->getPostForm($photo, $post);
 
             $post->setPhoto($photo);
 
             $redirectUrl = $this->generateObjectUrl($photo);
-        } elseif ($threadId) {
-            $thread = $this->getThreadRepository()->find($threadId);
-
+        } elseif ($thread) {
             $form = $this->getPostForm($thread, $post);
 
             $post->setThread($thread);
