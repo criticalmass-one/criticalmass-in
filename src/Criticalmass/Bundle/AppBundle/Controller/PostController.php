@@ -22,19 +22,19 @@ class PostController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
-     * @ParamConverter("ride", class="AppBundle:Ride", isOptional=true)
-     * @ParamConverter("photo", class="AppBundle:Photo", isOptional=true)
-     * @ParamConverter("thread", class="AppBundle:Thread", isOptional=true)
+     * @ParamConverter("city", class="AppBundle:City", isOptional=true, converter="city_converter")
+     * @ParamConverter("ride", class="AppBundle:Ride", isOptional=true, converter="ride_converter")
+     * @ParamConverter("photo", class="AppBundle:Photo", isOptional=true, converter="photo_converter")
+     * @ParamConverter("thread", class="AppBundle:Thread", isOptional=true, converter="thread_converter")
      */
     public function writeAction(
         Request $request,
         City $city = null,
         Ride $ride = null,
-        Photo $photo = null
+        Photo $photo = null,
+        Thread $thread = null
     ): Response {
         $post = new Post();
-        $thread = null; // TODO: ParamConverter does not want
 
         if ($city) {
             $form = $this->getPostForm($city, $post);

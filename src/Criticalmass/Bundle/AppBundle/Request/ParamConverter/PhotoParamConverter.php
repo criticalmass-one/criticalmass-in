@@ -2,6 +2,6 @@
 
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
-class ThreadParamConverter extends AbstractCriticalmassParamConverter
+class PhotoParamConverter extends AbstractCriticalmassParamConverter
 {
 }

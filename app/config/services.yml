@@ -51,3 +51,7 @@ services:
         tags:
             - { name: request.param_converter, priority: 10, converter: thread_converter }
 
+    Criticalmass\Bundle\AppBundle\Request\ParamConverter\PhotoParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: photo_converter }
+
