@@ -37,6 +37,14 @@
 
         <div class="row">
             <div class="col-md-12">
+                <div class="alert alert-info">
+                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ path('caldera_criticalmass_ride_add', { citySlug: city.mainSlugString }) }}">dieses Formular</a></strong>.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <div id="map" style="height: 250px;"></div>
             </div>
         </div>
