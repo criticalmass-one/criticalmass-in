@@ -91,6 +91,11 @@ class CityCycle
     protected $updatedAt;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $disabledAt;
+
+    /**
      * @ORM\Column(type="date", nullable=true)
      */
     protected $validFrom;
@@ -205,6 +210,18 @@ class CityCycle
     public function getLocation(): ?string
     {
         return $this->location;
+    }
+
+    public function setDisabledAt(\DateTime $disabledAt): CityCycle
+    {
+        $this->disabledAt = $disabledAt;
+
+        return $this;
+    }
+
+    public function getDisabledAt(): ?\DateTime
+    {
+        return $this->disabledAt;
     }
 
     public function setCreatedAt(\DateTime $createdAt): CityCycle
