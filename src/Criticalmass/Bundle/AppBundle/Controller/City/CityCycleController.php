@@ -155,11 +155,22 @@ class CityCycleController extends AbstractController
      */
     public function disableAction(Request $request, UserInterface $user, CityCycle $cityCycle, ObjectManager $objectManager): Response
     {
-        $cityCycle->setDisabledAt(new \DateTime());
+        if ($cityCycle->getRides()->count() > 0) {
+            if (!$cityCycle->getValidFrom()) {
+                $cityCycle->setValidFrom($cityCycle->getCreatedAt());
+            }
+
+            if (!$cityCycle->getValidUntil()) {
+                $cityCycle->setValidUntil(new \DateTime());
+            }
+
+            $cityCycle->setDisabledAt(new \DateTime());
+        } elseif (0 === $cityCycle->getRides()->count()) {
+            $objectManager->remove($cityCycle);
+        }
 
         $objectManager->flush();
 
         return $this->redirectToRoute('caldera_criticalmass_citycycle_list', ['citySlug' => $cityCycle->getCity()->getMainSlugString()]);
     }
-
 }
