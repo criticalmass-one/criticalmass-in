@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                     {% for cycle in cycles %}
-                        <tr>
+                        <tr {% if cycle.disabledAt %}style="text-decoration: line-through;"{% endif %}>
                             <td>
                                 am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }}
                                 im Monat
@@ -86,6 +86,7 @@
                             </td>
 
                             <td>
+                                {% if not cycle.disabledAt %}
                                 <div class="btn-group">
                                     <a class="btn btn-default btn-xs"
                                        href="{{ path('caldera_criticalmass_citycycle_edit', { citySlug: city.mainSlugString, cycleId: cycle.id }) }}">
@@ -97,6 +98,7 @@
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
