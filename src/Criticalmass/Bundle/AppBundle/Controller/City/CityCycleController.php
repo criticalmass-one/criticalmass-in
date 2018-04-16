@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Form\Type\CityCycleType;
+use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
@@ -147,4 +148,18 @@ class CityCycleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("cityCycle", class="AppBundle:CityCycle", options={"id" = "cycleId"})
+     */
+    public function disableAction(Request $request, UserInterface $user, CityCycle $cityCycle, ObjectManager $objectManager): Response
+    {
+        $cityCycle->setDisabledAt(new \DateTime());
+
+        $objectManager->flush();
+
+        return $this->redirectToRoute('caldera_criticalmass_citycycle_list', ['citySlug' => $cityCycle->getCity()->getMainSlugString()]);
+    }
+
 }
