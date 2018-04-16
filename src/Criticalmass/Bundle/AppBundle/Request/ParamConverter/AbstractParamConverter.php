@@ -2,12 +2,21 @@
 
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-abstract class AbstractParamConverter extends DoctrineParamConverter
+abstract class AbstractParamConverter implements ParamConverterInterface
 {
+    /** @var Registry $registry */
+    protected $registry;
+
+    protected function __construct(Registry $registry)
+    {
+        $this->registry = $registry;
+    }
+
     public function supports(ParamConverter $configuration): bool
     {
         $shortname = $this->getEntityShortName();
