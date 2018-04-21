@@ -1,0 +1,24 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Dein Benutzerkonto</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>
+                    Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
+                </h2>
+
+                <p class="lead">
+                    Willkommen in deinem Benutzerkonto &mdash; Hier kannst du deine Fotos, Tracks und Teilnahmen
+                    verwalten und deine Kontoeinstellungen ändern.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
