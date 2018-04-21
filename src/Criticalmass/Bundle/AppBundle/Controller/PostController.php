@@ -22,18 +22,42 @@ class PostController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="AppBundle:City", isOptional=true, converter="city_converter")
-     * @ParamConverter("ride", class="AppBundle:Ride", isOptional=true, converter="ride_converter")
-     * @ParamConverter("photo", class="AppBundle:Photo", isOptional=true, converter="photo_converter")
+     * @ParamConverter("city", class="AppBundle:City", converter="city_converter")
+     */
+    public function writeCityAction(Request $request, City $city): Response
+    {
+        return $this->writeAction($request, $city);
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride", converter="ride_converter")
+     */
+    public function writeRideAction(Request $request, Ride $ride): Response
+    {
+        return $this->writeAction($request, $ride);
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("photo", class="AppBundle:Photo", converter="photo_converter")
+     */
+    public function writePhotoAction(Request $request, Photo $photo): Response
+    {
+        return $this->writeAction($request, $photo);
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
      * @ParamConverter("thread", class="AppBundle:Thread", isOptional=true, converter="thread_converter")
      */
-    public function writeAction(
-        Request $request,
-        City $city = null,
-        Ride $ride = null,
-        Photo $photo = null,
-        Thread $thread = null
-    ): Response {
+    public function writeThreadAction(Request $request, Thread $thread = null): Response
+    {
+        return $this->writeAction($request, $thread);
+    }
+
+    public function writeAction(Request $request, PostableInterface $postable): Response
+    {
         $post = new Post();
 
         if ($city) {

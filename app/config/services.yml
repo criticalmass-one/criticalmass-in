@@ -33,25 +33,25 @@ services:
 
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\RideParamConverter:
         tags:
-            - { name: request.param_converter, priority: 10, converter: ride_converter }
+            - { name: request.param_converter, priority: 0, converter: ride_converter }
 
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\CityParamConverter:
         tags:
-            - { name: request.param_converter, priority: 10, converter: city_converter }
+            - { name: request.param_converter, priority: 0, converter: city_converter }
 
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\LocationParamConverter:
         tags:
-            - { name: request.param_converter, priority: 10, converter: location_converter }
+            - { name: request.param_converter, priority: 0, converter: location_converter }
 
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\BoardParamConverter:
         tags:
-            - { name: request.param_converter, priority: 10, converter: board_converter }
+            - { name: request.param_converter, priority: 0, converter: board_converter }
 
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\ThreadParamConverter:
         tags:
-            - { name: request.param_converter, priority: 10, converter: thread_converter }
+            - { name: request.param_converter, priority: 0, converter: thread_converter }
 
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\PhotoParamConverter:
         tags:
-            - { name: request.param_converter, priority: 10, converter: photo_converter }
+            - { name: request.param_converter, priority: 0, converter: photo_converter }
 
