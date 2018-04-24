@@ -8,16 +8,32 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2>
-                    Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
-                </h2>
 
-                <p class="lead">
-                    Willkommen in deinem Benutzerkonto &mdash; Hier kannst du deine Fotos, Tracks und Teilnahmen
-                    verwalten und deine Kontoeinstellungen ändern.
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <h2>
+                    Dein Profilfoto
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <img class="img-responsive img-thumbnail" src="{{ vich_uploader_asset(app.user, 'imageFile')|imagine_filter('user_profile_photo_medium') }}"/>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <p>
+                    Hier kannst du ein neues Profilfoto von deinem Rechner hochladen:
                 </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                {{ form(profilePhotoForm) }}
             </div>
         </div>
     </div>

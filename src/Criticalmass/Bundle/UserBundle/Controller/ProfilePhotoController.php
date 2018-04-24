@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ class ProfilePhotoController extends Controller
     public function uploadAction(Request $request, UserInterface $user): Response
     {
         $form = $this->createForm(UserProfilePhotoType::class, $user);
+        $form->add('submit', SubmitType::class);
 
         if ($request->isMethod(Request::METHOD_POST)) {
             return $this->uploadPostAction($request, $user, $form);
