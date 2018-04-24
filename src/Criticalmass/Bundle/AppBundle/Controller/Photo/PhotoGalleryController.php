@@ -19,6 +19,8 @@ class PhotoGalleryController extends AbstractController
      */
     public function galleryAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
+        $this->errorIfFeatureDisabled('photos');
+
         if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
             throw $this->createAccessDeniedException();
         }
@@ -39,6 +41,8 @@ class PhotoGalleryController extends AbstractController
 
     public function userlistAction(Request $request, UserInterface $user): Response
     {
+        $this->errorIfFeatureDisabled('photos');
+
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
         return $this->render('AppBundle:PhotoGallery:user_list.html.twig', [
@@ -48,6 +52,8 @@ class PhotoGalleryController extends AbstractController
 
     public function examplegalleryAction(): Response
     {
+        $this->errorIfFeatureDisabled('photos');
+
         $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
         $cityList = [];
