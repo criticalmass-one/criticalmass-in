@@ -2,22 +2,10 @@
 
 namespace Criticalmass\Bundle\AppBundle\Feature;
 
-class PhotosFeature implements FeatureInterface
+class PhotosFeature extends AbstractFeature
 {
-    protected $enabled = false;
-
     public function __construct(bool $featurePhotos)
     {
         $this->enabled = $featurePhotos;
-    }
-
-    public function getName(): string
-    {
-        return 'photos';
-    }
-
-    public function enabled(): bool
-    {
-        return $this->enabled;
     }
 }
