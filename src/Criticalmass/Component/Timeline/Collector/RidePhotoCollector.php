@@ -54,4 +54,9 @@ class RidePhotoCollector extends AbstractTimelineCollector
 
         return $this;
     }
+
+    public function getRequiredFeatures(): array
+    {
+        return ['photos'];
+    }
 }
