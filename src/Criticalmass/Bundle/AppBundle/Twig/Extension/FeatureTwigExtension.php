@@ -2,16 +2,16 @@
 
 namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
 
 class FeatureTwigExtension extends \Twig_Extension
 {
-    /** @var ContainerInterface $container */
-    protected $container;
+    /** @var FeatureManager $featureManager */
+    protected $featureManager;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(FeatureManager $featureManager)
     {
-        $this->container = $container;
+        $this->featureManager = $featureManager;
     }
 
     public function getFunctions(): array
@@ -23,9 +23,7 @@ class FeatureTwigExtension extends \Twig_Extension
 
     public function featureEnabled(string $featureName): bool
     {
-        $parameterName = sprintf('feature.%s', $featureName);
-
-        return $this->container->getParameter($parameterName) === true;
+        return $this->featureManager->isFeatureEnabled($featureName);
     }
 
     public function getName(): string
