@@ -22,7 +22,7 @@ abstract class AbstractController extends Controller
     {
         $parameterName = sprintf('feature.%s', $featureName);
 
-        return $this->getParameter($parameterName) !== 'true';
+        return $this->getParameter($parameterName) === true;
     }
 
     protected function errorIfFeatureDisabled(string $featureName): void
