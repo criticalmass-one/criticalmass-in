@@ -7,6 +7,7 @@ use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ParticipateableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
@@ -26,7 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id

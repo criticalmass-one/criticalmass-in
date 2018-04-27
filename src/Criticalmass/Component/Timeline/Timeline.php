@@ -2,7 +2,9 @@
 
 namespace Criticalmass\Component\Timeline;
 
+use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
 use Criticalmass\Component\Timeline\Collector\AbstractTimelineCollector;
+use Criticalmass\Component\Timeline\Collector\TimelineCollectorInterface;
 use Criticalmass\Component\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -32,15 +34,21 @@ class Timeline
     /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating)
+    /** @var FeatureManager $featureManager */
+    protected $featureManager;
+
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManager $featureManager)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
+        $this->featureManager = $featureManager;
     }
 
     public function addCollector(AbstractTimelineCollector $collector): Timeline
     {
-        array_push($this->collectorList, $collector);
+        if ($this->checkFeatureStatusForCollector($collector)) {
+            array_push($this->collectorList, $collector);
+        }
 
         return $this;
     }
@@ -134,6 +142,21 @@ class Timeline
     public function getTimelineContent(): string
     {
         return $this->content;
+    }
+
+    protected function checkFeatureStatusForCollector(TimelineCollectorInterface $timelineCollector): bool
+    {
+        $requiredFeatures = $timelineCollector->getRequiredFeatures();
+
+        if (count($requiredFeatures) > 0) {
+            foreach ($requiredFeatures as $requiredFeature) {
+                if (!$this->featureManager->isFeatureEnabled($requiredFeature)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
 

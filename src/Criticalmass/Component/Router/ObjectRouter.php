@@ -50,7 +50,7 @@ class ObjectRouter
 
     protected function generateCityUrl(City $city, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        $route = 'caldera_criticalmass_desktop_city_show';
+        $route = 'caldera_criticalmass_city_show';
 
         $parameters = [
             'citySlug' => $city->getMainSlugString()

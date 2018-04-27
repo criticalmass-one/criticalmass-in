@@ -15,8 +15,8 @@
                 </h2>
 
                 <p class="lead">
-                    Willkommen in deinem Benutzerkonto &mdash; Hier kannst du deine Fotos, Tracks und Teilnahmen
-                    verwalten und deine Kontoeinstellungen ändern.
+                    Willkommen in deinem Benutzerkonto!
+                    Hier kannst du deine {% if feature_enabled('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
                 </p>
             </div>
         </div>
@@ -39,6 +39,26 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Profilfoto ändern
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                    Lade ein Foto für dein Profil hoch.
+                                </p>
+
+                                <p class="text-center">
+                                    <a class="btn btn-default"
+                                       href="{{ path('criticalmass_user_profile_photo') }}">
+                                        Profilfoto ändern
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -97,6 +117,7 @@
                         </div>
                     </div>
 
+                    {% if feature_enabled('photos') %}
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -123,31 +144,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if bikeright_visible %}
-                        <div class="col-md-6">
-                            <div class="panel panel-bikeright">
-                                <div class="panel-heading">
-                                    <small class="pull-right">
-                                        Anzeige
-                                    </small>
-
-                                    Bikeright-Rabattcode
-                                </div>
-                                <div class="panel-body">
-                                    <p>
-                                        Ab sofort! Kostenfreie Rechtsberatung für Community-Mitglieder!
-                                    </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-bikeright"
-                                           href="{{ path('criticalmass_user_bikeright_view') }}">
-                                            Mehr erfahren
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     {% endif %}
 
                     <div class="col-md-6">
@@ -223,6 +219,32 @@
                             </div>
                         </div>
                     </div>
+
+                    {% if bikeright_visible %}
+                        <div class="col-md-6">
+                            <div class="panel panel-bikeright">
+                                <div class="panel-heading">
+                                    <small class="pull-right">
+                                        Anzeige
+                                    </small>
+
+                                    Bikeright-Rabattcode
+                                </div>
+                                <div class="panel-body">
+                                    <p>
+                                        Ab sofort! Kostenfreie Rechtsberatung für Community-Mitglieder!
+                                    </p>
+
+                                    <p class="text-center">
+                                        <a class="btn btn-bikeright"
+                                           href="{{ path('criticalmass_user_bikeright_view') }}">
+                                            Mehr erfahren
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

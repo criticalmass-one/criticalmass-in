@@ -8,12 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user_user")
  * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
 class User extends BaseUser implements SocialNetworkProfileAble
@@ -120,6 +123,18 @@ class User extends BaseUser implements SocialNetworkProfileAble
      * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
     protected $cycles;
+
+    /**
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName")
+     */
+    protected $imageFile;
+
+    /**
+     * @var string $imageName
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $imageName;
 
     public function __construct()
     {
@@ -423,5 +438,33 @@ class User extends BaseUser implements SocialNetworkProfileAble
         $this->cycles->removeElement($cityCycle);
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null): User
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(string $imageName = null): User
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 }

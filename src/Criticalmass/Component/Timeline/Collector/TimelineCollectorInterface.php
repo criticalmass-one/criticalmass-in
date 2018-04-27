@@ -9,4 +9,6 @@ interface TimelineCollectorInterface
     public function execute(): TimelineCollectorInterface;
 
     public function getItems(): array;
+
+    public function getRequiredFeatures(): array;
 }

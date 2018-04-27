@@ -26,10 +26,6 @@ caldera_criticalmass_board:
     resource: "@AppBundle/Resources/config/routing/board.yml"
     prefix:   /
 
-caldera_criticalmass_profile:
-    resource: "@AppBundle/Resources/config/routing/profile.yml"
-    prefix:   /profile
-
 caldera_criticalmass_help:
     resource: "@AppBundle/Resources/config/routing/help.yml"
     prefix:   /help

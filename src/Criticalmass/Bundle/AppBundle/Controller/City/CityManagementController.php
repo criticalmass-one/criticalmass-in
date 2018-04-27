@@ -42,7 +42,7 @@ class CityManagementController extends AbstractController
         $city->setUser($this->getUser());
 
         $form = $this->createForm(StandardCityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_city_add', $this->getRegionSlugParameterArray($region)),
+            'action' => $this->generateUrl('caldera_criticalmass_city_add', $this->getRegionSlugParameterArray($region)),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
@@ -84,7 +84,7 @@ class CityManagementController extends AbstractController
             $hasErrors = false;
 
             $form = $this->createForm(StandardCityType::class, $city, [
-                'action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', [
+                'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
                     'citySlug' => $citySlug->getSlug(),
                 ])
             ]);
@@ -118,7 +118,7 @@ class CityManagementController extends AbstractController
     public function editAction(Request $request, UserInterface $user, City $city): Response
     {
         $form = $this->createForm(StandardCityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_city_edit', [
+            'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
                 'citySlug' => $city->getMainSlugString()
             ])
         ]);

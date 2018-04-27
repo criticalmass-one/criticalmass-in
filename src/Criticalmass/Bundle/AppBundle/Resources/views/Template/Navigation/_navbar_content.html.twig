@@ -22,6 +22,12 @@
                         {% trans %}criticalmass.navigation.criticalmass.help{% endtrans %}
                     </a>
                 </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="{{ path('caldera_criticalmass_intro') }}">
+                        über criticalmass.in
+                    </a>
+                </li>
             </ul>
         </li>
 
@@ -33,7 +39,7 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+                    <a href="{{ path('caldera_criticalmass_city_list') }}">
                         {% trans %}criticalmass.navigation.cities.list{% endtrans %}
                     </a>
                 </li>
@@ -64,11 +70,6 @@
                         Übersicht
                     </a>
                 </li>
-                <li>
-                    <a href="{{ path('caldera_criticalmass_statistic_facebook') }}">
-                        facebook-Statistiken
-                    </a>
-                </li>
             </ul>
         </li>
 
@@ -93,11 +94,13 @@
                     </a>
                 </li>
 
+                {% if feature_enabled('photos') %}
                 <li>
                     <a href="{{ path('caldera_criticalmass_photo_examplegallery') }}">
                         Fotos
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </li>
 
