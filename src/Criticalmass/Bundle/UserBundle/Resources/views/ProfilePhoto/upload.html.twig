@@ -1,9 +1,17 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Dein Benutzerprofil{% endblock %}
+{% block title %}Profilfoto hochladen{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Dein Benutzerkonto</li>
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Profilfoto hochladen
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -31,10 +39,24 @@
             </div>
         </div>
 
+        {{ form_start(profilePhotoForm) }}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
-                {{ form(profilePhotoForm) }}
+                {{ form_widget(profilePhotoForm.imageFile) }}
             </div>
         </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <div class="btn-group">
+                    {{ form_widget(profilePhotoForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
+
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{ form_end(profilePhotoForm) }}
     </div>
 {% endblock %}
