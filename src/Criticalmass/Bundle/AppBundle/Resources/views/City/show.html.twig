@@ -124,7 +124,7 @@
                     </div>
                 </div>
 
-                {% if photos|length > 0 %}
+                {% if feature_enabled('photos') and photos|length > 0 %}
                     <div class="row">
                         <div class="col-md-12">
                             <h2>

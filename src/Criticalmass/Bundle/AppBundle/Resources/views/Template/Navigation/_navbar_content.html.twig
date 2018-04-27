@@ -88,11 +88,13 @@
                     </a>
                 </li>
 
+                {% if feature_enabled('photos') %}
                 <li>
                     <a href="{{ path('caldera_criticalmass_photo_examplegallery') }}">
                         Fotos
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </li>
 

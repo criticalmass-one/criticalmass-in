@@ -7,7 +7,8 @@ services:
             $openWeatherMapApiKey: '%openweather.appid%'
             $rootDirectory: '%kernel.root_dir%'
             $staticmapsHost: '%staticmaps.host%'
-            
+            $featurePhotos: '%feature.photos%'
+
     Criticalmass\Bundle\AppBundle\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/*'
         exclude: '../../src/Criticalmass/Bundle/AppBundle/{Admin,DQL,Entity,Manager,Model,Repository,Tests,UserProvider,Validator}'

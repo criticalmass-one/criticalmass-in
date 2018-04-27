@@ -21,6 +21,8 @@ class PhotoUploadController extends AbstractController
      */
     public function uploadAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
+        $this->errorIfFeatureDisabled('photos');
+
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->uploadPostAction($request, $user, $photoGps, $ride);
         } else {
