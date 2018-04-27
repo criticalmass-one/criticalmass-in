@@ -17,7 +17,7 @@
             {{ render(controller('AppBundle:Post:list', { 'rideId': ride.getId() })) }}
 
             {% if app.getUser() %}
-                {{ render(controller('AppBundle:Post:write', { 'rideId': ride.getId(), 'noButton': true })) }}
+                {{ render(controller('AppBundle:Post:writeRide', { 'rideId': ride.getId(), 'noButton': true })) }}
             {% endif %}
         </div>
     </div>
