@@ -132,6 +132,8 @@ class User extends BaseUser
     /**
      * @var string $imageName
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
      */
     protected $imageName;
 
@@ -146,16 +148,6 @@ class User extends BaseUser
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
-    }
-
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("gravatarHash")
-     */
-    public function getGravatarHash(): ?string
-    {
-        return md5($this->getEmail());
     }
 
     public function getId(): ?int
