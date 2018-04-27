@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
+use Criticalmass\Bundle\AppBundle\Repository\PostRepository;
 use Criticalmass\Component\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -58,44 +59,25 @@ class PostController extends AbstractController
 
     public function writeAction(Request $request, PostableInterface $postable): Response
     {
-        $post = new Post();
+        $post = $this->createPostForPostable($postable);
 
-        if ($city) {
-            $form = $this->getPostForm($city, $post);
-
-            $post->setCity($city);
-        } elseif ($ride) {
-            $city = $this->getCityRepository()->find($ride->getCity());
-
-            $form = $this->getPostForm($ride, $post);
-
-            $post->setCity($city);
-            $post->setRide($ride);
-        } elseif ($photo) {
-            $form = $this->getPostForm($photo, $post);
-
-            $post->setPhoto($photo);
-        } elseif ($thread) {
-            $form = $this->getPostForm($thread, $post);
-
-            $post->setThread($thread);
-        }
+        $form = $this->getPostForm($postable, $post);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->addPostAction($request, $form, $post, $city, $ride, $photo, $thread);
+            return $this->addPostAction($request, $form, $post, $postable);
         } else {
-            return $this->addGetAction($request, $form, $post, $city, $ride, $photo, $thread);
+            return $this->addGetAction($request, $form, $post,$postable);
         }
     }
 
-    protected function addGetAction(Request $request, FormInterface $form, Post $post, City $city = null, Ride $ride = null, Photo $photo = null, Thread $thread = null): Response
+    protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable): Response
     {
         return $this->render('AppBundle:Post:write.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
-    protected function addPostAction(Request $request, FormInterface $form, Post $post, City $city = null, Ride $ride = null, Photo $photo = null, Thread $thread = null): Response
+    protected function addPostAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable): Response
     {
         $form->handleRequest($request);
 
@@ -106,31 +88,29 @@ class PostController extends AbstractController
             $em->persist($post);
 
             /* if we have a thread we need some additional behaviour here after the post is persisted */
-            if ($thread) {
-                $thread->setLastPost($post);
-                $thread->incPostNumber();
+            if ($postable instanceof Thread) {
+                $postable
+                    ->setLastPost($post)
+                    ->incPostNumber();
 
-                /**
-                 * @var BoardInterface $board
-                 */
-                if ($thread->getBoard()) {
-                    $board = $thread->getBoard();
+                /** @var BoardInterface $board */
+                if ($postable->getBoard()) {
+                    $board = $postable->getBoard();
                 } else {
-                    $board = $thread->getCity();
+                    $board = $postable->getCity();
                 }
 
                 $board->incPostNumber();
-                $board->setLastThread($thread);
+                $board->setLastThread($postable);
             }
 
             $em->flush();
 
-            return new RedirectResponse($this->generateObjectUrl($thread ?? $photo ?? $ride ?? $city));
+            return new RedirectResponse($this->generateObjectUrl($postable));
         }
 
-        return $this->addGetAction($request, $form, $post, $city, $ride, $photo, $thread);
+        return $this->addGetAction($request, $form, $post, $postable);
     }
-
 
     /**
      * List all posts.
@@ -197,5 +177,17 @@ class PostController extends AbstractController
         $parameter = [$parameterName => $postable->getId()];
 
         return $this->generateUrl($routeName, $parameter);
+    }
+
+    protected function createPostForPostable(PostableInterface $postable): Post
+    {
+        $post = new Post();
+
+        $shortname = ClassUtil::getShortname($postable);
+        $setMethodName = sprintf('set%s', $shortname);
+
+        $post->$setMethodName($postable);
+
+        return $post;
     }
 }
