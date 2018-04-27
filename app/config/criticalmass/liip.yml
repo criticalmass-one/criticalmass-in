@@ -59,3 +59,11 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
+        user_profile_photo_medium:
+            quality: 75
+            filters:
+                thumbnail: { size: [512, 512], mode: inset }
+        user_profile_photo_small:
+            quality: 50
+            filters:
+                thumbnail: { size: [128, 128], mode: inset }
