@@ -109,7 +109,9 @@ class PostController extends AbstractController
             return new RedirectResponse($this->generateObjectUrl($postable));
         }
 
-        return $this->addGetAction($request, $form, $post, $postable);
+        return $this->render('AppBundle:Post:write_failed.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
