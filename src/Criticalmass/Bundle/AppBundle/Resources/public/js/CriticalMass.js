@@ -54,6 +54,7 @@ require.config({
         "FacebookStatisticPage": "/bundles/app/js/modules/page/FacebookStatisticPage",
         "StatisticPage": "/bundles/app/js/modules/page/StatisticPage",
         "FahrradstadtHamburg": "/bundles/app/js/modules/FahrradstadtHamburg",
+        "SortableTable": "/bundles/app/js/modules/SortableTable",
         "Map": "/bundles/app/js/modules/map/Map",
         "AutoMap": "/bundles/app/js/modules/map/AutoMap",
         "DrawMap": "/bundles/app/js/modules/map/DrawMap",
@@ -73,6 +74,8 @@ require.config({
         "SubrideMarker": "/bundles/app/js/modules/map/marker/SubrideMarker",
         "SnapablePhotoMarker": "/bundles/app/js/modules/map/marker/SnapablePhotoMarker",
         "Search": "/bundles/app/js/modules/Search",
+        "ReadMore": "/bundles/app/js/modules/ReadMore",
+        "readmorejs": "/bundles/app/js/external/readmore/readmore.min",
         "leaflet": "/bundles/app/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/app/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/app/js/external/leaflet/L.Control.Locate",
@@ -97,14 +100,25 @@ require.config({
         "dropzone": "/bundles/app/js/external/dropzone/dropzone.min",
         "typeahead": "/bundles/app/js/external/typeahead/typeahead",
         "bloodhound": "/bundles/app/js/external/typeahead/bloodhound",
-        "jquery": "/bundles/app/js/external/jquery/jquery-2.1.4.min",
+        "jquery": "/bundles/app/js/external/jquery/jquery-3.2.1.min",
         "jquery-areaselect": "/bundles/app/js/external/jquery/jquery.areaselect.min",
+        "jquery-tablesorter": "/bundles/app/js/external/jquery/jquery.tablesorter",
         "dateformat": "/bundles/app/js/external/dateformat/dateformat",
         "chartjs": "/bundles/app/js/external/chartjs/chartjs",
         "localforage": "/bundles/app/js/external/localforage/localforage.min",
-        "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min"
+        "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min",
+        "bootstrap4": "/bundles/app/js/external/bootstrap4/bootstrap.min",
+        "bootstrap4app": "/bundles/app/js/external/bootstrap-app-4/toolkit",
+        "popper": "/bundles/app/js/external/popper/popper.min"
     },
     shim: {
+        'popper': {
+            deps: ['jquery'],
+            exports: 'Popper'
+        },
+        'bootstrap4': {
+            deps: ['jquery', 'popper']
+        },
         'leaflet-locate': {
             deps: ['leaflet'],
             exports: 'L.Control.Locate'
@@ -184,4 +198,11 @@ require.config({
             exports: 'Bloodhound'
         }
     }
+});
+
+define('initBootstrap', ['popper'], function(popper) {
+    // set popper as required by Bootstrap
+    window.Popper = popper;
+    require(['bootstrap4app'], function(bootstrap) {
+    });
 });

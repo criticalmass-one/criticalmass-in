@@ -46,14 +46,21 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
-    public function findRidesForCity(City $city, $order = 'DESC')
+    public function findRidesForCity(City $city, string $order = 'DESC', int $maxResults = null)
     {
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder
+            ->select('ride')
+            ->where($builder->expr()->eq('ride.city', $city->getId()))
+            ->addOrderBy('ride.dateTime', $order)
+        ;
 
-        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
-        $builder->addOrderBy('ride.dateTime', $order);
+        if ($maxResults) {
+            $builder
+                ->setMaxResults($maxResults)
+            ;
+        }
 
         $query = $builder->getQuery();
 
@@ -299,8 +306,8 @@ class RideRepository extends EntityRepository
 
     public function findCityRideByDate(City $city, \DateTime $dateTime): ?Ride
     {
-        $fromDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
-        $untilDateTime = DateTimeUtil::getMonthEndDateTime($dateTime);
+        $fromDateTime = DateTimeUtil::getDayStartDateTime($dateTime);
+        $untilDateTime = DateTimeUtil::getDayEndDateTime($dateTime);
 
         $builder = $this->createQueryBuilder('r');
 

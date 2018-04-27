@@ -18,7 +18,9 @@
     {{ sonata_seo_lang_alternates() }}
 
     {% if bootstrap4 is defined and bootstrap4 == true %}
-        <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass-bootstrap4.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass-bootstrap4.css') }}" />
+    {% elseif bootstrap4app is defined and bootstrap4app == true %}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/external/bootstrap-app-4/toolkit.css') }}" />
     {% else %}
         <link rel="stylesheet" href="{{ asset('bundles/app/css/criticalmass.css') }}"/>
     {% endif %}
@@ -38,7 +40,7 @@
     {% block additionalHeaderElements %}{% endblock %}
 </head>
 
-<body class="{% block bodyClass %}{% endblock %}">
+<body class="{% block bodyClass %}{% endblock %} with-top-navbar">
 {% if not app.user %}
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -53,8 +55,17 @@
 {% block masterContent %}{% endblock %}
 
 {% if bootstrap4 is defined and bootstrap4 == true %}
-    <script src="{{ asset('bundles/app/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('bundles/app/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+<script>
+    CriticalMass.loadModule('initBootstrap');
+</script>
+<script src="{{ asset('bundles/app/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('bundles/app/js/external/bootstrap4/bootstrap.min.js') }}"></script>
+{% elseif bootstrap4app is defined and bootstrap4app == true %}
+<script>
+    CriticalMass.loadModule('initBootstrap');
+</script>
+<script src="{{ asset('bundles/app/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('bundles/app/js/external/bootstrap-app-4/toolkit.min.js') }}"></script>
 {% else %}
     <script src="{{ asset('bundles/app/js/external/jquery/jquery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('bundles/app/js/external/bootstrap3/bootstrap.min.js') }}"></script>

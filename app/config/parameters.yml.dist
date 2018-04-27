@@ -47,6 +47,8 @@ parameters:
 
     bikeright.visible: false
 
+    staticmaps.host: https://staticmaps.caldera.cc/
+
     graylog.hostname: anagnina.caldera.cc
     graylog.port: 12201
 

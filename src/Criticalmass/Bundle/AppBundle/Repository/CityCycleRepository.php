@@ -17,7 +17,7 @@ class CityCycleRepository extends EntityRepository
 
         $builder
             ->where($builder->expr()->eq('cc.city', ':city'))
-            ->addOrderBy('cc.validFrom')
+            ->addOrderBy('cc.validFrom', 'DESC')
             ->addOrderBy('cc.location')
             ->setParameter('city', $city);
 

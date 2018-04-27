@@ -3,6 +3,7 @@
 namespace Criticalmass\Component\RideGenerator\RideGenerator;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Component\RideGenerator\RideCalculator\RideCalculatorInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 abstract class AbstractRideGenerator implements RideGeneratorInterface
@@ -13,14 +14,8 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
     /** @var int $month */
     protected $month;
 
-    /** @var \DateTime $endDateTime */
-    protected $startDateTime;
-
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime;
-
-    /** @var City $city */
-    protected $city;
+    /** @var array $cityList */
+    protected $cityList;
 
     /** @var array $rideList */
     protected $rideList = [];
@@ -28,14 +23,25 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    public function __construct(Doctrine $doctrine)
+    /** @var RideCalculatorInterface $rideCalculator */
+    protected $rideCalculator;
+
+    public function __construct(Doctrine $doctrine, RideCalculatorInterface $rideCalculator)
     {
         $this->doctrine = $doctrine;
+        $this->rideCalculator = $rideCalculator;
     }
 
-    public function setCity(City $city): RideGeneratorInterface
+    public function addCity(City $city): RideGeneratorInterface
     {
-        $this->city = $city;
+        $this->cityList[] = $city;
+
+        return $this;
+    }
+
+    public function setCityList(array $cityList): RideGeneratorInterface
+    {
+        $this->cityList = $cityList;
 
         return $this;
     }
@@ -54,7 +60,7 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
         return $this;
     }
 
-    public function getList(): array
+    public function getRideList(): array
     {
         return $this->rideList;
     }

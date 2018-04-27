@@ -35,6 +35,10 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [1140, 250], mode: inset }
+        ride_image_wide:
+            quality: 60
+            filters:
+                thumbnail: { size: [1140, 250], mode: inset }
         blog_featuredphoto_standard:
             quality: 80
             filters:
@@ -47,6 +51,10 @@ liip_imagine:
             quality: 50
             filters:
                 thumbnail: { size: [800, 800], mode: inset }
+        ride_photo_preview:
+            quality: 50
+            filters:
+                thumbnail: { size: [600, 600], mode: inset }
         frontpage_teaser_large:
             quality: 75
             filters:
