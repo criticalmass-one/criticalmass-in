@@ -117,13 +117,13 @@
             {% if app.user %}
             <li class="nav-item ml-2">
                 <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover">
-                    <img class="rounded-circle" src="{{ gravatarUrl(app.user) }}">
+                    <img class="rounded-circle" src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}">
                 </button>
             </li>
             {% else %}
             <li class="nav-item ml-2">
                 <button class="btn btn-default navbar-btn navbar-btn-avatar" data-toggle="popover">
-                    <img class="rounded-circle" src="https://www.gravatar.com/avatar/qwqeqwe?f=y">
+                    <img class="rounded-circle" src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}">
                 </button>
             </li>
             {% endif %}

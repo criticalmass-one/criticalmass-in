@@ -3,7 +3,7 @@
         <div class="media post">
             <span class="pull-left">
                 {% if post.user.imageName %}
-                <img class="media-object gravatar round-media-object"
+                <img class="media-object round-media-object"
                      src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
                 {% endif %}
             </span>
