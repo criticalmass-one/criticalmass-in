@@ -3,10 +3,18 @@
 namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class ProfilePhotoTwigExtension extends \Twig_Extension
 {
-    public function getFunctions()
+    protected $uploaderHelper;
+
+    public function __construct(UploaderHelper $uploaderHelper)
+    {
+        $this->uploaderHelper = $uploaderHelper;
+    }
+
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('gravatarHash', [$this, 'gravatarHash'], [
