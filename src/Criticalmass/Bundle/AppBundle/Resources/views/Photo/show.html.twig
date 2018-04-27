@@ -155,7 +155,7 @@
                         {{ render(controller('AppBundle:Post:list', { 'photoId': photo.id })) }}
 
                         {% if app.getUser() %}
-                            {{ render(controller('AppBundle:Post:write', { 'photoId': photo.id, 'noButton': true })) }}
+                            {{ render(controller('AppBundle:Post:writePhoto', { 'photoId': photo.id, 'noButton': true })) }}
                         {% endif %}
                     </div>
                 </div>
