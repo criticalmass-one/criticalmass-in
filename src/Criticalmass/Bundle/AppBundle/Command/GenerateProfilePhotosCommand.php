@@ -6,6 +6,8 @@ use Criticalmass\Bundle\AppBundle\Entity\User;
 use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -34,13 +36,20 @@ class GenerateProfilePhotosCommand extends Command
     {
         $userList = $this->registry->getRepository(User::class)->findAll();
 
+        $progress = new ProgressBar($output, count($userList));
+        $table = new Table($output);
+
         /** @var User $user */
         foreach ($userList as $user) {
             //if (!$user->getImageName()) {
-                $this->profilePhotoGenerator->setUser($user)->generate();
-            //}
+                $filename = $this->profilePhotoGenerator->setUser($user)->generate();
 
-            break;
+                $table->addRow([$user->getUsername(), $filename]);
+                $progress->advance();
+            //}
         }
+
+        $progress->finish();
+        $table->render();
     }
 }

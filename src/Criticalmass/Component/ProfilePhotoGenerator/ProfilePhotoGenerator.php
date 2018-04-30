@@ -18,6 +18,8 @@ use Imagine\Image\Palette;
 
 class ProfilePhotoGenerator
 {
+    const FONT_FILE = '/app/Resources/fonts/Verdana/Bold.ttf';
+
     /** @var User $user */
     protected $user;
 
@@ -52,7 +54,7 @@ class ProfilePhotoGenerator
     {
         $image = $this->createImage();
 
-        $filename = $this->generateFilename();
+        $filename = $this->generateFilePath();
 
         $this->writeText($image);
 
@@ -103,7 +105,7 @@ class ProfilePhotoGenerator
     {
         $fontColor = $this->palette->color('fff');
         $fontSize = 256;
-        $fontFilename = sprintf('%s', $this->projectDirectory, '/app/Resources/fonts/Verdana/Bold.ttf');
+        $fontFilename = sprintf('%s', $this->projectDirectory, self::FONT_FILE);
 
         $font = new Font($this->imagick, $fontFilename, $fontSize, $fontColor);
 
@@ -119,8 +121,12 @@ class ProfilePhotoGenerator
         ]);
     }
 
-    protected function generateFilename(): string
+    protected function generateFilePath(): string
     {
-        return sprintf('%s/web/users/%s.png', $this->projectDirectory, uniqid());
+        $filename = sprintf('%s.png', uniqid());
+
+        $this->user->setImageName($filename);
+
+        return sprintf('%s/web/users/%s', $this->projectDirectory, $filename);
     }
 }
