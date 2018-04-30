@@ -36,9 +36,11 @@ class GenerateProfilePhotosCommand extends Command
 
         /** @var User $user */
         foreach ($userList as $user) {
-            if (!$user->getImageName()) {
+            //if (!$user->getImageName()) {
                 $this->profilePhotoGenerator->setUser($user)->generate();
-            }
+            //}
+
+            break;
         }
     }
 }
