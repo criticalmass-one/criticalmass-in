@@ -24,7 +24,7 @@ class FacebookEventApi extends FacebookApi
     public function queryEvents(string $pageId, \DateTime $since, \DateTime $until): ?GraphEdge
     {
         try {
-            $endpoint = sprintf('/%s/events?since=%d&d&until=%d', $pageId, $since->format('U'), $until->format('U'));
+            $endpoint = sprintf('/%s/events?since=%d&until=%d', $pageId, $since->format('U'), $until->format('U'));
 
             $response = $this->query($endpoint);
         } catch (\Exception $exception) {
