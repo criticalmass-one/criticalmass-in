@@ -3,7 +3,6 @@
 namespace Criticalmass\Component\ProfilePhotoGenerator;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Imagick;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
