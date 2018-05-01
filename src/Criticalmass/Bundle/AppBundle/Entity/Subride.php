@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Entity;
 use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
 use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
