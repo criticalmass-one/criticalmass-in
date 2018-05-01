@@ -1,12 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Bundle\AppBundle\Command\SocialNetwork;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Component\SocialNetwork\FeedFetcher\FeedFetcher;
+use Criticalmass\Bundle\AppBundle\Entity\Subride;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Criticalmass\Component\Util\ClassUtil;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,29 +42,45 @@ class ConvertNetworkCommand extends Command
             $this->checkNetworks($city);
         }
 
+        $rides = $this->doctrine->getRepository(Ride::class)->findAll();
+
+        /** @var Ride $ride */
+        foreach ($rides as $ride) {
+            $this->checkNetworks($ride);
+        }
+
+        $subrides = $this->doctrine->getRepository(Subride::class)->findAll();
+
+        /** @var Subride $subride */
+        foreach ($subrides as $subride) {
+            $this->checkNetworks($subride);
+        }
+
         $this->doctrine->getManager()->flush();
     }
 
-    protected function checkNetworks(City $city): void
+    protected function checkNetworks(SocialNetworkProfileAble $profileAble): void
     {
         $networks = ['twitter' => 'twitter', 'facebook' => 'facebook_page', 'url' => 'homepage'];
 
         foreach ($networks as $oldProperty => $network) {
             $oldGetMethodName = sprintf('get%s', ucfirst($oldProperty));
 
-            if ($city->$oldGetMethodName()) {
-                $this->createProfile($city, $network, $city->$oldGetMethodName());
+            if ($profileAble->$oldGetMethodName()) {
+                $this->createProfile($profileAble, $network, $profileAble->$oldGetMethodName());
             }
         }
     }
 
-    protected function createProfile(City $city, string $network, string $identifier): SocialNetworkProfile
+    protected function createProfile(SocialNetworkProfileAble $profileAble, string $network, string $identifier): SocialNetworkProfile
     {
+        $setProfileableMethodName = sprintf('set%s', ClassUtil::getShortname($profileAble));
+
         $profile = new SocialNetworkProfile();
 
         $profile
             ->setIdentifier($identifier)
-            ->setCity($city)
+            ->$setProfileableMethodName($profileAble)
             ->setNetwork($network);
 
         $this->doctrine->getManager()->persist($profile);
