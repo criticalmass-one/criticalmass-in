@@ -18,25 +18,25 @@ class SocialNetworkProfile
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="social_networks")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="social_networks")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="social_networks")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="social_networks")
+     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
      */
     protected $subride;

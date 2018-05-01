@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Entity;
 
 use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
 use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,6 +30,11 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
      * @JMS\Expose
      */
     protected $ride;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="subride", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -110,6 +116,8 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+
+        $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function __clone()
@@ -315,6 +323,32 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
     public function setTime(\DateTime $time): Subride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+
+        return $this;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Subride
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): Subride
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Subride
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
     }

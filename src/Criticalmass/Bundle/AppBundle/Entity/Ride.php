@@ -188,6 +188,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $photos;
 
     /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -278,6 +283,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->posts = new ArrayCollection();
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -924,5 +930,31 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): Ride
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
+
+        return $this;
     }
 }

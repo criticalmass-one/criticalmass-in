@@ -152,6 +152,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $cycles;
 
     /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="city", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
      * @JMS\Expose
@@ -260,6 +265,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->posts = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->cycles = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
 
         $this->createdAt = new \DateTime();
     }
@@ -839,6 +845,32 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function removeCycle(CityCycle $cityCycle): City
     {
         $this->cycles->removeElement($cityCycle);
+
+        return $this;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): City
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): City
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): City
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
     }
