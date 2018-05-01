@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user_user")
  * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
@@ -131,9 +131,9 @@ class User extends BaseUser
 
     /**
      * @var string $imageName
-     * @ORM\Column(type="string", length=255)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageName;
 

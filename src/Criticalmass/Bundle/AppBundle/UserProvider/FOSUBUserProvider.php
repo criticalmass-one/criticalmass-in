@@ -3,12 +3,25 @@
 namespace Criticalmass\Bundle\AppBundle\UserProvider;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
+use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
+    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
+    protected $profilePhotoGenerator;
+
+    public function __construct(UserManagerInterface $userManager, array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    {
+        $this->profilePhotoGenerator = $profilePhotoGenerator;
+
+        parent::__construct($userManager, $properties);
+    }
+
     public function connect(UserInterface $user, UserResponseInterface $response): void
     {
         $property = $this->getProperty($response);
@@ -59,6 +72,8 @@ class FOSUBUserProvider extends BaseClass
             ->setPassword('')
             ->setEnabled(true);
 
+        $this->setupProfilePhoto($user);
+
         return $user;
     }
 
@@ -98,5 +113,17 @@ class FOSUBUserProvider extends BaseClass
     protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
     {
         return $this->userManager->findUserBy(['email' => $response->getEmail()]);
+    }
+
+    /**
+     * @TODO This should be done via event subscriber during hwio process, but it does not work :(
+     */
+    protected function setupProfilePhoto(User $user): User
+    {
+        $this->profilePhotoGenerator
+            ->setUser($user)
+            ->generate();
+
+        return $user;
     }
 }

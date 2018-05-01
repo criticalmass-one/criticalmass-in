@@ -91,6 +91,7 @@
                 <argument type="string" key="strava">stravaId</argument>
                 <argument type="string" key="runkeeper">runkeeperId</argument>
             </argument>
+            <argument type="service" id="Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface" />
         </service>
     </services>
 </container>
