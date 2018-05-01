@@ -64,6 +64,8 @@ class GenerateProfilePhotosCommand extends Command
             }
         }
 
+        $this->registry->getManager()->flush();
+        
         $progress->finish();
         $table->render();
     }
