@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
@@ -24,6 +24,12 @@ class SocialNetworkFeedItemRepository extends EntityRepository
                 ->andWhere($builder->expr()->lte('fi.dateTime', ':endDateTime'))
                 ->setParameter('endDateTime', $endDateTime);
         }
+
+        $builder
+            ->andWhere($builder->expr()->eq('fi.hidden', ':hidden'))
+            ->andWhere($builder->expr()->eq('fi.deleted', ':deleted'))
+            ->setParameter('hidden', false)
+            ->setParameter('deleted', false);
 
         if ($limit) {
             $builder->setMaxResults($limit);

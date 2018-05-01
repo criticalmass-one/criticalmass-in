@@ -50,6 +50,26 @@ class SocialNetworkFeedItem
      */
     protected $dateTime;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $hidden = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $deleted = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $createdAt;
+
+    public function __construct()
+    {
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;
