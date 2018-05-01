@@ -3,7 +3,6 @@
 namespace Criticalmass\Bundle\AppBundle\Command;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGenerator;
 use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Console\Command\Command;
@@ -21,7 +20,7 @@ class GenerateProfilePhotosCommand extends Command
     /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
     protected $profilePhotoGenerator;
 
-    public function __construct(Registry $registry, ProfilePhotoGenerator $profilePhotoGenerator)
+    public function __construct(Registry $registry, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
         $this->registry = $registry;
         $this->profilePhotoGenerator = $profilePhotoGenerator;
@@ -65,6 +64,8 @@ class GenerateProfilePhotosCommand extends Command
             }
         }
 
+        $this->registry->getManager()->flush();
+        
         $progress->finish();
         $table->render();
     }
