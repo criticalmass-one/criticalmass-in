@@ -356,6 +356,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->title;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url): City
     {
         $this->url = $url;
@@ -363,11 +366,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook): City
     {
         $this->facebook = $facebook;
@@ -375,11 +384,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter): City
     {
         $this->twitter = $twitter;
@@ -387,6 +402,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;

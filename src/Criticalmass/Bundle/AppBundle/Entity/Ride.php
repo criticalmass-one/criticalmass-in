@@ -476,6 +476,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimatedParticipants;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook = null): Ride
     {
         $this->facebook = $facebook;
@@ -483,11 +486,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter = null): Ride
     {
         $this->twitter = $twitter;
@@ -495,11 +504,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url = null): Ride
     {
         $this->url = $url;
@@ -507,6 +522,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;

@@ -204,6 +204,9 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
         return $this->longitude;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook = null): Subride
     {
         $this->facebook = $facebook;
@@ -211,11 +214,17 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter = null): Subride
     {
         $this->twitter = $twitter;
@@ -223,11 +232,17 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url = null): Subride
     {
         $this->url = $url;
@@ -235,6 +250,9 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
