@@ -12,7 +12,6 @@ criticalmass_socialnetwork_city_add:
     path:  /{citySlug}/socialnetwork/add
     defaults: { _controller: AppBundle:SocialNetwork/SocialNetwork:add }
 
-
 criticalmass_socialnetwork_ride_add:
     path:  /{citySlug}/{rideDate}/socialnetwork/add
     defaults: { _controller: AppBundle:SocialNetwork/SocialNetwork:add }
