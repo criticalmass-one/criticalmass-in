@@ -67,7 +67,7 @@ class SocialNetworkFeedItem
 
     public function __construct()
     {
-
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -151,6 +151,42 @@ class SocialNetworkFeedItem
     {
         $this->dateTime = $dateTime;
 
+        return $this;
+    }
+
+    public function getHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    public function setHidden(bool $hidden): SocialNetworkFeedItem
+    {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    public function getDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): SocialNetworkFeedItem
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->getCreatedAt();
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): SocialNetworkFeedItem
+    {
+        $this->createdAt = $createdAt;
+        
         return $this;
     }
 

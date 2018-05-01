@@ -87,6 +87,13 @@
             <tag name="sonata.admin" manager-type="orm" group="Statistic" label="Estimate"/>
         </service>
 
+        <service id="Criticalmass\Bundle\AppBundle\Admin\SocialNetworkFeedItemAdmin">
+            <argument/>
+            <argument type="string">Criticalmass\Bundle\AppBundle\Entity\SocialNetworkFeedItem</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Social Network" label="Feed Item"/>
+        </service>
+
         <service id="Criticalmass\Bundle\AppBundle\Admin\ThreadAdmin">
             <argument/>
             <argument type="string">Criticalmass\Bundle\AppBundle\Entity\Thread</argument>
