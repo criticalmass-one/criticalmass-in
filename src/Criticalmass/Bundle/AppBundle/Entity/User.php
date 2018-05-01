@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user_user")
  * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
@@ -132,7 +132,9 @@ class User extends BaseUser implements SocialNetworkProfileAble
 
     /**
      * @var string $imageName
-     * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageName;
 
@@ -147,16 +149,6 @@ class User extends BaseUser implements SocialNetworkProfileAble
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
-    }
-
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("gravatarHash")
-     */
-    public function getGravatarHash(): ?string
-    {
-        return md5($this->getEmail());
     }
 
     public function getId(): ?int

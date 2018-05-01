@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Component\Timeline;
 
+use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;
@@ -10,12 +11,14 @@ class CachedTimeline extends Timeline
 {
     protected $ttl;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, int $ttl = 300)
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManager $featureManager, int $ttl = 300)
     {
-        parent::__construct($doctrine, $templating);
+
         $this->doctrine = $doctrine;
         $this->templating = $templating;
         $this->ttl = $ttl;
+
+        parent::__construct($doctrine, $templating, $featureManager);
     }
 
     public function execute(): Timeline

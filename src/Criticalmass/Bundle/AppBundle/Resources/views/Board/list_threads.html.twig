@@ -60,8 +60,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img class="pull-left" style="margin-right: 5px;"
-                                         src="{{ gravatarUrl(thread.firstPost.user, 36) }}" alt="..."/>
+                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     von <strong>{{ thread.firstPost.user.username }}</strong>
                                 </td>
                                 <td>
@@ -72,8 +71,7 @@
                                 </td>
                                 <td>
                                     {% if thread.lastPost %}
-                                        <img class="pull-left" style="margin-right: 5px;"
-                                             src="{{ gravatarUrl(thread.lastPost.user, 36) }}" alt="..."/>
+                                        <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                         von <strong>{{ thread.lastPost.user.username }}</strong><br/>
                                         {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
                                     {% endif %}
