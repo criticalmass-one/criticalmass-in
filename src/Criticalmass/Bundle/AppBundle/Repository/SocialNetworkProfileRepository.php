@@ -20,7 +20,7 @@ class SocialNetworkProfileRepository extends EntityRepository
         return $builder;
     }
 
-    public function findByProfileable(string $profileAble): array
+    public function findByProfileable(SocialNetworkProfileAble $profileAble): array
     {
         $reflection = new \ReflectionClass($profileAble);
         $lcEntityClassname = lcfirst($reflection->getShortName());
