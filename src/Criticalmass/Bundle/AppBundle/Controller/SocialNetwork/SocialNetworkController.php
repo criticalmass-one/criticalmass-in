@@ -1,7 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller\SocialNetwork;
 
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
@@ -16,7 +17,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractController
 {
