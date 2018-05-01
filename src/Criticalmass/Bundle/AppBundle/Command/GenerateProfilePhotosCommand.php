@@ -34,12 +34,14 @@ class GenerateProfilePhotosCommand extends Command
         $this
             ->setName('criticalmass:profile-photo:generate')
             ->setDescription('Generate profile photos')
-            ->addOption('overwrite', null,InputOption::VALUE_NONE);
+            ->addOption('overwrite', null,InputOption::VALUE_NONE)
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $overwrite = $input->getOption('overwrite');
+        $limit = $input->getOption('limit');
 
         $userList = $this->findUsers($overwrite);
 
@@ -57,6 +59,10 @@ class GenerateProfilePhotosCommand extends Command
 
             $table->addRow([$user->getUsername(), $filename]);
             $progress->advance();
+
+            if ($limit && $progress->getProgress() >= $limit) {
+                break;
+            }
         }
 
         $progress->finish();
