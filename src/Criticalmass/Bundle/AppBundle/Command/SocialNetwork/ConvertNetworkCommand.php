@@ -45,7 +45,7 @@ class ConvertNetworkCommand extends Command
 
     protected function checkNetworks(City $city): void
     {
-        $networks = ['twitter' => 'twitter', 'facebook' => 'facebook', 'url' => 'website'];
+        $networks = ['twitter' => 'twitter', 'facebook' => 'facebook_page', 'url' => 'homepage'];
 
         foreach ($networks as $oldProperty => $network) {
             $oldGetMethodName = sprintf('get%s', ucfirst($oldProperty));
