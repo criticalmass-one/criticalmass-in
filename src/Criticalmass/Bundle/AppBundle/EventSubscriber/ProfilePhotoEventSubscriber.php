@@ -29,7 +29,7 @@ class ProfilePhotoEventSubscriber implements EventSubscriberInterface
     {
         return [
             FOSUserEvents::REGISTRATION_SUCCESS => 'onFosRegistrationSuccess',
-            HWIOAuthEvents::REGISTRATION_SUCCESS => 'onHwiRegistrationSuccess',
+            HWIOAuthEvents::CONNECT_INITIALIZE => 'onHwiRegistrationSuccess',
         ];
     }
 

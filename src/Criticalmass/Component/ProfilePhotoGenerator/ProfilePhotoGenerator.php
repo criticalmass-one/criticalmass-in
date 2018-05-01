@@ -16,15 +16,12 @@ use Imagine\Imagick\Font;
 use Imagine\Imagick\Imagine;
 use Imagine\Image\Palette;
 
-class ProfilePhotoGenerator
+class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 {
     const FONT_FILE = '/app/Resources/fonts/Verdana/Bold.ttf';
 
     /** @var User $user */
     protected $user;
-
-    /** @var Registry $registry */
-    protected $registry;
 
     /** @var string $projectDirectory */
     protected $projectDirectory;
@@ -35,15 +32,14 @@ class ProfilePhotoGenerator
     /** @var \Imagick $imagick */
     protected $imagick;
 
-    public function __construct(string $projectDirectory, Registry $registry)
+    public function __construct(string $projectDirectory)
     {
-        $this->registry = $registry;
         $this->projectDirectory = $projectDirectory;
         $this->palette = new Palette\RGB();
         $this->imagick = new Imagick();
     }
 
-    public function setUser(User $user): ProfilePhotoGenerator
+    public function setUser(User $user): ProfilePhotoGeneratorInterface
     {
         $this->user = $user;
 
