@@ -67,3 +67,7 @@ liip_imagine:
             quality: 50
             filters:
                 thumbnail: { size: [128, 128], mode: inset }
+        user_profile_photo_timelapse:
+            quality: 30
+            filters:
+                thumbnail: { size: [50, 50], mode: inset }

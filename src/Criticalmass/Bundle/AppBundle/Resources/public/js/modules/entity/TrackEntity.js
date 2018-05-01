@@ -73,7 +73,7 @@ define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function (
 
     TrackEntity.prototype._createMarker = function () {
         if (!this._marker) {
-            this._marker = new PositionMarker(this._currentLatLng, false, this._user.getUsername(), this._user.getGravatarUrl());
+            this._marker = new PositionMarker(this._currentLatLng, false, this._user.getUsername(), this._user.getProfilePhotoUrl());
 
             this._marker.setColorRed(this._colorRed);
             this._marker.setColorGreen(this._colorGreen);
