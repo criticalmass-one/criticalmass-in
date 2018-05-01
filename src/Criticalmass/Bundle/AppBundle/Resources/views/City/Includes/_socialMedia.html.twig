@@ -1,34 +1,18 @@
-{% set hasSocialMedia = city.getUrl() or city.getFacebook() or city.getTwitter() %}
-
-{% if hasSocialMedia %}
+{% if city.socialNetworkProfiles|length > 0 %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Soziale Netze</h3>
         </div>
-        <div class="panel-body">
-            <div class="text-center">
-                <div class="btn-group-vertical" role="group" aria-label="...">
-                    {% if city.url %}
-                        <a class="btn btn-default" href="{{ city.url }}">
-                            <i class="fa fa-home"></i>
-                            {{ hostname(city.url) }}
-                        </a>
-                    {% endif %}
+        <div class="panel-body text-center">
+            <div class="btn-group-vertical">
+            {% for profile in city.socialNetworkProfiles %}
+                {% set network = getNetwork(profile.network) %}
 
-                    {% if city.facebook %}
-                        <a class="btn btn-default" href="{{ city.facebook }}">
-                            <i class="fa fa-facebook"></i>
-                            {{ facebookIdentifier(city.facebook) }}
-                        </a>
-                    {% endif %}
-
-                    {% if city.twitter %}
-                        <a class="btn btn-default" href="{{ city.twitter }}">
-                            <i class="fa fa-twitter"></i>
-                            {{ twitterUsername(city.twitter) }}
-                        </a>
-                    {% endif %}
-                </div>
+                <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                    <i class="fa {{ network.icon }}"></i>
+                    {{ network.name }}
+                </a>
+            {% endfor %}
             </div>
         </div>
     </div>
