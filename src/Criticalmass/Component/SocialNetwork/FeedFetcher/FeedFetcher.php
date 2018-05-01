@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Component\SocialNetwork\FeedFetcher;
 
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkFeedItem;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Component\SocialNetwork\Network\NetworkInterface;
 use Criticalmass\Component\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
@@ -40,8 +39,7 @@ class FeedFetcher
         return $this->doctrine->getRepository(SocialNetworkProfile::class)->findAll();
     }
 
-    protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile
-    ): ?NetworkFeedFetcherInterface
+    protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
         $namespace = 'Criticalmass\\Component\\SocialNetwork\\NetworkFeedFetcher\\';
 
@@ -56,7 +54,7 @@ class FeedFetcher
         return null;
     }
 
-    public function fetch()
+    public function fetch(): FeedFetcher
     {
         $profileList = $this->getSocialNetworkProfiles();
 
@@ -74,7 +72,7 @@ class FeedFetcher
         return $this;
     }
 
-    public function persist()
+    public function persist(): FeedFetcher
     {
         $em = $this->doctrine->getManager();
 
@@ -87,8 +85,8 @@ class FeedFetcher
         try {
             $em->flush();
         } catch (\Exception $exception) {
-        }
 
+        }
 
         return $this;
     }

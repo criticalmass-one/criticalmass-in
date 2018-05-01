@@ -16,7 +16,11 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        $this->fetchFeed($socialNetworkProfile);
+        try {
+            $this->fetchFeed($socialNetworkProfile);
+        } catch (\Exception $exception) {
+
+        }
 
         return $this;
     }
@@ -71,16 +75,26 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         $feedItem = new SocialNetworkFeedItem();
 
         try {
-            $feedItem
-                ->setUniqueIdentifier($entry->getId())
-                ->setPermalink($entry->getPermalink())
-                ->setTitle($entry->getTitle())
-                ->setText($entry->getContent())
-                ->setDateTime($entry->getDateCreated());
+            $uniqueId = $entry->getId();
+            $permalink = $entry->getPermalink();
+            $title = $entry->getTitle();
+            $text = $entry->getContent();
+            $dateTime = $entry->getDateCreated();
+
+            if ($uniqueId && $permalink && $title && $text && $dateTime) {
+                $feedItem
+                    ->setUniqueIdentifier($uniqueId)
+                    ->setPermalink($permalink)
+                    ->setTitle($title)
+                    ->setText($text)
+                    ->setDateTime($dateTime);
+
+                return $feedItem;
+            }
         } catch (\Exception $e) {
             return null;
         }
 
-        return $feedItem;
+        return null;
     }
 }
