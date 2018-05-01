@@ -131,7 +131,7 @@ class User extends BaseUser
 
     /**
      * @var string $imageName
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageName;
 
