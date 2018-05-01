@@ -11,8 +11,8 @@ use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Point;
 use Imagine\Image\Point\Center;
-use Imagine\Imagick\Font;
-use Imagine\Imagick\Imagine;
+use Imagine\Gd\Font;
+use Imagine\Gd\Imagine;
 use Imagine\Image\Palette;
 
 class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
@@ -28,14 +28,10 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
     /** @var PaletteInterface $palette */
     protected $palette;
 
-    /** @var \Imagick $imagick */
-    protected $imagick;
-
     public function __construct(string $projectDirectory)
     {
         $this->projectDirectory = $projectDirectory;
         $this->palette = new Palette\RGB();
-        $this->imagick = new Imagick();
     }
 
     public function setUser(User $user): ProfilePhotoGeneratorInterface
@@ -100,9 +96,9 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
     {
         $fontColor = $this->palette->color('fff');
         $fontSize = 256;
-        $fontFilename = sprintf('%s', $this->projectDirectory, self::FONT_FILE);
+        $fontFilename = sprintf('%s%s', $this->projectDirectory, self::FONT_FILE);
 
-        $font = new Font($this->imagick, $fontFilename, $fontSize, $fontColor);
+        $font = new Font($fontFilename, $fontSize, $fontColor);
 
         return $font;
     }
