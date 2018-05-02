@@ -45,7 +45,6 @@ class SocialNetworkFeedItemAdmin extends AbstractAdmin
             ->addIdentifier('title')
             ->add('dateTime')
             ->add('hidden')
-            ->add('deleted')
-            ->add('createdAt');
+            ->add('deleted');
     }
 }

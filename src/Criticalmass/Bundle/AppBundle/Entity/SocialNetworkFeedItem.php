@@ -180,13 +180,13 @@ class SocialNetworkFeedItem
 
     public function getCreatedAt(): \DateTime
     {
-        return $this->getCreatedAt();
+        return $this->createdAt;
     }
 
     public function setCreatedAt(\DateTime $createdAt): SocialNetworkFeedItem
     {
         $this->createdAt = $createdAt;
-        
+
         return $this;
     }
 
