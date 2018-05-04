@@ -19,6 +19,11 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    Criticalmass\Bundle\UserBundle\Controller\:
+        resource: '../../src/Criticalmass/Bundle/UserBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
     Criticalmass\Component\:
         resource: '../../src/Criticalmass/Component/*'
         exclude: '../../src/Criticalmass/Component/{Facebook,Image,Gps,UploadValidator/UploadValidatorException}'
@@ -60,4 +65,3 @@ services:
     Criticalmass\Bundle\AppBundle\Request\ParamConverter\UserParamConverter:
         tags:
             - { name: request.param_converter, priority: 10, converter: user_converter }
-
