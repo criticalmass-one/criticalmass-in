@@ -15,7 +15,7 @@ class StreakCalculator implements StreakCalculatorInterface
     /** @var \DateTime $latestDateTime */
     protected $latestDateTime = null;
 
-    public function addRide(Ride $ride): StreakCalculator
+    public function addRide(Ride $ride): StreakCalculatorInterface
     {
         $this->expandList($ride->getDateTime());
 
@@ -92,7 +92,11 @@ class StreakCalculator implements StreakCalculatorInterface
             }
         }
 
-        return new Streak($startDateTime, $endDateTime, $rideList);
+        if ($startDateTime && $endDateTime && count($rideList) > 0) {
+            return new Streak($startDateTime, $endDateTime, $rideList);
+        }
+
+        return new Streak(new \DateTime(), new \DateTime(), []);
     }
 
     public function calculateLongestStreak(): Streak

@@ -17,9 +17,9 @@ class StreakGenerator implements StreakGeneratorInterface
     /** @var StreakCalculator $calculator */
     protected $calculator;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(Registry $registry)
     {
-        $this->doctrine = $doctrine;
+        $this->registry = $registry;
 
         $this->calculator = new StreakCalculator();
     }
@@ -33,6 +33,13 @@ class StreakGenerator implements StreakGeneratorInterface
 
     public function calculate(): StreakGeneratorInterface
     {
+        $this->loadParticipations();
+
+        return $this;
+    }
+
+    protected function loadParticipations(): StreakGenerator
+    {
         $participationList = $this->registry->getRepository(Participation::class)->findByUser($this->user);
 
         /** @var Participation $participation */
@@ -43,5 +50,19 @@ class StreakGenerator implements StreakGeneratorInterface
         }
 
         return $this;
+    }
+
+    public function calculateCurrentStreak(\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): Streak
+    {
+        $this->loadParticipations();
+
+        return $this->calculator->calculateCurrentStreak($currentDateTime, $includeCurrentMonth);
+    }
+
+    public function calculateLongestStreak(): Streak
+    {
+        $this->loadParticipations();
+
+        return $this->calculator->calculateLongestStreak();
     }
 }

@@ -18,6 +18,30 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Longest Streak
+                            </div>
+                            <div class="panel-body text-center">
+                                <p>
+                                    {{ longestStreak.startDateTime|date('d.m.Y') }} bis {{ longestStreak.endDateTime|date('d.m.Y') }}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        {{ longestStreak.rideList|length }} Touren
+                                    </strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
                 <h2>
                     Deine Touren
                 </h2>
