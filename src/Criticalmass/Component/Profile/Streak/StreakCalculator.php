@@ -58,11 +58,7 @@ class StreakCalculator implements StreakCalculatorInterface
 
         return $this;
     }
-
-    public function calculateStreakList(): array
-    {
-    }
-
+    
     public function calculateCurrentStreak(\DateTime $dateTime = null, bool $includeCurrentMonth = false): Streak
     {
         if (!$dateTime) {
