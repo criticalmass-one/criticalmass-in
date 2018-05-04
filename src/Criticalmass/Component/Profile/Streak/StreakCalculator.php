@@ -90,9 +90,9 @@ class StreakCalculator
             } else {
                 break;
             }
-
-            return new Streak($startDateTime, $endDateTime, $rideList);
         }
+
+        return new Streak($startDateTime, $endDateTime, $rideList);
     }
 
     public function calculateLongestStreak(): Streak
