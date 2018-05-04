@@ -33,11 +33,11 @@ class ParticipationController extends Controller
      * @Security("is_granted('cancel', participation)")
      * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
      */
-    public function cancelAction(EntityManager $entityManager, Participation $participation): Response
+    public function cancelAction(RegistryInterface $registry, Participation $participation): Response
     {
         $participation->setGoingNo(true)->setGoingMaybe(false)->setGoingYes(false);
 
-        $entityManager->flush();
+        $registry->getManager()->flush();
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
@@ -46,11 +46,11 @@ class ParticipationController extends Controller
      * @Security("is_granted('delete', participation)")
      * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
      */
-    public function deleteAction(EntityManager $entityManager, Participation $participation): Response
+    public function deleteAction(RegistryInterface $registry, Participation $participation): Response
     {
-        $entityManager->remove($participation);
+        $registry->getManager()->remove($participation);
 
-        $entityManager->flush();
+        $registry->getManager()->flush();
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
