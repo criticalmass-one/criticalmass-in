@@ -35,7 +35,10 @@ class ParticipationController extends Controller
      */
     public function cancelAction(RegistryInterface $registry, Participation $participation): Response
     {
-        $participation->setGoingNo(true)->setGoingMaybe(false)->setGoingYes(false);
+        $participation
+            ->setGoingNo(true)
+            ->setGoingMaybe(false)
+            ->setGoingYes(false);
 
         $registry->getManager()->flush();
 
