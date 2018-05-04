@@ -6,7 +6,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Participation;
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
-class StreakGenerator
+class StreakGenerator implements StreakGeneratorInterface
 {
     /** @var User $user */
     protected $user;
@@ -24,14 +24,14 @@ class StreakGenerator
         $this->calculator = new StreakCalculator();
     }
 
-    public function setUser(User $user): StreakGenerator
+    public function setUser(User $user): StreakGeneratorInterface
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function calculate(): StreakGenerator
+    public function calculate(): StreakGeneratorInterface
     {
         $participationList = $this->registry->getRepository(Participation::class)->findByUser($this->user);
 

@@ -4,7 +4,7 @@ namespace Criticalmass\Component\Profile\Streak;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 
-class StreakCalculator
+class StreakCalculator implements StreakCalculatorInterface
 {
     /** @var array $list */
     protected $list = [];
