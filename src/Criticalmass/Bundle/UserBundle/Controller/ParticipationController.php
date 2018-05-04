@@ -41,4 +41,17 @@ class ParticipationController extends Controller
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
+
+    /**
+     * @Security("is_granted('delete', participation)")
+     * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
+     */
+    public function deleteAction(EntityManager $entityManager, Participation $participation): Response
+    {
+        $entityManager->remove($participation);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('criticalmass_user_participation_list');
+    }
 }

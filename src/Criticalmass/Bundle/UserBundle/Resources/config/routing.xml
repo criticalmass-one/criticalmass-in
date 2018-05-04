@@ -24,6 +24,10 @@
         <default key="_controller">UserBundle:Participation:cancel</default>
     </route>
 
+    <route id="criticalmass_user_participation_delete" path="/profile/participation/{participationId}/delete">
+        <default key="_controller">UserBundle:Participation:delete</default>
+    </route>
+
     <route id="criticalmass_user_profile_photo" path="/profile/profilephoto">
         <default key="_controller">UserBundle:ProfilePhoto:upload</default>
     </route>

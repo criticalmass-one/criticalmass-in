@@ -19,4 +19,17 @@ class ParticipationVoter extends AbstractVoter
 
         return false;
     }
+
+    protected function canDelete(Participation $participation, User $user): bool
+    {
+        if ($user->hasRole('ROLE_ADMIN')) {
+            return true;
+        }
+
+        if ($user === $participation->getUser()) {
+            return true;
+        }
+
+        return false;
+    }
 }
