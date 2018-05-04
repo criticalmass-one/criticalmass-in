@@ -87,6 +87,10 @@
                         <th>
                             Datum
                         </th>
+
+                        <th>
+
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -103,8 +107,19 @@
                                     {{ participation.ride.city.city }}
                                 </a>
                             </td>
+
                             <td>
                                 {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
+                            </td>
+
+                            <td class="btn-group btn-group-xs">
+                                <a href="{{ path('criticalmass_user_participation_delete', { participationId: participation.id }) }}" class="btn btn-default" title="Deine Teilnahme löschen">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+
+                                <a href="{{ path('criticalmass_user_participation_cancel', { participationId: participation.id }) }}" class="btn btn-default" title="Deine Teilnahme absagen">
+                                    <i class="fa fa-times"></i>
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
