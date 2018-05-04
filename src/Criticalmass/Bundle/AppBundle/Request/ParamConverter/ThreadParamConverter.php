@@ -2,26 +2,12 @@
 
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
-class ThreadParamConverter extends AbstractParamConverter
+class ThreadParamConverter extends AbstractCriticalmassParamConverter
 {
-    public function apply(Request $request, ParamConverter $configuration): void
+    public function __construct(Registry $registry)
     {
-        $thread = null;
-
-        $threadSlug = $request->get('threadSlug');
-
-        if ($threadSlug) {
-            $thread = $this->registry->getRepository(Thread::class)->findOneBySlug($threadSlug);
-        }
-
-        if ($thread) {
-            $request->attributes->set($configuration->getName(), $thread);
-        } else {
-            $this->notFound($configuration);
-        }
+        parent::__construct($registry);
     }
 }

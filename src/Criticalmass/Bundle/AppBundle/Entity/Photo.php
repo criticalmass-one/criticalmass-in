@@ -2,7 +2,9 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
+use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
+use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble
 {
     /**
      * @ORM\Id

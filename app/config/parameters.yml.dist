@@ -53,3 +53,5 @@ parameters:
     graylog.port: 12201
 
     upload_destination.photo: %kernel.root_dir%/../web/photos
+
+    feature.photos: true

@@ -3,7 +3,7 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
     <li class="active">{{ city.city }}</li>
 {% endblock %}
 
@@ -17,14 +17,14 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ path('caldera_criticalmass_city_edit', { citySlug: city.getMainSlugString() } ) }}">
                     <i class="fa fa-cogs"></i>
                     Stadt editieren
                 </a>
             </li>
 
             <li>
-                <a href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ path('caldera_criticalmass_ride_add', { citySlug: city.getMainSlugString() } ) }}">
                     <i class="fa fa-plus"></i>
                     Tour hinzufügen
                 </a>
@@ -95,7 +95,7 @@
                                 <strong>Huch?</strong>
                                 Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
                                 Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}">hier
+                                        href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}">hier
                                     beschreiben</a>:
 
                                 <ul>
@@ -114,7 +114,7 @@
                                 </ul>
 
                                 <p class="text-center margin-top-medium">
-                                    <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}"
+                                    <a href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}"
                                        class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
                                     </a>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
 
-                {% if photos|length > 0 %}
+                {% if feature_enabled('photos') and photos|length > 0 %}
                     <div class="row">
                         <div class="col-md-12">
                             <h2>
@@ -133,7 +133,7 @@
 
                             <p>
                                 Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
-                                        href="{{ path('caldera_criticalmass_desktop_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
+                                        href="{{ path('caldera_criticalmass_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
                                     über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>

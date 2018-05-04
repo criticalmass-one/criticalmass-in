@@ -4,7 +4,7 @@
             {% if app.getUser() %}
                 <div class="btn-group pull-right" style="margin-top: 16px;">
                     <a class="btn btn-success"
-                       href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
+                       href="{{ path('caldera_criticalmass_subride_add', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
                        title="Mini-Mass anlegen">
                         <i class="fa fa-map-marker"></i>
                         Mini-Mass eintragen
@@ -22,7 +22,7 @@
                 {% for subride in subrides %}
                     <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
                         {% if app.getUser() %}
-                            <a href="{{ path('caldera_criticalmass_desktop_subride_edit', { citySlug: ride.city.getMainSlugString(), rideDate: ride.getFormattedDate(), subrideId: subride.id } ) }}"
+                            <a href="{{ path('caldera_criticalmass_subride_edit', { citySlug: ride.city.getMainSlugString(), rideDate: ride.getFormattedDate(), subrideId: subride.id } ) }}"
                                class="edit-subride pull-right btn btn-default btn-xs">
                                 <i class="fa fa-wrench"></i>
                             </a>
@@ -47,7 +47,7 @@
                         {% if app.getUser() %}
                             <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand
                                 eine Mini-Mass für diese Tour erstellt &mdash; <a
-                                        href="{{ path('caldera_criticalmass_desktop_subride_add', { citySlug: ride.city.getMainSlugString(), rideDate: ride.dateTime.format('Y-m-d') } ) }}"
+                                        href="{{ path('caldera_criticalmass_subride_add', { citySlug: ride.city.getMainSlugString(), rideDate: ride.dateTime.format('Y-m-d') } ) }}"
                                         title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a> oder die <a
                                         href="{{ path('caldera_criticalmass_subride_preparecopy', { citySlug: ride.city.getMainSlugString(), rideDate: ride.dateTime.format('Y-m-d') } ) }}">Mini-Masses
                                     der letzten Tour kopieren</a>.

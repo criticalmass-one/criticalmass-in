@@ -56,8 +56,8 @@
                             </td>
                             <td>
                                 {% if board.lastThread %}
-                                    <img class="pull-left" style="margin-right: 5px;"
-                                         src="{{ gravatarUrl(board.lastThread.lastPost.user, 36) }}" alt="..."/>
+                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
+                                         src="{{ vich_uploader_asset(board.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     <a href="{{ objectPath(board.lastThread) }}">
                                         <strong>{{ board.lastThread.title }}</strong>
                                     </a>
@@ -97,8 +97,8 @@
                             </td>
                             <td>
                                 {% if city.lastThread %}
-                                    <img class="pull-left" style="margin-right: 5px;"
-                                         src="{{ gravatarUrl(city.lastThread.lastPost.user, 36) }}" alt="..."/>
+                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
+                                         src="{{ vich_uploader_asset(city.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     <a href="{{ objectPath(city.lastThread) }}">
                                         <strong>{{ city.lastThread.title }}</strong>
                                     </a>

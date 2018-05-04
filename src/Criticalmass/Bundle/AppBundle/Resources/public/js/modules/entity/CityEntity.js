@@ -43,7 +43,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
         cityButton.setCaption('Städteseite');
         cityButton.setIcon('university');
         cityButton.setClass('btn-success');
-        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', {citySlug: this._slug}));
+        cityButton.setHref(Routing.generate('caldera_criticalmass_city_show', {citySlug: this._slug}));
 
         var closeButton = new CloseModalButton;
 

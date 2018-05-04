@@ -18,6 +18,8 @@ class PhotoController extends AbstractController
      */
     public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, Photo $photo): Response
     {
+        $this->errorIfFeatureDisabled('photos');
+
         $city = $photo->getCity();
 
         $ride = $photo->getRide();
@@ -53,6 +55,8 @@ class PhotoController extends AbstractController
 
     public function ajaxphotoviewAction(Request $request, ViewStorageCache $viewStorageCache): Response
     {
+        $this->errorIfFeatureDisabled('photos');
+
         $photoId = $request->get('photoId');
 
         /**

@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
+use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
+use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="thread")
  * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\ThreadRepository")
  */
-class Thread implements ViewableInterface, RouteableInterface
+class Thread implements ViewableInterface, RouteableInterface, AutoParamConverterAble, PostableInterface
 {
     /**
      * @ORM\Id

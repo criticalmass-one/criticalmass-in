@@ -2,26 +2,12 @@
 
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
-use Criticalmass\Bundle\AppBundle\Entity\Board;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
-class BoardParamConverter extends AbstractParamConverter
+class BoardParamConverter extends AbstractCriticalmassParamConverter
 {
-    public function apply(Request $request, ParamConverter $configuration): void
+    public function __construct(Registry $registry)
     {
-        $board = null;
-
-        $boardSlug = $request->get('boardSlug');
-
-        if ($boardSlug) {
-            $board = $this->registry->getRepository(Board::class)->findOneBySlug($boardSlug);
-        }
-
-        if ($board) {
-            $request->attributes->set($configuration->getName(), $board);
-        } else {
-            $this->notFound($configuration);
-        }
+        parent::__construct($registry);
     }
 }

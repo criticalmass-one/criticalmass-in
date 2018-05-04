@@ -28,7 +28,7 @@
                     <i class="fa fa-comment"></i>
                     Antwort hinzufügen
                 </button>
-                {{ render(controller('AppBundle:Post:write', { 'threadId': thread.id, 'noButton': true })) }}
+                {{ render(controller('AppBundle:Post:writeThread', { 'threadId': thread.id, 'noButton': true })) }}
             {% endif %}
             <h2>
                 {{ thread.title }}

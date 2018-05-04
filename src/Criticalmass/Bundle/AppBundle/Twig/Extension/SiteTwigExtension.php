@@ -39,12 +39,6 @@ class SiteTwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('metadata', [$this, 'getMetadataService',], array(
                 'is_safe' => array('raw')
             )),
-            new \Twig_SimpleFunction('gravatarHash', [$this, 'gravatarHash'], array(
-                'is_safe' => array('html')
-            )),
-            new \Twig_SimpleFunction('gravatarUrl', [$this, 'gravatarUrl'], array(
-                'is_safe' => array('html')
-            )),
             new \Twig_SimpleFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
@@ -63,20 +57,6 @@ class SiteTwigExtension extends \Twig_Extension
             'instanceof' => new \Twig_SimpleFunction('instanceof', [$this, 'instanceof']),
             'today' => new \Twig_SimpleFunction('today', [$this, 'today'])
         ];
-    }
-
-    public function gravatarHash(User $user = null)
-    {
-        if (!$user) {
-            return 'avatar';
-        }
-
-        return md5($user->getEmail());
-    }
-
-    public function gravatarUrl(User $user = null, $size = 256)
-    {
-        return 'https://www.gravatar.com/avatar/' . $this->gravatarHash($user) . '?s=' . $size;
     }
 
     public function daysSince($dateTimeString)

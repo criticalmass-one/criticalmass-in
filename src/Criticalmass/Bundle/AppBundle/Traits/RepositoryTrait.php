@@ -6,8 +6,6 @@ use Criticalmass\Bundle\AppBundle\Repository\BlockedCityRepository;
 use Criticalmass\Bundle\AppBundle\Repository\BoardRepository;
 use Criticalmass\Bundle\AppBundle\Repository\CityCycleRepository;
 use Criticalmass\Bundle\AppBundle\Repository\CityRepository;
-use Criticalmass\Bundle\AppBundle\Repository\FacebookCityPropertiesRepository;
-use Criticalmass\Bundle\AppBundle\Repository\FacebookRidePropertiesRepository;
 use Criticalmass\Bundle\AppBundle\Repository\FrontpageTeaserRepository;
 use Criticalmass\Bundle\AppBundle\Repository\LocationRepository;
 use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
@@ -57,16 +55,6 @@ trait RepositoryTrait
     protected function getCityRepository(): CityRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:City');
-    }
-
-    protected function getFacebookCityPropertiesRepository(): FacebookCityPropertiesRepository
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:FacebookCityProperties');
-    }
-
-    protected function getFacebookRidePropertiesRepository(): FacebookRidePropertiesRepository
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:FacebookRideProperties');
     }
 
     protected function getHelpCategoryRepository(): ObjectRepository

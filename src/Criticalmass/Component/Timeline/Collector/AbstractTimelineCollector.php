@@ -76,4 +76,9 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 
         return $this;
     }
+
+    public function getRequiredFeatures(): array
+    {
+        return [];
+    }
 }

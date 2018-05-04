@@ -27,7 +27,7 @@ class SubrideController extends AbstractController
             ->setUser($this->getUser());
 
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_subride_add', [
+            'action' => $this->generateUrl('caldera_criticalmass_subride_add', [
                 'citySlug' => $ride->getCity()->getMainSlugString(),
                 'rideDate' => $ride->getFormattedDate(),
             ])
@@ -56,7 +56,7 @@ class SubrideController extends AbstractController
         $form->handleRequest($request);
 
         $hasErrors = true;
-        $actionUrl = $this->generateUrl('caldera_criticalmass_desktop_subride_add', [
+        $actionUrl = $this->generateUrl('caldera_criticalmass_subride_add', [
             'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
             'rideDate' => $subride->getRide()->getFormattedDate(),
         ]);
@@ -69,7 +69,7 @@ class SubrideController extends AbstractController
             // TODO: remove also this
             $hasErrors = false;
 
-            $actionUrl = $this->generateUrl('caldera_criticalmass_desktop_subride_edit', [
+            $actionUrl = $this->generateUrl('caldera_criticalmass_subride_edit', [
                 'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
                 'rideDate' => $subride->getRide()->getFormattedDate(),
                 'subrideId' => $subride->getId(),
@@ -99,7 +99,7 @@ class SubrideController extends AbstractController
     public function editAction(Request $request, Subride $subride): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateUrl('caldera_criticalmass_desktop_subride_edit', [
+            'action' => $this->generateUrl('caldera_criticalmass_subride_edit', [
                 'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
                 'rideDate' => $subride->getRide()->getFormattedDate(),
                 'subrideId' => $subride->getId()

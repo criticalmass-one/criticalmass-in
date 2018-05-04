@@ -3,11 +3,17 @@
 namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
-class RideParamConverter extends AbstractParamConverter
+class RideParamConverter extends AbstractCriticalmassParamConverter
 {
+    public function __construct(Registry $registry)
+    {
+        parent::__construct($registry);
+    }
+
     public function apply(Request $request, ParamConverter $configuration): void
     {
         $ride = $this->findRideById($request);
