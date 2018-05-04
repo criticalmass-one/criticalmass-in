@@ -4,7 +4,7 @@ namespace Criticalmass\Component\Profile\ParticipationTable;
 
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
 
-class ParticipationTable
+class ParticipationTable implements \Countable
 {
     /** @var array $yearList */
     protected $yearList = [];
@@ -39,4 +39,14 @@ class ParticipationTable
         return $this;
     }
 
+    public function count(): int
+    {
+        $counter = 0;
+
+        foreach ($this->yearList as $year) {
+            $counter += count($year);
+        }
+
+        return $counter;
+    }
 }

@@ -2,10 +2,9 @@
 
 namespace Criticalmass\Component\Profile\ParticipationTable;
 
-
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
 
-class ParticipationYear
+class ParticipationYear implements \Countable
 {
     /** @var int $year */
     protected $year;
@@ -38,5 +37,16 @@ class ParticipationYear
         $this->monthList[$month][$dateTime];
 
         return $this;
+    }
+
+    public function count(): int
+    {
+        $counter = 0;
+
+        for ($month = 1; $month <= 12; ++$month) {
+            $counter += count($this->monthList[$month]);
+        }
+
+        return $counter;
     }
 }

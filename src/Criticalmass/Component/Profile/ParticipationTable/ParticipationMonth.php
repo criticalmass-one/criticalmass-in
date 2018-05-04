@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Component\Profile\ParticipationTable;
 
-class ParticipationMonth
+class ParticipationMonth implements \Countable
 {
     protected $year;
     protected $month;
@@ -13,5 +13,10 @@ class ParticipationMonth
     {
         $this->year = $year;
         $this->month = $month;
+    }
+
+    public function count(): int
+    {
+        return count($this->rideList);
     }
 }
