@@ -26,6 +26,7 @@ class ParticipationController extends Controller
 
         return $this->render('UserBundle:Participation:list.html.twig', [
             'participationList' => $participationList,
+            'participationTable' => $participationTable,
             'currentStreak' => $streakGenerator->calculateCurrentStreak(new \DateTime(), true),
             'longestStreak' => $streakGenerator->calculateLongestStreak(),
         ]);

@@ -31,7 +31,7 @@ class ParticipationTable implements \Countable
         $untilYear = (new \DateTime())->format('Y');
 
         for ($year = $fromYear; $year <= $untilYear; ++$year) {
-            if (array_key_exists($year, $this->yearList)) {
+            if (!array_key_exists($year, $this->yearList)) {
                 $this->yearList[$year] = new ParticipationYear($year);
             }
         }

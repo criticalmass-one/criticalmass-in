@@ -34,7 +34,7 @@ class ParticipationYear implements \Countable
         $dateTime = $ride->getDateTime();
         $month = (int) $dateTime->format('n');
 
-        $this->monthList[$month][$dateTime];
+        $this->monthList[$month]->addParticipation($participation);
 
         return $this;
     }
@@ -48,5 +48,15 @@ class ParticipationYear implements \Countable
         }
 
         return $counter;
+    }
+
+    public function getMonthList(): array
+    {
+        return $this->monthList;
+    }
+
+    public function getYear(): int
+    {
+        return $this->year;
     }
 }

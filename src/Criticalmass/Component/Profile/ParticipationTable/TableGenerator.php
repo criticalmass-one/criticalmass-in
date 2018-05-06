@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Component\Profile\ParticipationTable;
 
+use Criticalmass\Bundle\AppBundle\Entity\Participation;
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -32,6 +33,12 @@ class TableGenerator implements TableGeneratorInterface
 
     public function generate(): TableGenerator
     {
+        $participationList = $this->registry->getRepository(Participation::class)->findByUser($this->user, true);
+
+        foreach ($participationList as $participation) {
+            $this->table->addParticipation($participation);
+        }
+
         return $this;
     }
 
