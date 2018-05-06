@@ -17,13 +17,13 @@
                 <th>Dez</th>
                 <th>&sum;</th>
             </tr>
-            {% for year in participationTable.yearList %}
+            {% for year in participationTable %}
                 <tr>
                     <th>
                         {{ year.year }}
                     </th>
-                    {% for month in year.monthList %}
-                        {% set counter = month.participationList|length %}
+                    {% for month in year %}
+                        {% set counter = month|length %}
 
                         {% if counter == 0 %}
                             {% set backgroundColor = 'white' %}
