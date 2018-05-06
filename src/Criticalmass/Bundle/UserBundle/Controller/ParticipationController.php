@@ -10,17 +10,19 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Criticalmass\Component\Profile\ParticipationTable\TableGeneratorInterface;
 
 class ParticipationController extends Controller
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listAction(UserInterface $user, RegistryInterface $registry, StreakGeneratorInterface $streakGenerator): Response
+    public function listAction(UserInterface $user, RegistryInterface $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator): Response
     {
         $streakGenerator->setUser($user);
 
         $participationList = $this->getDoctrine()->getRepository(Participation::class)->findByUser($user, true);
+        $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
 
         return $this->render('UserBundle:Participation:list.html.twig', [
             'participationList' => $participationList,
