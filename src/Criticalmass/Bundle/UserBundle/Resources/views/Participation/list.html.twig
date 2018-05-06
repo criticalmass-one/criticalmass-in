@@ -42,8 +42,22 @@
                                         {{ year.year }}
                                     </th>
                                     {% for month in year.monthList %}
-                                        <td>
-                                            {{ month.participationList|length }}
+                                        {% set counter = month.participationList|length %}
+
+                                        {% if counter == 0 %}
+                                            {% set backgroundColor = 'white' %}
+                                        {% elseif counter == 1 %}
+                                            {% set backgroundColor = 'green' %}
+                                        {% elseif counter == 2 %}
+                                            {% set backgroundColor = 'orange' %}
+                                        {% elseif counter == 3 %}
+                                            {% set backgroundColor = 'red' %}
+                                        {% else %}
+                                            {% set backgroundColor = 'purble' %}
+                                        {% endif %}
+
+                                        <td style="background-color: {{ backgroundColor }};">
+                                            {{ counter }}
                                         </td>
                                     {% endfor %}
                                 </tr>
