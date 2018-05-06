@@ -15,6 +15,7 @@
                 <th>Okt</th>
                 <th>Nov</th>
                 <th>Dez</th>
+                <th>&sum;</th>
             </tr>
             {% for year in participationTable.yearList %}
                 <tr>
@@ -40,6 +41,9 @@
                             {{ counter }}
                         </td>
                     {% endfor %}
+                    <td>
+                        {{ year|length }}
+                    </td>
                 </tr>
             {% endfor %}
         </table>
