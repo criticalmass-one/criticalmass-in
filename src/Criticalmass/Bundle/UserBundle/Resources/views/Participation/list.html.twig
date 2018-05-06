@@ -18,163 +18,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <tr>
-                                <th>&nbsp;</th>
-                                <th>Jan</th>
-                                <th>Feb</th>
-                                <th>Mär</th>
-                                <th>Apr</th>
-                                <th>Mai</th>
-                                <th>Jun</th>
-                                <th>Jul</th>
-                                <th>Aug</th>
-                                <th>Sep</th>
-                                <th>Okt</th>
-                                <th>Nov</th>
-                                <th>Dez</th>
-                            </tr>
-                            {% for year in participationTable.yearList %}
-                                <tr>
-                                    <th>
-                                        {{ year.year }}
-                                    </th>
-                                    {% for month in year.monthList %}
-                                        {% set counter = month.participationList|length %}
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a href="#table" aria-controls="profile" role="tab" data-toggle="tab">
+                            Übersicht
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#list" aria-controls="profile" role="tab" data-toggle="tab">
+                            Liste
+                        </a>
+                    </li>
+                </ul>
 
-                                        {% if counter == 0 %}
-                                            {% set backgroundColor = 'white' %}
-                                        {% elseif counter == 1 %}
-                                            {% set backgroundColor = 'green' %}
-                                        {% elseif counter == 2 %}
-                                            {% set backgroundColor = 'orange' %}
-                                        {% elseif counter == 3 %}
-                                            {% set backgroundColor = 'red' %}
-                                        {% else %}
-                                            {% set backgroundColor = 'purble' %}
-                                        {% endif %}
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="table">
+                        {{ include('UserBundle:Participation:_table.html.twig') }}
+                    </div>
 
-                                        <td style="background-color: {{ backgroundColor }};">
-                                            {{ counter }}
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </table>
+                    <div role="tabpanel" class="tab-pane" id="list">
+                        {{ include('UserBundle:Participation:_list.html.twig') }}
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Current Streak
-                            </div>
-                            <div class="panel-body text-center">
-                                <p>
-                                    {{ currentStreak.startDateTime|date('d.m.Y') }} bis heute
-                                </p>
-
-                                <p>
-                                    <strong>
-                                        {{ currentStreak.rideList|length }} Touren
-                                    </strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Longest Streak
-                            </div>
-                            <div class="panel-body text-center">
-                                <p>
-                                    {{ longestStreak.startDateTime|date('d.m.Y') }}
-                                    bis {{ longestStreak.endDateTime|date('d.m.Y') }}
-                                </p>
-
-                                <p>
-                                    <strong>
-                                        {{ longestStreak.rideList|length }} Touren
-                                    </strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2>
-                    Deine Touren
-                </h2>
-
-                <p class="lead">
-                    An diesen Critical-Mass-Touren hast du bislang teilgenommen.
-                </p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Tour
-                        </th>
-
-                        <th>
-                            Stadt
-                        </th>
-
-                        <th>
-                            Datum
-                        </th>
-
-                        <th>
-
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for participation in participationList %}
-                        <tr>
-                            <td>
-                                <a href="{{ objectPath(participation.ride) }}">
-                                    {{ participation.ride.fancyTitle }}
-                                </a>
-                            </td>
-
-                            <td>
-                                <a href="{{ objectPath(participation.ride.city) }}">
-                                    {{ participation.ride.city.city }}
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
-                            </td>
-
-                            <td class="btn-group btn-group-xs">
-                                <a href="{{ path('criticalmass_user_participation_delete', { participationId: participation.id }) }}"
-                                   class="btn btn-default" title="Deine Teilnahme löschen">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-
-                                <a href="{{ path('criticalmass_user_participation_cancel', { participationId: participation.id }) }}"
-                                   class="btn btn-default" title="Deine Teilnahme absagen">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
