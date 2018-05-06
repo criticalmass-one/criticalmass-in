@@ -1,32 +1,35 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Bundle\UserBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
+use Criticalmass\Component\Profile\Streak\StreakGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Criticalmass\Component\Profile\ParticipationTable\TableGeneratorInterface;
 
 class ParticipationController extends Controller
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listAction(Request $request, UserInterface $user): Response
+    public function listAction(UserInterface $user, RegistryInterface $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator): Response
     {
-        $participationList = $this->getDoctrine()->getRepository('AppBundle:Participation')->findByUser($user, true);
+        $streakGenerator->setUser($user);
 
-        return $this->render(
-            'UserBundle:Participation:list.html.twig',
-            [
-                'participationList' => $participationList
-            ]
-        );
+        $participationList = $this->getDoctrine()->getRepository(Participation::class)->findByUser($user, true);
+        $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
+
+        return $this->render('UserBundle:Participation:list.html.twig', [
+            'participationList' => $participationList,
+            'participationTable' => $participationTable,
+            'currentStreak' => $streakGenerator->calculateCurrentStreak(new \DateTime(), true),
+            'longestStreak' => $streakGenerator->calculateLongestStreak(),
+        ]);
     }
 
     /**

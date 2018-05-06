@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>&nbsp;</th>
+                <th>Jan</th>
+                <th>Feb</th>
+                <th>Mär</th>
+                <th>Apr</th>
+                <th>Mai</th>
+                <th>Jun</th>
+                <th>Jul</th>
+                <th>Aug</th>
+                <th>Sep</th>
+                <th>Okt</th>
+                <th>Nov</th>
+                <th>Dez</th>
+                <th>&sum;</th>
+            </tr>
+            {% for year in participationTable %}
+                <tr>
+                    <th>
+                        {{ year.year }}
+                    </th>
+                    {% for month in year %}
+                        {% set counter = month|length %}
+
+                        {% if counter == 0 %}
+                            {% set backgroundColor = 'white' %}
+                        {% elseif counter == 1 %}
+                            {% set backgroundColor = 'green' %}
+                        {% elseif counter == 2 %}
+                            {% set backgroundColor = 'orange' %}
+                        {% elseif counter == 3 %}
+                            {% set backgroundColor = 'red' %}
+                        {% else %}
+                            {% set backgroundColor = 'purple' %}
+                        {% endif %}
+
+                        <td style="background-color: {{ backgroundColor }};">
+                            {{ counter }}
+                        </td>
+                    {% endfor %}
+                    <td>
+                        {{ year|length }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Current Streak
+            </div>
+            <div class="panel-body text-center">
+                <p>
+                    {{ currentStreak.startDateTime|date('d.m.Y') }} bis heute
+                </p>
+
+                <p>
+                    <strong>
+                        {{ currentStreak.rideList|length }} Touren
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Longest Streak
+            </div>
+            <div class="panel-body text-center">
+                <p>
+                    {{ longestStreak.startDateTime|date('d.m.Y') }}
+                    bis {{ longestStreak.endDateTime|date('d.m.Y') }}
+                </p>
+
+                <p>
+                    <strong>
+                        {{ longestStreak.rideList|length }} Touren
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

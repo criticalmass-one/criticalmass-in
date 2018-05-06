@@ -18,70 +18,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h2>
-                    Deine Touren
-                </h2>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a href="#table" aria-controls="profile" role="tab" data-toggle="tab">
+                            Übersicht
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#list" aria-controls="profile" role="tab" data-toggle="tab">
+                            Liste
+                        </a>
+                    </li>
+                </ul>
 
-                <p class="lead">
-                    An diesen Critical-Mass-Touren hast du bislang teilgenommen.
-                </p>
-            </div>
-        </div>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="table">
+                        {{ include('UserBundle:Participation:_table.html.twig') }}
+                    </div>
 
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Tour
-                        </th>
-
-                        <th>
-                            Stadt
-                        </th>
-
-                        <th>
-                            Datum
-                        </th>
-
-                        <th>
-
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for participation in participationList %}
-                        <tr>
-                            <td>
-                                <a href="{{ objectPath(participation.ride) }}">
-                                    {{ participation.ride.fancyTitle }}
-                                </a>
-                            </td>
-
-                            <td>
-                                <a href="{{ objectPath(participation.ride.city) }}">
-                                    {{ participation.ride.city.city }}
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
-                            </td>
-
-                            <td class="btn-group btn-group-xs">
-                                <a href="{{ path('criticalmass_user_participation_delete', { participationId: participation.id }) }}" class="btn btn-default" title="Deine Teilnahme löschen">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-
-                                <a href="{{ path('criticalmass_user_participation_cancel', { participationId: participation.id }) }}" class="btn btn-default" title="Deine Teilnahme absagen">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                    <div role="tabpanel" class="tab-pane" id="list">
+                        {{ include('UserBundle:Participation:_list.html.twig') }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
