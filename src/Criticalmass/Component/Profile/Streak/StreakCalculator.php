@@ -65,14 +65,18 @@ class StreakCalculator implements StreakCalculatorInterface
             $dateTime = new \DateTime();
         }
 
+        krsort($this->list);
+
+        if (!$this->checkCurrentStreakMonth($dateTime, $includeCurrentMonth)) {
+            return new Streak(new \DateTime(), new \DateTime(), []);
+        }
+
         $longestStreakCounter = null;
         $longestStreak = null;
 
         $startDateTime = null;
         $endDateTime = null;
         $rideList = [];
-
-        krsort($this->list);
 
         foreach ($this->list as $month => $rides) {
             if (count($rides) > 0) {
@@ -93,6 +97,19 @@ class StreakCalculator implements StreakCalculatorInterface
         }
 
         return new Streak(new \DateTime(), new \DateTime(), []);
+    }
+
+    protected function checkCurrentStreakMonth(\DateTime $dateTime = null, bool $includeCurrentMonth = false): bool
+    {
+        $monthKeys = array_keys($this->list);
+
+        $lastMonthString = array_shift($monthKeys);
+
+        if (!$includeCurrentMonth) {
+            $dateTime->sub(new \DateInterval('P1M'));
+        }
+
+        return $lastMonthString === $dateTime->format('Y-m');
     }
 
     public function calculateLongestStreak(): Streak
