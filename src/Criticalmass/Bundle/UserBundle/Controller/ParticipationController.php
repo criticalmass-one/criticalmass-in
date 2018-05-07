@@ -21,11 +21,14 @@ class ParticipationController extends Controller
     {
         $streakGenerator->setUser($user);
 
-        $participationList = $this->getDoctrine()->getRepository(Participation::class)->findByUser($user, true);
+        $repository = $this->getDoctrine()->getRepository(Participation::class);
+
         $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
 
         return $this->render('UserBundle:Participation:list.html.twig', [
-            'participationList' => $participationList,
+            'participationYesList' => $repository->findByUser($user, true),
+            'participationMaybeList' => $repository->findByUser($user, false, true),
+            'participationNoList' => $repository->findByUser($user, false, false, true),
             'participationTable' => $participationTable,
             'currentStreak' => $streakGenerator->calculateCurrentStreak(new \DateTime(), true),
             'longestStreak' => $streakGenerator->calculateLongestStreak(),
