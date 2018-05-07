@@ -57,6 +57,7 @@
                 Current Streak
             </div>
             <div class="panel-body text-center">
+                {% if currentStreak.rideList|length > 0 %}
                 <p>
                     {{ currentStreak.startDateTime|date('d.m.Y') }} bis heute
                 </p>
@@ -65,6 +66,34 @@
                     <strong>
                         {{ currentStreak.rideList|length }} Touren
                     </strong>
+                </p>
+                {% else %}
+                    <p>
+                        Schade: Du hast in der jüngeren Vergangenheit an keinen Touren teilgenommen.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Gesamtzahl
+            </div>
+            <div class="panel-body text-center">
+                <p>
+                    seit {{ participationList|last.ride.dateTime|date('d.m.Y') }} hast du an
+                </p>
+
+                <p>
+                    <strong>
+                        {{ participationList|length }} Touren
+                    </strong>
+                </p>
+
+                <p>
+                    teilgenommen. Super!
                 </p>
             </div>
         </div>
