@@ -25,8 +25,26 @@
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#list" aria-controls="profile" role="tab" data-toggle="tab">
-                            Liste
+                        <a href="#goingYes" aria-controls="profile" role="tab" data-toggle="tab">
+                            Teilgenommen <span class="badge">
+                                {{ participationYesList|length }}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#goingMaybe" aria-controls="profile" role="tab" data-toggle="tab">
+                            Unentschieden <span class="badge">
+                                {{ participationMaybeList|length }}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#goingNo" aria-controls="profile" role="tab" data-toggle="tab">
+                            Abgesagt <span class="badge">
+                                {{ participationNoList|length }}
+                            </span>
                         </a>
                     </li>
                 </ul>
@@ -36,7 +54,15 @@
                         {{ include('UserBundle:Participation:_table.html.twig') }}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="list">
+                    <div role="tabpanel" class="tab-pane" id="goingYes">
+                        {{ include('UserBundle:Participation:_list.html.twig') }}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="goingMaybe">
+                        {{ include('UserBundle:Participation:_list.html.twig') }}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="goingNo">
                         {{ include('UserBundle:Participation:_list.html.twig') }}
                     </div>
                 </div>
