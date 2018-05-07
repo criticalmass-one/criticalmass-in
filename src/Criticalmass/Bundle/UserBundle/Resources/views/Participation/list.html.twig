@@ -55,15 +55,15 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="goingYes">
-                        {{ include('UserBundle:Participation:_list.html.twig') }}
+                        {% include 'UserBundle:Participation:_list.html.twig' with { 'participationList': participationYesList } only %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="goingMaybe">
-                        {{ include('UserBundle:Participation:_list.html.twig') }}
+                        {% include 'UserBundle:Participation:_list.html.twig' with { 'participationList': participationMaybeList } only %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="goingNo">
-                        {{ include('UserBundle:Participation:_list.html.twig') }}
+                        {% include 'UserBundle:Participation:_list.html.twig' with { 'participationList': participationNoList } only %}
                     </div>
                 </div>
             </div>
