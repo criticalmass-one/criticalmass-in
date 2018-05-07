@@ -73,6 +73,26 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
+                Current Streak
+            </div>
+            <div class="panel-body text-center">
+                <p>
+                    {{ currentStreak.startDateTime|date('d.m.Y') }}
+                    bis {{ currentStreak.endDateTime|date('d.m.Y') }}
+                </p>
+
+                <p>
+                    <strong>
+                        {{ currentStreak.rideList|length }} Touren
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 Longest Streak
             </div>
             <div class="panel-body text-center">
