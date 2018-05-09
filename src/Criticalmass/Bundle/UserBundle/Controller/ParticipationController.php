@@ -72,7 +72,7 @@ class ParticipationController extends Controller
 
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(new ParticipationDeletedEvent($participation));
+        $eventDispatcher->dispatch(ParticipationDeletedEvent::NAME, new ParticipationDeletedEvent($participation));
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
