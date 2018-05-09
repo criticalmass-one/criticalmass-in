@@ -59,7 +59,7 @@ class StreakCalculator implements StreakCalculatorInterface
         return $this;
     }
     
-    public function calculateCurrentStreak(\DateTime $dateTime = null, bool $includeCurrentMonth = false): Streak
+    public function calculateCurrentStreak(\DateTime $dateTime = null, bool $includeCurrentMonth = false): ?Streak
     {
         if (!$dateTime) {
             $dateTime = new \DateTime();
@@ -96,7 +96,7 @@ class StreakCalculator implements StreakCalculatorInterface
             return new Streak($startDateTime, $endDateTime, $rideList);
         }
 
-        return new Streak(new \DateTime(), new \DateTime(), []);
+        return null;
     }
 
     protected function checkCurrentStreakMonth(\DateTime $dateTime = null, bool $includeCurrentMonth = false): bool
@@ -112,7 +112,7 @@ class StreakCalculator implements StreakCalculatorInterface
         return $lastMonthString === $dateTime->format('Y-m');
     }
 
-    public function calculateLongestStreak(): Streak
+    public function calculateLongestStreak(): ?Streak
     {
         $counter = 0;
         $longestStreakCounter = null;
