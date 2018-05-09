@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\EventSubscriber;
+namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationCreatedEvent;
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationDeletedEvent;
@@ -27,21 +27,21 @@ class ParticipationEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    protected function onParticipationCreated(ParticipationCreatedEvent $participationCreatedEvent): void
+    public function onParticipationCreated(ParticipationCreatedEvent $participationCreatedEvent): void
     {
         $this->rideParticipationCalculator
             ->setRide($participationCreatedEvent->getParticipation()->getRide())
             ->calculate();
     }
 
-    protected function onParticipationUpdated(ParticipationUpdatedEvent $participationUpdatedEvent): void
+    public function onParticipationUpdated(ParticipationUpdatedEvent $participationUpdatedEvent): void
     {
         $this->rideParticipationCalculator
             ->setRide($participationUpdatedEvent->getParticipation()->getRide())
             ->calculate();
     }
 
-    protected function onParticipationDeleted(ParticipationDeletedEvent $participationDeletedEvent): void
+    public function onParticipationDeleted(ParticipationDeletedEvent $participationDeletedEvent): void
     {
         $this->rideParticipationCalculator
             ->setRide($participationDeletedEvent->getParticipation()->getRide())

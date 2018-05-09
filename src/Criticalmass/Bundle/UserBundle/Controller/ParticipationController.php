@@ -4,6 +4,8 @@ namespace Criticalmass\Bundle\UserBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationDeletedEvent;
+use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationUpdatedEvent;
 use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
 use Criticalmass\Component\Participation\Calculator\RideParticipationCalculatorInterface;
 use Criticalmass\Component\Profile\Streak\StreakGeneratorInterface;
@@ -11,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -43,7 +46,7 @@ class ParticipationController extends Controller
      * @Security("is_granted('cancel', participation)")
      * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
      */
-    public function updateAction(Request $request, RideParticipationCalculatorInterface $rideParticipationCalculator, RegistryInterface $registry, Participation $participation): Response
+    public function updateAction(Request $request, RegistryInterface $registry, EventDispatcherInterface $eventDispatcher, Participation $participation): Response
     {
         $status = $request->query->get('status', 'maybe');
 
@@ -54,7 +57,7 @@ class ParticipationController extends Controller
 
         $registry->getManager()->flush();
 
-        $this->recalculateRideParticipations($rideParticipationCalculator, $participation->getRide());
+        $eventDispatcher->dispatch(ParticipationUpdatedEvent::NAME, new ParticipationUpdatedEvent($participation));
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
@@ -63,21 +66,14 @@ class ParticipationController extends Controller
      * @Security("is_granted('delete', participation)")
      * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
      */
-    public function deleteAction(RideParticipationCalculatorInterface $rideParticipationCalculator, RegistryInterface $registry, Participation $participation): Response
+    public function deleteAction(RegistryInterface $registry, EventDispatcherInterface $eventDispatcher,  Participation $participation): Response
     {
         $registry->getManager()->remove($participation);
 
         $registry->getManager()->flush();
 
-        $this->recalculateRideParticipations($rideParticipationCalculator, $participation->getRide());
+        $eventDispatcher->dispatch(new ParticipationDeletedEvent($participation));
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
-    }
-
-    protected function recalculateRideParticipations(RideParticipationCalculatorInterface $rideParticipationCalculator, Ride $ride): void
-    {
-        $rideParticipationCalculator
-            ->setRide($ride)
-            ->calculate();
     }
 }
