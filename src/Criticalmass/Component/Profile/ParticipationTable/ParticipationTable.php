@@ -82,6 +82,10 @@ class ParticipationTable implements \Countable, \Iterator
 
     public function rewind(): void
     {
-        $this->currentYear = max(array_keys($this->yearList));
+        if (count($this->yearList) > 0) {
+            $this->currentYear = max(array_keys($this->yearList));
+        } else {
+            $this->currentYear = (new \DateTime())->format('Y');
+        }
     }
 }
