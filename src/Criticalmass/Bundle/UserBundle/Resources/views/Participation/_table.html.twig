@@ -4,23 +4,23 @@
         <table class="table">
             <tr>
                 <th>&nbsp;</th>
-                <th>Jan</th>
-                <th>Feb</th>
-                <th>Mär</th>
-                <th>Apr</th>
-                <th>Mai</th>
-                <th>Jun</th>
-                <th>Jul</th>
-                <th>Aug</th>
-                <th>Sep</th>
-                <th>Okt</th>
-                <th>Nov</th>
-                <th>Dez</th>
-                <th>&sum;</th>
+                <th class="text-center">Jan</th>
+                <th class="text-center">Feb</th>
+                <th class="text-center">Mär</th>
+                <th class="text-center">Apr</th>
+                <th class="text-center">Mai</th>
+                <th class="text-center">Jun</th>
+                <th class="text-center">Jul</th>
+                <th class="text-center">Aug</th>
+                <th class="text-center">Sep</th>
+                <th class="text-center">Okt</th>
+                <th class="text-center">Nov</th>
+                <th class="text-center">Dez</th>
+                <th class="text-center">&sum;</th>
             </tr>
             {% for year in participationTable %}
                 <tr>
-                    <th>
+                    <th class="text-center">
                         {{ year.year }}
                     </th>
                     {% for month in year %}
@@ -38,11 +38,11 @@
                             {% set backgroundColor = 'purple' %}
                         {% endif %}
 
-                        <td style="background-color: {{ backgroundColor }};">
+                        <td style="background-color: {{ backgroundColor }};" class="text-center">
                             {{ counter }}
                         </td>
                     {% endfor %}
-                    <td>
+                    <td class="text-center">
                         {{ year|length }}
                     </td>
                 </tr>
