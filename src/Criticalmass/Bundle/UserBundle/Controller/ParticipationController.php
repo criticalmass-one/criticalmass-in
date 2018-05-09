@@ -5,6 +5,7 @@ namespace Criticalmass\Bundle\UserBundle\Controller;
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
+use Criticalmass\Component\Participation\Calculator\RideParticipationCalculatorInterface;
 use Criticalmass\Component\Profile\Streak\StreakGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -42,7 +43,7 @@ class ParticipationController extends Controller
      * @Security("is_granted('cancel', participation)")
      * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
      */
-    public function updateAction(Request $request, RegistryInterface $registry, Participation $participation): Response
+    public function updateAction(Request $request, RideParticipationCalculatorInterface $rideParticipationCalculator, RegistryInterface $registry, Participation $participation): Response
     {
         $status = $request->query->get('status', 'maybe');
 
@@ -53,7 +54,7 @@ class ParticipationController extends Controller
 
         $registry->getManager()->flush();
 
-        $this->recalculateRideParticipations($registry, $participation->getRide());
+        $this->recalculateRideParticipations($rideParticipationCalculator, $participation->getRide());
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
@@ -62,27 +63,21 @@ class ParticipationController extends Controller
      * @Security("is_granted('delete', participation)")
      * @ParamConverter("participation", class="AppBundle:Participation", options={"id": "participationId"})
      */
-    public function deleteAction(RegistryInterface $registry, Participation $participation): Response
+    public function deleteAction(RideParticipationCalculatorInterface $rideParticipationCalculator, RegistryInterface $registry, Participation $participation): Response
     {
         $registry->getManager()->remove($participation);
 
         $registry->getManager()->flush();
 
-        $this->recalculateRideParticipations($registry, $participation->getRide());
+        $this->recalculateRideParticipations($rideParticipationCalculator, $participation->getRide());
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
 
-    protected function recalculateRideParticipations(RegistryInterface $registry, Ride $ride): void
+    protected function recalculateRideParticipations(RideParticipationCalculatorInterface $rideParticipationCalculator, Ride $ride): void
     {
-        /** @var ParticipationRepository $repository */
-        $repository = $registry->getRepository(Participation::class);
-
-        $ride
-            ->setParticipationsNumberYes($repository->countParticipationsForRide($ride, 'yes'))
-            ->setParticipationsNumberMaybe($repository->countParticipationsForRide($ride, 'maybe'))
-            ->setParticipationsNumberNo($repository->countParticipationsForRide($ride, 'no'));
-
-        $registry->getManager()->flush();
+        $rideParticipationCalculator
+            ->setRide($ride)
+            ->calculate();
     }
 }
