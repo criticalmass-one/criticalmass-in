@@ -31,13 +31,6 @@ class StreakGenerator implements StreakGeneratorInterface
         return $this;
     }
 
-    public function calculate(): StreakGeneratorInterface
-    {
-        $this->loadParticipations();
-
-        return $this;
-    }
-
     protected function loadParticipations(): StreakGenerator
     {
         $participationList = $this->registry->getRepository(Participation::class)->findByUser($this->user);
