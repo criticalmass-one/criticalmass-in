@@ -20,7 +20,9 @@ class ProfileCancelationController extends Controller
      */
     public function cancelAction(Request $request, UserInterface $user): Response
     {
-        if ($request->isMethod(Request::METHOD_GET)) }
+        if ($request->isMethod(Request::METHOD_GET)) {
+            return $this->cancelGetAction($request, $user);
+        }
     }
 
     protected function cancelGetAction(Request $request, UserInterface $user): Response
