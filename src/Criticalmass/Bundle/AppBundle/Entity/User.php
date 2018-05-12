@@ -69,12 +69,12 @@ class User extends BaseUser
     protected $blurGalleries = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $participations;
 
     /**
-     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user", cascade={"persist"})
      */
     protected $bikerightVouchers;
 
@@ -119,7 +119,7 @@ class User extends BaseUser
     protected $runkeeperAccessToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist"})
      */
     protected $cycles;
 
