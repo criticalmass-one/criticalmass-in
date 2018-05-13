@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 
+use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
@@ -51,18 +52,35 @@ class TrackEventSubscriber implements EventSubscriberInterface
     {
         $track = $trackTrimmedEvent->getTrack();
 
+        $this->updatePolyline($track);
+
+        $this->updateLatLngList($track);
+
+        $this->updateTrackProperties($track);
+
+        $this->updateEstimates($track);
+    }
+
+    protected function updatePolyline(Track $track): void
+    {
         $this->trackPolyline
             ->loadTrack($track)
             ->execute();
 
         $track->setPolyline($this->trackPolyline->getPolyline());
+    }
 
+    protected function updateLatLngList(Track $track): void
+    {
         $this->rangeLatLngListGenerator
             ->loadTrack($track)
             ->execute();
 
         $track->setLatLngList($this->rangeLatLngListGenerator->getList());
+    }
 
+    protected function updateTrackProperties(Track $track): void
+    {
         $this->trackReader->loadTrack($track);
 
         $track
@@ -71,7 +89,10 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->setDistance($this->trackReader->calculateDistance());
 
         $this->registry->getManager()->flush();
+    }
 
+    public function updateEstimates(Track $track): void
+    {
         $this->rideEstimateHandler
             ->setRide($track->getRide())
             ->flushEstimates()
