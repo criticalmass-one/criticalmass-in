@@ -37,7 +37,7 @@ class TrackPolyline
         return $this;
     }
 
-    public function getPolyline()
+    public function getPolyline(): string
     {
         return $this->polyline;
     }

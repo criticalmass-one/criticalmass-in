@@ -3,10 +3,43 @@
 namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 
 use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
+use Criticalmass\Component\Gps\GpxReader\TrackReader;
+use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Criticalmass\Component\Gps\TrackPolyline\TrackPolyline;
+use Criticalmass\Component\Statistic\RideEstimate\RideEstimateHandler;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
 {
+    /** @var TrackReader $trackReader */
+    protected $trackReader;
+
+    /** @var TrackPolyline $trackPolyline */
+    protected $trackPolyline;
+
+    /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
+    protected $rangeLatLngListGenerator;
+
+    /** @var RideEstimateHandler $rideEstimateHandler */
+    protected $rideEstimateHandler;
+
+    /** @var Registry $registry */
+    protected $registry;
+
+    public function __construct(Registry $registry, RideEstimateHandler $rideEstimateHandler, TrackReader $trackReader, TrackPolyline $trackPolyline, RangeLatLngListGenerator $rangeLatLngListGenerator)
+    {
+        $this->trackPolyline = $trackPolyline;
+
+        $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
+
+        $this->trackReader = $trackReader;
+
+        $this->rideEstimateHandler = $rideEstimateHandler;
+
+        $this->registry = $registry;
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -16,54 +49,34 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     public function onTrackTrimmed(TrackTrimmedEvent $trackTrimmedEvent): void
     {
-        /**
-         * @var TrackPolyline $trackPolyline
-         */
-        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+        $track = $trackTrimmedEvent->getTrack();
 
-        $trackPolyline->loadTrack($track);
+        $this->trackPolyline
+            ->loadTrack($track)
+            ->execute();
 
-        $trackPolyline->execute();
+        $track->setPolyline($this->trackPolyline->getPolyline());
 
-        $track->setPolyline($trackPolyline->getPolyline());
+        $this->rangeLatLngListGenerator
+            ->loadTrack($track)
+            ->execute();
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $track->setLatLngList($this->rangeLatLngListGenerator->getList());
 
-        /**
-         * @var RangeLatLngListGenerator $llag
-         */
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
-        $llag->loadTrack($track);
-        $llag->execute();
-        $track->setLatLngList($llag->getList());
+        $this->trackReader->loadTrack($track);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $track
+            ->setStartDateTime($this->trackReader->getStartDateTime())
+            ->setEndDateTime($this->trackReader->getEndDateTime())
+            ->setDistance($this->trackReader->calculateDistance());
 
-        /**
-         * @var TrackReader $tr
-         */
-        $tr = $this->get('caldera.criticalmass.gps.trackreader');
-        $tr->loadTrack($track);
+        $this->registry->getManager()->flush();
 
-        $track->setStartDateTime($tr->getStartDateTime());
-        $track->setEndDateTime($tr->getEndDateTime());
-        $track->setDistance($tr->calculateDistance());
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
-
-        /** @var RideEstimateHandler $reh */
-        $reh = $this->get(RideEstimateHandler::class);
-
-        $reh
+        $this->rideEstimateHandler
             ->setRide($track->getRide())
             ->flushEstimates()
             ->addEstimateFromTrack($track);
-        $reh->calculateEstimates($track->getRide());
+
+        $this->rideEstimateHandler->calculateEstimates();
     }
 }

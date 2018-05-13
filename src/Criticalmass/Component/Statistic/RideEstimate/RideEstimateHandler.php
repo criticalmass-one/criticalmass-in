@@ -33,7 +33,7 @@ class RideEstimateHandler
         return $this;
     }
 
-    public function flushEstimates(Ride $ride): RideEstimateHandler
+    public function flushEstimates(): RideEstimateHandler
     {
         $this->ride
             ->setEstimatedDistance(0.0)
