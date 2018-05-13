@@ -1,57 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Component\Gps\GpxExporter;
 
-
-use Criticalmass\Bundle\AppBundle\Entity\CriticalmapsUser;
 use Criticalmass\Bundle\AppBundle\Entity\Position;
-use Criticalmass\Bundle\AppBundle\Entity\Ticket;
 
-/**
- * @deprecated
- */
-class GpxExporter
+/** @deprecated */
+class GpxExporter extends AbstractGpxExporter
 {
-    protected $entityManager;
-    protected $doctrine;
-    protected $ticket = null;
-    protected $criticalmapsUser = null;
-    protected $positionArray;
-    protected $gpxContent = null;
-
-    public function __construct($entityManager, $doctrine)
-    {
-        $this->entityManager = $entityManager;
-        $this->doctrine = $doctrine;
-    }
-
-    public function setTicket(Ticket $ticket)
-    {
-        $this->ticket = $ticket;
-    }
-
-    public function setCriticalmapsUser(CriticalmapsUser $criticalmapsUser)
-    {
-        $this->criticalmapsUser = $criticalmapsUser;
-    }
-
-    public function setPositionArray($positionArray)
-    {
-        $this->positionArray = $positionArray;
-    }
-
-    protected function findPositions()
-    {
-        if ($this->ticket) {
-            $this->positionArray = $this->doctrine->getRepository('AppBundle:Position')->findPositionsForTicket($this->ticket);
-        }
-
-        if ($this->criticalmapsUser) {
-            $this->positionArray = $this->doctrine->getRepository('AppBundle:Position')->findPositionsForCriticalmapsUser($this->criticalmapsUser);
-        }
-    }
-
-    protected function generateGpxContent()
+    protected function generateGpxContent(): GpxExporterInterface
     {
         $writer = new \XMLWriter();
         $writer->openMemory();
@@ -107,19 +63,7 @@ class GpxExporter
         $writer->endElement();
         $writer->endDocument();
         $this->gpxContent = $writer->outputMemory(true);
-    }
 
-    public function execute()
-    {
-        $this->findPositions();
-
-        if (count($this->positionArray) > 0) {
-            $this->generateGpxContent();
-        }
-    }
-
-    public function getGpxContent()
-    {
-        return $this->gpxContent;
+        return $this;
     }
 } 
