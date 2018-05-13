@@ -2,12 +2,13 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
 use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,13 +17,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackRangeController extends AbstractController
 {
-    use TrackHandlingTrait;
-
     /**
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function rangeAction(Request $request, UserInterface $user, Track $track, SimpleLatLngListGenerator $latLngListGenerator): Response
+    public function rangeAction(Request $request, UserInterface $user, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_track_range', [
@@ -33,13 +32,13 @@ class TrackRangeController extends AbstractController
             ->getForm();
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->rangePostAction($request, $track, $form, $latLngListGenerator);
+            return $this->rangePostAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
         } else {
-            return $this->rangeGetAction($request, $track, $form, $latLngListGenerator);
+            return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
         }
     }
 
-    protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator): Response
+    protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
         $latLngListGenerator
             ->loadTrack($track)
@@ -53,17 +52,14 @@ class TrackRangeController extends AbstractController
         ]);
     }
 
-    protected function rangePostAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator): Response
+    protected function rangePostAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $track = $form->getData();
 
-            $this->generatePolyline($track);
-            $this->saveLatLngList($track);
-            $this->updateTrackProperties($track);
-            $this->calculateRideEstimates($track);
+            $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
         }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
