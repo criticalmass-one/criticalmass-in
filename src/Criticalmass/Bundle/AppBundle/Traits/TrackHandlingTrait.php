@@ -8,7 +8,7 @@ use Criticalmass\Component\Gps\DistanceCalculator\TrackDistanceCalculator;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Criticalmass\Component\Gps\TrackPolyline\TrackPolyline;
+use Criticalmass\Component\Gps\TrackPolyline\PolylineGenerator;
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateHandler;
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
 
@@ -121,7 +121,7 @@ trait TrackHandlingTrait
     protected function generatePolyline(Track $track)
     {
         /**
-         * @var TrackPolyline $trackPolyline
+         * @var PolylineGenerator $trackPolyline
          */
         $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
 
