@@ -99,13 +99,11 @@ trait TrackHandlingTrait
 
     protected function calculateRideEstimates(Track $track)
     {
-        /**
-         * @var RideEstimateService $res
-         */
-        $res = $this->get('caldera.criticalmass.statistic.rideestimate.track');
+        /** @var RideEstimateService $res */
+        $res = $this->get(RideEstimateService::class);
         $res->flushEstimates($track->getRide());
 
-        $res->refreshEstimate($track->getRideEstimate());
+        $res->addEstimateFromTrack($track);
         $res->calculateEstimates($track->getRide());
     }
 

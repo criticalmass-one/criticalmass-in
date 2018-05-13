@@ -61,18 +61,22 @@ class RideEstimateHandler
 
     public function addEstimateFromTrack(Track $track): RideEstimateHandler
     {
-        $re = new RideEstimate();
-        $re
-            ->setRide($track->getRide())
-            ->setUser($track->getUser())
-            ->setTrack($track)
-            ->setEstimatedDistance($track->getDistance())
-            ->setEstimatedDuration($this->calculateDurationInHours($track));
+        if ($track->getRideEstimate()) {
+            $re = $track->getRideEstimate();
+        } else {
+            $re = new RideEstimate();
+            $re
+                ->setRide($track->getRide())
+                ->setUser($track->getUser())
+                ->setTrack($track)
+                ->setEstimatedDistance($track->getDistance())
+                ->setEstimatedDuration($this->calculateDurationInHours($track));
 
-        $track->setRideEstimate($re);
+            $track->setRideEstimate($re);
 
-        $this->getEntityManager()->persist($re);
-        $this->getEntityManager()->flush();
+            $this->getEntityManager()->persist($re);
+            $this->getEntityManager()->flush();
+        }
 
         return $this;
     }
