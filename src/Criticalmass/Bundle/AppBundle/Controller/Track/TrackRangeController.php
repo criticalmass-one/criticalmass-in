@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
+use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
@@ -21,7 +22,7 @@ class TrackRangeController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function rangeAction(Request $request, UserInterface $user, Track $track): Response
+    public function rangeAction(Request $request, UserInterface $user, Track $track, SimpleLatLngListGenerator $latLngListGenerator): Response
     {
         $form = $this->createFormBuilder($track)
             ->setAction($this->generateUrl('caldera_criticalmass_track_range', [
@@ -32,30 +33,27 @@ class TrackRangeController extends AbstractController
             ->getForm();
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->rangePostAction($request, $track, $form);
+            return $this->rangePostAction($request, $track, $form, $latLngListGenerator);
         } else {
-            return $this->rangeGetAction($request, $track, $form);
+            return $this->rangeGetAction($request, $track, $form, $latLngListGenerator);
         }
     }
 
-    protected function rangeGetAction(Request $request, Track $track, FormInterface $form): Response
+    protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator): Response
     {
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
-        $llag
+        $latLngListGenerator
             ->loadTrack($track)
             ->execute();
 
-        return $this->render('AppBundle:Track:range.html.twig',
-            [
-                'form' => $form->createView(),
-                'track' => $track,
-                'latLngList' => $llag->getList(),
-                'gapWidth' => $this->getParameter('track.gap_width')
-            ]
-        );
+        return $this->render('AppBundle:Track:range.html.twig', [
+            'form' => $form->createView(),
+            'track' => $track,
+            'latLngList' => $latLngListGenerator->getList(),
+            'gapWidth' => $this->getParameter('track.gap_width')
+        ]);
     }
 
-    protected function rangePostAction(Request $request, Track $track, FormInterface $form): Response
+    protected function rangePostAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator): Response
     {
         $form->handleRequest($request);
 
