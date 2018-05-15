@@ -6,7 +6,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Criticalmass\Component\Gps\TrackPolyline\TrackPolyline;
+use Criticalmass\Component\Gps\TrackPolyline\PolylineGeneratorInterface;
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateHandler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,7 +16,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var TrackReader $trackReader */
     protected $trackReader;
 
-    /** @var TrackPolyline $trackPolyline */
+    /** @var PolylineGeneratorInterface $trackPolyline */
     protected $trackPolyline;
 
     /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
@@ -28,7 +28,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var Registry $registry */
     protected $registry;
 
-    public function __construct(Registry $registry, RideEstimateHandler $rideEstimateHandler, TrackReader $trackReader, TrackPolyline $trackPolyline, RangeLatLngListGenerator $rangeLatLngListGenerator)
+    public function __construct(Registry $registry, RideEstimateHandler $rideEstimateHandler, TrackReader $trackReader, PolylineGeneratorInterface $trackPolyline, RangeLatLngListGenerator $rangeLatLngListGenerator)
     {
         $this->trackPolyline = $trackPolyline;
 
@@ -59,15 +59,20 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->updateTrackProperties($track);
 
         $this->updateEstimates($track);
+
+        $this->registry->getManager()->flush();
     }
 
     protected function updatePolyline(Track $track): void
     {
-        $this->trackPolyline
+        $polyline = $this->trackPolyline
             ->loadTrack($track)
-            ->execute();
+            ->execute()
+            ->getPolyline();
 
-        $track->setPolyline($this->trackPolyline->getPolyline());
+        var_dump($polyline);
+        die;
+        $track->setPolyline($polyline);
     }
 
     protected function updateLatLngList(Track $track): void
@@ -87,8 +92,6 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->setStartDateTime($this->trackReader->getStartDateTime())
             ->setEndDateTime($this->trackReader->getEndDateTime())
             ->setDistance($this->trackReader->calculateDistance());
-
-        $this->registry->getManager()->flush();
     }
 
     public function updateEstimates(Track $track): void

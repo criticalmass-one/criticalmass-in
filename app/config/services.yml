@@ -9,6 +9,7 @@ services:
             $projectDirectory: '%kernel.project_dir%'
             $staticmapsHost: '%staticmaps.host%'
             $featurePhotos: '%feature.photos%'
+            $gapWidth: '%track.gap_width%'
 
     Criticalmass\Bundle\AppBundle\:
         resource: '../../src/Criticalmass/Bundle/AppBundle/*'
@@ -26,7 +27,7 @@ services:
 
     Criticalmass\Component\:
         resource: '../../src/Criticalmass/Component/*'
-        exclude: '../../src/Criticalmass/Component/{Facebook,Image,Gps,UploadValidator/UploadValidatorException}'
+        exclude: '../../src/Criticalmass/Component/{Facebook,Image,UploadValidator/UploadValidatorException}'
 
     Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
         arguments:
