@@ -81,7 +81,7 @@ class RideCalculator extends AbstractRideCalculator
         $time = $cityCycle->getTime();
 
         $timezone = $this->getCityTimeZone($cityCycle);
-        
+
         $time->setTimezone($timezone);
 
         $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));

@@ -205,5 +205,21 @@ class CityRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findCitiesBySlugList(array $slugList): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->join('c.slugs', 's')
+            ->where($builder->expr()->in('s.slug', ':slugList'))
+            ->orderBy('c.city', 'ASC')
+            ->setParameter('slugList', $slugList);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
 

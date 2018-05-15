@@ -44,6 +44,11 @@ class StandardRideCommand extends Command
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
             )
+            ->addArgument(
+                'cities',
+                InputArgument::IS_ARRAY,
+                'List of cities'
+            )
             ->addOption(
                 'save',
                 null,
@@ -62,12 +67,12 @@ class StandardRideCommand extends Command
 
         $manager = $this->registry->getManager();
 
-        $cities = $this->registry->getRepository(City::class)->findCities();
+        $cityList = $this->getCityList($input);
 
         $this->rideGenerator
             ->setMonth($month)
             ->setYear($year)
-            ->setCityList($cities)
+            ->setCityList($cityList)
             ->execute();
 
         $table = new Table($output);
@@ -96,5 +101,16 @@ class StandardRideCommand extends Command
         } else {
             $output->writeln('Did not save any of these rides, run with --save to persist.');
         }
+    }
+
+    protected function getCityList(InputInterface $input): array
+    {
+        $citySlugList = $input->getArgument('cities');
+
+        if (count($citySlugList) === 0) {
+            return $this->registry->getRepository(City::class)->findCities();
+        }
+
+        return $this->registry->getRepository(City::class)->findCitiesBySlugList($citySlugList);
     }
 }
