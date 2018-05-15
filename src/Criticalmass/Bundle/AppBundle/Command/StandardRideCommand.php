@@ -29,7 +29,7 @@ class StandardRideCommand extends Command
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('criticalmass:cycles:create')
@@ -55,10 +55,10 @@ class StandardRideCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var int $year */
-        $year = $input->getArgument('year');
+        $year = (int) $input->getArgument('year');
 
         /** @var int $month */
-        $month = $input->getArgument('month');
+        $month = (int) $input->getArgument('month');
 
         $manager = $this->registry->getManager();
 
