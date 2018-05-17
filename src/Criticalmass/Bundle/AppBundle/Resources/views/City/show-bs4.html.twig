@@ -181,15 +181,6 @@
             <div class="col-12 col-md-4">
                 {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
 
-                {% if 'Hamburg' in city.city %}
-                <div class="row mb-1">
-                    <div class="col-12" id="fahrradstadthamburg-container">
-                        <script>
-                            CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
-                        </script>
-                    </div>
-                {% endif %}
-
                 {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
 
                 {% include 'AppBundle:City:Includes/_photos.html.twig' with { 'city': city, 'photos': photos } %}
