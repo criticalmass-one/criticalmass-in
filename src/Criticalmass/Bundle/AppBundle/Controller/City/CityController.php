@@ -159,16 +159,6 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function liveAction(City $city): Response
-    {
-        return $this->render('CalderaCriticalmassDesktopBundle:City:live.html.twig', [
-            'city' => $city,
-        ]);
-    }
-
-    /**
-     * @ParamConverter("city", class="AppBundle:City")
-     */
     public function getlocationsAction(City $city): Response
     {
         return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), 200, [

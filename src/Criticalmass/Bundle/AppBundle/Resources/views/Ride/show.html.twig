@@ -20,11 +20,7 @@
 
 {% block content %}
     <div class="container">
-        {% if today(ride.date) %}
-            {% include('AppBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
-        {% else %}
-            {% include('AppBundle:Ride:Includes/_registrationHint.html.twig') %}
-        {% endif %}
+        {% include('AppBundle:Ride:Includes/_registrationHint.html.twig') %}
 
         {% include('AppBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 
