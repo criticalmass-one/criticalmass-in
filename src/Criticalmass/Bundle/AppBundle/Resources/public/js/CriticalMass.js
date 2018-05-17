@@ -75,6 +75,7 @@ require.config({
         "SnapablePhotoMarker": "/bundles/app/js/modules/map/marker/SnapablePhotoMarker",
         "Search": "/bundles/app/js/modules/Search",
         "ReadMore": "/bundles/app/js/modules/ReadMore",
+        "CookieNotice": "/bundles/app/js/modules/CookieNotice",
         "readmorejs": "/bundles/app/js/external/readmore/readmore.min",
         "cookie-notice": "/bundles/app/js/external/cookie-notice/cookie-notice",
         "leaflet": "/bundles/app/js/external/leaflet/leaflet",
