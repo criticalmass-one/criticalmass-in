@@ -76,6 +76,7 @@ require.config({
         "Search": "/bundles/app/js/modules/Search",
         "ReadMore": "/bundles/app/js/modules/ReadMore",
         "readmorejs": "/bundles/app/js/external/readmore/readmore.min",
+        "cookie-notice": "/bundles/app/js/external/cookie-notice/cookie-notice",
         "leaflet": "/bundles/app/js/external/leaflet/leaflet",
         "leaflet-activearea": "/bundles/app/js/external/leaflet/L.activearea",
         "leaflet-locate": "/bundles/app/js/external/leaflet/L.Control.Locate",
