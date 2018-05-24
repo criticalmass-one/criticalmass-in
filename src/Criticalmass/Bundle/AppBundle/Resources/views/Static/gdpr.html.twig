@@ -1,10 +1,10 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Datenschutzerklärung{% endblock %}
+{% block title %}Deine persönlichen Daten{% endblock %}
 
 {% block breadcrumb %}
     <li class="active">
-        Datenschutzerklärung
+        Deine persönlichen Daten
     </li>
 {% endblock %}
 
@@ -12,6 +12,19 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            <h2>
+                Deine persönlichen Daten
+            </h2>
+
+            <p class="lead">
+                Hier erfährst du, was mit deinen persönlichen und allgemeinen Daten auf unserer Website passiert.
+            </p>
+
+            <p>
+                Seit Anfang an, als criticalmass.in noch ein Studentenprojekt an der Fachhochschule Wedel war, galt der Grundsatz, keinen Unfug mit persönlichen Daten anzustellen. Daran hat sich bis heute nichts geändert: Wir nutzen so wenig persönliche Daten wie möglich und haben kein Interesse daran, mit deinen Daten Geld zu verdienen. Wenn du ein wenig von Programmierung verstehst, kannst du dich in unserem <a href="https://github.com/calderacc/criticalmass-in">GitHub-Repository</a> selbst davon überzeugen.
+            </p>
+
+            <a name="dein-profil"></a>
             <h3>
                 Dein Profil
             </h3>
@@ -62,6 +75,7 @@
                 Falls du dich nicht über soziale Netzwerke einloggst, kannst du in deinen Profileinstellungen außerdem dein Kennwort und deine E-Mail-Adresse ändern.
             </p>
 
+            <a name="login-soziale-netzwerke"></a>
             <h3>
                 Login über soziale Netzwerke
             </h3>
@@ -138,6 +152,7 @@
                 </li>
             </ul>
 
+            <a name="fotos"></a>
             <h3>
                 Fotos
             </h3>
@@ -149,6 +164,7 @@
             <p>
                 Wenn deine hochgeladenen Fotos GPS-Daten enthalten oder du bereits einen Track zu dieser Tour hochgeladen oder importiert hast, versuchen wir deine Fotos zu verorten und auf der Karte der Tour deinen Aufnahmestandpunkt darzustellen.
             </p>
+
             <p>
                 Für Fotos von Critical-Mass-Touren ist <a href="https://www.gesetze-im-internet.de/kunsturhg/__23.html">§ 23 Abs. 1 Nr. 3 KunstUrhG</a> einschlägig, der die Veröffentlichung der „Bilder von Versammlungen, Aufzügen und ähnlichen Vorgängen, an denen die dargestellten Personen teilgenommen haben“ erlaubt.
             </p>
@@ -161,6 +177,7 @@
                 Der Aufruf von Fotos wird zu statistischen Zwecken gespeichert. Wenn du als eingeloggter Nutzer Fotos betrachtest, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, so dass wir dir Fotos vorschlagen können, die du noch nicht gesehen hast.
             </p>
 
+            <a name="tracks"></a>
             <h3>
                 Tracks
             </h3>
@@ -185,6 +202,7 @@
                 <a href="{{ path('caldera_criticalmass_track_list') }}">Selbstverständlich kannst du deine Tracks anschließend verwalten</a>. Dir stehen verschiedene Werkzeuge zur Verfügung, mit denen du deinen Track unsichtbar schalten kannst, um ihn von anderen Nutzern und aus den Heatmaps zu verbergen, oder mit denen du deinen Track kürzen kannst, um etwa die An- und Abfahrt zu einer Critical Mass herauszuschneiden. Natürlich kannst du deine Track auch komplett aus unserer Webseite löschen. Die damit verknüpften statistischen Daten werden dann ebenfalls entfernt.
             </p>
 
+            <a name="staedte-touren-zubringertouren"></a>
             <h3>
                 Städte, Touren und Zubringertouren
             </h3>
@@ -205,6 +223,7 @@
                 Der Aufruf der Seite einer Stadt oder einer Tour wird zu statistischen Zwecken erhoben, um besonders beliebte oder wenig bekannte Städte und Touren ermitteln zu können. Falls du im eingeloggten Zustand diese Seiten aufrufst, wird der Zugriff mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, ob du die Seite einer Stadt bereits aufgerufen oder eine neu erstellte Tour bereits kennst.
             </p>
 
+            <a name="teilnahmen"></a>
             <h3>
                 Teilnahmen an Touren
             </h3>
@@ -221,6 +240,7 @@
                 Du kannst deine Teilnahmen <a href="{{ path('criticalmass_user_participation_list') }}">jederzeit wiederrufen oder den Datensatz komplett löschen</a>.
             </p>
 
+            <a name="statistiken"></a>
             <h3>
                 Statistiken
             </h3>
@@ -241,6 +261,7 @@
                 Wenn du einen Track hochlädst oder importierst, wird automatisch die Länge der Strecke und die Dauer als statistischer Wert erhoben. Diese Werte werden jedoch wieder entfernt, wenn du deinen Track deaktivierst, löschst oder dein Benutzerkonto entfernst.
             </p>
 
+            <a name="diskussionsforum"></a>
             <h3>
                 Diskussionsforum und Kommentare
             </h3>
@@ -269,6 +290,7 @@
                 Der Aufruf eines Diskussionsstranges wird zu statistischen Zwecken mitgezählt. Wenn du im eingeloggten Zustand einen Strang aufrufst, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, welche Stränge und Foren noch ungelesene Beiträge enthalten.
             </p>
 
+            <a name="landkarten"></a>
             <h3>
                 Landkarten
             </h3>
@@ -293,6 +315,7 @@
                 Um deine Privatsphäre zu schützen, leiten wir alle Kacheldaten über unseren Kachel-Proxy-Server <code>tiles.caldera.cc</code> um. Weder Wikimedia Maps noch Open Street Map werden darüber informiert, welche Gebiete der Karte du dir angesehen hast. Selbstverständlich erhebt unser Kachel-Proxy-Server keine weiteren Logdateien über deine Zugriffe.
             </p>
 
+            <a name="werbung"></a>
             <h3>
                 Werbung
             </h3>
@@ -301,6 +324,7 @@
                 Auf einigen Seiten unseres Internetangebotes wirst du Werbeanzeigen sehen. Diese Anzeigen werden ausnahmslos von unserem eigenen Server <code>adserver.caldera.cc</code> ausgespielt. Es handelt sich ausschließlich um unbezahlte Werbeanzeigen für Projekte oder Webseiten, die wir für unterstützungswert oder interessant halten. Die Werbeanzeigen werden nach dem Zufallsprinzip ausgespielt, es findet keine Profilbildung oder zusätzliche Datenerhebung statt, unser Webserver loggt keine personenbezogenen Daten. Es wird lediglich eine anonymisierte Statistik erhoben, welche Anzeige zu welchem Zeitpunkt ausgespielt wurde.
             </p>
 
+            <a name="verschluesselung"></a>
             <h3>
                 Verschlüsselung
             </h3>
@@ -317,6 +341,7 @@
                 Technisch gesehen ist bcrypt keine Verschlüsselungs-, sondern eine Hashfunktion, was bedeutet, dass einmal gehashte Werte nie wieder in ihren Ursprungswert zurückgeführt werden können.
             </p>
 
+            <a name="cookies"></a>
             <h3>
                 Cookies
             </h3>
@@ -325,6 +350,7 @@
                 Als Webseite mit Login-Funktionalität kommen wir leider um Cookies nicht drumherum. Du kennst den Spruch sicherlich: Wir setzen Cookies ein, um die Funktionalität unserer Webseite zu gewährleisten. In den Cookies werden keine persönlichen Informationen abgelegt, sie denen lediglich dazu, dich beim Besuch von criticalmass.in erkennen und einloggen zu können.
             </p>
 
+            <a name="tracking"></a>
             <h3>
                 Tracking
             </h3>
@@ -385,7 +411,7 @@
                 </li>
 
                 <li role="presentation">
-                    <a href="#diskussionforum">
+                    <a href="#diskussionsforum">
                         Diskussionsforum
                     </a>
                 </li>
