@@ -1,0 +1,42 @@
+registration:
+    check_email: 'Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.'
+    confirmed: 'Glückwunsch %username%, Ihr Benutzerkonto ist jetzt bestätigt.'
+    back: 'Zurück zur ursprünglichen Seite.'
+    submit: Registrieren
+    flash:
+        user_created: 'Der Benutzer wurde erfolgreich erstellt.'
+    email:
+        subject: 'Willkommen %username%!'
+        message: |
+            Hallo %username%!
+
+            Besuchen Sie bitte folgende Seite, um Ihr Benutzerkonto zu bestätigen: %confirmationUrl%
+
+            Mit besten Grüßen,
+            das Team.
+
+resetting:
+    check_email: |
+        Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
+        Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
+
+        Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
+
+    request:
+        username: 'Benutzername oder E-Mail-Adresse'
+        submit: 'Passwort zurücksetzen'
+    reset:
+        submit: 'Passwort ändern'
+    flash:
+        success: 'Das Passwort wurde erfolgreich zurückgesetzt.'
+    email:
+        subject: 'Passwort zurücksetzen'
+        message: |
+            Hej %username%!
+
+            Du hattest darum gebeten, dein Kennwort bei criticalmass.in zurückzusetzen.
+
+            Rufe dazu bitte die folgende Seite auf: %confirmationUrl%
+
+            Viele Grüße
+            Malte
