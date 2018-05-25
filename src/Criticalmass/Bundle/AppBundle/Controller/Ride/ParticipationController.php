@@ -19,7 +19,7 @@ class ParticipationController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function rideparticipationAction(Registry $registry, EventDispatcherInterface $eventDispatcher, UserInterface $user, Ride $ride, string $status): Response
+    public function rideparticipationAction(Registry $registry, EventDispatcherInterface $eventDispatcher, UserInterface $user = null, Ride $ride, string $status): Response
     {
         $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(), $ride);
 
