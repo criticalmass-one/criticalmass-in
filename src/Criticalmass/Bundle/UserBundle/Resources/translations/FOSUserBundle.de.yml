@@ -8,12 +8,12 @@ registration:
     email:
         subject: 'Willkommen %username%!'
         message: |
-            Hallo %username%!
+            Hej %username%!
 
-            Besuchen Sie bitte folgende Seite, um Ihr Benutzerkonto zu bestätigen: %confirmationUrl%
+            Danke für deine Registrierung auf criticalmass.in! Bitte rufe die folgende Seite auf, um deine Registrierung zu bestätigen: %confirmationUrl%
 
-            Mit besten Grüßen,
-            das Team.
+            Viele Grüße
+            Malte
 
 resetting:
     check_email: |
