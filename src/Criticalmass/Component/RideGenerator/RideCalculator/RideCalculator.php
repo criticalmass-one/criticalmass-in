@@ -80,7 +80,7 @@ class RideCalculator extends AbstractRideCalculator
     {
         $time = $cityCycle->getTime();
 
-        $timezone = $this->getCityTimeZone($cityCycle);
+        $timezone = $this->timezone ?? $this->getCityTimeZone($cityCycle);
 
         $time->setTimezone($timezone);
 

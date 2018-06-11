@@ -49,14 +49,17 @@ class AnalyzeCyclesCommand extends Command
 
         $table = new Table($output);
 
-        $table->setHeaders(['Cycle Id', 'Computed', 'Actual']);
+        $table->setHeaders(['Cycle Id', 'Computed DateTime', 'Actual DateTime', 'Computed Location', 'Actual Location']);
 
         /** @var CycleAnalyzerModel $result */
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
             $table->addRow([
-                $result->getCycle()->getId(),
-                $result->getGeneratedRide()->getDateTime()->format('d.m.Y H:i'),
+                $result->getCycle() ? $result->getCycle()->getId() : '',
+                $result->getGeneratedRide() ? $result->getGeneratedRide()->getDateTime()->format('d.m.Y H:i') : '',
                 $result->getRide()->getDateTime()->format('d.m.Y H:i'),
+                $result->getGeneratedRide() ? $result->getGeneratedRide()->getLocation() : '',
+                $result->getRide()->getLocation(),
+                $result->equals() ? '✅' : '❌',
             ]);
         }
 
