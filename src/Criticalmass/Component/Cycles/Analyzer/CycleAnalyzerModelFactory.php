@@ -2,11 +2,15 @@
 
 namespace Criticalmass\Component\Cycles\Analyzer;
 
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+
 class CycleAnalyzerModelFactory implements CycleAnalyzerModelFactoryInterface
 {
     protected $rides = [];
 
     protected $simulatedRides = [];
+
+    protected $resultList = [];
 
     public function setRides(array $rides): CycleAnalyzerModelFactoryInterface
     {
@@ -24,7 +28,18 @@ class CycleAnalyzerModelFactory implements CycleAnalyzerModelFactoryInterface
 
     public function build(): CycleAnalyzerModelFactoryInterface
     {
+        /** @var Ride $simulatedRide */
+        foreach ($this->simulatedRides as $simulatedRide) {
+            $model = new CycleAnalyzerModel($simulatedRide->getCycle(), $simulatedRide, $simulatedRide);
 
+            $this->resultList[$simulatedRide->getDateTime()->format('U')] = $model;
+        }
+
+        return $this;
     }
 
+    public function getResultList(): array
+    {
+        return $this->resultList;
+    }
 }

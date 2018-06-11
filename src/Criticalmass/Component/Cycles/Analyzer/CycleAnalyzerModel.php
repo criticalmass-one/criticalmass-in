@@ -18,7 +18,7 @@ class CycleAnalyzerModel
 
     public function __construct(CityCycle $cycle, Ride $ride, Ride $generatedRide)
     {
-        $this->cycle = $$cycle;
+        $this->cycle = $cycle;
         $this->ride = $ride;
         $this->generatedRide = $generatedRide;
     }
@@ -37,5 +37,4 @@ class CycleAnalyzerModel
     {
         return $this->generatedRide;
     }
-
 }

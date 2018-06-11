@@ -5,8 +5,10 @@ namespace Criticalmass\Bundle\AppBundle\Command\Cycles;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
 use Criticalmass\Component\Cycles\Analyzer\CycleAnalyzerInterface;
+use Criticalmass\Component\Cycles\Analyzer\CycleAnalyzerModel;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,6 +46,21 @@ class AnalyzeCyclesCommand extends Command
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
 
         $this->cycleAnalyzer->setCity($city)->analyze();
+
+        $table = new Table($output);
+
+        $table->setHeaders(['Cycle Id', 'Computed', 'Actual']);
+
+        /** @var CycleAnalyzerModel $result */
+        foreach ($this->cycleAnalyzer->getResultList() as $result) {
+            $table->addRow([
+                $result->getCycle()->getId(),
+                $result->getGeneratedRide()->getDateTime()->format('d.m.Y H:i'),
+                $result->getRide()->getDateTime()->format('d.m.Y H:i'),
+            ]);
+        }
+
+        $table->render();
     }
 
     protected function getCityBySlug(string $slug): City

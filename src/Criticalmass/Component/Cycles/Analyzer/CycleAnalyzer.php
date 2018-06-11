@@ -38,8 +38,11 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     /** @var CycleAnalyzerModelFactoryInterface $analyzerModelFactory */
     protected $analyzerModelFactory;
 
-    public function __construct(Registry $registry, RideCalculatorInterface $rideCalculator, CycleAnalyzerModelFactoryInterface $analyzerModelFactory)
-    {
+    public function __construct(
+        Registry $registry,
+        RideCalculatorInterface $rideCalculator,
+        CycleAnalyzerModelFactoryInterface $analyzerModelFactory
+    ) {
         $this->registry = $registry;
 
         $this->rideCalculator = $rideCalculator;
@@ -95,13 +98,18 @@ class CycleAnalyzer implements CycleAnalyzerInterface
         for ($current = $this->startDateTime; $current <= $this->endDateTime; $current->add($month)) {
             $rideList = $this->rideCalculator
                 ->reset()
-                ->setMonth((int) $current->format('m'))
-                ->setYear((int) $current->format('Y'))
+                ->setMonth((int)$current->format('m'))
+                ->setYear((int)$current->format('Y'))
                 ->setCycleList($this->cycleList)
                 ->execute()
                 ->getRideList();
 
             $this->simulatedRideList += $rideList;
         }
+    }
+
+    public function getResultList(): array
+    {
+        return $this->analyzerModelFactory->getResultList();
     }
 }
