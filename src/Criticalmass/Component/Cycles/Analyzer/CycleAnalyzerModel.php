@@ -44,6 +44,7 @@ class CycleAnalyzerModel
             return false;
         }
 
-        return $this->ride->getDateTime() === $this->generatedRide->getDateTime();
+        return $this->ride->getDateTime() === $this->generatedRide->getDateTime() &&
+            $this->ride->getLocation() === $this->generatedRide->getLocation();
     }
 }
