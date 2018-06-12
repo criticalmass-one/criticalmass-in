@@ -91,7 +91,7 @@ class CycleAnalyzer implements CycleAnalyzerInterface
         return $this;
     }
 
-    protected function simulateRides()
+    protected function simulateRides(): CycleAnalyzer
     {
         $month = new \DateInterval('P1M');
 
@@ -106,6 +106,8 @@ class CycleAnalyzer implements CycleAnalyzerInterface
 
             $this->simulatedRideList = array_merge($this->simulatedRideList, $rideList);
         }
+
+        return $this;
     }
 
     public function getResultList(): array

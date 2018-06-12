@@ -8,4 +8,5 @@ interface CycleAnalyzerInterface
 {
     public function setCity(City $city): CycleAnalyzerInterface;
     public function analyze(): CycleAnalyzerInterface;
+    public function getResultList(): array;
 }

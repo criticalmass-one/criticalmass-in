@@ -41,7 +41,7 @@ class AnalyzeCyclesCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $timezone = new \DateTimeZone('UTC');
 
