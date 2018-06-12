@@ -43,6 +43,8 @@ class AnalyzeCyclesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $timezone = new \DateTimeZone('UTC');
+
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
 
         $this->cycleAnalyzer->setCity($city)->analyze();
@@ -55,8 +57,8 @@ class AnalyzeCyclesCommand extends Command
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
             $table->addRow([
                 $result->getCycle() ? $result->getCycle()->getId() : '',
-                $result->getGeneratedRide() ? $result->getGeneratedRide()->getDateTime()->format('d.m.Y H:i') : '',
-                $result->getRide()->getDateTime()->format('d.m.Y H:i'),
+                $result->getGeneratedRide() ? $result->getGeneratedRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i') : '',
+                $result->getRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
                 $result->getGeneratedRide() ? $result->getGeneratedRide()->getLocation() : '',
                 $result->getRide()->getLocation(),
                 $result->equals() ? '✅' : '❌',

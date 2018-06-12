@@ -95,8 +95,6 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     {
         $month = new \DateInterval('P1M');
 
-        $this->rideCalculator->setTimezone(new \DateTimeZone('UTC'));
-
         for ($current = $this->startDateTime; $current <= $this->endDateTime; $current->add($month)) {
             $rideList = $this->rideCalculator
                 ->reset()
