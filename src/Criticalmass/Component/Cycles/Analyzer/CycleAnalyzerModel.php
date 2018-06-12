@@ -38,13 +38,24 @@ class CycleAnalyzerModel
         return $this->generatedRide;
     }
 
-    public function equals(): bool
+    public function compare(): int
     {
+        $result = ComparisonResultInterface::EQUAL;
+
         if (!$this->ride || !$this->generatedRide) {
-            return false;
+            $result += ComparisonResultInterface::NO_RIDE;
+
+            return $result;
         }
 
-        return $this->ride->getDateTime() === $this->generatedRide->getDateTime() &&
-            $this->ride->getLocation() === $this->generatedRide->getLocation();
+        if ($this->ride->getLocation() === $this->generatedRide->getLocation()) {
+            $result += ComparisonResultInterface::LOCATION_MISMATCH;
+        }
+
+        if ($this->ride->getDateTime() !== $this->generatedRide->getDateTime()) {
+            $result += ComparisonResultInterface::DATETIME_MISMATCH;
+        }
+
+        return $result;
     }
 }

@@ -4,6 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Command\Cycles;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
+use Criticalmass\Component\Cycles\Analyzer\ComparisonResultInterface;
 use Criticalmass\Component\Cycles\Analyzer\CycleAnalyzerInterface;
 use Criticalmass\Component\Cycles\Analyzer\CycleAnalyzerModel;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -62,7 +63,7 @@ class AnalyzeCyclesCommand extends Command
                 $result->getRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
                 $result->getGeneratedRide() ? $result->getGeneratedRide()->getLocation() : '',
                 $result->getRide()->getLocation(),
-                $result->equals() ? '✅' : '❌',
+                $this->compare($result),
             ]);
         }
 
@@ -75,5 +76,24 @@ class AnalyzeCyclesCommand extends Command
         $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($slug);
 
         return $citySlug->getCity();
+    }
+
+    protected function compare(CycleAnalyzerModel $model): string
+    {
+        switch ($model->compare()) {
+            case ComparisonResultInterface::EQUAL:
+                return '️✅️';
+
+            case ComparisonResultInterface::NO_RIDE:
+                return '️⚠️';
+
+            case ComparisonResultInterface::LOCATION_MISMATCH:
+                return '️❌️';
+
+            case ComparisonResultInterface::DATETIME_MISMATCH:
+                return '️❌️';
+
+            default: return '';
+        }
     }
 }
