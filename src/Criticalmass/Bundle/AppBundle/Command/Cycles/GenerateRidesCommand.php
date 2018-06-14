@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command\Cycles;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StandardRideCommand extends Command
+class GenerateRidesCommand extends Command
 {
     /** @var RideGeneratorInterface $rideGenerator */
     protected $rideGenerator;
@@ -32,7 +32,7 @@ class StandardRideCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:cycles:create')
+            ->setName('criticalmass:cycles:generate-rides')
             ->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'year',
