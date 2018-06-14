@@ -26,8 +26,8 @@ class CityCycleRepository extends EntityRepository
                 ->andWhere(
                     $builder->expr()->orX(
                         $builder->expr()->andX(
-                            $builder->expr()->gte('cc.validFrom', ':startDateTime'),
-                            $builder->expr()->lte('cc.validUntil', ':startDateTime')
+                            $builder->expr()->lte('cc.validFrom', ':startDateTime'),
+                            $builder->expr()->gte('cc.validUntil', ':startDateTime')
                         ),
                         $builder->expr()->andX(
                             $builder->expr()->isNull('cc.validFrom'),
