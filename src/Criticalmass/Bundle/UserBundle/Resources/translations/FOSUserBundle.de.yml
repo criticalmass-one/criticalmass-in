@@ -1,0 +1,23 @@
+registration:
+    email:
+        subject: 'Willkommen bei criticalmass.in, %username%!'
+        message: |
+            Hej %username%!
+
+            Danke für deine Registrierung auf criticalmass.in! Bitte rufe die folgende Seite auf, um deine Registrierung zu bestätigen: %confirmationUrl%
+
+            Viele Grüße
+            Malte
+
+resetting:
+    email:
+        subject: 'Du möchtest dein Kennwort zurücksetzen'
+        message: |
+            Hej %username%!
+
+            Du hattest darum gebeten, dein Kennwort bei criticalmass.in zurückzusetzen.
+
+            Rufe dazu bitte die folgende Seite auf: %confirmationUrl%
+
+            Viele Grüße
+            Malte
