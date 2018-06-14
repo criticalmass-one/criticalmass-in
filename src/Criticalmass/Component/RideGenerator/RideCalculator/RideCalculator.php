@@ -19,8 +19,14 @@ class RideCalculator extends AbstractRideCalculator
             throw new InvalidMonthException();
         }
 
+        /** @var CityCycle $cycle */
         foreach ($this->cycleList as $cycle) {
             $ride = $this->createRide($cycle);
+
+            // yeah, first create ride and then check if it is matching the cycle range
+            if (!$cycle->isValid($ride->getDateTime())) {
+                continue;
+            }
 
             $this->rideList[] = $ride;
         }
