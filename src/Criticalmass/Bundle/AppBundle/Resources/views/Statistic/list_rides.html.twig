@@ -76,5 +76,40 @@
                 </table>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pager">
+                    {% if previousDateTime %}
+                        <li class="previous">
+                            <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}">
+                                &larr; Voriger Monat
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="previous disabled">
+                            <a href="#">
+                                &larr; Voriger Monat
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if nextDateTime %}
+                        <li class="next">
+                            <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}">
+                                Nächster Monat &rarr;
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="next disabled">
+                            <a href="#">
+                                Nächster Monat &rarr;
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div>
     </div>
 {% endblock %}
