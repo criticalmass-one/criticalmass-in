@@ -71,15 +71,6 @@ class StatisticController extends AbstractController
         );
     }
 
-    public function listRidesAction(int $year, int $month): Response
-    {
-        $rides = $this->getRideRepository()->findEstimatedRides($year, $month);
-
-        return $this->render('AppBundle:Statistic:list_rides.html.twig', [
-            'rides' => $rides,
-        ]);
-    }
-
     protected function findCitiesWithoutParticipationEstimates(array $rides): array
     {
         $cityList = [];
