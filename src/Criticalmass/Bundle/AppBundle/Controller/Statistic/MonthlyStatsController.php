@@ -9,7 +9,7 @@ class MonthlyStatsController extends AbstractController
 {
     public function listRidesAction(int $year = null, int $month = null): Response
     {
-        if (!$year || $month) {
+        if (!$year || !$month) {
             $dateTime = new \DateTimeImmutable();
 
             $year = (int) $dateTime->format('Y');
