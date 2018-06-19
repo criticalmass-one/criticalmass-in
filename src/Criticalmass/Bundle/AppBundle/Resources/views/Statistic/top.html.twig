@@ -1,0 +1,61 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}Statistiken{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Statistiken
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Statistiken
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Datum
+                            </th>
+
+                            <th>
+                                Stadt
+                            </th>
+
+                            <th>
+                                Teilnehmerzahl
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for ride in rideList %}
+                        <tr>
+                            <td>
+                                {{ ride.dateTime|date('d.m.Y') }}
+                            </td>
+
+                            <td>
+                                {{ ride.city.city }}
+                            </td>
+
+                            <td>
+                                {{ ride.estimatedParticipants }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

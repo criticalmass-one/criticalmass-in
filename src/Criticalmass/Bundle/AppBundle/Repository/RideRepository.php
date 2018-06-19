@@ -750,4 +750,18 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findMostPopularRides(int $limit = 10): array
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        $qb
+            ->addOrderBy('r.estimatedParticipants', 'DESC')
+            ->where($qb->expr()->isNotNull('r.estimatedParticipants'))
+            ->setMaxResults($limit);
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }
