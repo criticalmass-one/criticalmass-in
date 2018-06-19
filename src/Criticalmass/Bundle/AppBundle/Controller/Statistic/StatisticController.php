@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller\Statistic;
 
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Region;

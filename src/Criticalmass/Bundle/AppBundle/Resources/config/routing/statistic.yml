@@ -1,11 +1,11 @@
 caldera_criticalmass_statistic_city:
     path: /{citySlug}/statistic
-    defaults: { _controller: AppBundle:Statistic:citystatistic }
+    defaults: { _controller: AppBundle:Statistic/Statistic:citystatistic }
 
 caldera_criticalmass_statistic_overview:
     path: /statistic
-    defaults: { _controller: AppBundle:Statistic:overview }
+    defaults: { _controller: AppBundle:Statistic/Statistic:overview }
 
 caldera_criticalmass_statistic_ride_month:
     path: /statistic/{year}/{month}
-    defaults: { _controller: AppBundle:Statistic:listRides }
+    defaults: { _controller: AppBundle:Statistic/Statistic:listRides }
