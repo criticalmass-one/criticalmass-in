@@ -59,16 +59,24 @@
                                 {{ ride.dateTime|date('d.m.Y') }}
                             </td>
                             <td>
+                                {% if ride.estimatedParticipants %}
                                 {{ ride.estimatedParticipants }}
+                                {% endif %}
                             </td>
                             <td>
+                                {% if ride.estimatedDistance %}
                                 {{ ride.estimatedDistance }} Kilometer
+                                {% endif %}
                             </td>
                             <td>
-                                {{ ride.getDurationInterval.format('%h:%i') }}&nbsp;Stunden
+                                {% if ride.durationInterval.format('%h:%i') > 0 %}
+                                {{ ride.durationInterval.format('%h:%i') }}&nbsp;Stunden
+                                {% endif %}
                             </td>
                             <td>
-                                {{ ride.getAverageVelocity()|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde
+                                {% if ride.durationInterval and ride.estimatedDistance %}
+                                {{ ride.averageVelocity|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
