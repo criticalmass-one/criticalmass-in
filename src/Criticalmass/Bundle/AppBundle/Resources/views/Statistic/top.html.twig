@@ -1,10 +1,10 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}Statistiken{% endblock %}
+{% block title %}Top-Ten-Statistiken{% endblock %}
 
 {% block breadcrumb %}
     <li class="active">
-        Statistiken
+        Top-Ten-Statistiken
     </li>
 {% endblock %}
 
@@ -13,8 +13,12 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Top-Ten-Listen
+                    Top-Ten-Statistiken
                 </h2>
+
+                <p class="lead">
+                    Hier findest du eine Übersicht der Top-Ten der Touren mit den meisten Teilnehmern, der längsten Strecken und der längsten Dauer.
+                </p>
             </div>
         </div>
 
@@ -67,11 +71,15 @@
                             {% for ride in participationList %}
                                 <tr>
                                     <td>
-                                        {{ ride.dateTime|date('d.m.Y') }}
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y') }}
+                                        </a>
                                     </td>
 
                                     <td>
-                                        {{ ride.city.city }}
+                                        <a href="{{ objectPath(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
                                     </td>
 
                                     <td>
@@ -109,11 +117,15 @@
                             {% for ride in distanceList %}
                                 <tr>
                                     <td>
-                                        {{ ride.dateTime|date('d.m.Y') }}
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y') }}
+                                        </a>
                                     </td>
 
                                     <td>
-                                        {{ ride.city.city }}
+                                        <a href="{{ objectPath(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
                                     </td>
 
                                     <td>
@@ -151,11 +163,15 @@
                             {% for ride in durationList %}
                                 <tr>
                                     <td>
-                                        {{ ride.dateTime|date('d.m.Y') }}
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y') }}
+                                        </a>
                                     </td>
 
                                     <td>
-                                        {{ ride.city.city }}
+                                        <a href="{{ objectPath(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
                                     </td>
 
                                     <td>
@@ -168,6 +184,10 @@
                     </div>
                 </div>
             </div>
+
+            <p>
+                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="{{ path('caldera_criticalmass_help_index') }}">unserer Hilfeseite</a> findest du weitere Informationen.
+            </p>
         </div>
     </div>
 {% endblock %}
