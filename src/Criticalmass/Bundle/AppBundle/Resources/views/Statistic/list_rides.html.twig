@@ -53,10 +53,14 @@
                     {% for ride in rides %}
                         <tr>
                             <td>
-                                {{ ride.city.city }}
+                                <a href="{{ objectPath(ride.city) }}">
+                                    {{ ride.city.city }}
+                                </a>
                             </td>
                             <td>
-                                {{ ride.dateTime|date('d.m.Y') }}
+                                <a href="{{ objectPath(ride) }}">
+                                    {{ ride.dateTime|date('d.m.Y') }}
+                                </a>
                             </td>
                             <td>
                                 {% if ride.estimatedParticipants %}
