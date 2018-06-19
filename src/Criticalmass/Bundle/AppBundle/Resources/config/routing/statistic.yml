@@ -10,6 +10,6 @@ caldera_criticalmass_statistic_ride_month:
     path: /statistic/{year}/{month}
     defaults: { _controller: AppBundle:Statistic/Statistic:listRides }
 
-caldera_criticalmass_statistic_top:
+caldera_criticalmass_statistic_topten:
     path: /statistic/top
     defaults: { _controller: AppBundle:Statistic/TopStats:topStats }
