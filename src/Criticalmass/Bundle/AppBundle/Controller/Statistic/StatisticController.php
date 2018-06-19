@@ -4,7 +4,6 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Statistic;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\FacebookCityProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Region;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\SeoPage\SeoPage;
@@ -17,11 +16,11 @@ class StatisticController extends AbstractController
     /**
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function citystatisticAction(Request $request, SeoPage $seoPage, City $city): Response
+    public function citystatisticAction(SeoPage $seoPage, City $city): Response
     {
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
-        $seoPage->setDescription('Critical-Mass-Statistiken aus ' . $city->getCity() . ': Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
+        $seoPage->setDescription(sprintf('Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren', $city->getCity()));
 
         return $this->render('AppBundle:Statistic:city_statistic.html.twig', [
             'city' => $city,
@@ -29,24 +28,9 @@ class StatisticController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
-     */
-    public function ridestatisticAction(Ride $ride): Response
+    public function overviewAction(SeoPage $seoPage): Response
     {
-        $frp = $this->getFacebookRidePropertiesRepository()->findByRide($ride);
-
-        return $this->render('AppBundle:Statistic:ride_statistic.html.twig', [
-            'ride' => $ride,
-            'frp' => $frp
-        ]);
-    }
-
-    public function overviewAction(Request $request, SeoPage $seoPage)
-    {
-        /**
-         * @var Region $region
-         */
+        /** @var Region $region */
         $region = $this->getRegionRepository()->find(3);
 
         $endDateTime = new \DateTime();
@@ -87,25 +71,20 @@ class StatisticController extends AbstractController
         );
     }
 
-    public function listRidesAction(Request $request, int $year, int $month): Response
+    public function listRidesAction(int $year, int $month): Response
     {
         $rides = $this->getRideRepository()->findEstimatedRides($year, $month);
 
-        return $this->render(
-            'AppBundle:Statistic:list_rides.html.twig',
-            [
-                'rides' => $rides,
-            ]
-        );
+        return $this->render('AppBundle:Statistic:list_rides.html.twig', [
+            'rides' => $rides,
+        ]);
     }
 
-    protected function findCitiesWithoutParticipationEstimates(array $rides)
+    protected function findCitiesWithoutParticipationEstimates(array $rides): array
     {
         $cityList = [];
 
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             if (!$ride->getEstimatedParticipants()) {
                 $citySlug = $ride->getCity()->getSlug();
@@ -121,7 +100,7 @@ class StatisticController extends AbstractController
         return $cityList;
     }
 
-    protected function filterRideList(array $rides, array $cities)
+    protected function filterRideList(array $rides, array $cities): array
     {
         $resultList = [];
 
