@@ -764,4 +764,32 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findLongestDistanceRides(int $limit = 10): array
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        $qb
+            ->addOrderBy('r.estimatedDistance', 'DESC')
+            ->where($qb->expr()->isNotNull('r.estimatedDistance'))
+            ->setMaxResults($limit);
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findLongestDurationRides(int $limit = 10): array
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        $qb
+            ->addOrderBy('r.estimatedDuration', 'DESC')
+            ->where($qb->expr()->isNotNull('r.estimatedDuration'))
+            ->setMaxResults($limit);
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

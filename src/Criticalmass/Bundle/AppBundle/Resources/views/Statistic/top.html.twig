@@ -12,49 +12,161 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>
-                    Statistiken
-                </h1>
+                <h2>
+                    Top-Ten-Listen
+                </h2>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Datum
-                            </th>
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#participants" aria-controls="home" role="tab" data-toggle="tab">
+                        <i class="fa fa-group"></i>
+                        Teilnehmer
+                    </a>
+                </li>
 
-                            <th>
-                                Stadt
-                            </th>
+                <li role="presentation">
+                    <a href="#distance" aria-controls="home" role="tab" data-toggle="tab">
+                        <i class="fa fa-map"></i>
+                        Strecke
+                    </a>
+                </li>
 
-                            <th>
-                                Teilnehmerzahl
-                            </th>
-                        </tr>
-                    </thead>
+                <li role="presentation">
+                    <a href="#duration" aria-controls="home" role="tab" data-toggle="tab">
+                        <i class="fa fa-clock-o"></i>
+                        Länge
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="participants">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
 
-                    <tbody>
-                        {% for ride in rideList %}
-                        <tr>
-                            <td>
-                                {{ ride.dateTime|date('d.m.Y') }}
-                            </td>
+                                <th>
+                                    Stadt
+                                </th>
 
-                            <td>
-                                {{ ride.city.city }}
-                            </td>
+                                <th>
+                                    Teilnehmerzahl
+                                </th>
+                            </tr>
+                            </thead>
 
-                            <td>
-                                {{ ride.estimatedParticipants }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                            <tbody>
+                            {% for ride in participationList %}
+                                <tr>
+                                    <td>
+                                        {{ ride.dateTime|date('d.m.Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ ride.city.city }}
+                                    </td>
+
+                                    <td>
+                                        {{ ride.estimatedParticipants }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="distance">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
+
+                                <th>
+                                    Stadt
+                                </th>
+
+                                <th>
+                                    Streckenlänge
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for ride in distanceList %}
+                                <tr>
+                                    <td>
+                                        {{ ride.dateTime|date('d.m.Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ ride.city.city }}
+                                    </td>
+
+                                    <td>
+                                        {{ ride.estimatedDistance|round(2) }} Kilometer
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="duration">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
+
+                                <th>
+                                    Stadt
+                                </th>
+
+                                <th>
+                                    Dauer
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for ride in durationList %}
+                                <tr>
+                                    <td>
+                                        {{ ride.dateTime|date('d.m.Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ ride.city.city }}
+                                    </td>
+
+                                    <td>
+                                        {{ ride.estimatedDuration|round(2) }} Stunden
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
