@@ -5,7 +5,7 @@
 {% block breadcrumb %}
     <li>
         <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: dateTime|date('Y'), month: dateTime|date('m') }) }}">
-            CCritical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
+            Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
         </a>
     </li>
 {% endblock %}
@@ -79,6 +79,14 @@
 
         <div class="row">
             <div class="col-md-12">
+                <p>
+                    Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="{{ path('caldera_criticalmass_help_index') }}">unserer Hilfeseite</a> findest du weitere Informationen.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <ul class="pager">
                     {% if previousDateTime %}
                         <li class="previous">
@@ -108,7 +116,6 @@
                         </li>
                     {% endif %}
                 </ul>
-
             </div>
         </div>
     </div>

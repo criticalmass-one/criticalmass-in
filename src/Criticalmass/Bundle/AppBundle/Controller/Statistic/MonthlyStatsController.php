@@ -9,6 +9,8 @@ class MonthlyStatsController extends AbstractController
 {
     public function listRidesAction(int $year = null, int $month = null): Response
     {
+        $now = new \DateTime();
+
         if (!$year || !$month) {
             $dateTime = new \DateTimeImmutable();
 
@@ -27,7 +29,7 @@ class MonthlyStatsController extends AbstractController
             'rides' => $rides,
             'dateTime' => $dateTime,
             'previousDateTime' => $dateTime->sub($month),
-            'nextDateTime' => $dateTime->add($month),
+            'nextDateTime' => $dateTime->add($month) <= $now ? $dateTime->add($month) : null,
         ]);
     }
 }
