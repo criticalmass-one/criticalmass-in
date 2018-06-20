@@ -5,11 +5,11 @@ namespace Criticalmass\Bundle\AppBundle\Command\Statistic;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CalculateRideEstimatesCommand extends Command
+class CalculateRideEstimatesCommand extends ContainerAwareCommand
 {
     /** @var RegistryInterface $registry */
     protected $registry;
