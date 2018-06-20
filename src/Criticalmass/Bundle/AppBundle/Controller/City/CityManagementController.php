@@ -23,7 +23,7 @@ class CityManagementController extends AbstractController
      */
     public function addAction(
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
         string $slug1 = null,
         string $slug2 = null,
@@ -115,7 +115,7 @@ class CityManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function editAction(Request $request, UserInterface $user, City $city): Response
+    public function editAction(Request $request, UserInterface $user = null, City $city): Response
     {
         $form = $this->createForm(StandardCityType::class, $city, [
             'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
