@@ -2,45 +2,36 @@
 
 namespace Criticalmass\Bundle\AppBundle\Command\Statistic;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CalculateRideEstimatesCommand extends ContainerAwareCommand
+class ImportRideEstimatesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var RideEstimateService $rideEstimateService */
-    protected $rideEstimateService;
-
-    public function __construct(?string $name = null, RideEstimateService $rideEstimateService, RegistryInterface $registry)
-    {
-        $this->registry = $registry;
-        $this->rideEstimateService = $rideEstimateService;
-
-        parent::__construct($name);
-    }
-
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:rideestimate:recalculate')
+            ->setName('criticalmass:rideestimate:import')
             ->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $rides = $this->registry->getRepository(Ride::class)->findEstimatedRides();
+        $importLines = $this->readFromStdin();
 
-        /** @var Ride $ride */
-        foreach ($rides as $ride) {
-            $output->writeln(sprintf('%s: %s', $ride->getCity()->getCity(), $ride->getFormattedDate()));
+        var_dump($importLines);
+    }
 
-            $this->rideEstimateService->flushEstimates($ride)->calculateEstimates($ride);
+    protected function readFromStdin(): array
+    {
+        $lines = [];
+
+        if (0 === ftell(STDIN)) {
+            while (!feof(STDIN)) {
+                $lines[] = fread(STDIN, 1024);
+            }
         }
+
+        return $lines;
     }
 }
