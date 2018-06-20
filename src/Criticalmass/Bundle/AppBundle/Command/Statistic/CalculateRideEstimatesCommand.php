@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command\Statistic;
 
 use Criticalmass\Bundle\AppBundle\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
