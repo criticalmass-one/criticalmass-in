@@ -5,7 +5,7 @@ namespace Criticalmass\Component\Facebook\Api;
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
 
-abstract class FacebookApi
+class FacebookApi
 {
     /** @var Facebook $facebook */
     protected $facebook;
@@ -27,19 +27,17 @@ abstract class FacebookApi
         string $facebookAppSecret,
         string $facebookDefaultToken
     ): FacebookApi {
-        $this->facebook = new Facebook(
-            [
-                'app_id' => $facebookAppId,
-                'app_secret' => $facebookAppSecret,
-                'default_graph_version' => 'v2.11',
-                'default_access_token' => $facebookDefaultToken,
-            ]
-        );
+        $this->facebook = new Facebook([
+            'app_id' => $facebookAppId,
+            'app_secret' => $facebookAppSecret,
+            'default_graph_version' => 'v2.11',
+            'default_access_token' => $facebookDefaultToken,
+        ]);
 
         return $this;
     }
 
-    protected function query(string $endpoint): FacebookResponse
+    public function query(string $endpoint): FacebookResponse
     {
         return $this->facebook->get($endpoint);
     }

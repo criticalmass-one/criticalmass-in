@@ -34,21 +34,6 @@ class StandardCityType extends AbstractType
                     'required' => false
                 ]
             )
-            ->add('url',
-                TextType::class, [
-                    'required' => false
-                ]
-            )
-            ->add('facebook',
-                TextType::class, [
-                    'required' => false
-                ]
-            )
-            ->add('twitter',
-                TextType::class, [
-                    'required' => false
-                ]
-            )
             ->add('longitude',
                 HiddenType::class
             )

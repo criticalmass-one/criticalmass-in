@@ -10,6 +10,7 @@ use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id
@@ -187,6 +188,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $photos;
 
     /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -277,6 +283,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->posts = new ArrayCollection();
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -475,6 +482,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimatedParticipants;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook = null): Ride
     {
         $this->facebook = $facebook;
@@ -482,11 +492,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter = null): Ride
     {
         $this->twitter = $twitter;
@@ -494,11 +510,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url = null): Ride
     {
         $this->url = $url;
@@ -506,6 +528,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
@@ -905,5 +930,31 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): Ride
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
+
+        return $this;
     }
 }

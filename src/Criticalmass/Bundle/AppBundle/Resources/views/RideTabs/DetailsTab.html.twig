@@ -21,6 +21,12 @@
                         </li>
 
                         <li>
+                            <a href="{{ path('criticalmass_socialnetwork_ride_list', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">
+                                soziale Netzwerke verwalten
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ path('caldera_criticalmass_ride_socialpreview', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
                                 Vorschau für soziale Netzwerke
                             </a>
