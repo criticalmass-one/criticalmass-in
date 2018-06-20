@@ -13,8 +13,8 @@ class SearchController extends AbstractController
 {
     protected function createQuery(
         $queryPhrase,
-        \Elastica\Filter\AbstractFilter $cityFilter,
-        \Elastica\Filter\AbstractFilter $countryFilter
+        \Elastica\Query\AbstractQuery $cityFilter,
+        \Elastica\Query\AbstractQuery $countryFilter
     ) {
         if ($queryPhrase) {
             $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
@@ -23,11 +23,13 @@ class SearchController extends AbstractController
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
 
-        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
+        $enabledFilter = new \Elastica\Query\Term(['isEnabled' => true]);
 
-        $filter = new \Elastica\Filter\BoolAnd([$enabledFilter, $cityFilter, $countryFilter]);
+        $filter = new \Elastica\Query\BoolQuery();
+        $filter->addFilter($enabledFilter)->addFilter($cityFilter)->addFilter($countryFilter);
 
-        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
+        $filteredQuery = new \Elastica\Query\BoolQuery();
+        $filteredQuery->addFilter($simpleQueryString)->addFilter($filter);
 
         $query = new \Elastica\Query($filteredQuery);
 
@@ -67,10 +69,10 @@ class SearchController extends AbstractController
         $filters = [];
 
         foreach ($cities as $city) {
-            $filters[] = new \Elastica\Filter\Term(['city' => $city]);
+            $filters[] = new \Elastica\Query\Term(['city' => $city]);
         }
 
-        return new \Elastica\Filter\BoolOr($filters);
+        return new \Elastica\Query\BoolOr($filters);
     }
 
     protected function createCountryFilter(array $countries = [])
@@ -78,10 +80,10 @@ class SearchController extends AbstractController
         $filters = [];
 
         foreach ($countries as $country) {
-            $filters[] = new \Elastica\Filter\Term(['country' => $country]);
+            $filters[] = new \Elastica\Query\Term(['country' => $country]);
         }
 
-        return new \Elastica\Filter\BoolOr($filters);
+        return new \Elastica\Query\BoolOr($filters);
     }
 
     public function queryAction(Request $request, IndexManager $manager)
@@ -93,13 +95,13 @@ class SearchController extends AbstractController
         if ($cities) {
             $cityFilter = $this->createCityFilter($cities);
         } else {
-            $cityFilter = new \Elastica\Filter\MatchAll();
+            $cityFilter = new \Elastica\Query\MatchAll();
         }
 
         if ($countries) {
             $countryFilter = $this->createCountryFilter($countries);
         } else {
-            $countryFilter = new \Elastica\Filter\MatchAll();
+            $countryFilter = new \Elastica\Query\MatchAll();
         }
 
         $query = $this->createQuery($queryPhrase, $cityFilter, $countryFilter);
