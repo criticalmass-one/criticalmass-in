@@ -18,8 +18,18 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
     /** @var array $rideList */
     protected $rideList;
 
+    /** @var \DateTimeZone $timezone */
+    protected $timezone = null;
+
     public function __construct()
     {
+    }
+
+    public function setTimezone(\DateTimeZone $timezone): RideCalculatorInterface
+    {
+        $this->timezone = $timezone;
+
+        return $this;
     }
 
     public function setYear(int $year): RideCalculatorInterface
