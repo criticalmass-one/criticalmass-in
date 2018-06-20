@@ -23,7 +23,7 @@ class ParticipationRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function countParticipationsForRide(Ride $ride, $status)
+    public function countParticipationsForRide(Ride $ride, $status): int
     {
         $builder = $this->createQueryBuilder('participation');
 

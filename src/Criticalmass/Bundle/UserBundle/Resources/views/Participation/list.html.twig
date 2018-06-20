@@ -18,55 +18,78 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h2>
-                    Deine Touren
-                </h2>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a href="#table" aria-controls="profile" role="tab" data-toggle="tab">
+                            Übersicht
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#goingYes" aria-controls="profile" role="tab" data-toggle="tab">
+                            Teilgenommen <span class="badge">
+                                {{ participationYesList|length }}
+                            </span>
+                        </a>
+                    </li>
 
-                <p class="lead">
-                    An diesen Critical-Mass-Touren hast du bislang teilgenommen.
-                </p>
-            </div>
-        </div>
+                    <li role="presentation">
+                        <a href="#goingMaybe" aria-controls="profile" role="tab" data-toggle="tab">
+                            Unentschieden <span class="badge">
+                                {{ participationMaybeList|length }}
+                            </span>
+                        </a>
+                    </li>
 
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Tour
-                        </th>
+                    <li role="presentation">
+                        <a href="#goingNo" aria-controls="profile" role="tab" data-toggle="tab">
+                            Abgesagt <span class="badge">
+                                {{ participationNoList|length }}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
 
-                        <th>
-                            Stadt
-                        </th>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="table">
+                        {{ include('UserBundle:Participation:_table.html.twig') }}
+                    </div>
 
-                        <th>
-                            Datum
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for participation in participationList %}
-                        <tr>
-                            <td>
-                                <a href="{{ objectPath(participation.ride) }}">
-                                    {{ participation.ride.fancyTitle }}
-                                </a>
-                            </td>
+                    <div role="tabpanel" class="tab-pane" id="goingYes">
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                <p>
+                                    Hier siehst du eine Liste von Critical-Mass-Touren, zu denen du deine Teilnahme bestätigt hast. Du kannst deine Teilnahme nachträglich zurückziehen oder den Eintrag aus unserer Datenbank löschen.
+                                </p>
+                            </div>
+                        </div>
 
-                            <td>
-                                <a href="{{ objectPath(participation.ride.city) }}">
-                                    {{ participation.ride.city.city }}
-                                </a>
-                            </td>
-                            <td>
-                                {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        {% include 'UserBundle:Participation:_list.html.twig' with { 'participationList': participationYesList } only %}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="goingMaybe">
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                <p>
+                                    Bei diesen Touren hast du bislang nicht angegeben, ob du teilgenommen hast oder nicht. Du kannst deine Teilnahme nachträglich bestätigen, zurückziehen oder den Datensatz aus unserer Datenbank löschen.
+                                </p>
+                            </div>
+                        </div>
+
+                        {% include 'UserBundle:Participation:_list.html.twig' with { 'participationList': participationMaybeList } only %}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="goingNo">
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
+                                <p>
+                                    Hier siehst du eine Liste von Critical-Mass-Touren, zu deren Teilnahme du abgesagt hast. Du kannst deine Teilnahme nachträglich bestätigen oder den Eintrag aus unserer Datenbank löschen.
+                                </p>
+                            </div>
+                        </div>
+
+                        {% include 'UserBundle:Participation:_list.html.twig' with { 'participationList': participationNoList } only %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

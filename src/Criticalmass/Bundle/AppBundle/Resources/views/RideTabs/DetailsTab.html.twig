@@ -53,16 +53,6 @@
                 </div>
             </div>
 
-            {% if 'Hamburg' in ride.city.city %}
-                <div class="row">
-                    <div class="col-md-12" id="fahrradstadthamburg-container">
-                        <script>
-                            CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
-                        </script>
-                    </div>
-                </div>
-            {% endif %}
-
             <div class="row">
                 <div class="col-md-12">
                     {% include 'AppBundle:Ride:Includes/_participationNumbers.html.twig' with { 'ride': ride } %}

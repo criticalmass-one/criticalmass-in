@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace Criticalmass\Bundle\AppBundle\Command\Cycles;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StandardRideCommand extends Command
+class GenerateRidesCommand extends Command
 {
     /** @var RideGeneratorInterface $rideGenerator */
     protected $rideGenerator;
@@ -29,10 +29,10 @@ class StandardRideCommand extends Command
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('criticalmass:cycles:create')
+            ->setName('criticalmass:cycles:generate-rides')
             ->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'year',
@@ -43,6 +43,11 @@ class StandardRideCommand extends Command
                 'month',
                 InputArgument::REQUIRED,
                 'Month of the rides to create'
+            )
+            ->addArgument(
+                'cities',
+                InputArgument::IS_ARRAY,
+                'List of cities'
             )
             ->addOption(
                 'save',
@@ -55,19 +60,19 @@ class StandardRideCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var int $year */
-        $year = $input->getArgument('year');
+        $year = (int) $input->getArgument('year');
 
         /** @var int $month */
-        $month = $input->getArgument('month');
+        $month = (int) $input->getArgument('month');
 
         $manager = $this->registry->getManager();
 
-        $cities = $this->registry->getRepository(City::class)->findCities();
+        $cityList = $this->getCityList($input);
 
         $this->rideGenerator
             ->setMonth($month)
             ->setYear($year)
-            ->setCityList($cities)
+            ->setCityList($cityList)
             ->execute();
 
         $table = new Table($output);
@@ -96,5 +101,16 @@ class StandardRideCommand extends Command
         } else {
             $output->writeln('Did not save any of these rides, run with --save to persist.');
         }
+    }
+
+    protected function getCityList(InputInterface $input): array
+    {
+        $citySlugList = $input->getArgument('cities');
+
+        if (count($citySlugList) === 0) {
+            return $this->registry->getRepository(City::class)->findCities();
+        }
+
+        return $this->registry->getRepository(City::class)->findCitiesBySlugList($citySlugList);
     }
 }

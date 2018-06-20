@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Component\RideGenerator\RideGenerator;
 
@@ -11,10 +11,6 @@ class RideGenerator extends AbstractRideGenerator
 {
     public function execute(): RideGeneratorInterface
     {
-        if (!count($this->cityList)) {
-            $this->cityList = $this->findCities();
-        }
-
         foreach ($this->cityList as $city) {
             $cycles = $this->findCyclesForCity($city);
 
@@ -24,11 +20,6 @@ class RideGenerator extends AbstractRideGenerator
         }
 
         return $this;
-    }
-
-    protected function findCities(): array
-    {
-        return $this->doctrine->getRepository(City::class)->findCities();
     }
 
     protected function findCyclesForCity(City $city): array

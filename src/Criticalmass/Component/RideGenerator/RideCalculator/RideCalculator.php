@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Component\RideGenerator\RideCalculator;
 
@@ -19,8 +19,14 @@ class RideCalculator extends AbstractRideCalculator
             throw new InvalidMonthException();
         }
 
+        /** @var CityCycle $cycle */
         foreach ($this->cycleList as $cycle) {
             $ride = $this->createRide($cycle);
+
+            // yeah, first create ride and then check if it is matching the cycle range
+            if (!$cycle->isValid($ride->getDateTime())) {
+                continue;
+            }
 
             $this->rideList[] = $ride;
         }
@@ -80,7 +86,8 @@ class RideCalculator extends AbstractRideCalculator
     {
         $time = $cityCycle->getTime();
 
-        $timezone = new \DateTimeZone($cityCycle->getCity()->getTimezone());
+        $timezone = $this->timezone ?? $this->getCityTimeZone($cityCycle);
+
         $time->setTimezone($timezone);
 
         $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));
@@ -95,6 +102,17 @@ class RideCalculator extends AbstractRideCalculator
             ->setHasTime(true);
 
         return $ride;
+    }
+
+    protected function getCityTimeZone(CityCycle $cityCycle): \DateTimeZone
+    {
+        if ($timezoneSpec = $cityCycle->getCity()->getTimezone()) {
+            $timezone = new \DateTimeZone($timezoneSpec);
+        } else {
+            $timezone = new \DateTimeZone('Europe/Berlin');
+        }
+
+        return $timezone;
     }
 
     protected function setupLocation(CityCycle $cityCycle, Ride $ride): Ride

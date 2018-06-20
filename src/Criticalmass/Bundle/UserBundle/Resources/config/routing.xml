@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="criticalmass_user_usermanagement" path="/profile">
+    <route id="criticalmass_user_usermanagement" path="/profile/">
         <default key="_controller">UserBundle:ProfileManagement:manage</default>
     </route>
 
@@ -18,6 +18,14 @@
 
     <route id="criticalmass_user_participation_list" path="/profile/participation/list">
         <default key="_controller">UserBundle:Participation:list</default>
+    </route>
+
+    <route id="criticalmass_user_participation_update" path="/profile/participation/{participationId}/update">
+        <default key="_controller">UserBundle:Participation:update</default>
+    </route>
+
+    <route id="criticalmass_user_participation_delete" path="/profile/participation/{participationId}/delete">
+        <default key="_controller">UserBundle:Participation:delete</default>
     </route>
 
     <route id="criticalmass_user_profile_photo" path="/profile/profilephoto">

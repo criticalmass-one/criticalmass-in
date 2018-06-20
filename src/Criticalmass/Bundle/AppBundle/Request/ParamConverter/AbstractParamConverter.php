@@ -12,7 +12,7 @@ abstract class AbstractParamConverter implements ParamConverterInterface
     /** @var Registry $registry */
     protected $registry;
 
-    protected function __construct(Registry $registry)
+    public function __construct(Registry $registry)
     {
         $this->registry = $registry;
     }

@@ -91,6 +91,11 @@ class CityCycle
     protected $updatedAt;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $disabledAt;
+
+    /**
      * @ORM\Column(type="date", nullable=true)
      */
     protected $validFrom;
@@ -231,6 +236,18 @@ class CityCycle
         return $this->updatedAt;
     }
 
+    public function setDisabledAt(\DateTime $disabledAt = null): CityCycle
+    {
+        $this->disabledAt = $disabledAt;
+
+        return $this;
+    }
+
+    public function getDisabledAt(): ?\DateTime
+    {
+        return $this->disabledAt;
+    }
+
     public function setValidFrom(\DateTime $validFrom = null): CityCycle
     {
         $this->validFrom = $validFrom;
@@ -258,6 +275,17 @@ class CityCycle
     public function hasRange(): bool
     {
         return ($this->validFrom && $this->validUntil);
+    }
+
+    public function isValid(\DateTime $dateTime = null): bool
+    {
+        if (!$dateTime) {
+            $dateTime = new \DateTime();
+        }
+
+        return $this->validFrom <= $dateTime && $this->validUntil >= $dateTime ||
+            $this->validFrom <= $dateTime && $this->validUntil === null ||
+            $this->validFrom === null && $this->validUntil >= $dateTime;
     }
 
     public function addRide(Ride $ride): CityCycle
