@@ -9,8 +9,11 @@ use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 
 class ImportRideEstimatesCommand extends Command
 {
@@ -30,11 +33,16 @@ class ImportRideEstimatesCommand extends Command
     {
         $this
             ->setName('criticalmass:rideestimate:import')
-            ->setDescription('');
+            ->setDescription('')
+            ->addArgument('year', InputArgument::REQUIRED)
+            ->addArgument('month', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        $dateTimeSpec = sprintf('%d-%d-01', $input->getArgument('year'), $input->getArgument('month'));
+        $dateTime = new \DateTime($dateTimeSpec);
+
         $this->citySlugs = $this->registry->getRepository(CitySlug::class)->findAllIndexed();
 
         $importLines = $this->readFromStdin();
@@ -42,7 +50,9 @@ class ImportRideEstimatesCommand extends Command
         $estimateList = [];
 
         foreach ($importLines as $line) {
-            $estimateList[] = $this->parse($line);
+            if ($estimation = $this->parse($line, $dateTime, $input, $output)) {
+                $estimateList[] = $estimation;
+            }
         }
 
         $table = new Table($output);
@@ -62,6 +72,19 @@ class ImportRideEstimatesCommand extends Command
         }
 
         $table->render();
+
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Save estimations?');
+
+        $persist = $helper->ask($input, $output, $question);
+
+        if ($persist) {
+            foreach ($estimateList as $estimation) {
+                $this->registry->getManager()->persist($estimation);
+            }
+
+            $this->registry->getManager()->flush();
+        }
     }
 
     protected function readFromStdin(): array
@@ -69,29 +92,51 @@ class ImportRideEstimatesCommand extends Command
         $lines = [];
 
         if (0 === ftell(STDIN)) {
-            while (!feof(STDIN)) {
-                $lines[] = fread(STDIN, 1024);
+            while ($line = fgets(STDIN)) {
+                $line = preg_replace( "/\r|\n/", "", $line);
+
+                $lines[] = $line;
             }
         }
+
+        fclose(STDIN);
 
         return $lines;
     }
 
-    protected function parse(string $line): ?RideEstimate
+    protected function parse(string $line, \DateTime $dateTime, InputInterface $input, OutputInterface $output): ?RideEstimate
     {
-        $pattern = '/([\sA-Za-z]+)(?:[\s-:]+)([0-9.]+)/';
+        $pattern = '/([\sA-Za-z-.]+[a-z])(?:[\s-–—:]+)([0-9.]+)/';
         preg_match($pattern, $line, $matches);
 
         if (3 === count($matches)) {
             $citySlug = trim(strtolower($matches[1]));
             $participants = intval(str_replace('.', '', $matches[2]));
 
-            if ($ride = $this->findRide($citySlug)) {
+            $ride = $this->findRide($citySlug, $dateTime);
+
+            while (!$ride) {
+                $question = new Question(sprintf('No ride found for city "%s", please provide a city slug or press enter to skip: ', $citySlug));
+
+                $citySlug = $this->getHelper('question')->ask($input, $output, $question);
+
+                if (!$citySlug) {
+                    break;
+                }
+
+                $ride = $this->findRide($citySlug, $dateTime);
+            }
+
+            if ($ride) {
                 $estimate = new RideEstimate();
 
                 $estimate
                     ->setEstimatedParticipants($participants)
                     ->setRide($ride);
+
+                if ($this->estimateExists($estimate)) {
+                    return null;
+                }
 
                 return $estimate;
             }
@@ -109,10 +154,8 @@ class ImportRideEstimatesCommand extends Command
         return null;
     }
 
-    protected function findRide(string $citySlug): ?Ride
+    protected function findRide(string $citySlug, \DateTime $dateTime): ?Ride
     {
-        $dateTime = new \DateTime('2016-05-20');
-
         if ($city = $this->findCityBySlug($citySlug)) {
             $rides = $this->registry->getRepository(Ride::class)->findByCityAndMonth($city, $dateTime);
 
@@ -122,5 +165,10 @@ class ImportRideEstimatesCommand extends Command
         }
 
         return null;
+    }
+
+    protected function estimateExists(RideEstimate $estimate): bool
+    {
+        return null !== $this->registry->getRepository(RideEstimate::class)->findByRideAndParticipants($estimate->getRide(), $estimate->getEstimatedParticipants());
     }
 }
