@@ -4,6 +4,7 @@ namespace Criticalmass\Component\Facebook\Bridge;
 
 use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Component\Facebook\Api\FacebookEventApi;
 use Criticalmass\Component\Util\DateTimeUtil;
 use Facebook\GraphNodes\GraphEdge;
@@ -75,7 +76,7 @@ class RideBridge extends AbstractBridge
 
     public function getEventForRide(Ride $ride): ?GraphEvent
     {
-        if ($ride->getFacebook()) {
+        if ($this->hasFacebookEvent($ride)) {
             $eventId = $this->getRideEventId($ride);
 
             $event = $this->facebookEventApi->queryEvent($eventId);
@@ -130,5 +131,17 @@ class RideBridge extends AbstractBridge
     protected function getCityPageIdByRide(Ride $ride): ?string
     {
         return $this->getCityPageId($ride->getCity());
+    }
+
+    protected function hasFacebookEvent(Ride $ride): bool
+    {
+        /** @var SocialNetworkProfile $socialNetworkProfile */
+        foreach ($ride->getSocialNetworkProfiles() as $socialNetworkProfile) {
+            if ($socialNetworkProfile->getNetwork() === 'facebook_event') {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

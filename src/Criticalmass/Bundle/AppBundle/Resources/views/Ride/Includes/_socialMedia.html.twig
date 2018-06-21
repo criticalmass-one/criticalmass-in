@@ -1,34 +1,18 @@
-{% set hasSocialMedia = ride.url or ride.facebook or ride.twitter %}
-
-{% if hasSocialMedia %}
+{% if ride.socialNetworkProfiles|length > 0 %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Soziale Netze</h3>
         </div>
-        <div class="panel-body">
-            <div class="text-center">
-                <div class="btn-group-vertical" role="group" aria-label="...">
-                    {% if ride.url %}
-                        <a class="btn btn-default" href="{{ ride.url }}">
-                            <i class="fa fa-home"></i>
-                            {{ hostname(ride.url) }}
-                        </a>
-                    {% endif %}
+        <div class="panel-body text-center">
+            <div class="btn-group-vertical">
+                {% for profile in ride.socialNetworkProfiles %}
+                    {% set network = getNetwork(profile.network) %}
 
-                    {% if ride.facebook %}
-                        <a class="btn btn-default" href="{{ ride.facebook }}">
-                            <i class="fa fa-facebook"></i>
-                            {{ facebookIdentifier(ride.facebook) }}
-                        </a>
-                    {% endif %}
-
-                    {% if ride.twitter %}
-                        <a class="btn btn-default" href="{{ ride.twitter }}">
-                            <i class="fa fa-twitter"></i>
-                            {{ twitterUsername(ride.twitter) }}
-                        </a>
-                    {% endif %}
-                </div>
+                    <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                        <i class="fa {{ network.icon }}"></i>
+                        {{ network.name }}
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </div>

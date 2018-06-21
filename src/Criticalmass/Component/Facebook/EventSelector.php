@@ -3,7 +3,9 @@
 namespace Criticalmass\Component\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 use Criticalmass\Component\Facebook\Bridge\RideBridge;
+use Criticalmass\Component\SocialNetwork\Network\FacebookEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Facebook\GraphNodes\GraphEvent;
 
@@ -26,11 +28,11 @@ class EventSelector
 
     public function autoselect(): EventSelector
     {
-        $rides = $this->doctrine->getRepository(Ride::class)->findFutureRides();
+        $rides = $this->doctrine->getRepository(Ride::class)->findRecentRides(2018, 4);
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            if (!$ride->getFacebook()) {
+            if (!$this->hasFacebookEvent($ride)) {
                 /** @var GraphEvent $event */
                 $event = $this->rideBridge->getEventForRide($ride);
 
@@ -54,5 +56,32 @@ class EventSelector
     public function getAssignedRides(): array
     {
         return $this->assignedRides;
+    }
+
+    protected function hasFacebookEvent(Ride $ride): bool
+    {
+        /** @var SocialNetworkProfile $socialNetworkProfile */
+        foreach ($ride->getSocialNetworkProfiles() as $socialNetworkProfile) {
+            if ($socialNetworkProfile->getNetwork() === 'facebook_event') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function createEventProfile(Ride $ride, GraphEvent $event): SocialNetworkProfile
+    {
+        $eventId = $event->getId();
+        $link = sprintf('https://www.facebook.com/events/%s', $eventId);
+
+        $profile = new SocialNetworkProfile();
+
+        $profile
+            ->setRide($ride)
+            ->setNetwork('facebook_event')
+            ->setIdentifier($link);
+
+        return $profile;
     }
 }

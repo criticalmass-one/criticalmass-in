@@ -80,11 +80,13 @@ class RideRepository extends EntityRepository
 
         $builder->select('ride');
 
-        $builder->where($builder->expr()->gte('ride.estimatedParticipants', $minParticipants));
+        if ($minParticipants) {
+            $builder->where($builder->expr()->gte('ride.estimatedParticipants', $minParticipants));
+        }
 
         if ($month && $year) {
             $builder->andWhere($builder->expr()->eq('MONTH(ride.dateTime)', $month));
-            $builder->andWhere($builder->expr()->eq('YEAR(ride.dateTime)', $month));
+            $builder->andWhere($builder->expr()->eq('YEAR(ride.dateTime)', $year));
         }
 
         $builder->addOrderBy('ride.dateTime', 'DESC');

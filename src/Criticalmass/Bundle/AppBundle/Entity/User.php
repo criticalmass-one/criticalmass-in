@@ -2,6 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser
+class User extends BaseUser implements SocialNetworkProfileAble
 {
     /**
      * @ORM\Id

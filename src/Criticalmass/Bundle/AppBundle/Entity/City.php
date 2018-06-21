@@ -11,6 +11,7 @@ use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
+use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,7 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, PostableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface
 {
     /**
      * @ORM\Id
@@ -151,6 +152,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $cycles;
 
     /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="city", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
      * @JMS\Expose
@@ -259,6 +265,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->posts = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->cycles = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
 
         $this->createdAt = new \DateTime();
     }
@@ -355,6 +362,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->title;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url): City
     {
         $this->url = $url;
@@ -362,11 +372,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook): City
     {
         $this->facebook = $facebook;
@@ -374,11 +390,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter): City
     {
         $this->twitter = $twitter;
@@ -386,6 +408,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
@@ -820,6 +845,32 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function removeCycle(CityCycle $cityCycle): City
     {
         $this->cycles->removeElement($cityCycle);
+
+        return $this;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): City
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): City
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): City
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
     }

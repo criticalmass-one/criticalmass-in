@@ -32,8 +32,15 @@
 
             <li>
                 <a href="{{ path('caldera_criticalmass_citycycle_list', { citySlug: city.getMainSlugString() } ) }}">
-                    <i class="fa Example of calendar-o fa-calendar-o"></i>
-                    Turnus
+                    <i class="fa fa-calendar-o"></i>
+                    Turnus verwalten
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('criticalmass_socialnetwork_city_list', { citySlug: city.getMainSlugString() } ) }}">
+                    <i class="fa fa-at"></i>
+                    soziale Netzwerke verwalten
                 </a>
             </li>
         </ul>

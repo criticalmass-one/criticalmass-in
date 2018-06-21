@@ -42,15 +42,6 @@ class SiteTwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
-            new \Twig_SimpleFunction('twitterUsername', [$this, 'twitterUsername'], array(
-                'is_safe' => array('html')
-            )),
-            new \Twig_SimpleFunction('facebookIdentifier', [$this, 'facebookIdentifier'], array(
-                'is_safe' => array('html')
-            )),
-            new \Twig_SimpleFunction('hostname', [$this, 'hostname'], array(
-                'is_safe' => array('html')
-            )),
             new \Twig_SimpleFunction('today', [$this, 'today'], array(
                 'is_safe' => array('html')
             )),
@@ -81,41 +72,6 @@ class SiteTwigExtension extends \Twig_Extension
         $today = new \DateTime();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
-    }
-
-    public function twitterUsername($twitterUrl)
-    {
-        $parsedParts = parse_url($twitterUrl);
-
-        $username = $parsedParts['path'];
-
-        $username = str_replace('/', '', $username);
-
-        $username = '@' . $username;
-
-        return $username;
-    }
-
-    public function facebookIdentifier($facebookUrl)
-    {
-        $parsedParts = parse_url($facebookUrl);
-
-        $identifier = $parsedParts['path'];
-
-        $identifier = str_replace('/', '', $identifier);
-
-        return $identifier;
-    }
-
-    public function hostname($url)
-    {
-        $parsedParts = parse_url($url);
-
-        $hostname = $parsedParts['host'];
-
-        $hostname = str_replace('www.', '', $hostname);
-
-        return $hostname;
     }
 
     public function getName()
