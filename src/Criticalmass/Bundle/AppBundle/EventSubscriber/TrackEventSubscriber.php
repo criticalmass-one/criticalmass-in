@@ -70,8 +70,6 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->execute()
             ->getPolyline();
 
-        var_dump($polyline);
-        die;
         $track->setPolyline($polyline);
     }
 
