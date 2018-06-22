@@ -183,5 +183,25 @@ class TrackRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
+
+
+    public function findByUser(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): array
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->join('t.ride', 'r')
+            ->where($builder->expr()->eq('t.user', ':user'))
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->orderBy('r.dateTime', $order)
+            ->setParameter('user', $user)
+            ->setParameter('enabled', $enabled)
+            ->setParameter('deleted', $deleted);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
 

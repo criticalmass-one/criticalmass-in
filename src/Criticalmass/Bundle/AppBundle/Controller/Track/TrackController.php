@@ -18,6 +18,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackController extends AbstractController
@@ -27,17 +28,9 @@ class TrackController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listAction()
+    public function listAction(UserInterface $user)
     {
-        /**
-         * @var array Track
-         */
-        $tracks = $this->getTrackRepository()->findBy([
-            'user' => $this->getUser()->getId(),
-            'deleted' => false,
-        ], [
-            'startDateTime' => 'DESC'
-        ]);
+        $tracks = $this->getTrackRepository()->findByUser($user);
 
         return $this->render('AppBundle:Track:list.html.twig', [
             'tracks' => $tracks,
