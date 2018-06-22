@@ -8,11 +8,14 @@ use Criticalmass\Component\Gps\DistanceCalculator\TrackDistanceCalculator;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Criticalmass\Component\Gps\TrackPolyline\TrackPolyline;
+use Criticalmass\Component\Gps\TrackPolyline\PolylineGenerator;
+use Criticalmass\Component\Statistic\RideEstimate\RideEstimateHandler;
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
 
+/** @deprecated  */
 trait TrackHandlingTrait
 {
+    /** @deprecated  */
     protected function loadTrackProperties(Track $track)
     {
         /**
@@ -39,6 +42,7 @@ trait TrackHandlingTrait
         $track->setMd5Hash($gr->getMd5Hash());
     }
 
+    /** @deprecated  */
     protected function addRideEstimate(Track $track, Ride $ride)
     {
         $estimateService = $this->get(RideEstimateService::class);
@@ -47,6 +51,7 @@ trait TrackHandlingTrait
             ->calculateEstimates($ride);
     }
 
+    /** @deprecated  */
     protected function generateSimpleLatLngList(Track $track)
     {
         /**
@@ -65,6 +70,7 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
+    /** @deprecated  */
     protected function saveLatLngList(Track $track)
     {
         /**
@@ -80,6 +86,7 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
+    /** @deprecated  */
     protected function updateTrackProperties(Track $track)
     {
         /**
@@ -97,22 +104,24 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
+    /** @deprecated  */
     protected function calculateRideEstimates(Track $track)
     {
-        /**
-         * @var RideEstimateService $res
-         */
-        $res = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-        $res->flushEstimates($track->getRide());
+        /** @var RideEstimateHandler $reh */
+        $reh = $this->get(RideEstimateHandler::class);
 
-        $res->refreshEstimate($track->getRideEstimate());
-        $res->calculateEstimates($track->getRide());
+        $reh
+            ->setRide($track->getRide())
+            ->flushEstimates()
+            ->addEstimateFromTrack($track);
+        $reh->calculateEstimates($track->getRide());
     }
 
+    /** @deprecated  */
     protected function generatePolyline(Track $track)
     {
         /**
-         * @var TrackPolyline $trackPolyline
+         * @var PolylineGenerator $trackPolyline
          */
         $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
 
