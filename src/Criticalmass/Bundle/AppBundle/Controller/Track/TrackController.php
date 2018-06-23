@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
@@ -10,32 +10,14 @@ use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
-use Criticalmass\Component\Gps\TrackTimeShift\TrackTimeShift;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackController extends AbstractController
 {
     use TrackHandlingTrait;
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function listAction(UserInterface $user)
-    {
-        $tracks = $this->getTrackRepository()->findByUser($user);
-
-        return $this->render('AppBundle:Track:list.html.twig', [
-            'tracks' => $tracks,
-        ]);
-    }
 
     /**
      * @Security("has_role('ROLE_USER')")
