@@ -11,53 +11,49 @@ services:
             $featurePhotos: '%feature.photos%'
             $gapWidth: '%track.gap_width%'
 
-    Criticalmass\Bundle\AppBundle\:
-        resource: '../../src/Criticalmass/Bundle/AppBundle/*'
-        exclude: '../../src/Criticalmass/Bundle/AppBundle/{Admin,DQL,Entity,Manager,Model,Repository,Tests,UserProvider,Validator}'
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Model,Repository,Tests,UserProvider,Validator,Criticalmass/Facebook,Criticalmass/Image,Criticalmass/UploadValidator/UploadValidatorException}'
 
-    Criticalmass\Bundle\AppBundle\Controller\:
-        resource: '../../src/Criticalmass/Bundle/AppBundle/Controller'
+    AppBundle\Controller\:
+        resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
 
-    Criticalmass\Bundle\AppBundle\Criticalmass\:
-        resource: '../../src/Criticalmass/Component/*'
-        exclude: '../../src/Criticalmass/Component/{Facebook,Image,UploadValidator/UploadValidatorException}'
-
-    Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader:
+    AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
 
-    Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGps:
+    AppBundle\Criticalmass\Image\PhotoGps\PhotoGps:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
 
     Cmfcmf\OpenWeatherMap: ~
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\RideParamConverter:
+    AppBundle\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\CityParamConverter:
+    AppBundle\Request\ParamConverter\CityParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: city_converter }
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\LocationParamConverter:
+    AppBundle\Request\ParamConverter\LocationParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: location_converter }
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\BoardParamConverter:
+    AppBundle\Request\ParamConverter\BoardParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: board_converter }
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\ThreadParamConverter:
+    AppBundle\Request\ParamConverter\ThreadParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: thread_converter }
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\PhotoParamConverter:
+    AppBundle\Request\ParamConverter\PhotoParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: photo_converter }
 
-    Criticalmass\Bundle\AppBundle\Request\ParamConverter\UserParamConverter:
+    AppBundle\Request\ParamConverter\UserParamConverter:
         tags:
             - { name: request.param_converter, priority: 10, converter: user_converter }

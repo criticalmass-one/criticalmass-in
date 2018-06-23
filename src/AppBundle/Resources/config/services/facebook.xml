@@ -10,8 +10,8 @@
         </defaults>
 
         <prototype namespace="AppBundle\Criticalmass\Facebook\"
-                   resource="%kernel.project_dir%/src/Criticalmass/Component/Facebook/*"/>
+                   resource="%kernel.project_dir%/src/AppBundle/Criticalmass/Facebook/*"/>
         <prototype namespace="AppBundle\Criticalmass\Facebook\Api\"
-                   resource="%kernel.project_dir%/src/Criticalmass/Component/Facebook/Api/*"/>
+                   resource="%kernel.project_dir%/src/AppBundle/Criticalmass/Facebook/Api/*"/>
     </services>
 </container>
