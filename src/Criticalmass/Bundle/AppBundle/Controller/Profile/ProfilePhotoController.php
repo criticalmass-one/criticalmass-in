@@ -3,7 +3,6 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
 
 use Criticalmass\Bundle\AppBundle\Form\Type\UserProfilePhotoType;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,7 +31,7 @@ class ProfilePhotoController extends Controller
 
     protected function uploadGetAction(Request $request, UserInterface $user, FormInterface $form): Response
     {
-        return $this->render('UserBundle:ProfilePhoto:upload.html.twig', [
+        return $this->render('AppBundle:ProfilePhoto:upload.html.twig', [
             'profilePhotoForm' => $form->createView(),
         ]);
     }

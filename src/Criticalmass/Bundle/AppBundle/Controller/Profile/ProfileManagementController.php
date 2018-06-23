@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
 
+use Criticalmass\Bundle\AppBundle\Form\Type\UserEmailType;
+use Criticalmass\Bundle\AppBundle\Form\Type\UsernameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -10,8 +12,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Criticalmass\Bundle\UserBundle\Form\Type\UserEmailType;
-use Criticalmass\Bundle\UserBundle\Form\Type\UsernameType;
 
 class ProfileManagementController extends Controller
 {
@@ -24,14 +24,11 @@ class ProfileManagementController extends Controller
         $trackCounter = $this->getDoctrine()->getRepository('AppBundle:Track')->countByUser($user);
         $photoCounter = $this->getDoctrine()->getRepository('AppBundle:Photo')->countByUser($user);
 
-        return $this->render(
-            'UserBundle:ProfileManagement:manage.html.twig',
-            [
-                'participationCounter' => $participationCounter,
-                'trackCounter' => $trackCounter,
-                'photoCounter' => $photoCounter,
-            ]
-        );
+        return $this->render('AppBundle:ProfileManagement:manage.html.twig', [
+            'participationCounter' => $participationCounter,
+            'trackCounter' => $trackCounter,
+            'photoCounter' => $photoCounter,
+        ]);
     }
 
     /**
@@ -39,15 +36,9 @@ class ProfileManagementController extends Controller
      */
     public function editUsernameAction(Request $request, UserInterface $user): Response
     {
-        $usernameForm = $this->createForm(
-            UsernameType::class,
-            $user,
-            [
-                'action' => $this->generateUrl(
-                    'criticalmass_user_usermanagement_editusername'
-                )
-            ]
-        );
+        $usernameForm = $this->createForm(UsernameType::class, $user, [
+            'action' => $this->generateUrl('criticalmass_user_usermanagement_editusername')
+        ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
             $usernameForm->handleRequest($request);
@@ -71,12 +62,9 @@ class ProfileManagementController extends Controller
             }
         }
 
-        return $this->render(
-            'UserBundle:ProfileManagement:edit_username.html.twig',
-            [
-                'usernameForm' => $usernameForm->createView()
-            ]
-        );
+        return $this->render('AppBundle:ProfileManagement:edit_username.html.twig', [
+            'usernameForm' => $usernameForm->createView()
+        ]);
     }
 
     /**
@@ -84,15 +72,9 @@ class ProfileManagementController extends Controller
      */
     public function editEmailAction(Request $request, UserInterface $user): Response
     {
-        $userEmailForm = $this->createForm(
-            UserEmailType::class,
-            $user,
-            [
-                'action' => $this->generateUrl(
-                    'criticalmass_user_usermanagement_editemail'
-                )
-            ]
-        );
+        $userEmailForm = $this->createForm(UserEmailType::class, $user, [
+            'action' => $this->generateUrl('criticalmass_user_usermanagement_editemail')
+        ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
             $userEmailForm->handleRequest($request);
@@ -116,11 +98,8 @@ class ProfileManagementController extends Controller
             }
         }
 
-        return $this->render(
-            'UserBundle:ProfileManagement:edit_email.html.twig',
-            [
-                'userEmailForm' => $userEmailForm->createView()
-            ]
-        );
+        return $this->render('AppBundle:ProfileManagement:edit_email.html.twig', [
+            'userEmailForm' => $userEmailForm->createView()
+        ]);
     }
 }

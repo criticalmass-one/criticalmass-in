@@ -1,14 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
+namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     const TEMPLATE_MODE_FULL = 1;
     const TEMPLATE_MODE_FORM = 2;
@@ -41,8 +40,7 @@ class SecurityController extends Controller
 
         $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
 
-        return $this->renderLogin(
-            [
+        return $this->renderLogin([
                 'last_username' => $lastUsername,
                 'error' => $error,
                 'csrf_token' => $csrfToken
@@ -67,7 +65,7 @@ class SecurityController extends Controller
                 break;
         }
 
-        return $this->render('UserBundle:Security:' . $templateName, $data);
+        return $this->render('AppBundle:Security:' . $templateName, $data);
     }
 
     public function loginFormModalAction(Request $request): Response

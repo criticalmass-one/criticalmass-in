@@ -20,11 +20,6 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    Criticalmass\Bundle\UserBundle\Controller\:
-        resource: '../../src/Criticalmass/Bundle/UserBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-
     Criticalmass\Component\:
         resource: '../../src/Criticalmass/Component/*'
         exclude: '../../src/Criticalmass/Component/{Facebook,Image,UploadValidator/UploadValidatorException}'
