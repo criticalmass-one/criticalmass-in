@@ -1,25 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\UserBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
 
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationDeletedEvent;
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationUpdatedEvent;
-use Criticalmass\Bundle\AppBundle\Repository\ParticipationRepository;
-use Criticalmass\Component\Participation\Calculator\RideParticipationCalculatorInterface;
 use Criticalmass\Component\Profile\Streak\StreakGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Criticalmass\Component\Profile\ParticipationTable\TableGeneratorInterface;
 
-class ParticipationController extends Controller
+class ParticipationController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
@@ -32,7 +29,7 @@ class ParticipationController extends Controller
 
         $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
 
-        return $this->render('UserBundle:Participation:list.html.twig', [
+        return $this->render('AppBundle:Participation:list.html.twig', [
             'participationYesList' => $repository->findByUser($user, true),
             'participationMaybeList' => $repository->findByUser($user, false, true),
             'participationNoList' => $repository->findByUser($user, false, false, true),

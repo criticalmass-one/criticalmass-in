@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Gps\TrackTimeShift;
+namespace Criticalmass\Component\Gps\TrackTimeshift;
 
 use Criticalmass\Bundle\AppBundle\Entity\Position;
 
 /**
  * @deprecated
  */
-class TrackTimeShift extends AbstractTrackTimeshift
+class TrackTimeshift extends AbstractTrackTimeshift
 {
-    public function shift(\DateInterval $interval): TrackTimeShiftInterface
+    public function shift(\DateInterval $interval): TrackTimeshiftInterface
     {
         /** @var Position $position */
         foreach ($this->positionArray as $position) {

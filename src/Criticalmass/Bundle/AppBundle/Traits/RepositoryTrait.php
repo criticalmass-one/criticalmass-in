@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
+use Criticalmass\Bundle\AppBundle\Repository\BikerightVoucherRepository;
 use Criticalmass\Bundle\AppBundle\Repository\BlockedCityRepository;
 use Criticalmass\Bundle\AppBundle\Repository\BoardRepository;
 use Criticalmass\Bundle\AppBundle\Repository\CityCycleRepository;
@@ -22,6 +23,11 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 trait RepositoryTrait
 {
+    protected function getBikeRightVoucherRepository(): BikerightVoucherRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:BikerightVoucher');
+    }
+
     protected function getBlockedCityRepository(): BlockedCityRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:BlockedCity');

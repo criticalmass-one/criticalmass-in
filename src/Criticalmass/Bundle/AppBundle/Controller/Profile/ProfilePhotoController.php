@@ -1,19 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\UserBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
 
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Form\Type\UserProfilePhotoType;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ProfilePhotoController extends Controller
+class ProfilePhotoController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
@@ -32,7 +30,7 @@ class ProfilePhotoController extends Controller
 
     protected function uploadGetAction(Request $request, UserInterface $user, FormInterface $form): Response
     {
-        return $this->render('UserBundle:ProfilePhoto:upload.html.twig', [
+        return $this->render('AppBundle:ProfilePhoto:upload.html.twig', [
             'profilePhotoForm' => $form->createView(),
         ]);
     }

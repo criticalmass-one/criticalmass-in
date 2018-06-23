@@ -1,31 +1,28 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\UserBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
 
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use Criticalmass\Bundle\AppBundle\Entity\BikerightVoucher;
+use Criticalmass\Bundle\AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\BikerightVoucher;
-use AppBundle\Entity\User;
-use AppBundle\Repository\BikerightVoucherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class BikerightController extends Controller
+class BikerightController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function viewAction(Request $request, UserInterface $user): Response
+    public function viewAction(UserInterface $user): Response
     {
         $bikerightVoucher = $this->getVoucher($user);
 
-        return $this->render(
-            'UserBundle:BikeRight:view.html.twig',
-            [
-                'bikerightVoucher' => $bikerightVoucher,
-            ]
-        );
+        return $this->render('AppBundle:BikeRight:view.html.twig', [
+            'bikerightVoucher' => $bikerightVoucher,
+        ]);
     }
 
     /**
@@ -64,10 +61,4 @@ class BikerightController extends Controller
     {
         return $this->getBikerightVoucherRepository()->findOneByUser($user);
     }
-
-    protected function getBikerightVoucherRepository(): BikerightVoucherRepository
-    {
-        return $this->getDoctrine()->getRepository('AppBundle:BikerightVoucher');
-    }
-
 }
