@@ -20,15 +20,15 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    Criticalmass\Component\:
+    Criticalmass\Bundle\AppBundle\Criticalmass\:
         resource: '../../src/Criticalmass/Component/*'
         exclude: '../../src/Criticalmass/Component/{Facebook,Image,UploadValidator/UploadValidatorException}'
 
-    Criticalmass\Component\Image\PhotoUploader\PhotoUploader:
+    Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
 
-    Criticalmass\Component\Image\PhotoGps\PhotoGps:
+    Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGps:
         arguments:
             $uploadDestinationPhoto: %upload_destination.photo%
 
