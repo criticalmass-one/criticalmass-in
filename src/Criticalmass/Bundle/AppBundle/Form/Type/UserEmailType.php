@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\UserBundle\Form\Type;
+namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

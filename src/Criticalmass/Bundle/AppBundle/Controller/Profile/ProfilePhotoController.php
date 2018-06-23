@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\UserBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
 use Criticalmass\Bundle\AppBundle\Form\Type\UserProfilePhotoType;
 use Doctrine\Bundle\DoctrineBundle\Registry;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\UserBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Form\Type;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
