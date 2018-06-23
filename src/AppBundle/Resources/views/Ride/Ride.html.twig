@@ -51,20 +51,22 @@
                     </a>
                 </li>
                 {% if pastRide %}
+                    {% if feature_enabled('photos') %}
                     <li role="presentation">
                         <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
                             <i class="fa fa-camera"></i>
                             Galerie
-                        <span class="badge">
+                            <span class="badge">
                             {{ photos|length }}
                         </span>
                         </a>
                     </li>
+                    {% endif %}
                     <li role="presentation">
                         <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
                             <i class="fa fa-bicycle"></i>
                             Tracks
-                        <span class="badge">
+                            <span class="badge">
                             {{ tracks|length }}
                         </span>
                         </a>
@@ -111,6 +113,7 @@
         ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
         {% endfor %}
 
+        {% if feature_enabled('photos') %}
         {% for photo in photos %}
         {% if photo.hasCoordinates() %}
         {% if photo.user.blurGalleries %}
@@ -121,6 +124,7 @@
         ridePage.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
         {% endif %}
         {% endfor %}
+        {% endif %}
 
         {% for subride in subrides %}
         ridePage.addSubride('{{ subride|serialize|raw|e('js') }}');

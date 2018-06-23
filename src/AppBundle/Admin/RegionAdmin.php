@@ -20,12 +20,10 @@ class RegionAdmin extends AbstractAdmin
             ->add('name', TextType::class)
             ->add('description', TextareaType::class, ['required' => false])
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('slug', TextType::class)
             ->add('parent', EntityType::class, ['class' => Region::class, 'required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -33,15 +31,13 @@ class RegionAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('description')
-            ->add('parent')
-        ;
+            ->add('parent');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('name')
-            ->add('parent')
-        ;
+            ->add('parent');
     }
 }

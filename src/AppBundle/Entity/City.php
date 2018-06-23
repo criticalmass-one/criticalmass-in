@@ -2,12 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use Caldera\GeoBasic\Coord\Coord;
 use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\BoardInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\PostableInterface;
 use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface
 {
     /**
      * @ORM\Id
@@ -148,6 +152,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $cycles;
 
     /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="city", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
      * @JMS\Expose
@@ -197,7 +206,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enableBoard;
+    protected $enableBoard = false;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -256,6 +265,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->posts = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->cycles = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
 
         $this->createdAt = new \DateTime();
     }
@@ -335,7 +345,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -352,6 +362,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->title;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url): City
     {
         $this->url = $url;
@@ -359,11 +372,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook): City
     {
         $this->facebook = $facebook;
@@ -371,11 +390,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter): City
     {
         $this->twitter = $twitter;
@@ -383,6 +408,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
@@ -466,7 +494,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->description;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function isEqual(City $city): bool
     {
         return $city->getId() === $this->getId();
@@ -609,6 +637,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
+    public function getCoord(): Coord
+    {
+        return new Coord($this->latitude, $this->longitude);
+    }
+
     public function setEnableBoard(bool $enableBoard): City
     {
         $this->enableBoard = $enableBoard;
@@ -628,7 +661,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getTimezone(): string
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
@@ -812,6 +845,32 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function removeCycle(CityCycle $cityCycle): City
     {
         $this->cycles->removeElement($cityCycle);
+
+        return $this;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): City
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): City
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): City
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
     }

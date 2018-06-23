@@ -8,24 +8,26 @@ use Doctrine\ORM\EntityRepository;
 
 class CityCycleRepository extends EntityRepository
 {
-    public function findByCity(City $city, \DateTimeInterface $startDateTime = null, \DateTimeInterface $endDateTime = null): array
-    {
+    public function findByCity(
+        City $city,
+        \DateTimeInterface $startDateTime = null,
+        \DateTimeInterface $endDateTime = null
+    ): array {
         $builder = $this->createQueryBuilder('cc');
 
         $builder
             ->where($builder->expr()->eq('cc.city', ':city'))
-            ->addOrderBy('cc.validFrom')
+            ->addOrderBy('cc.validFrom', 'DESC')
             ->addOrderBy('cc.location')
-            ->setParameter('city', $city)
-        ;
+            ->setParameter('city', $city);
 
         if ($startDateTime) {
             $builder
                 ->andWhere(
                     $builder->expr()->orX(
                         $builder->expr()->andX(
-                            $builder->expr()->gte('cc.validFrom', ':startDateTime'),
-                            $builder->expr()->lte('cc.validUntil', ':startDateTime')
+                            $builder->expr()->lte('cc.validFrom', ':startDateTime'),
+                            $builder->expr()->gte('cc.validUntil', ':startDateTime')
                         ),
                         $builder->expr()->andX(
                             $builder->expr()->isNull('cc.validFrom'),
@@ -33,8 +35,7 @@ class CityCycleRepository extends EntityRepository
                         )
                     )
                 )
-                ->setParameter('startDateTime', $startDateTime)
-            ;
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
@@ -51,8 +52,7 @@ class CityCycleRepository extends EntityRepository
                         )
                     )
                 )
-                ->setParameter('endDateTime', $endDateTime)
-            ;
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         $query = $builder->getQuery();

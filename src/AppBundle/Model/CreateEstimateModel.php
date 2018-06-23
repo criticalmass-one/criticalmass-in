@@ -17,6 +17,13 @@ class CreateEstimateModel
     protected $dateTime;
 
     /**
+     * @var string $citySlug
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     */
+    protected $citySlug;
+
+    /**
      * @var float $latitude
      * @JMS\Expose()
      * @JMS\Type("float")
@@ -36,9 +43,15 @@ class CreateEstimateModel
      */
     protected $estimation;
 
-    public function __construct(\DateTime $dateTime = null, float $latitude = null, float $longitude = null, int $estimation = null)
-    {
+    public function __construct(
+        \DateTime $dateTime = null,
+        string $citySlug = null,
+        float $latitude = null,
+        float $longitude = null,
+        int $estimation
+    ) {
         $this->dateTime = $dateTime;
+        $this->citySlug = $citySlug;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->estimation = $estimation;
@@ -56,6 +69,18 @@ class CreateEstimateModel
         return $this->dateTime;
     }
 
+    public function setCitySlug(string $citySlug): CreateEstimateModel
+    {
+        $this->citySlug = $citySlug;
+
+        return $this;
+    }
+
+    public function getCitySlug(): ?string
+    {
+        return $this->citySlug;
+    }
+
     public function setLatitude(float $latitude): CreateEstimateModel
     {
         $this->latitude = $latitude;
@@ -63,7 +88,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -75,7 +100,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -87,7 +112,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getEstimation(): float
+    public function getEstimation(): int
     {
         return $this->estimation;
     }

@@ -23,7 +23,7 @@ class ParticipationRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function countParticipationsForRide(Ride $ride, $status)
+    public function countParticipationsForRide(Ride $ride, $status): int
     {
         $builder = $this->createQueryBuilder('participation');
 
@@ -49,8 +49,7 @@ class ParticipationRepository extends EntityRepository
             ->select('COUNT(p)')
             ->where($builder->expr()->eq('p.user', ':user'))
             ->setParameter('user', $user)
-            ->andWhere($builder->expr()->eq('p.goingYes', true))
-        ;
+            ->andWhere($builder->expr()->eq('p.goingYes', true));
 
         $query = $builder->getQuery();
 
@@ -65,8 +64,7 @@ class ParticipationRepository extends EntityRepository
             ->join('p.ride', 'r')
             ->where($builder->expr()->eq('p.user', ':user'))
             ->setParameter('user', $user)
-            ->orderBy('r.dateTime', 'DESC')
-        ;
+            ->orderBy('r.dateTime', 'DESC');
 
         if ($yes) {
             $builder->andWhere($builder->expr()->eq('p.goingYes', true));

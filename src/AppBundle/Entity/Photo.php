@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\PostableInterface;
 use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble
 {
     /**
      * @ORM\Id

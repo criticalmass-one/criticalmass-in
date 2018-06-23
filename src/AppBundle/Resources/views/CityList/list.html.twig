@@ -11,16 +11,12 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Die nächste Masse ist ganz nah.
+                    Die nächste Masse ist ganz nah
                 </h1>
 
                 <p class="lead">
                     Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
                 </p>
-
-                <div class="pull-right">
-                    {% include 'AppBundle:CityList:_cityListSort.html.twig' %}
-                </div>
 
                 <p>
                     Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
@@ -33,7 +29,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table id="cityList" class="table sortableCityRideList">
+                <table id="city-list-table" class="table tablesorter">
                     <thead>
                     <tr>
                         <th>
@@ -52,13 +48,7 @@
                     </thead>
                     <tbody>
                     {% for city in cityList %}
-                        <tr class="city"
-                            data-cityName="{{ city.city }}"
-                            data-cityslug="{{ city.city.slug }}"
-                            data-latitude="{{ city.city.latitude }}"
-                            data-longitude="{{ city.city.longitude }}"
-                            data-currentRide="{% if city.currentRide %}{{ city.currentRide.dateTime|date('Y-m-d H:i', 'Europe/Berlin') }}{% else %}9999-99-99 99:99{% endif %}"
-                        >
+                        <tr>
                             <td>
                                 <a href="{{ objectPath(city.city) }}">
                                     {{ city.city.city }}
@@ -67,21 +57,23 @@
                             <td>
                                 {% if city.currentRide %}
                                     <a href="{{ objectPath(city.currentRide) }}">
-                                        {{ city.currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}&nbsp;Uhr
+                                        {{ city.currentRide.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}
+                                        &nbsp;Uhr
                                     </a>
                                 {% endif %}
                             </td>
                             <td>
                                 <ul class="list-unstyled">
                                     {% for cycle in city.cycles %}
-                                    <li>
-                                        am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', 'Europe/Berlin') }} Uhr
-                                    </li>
+                                        <li>
+                                            am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }}
+                                            um {{ cycle.time|date('H:i', 'Europe/Berlin') }} Uhr
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_desktop_city_listrides', { citySlug: city.city.slug }) }}">
+                                <a href="{{ path('caldera_criticalmass_city_listrides', { citySlug: city.city.slug }) }}">
                                     {{ city.countRides }}
                                 </a>
                             </td>
@@ -92,4 +84,8 @@
             </div>
         </div>
     </div>
+
+    <script>
+        CriticalMass.loadModule('SortableTable', '#city-list-table');
+    </script>
 {% endblock %}

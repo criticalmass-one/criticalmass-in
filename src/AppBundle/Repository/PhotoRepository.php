@@ -30,7 +30,8 @@ class PhotoRepository extends EntityRepository
             $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
         }
 
-        $builder->andWhere($builder->expr()->lt('photo.dateTime', '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
+        $builder->andWhere($builder->expr()->lt('photo.dateTime',
+            '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
@@ -63,7 +64,8 @@ class PhotoRepository extends EntityRepository
             $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
         }
 
-        $builder->andWhere($builder->expr()->gt('photo.dateTime', '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
+        $builder->andWhere($builder->expr()->gt('photo.dateTime',
+            '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
@@ -92,8 +94,7 @@ class PhotoRepository extends EntityRepository
             ->groupBy('photo.ride')
             ->join('photo.ride', 'ride')
             ->join('ride.city', 'city')
-            ->orderBy('ride.dateTime', 'desc')
-        ;
+            ->orderBy('ride.dateTime', 'desc');
 
         $query = $builder->getQuery();
         $result = $query->getResult();
@@ -236,8 +237,7 @@ class PhotoRepository extends EntityRepository
             ->select('COUNT(photo)')
             ->where($builder->expr()->eq('photo.ride', $ride))
             ->andWhere($builder->expr()->eq('photo.enabled', 1))
-            ->andWhere($builder->expr()->eq('photo.deleted', 0))
-        ;
+            ->andWhere($builder->expr()->eq('photo.deleted', 0));
 
         $query = $builder->getQuery();
 
@@ -294,8 +294,11 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelinePhotoCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
+    public function findForTimelineRidePhotoCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ) {
         $builder = $this->createQueryBuilder('photo');
 
         $builder->select('photo');
@@ -305,11 +308,13 @@ class PhotoRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('photo.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->gte('photo.creationDateTime',
+                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('photo.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lte('photo.creationDateTime',
+                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -334,8 +339,7 @@ class PhotoRepository extends EntityRepository
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('user', $user)
             ->setParameter('enabled', true)
-            ->setParameter('deleted', false)
-        ;
+            ->setParameter('deleted', false);
 
         $query = $builder->getQuery();
 

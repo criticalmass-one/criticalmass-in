@@ -1,13 +1,18 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
 use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository
 {
-    public function findForTimelineRideParticipantsEstimateCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
-    {
+    public function findForTimelineRideParticipationEstimateCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ): array {
         $builder = $this->createQueryBuilder('e');
 
         $builder
@@ -16,22 +21,19 @@ class RideEstimateRepository extends EntityRepository
             ->andWhere($builder->expr()->isNull('e.estimatedDistance'))
             ->andWhere($builder->expr()->isNull('e.estimatedDuration'))
             ->andWhere($builder->expr()->isNotNull('e.user'))
-            ->addOrderBy('e.dateTime', 'DESC')
-        ;
+            ->addOrderBy('e.dateTime', 'DESC');
 
         if ($startDateTime) {
             $builder
                 ->andWhere($builder->expr()->gte('e.dateTime', ':startDateTime'))
-                ->setParameter('startDateTime', $startDateTime)
-            ;
+                ->setParameter('startDateTime', $startDateTime);
 
         }
 
         if ($endDateTime) {
             $builder
                 ->andWhere($builder->expr()->lte('e.dateTime', ':endDateTime'))
-                ->setParameter('endDateTime', $endDateTime)
-            ;
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
@@ -39,11 +41,25 @@ class RideEstimateRepository extends EntityRepository
         }
 
 
-
         $query = $builder->getQuery();
 
         $result = $query->getResult();
 
         return $result;
+    }
+
+    public function findByRideAndParticipants(Ride $ride, int $estimatedParticipants): ?RideEstimate
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb->where($qb->expr()->eq('e.ride', ':ride'))
+            ->andWhere($qb->expr()->eq('e.estimatedParticipants', ':estimatedParticipants'))
+            ->setParameter('estimatedParticipants', $estimatedParticipants)
+            ->setParameter('ride', $ride)
+            ->setMaxResults(1);
+
+        $query = $qb->getQuery();
+
+        return $query->getOneOrNullResult();
     }
 }

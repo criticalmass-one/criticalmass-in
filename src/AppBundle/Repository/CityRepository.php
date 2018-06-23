@@ -108,8 +108,7 @@ class CityRepository extends EntityRepository
             ->select('c')
             ->where($builder->expr()->eq('c.enabled', ':enabled'))
             ->orderBy('c.city', 'ASC')
-            ->setParameter('enabled', true)
-        ;
+            ->setParameter('enabled', true);
 
         $query = $builder->getQuery();
 
@@ -139,37 +138,84 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelineCityEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, int $limit = null): array
-    {
+    public function findForTimelineCityEditCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        int $limit = null
+    ): array {
         $builder = $this->createQueryBuilder('c');
 
         $builder
             ->select('c')
             ->where($builder->expr()->isNotNull('c.updatedAt'))
-            ->addOrderBy('c.updatedAt', 'DESC')
-        ;
+            ->addOrderBy('c.updatedAt', 'DESC');
 
         if ($startDateTime) {
             $builder
                 ->andWhere($builder->expr()->gte('c.updatedAt', ':startDateTime'))
-                ->setParameter('startDateTime', $startDateTime)
-            ;
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
             $builder
                 ->andWhere($builder->expr()->lte('c.updatedAt', ':endDateTime'))
-                ->setParameter('endDateTime', $endDateTime)
-            ;
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder
-                ->setMaxResults($limit)
-            ;
+                ->setMaxResults($limit);
         }
 
+        $query = $builder->getQuery();
 
+        return $query->getResult();
+    }
+
+    public function findForTimelineCityCreatedCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        int $limit = null
+    ): array {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNull('c.updatedAt'))
+            ->addOrderBy('c.createdAt', 'DESC');
+
+        if ($startDateTime) {
+            $builder
+                ->andWhere($builder->expr()->gte('c.createdAt', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
+        }
+
+        if ($endDateTime) {
+            $builder
+                ->andWhere($builder->expr()->lte('c.createdAt', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
+        }
+
+        if ($limit) {
+            $builder
+                ->setMaxResults($limit);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findCitiesBySlugList(array $slugList): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->join('c.slugs', 's')
+            ->where($builder->expr()->in('s.slug', ':slugList'))
+            ->orderBy('c.city', 'ASC')
+            ->setParameter('slugList', $slugList);
 
         $query = $builder->getQuery();
 

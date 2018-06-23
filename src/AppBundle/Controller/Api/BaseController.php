@@ -32,7 +32,7 @@ abstract class BaseController extends FOSRestController
         return $context;
     }
 
-    protected function deserializeRequest(Request $request, string $modelClass)
+    protected function deserializeRequest(Request $request, Serializer $serializer, string $modelClass)
     {
         $content = null;
 
@@ -42,11 +42,6 @@ abstract class BaseController extends FOSRestController
             $content = $request->getContent();
         }
 
-        return $this->getJmsSerializer()->deserialize($content, $modelClass, 'json');
-    }
-
-    protected function getJmsSerializer(): Serializer
-    {
-        return $this->get('jms_serializer');
+        return $serializer->deserialize($content, $modelClass, 'json');
     }
 }

@@ -2,11 +2,12 @@
 
 namespace AppBundle\Controller\Photo;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
-use AppBundle\Image\PhotoGps\PhotoGps;
+use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
 use PHPExif\Reader\Reader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,29 +17,27 @@ class PhotoUploadController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user, string $citySlug, string $rideDate): Response
+    public function uploadAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $this->errorIfFeatureDisabled('photos');
 
-        if ($request->getMethod() == 'POST') {
-            return $this->uploadPostAction($request, $user, $ride);
+        if (Request::METHOD_POST === $request->getMethod()) {
+            return $this->uploadPostAction($request, $user, $photoGps, $ride);
         } else {
-            return $this->uploadGetAction($request, $user, $ride);
+            return $this->uploadGetAction($request, $user, $photoGps, $ride);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user, Ride $ride): Response
+    protected function uploadGetAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
-        return $this->render(
-            'AppBundle:PhotoUpload:upload.html.twig',
-            [
-                'ride' => $ride,
-            ]
-        );
+        return $this->render('AppBundle:PhotoUpload:upload.html.twig', [
+            'ride' => $ride,
+        ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user, Ride $ride): Response
+    protected function uploadPostAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -54,7 +53,7 @@ class PhotoUploadController extends AbstractController
         $em->flush();
 
         $this->findDateTime($photo);
-        $this->findCoords($ride, $photo, $user);
+        $this->findCoords($photoGps, $ride, $photo, $user);
 
         $em->flush();
 
@@ -65,7 +64,7 @@ class PhotoUploadController extends AbstractController
     {
         try {
             $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-            $path = $this->getParameter('kernel.root_dir').'/../web/'.$helper->asset($photo, 'imageFile');
+            $path = $this->getParameter('kernel.root_dir') . '/../web/' . $helper->asset($photo, 'imageFile');
 
             $reader = Reader::factory(Reader::TYPE_NATIVE);
 
@@ -83,7 +82,7 @@ class PhotoUploadController extends AbstractController
         return true;
     }
 
-    protected function findCoords(Ride $ride, Photo $photo, UserInterface $user): bool
+    protected function findCoords(PhotoGps $photoGps, Ride $ride, Photo $photo, UserInterface $user): bool
     {
         $track = null;
 
@@ -93,16 +92,10 @@ class PhotoUploadController extends AbstractController
 
         if ($ride && $track) {
             try {
-                /**
-                 * @var PhotoGps $pgps
-                 */
-                $pgps = $this->get('caldera.criticalmass.image.photogps');
-
-                $pgps
+                $photoGps
                     ->setPhoto($photo)
                     ->setTrack($track)
-                    ->execute()
-                ;
+                    ->execute();
             } catch (\Exception $e) {
                 return false;
             }

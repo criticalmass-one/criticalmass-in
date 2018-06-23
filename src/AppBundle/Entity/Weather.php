@@ -128,7 +128,7 @@ class Weather
         return $this->id;
     }
 
-     public function getJson(): ?string
+    public function getJson(): ?string
     {
         return $this->json;
     }

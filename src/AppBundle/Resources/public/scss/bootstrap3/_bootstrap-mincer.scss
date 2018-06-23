@@ -3,7 +3,6 @@
 // This must be imported into a .css.ejs.scss file.
 // Then, <% %>-interpolations will be parsed as strings by Sass, and evaluated by EJS after Sass compilation.
 
-
 @function twbs-font-path($path) {
   // do something like following
   // from "path/to/font.ext#suffix" to "<%- asset_path(path/to/font.ext)) + #suffix %>"

@@ -1,9 +1,8 @@
-@import "bootstrap3/bootstrap.scss";
-@import "external/leaflet/_extramarkers.scss";
-@import "criticalmass/_criticalmass.scss";
-@import "criticalmass/_bikeright3.scss";
-@import "criticalmass/_fahrradstadt3.scss";
-@import "criticalmass/_frontpage3.scss";
+@import "bootstrap3/bootstrap";
+@import "external/leaflet/extramarkers";
+@import "criticalmass/criticalmass";
+@import "criticalmass/bikeright3";
+@import "criticalmass/frontpage3";
 
 .form-control.datepicker {
   padding: 0.5rem 0.75rem !important;
@@ -16,4 +15,8 @@
 .breadcrumb > li + li:before {
   content: "/\00a0";
   color: $breadcrumb-color;
+}
+
+input[type="file"] {
+  display: inline !important;
 }

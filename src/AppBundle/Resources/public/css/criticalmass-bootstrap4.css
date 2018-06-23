@@ -5862,49 +5862,49 @@ a.text-dark:hover {
 
 /* Sprites setup */
 .extra-marker-circle-red {
-  background-position: 0          0; }
+  background-position: 0 0; }
 
 .extra-marker-circle-orange-dark {
-  background-position: -36px      0; }
+  background-position: -36px 0; }
 
 .extra-marker-circle-orange {
-  background-position: -72px      0; }
+  background-position: -72px 0; }
 
 .extra-marker-circle-yellow {
-  background-position: -108px     0; }
+  background-position: -108px 0; }
 
 .extra-marker-circle-blue-dark {
-  background-position: -144px     0; }
+  background-position: -144px 0; }
 
 .extra-marker-circle-blue {
-  background-position: -180px     0; }
+  background-position: -180px 0; }
 
 .extra-marker-circle-cyan {
-  background-position: -216px     0; }
+  background-position: -216px 0; }
 
 .extra-marker-circle-purple {
-  background-position: -252px     0; }
+  background-position: -252px 0; }
 
 .extra-marker-circle-violet {
-  background-position: -288px     0; }
+  background-position: -288px 0; }
 
 .extra-marker-circle-pink {
-  background-position: -324px     0; }
+  background-position: -324px 0; }
 
 .extra-marker-circle-green-dark {
-  background-position: -360px     0; }
+  background-position: -360px 0; }
 
 .extra-marker-circle-green {
-  background-position: -396px     0; }
+  background-position: -396px 0; }
 
 .extra-marker-circle-green-light {
-  background-position: -432px     0; }
+  background-position: -432px 0; }
 
 .extra-marker-circle-black {
-  background-position: -468px     0; }
+  background-position: -468px 0; }
 
 .extra-marker-circle-white {
-  background-position: -504px     0; }
+  background-position: -504px 0; }
 
 .extra-marker-square-red {
   background-position: 0 -46px; }
@@ -6206,6 +6206,29 @@ body .transit-hvv-u4 {
 
 body .transit-hvv-a1,
 body .transit-hvv-a2,
-body
-.transit-hvv-a3 {
+body .transit-hvv-a3 {
   background-color: #e7873a; }
+
+.readmore {
+  -webkit-box-shadow: inset 0px -80px 40px -40px white;
+  -moz-box-shadow: inset 0px -80px 40px -40px white;
+  box-shadow: inset 0px -80px 40px -40px white;
+  overflow: hidden;
+  cursor: pointer; }
+
+.readmore:before {
+  content: '';
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+100;White+to+Transparent */
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+  /* IE6-9 */ }

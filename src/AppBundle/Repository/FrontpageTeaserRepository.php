@@ -26,8 +26,7 @@ class FrontpageTeaserRepository extends EntityRepository
                     )
                 )
             )
-            ->setParameter('dateTime', $dateTime)
-        ;
+            ->setParameter('dateTime', $dateTime);
 
         $query = $builder->getQuery();
 

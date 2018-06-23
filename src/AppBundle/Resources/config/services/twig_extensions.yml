@@ -14,3 +14,10 @@ services:
             - '@caldera.criticalmass.routing.object_router'
         tags:
             - { name: twig.extension }
+
+    caldera_criticalmass.twig.staticmaps:
+        class: AppBundle\Twig\Extension\StaticmapsTwigExtension
+        arguments:
+            - '%staticmaps.host%'
+        tags:
+            - { name: twig.extension }

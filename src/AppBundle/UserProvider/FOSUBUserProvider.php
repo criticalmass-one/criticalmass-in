@@ -3,16 +3,26 @@
 namespace AppBundle\UserProvider;
 
 use AppBundle\Entity\User;
+use AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function connect(UserInterface $user, UserResponseInterface $response)
+    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
+    protected $profilePhotoGenerator;
+
+    public function __construct(UserManagerInterface $userManager, array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    {
+        $this->profilePhotoGenerator = $profilePhotoGenerator;
+
+        parent::__construct($userManager, $properties);
+    }
+
+    public function connect(UserInterface $user, UserResponseInterface $response): void
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
@@ -28,21 +38,14 @@ class FOSUBUserProvider extends BaseClass
         $this->userManager->updateUser($user);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response)
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
     {
         $user = $this->findUserByUsername($response);
 
         if (null === $user) {
-            if (null === $user) {
-                $user = $this->findUserByEmail($response);
-            } else {
-                $user = $this->userManager->createUser();
+            $user = $this->userManager->createUser();
 
-                $user = $this->setUserData($user, $response);
-            }
+            $user = $this->setUserData($user, $response);
 
             $user = $this->setServiceData($user, $response);
 
@@ -67,28 +70,33 @@ class FOSUBUserProvider extends BaseClass
             ->setUsername($username)
             ->setEmail($email)
             ->setPassword('')
-            ->setEnabled(true)
-        ;
+            ->setEnabled(true);
+
+        $this->setupProfilePhoto($user);
 
         return $user;
     }
 
-    protected function setServiceData(UserInterface $user, UserResponseInterface $response, bool $clear = false): UserInterface
-    {
+    protected function setServiceData(
+        UserInterface $user,
+        UserResponseInterface $response,
+        bool $clear = false
+    ): UserInterface {
         $username = $response->getUsername();
         $service = $response->getResourceOwner()->getName();
 
-        $setter = 'set' . ucfirst($service);
-        $setterId = $setter . 'Id';
-        $setterToken = $setter . 'AccessToken';
+        $setter = sprintf('set%s', ucfirst($service));
+        $setterId = sprintf('%sId', $setter);
+        $setterToken = sprintf('%sAccessToken', $setter);
 
         if ($clear) {
-            $user->$setterId(null);
-            $user->$setterToken(null);
-
+            $user
+                ->$setterId(null)
+                ->$setterToken(null);
         } else {
-            $user->$setterId($username);
-            $user->$setterToken($response->getAccessToken());
+            $user
+                ->$setterId($username)
+                ->$setterToken($response->getAccessToken());
         }
 
         return $user;
@@ -96,11 +104,26 @@ class FOSUBUserProvider extends BaseClass
 
     protected function findUserByUsername(UserResponseInterface $response): ?UserInterface
     {
-        return $this->userManager->findUserBy(['username' => $response->getUsername()]);
+        $service = $response->getResourceOwner()->getName();
+        $serviceId = sprintf('%sId', strtolower($service));
+
+        return $this->userManager->findUserBy([$serviceId => $response->getUsername()]);
     }
 
     protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
     {
         return $this->userManager->findUserBy(['email' => $response->getEmail()]);
+    }
+
+    /**
+     * @TODO This should be done via event subscriber during hwio process, but it does not work :(
+     */
+    protected function setupProfilePhoto(User $user): User
+    {
+        $this->profilePhotoGenerator
+            ->setUser($user)
+            ->generate();
+
+        return $user;
     }
 }

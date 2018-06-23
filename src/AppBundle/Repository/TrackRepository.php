@@ -6,6 +6,7 @@ use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * Class TrackRepository
@@ -34,7 +35,8 @@ class TrackRepository extends EntityRepository
 
         $builder->select('track');
         $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->lt('ride.dateTime', '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
+        $builder->where($builder->expr()->lt('ride.dateTime',
+            '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
         $builder->addOrderBy('track.startDateTime', 'DESC');
         $builder->setMaxResults(1);
@@ -62,7 +64,8 @@ class TrackRepository extends EntityRepository
 
         $builder->select('track');
         $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
+        $builder->where($builder->expr()->gt('ride.dateTime',
+            '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
         $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
         $builder->addOrderBy('track.startDateTime', 'ASC');
         $builder->setMaxResults(1);
@@ -129,8 +132,11 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
+    public function findForTimelineRideTrackCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ) {
         $builder = $this->createQueryBuilder('track');
 
         $builder->select('track');
@@ -141,11 +147,13 @@ class TrackRepository extends EntityRepository
         $builder->andWhere($builder->expr()->eq('track.deleted', 0));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('track.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->gte('track.creationDateTime',
+                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('track.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lte('track.creationDateTime',
+                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
         }
 
         if ($limit) {
@@ -170,12 +178,36 @@ class TrackRepository extends EntityRepository
             ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
             ->setParameter('user', $user)
             ->setParameter('enabled', true)
-            ->setParameter('deleted', false)
-        ;
+            ->setParameter('deleted', false);
 
         $query = $builder->getQuery();
 
         return $query->getSingleScalarResult();
+    }
+
+
+    public function findByUser(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): array
+    {
+        $query = $this->findByUserQuery($user, $enabled, $deleted, $order);
+
+        return $query->getResult();
+    }
+
+    public function findByUserQuery(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): Query
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->join('t.ride', 'r')
+            ->where($builder->expr()->eq('t.user', ':user'))
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->orderBy('r.dateTime', $order)
+            ->setParameter('user', $user)
+            ->setParameter('enabled', $enabled)
+            ->setParameter('deleted', $deleted);
+
+        return $builder->getQuery();
     }
 }
 

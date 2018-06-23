@@ -10,7 +10,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
     RideEntity.prototype._description = null;
     RideEntity.prototype._citySlug = null;
     RideEntity.prototype._location = null;
-    RideEntity.prototype._timestamp = null;
+    RideEntity.prototype._dateTime = null;
 
     RideEntity.prototype._initIcon = function () {
         this._icon = L.ExtraMarkers.icon({
@@ -26,10 +26,10 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
 
         var content = '<dl class="dl-horizontal">';
 
-        content += '<dt>Datum:</dt><dd>' + this._timestamp.format('dd.mm.yyyy') + '</dd>';
+        content += '<dt>Datum:</dt><dd>' + this._dateTime.format('dd.mm.yyyy') + '</dd>';
 
         if (this._hasTime) {
-            content += '<dt>Uhrzeit:</dt><dd>' + this._timestamp.format('HH:MM') + ' Uhr</dd>';
+            content += '<dt>Uhrzeit:</dt><dd>' + this._dateTime.format('HH:MM') + ' Uhr</dd>';
         } else {
             content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
         }
@@ -70,7 +70,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         cityButton.setCaption('Städteseite');
         cityButton.setIcon('university');
         cityButton.setClass('btn-success');
-        cityButton.setHref(Routing.generate('caldera_criticalmass_desktop_city_show', {citySlug: this._city._slug}));
+        cityButton.setHref(Routing.generate('caldera_criticalmass_city_show', {citySlug: this._city._slug}));
 
         var rideButton = new ModalButton();
         rideButton.setCaption('Tourseite');
@@ -78,7 +78,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'M
         rideButton.setClass('btn-success');
         rideButton.setHref(Routing.generate('caldera_criticalmass_ride_show', {
             citySlug: this._city._slug,
-            rideDate: this._timestamp.format('yyyy-mm-dd')
+            rideDate: this._dateTime.format('yyyy-mm-dd')
         }));
 
         var closeButton = new CloseModalButton;

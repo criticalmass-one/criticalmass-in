@@ -21,16 +21,13 @@ class TrackAdmin extends AbstractAdmin
             ->add('ride', EntityType::class, ['class' => Ride::class])
             ->add('user', EntityType::class, ['class' => User::class])
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('deleted', CheckboxType::class, ['required' => false])
             ->end()
-
             ->with('Track file', ['class' => 'col-md-6'])
             ->add('trackFile', VichFileType::class, ['required' => false])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -39,8 +36,7 @@ class TrackAdmin extends AbstractAdmin
             ->add('user')
             ->add('ride')
             ->add('enabled')
-            ->add('deleted')
-        ;
+            ->add('deleted');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -51,7 +47,6 @@ class TrackAdmin extends AbstractAdmin
             ->add('ride')
             ->add('creationDateTime')
             ->add('enabled')
-            ->add('deleted')
-        ;
+            ->add('deleted');
     }
 }

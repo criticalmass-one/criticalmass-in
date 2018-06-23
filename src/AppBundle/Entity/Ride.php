@@ -2,12 +2,15 @@
 
 namespace AppBundle\Entity;
 
+use Caldera\GeoBasic\Coord\Coord;
 use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
 use AppBundle\EntityInterface\ParticipateableInterface;
 use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\PostableInterface;
 use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id
@@ -88,7 +91,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="datetime")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @JMS\Type("DateTime")
+     * @JMS\Type("DateTime<'U'>")
      */
     protected $dateTime;
 
@@ -131,18 +134,21 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $estimatedParticipants;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $estimatedDistance;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
     protected $estimatedDuration;
@@ -180,6 +186,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
      */
     protected $photos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
 
     /**
      * @var \DateTime
@@ -257,7 +268,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      */
     private $imageName;
 
-
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -273,6 +283,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->posts = new ArrayCollection();
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -323,7 +334,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         return $this->dateTime->format('Y-m-d');
     }
-    
+
     public function setHasTime(bool $hasTime): Ride
     {
         $this->hasTime = $hasTime;
@@ -471,6 +482,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimatedParticipants;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook = null): Ride
     {
         $this->facebook = $facebook;
@@ -478,11 +492,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter = null): Ride
     {
         $this->twitter = $twitter;
@@ -490,11 +510,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url = null): Ride
     {
         $this->url = $url;
@@ -502,19 +528,12 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("timestamp")
-     * @JMS\Type("integer")
-     */
-    public function getTimestamp(): int
-    {
-        return $this->dateTime->format('U');
     }
 
     /** @deprecated */
@@ -538,7 +557,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /** @deprecated */
     public function setDate(\DateTime $date): Ride
     {
-        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'), $date->getTimezone());
+        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'),
+            $date->getTimezone());
 
         return $this;
     }
@@ -546,7 +566,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /** @deprecated */
     public function setTime(\DateTime $time): Ride
     {
-        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'), $time->getTimezone());
+        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'),
+            $time->getTimezone());
 
         return $this;
     }
@@ -690,8 +711,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         if (!$this->latitude || !$this->longitude) {
             return '0,0';
         }
-        
+
         return $this->latitude . ',' . $this->longitude;
+    }
+
+    public function getCoord(): ?Coord
+    {
+        return null;
+        return new Coord($this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime
@@ -903,5 +930,31 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): Ride
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
+
+        return $this;
     }
 }

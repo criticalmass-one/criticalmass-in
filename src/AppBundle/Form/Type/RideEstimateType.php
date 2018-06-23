@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Form\Type;
 
@@ -8,14 +8,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class RideEstimateType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('estimatedParticipants', TextType::class, array('required' => true));
+            ->add('estimatedParticipants', TextType::class, ['required' => true]);
     }
 
-    public function getName()
+    public function getName(): string
     {
-        return 'rideestimate';
+        return 'ride_estimate';
     }
 }

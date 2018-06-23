@@ -4,7 +4,7 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
         </a>
     </li>
@@ -20,11 +20,7 @@
 
 {% block content %}
     <div class="container">
-        {% if today(ride.date) %}
-            {% include('AppBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
-        {% else %}
-            {% include('AppBundle:Ride:Includes/_registrationHint.html.twig') %}
-        {% endif %}
+        {% include('AppBundle:Ride:Includes/_registrationHint.html.twig') %}
 
         {% include('AppBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 

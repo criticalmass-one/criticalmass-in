@@ -2,20 +2,24 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user_user")
  * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser
+class User extends BaseUser implements SocialNetworkProfileAble
 {
     /**
      * @ORM\Id
@@ -120,6 +124,20 @@ class User extends BaseUser
      */
     protected $cycles;
 
+    /**
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName")
+     */
+    protected $imageFile;
+
+    /**
+     * @var string $imageName
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageName;
+
     public function __construct()
     {
         parent::__construct();
@@ -131,16 +149,6 @@ class User extends BaseUser
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
-    }
-
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("gravatarHash")
-     */
-    public function getGravatarHash(): ?string
-    {
-        return md5($this->getEmail());
     }
 
     public function getId(): ?int
@@ -422,5 +430,33 @@ class User extends BaseUser
         $this->cycles->removeElement($cityCycle);
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null): User
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(string $imageName = null): User
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 }

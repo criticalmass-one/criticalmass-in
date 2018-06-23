@@ -44,8 +44,12 @@ class CityListFactory
         return $this;
     }
 
-    protected function createModel(City $city, Ride $currentRide = null, array $cycles = [], int $countRides = 0): CityListModel
-    {
+    protected function createModel(
+        City $city,
+        Ride $currentRide = null,
+        array $cycles = [],
+        int $countRides = 0
+    ): CityListModel {
         return new CityListModel($city, $currentRide, $cycles, $countRides);
     }
 }

@@ -2,17 +2,24 @@
 
 namespace AppBundle\Command;
 
-use AppBundle\ViewStorage\ViewStoragePersisterInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use AppBundle\Criticalmass\ViewStorage\ViewStoragePersisterInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StoreViewCommand extends ContainerAwareCommand
+class StoreViewCommand extends Command
 {
     /**
-     * @var OutputInterface $output
+     * @var ViewStoragePersisterInterface $viewSotragePersister
      */
-    protected $output;
+    protected $viewStoragePersister;
+
+    public function __construct(ViewStoragePersisterInterface $viewStoragePersister)
+    {
+        $this->viewStoragePersister = $viewStoragePersister;
+
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -23,10 +30,7 @@ class StoreViewCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ViewStoragePersisterInterface $persister */
-        $persister = $this->getContainer()->get('caldera.view_storage.persister');
-
-        $persister
+        $this->viewStoragePersister
             ->setOutput($output)
             ->persistViews();
     }

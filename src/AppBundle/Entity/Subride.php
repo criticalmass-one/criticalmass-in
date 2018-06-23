@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
-class Subride implements AuditableInterface
+class Subride implements AuditableInterface, SocialNetworkProfileAble
 {
     /**
      * @ORM\Id
@@ -28,6 +31,11 @@ class Subride implements AuditableInterface
      * @JMS\Expose
      */
     protected $ride;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="subride", cascade={"persist", "remove"})
+     */
+    protected $socialNetworkProfiles;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -109,6 +117,8 @@ class Subride implements AuditableInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+
+        $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function __clone()
@@ -128,7 +138,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -140,7 +150,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -186,7 +196,7 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -198,11 +208,14 @@ class Subride implements AuditableInterface
         return $this;
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
+    /**
+     * @deprecated
+     */
     public function setFacebook(string $facebook = null): Subride
     {
         $this->facebook = $facebook;
@@ -210,11 +223,17 @@ class Subride implements AuditableInterface
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getFacebook(): ?string
     {
         return $this->facebook;
     }
 
+    /**
+     * @deprecated
+     */
     public function setTwitter(string $twitter = null): Subride
     {
         $this->twitter = $twitter;
@@ -222,11 +241,17 @@ class Subride implements AuditableInterface
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getTwitter(): ?string
     {
         return $this->twitter;
     }
 
+    /**
+     * @deprecated
+     */
     public function setUrl(string $url = null): Subride
     {
         $this->url = $url;
@@ -234,12 +259,15 @@ class Subride implements AuditableInterface
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
-   public function setRide(Ride $ride = null): Subride
+    public function setRide(Ride $ride = null): Subride
     {
         $this->ride = $ride;
 
@@ -292,9 +320,37 @@ class Subride implements AuditableInterface
         return $this->dateTime;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function setTime(\DateTime $time): Subride
     {
         $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+
+        return $this;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Subride
+    {
+        $this->socialNetworkProfiles->add($socialNetworkProfile);
+
+        return $this;
+    }
+
+    public function setSocialNetworkProfiles(Collection $socialNetworkProfiles): Subride
+    {
+        $this->socialNetworkProfiles = $socialNetworkProfiles;
+
+        return $this;
+    }
+
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Subride
+    {
+        $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
+
+        return $this;
     }
 }

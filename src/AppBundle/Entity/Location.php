@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="location")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LocationRepository")
  */
-class Location implements RouteableInterface, AuditableInterface
+class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
     /**
      * @ORM\Id

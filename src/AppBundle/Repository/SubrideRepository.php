@@ -15,8 +15,7 @@ class SubrideRepository extends EntityRepository
             ->select('sr')
             ->where($builder->expr()->eq('sr.ride', ':ride'))
             ->addOrderBy('sr.dateTime', 'ASC')
-            ->setParameter('ride', $ride)
-        ;
+            ->setParameter('ride', $ride);
 
         $query = $builder->getQuery();
 

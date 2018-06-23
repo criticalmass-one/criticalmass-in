@@ -3,8 +3,8 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Track;
-use AppBundle\Gps\DistanceCalculator\TrackDistanceCalculator;
-use AppBundle\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
