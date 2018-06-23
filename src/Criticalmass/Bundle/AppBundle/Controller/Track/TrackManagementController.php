@@ -3,6 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
@@ -17,22 +18,20 @@ class TrackManagementController extends AbstractController
     use TrackHandlingTrait;
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
-    public function listAction()
+    public function listAction(Request $request, UserInterface $user, PaginatorInterface $paginator)
     {
-        /**
-         * @var array Track
-         */
-        $tracks = $this->getTrackRepository()->findBy([
-            'user' => $this->getUser()->getId(),
-            'deleted' => false
-        ], [
-            'startDateTime' => 'DESC'
-        ]);
+        $query = $this->getTrackRepository()->findByUserQuery($user);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            12
+        );
 
         return $this->render('AppBundle:Track:list.html.twig', [
-            'tracks' => $tracks,
+            'pagination' => $pagination,
         ]);
     }
 
