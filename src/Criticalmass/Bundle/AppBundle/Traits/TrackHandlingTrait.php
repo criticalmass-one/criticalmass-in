@@ -4,13 +4,13 @@ namespace Criticalmass\Bundle\AppBundle\Traits;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Component\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Criticalmass\Component\Gps\GpxReader\TrackReader;
-use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Criticalmass\Component\Gps\TrackPolyline\PolylineGenerator;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateHandler;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 
 /** @deprecated  */
 trait TrackHandlingTrait

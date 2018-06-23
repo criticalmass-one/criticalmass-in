@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

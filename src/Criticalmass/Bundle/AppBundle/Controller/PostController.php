@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller;
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
 use Criticalmass\Bundle\AppBundle\Repository\PostRepository;
-use Criticalmass\Component\Util\ClassUtil;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Entity\City;

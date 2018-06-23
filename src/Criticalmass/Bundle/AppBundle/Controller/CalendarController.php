@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

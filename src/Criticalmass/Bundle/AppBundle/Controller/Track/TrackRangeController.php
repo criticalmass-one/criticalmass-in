@@ -4,7 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
 use Criticalmass\Bundle\AppBundle\Form\Type\TrackRangeType;
-use Criticalmass\Component\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;

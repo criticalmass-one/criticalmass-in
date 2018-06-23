@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Traits;
 
-use Criticalmass\Component\Router\ObjectRouter;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Router\ObjectRouter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

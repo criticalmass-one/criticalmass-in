@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\Command\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\Image\PhotoLocator\PhotoLocator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoLocator\PhotoLocator;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Facebook\EventSelector;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\EventSelector;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

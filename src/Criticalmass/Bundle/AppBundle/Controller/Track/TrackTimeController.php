@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
-use Criticalmass\Component\Gps\TrackTimeshift\TrackTimeshift;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackTimeshift\TrackTimeshift;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormInterface;

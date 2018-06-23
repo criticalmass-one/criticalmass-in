@@ -4,8 +4,8 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Component\SeoPage\SeoPage;
-use Criticalmass\Component\ViewStorage\ViewStorageCache;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

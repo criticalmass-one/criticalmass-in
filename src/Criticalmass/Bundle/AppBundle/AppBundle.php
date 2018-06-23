@@ -4,11 +4,11 @@ namespace Criticalmass\Bundle\AppBundle;
 
 use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\SocialNetworkPass;
 use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
-use Criticalmass\Component\SocialNetwork\Network\NetworkInterface;
-use Criticalmass\Component\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\FeaturePass;
 use Criticalmass\Bundle\AppBundle\Feature\FeatureInterface;
-use Criticalmass\Component\Timeline\Collector\TimelineCollectorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

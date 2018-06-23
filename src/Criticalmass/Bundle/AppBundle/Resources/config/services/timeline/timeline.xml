@@ -9,7 +9,7 @@
             <bind key="$ttl">%timeline.ttl%</bind>
         </defaults>
 
-        <service id="Criticalmass\Component\Timeline\Timeline"/>
-        <service id="Criticalmass\Component\Timeline\CachedTimeline"/>
+        <service id="Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Timeline"/>
+        <service id="Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\CachedTimeline"/>
     </services>
 </container>

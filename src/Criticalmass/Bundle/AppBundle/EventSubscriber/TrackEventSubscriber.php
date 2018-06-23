@@ -4,10 +4,10 @@ namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
-use Criticalmass\Component\Gps\GpxReader\TrackReader;
-use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Criticalmass\Component\Gps\TrackPolyline\PolylineGeneratorInterface;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateHandler;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGeneratorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

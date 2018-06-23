@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
-use Criticalmass\Component\Timeline\CachedTimeline;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\CachedTimeline;
 use Symfony\Component\HttpFoundation\Request;
 
 class TimelineController extends AbstractController

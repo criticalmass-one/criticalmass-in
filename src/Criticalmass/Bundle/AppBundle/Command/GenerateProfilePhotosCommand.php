@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

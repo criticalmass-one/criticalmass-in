@@ -3,9 +3,9 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\SeoPage\SeoPage;
-use Criticalmass\Component\Timeline\CachedTimeline;
-use Criticalmass\Component\Timeline\Timeline;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\CachedTimeline;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

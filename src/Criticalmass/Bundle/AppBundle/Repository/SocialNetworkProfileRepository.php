@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 

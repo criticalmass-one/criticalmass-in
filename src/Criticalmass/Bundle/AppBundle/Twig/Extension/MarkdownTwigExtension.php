@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
-use Criticalmass\Component\Markdown\CriticalMarkdown;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Markdown\CriticalMarkdown;
 
 class MarkdownTwigExtension extends \Twig_Extension
 {

@@ -3,8 +3,8 @@
 namespace Criticalmass\Bundle\AppBundle\UserProvider;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGenerator;
-use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;

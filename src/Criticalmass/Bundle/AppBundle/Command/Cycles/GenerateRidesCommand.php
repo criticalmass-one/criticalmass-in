@@ -4,7 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Command\Cycles;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\RideGenerator\RideGenerator\RideGeneratorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

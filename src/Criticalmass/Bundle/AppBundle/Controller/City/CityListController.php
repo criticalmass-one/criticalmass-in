@@ -4,7 +4,7 @@ namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Factory\CityListFactory;
-use Criticalmass\Component\SeoPage\SeoPage;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Response;
 
 class CityListController extends AbstractController
