@@ -6,6 +6,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * Class TrackRepository
@@ -182,6 +183,31 @@ class TrackRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getSingleScalarResult();
+    }
+
+
+    public function findByUser(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): array
+    {
+        $query = $this->findByUserQuery($user, $enabled, $deleted, $order);
+
+        return $query->getResult();
+    }
+
+    public function findByUserQuery(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): Query
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->join('t.ride', 'r')
+            ->where($builder->expr()->eq('t.user', ':user'))
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->orderBy('r.dateTime', $order)
+            ->setParameter('user', $user)
+            ->setParameter('enabled', $enabled)
+            ->setParameter('deleted', $deleted);
+
+        return $builder->getQuery();
     }
 }
 

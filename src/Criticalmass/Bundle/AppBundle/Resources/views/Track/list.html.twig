@@ -32,7 +32,7 @@
         </div>
 
         <div class="row">
-            {% for track in tracks %}
+            {% for track in pagination %}
                 <div class="col-md-4 margin-bottom-medium">
                     <div class="panel panel-default{% if not track.enabled %} panel-danger{% endif %}">
                         <div class="panel-heading">
@@ -197,6 +197,14 @@
 
     #}
             {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </div>
     </div>
 
