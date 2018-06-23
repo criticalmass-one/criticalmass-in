@@ -13,7 +13,7 @@ class GpxExporter extends AbstractGpxExporter
         $writer->openMemory();
         $writer->startDocument('1.0');
 
-        $writer->setIndent(4);
+        $writer->setIndent(true);
 
         $writer->startElement('gpx');
         $writer->writeAttribute('creator', 'criticalmass.in');
@@ -40,11 +40,11 @@ class GpxExporter extends AbstractGpxExporter
          */
         foreach ($this->positionArray as $position) {
             $writer->startElement('trkpt');
-            $writer->writeAttribute('lat', $position->getLatitude());
-            $writer->writeAttribute('lon', $position->getLongitude());
+            $writer->writeAttribute('lat', (string) $position->getLatitude());
+            $writer->writeAttribute('lon', (string) $position->getLongitude());
 
             $writer->startElement('ele');
-            $writer->text($position->getAltitude());
+            $writer->text((string) $position->getAltitude());
             $writer->endElement();
 
             $writer->startElement('time');
