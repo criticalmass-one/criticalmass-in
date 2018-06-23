@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Gps\TrackTimeShift;
+namespace Criticalmass\Component\Gps\TrackTimeshift;
 
-use Criticalmass\Bundle\AppBundle\Entity\Position;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Component\Gps\GpxExporter\GpxExporter;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
@@ -11,7 +10,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 /**
  * @deprecated
  */
-abstract class AbstractTrackTimeshift implements TrackTimeShiftInterface
+abstract class AbstractTrackTimeshift implements TrackTimeshiftInterface
 {
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
@@ -35,7 +34,7 @@ abstract class AbstractTrackTimeshift implements TrackTimeShiftInterface
         $this->gpxExporter = $gpxExporter;
     }
 
-    public function loadTrack(Track $track): TrackTimeShiftInterface
+    public function loadTrack(Track $track): TrackTimeshiftInterface
     {
         $this->track = $track;
 
@@ -46,7 +45,7 @@ abstract class AbstractTrackTimeshift implements TrackTimeShiftInterface
         return $this;
     }
 
-    public function saveTrack(): TrackTimeShiftInterface
+    public function saveTrack(): TrackTimeshiftInterface
     {
         $this->gpxExporter->setPositionArray($this->positionArray);
 
