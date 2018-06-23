@@ -43,7 +43,7 @@ class SocialNetworkProfileRepository extends EntityRepository
     public function __call($method, $arguments): array
     {
         $methodPrefix = 'findBy';
-        $entityNamespace = 'Criticalmass\\Bundle\\AppBundle\\Entity';
+        $entityNamespace = 'AppBundle\\Entity';
 
         if (0 === strpos($method, $methodPrefix)) {
             $entityClassname = substr($method, 6);

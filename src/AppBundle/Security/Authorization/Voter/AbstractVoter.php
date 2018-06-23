@@ -61,7 +61,7 @@ abstract class AbstractVoter extends Voter
 
         $entityClassName = array_pop($matches);
 
-        $fqcn = sprintf('Criticalmass\\Bundle\\AppBundle\\Entity\\%s', $entityClassName);
+        $fqcn = sprintf('AppBundle\\Entity\\%s', $entityClassName);
 
         return $fqcn;
     }

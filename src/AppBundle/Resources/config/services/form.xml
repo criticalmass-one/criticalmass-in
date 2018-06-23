@@ -7,6 +7,6 @@
         </defaults>
 
         <prototype namespace="AppBundle\Form\"
-                   resource="%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Form/*"/>
+                   resource="%kernel.project_dir%/src/AppBundle/Form/*"/>
     </services>
 </container>

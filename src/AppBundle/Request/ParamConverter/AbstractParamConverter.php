@@ -41,7 +41,7 @@ abstract class AbstractParamConverter implements ParamConverterInterface
 
     protected function getEntityFqcn(): string
     {
-        return sprintf('Criticalmass\\Bundle\\AppBundle\\Entity\\%s', $this->getEntityShortName());
+        return sprintf('AppBundle\\Entity\\%s', $this->getEntityShortName());
     }
 
     protected function notFound(ParamConverter $configuration): void
