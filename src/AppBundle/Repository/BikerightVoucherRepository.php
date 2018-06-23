@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\BikerightVoucher;
+use AppBundle\Entity\BikerightVoucher;
 use Doctrine\ORM\EntityRepository;
 
 class BikerightVoucherRepository extends EntityRepository

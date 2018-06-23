@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command\Weather;
+namespace AppBundle\Command\Weather;
 
-use Criticalmass\Bundle\AppBundle\Entity\Weather;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Weather\WeatherForecastRetriever;
+use AppBundle\Entity\Weather;
+use AppBundle\Criticalmass\Weather\WeatherForecastRetriever;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;

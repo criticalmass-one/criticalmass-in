@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
 
 class StaticmapsTwigExtension extends \Twig_Extension
 {

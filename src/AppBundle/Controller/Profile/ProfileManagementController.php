@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
+namespace AppBundle\Controller\Profile;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Form\Type\UserEmailType;
-use Criticalmass\Bundle\AppBundle\Form\Type\UsernameType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Form\Type\UserEmailType;
+use AppBundle\Form\Type\UsernameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Profile\Streak;
+namespace AppBundle\Criticalmass\Profile\Streak;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 
 interface StreakCalculatorInterface
 {

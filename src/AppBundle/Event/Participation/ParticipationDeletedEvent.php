@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Event\Participation;
+namespace AppBundle\Event\Participation;
 
 class ParticipationDeletedEvent extends AbstractParticipationEvent
 {

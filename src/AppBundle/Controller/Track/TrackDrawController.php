@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Track;
+namespace AppBundle\Controller\Track;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Traits\TrackHandlingTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

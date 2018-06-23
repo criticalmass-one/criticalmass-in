@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
 use Elastica\ResultSet;
 use FOS\ElasticaBundle\Index\IndexManager;
 use Symfony\Component\HttpFoundation\Request;

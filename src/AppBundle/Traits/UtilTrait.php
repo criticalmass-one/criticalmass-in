@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Traits;
+namespace AppBundle\Traits;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Router\ObjectRouter;
+use AppBundle\Criticalmass\Router\ObjectRouter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

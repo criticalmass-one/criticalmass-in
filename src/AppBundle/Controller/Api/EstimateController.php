@@ -1,14 +1,14 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
-use Criticalmass\Bundle\AppBundle\Model\CreateEstimateModel;
-use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
-use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
+use AppBundle\Model\CreateEstimateModel;
+use AppBundle\Traits\RepositoryTrait;
+use AppBundle\Traits\UtilTrait;
+use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\Serializer;

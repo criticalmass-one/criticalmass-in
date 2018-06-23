@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
-use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
+use AppBundle\Entity\City;
+use AppBundle\Traits\RepositoryTrait;
+use AppBundle\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
+use AppBundle\Criticalmass\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

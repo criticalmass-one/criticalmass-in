@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler;
+namespace AppBundle\DependencyInjection\Compiler;
 
-use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
+use AppBundle\Feature\FeatureManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;

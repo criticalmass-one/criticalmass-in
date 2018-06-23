@@ -1,12 +1,12 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="social_network_profile")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\SocialNetworkProfileRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SocialNetworkProfileRepository")
  */
 class SocialNetworkProfile
 {

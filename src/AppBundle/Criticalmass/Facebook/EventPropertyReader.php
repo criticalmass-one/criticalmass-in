@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook;
+namespace AppBundle\Criticalmass\Facebook;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge\RideBridge;
+use AppBundle\Entity\Ride;
+use AppBundle\Criticalmass\Facebook\Bridge\RideBridge;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class EventPropertyReader

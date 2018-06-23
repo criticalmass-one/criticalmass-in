@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Validator;
+namespace AppBundle\Validator;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

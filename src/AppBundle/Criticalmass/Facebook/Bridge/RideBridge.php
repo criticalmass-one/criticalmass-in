@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge;
+namespace AppBundle\Criticalmass\Facebook\Bridge;
 
-use Criticalmass\Bundle\AppBundle\Entity\FacebookRideProperties;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Api\FacebookEventApi;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Util\DateTimeUtil;
+use AppBundle\Entity\FacebookRideProperties;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\SocialNetworkProfile;
+use AppBundle\Criticalmass\Facebook\Api\FacebookEventApi;
+use AppBundle\Criticalmass\Util\DateTimeUtil;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphLocation;

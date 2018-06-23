@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge;
+namespace AppBundle\Criticalmass\Facebook\Bridge;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Api\FacebookPageApi;
+use AppBundle\Criticalmass\Facebook\Api\FacebookPageApi;
 
 class CityBridge extends AbstractBridge
 {

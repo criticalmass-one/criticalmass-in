@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackTimeshift;
+namespace AppBundle\Criticalmass\Gps\TrackTimeshift;
 
-use Criticalmass\Bundle\AppBundle\Entity\Position;
+use AppBundle\Entity\Position;
 
 /**
  * @deprecated

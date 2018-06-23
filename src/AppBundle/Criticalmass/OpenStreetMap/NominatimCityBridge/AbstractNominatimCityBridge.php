@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge;
+namespace AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 

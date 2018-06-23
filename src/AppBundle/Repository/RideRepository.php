@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
-use Criticalmass\Bundle\AppBundle\Entity\Location;
-use Criticalmass\Bundle\AppBundle\Entity\Region;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Util\DateTimeUtil;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CityCycle;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
+use AppBundle\Criticalmass\Util\DateTimeUtil;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository

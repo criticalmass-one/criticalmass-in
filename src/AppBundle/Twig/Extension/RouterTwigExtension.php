@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Router\ObjectRouter;
+use AppBundle\Criticalmass\Router\ObjectRouter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RouterTwigExtension extends \Twig_Extension

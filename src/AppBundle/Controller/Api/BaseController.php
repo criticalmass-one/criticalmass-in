@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\Context;

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
 use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository

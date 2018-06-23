@@ -1,12 +1,12 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
+namespace AppBundle\Controller\Photo;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\SeoPage\SeoPage;
+use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

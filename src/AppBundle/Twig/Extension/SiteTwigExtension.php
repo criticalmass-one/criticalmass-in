@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Bundle\AppBundle\HtmlMetadata\Metadata;
+use AppBundle\Entity\User;
+use AppBundle\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 

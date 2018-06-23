@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
-use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
-use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
+use AppBundle\Traits\RepositoryTrait;
+use AppBundle\Traits\UtilTrait;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;

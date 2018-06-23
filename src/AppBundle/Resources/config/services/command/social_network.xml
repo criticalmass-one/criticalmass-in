@@ -9,7 +9,7 @@
             <tag name="console.command"/>
         </defaults>
 
-        <prototype namespace="Criticalmass\Bundle\AppBundle\Command\SocialNetwork\"
+        <prototype namespace="AppBundle\Command\SocialNetwork\"
                    resource="%kernel.project_dir%/src/Criticalmass/Bundle/AppBundle/Command/SocialNetwork/*"/>
     </services>
 </container>

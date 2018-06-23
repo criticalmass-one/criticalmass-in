@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle;
+namespace AppBundle;
 
-use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\SocialNetworkPass;
-use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler\FeaturePass;
-use Criticalmass\Bundle\AppBundle\Feature\FeatureInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
+use AppBundle\DependencyInjection\Compiler\SocialNetworkPass;
+use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
+use AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use AppBundle\DependencyInjection\Compiler\FeaturePass;
+use AppBundle\Feature\FeatureInterface;
+use AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

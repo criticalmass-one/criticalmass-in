@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
+namespace AppBundle\Controller\Profile;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Form\Type\UserProfilePhotoType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Form\Type\UserProfilePhotoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;

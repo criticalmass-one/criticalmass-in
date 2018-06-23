@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
+namespace AppBundle\Request\ParamConverter;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 

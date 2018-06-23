@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

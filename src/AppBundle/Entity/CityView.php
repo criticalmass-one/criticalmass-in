@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\ViewInterface;
+use AppBundle\EntityInterface\ViewInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

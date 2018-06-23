@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Statistic;
+namespace AppBundle\Controller\Statistic;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use AppBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class TopStatsController extends AbstractController

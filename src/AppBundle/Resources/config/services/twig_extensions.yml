@@ -1,6 +1,6 @@
 services:
     caldera_criticalmass.twig.extension:
-        class: Criticalmass\Bundle\AppBundle\Twig\Extension\SiteTwigExtension
+        class: AppBundle\Twig\Extension\SiteTwigExtension
         arguments:
             - '@translator'
             - '@router'
@@ -9,14 +9,14 @@ services:
             - { name: twig.extension }
 
     caldera_criticalmass.twig.router_extension:
-        class: Criticalmass\Bundle\AppBundle\Twig\Extension\RouterTwigExtension
+        class: AppBundle\Twig\Extension\RouterTwigExtension
         arguments:
             - '@caldera.criticalmass.routing.object_router'
         tags:
             - { name: twig.extension }
 
     caldera_criticalmass.twig.staticmaps:
-        class: Criticalmass\Bundle\AppBundle\Twig\Extension\StaticmapsTwigExtension
+        class: AppBundle\Twig\Extension\StaticmapsTwigExtension
         arguments:
             - '%staticmaps.host%'
         tags:

@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\EntityInterface;
+namespace AppBundle\EntityInterface;
 
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
+use AppBundle\Entity\Thread;
 
 interface BoardInterface
 {

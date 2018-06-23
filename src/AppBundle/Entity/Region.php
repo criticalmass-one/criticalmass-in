@@ -1,14 +1,14 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="region")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\RegionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
  */
 class Region implements RouteableInterface, AuditableInterface
 {

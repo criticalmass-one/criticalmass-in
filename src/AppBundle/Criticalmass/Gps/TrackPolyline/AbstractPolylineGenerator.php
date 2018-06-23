@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline;
+namespace AppBundle\Criticalmass\Gps\TrackPolyline;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 
 abstract class AbstractPolylineGenerator implements PolylineGeneratorInterface
 {

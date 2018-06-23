@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\CityCycleRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CityCycleRepository")
  * @ORM\Table(name="city_cycle")
  */
 class CityCycle

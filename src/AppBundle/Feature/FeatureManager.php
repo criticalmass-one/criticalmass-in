@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Feature;
+namespace AppBundle\Feature;
 
 class FeatureManager
 {

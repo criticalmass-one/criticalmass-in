@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector;
+namespace AppBundle\Criticalmass\Timeline\Collector;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\ItemInterface;
+use AppBundle\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface

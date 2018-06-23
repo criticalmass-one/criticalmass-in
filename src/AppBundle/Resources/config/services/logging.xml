@@ -30,10 +30,10 @@
         <service id="CalendR\Event\Manager">
             <call method="addProvider">
                 <argument type="string">ride_provider</argument>
-                <argument type="service" id="Criticalmass\Bundle\AppBundle\Criticalmass\Calendar\EventProvider\RideProvider"/>
+                <argument type="service" id="AppBundle\Criticalmass\Calendar\EventProvider\RideProvider"/>
             </call>
         </service>
 
-        <service id="Criticalmass\Bundle\AppBundle\Criticalmass\Calendar\EventProvider\RideProvider"/>
+        <service id="AppBundle\Criticalmass\Calendar\EventProvider\RideProvider"/>
     </services>
 </container>

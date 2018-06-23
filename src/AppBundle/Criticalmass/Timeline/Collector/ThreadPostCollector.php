@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector;
+namespace AppBundle\Criticalmass\Timeline\Collector;
 
-use Criticalmass\Bundle\AppBundle\Entity\Post;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\ThreadPostItem;
+use AppBundle\Entity\Post;
+use AppBundle\Criticalmass\Timeline\Item\ThreadPostItem;
 
 class ThreadPostCollector extends AbstractTimelineCollector
 {

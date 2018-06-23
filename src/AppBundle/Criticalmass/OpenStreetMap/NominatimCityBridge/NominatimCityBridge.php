@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge;
+namespace AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Region;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Region;
 use maxh\Nominatim\Nominatim;
 
 class NominatimCityBridge extends AbstractNominatimCityBridge

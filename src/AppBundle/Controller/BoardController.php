@@ -1,15 +1,15 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Criticalmass\Bundle\AppBundle\Entity\Board;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Entity\Board;
+use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Post;
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
-use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Thread;
+use AppBundle\EntityInterface\BoardInterface;
 use Malenki\Slug;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

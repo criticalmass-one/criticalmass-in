@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
+namespace AppBundle\Request\ParamConverter;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
-use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\EntityInterface\AutoParamConverterAble;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

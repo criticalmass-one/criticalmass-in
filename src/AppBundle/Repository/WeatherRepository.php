@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Weather;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Weather;
 use Doctrine\ORM\EntityRepository;
 
 class WeatherRepository extends EntityRepository

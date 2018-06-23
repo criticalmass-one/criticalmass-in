@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Cycles\Analyzer;
+namespace AppBundle\Criticalmass\Cycles\Analyzer;
 
-use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\CityCycle;
+use AppBundle\Entity\Ride;
 
 class CycleAnalyzerModel
 {

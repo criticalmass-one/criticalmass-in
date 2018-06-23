@@ -1,16 +1,16 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
-use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\EntityInterface\AutoParamConverterAble;
+use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="board")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\BoardRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BoardRepository")
  */
 class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble
 {

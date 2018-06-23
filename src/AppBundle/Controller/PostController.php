@@ -1,19 +1,19 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
-use Criticalmass\Bundle\AppBundle\Repository\PostRepository;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Util\ClassUtil;
+use AppBundle\Entity\Photo;
+use AppBundle\EntityInterface\PostableInterface;
+use AppBundle\Repository\PostRepository;
+use AppBundle\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Post;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
-use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
-use Criticalmass\Bundle\AppBundle\Form\Type\PostType;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
+use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\Form\Type\PostType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,16 +1,16 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\SocialNetwork;
+namespace AppBundle\Controller\SocialNetwork;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Bundle\AppBundle\Entity\Subride;
-use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Bundle\AppBundle\Form\Type\SocialNetworkProfileType;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\SocialNetworkProfile;
+use AppBundle\Entity\Subride;
+use AppBundle\Entity\User;
+use AppBundle\Form\Type\SocialNetworkProfileType;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use AppBundle\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;

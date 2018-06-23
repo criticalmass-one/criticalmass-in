@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Location;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class LocationRepository extends EntityRepository

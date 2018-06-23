@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge;
+namespace AppBundle\Criticalmass\Facebook\Bridge;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
 
 abstract class AbstractBridge
 {

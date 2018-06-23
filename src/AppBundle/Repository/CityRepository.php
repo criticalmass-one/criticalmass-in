@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\Region;
+use AppBundle\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
 /**

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator;
+namespace AppBundle\Criticalmass\ProfilePhotoGenerator;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Imagick;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;

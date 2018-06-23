@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Exception;
+namespace AppBundle\Exception;
 
 /**
  * @deprecated

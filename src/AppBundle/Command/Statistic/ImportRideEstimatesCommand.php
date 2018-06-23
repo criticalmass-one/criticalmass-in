@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Command\Statistic;
+namespace AppBundle\Command\Statistic;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

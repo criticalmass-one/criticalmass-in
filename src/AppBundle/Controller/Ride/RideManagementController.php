@@ -1,16 +1,16 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Criticalmass\Bundle\AppBundle\Form\Type\RideSocialPreviewType;
+use AppBundle\Form\Type\RideSocialPreviewType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Form\Type\RideType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
+use AppBundle\Form\Type\RideType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

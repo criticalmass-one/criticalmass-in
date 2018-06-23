@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Event\Participation;
+namespace AppBundle\Event\Participation;
 
-use Criticalmass\Bundle\AppBundle\Entity\Participation;
+use AppBundle\Entity\Participation;
 
 abstract class AbstractParticipationEvent
 {

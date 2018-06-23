@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class SubrideRepository extends EntityRepository

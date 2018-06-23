@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Command\SocialNetwork;
+namespace AppBundle\Command\SocialNetwork;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Bundle\AppBundle\Entity\Subride;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Util\ClassUtil;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\SocialNetworkProfile;
+use AppBundle\Entity\Subride;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use AppBundle\Criticalmass\Util\ClassUtil;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

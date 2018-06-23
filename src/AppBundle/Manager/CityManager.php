@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Manager;
+namespace AppBundle\Manager;
 
-use Criticalmass\Bundle\AppBundle\Model\CityListModel;
+use AppBundle\Model\CityListModel;
 
 class CityManager extends AbstractManager
 {

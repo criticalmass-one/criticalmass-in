@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Event;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
 
 class PostRepository extends EntityRepository

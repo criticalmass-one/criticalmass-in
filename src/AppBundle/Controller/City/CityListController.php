@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\City;
+namespace AppBundle\Controller\City;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Factory\CityListFactory;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Factory\CityListFactory;
+use AppBundle\Criticalmass\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Response;
 
 class CityListController extends AbstractController

@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\DistanceCalculator;
+namespace AppBundle\Criticalmass\Gps\DistanceCalculator;
 
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 
 /**
  * @deprecated

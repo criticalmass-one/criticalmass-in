@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Manager\Exception;
+namespace AppBundle\Manager\Exception;
 
-use Criticalmass\Bundle\AppBundle\Exception\CalderaException;
+use AppBundle\Exception\CalderaException;
 
 /**
  * @deprecated

@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Manager;
+namespace AppBundle\Manager;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\ElasticaBundle\Elastica\Index;

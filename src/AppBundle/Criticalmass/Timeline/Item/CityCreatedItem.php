@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item;
+namespace AppBundle\Criticalmass\Timeline\Item;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
+use AppBundle\Entity\City;
 
 class CityCreatedItem extends AbstractItem
 {

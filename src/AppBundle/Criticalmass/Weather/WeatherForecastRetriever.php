@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Weather;
+namespace AppBundle\Criticalmass\Weather;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Weather;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Weather;
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Forecast;
 use Cmfcmf\OpenWeatherMap\WeatherForecast;

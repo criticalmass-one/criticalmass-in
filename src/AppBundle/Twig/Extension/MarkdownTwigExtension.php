@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Markdown\CriticalMarkdown;
+use AppBundle\Criticalmass\Markdown\CriticalMarkdown;
 
 class MarkdownTwigExtension extends \Twig_Extension
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Manager\PostManager;
+namespace AppBundle\Manager\PostManager;
 
-use Criticalmass\Bundle\AppBundle\Manager\AbstractManager;
-use Criticalmass\Bundle\AppBundle\Repository\PostRepository;
+use AppBundle\Manager\AbstractManager;
+use AppBundle\Repository\PostRepository;
 
 /**
  * @deprecated

@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException;
+namespace AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException;
 
 class NoDateTimeException extends TrackValidatorException
 {

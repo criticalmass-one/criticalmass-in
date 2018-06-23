@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
+namespace AppBundle\Controller\Profile;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Participation;
-use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationDeletedEvent;
-use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationUpdatedEvent;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Profile\Streak\StreakGeneratorInterface;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Participation;
+use AppBundle\Event\Participation\ParticipationDeletedEvent;
+use AppBundle\Event\Participation\ParticipationUpdatedEvent;
+use AppBundle\Criticalmass\Profile\Streak\StreakGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Profile\ParticipationTable\TableGeneratorInterface;
+use AppBundle\Criticalmass\Profile\ParticipationTable\TableGeneratorInterface;
 
 class ParticipationController extends AbstractController
 {

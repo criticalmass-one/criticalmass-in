@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkDetector;
+namespace AppBundle\Criticalmass\SocialNetwork\NetworkDetector;
 
-use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
+use AppBundle\Entity\SocialNetworkProfile;
+use AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use AppBundle\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 
 class NetworkDetector
 {

@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Track;
+namespace AppBundle\Controller\Track;
 
-use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
-use Criticalmass\Bundle\AppBundle\Form\Type\TrackRangeType;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use AppBundle\Event\Track\TrackTrimmedEvent;
+use AppBundle\Form\Type\TrackRangeType;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
+namespace AppBundle\Controller\Profile;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\BikerightVoucher;
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\BikerightVoucher;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Profile\Streak;
+namespace AppBundle\Criticalmass\Profile\Streak;
 
-use Criticalmass\Bundle\AppBundle\Entity\Participation;
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\Participation;
+use AppBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class StreakGenerator implements StreakGeneratorInterface

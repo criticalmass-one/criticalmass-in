@@ -1,28 +1,28 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Caldera\GeoBasic\Coord\Coord;
-use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\ParticipateableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\EntityInterface\ElasticSearchPinInterface;
+use AppBundle\EntityInterface\ParticipateableInterface;
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\PostableInterface;
+use AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Criticalmass\Bundle\AppBundle\Validator\Constraint as CriticalAssert;
+use AppBundle\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="ride")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\RideRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RideRepository")
  * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable

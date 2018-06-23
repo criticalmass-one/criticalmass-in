@@ -1,15 +1,15 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
-use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\EntityInterface\AutoParamConverterAble;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\LocationRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LocationRepository")
  */
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {

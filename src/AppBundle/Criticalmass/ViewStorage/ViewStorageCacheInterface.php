@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage;
+namespace AppBundle\Criticalmass\ViewStorage;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
 
 interface ViewStorageCacheInterface
 {

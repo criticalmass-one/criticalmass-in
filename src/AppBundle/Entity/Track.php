@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\TrackRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TrackRepository")
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */

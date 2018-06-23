@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Api;
+namespace AppBundle\Controller\Api;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
-use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Util\DateTimeUtil;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Entity\Ride;
+use AppBundle\Traits\RepositoryTrait;
+use AppBundle\Traits\UtilTrait;
+use AppBundle\Criticalmass\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

@@ -1,17 +1,17 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Caldera\GeoBasic\Coord\Coord;
-use Criticalmass\Bundle\AppBundle\EntityInterface\AuditableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\AutoParamConverterAble;
-use Criticalmass\Bundle\AppBundle\EntityInterface\BoardInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\ElasticSearchPinInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\PhotoInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\PostableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\RouteableInterface;
-use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use AppBundle\EntityInterface\AuditableInterface;
+use AppBundle\EntityInterface\AutoParamConverterAble;
+use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\EntityInterface\ElasticSearchPinInterface;
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\PostableInterface;
+use AppBundle\EntityInterface\RouteableInterface;
+use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\CityRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")

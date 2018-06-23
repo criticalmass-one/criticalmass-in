@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackChecker;
+namespace AppBundle\Criticalmass\Gps\TrackChecker;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**

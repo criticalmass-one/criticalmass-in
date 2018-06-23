@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Admin;
+namespace AppBundle\Admin;
 
-use Criticalmass\Bundle\AppBundle\Entity\HelpCategory;
+use AppBundle\Entity\HelpCategory;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;

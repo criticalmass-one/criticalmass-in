@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Form\Type;
+namespace AppBundle\Form\Type;
 
-use Criticalmass\Bundle\AppBundle\Repository\RegionRepository;
+use AppBundle\Repository\RegionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

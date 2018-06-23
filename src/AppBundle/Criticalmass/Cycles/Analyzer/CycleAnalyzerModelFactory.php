@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Cycles\Analyzer;
+namespace AppBundle\Criticalmass\Cycles\Analyzer;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Entity\Ride;
 
 class CycleAnalyzerModelFactory implements CycleAnalyzerModelFactoryInterface
 {

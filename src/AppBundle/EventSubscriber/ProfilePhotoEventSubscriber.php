@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
+namespace AppBundle\EventSubscriber;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use AppBundle\Entity\User;
+use AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Event\FormEvent as FosFormEvent;
 use FOS\UserBundle\FOSUserEvents;

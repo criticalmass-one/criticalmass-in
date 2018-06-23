@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Photo;
+namespace AppBundle\Controller\Photo;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Form\Type\PhotoCoordType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Form\Type\PhotoCoordType;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;

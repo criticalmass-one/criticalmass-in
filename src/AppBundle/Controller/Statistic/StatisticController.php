@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Statistic;
+namespace AppBundle\Controller\Statistic;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Region;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Region;
+use AppBundle\Entity\Ride;
+use AppBundle\Criticalmass\SeoPage\SeoPage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

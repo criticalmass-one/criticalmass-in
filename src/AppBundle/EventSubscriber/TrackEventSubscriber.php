@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
+namespace AppBundle\EventSubscriber;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGeneratorInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
+use AppBundle\Entity\Track;
+use AppBundle\Event\Track\TrackTrimmedEvent;
+use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGeneratorInterface;
+use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\GpxCoordLoop;
+namespace AppBundle\Criticalmass\Gps\GpxReader\GpxCoordLoop;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\GpxReader;
+use AppBundle\Criticalmass\Gps\GpxReader\GpxReader;
 
 /**
  * @deprecated

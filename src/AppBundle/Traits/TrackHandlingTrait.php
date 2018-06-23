@@ -1,16 +1,16 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Traits;
+namespace AppBundle\Traits;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGenerator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
+use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGenerator;
+use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
+use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 
 /** @deprecated  */
 trait TrackHandlingTrait

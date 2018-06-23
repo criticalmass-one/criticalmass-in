@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Repository;
+namespace AppBundle\Repository;
 
-use Criticalmass\Bundle\AppBundle\Entity\Board;
-use Criticalmass\Bundle\AppBundle\Entity\City;
+use AppBundle\Entity\Board;
+use AppBundle\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 /**

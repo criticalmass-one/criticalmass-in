@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Entity\Ride;
+use AppBundle\Criticalmass\SeoPage\SeoPage;
+use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Weather;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Weather;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

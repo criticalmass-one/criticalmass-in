@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector;
+namespace AppBundle\Criticalmass\Timeline\Collector;
 
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\ThreadItem;
+use AppBundle\Entity\Thread;
+use AppBundle\Criticalmass\Timeline\Item\ThreadItem;
 
 class ThreadCollector extends AbstractTimelineCollector
 {

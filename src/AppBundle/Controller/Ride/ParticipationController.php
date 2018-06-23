@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
-use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationCreatedEvent;
+use AppBundle\Event\Participation\ParticipationCreatedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Participation;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Participation;
+use AppBundle\Entity\Ride;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;

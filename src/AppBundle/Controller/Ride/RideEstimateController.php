@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
+namespace AppBundle\Controller\Ride;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
-use Criticalmass\Bundle\AppBundle\Form\Type\RideEstimateType;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
+use AppBundle\Form\Type\RideEstimateType;
+use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;

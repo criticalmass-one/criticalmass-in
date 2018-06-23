@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\UserProvider;
+namespace AppBundle\UserProvider;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use AppBundle\Entity\User;
+use AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;

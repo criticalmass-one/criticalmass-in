@@ -1,15 +1,15 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\City;
+namespace AppBundle\Controller\City;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
+use AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CitySlug;
-use Criticalmass\Bundle\AppBundle\Entity\Region;
-use Criticalmass\Bundle\AppBundle\Form\Type\StandardCityType;
+use AppBundle\Controller\AbstractController;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Entity\Region;
+use AppBundle\Form\Type\StandardCityType;
 use Malenki\Slug;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

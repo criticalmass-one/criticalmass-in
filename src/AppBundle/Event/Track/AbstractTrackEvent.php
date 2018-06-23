@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Event\Track;
+namespace AppBundle\Event\Track;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
+use AppBundle\Entity\Track;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractTrackEvent extends Event

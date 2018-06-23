@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline;
+namespace AppBundle\Criticalmass\Timeline;
 
-use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\ItemInterface;
+use AppBundle\Feature\FeatureManager;
+use AppBundle\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
+use AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
+use AppBundle\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Twig\TwigEngine;

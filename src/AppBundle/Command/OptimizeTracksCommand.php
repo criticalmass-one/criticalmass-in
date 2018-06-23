@@ -1,10 +1,10 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace AppBundle\Command;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use AppBundle\Entity\Track;
+use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
+use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

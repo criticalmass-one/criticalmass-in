@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps;
+namespace AppBundle\Criticalmass\Image\PhotoGps;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Track;
 
 interface PhotoGpsInterface
 {

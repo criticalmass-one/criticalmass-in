@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Profile\Streak;
+namespace AppBundle\Criticalmass\Profile\Streak;
 
 class Streak
 {

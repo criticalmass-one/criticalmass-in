@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command;
+namespace AppBundle\Command;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
+use AppBundle\Entity\Track;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

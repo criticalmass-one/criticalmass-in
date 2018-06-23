@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
+namespace AppBundle\Twig\Extension;
 
-use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
+use AppBundle\Feature\FeatureManager;
 
 class FeatureTwigExtension extends \Twig_Extension
 {

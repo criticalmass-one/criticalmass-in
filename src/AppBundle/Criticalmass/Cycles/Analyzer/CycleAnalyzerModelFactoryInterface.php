@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Cycles\Analyzer;
+namespace AppBundle\Criticalmass\Cycles\Analyzer;
 
 interface CycleAnalyzerModelFactoryInterface
 {

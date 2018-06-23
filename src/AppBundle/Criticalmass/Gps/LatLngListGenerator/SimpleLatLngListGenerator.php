@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator;
+namespace AppBundle\Criticalmass\Gps\LatLngListGenerator;
 
 /**
  * @deprecated

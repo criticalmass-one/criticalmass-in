@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Util;
+namespace AppBundle\Criticalmass\Util;
 
 class DateTimeUtil
 {

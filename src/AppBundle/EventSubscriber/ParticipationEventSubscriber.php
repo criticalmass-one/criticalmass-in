@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
+namespace AppBundle\EventSubscriber;
 
-use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationCreatedEvent;
-use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationDeletedEvent;
-use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationUpdatedEvent;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Participation\Calculator\RideParticipationCalculatorInterface;
+use AppBundle\Event\Participation\ParticipationCreatedEvent;
+use AppBundle\Event\Participation\ParticipationDeletedEvent;
+use AppBundle\Event\Participation\ParticipationUpdatedEvent;
+use AppBundle\Criticalmass\Participation\Calculator\RideParticipationCalculatorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParticipationEventSubscriber implements EventSubscriberInterface

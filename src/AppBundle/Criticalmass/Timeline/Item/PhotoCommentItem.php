@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item;
+namespace AppBundle\Criticalmass\Timeline\Item;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
+use AppBundle\Entity\Photo;
 
 class PhotoCommentItem extends AbstractItem
 {

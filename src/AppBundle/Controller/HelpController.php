@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;

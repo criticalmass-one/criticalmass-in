@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Command\Photo;
+namespace AppBundle\Command\Photo;
 
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
+use AppBundle\Entity\User;
+use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
+use AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Doctrine\ORM\EntityManager;
 use PHPExif\Reader\Reader;

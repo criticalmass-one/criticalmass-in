@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Manager\ContentManager;
+namespace AppBundle\Manager\ContentManager;
 
-use Criticalmass\Bundle\AppBundle\Entity\Content;
-use Criticalmass\Bundle\AppBundle\Manager\AbstractManager;
-use Criticalmass\Bundle\AppBundle\Manager\ContentManager\Exception\ContentNotFoundException;
-use Criticalmass\Bundle\AppBundle\Repository\ContentRepository;
+use AppBundle\Entity\Content;
+use AppBundle\Manager\AbstractManager;
+use AppBundle\Manager\ContentManager\Exception\ContentNotFoundException;
+use AppBundle\Repository\ContentRepository;
 
 /**
  * @deprecated

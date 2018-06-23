@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\EntityInterface;
+namespace AppBundle\EntityInterface;
 
 interface PostableInterface
 {

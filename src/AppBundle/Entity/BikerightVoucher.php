@@ -1,12 +1,12 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="bikeright_voucher")
- * @ORM\Entity(repositoryClass="Criticalmass\Bundle\AppBundle\Repository\BikerightVoucherRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BikerightVoucherRepository")
  */
 class BikerightVoucher
 {

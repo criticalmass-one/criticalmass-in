@@ -1,13 +1,13 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Traits;
+namespace AppBundle\Traits;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Photo;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\Thread;
-use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
-use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCacheInterface;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\Thread;
+use AppBundle\EntityInterface\ViewableInterface;
+use AppBundle\Criticalmass\ViewStorage\ViewStorageCacheInterface;
 
 /** @deprecated  */
 trait ViewStorageTrait
@@ -16,7 +16,7 @@ trait ViewStorageTrait
     protected function countView(ViewableInterface $viewable)
     {
         /** @var ViewStorageCacheInterface $viewStorage */
-        $viewStorage = $this->get('Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache');
+        $viewStorage = $this->get('AppBundle\Criticalmass\ViewStorage\ViewStorageCache');
 
         $viewStorage->countView($viewable);
     }

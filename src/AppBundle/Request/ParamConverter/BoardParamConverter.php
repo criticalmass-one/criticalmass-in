@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Request\ParamConverter;
+namespace AppBundle\Request\ParamConverter;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 

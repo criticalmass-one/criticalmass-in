@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\EntityInterface;
+namespace AppBundle\EntityInterface;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 
 interface ViewInterface
 {

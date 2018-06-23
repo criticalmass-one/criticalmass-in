@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline;
+namespace AppBundle\Criticalmass\Gps\TrackPolyline;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
+use AppBundle\Entity\Track;
 
 interface PolylineGeneratorInterface
 {

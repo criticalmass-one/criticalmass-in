@@ -1,14 +1,14 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller\City;
+namespace AppBundle\Controller\City;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
-use Criticalmass\Bundle\AppBundle\Form\Type\CityCycleType;
+use AppBundle\Entity\City;
+use AppBundle\Entity\CityCycle;
+use AppBundle\Form\Type\CityCycleType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
+use AppBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

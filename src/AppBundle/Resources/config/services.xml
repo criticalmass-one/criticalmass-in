@@ -10,82 +10,82 @@
     </imports>
 
     <services>
-        <service id="critical_markdown" class="Criticalmass\Bundle\AppBundle\Criticalmass\Markdown\CriticalMarkdown"/>
+        <service id="critical_markdown" class="AppBundle\Criticalmass\Markdown\CriticalMarkdown"/>
 
         <service id="caldera.criticalmass.validator.single_ride_day"
-                 class="Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator">
+                 class="AppBundle\Validator\SingleRideForDayValidator">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="validator.constraint_validator"/>
         </service>
 
-        <service id="caldera.criticalmass.image.filter.blur" class="Criticalmass\Bundle\AppBundle\Criticalmass\Image\Filter\BlurFilter">
+        <service id="caldera.criticalmass.image.filter.blur" class="AppBundle\Criticalmass\Image\Filter\BlurFilter">
             <tag name="liip_imagine.filter.loader" loader="blur_filter"/>
         </service>
 
         <service id="caldera.criticalmass.image.filter.fast_blur"
-                 class="Criticalmass\Bundle\AppBundle\Criticalmass\Image\Filter\FastBlurFilter">
+                 class="AppBundle\Criticalmass\Image\Filter\FastBlurFilter">
             <tag name="liip_imagine.filter.loader" loader="fast_blur_filter"/>
         </service>
 
-        <service id="caldera.criticalmass.routing.object_router" class="Criticalmass\Bundle\AppBundle\Criticalmass\Router\ObjectRouter">
+        <service id="caldera.criticalmass.routing.object_router" class="AppBundle\Criticalmass\Router\ObjectRouter">
             <argument type="service" id="router.default"/>
         </service>
 
-        <service id="caldera.criticalmass.gps.gpxexporter" class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxExporter\GpxExporter">
+        <service id="caldera.criticalmass.gps.gpxexporter" class="AppBundle\Criticalmass\Gps\GpxExporter\GpxExporter">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="doctrine"/>
         </service>
 
-        <service id="caldera.criticalmass.gps.gpxreader" class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\GpxReader">
+        <service id="caldera.criticalmass.gps.gpxreader" class="AppBundle\Criticalmass\Gps\GpxReader\GpxReader">
             <argument type="service" id="vich_uploader.templating.helper.uploader_helper"/>
             <argument type="string">%kernel.root_dir%</argument>
         </service>
 
-        <service id="caldera.criticalmass.gps.trackreader" class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader">
+        <service id="caldera.criticalmass.gps.trackreader" class="AppBundle\Criticalmass\Gps\GpxReader\TrackReader">
             <argument type="service" id="vich_uploader.templating.helper.uploader_helper"/>
             <argument type="string">%kernel.root_dir%</argument>
         </service>
 
         <service id="caldera.criticalmass.gps.latlnglistgenerator.simple"
-                 class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator">
+                 class="AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator">
             <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
             <argument type="string">%track.gap_width%</argument>
         </service>
 
         <service id="caldera.criticalmass.gps.latlnglistgenerator.range"
-                 class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator">
+                 class="AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator">
             <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
             <argument type="string">%track.gap_width%</argument>
         </service>
 
         <service id="caldera.criticalmass.gps.latlnglistgenerator.time"
-                 class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator">
+                 class="AppBundle\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator">
             <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
             <argument type="string">%track.gap_width%</argument>
         </service>
 
         <service id="caldera.criticalmass.gps.polyline.track"
-                 class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackPolyline\TrackPolyline">
+                 class="AppBundle\Criticalmass\Gps\TrackPolyline\TrackPolyline">
             <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
             <argument type="string">%track.gap_width%</argument>
         </service>
 
         <service id="caldera.criticalmass.gps.distancecalculator.track"
-                 class="Criticalmass\Bundle\AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator">
+                 class="AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator">
             <argument type="service" id="doctrine"/>
             <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
         </service>
 
         <service id="fos_user.doctrine_registry" alias="doctrine"/>
 
-        <service id="caldera.user_provider" class="Criticalmass\Bundle\AppBundle\UserProvider\FOSUBUserProvider">
+        <service id="caldera.user_provider" class="AppBundle\UserProvider\FOSUBUserProvider">
             <argument type="service" id="fos_user.user_manager"/>
             <argument type="collection">
                 <argument type="string" key="facebook">facebookId</argument>
                 <argument type="string" key="strava">stravaId</argument>
                 <argument type="string" key="runkeeper">runkeeperId</argument>
             </argument>
-            <argument type="service" id="Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface" />
+            <argument type="service" id="AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface" />
         </service>
     </services>
 </container>

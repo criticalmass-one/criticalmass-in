@@ -1,8 +1,8 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Validator\Constraint;
+namespace AppBundle\Validator\Constraint;
 
-use Criticalmass\Bundle\AppBundle\Validator\SingleRideForDayValidator;
+use AppBundle\Validator\SingleRideForDayValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

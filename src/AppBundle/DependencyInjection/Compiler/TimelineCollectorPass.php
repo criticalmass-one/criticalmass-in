@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler;
+namespace AppBundle\DependencyInjection\Compiler;
 
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\CachedTimeline;
-use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Timeline;
+use AppBundle\Criticalmass\Timeline\CachedTimeline;
+use AppBundle\Criticalmass\Timeline\Timeline;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;

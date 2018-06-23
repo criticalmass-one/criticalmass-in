@@ -1,12 +1,12 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item;
+namespace AppBundle\Criticalmass\Timeline\Item;
 
-use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Bundle\AppBundle\Entity\Subride;
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\SocialNetworkProfile;
+use AppBundle\Entity\Subride;
+use AppBundle\Entity\User;
 
 class SocialNetworkFeedItemItem extends AbstractItem
 {
