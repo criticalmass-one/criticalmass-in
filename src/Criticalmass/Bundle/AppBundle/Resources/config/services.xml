@@ -76,13 +76,6 @@
             <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
         </service>
 
-        <service id="caldera.criticalmass.gps.timeshift.track"
-                 class="Criticalmass\Component\Gps\TrackTimeShift\TrackTimeShift">
-            <argument type="service" id="doctrine"/>
-            <argument type="service" id="caldera.criticalmass.gps.trackreader"/>
-            <argument type="service" id="caldera.criticalmass.gps.gpxexporter"/>
-        </service>
-
         <service id="fos_user.doctrine_registry" alias="doctrine"/>
 
         <service id="caldera.user_provider" class="Criticalmass\Bundle\AppBundle\UserProvider\FOSUBUserProvider">

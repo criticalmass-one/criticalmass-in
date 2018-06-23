@@ -3,11 +3,12 @@
 namespace Criticalmass\Component\Gps\GpxExporter;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /** @deprecated */
 abstract class AbstractGpxExporter implements GpxExporterInterface
 {
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
     /** @var array $positionArray */
@@ -16,7 +17,7 @@ abstract class AbstractGpxExporter implements GpxExporterInterface
     /** @var string $gpxContent */
     protected $gpxContent = null;
 
-    public function __construct(Registry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
     }
