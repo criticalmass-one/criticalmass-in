@@ -15,16 +15,35 @@ class Builder implements ContainerAwareInterface
     {
         $menu = $factory->createItem('root');
 
-        $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
+        $menu->setChildrenAttribute('class', 'nav navbar-nav');
 
-        $menu->addChild('Critical Mass', ['route' => 'caldera_criticalmass_frontpage']);
-        $menu['Critical Mass']->addChild('Über die Critical Mass');
-        $menu['Critical Mass']->addChild('Häufig gestellte Fragen');
-        $menu['Critical Mass']->addChild('Hilfe');
+        $menu
+            ->addChild('Critical Mass', ['uri' => '#'])
+            ->setLinkAttribute('class', 'dropdown-toggle')
+            ->setLinkAttribute('data-toggle', 'dropdown');
 
-        $menu->addChild('Städte', ['route' => 'caldera_criticalmass_frontpage']);
-        $menu['Städte']->addChild('Städteliste');
+        $menu['Critical Mass']
+            ->setChildrenAttribute('class', 'dropdown-menu')
+            ->addChild('Über die Critical Mass');
+
+        $menu['Critical Mass']
+            ->setChildrenAttribute('class', 'dropdown-menu')
+            ->addChild('Häufig gestellte Fragen');
+        $menu['Critical Mass']
+            ->setChildrenAttribute('class', 'dropdown-menu')
+            ->addChild('Hilfe');
+
+        $menu
+            ->addChild('Städte', ['uri' => '#'])
+            ->setLinkAttribute('class', 'dropdown-toggle')
+            ->setLinkAttribute('data-toggle', 'dropdown');
+
+        $menu['Städte']
+            ->setChildrenAttribute('class', 'dropdown-menu')
+            ->addChild('Städteliste');
+
         $menu['Städte']->addChild('Verzeichnis');
+
         $menu['Städte']->addChild('Kalender');
 
         $menu->addChild('Statistik', ['route' => 'caldera_criticalmass_frontpage']);
