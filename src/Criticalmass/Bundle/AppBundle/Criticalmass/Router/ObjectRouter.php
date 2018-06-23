@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Router;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Router;
 
 use Criticalmass\Bundle\AppBundle\Entity\Board;
 use Criticalmass\Bundle\AppBundle\Entity\City;

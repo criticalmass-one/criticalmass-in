@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Profile\ParticipationTable;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Profile\ParticipationTable;
 
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
 

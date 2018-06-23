@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Weather;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Weather;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;

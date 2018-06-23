@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Component\Timeline\Collector;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Component\Timeline\Item\CityCreatedItem;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\CityCreatedItem;
 
 class CityCreatedCollector extends AbstractTimelineCollector
 {

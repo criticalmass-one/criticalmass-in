@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException;
 
 class TrackValidatorException extends UploadValidatorException
 {

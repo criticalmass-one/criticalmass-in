@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Profile\Streak;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Profile\Streak;
 
 use Criticalmass\Bundle\AppBundle\Entity\Participation;
 use Criticalmass\Bundle\AppBundle\Entity\User;

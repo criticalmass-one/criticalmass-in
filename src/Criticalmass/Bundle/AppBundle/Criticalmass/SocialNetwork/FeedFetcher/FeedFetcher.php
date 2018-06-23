@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\SocialNetwork\FeedFetcher;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\FeedFetcher;
 
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkFeedItem;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Component\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class FeedFetcher

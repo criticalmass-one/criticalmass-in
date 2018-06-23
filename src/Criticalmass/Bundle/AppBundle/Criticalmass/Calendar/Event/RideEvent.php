@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Calendar\Event;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Calendar\Event;
 
 use CalendR\Event\AbstractEvent;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;

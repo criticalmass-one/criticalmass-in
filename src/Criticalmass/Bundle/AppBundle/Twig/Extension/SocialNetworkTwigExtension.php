@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
-use Criticalmass\Component\SocialNetwork\Network\NetworkInterface;
-use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManagerInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 
 class SocialNetworkTwigExtension extends \Twig_Extension
 {

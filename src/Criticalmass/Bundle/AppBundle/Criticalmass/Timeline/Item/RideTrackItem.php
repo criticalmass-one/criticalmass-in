@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Timeline\Item;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;

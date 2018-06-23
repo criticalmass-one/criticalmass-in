@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command\Photo;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Image\PhotoFilterer\PhotoFilterer;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoFilterer\PhotoFilterer;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

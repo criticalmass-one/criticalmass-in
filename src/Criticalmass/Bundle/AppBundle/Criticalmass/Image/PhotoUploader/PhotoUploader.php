@@ -1,12 +1,12 @@
 <?php
 
-namespace Criticalmass\Component\Image\PhotoUploader;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoUploader;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\Image\PhotoGps\PhotoGps;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
 use DirectoryIterator;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use PHPExif\Reader\Reader;

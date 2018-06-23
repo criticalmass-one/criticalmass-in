@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Facebook;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
-use Criticalmass\Component\Facebook\Bridge\RideBridge;
-use Criticalmass\Component\SocialNetwork\Network\FacebookEvent;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge\RideBridge;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\Network\FacebookEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Facebook\GraphNodes\GraphEvent;
 

@@ -8,7 +8,7 @@ use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Form\Type\RideEstimateType;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Entity;
 
-use Criticalmass\Component\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

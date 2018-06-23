@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\ProfilePhotoGenerator;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
 

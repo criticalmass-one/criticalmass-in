@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\SocialNetwork\NetworkFeedFetcher;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkProfile;
 

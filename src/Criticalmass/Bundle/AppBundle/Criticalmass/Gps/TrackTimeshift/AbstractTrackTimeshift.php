@@ -1,11 +1,11 @@
 <?php
 
-namespace Criticalmass\Component\Gps\TrackTimeshift;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\TrackTimeshift;
 
 use Criticalmass\Bundle\AppBundle\Entity\Position;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Component\Gps\GpxExporter\GpxExporter;
-use Criticalmass\Component\Gps\GpxReader\TrackReader;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxExporter\GpxExporter;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

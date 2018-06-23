@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Gps\GpxExporter;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxExporter;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bridge\Doctrine\RegistryInterface;

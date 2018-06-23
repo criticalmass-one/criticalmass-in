@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
-use Criticalmass\Component\UploadValidator\TrackValidator;
-use Criticalmass\Component\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
+use Criticalmass\Bundle\AppBundle\Criticalmass\UploadValidator\TrackValidator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;

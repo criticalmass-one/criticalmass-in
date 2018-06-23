@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Component\Timeline\Collector;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector;
 
 use Criticalmass\Bundle\AppBundle\Entity\SocialNetworkFeedItem;
-use Criticalmass\Component\Timeline\Item\SocialNetworkFeedItemItem;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\SocialNetworkFeedItemItem;
 
 class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
 {

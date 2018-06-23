@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\UploadValidator;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\UploadValidator;
 
 interface UploadValidatorInterface
 {

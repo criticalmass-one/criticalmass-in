@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\SocialNetwork\EntityInterface;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\EntityInterface;
 
 interface SocialNetworkProfileAble
 {

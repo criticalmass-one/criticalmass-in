@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Facebook;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Component\Facebook\Api\FacebookPageApi;
-use Criticalmass\Component\Facebook\Bridge\CityBridge;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Api\FacebookPageApi;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge\CityBridge;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class PagePropertyReader

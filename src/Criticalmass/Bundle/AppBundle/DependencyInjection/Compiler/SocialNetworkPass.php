@@ -2,8 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\DependencyInjection\Compiler;
 
-use Criticalmass\Component\SocialNetwork\FeedFetcher\FeedFetcher;
-use Criticalmass\Component\SocialNetwork\NetworkManager\NetworkManager;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;

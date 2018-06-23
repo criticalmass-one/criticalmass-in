@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\RideGenerator\RideGenerator;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\RideGenerator\RideGenerator;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 

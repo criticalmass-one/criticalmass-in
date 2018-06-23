@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Command\Statistic;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

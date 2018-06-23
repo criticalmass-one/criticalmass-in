@@ -9,9 +9,9 @@
             <bind key="$facebookDefaultToken">%facebook.default_token%</bind>
         </defaults>
 
-        <prototype namespace="Criticalmass\Component\Facebook\"
+        <prototype namespace="Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\"
                    resource="%kernel.project_dir%/src/Criticalmass/Component/Facebook/*"/>
-        <prototype namespace="Criticalmass\Component\Facebook\Api\"
+        <prototype namespace="Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Api\"
                    resource="%kernel.project_dir%/src/Criticalmass/Component/Facebook/Api/*"/>
     </services>
 </container>

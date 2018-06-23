@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Image\Filter;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Image\Filter;
 
 use Imagine\Image\ImageInterface;
 use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;

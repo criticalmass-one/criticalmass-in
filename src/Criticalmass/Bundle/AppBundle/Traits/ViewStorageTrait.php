@@ -7,7 +7,7 @@ use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 use Criticalmass\Bundle\AppBundle\Entity\Thread;
 use Criticalmass\Bundle\AppBundle\EntityInterface\ViewableInterface;
-use Criticalmass\Component\ViewStorage\ViewStorageCacheInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCacheInterface;
 
 /** @deprecated  */
 trait ViewStorageTrait
@@ -16,7 +16,7 @@ trait ViewStorageTrait
     protected function countView(ViewableInterface $viewable)
     {
         /** @var ViewStorageCacheInterface $viewStorage */
-        $viewStorage = $this->get('Criticalmass\Component\ViewStorage\ViewStorageCache');
+        $viewStorage = $this->get('Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache');
 
         $viewStorage->countView($viewable);
     }

@@ -3,8 +3,8 @@
 namespace Criticalmass\Bundle\AppBundle\Controller\Ride;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\SeoPage\SeoPage;
-use Criticalmass\Component\ViewStorage\ViewStorageCache;
+use Criticalmass\Bundle\AppBundle\Criticalmass\SeoPage\SeoPage;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Weather;

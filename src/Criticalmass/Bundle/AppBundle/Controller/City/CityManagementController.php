@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\City;
 
-use Criticalmass\Component\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
+use Criticalmass\Bundle\AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;

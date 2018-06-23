@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Cycles\Analyzer;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Cycles\Analyzer;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 

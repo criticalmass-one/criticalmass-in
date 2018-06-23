@@ -5,8 +5,8 @@ namespace Tests\Component\Util\RideGenerator;
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\RideGenerator\RideCalculator\RideCalculator;
-use Criticalmass\Component\RideGenerator\RideCalculator\RideCalculatorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class RideCalculatorTest extends TestCase

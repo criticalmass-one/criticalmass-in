@@ -5,7 +5,7 @@ namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationCreatedEvent;
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationDeletedEvent;
 use Criticalmass\Bundle\AppBundle\Event\Participation\ParticipationUpdatedEvent;
-use Criticalmass\Component\Participation\Calculator\RideParticipationCalculatorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Participation\Calculator\RideParticipationCalculatorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParticipationEventSubscriber implements EventSubscriberInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\OpenStreetMap\NominatimCityBridge;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Region;

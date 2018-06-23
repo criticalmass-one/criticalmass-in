@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Facebook\Api;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Api;
 
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;

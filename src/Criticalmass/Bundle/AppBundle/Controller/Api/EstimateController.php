@@ -8,7 +8,7 @@ use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Criticalmass\Bundle\AppBundle\Model\CreateEstimateModel;
 use Criticalmass\Bundle\AppBundle\Traits\RepositoryTrait;
 use Criticalmass\Bundle\AppBundle\Traits\UtilTrait;
-use Criticalmass\Component\Statistic\RideEstimate\RideEstimateService;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\Serializer;

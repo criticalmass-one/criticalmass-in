@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Image\PhotoFilterer;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoFilterer;
 
 use Criticalmass\Bundle\AppBundle\Entity\Photo;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;

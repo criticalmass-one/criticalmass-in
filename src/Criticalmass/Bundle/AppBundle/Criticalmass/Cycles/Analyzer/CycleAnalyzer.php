@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Cycles\Analyzer;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Cycles\Analyzer;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\CityCycle;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
-use Criticalmass\Component\RideGenerator\RideCalculator\RideCalculatorInterface;
-use Criticalmass\Component\RideGenerator\RideGenerator\RideGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\RideGenerator\RideGenerator\RideGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class CycleAnalyzer implements CycleAnalyzerInterface

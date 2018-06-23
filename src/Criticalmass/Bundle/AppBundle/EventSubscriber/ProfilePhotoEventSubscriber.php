@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 
 use Criticalmass\Bundle\AppBundle\Entity\User;
-use Criticalmass\Component\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Event\FormEvent as FosFormEvent;
 use FOS\UserBundle\FOSUserEvents;

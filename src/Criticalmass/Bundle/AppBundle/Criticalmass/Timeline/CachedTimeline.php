@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Timeline;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline;
 
 use Criticalmass\Bundle\AppBundle\Feature\FeatureManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;

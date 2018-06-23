@@ -1,9 +1,9 @@
 <?php
 
-namespace Criticalmass\Component\Timeline\Collector;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Collector;
 
 use Criticalmass\Bundle\AppBundle\Entity\Post;
-use Criticalmass\Component\Timeline\Item\RideCommentItem;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item\RideCommentItem;
 
 class RideCommentCollector extends AbstractTimelineCollector
 {

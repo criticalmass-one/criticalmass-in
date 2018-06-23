@@ -3,7 +3,7 @@
 namespace Criticalmass\Bundle\AppBundle\Controller;
 
 use Criticalmass\Bundle\AppBundle\Entity\Board;
-use Criticalmass\Component\ViewStorage\ViewStorageCache;
+use Criticalmass\Bundle\AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Entity\City;

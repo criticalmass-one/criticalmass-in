@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Util;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Util;
 
 class ClassUtil
 {

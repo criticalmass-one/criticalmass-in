@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Facebook\Bridge;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Facebook\Bridge;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Criticalmass\Bundle\AppBundle\Entity\Ride;

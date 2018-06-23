@@ -2,7 +2,7 @@
 
 namespace Criticalmass\Bundle\AppBundle\Twig\Extension;
 
-use Criticalmass\Component\Router\ObjectRouter;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Router\ObjectRouter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RouterTwigExtension extends \Twig_Extension

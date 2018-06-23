@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Timeline\Item;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Timeline\Item;
 
 interface ItemInterface
 {

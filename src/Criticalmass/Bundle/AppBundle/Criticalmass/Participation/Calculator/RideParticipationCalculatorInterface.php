@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Component\Participation\Calculator;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Participation\Calculator;
 
 use Criticalmass\Bundle\AppBundle\Entity\Ride;
 

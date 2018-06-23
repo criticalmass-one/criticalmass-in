@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Component\Gps\GpxReader;
+namespace Criticalmass\Bundle\AppBundle\Criticalmass\Gps\GpxReader;
 
 use Criticalmass\Bundle\AppBundle\Entity\Track;
 
