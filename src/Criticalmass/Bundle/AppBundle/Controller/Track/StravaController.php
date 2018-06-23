@@ -1,6 +1,6 @@
 <?php
 
-namespace Criticalmass\Bundle\AppBundle\Controller;
+namespace Criticalmass\Bundle\AppBundle\Controller\Track;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
