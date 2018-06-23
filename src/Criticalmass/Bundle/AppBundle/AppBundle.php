@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AppBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -27,5 +27,10 @@ class AppBundle extends Bundle
         
         $container->addCompilerPass(new FeaturePass());
         $container->registerForAutoconfiguration(FeatureInterface::class)->addTag('feature');
+    }
+
+    public function getParent(): string
+    {
+        return 'FOSUserBundle';
     }
 }
