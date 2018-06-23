@@ -1,11 +1,11 @@
 doctrine:
     dbal:
         driver:   pdo_mysql
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
+        host:     '%database_host%'
+        port:     '%database_port%'
+        dbname:   '%database_name%'
+        user:     '%database_user%'
+        password: '%database_password%'
         charset:  UTF8
         types:
             datetime: Criticalmass\Bundle\AppBundle\DBAL\Type\UTCDateTimeType
@@ -14,7 +14,7 @@ doctrine:
         mapping_types:
             enum: string
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping: true
         dql:
             datetime_functions:

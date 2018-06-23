@@ -26,11 +26,11 @@ services:
 
     Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader:
         arguments:
-            $uploadDestinationPhoto: %upload_destination.photo%
+            $uploadDestinationPhoto: '%upload_destination.photo%'
 
     Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGps:
         arguments:
-            $uploadDestinationPhoto: %upload_destination.photo%
+            $uploadDestinationPhoto: '%upload_destination.photo%'
 
     Cmfcmf\OpenWeatherMap: ~
 
