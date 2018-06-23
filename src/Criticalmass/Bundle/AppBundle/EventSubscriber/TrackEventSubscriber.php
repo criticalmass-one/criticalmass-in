@@ -3,7 +3,13 @@
 namespace Criticalmass\Bundle\AppBundle\EventSubscriber;
 
 use Criticalmass\Bundle\AppBundle\Entity\Track;
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackDeletedEvent;
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackHiddenEvent;
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackShownEvent;
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackTimeEvent;
 use Criticalmass\Bundle\AppBundle\Event\Track\TrackTrimmedEvent;
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackUpdatedEvent;
+use Criticalmass\Bundle\AppBundle\Event\Track\TrackUploadedEvent;
 use Criticalmass\Component\Gps\GpxReader\TrackReader;
 use Criticalmass\Component\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Criticalmass\Component\Gps\TrackPolyline\PolylineGeneratorInterface;
@@ -44,7 +50,13 @@ class TrackEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            TrackDeletedEvent::NAME => 'onTrackDeleted',
+            TrackHiddenEvent::NAME => 'onTrackHidden',
+            TrackShownEvent::NAME => 'onTrackShowned',
+            TrackTimeEvent::NAME => 'onTrackTime',
             TrackTrimmedEvent::NAME => 'onTrackTrimmed',
+            TrackUpdatedEvent::NAME => 'onTrackUpdated',
+            TrackUploadedEvent::NAME => 'onTrackUploaded',
         ];
     }
 
