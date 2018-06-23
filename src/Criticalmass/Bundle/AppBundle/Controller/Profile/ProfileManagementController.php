@@ -2,18 +2,18 @@
 
 namespace Criticalmass\Bundle\AppBundle\Controller\Profile;
 
+use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Form\Type\UserEmailType;
 use Criticalmass\Bundle\AppBundle\Form\Type\UsernameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ProfileManagementController extends Controller
+class ProfileManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
