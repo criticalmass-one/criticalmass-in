@@ -8,15 +8,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Criticalmass\Bundle\AppBundle\Controller\AbstractController;
 use Criticalmass\Bundle\AppBundle\Entity\Track;
-use Criticalmass\Bundle\AppBundle\Traits\TrackHandlingTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackManagementController extends AbstractController
 {
-    use TrackHandlingTrait;
-
     /**
      * @Security("is_granted('ROLE_USER')")
      */
