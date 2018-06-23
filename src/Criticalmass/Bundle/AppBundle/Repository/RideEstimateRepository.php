@@ -2,6 +2,8 @@
 
 namespace Criticalmass\Bundle\AppBundle\Repository;
 
+use Criticalmass\Bundle\AppBundle\Entity\Ride;
+use Criticalmass\Bundle\AppBundle\Entity\RideEstimate;
 use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository
@@ -44,5 +46,20 @@ class RideEstimateRepository extends EntityRepository
         $result = $query->getResult();
 
         return $result;
+    }
+
+    public function findByRideAndParticipants(Ride $ride, int $estimatedParticipants): ?RideEstimate
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb->where($qb->expr()->eq('e.ride', ':ride'))
+            ->andWhere($qb->expr()->eq('e.estimatedParticipants', ':estimatedParticipants'))
+            ->setParameter('estimatedParticipants', $estimatedParticipants)
+            ->setParameter('ride', $ride)
+            ->setMaxResults(1);
+
+        $query = $qb->getQuery();
+
+        return $query->getOneOrNullResult();
     }
 }
