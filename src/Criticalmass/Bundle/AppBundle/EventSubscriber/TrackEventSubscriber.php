@@ -60,6 +60,15 @@ class TrackEventSubscriber implements EventSubscriberInterface
         ];
     }
 
+    public function onTrackTime(TrackTimeEvent $trackTimeEvent): void
+    {
+        $track = $trackTimeEvent->getTrack();
+
+        $this->updateTrackProperties($track);
+
+        $this->registry->getManager()->flush();
+    }
+
     public function onTrackTrimmed(TrackTrimmedEvent $trackTrimmedEvent): void
     {
         $track = $trackTrimmedEvent->getTrack();
