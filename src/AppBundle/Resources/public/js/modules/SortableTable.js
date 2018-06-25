@@ -6,7 +6,9 @@ define(['jquery', 'datatables'], function () {
     };
 
     SortableTable.prototype._init = function () {
-        $(this.context).DataTable();
+        $(this.context).DataTable({
+            'paging': false
+        });
     };
 
     return SortableTable;
