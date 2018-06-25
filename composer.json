@@ -62,7 +62,8 @@
         "zendframework/zend-http": "^2.7",
         "zendframework/zend-feed": "^2.9",
         "php-http/guzzle6-adapter": "^1.1",
-        "php-http/httplug-bundle": "^1.10"
+        "php-http/httplug-bundle": "^1.10",
+        "knplabs/knp-menu-bundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
