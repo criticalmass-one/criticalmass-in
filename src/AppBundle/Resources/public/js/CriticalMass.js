@@ -110,7 +110,8 @@ require.config({
         "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min",
         "bootstrap4": "/bundles/app/js/external/bootstrap4/bootstrap.min",
         "bootstrap4app": "/bundles/app/js/external/bootstrap-app-4/toolkit",
-        "popper": "/bundles/app/js/external/popper/popper.min"
+        "popper": "/bundles/app/js/external/popper/popper.min",
+        "datatables": "/bundles/app/js/external/datatables/datatables.min"
     },
     shim: {
         'popper': {
