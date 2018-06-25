@@ -3,24 +3,10 @@
 namespace AppBundle\Menu;
 
 use AppBundle\Entity\User;
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class Builder
+class Builder extends AbstractBuilder
 {
-    /** @var FactoryInterface $factory */
-    protected $factory;
-
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    public function __construct(FactoryInterface $factory, TokenStorageInterface $tokenStorage)
-    {
-        $this->factory = $factory;
-        $this->tokenStorage = $tokenStorage;
-    }
-
     public function mainMenu(array $options = []): ItemInterface
     {
         $menu = $this->factory->createItem('root');
@@ -110,23 +96,5 @@ class Builder
 
 
         return $menu;
-    }
-
-    protected function isUserLoggedIn(): bool
-    {
-        $user = $this->getUser();
-
-        return null !== $user;
-    }
-
-    protected function getUser(): ?User
-    {
-        $token = $this->tokenStorage->getToken();
-
-        if ($token && is_object($token->getUser())) {
-            return $token->getUser();
-        }
-
-        return null;
     }
 }
