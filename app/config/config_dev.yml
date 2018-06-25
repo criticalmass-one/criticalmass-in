@@ -15,15 +15,12 @@ monolog:
     handlers:
         main:
             type:  stream
+
             path:  '%kernel.logs_dir%/%kernel.environment%.log'
             level: error
         firephp:
             type:  firephp
-            level: info
+            level: error
         chromephp:
             type:  chromephp
-            level: info
-        gelf:
-            type: service
-            id: monolog.gelf_handler
             level: error
