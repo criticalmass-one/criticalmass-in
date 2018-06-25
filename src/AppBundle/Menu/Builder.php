@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Menu;
 
@@ -20,44 +20,54 @@ class Builder implements ContainerAwareInterface
         $menu
             ->addChild('Critical Mass', ['uri' => '#'])
             ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown');
+            ->setLinkAttribute('data-toggle', 'dropdown')
+            ->setChildrenAttribute('class', 'dropdown-menu');
 
         $menu['Critical Mass']
-            ->setChildrenAttribute('class', 'dropdown-menu')
             ->addChild('Über die Critical Mass');
 
         $menu['Critical Mass']
-            ->setChildrenAttribute('class', 'dropdown-menu')
             ->addChild('Häufig gestellte Fragen');
+
         $menu['Critical Mass']
-            ->setChildrenAttribute('class', 'dropdown-menu')
             ->addChild('Hilfe');
 
         $menu
             ->addChild('Städte', ['uri' => '#'])
             ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown');
+            ->setLinkAttribute('data-toggle', 'dropdown')
+            ->setChildrenAttribute('class', 'dropdown-menu');
 
         $menu['Städte']
-            ->setChildrenAttribute('class', 'dropdown-menu')
             ->addChild('Städteliste');
 
         $menu['Städte']->addChild('Verzeichnis');
 
         $menu['Städte']->addChild('Kalender');
 
-        $menu->addChild('Statistik', ['route' => 'caldera_criticalmass_frontpage']);
-        $menu['Statistik']->addChild('Übersicht');
-        $menu['Statistik']->addChild('facebook-Statistiken');
+        $menu->addChild('Statistik', ['uri' => '#'])
+            ->setLinkAttribute('class', 'dropdown-toggle')
+            ->setLinkAttribute('data-toggle', 'dropdown')
+            ->setChildrenAttribute('class', 'dropdown-menu');
 
-        $menu->addChild('Community', ['route' => 'caldera_criticalmass_frontpage']);
+        $menu['Statistik']->addChild('Übersicht');
+
+        $menu->addChild('Community', ['uri' => '#'])
+            ->setLinkAttribute('class', 'dropdown-toggle')
+            ->setLinkAttribute('data-toggle', 'dropdown')
+            ->setChildrenAttribute('class', 'dropdown-menu');
+
         $menu['Community']->addChild('Timeline');
         $menu['Community']->addChild('Diskussion');
         $menu['Community']->addChild('Fotos');
 
         $menu->addChild('Anmelden', ['route' => 'fos_user_security_login'])->setLinkAttributes(['href' => '#', 'data-toggle' => 'modal', 'data-target' => '#loginModal']);
 
-        $menu->addChild('Benutzerkonto', ['route' => 'caldera_criticalmass_frontpage']);
+        $menu->addChild('Benutzerkonto', ['uri' => '#'])
+            ->setLinkAttribute('class', 'dropdown-toggle')
+            ->setLinkAttribute('data-toggle', 'dropdown')
+            ->setChildrenAttribute('class', 'dropdown-menu');
+
         $menu['Benutzerkonto']->addChild('Dein Profil');
         $menu['Benutzerkonto']->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
 
