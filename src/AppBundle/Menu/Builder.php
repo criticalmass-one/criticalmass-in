@@ -2,17 +2,23 @@
 
 namespace AppBundle\Menu;
 
+use AppBundle\Entity\User;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Builder
 {
     /** @var FactoryInterface $factory */
     protected $factory;
 
-    public function __construct(FactoryInterface $factory)
+    /** @var TokenStorageInterface $tokenStorage */
+    protected $tokenStorage;
+
+    public function __construct(FactoryInterface $factory, TokenStorageInterface $tokenStorage)
     {
         $this->factory = $factory;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function mainMenu(array $options = []): ItemInterface
@@ -82,14 +88,46 @@ class Builder
         $menu['Community']
             ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
 
-        $menu->addChild('Anmelden', ['route' => 'fos_user_security_login'])->setLinkAttributes(['href' => '#', 'data-toggle' => 'modal', 'data-target' => '#loginModal']);
+        if ($this->isUserLoggedIn()) {
+            $menu->addChild('Benutzerkonto', ['uri' => '#'])
+                ->setExtra('dropdown', true);
 
-        $menu->addChild('Benutzerkonto', ['uri' => '#'])
-            ->setExtra('dropdown', true);
+            $menu['Benutzerkonto'
+                ]->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
 
-        $menu['Benutzerkonto']->addChild('Dein Profil');
-        $menu['Benutzerkonto']->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
+            $menu['Benutzerkonto']
+                ->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
+        } else {
+            $menu
+                ->addChild('Anmelden', [
+                    'route' => 'fos_user_security_login'
+                ])
+                ->setLinkAttributes([
+                    'href' => '#',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#loginModal'
+                ]);
+        }
+
 
         return $menu;
+    }
+
+    protected function isUserLoggedIn(): bool
+    {
+        $user = $this->getUser();
+
+        return null !== $user;
+    }
+
+    protected function getUser(): ?User
+    {
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && is_object($token->getUser())) {
+            return $token->getUser();
+        }
+
+        return null;
     }
 }
