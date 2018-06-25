@@ -18,55 +18,70 @@ class Builder implements ContainerAwareInterface
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
 
         $menu
-            ->addChild('Critical Mass', ['uri' => '#'])
+            ->addChild('Critical Mass', ['uri' => '#', 'class' => 'dropdown'])
+            ->setExtra('dropdown', true)
             ->setLinkAttribute('class', 'dropdown-toggle')
             ->setLinkAttribute('data-toggle', 'dropdown')
             ->setChildrenAttribute('class', 'dropdown-menu');
 
         $menu['Critical Mass']
-            ->addChild('Über die Critical Mass');
+            ->addChild('Über die Critical Mass', ['route' => 'caldera_criticalmass_help_about']);
 
         $menu['Critical Mass']
-            ->addChild('Häufig gestellte Fragen');
+            ->addChild('Häufig gestellte Fragen', ['route' => 'caldera_criticalmass_help_faq']);
 
         $menu['Critical Mass']
-            ->addChild('Hilfe');
+            ->addChild('Hilfe', ['route' => 'caldera_criticalmass_help_index']);
+
+        $menu['Critical Mass']
+            ->addChild('Über criticalmass.in', ['route' => 'caldera_criticalmass_intro']);
 
         $menu
             ->addChild('Städte', ['uri' => '#'])
-            ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown')
-            ->setChildrenAttribute('class', 'dropdown-menu');
+            ->setExtra('dropdown', true);
 
         $menu['Städte']
-            ->addChild('Städteliste');
+            ->addChild('Städteliste', ['route' => 'caldera_criticalmass_city_list']);
 
-        $menu['Städte']->addChild('Verzeichnis');
+        $menu['Städte']
+            ->addChild('Verzeichnis', ['route' => 'caldera_criticalmass_region_world']);
 
-        $menu['Städte']->addChild('Kalender');
+        $menu['Städte']
+            ->addChild('Kalender', ['route' => 'caldera_criticalmass_calendar']);
 
         $menu->addChild('Statistik', ['uri' => '#'])
-            ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown')
-            ->setChildrenAttribute('class', 'dropdown-menu');
+            ->setExtra('dropdown', true);
 
-        $menu['Statistik']->addChild('Übersicht');
+        $menu['Statistik']
+            ->addChild('Übersicht', ['route' => 'caldera_criticalmass_statistic_overview']);
+
+        $menu['Statistik']
+            ->addChild('Top 10', ['route' => 'caldera_criticalmass_statistic_topten']);
+
+        $menu['Statistik']
+            ->addChild('Monatsauswertung', [
+                'route' => 'caldera_criticalmass_statistic_ride_month',
+                'routeParameters' => [
+                    'year' => (new \DateTime())->format('Y'),
+                    'month' => (new \DateTime())->format('m'),
+                ]]);
 
         $menu->addChild('Community', ['uri' => '#'])
-            ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown')
-            ->setChildrenAttribute('class', 'dropdown-menu');
+            ->setExtra('dropdown', true);
 
-        $menu['Community']->addChild('Timeline');
-        $menu['Community']->addChild('Diskussion');
-        $menu['Community']->addChild('Fotos');
+        $menu['Community']
+            ->addChild('Timeline', ['route' => 'caldera_criticalmass_timeline_index']);
+
+        $menu['Community']
+            ->addChild('Diskussion', ['route' => 'caldera_criticalmass_board_overview']);
+
+        $menu['Community']
+            ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
 
         $menu->addChild('Anmelden', ['route' => 'fos_user_security_login'])->setLinkAttributes(['href' => '#', 'data-toggle' => 'modal', 'data-target' => '#loginModal']);
 
         $menu->addChild('Benutzerkonto', ['uri' => '#'])
-            ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown')
-            ->setChildrenAttribute('class', 'dropdown-menu');
+            ->setExtra('dropdown', true);
 
         $menu['Benutzerkonto']->addChild('Dein Profil');
         $menu['Benutzerkonto']->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
@@ -74,43 +89,3 @@ class Builder implements ContainerAwareInterface
         return $menu;
     }
 }
-
-/**
- * {% if app.getUser() %}
-
-<li class="dropdown">
-<a href="{{ path('fos_user_security_login') }}" class="dropdown-toggle"
-data-toggle="dropdown">
-<i class="fa fa-user"></i>
-{% trans %}criticalmass.navigation.account.account{% endtrans %}
-<span class="caret"></span>
-</a>
-
-<ul class="dropdown-menu" role="menu">
-<li>
-<a href="{{ path('caldera_criticalmass_track_list') }}">
-{% trans %}criticalmass.navigation.account.tracks{% endtrans %}
-</a>
-</li>
-<li>
-<a href="{{ path('caldera_criticalmass_photo_user_list') }}">
-{% trans %}criticalmass.navigation.account.photos{% endtrans %}
-</a>
-</li>
-<li class="divider"></li>
-<li>
-<a href="{{ path('fos_user_security_logout') }}">
-{% trans %}criticalmass.navigation.account.logout{% endtrans %}
-</a>
-</li>
-</ul>
-</li>
-{% else %}
-<li>
-<a href="#" data-toggle="modal" data-target="#loginModal">
-<i class="fa fa-user"></i>
-{% trans %}criticalmass.navigation.account.login{% endtrans %}
-</a>
-</li>
-{% endif %}
- */
