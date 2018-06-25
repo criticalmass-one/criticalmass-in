@@ -100,10 +100,9 @@ class Builder
         } else {
             $menu
                 ->addChild('Anmelden', [
-                    'route' => 'fos_user_security_login'
+                    'uri' => '#'
                 ])
                 ->setLinkAttributes([
-                    'href' => '#',
                     'data-toggle' => 'modal',
                     'data-target' => '#loginModal'
                 ]);
