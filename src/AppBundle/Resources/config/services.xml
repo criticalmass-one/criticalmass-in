@@ -86,5 +86,10 @@
             </argument>
             <argument type="service" id="AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface" />
         </service>
+
+        <service id="AppBundle\Menu\Builder">
+            <argument type="service" id="knp_menu.factory" />
+            <tag name="knp_menu.menu_builder" method="mainMenu" alias="main_menu" />
+        </service>
     </services>
 </container>

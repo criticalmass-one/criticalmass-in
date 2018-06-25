@@ -4,16 +4,20 @@ namespace AppBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class Builder implements ContainerAwareInterface
+class Builder
 {
-    use ContainerAwareTrait;
+    /** @var FactoryInterface $factory */
+    protected $factory;
 
-    public function mainMenu(FactoryInterface $factory, array $options): ItemInterface
+    public function __construct(FactoryInterface $factory)
     {
-        $menu = $factory->createItem('root');
+        $this->factory = $factory;
+    }
+
+    public function mainMenu(array $options = []): ItemInterface
+    {
+        $menu = $this->factory->createItem('root');
 
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
 
