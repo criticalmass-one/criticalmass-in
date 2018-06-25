@@ -36,8 +36,7 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new SimpleThings\EntityAudit\SimpleThingsEntityAuditBundle(),
             new Sonata\SeoBundle\SonataSeoBundle(),
-            new Criticalmass\Bundle\AppBundle\AppBundle(),
-            new Criticalmass\Bundle\UserBundle\UserBundle(),
+            new AppBundle\AppBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

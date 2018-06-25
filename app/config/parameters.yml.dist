@@ -30,13 +30,17 @@ parameters:
     runkeeper.client_id: 234qt35zr6tjzrgrergerg
     runkeeper.secret: 234qt35zr6tjzrgrergerg
 
+    twitter.client_id: 234qt35zr6tjzrgrergerg
+    twitter.token: 234qt35zr6tjzrgrergerg
+    twitter.secret: 234qt35zr6tjzrgrergerg
+
     timeline.ttl: 60
 
     messagebird.api_key: 234qt35zr6tjzrgrergerg
     notification.pushover.token: 234qt35zr6tjzrgrergerg
     notification.mail.sender_address: 'malte@criticalmass.in'
 
-    jms_serializer.camel_case_naming_strategy.class: Criticalmass\Bundle\AppBundle\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
+    jms_serializer.camel_case_naming_strategy.class: AppBundle\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
 
     request_listener.http_port: 80
     request_listener.https_port: 443
@@ -53,3 +57,5 @@ parameters:
     graylog.port: 12201
 
     upload_destination.photo: %kernel.root_dir%/../web/photos
+
+    feature.photos: true

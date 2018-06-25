@@ -17,4 +17,3 @@ imports:
     - { resource: criticalmass/nelmio.yml }
     - { resource: criticalmass/hwi.yml }
     - { resource: services.yml }
-    - { resource: "@UserBundle/Resources/config/services.xml" }

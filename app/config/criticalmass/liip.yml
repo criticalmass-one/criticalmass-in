@@ -15,7 +15,7 @@ liip_imagine:
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
                 watermark:
-                    image: ../src/Criticalmass/Bundle/AppBundle/Resources/public/images/watermark/criticalmass.png
+                    image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
         gallery_photo_blurred:
@@ -28,7 +28,7 @@ liip_imagine:
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
                 watermark:
-                    image: ../src/Criticalmass/Bundle/AppBundle/Resources/public/images/watermark/criticalmass.png
+                    image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
         city_image_wide:
@@ -59,3 +59,15 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
+        user_profile_photo_medium:
+            quality: 75
+            filters:
+                thumbnail: { size: [512, 512], mode: inset }
+        user_profile_photo_small:
+            quality: 50
+            filters:
+                thumbnail: { size: [128, 128], mode: inset }
+        user_profile_photo_timelapse:
+            quality: 30
+            filters:
+                thumbnail: { size: [50, 50], mode: inset }

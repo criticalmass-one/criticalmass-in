@@ -2,7 +2,7 @@
 
 namespace Tests\Component\Util;
 
-use Criticalmass\Component\Util\DateTimeUtil;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Util\DateTimeUtil;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeUtilTest extends TestCase
