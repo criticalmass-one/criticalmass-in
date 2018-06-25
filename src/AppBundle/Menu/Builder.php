@@ -15,10 +15,7 @@ class Builder extends AbstractBuilder
 
         $menu
             ->addChild('Critical Mass', ['uri' => '#', 'class' => 'dropdown'])
-            ->setExtra('dropdown', true)
-            ->setLinkAttribute('class', 'dropdown-toggle')
-            ->setLinkAttribute('data-toggle', 'dropdown')
-            ->setChildrenAttribute('class', 'dropdown-menu');
+            ->setExtra('dropdown', true);
 
         $menu['Critical Mass']
             ->addChild('Über die Critical Mass', ['route' => 'caldera_criticalmass_help_about']);
