@@ -1,6 +1,6 @@
 twig:
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
+    debug:            '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
     number_format:
         decimals: 2
         decimal_point: ','
@@ -10,4 +10,4 @@ twig:
         format: d.m.Y, H:i:s
         interval_format: '%%d days'
     globals:
-        bikeright_visible: %bikeright.visible%
+        bikeright_visible: '%bikeright.visible%'

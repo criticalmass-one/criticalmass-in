@@ -1,0 +1,29 @@
+criticalmass:
+    logoname: criticalmass.in
+    brandname: criticalmass.in
+
+    navigation:
+        cities:
+            cities: Cities
+            list: List
+            directory: Directory
+            calendar: Calendar
+            photos: Photos
+            galleries: Photo galleries
+        criticalmass:
+            criticalmass: Critical Mass
+            about: About Critical Mass
+            faq: FAQ
+            tips: Tips
+            about-us: About Caldera Critical Mass
+            caldera-faq: Caldera FAQ
+            help: Help
+        account:
+            account: Your account
+            tracks: Tracks
+            apps: Apps
+            photos: Photos
+            logout: Logout
+            login: Login
+        search:
+            search: Search
