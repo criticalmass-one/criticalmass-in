@@ -103,14 +103,14 @@ require.config({
         "bloodhound": "/bundles/app/js/external/typeahead/bloodhound",
         "jquery": "/bundles/app/js/external/jquery/jquery-3.2.1.min",
         "jquery-areaselect": "/bundles/app/js/external/jquery/jquery.areaselect.min",
-        "jquery-tablesorter": "/bundles/app/js/external/jquery/jquery.tablesorter",
         "dateformat": "/bundles/app/js/external/dateformat/dateformat",
         "chartjs": "/bundles/app/js/external/chartjs/chartjs",
         "localforage": "/bundles/app/js/external/localforage/localforage.min",
         "bootstrap-datepicker": "/bundles/app/js/external/bootstrap-datepicker/bootstrap-datepicker.min",
         "bootstrap4": "/bundles/app/js/external/bootstrap4/bootstrap.min",
         "bootstrap4app": "/bundles/app/js/external/bootstrap-app-4/toolkit",
-        "popper": "/bundles/app/js/external/popper/popper.min"
+        "popper": "/bundles/app/js/external/popper/popper.min",
+        "datatables": "/bundles/app/js/external/datatables/datatables.min"
     },
     shim: {
         'popper': {
