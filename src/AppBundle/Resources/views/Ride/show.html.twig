@@ -4,7 +4,7 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
         </a>
     </li>
@@ -18,41 +18,9 @@
     </li>
 {% endblock %}
 
-{% block additionalHeaderElements %}
-    <meta property="og:title" content="{{ ride.fancyTitle }}" />
-    <meta property="og:type" content="Website" />
-    <meta property="og:url" content="{{ url('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}" />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="criticalmass.in" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@calderacc" />
-    <meta name="twitter:creator" content="@maltehuebner" />
-    <meta name="twitter:title" content="{{ ride.fancyTitle }}" />
-
-    {% if ride.socialDescription %}
-        <meta name="twitter:description" content="{{ ride.socialDescription }}" />
-        <meta property="og:description" content="{{ ride.socialDescription }}" />
-    {% else %}
-        <meta name="twitter:description" content="{{ ride.description }}" />
-        <meta property="og:description" content="{{ ride.description }}" />
-    {% endif %}
-
-    {% if ride.imageName %}
-        <meta property="og:image" content="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
-        <meta name="twitter:image" content="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
-    {% elseif ride.featuredPhoto %}
-        <meta property="og:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
-        <meta name="twitter:image" content="{{ vich_uploader_asset(ride.featuredPhoto, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
-    {% endif %}
-{% endblock %}
-
 {% block content %}
     <div class="container">
-        {% if today(ride.date) %}
-            {% include('AppBundle:Ride:Includes/_liveHint.html.twig') with { 'city': city } %}
-        {% else %}
-            {% include('AppBundle:Ride:Includes/_registrationHint.html.twig') %}
-        {% endif %}
+        {% include('AppBundle:Ride:Includes/_registrationHint.html.twig') %}
 
         {% include('AppBundle:Ride:Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 

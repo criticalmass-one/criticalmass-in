@@ -3,6 +3,7 @@
     overflow: hidden;
     position: absolute;
 }
+
 .blurred {
     filter: url('/bundles/app/images/jquery/filter.svg#blur3px');
     -webkit-filter: blur(3px);
@@ -30,6 +31,7 @@
     height: 16px;
     width: 16px;
 }
+
 .delete-area {
     position: absolute;
     cursor: pointer;

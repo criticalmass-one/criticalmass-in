@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\BoardInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="board")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BoardRepository")
  */
-class Board implements BoardInterface
+class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble
 {
     /**
      * @ORM\Id

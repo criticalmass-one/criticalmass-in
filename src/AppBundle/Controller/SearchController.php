@@ -5,36 +5,29 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
 use Elastica\ResultSet;
+use FOS\ElasticaBundle\Index\IndexManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected function createQuery($queryPhrase, \Elastica\Filter\AbstractFilter $cityFilter, \Elastica\Filter\AbstractFilter $countryFilter)
-    {
+    protected function createQuery(
+        $queryPhrase,
+        \Elastica\Filter\AbstractFilter $cityFilter,
+        \Elastica\Filter\AbstractFilter $countryFilter
+    ) {
         if ($queryPhrase) {
-            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase, ['title', 'description', 'location']);
+            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
+                ['title', 'description', 'location']);
         } else {
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
 
-        $dateTimeRange = new \Elastica\Query\Range();
-        $dateTimeRange->addField('dateTime',
-            [
-                'lte' => '2013-01-01 00:00:00',
-            ]
-        );
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery->addMust($simpleQueryString);
-        $boolQuery->addMust($dateTimeRange);
-
-        $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
         $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $enabledFilter, $cityFilter, $countryFilter]);
+        $filter = new \Elastica\Filter\BoolAnd([$enabledFilter, $cityFilter, $countryFilter]);
 
-        $filteredQuery = new \Elastica\Query\Filtered($boolQuery, $filter);
+        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
 
         $query = new \Elastica\Query($filteredQuery);
 
@@ -44,14 +37,12 @@ class SearchController extends AbstractController
         return $query;
     }
 
-    protected function performSearch(\Elastica\Query $query)
+    protected function performSearch(\Elastica\Query $query, IndexManager $manager)
     {
-        $mngr = $this->get('fos_elastica.index_manager');
+        $search = $manager->getIndex('criticalmass')->createSearch();
 
-        $search = $mngr->getIndex('criticalmass')->createSearch();
-
-        $search->addType('ride');
-        $search->addType('city');
+        //$search->addType('ride');
+        //$search->addType('city');
 
         return $search->search($query);
     }
@@ -93,7 +84,7 @@ class SearchController extends AbstractController
         return new \Elastica\Filter\BoolOr($filters);
     }
 
-    public function queryAction(Request $request)
+    public function queryAction(Request $request, IndexManager $manager)
     {
         $queryPhrase = $request->get('query');
         $cities = $request->get('cities');
@@ -116,7 +107,7 @@ class SearchController extends AbstractController
         $query = $this->addAggregations($query);
 
         /** @var ResultSet $resultSet */
-        $resultSet = $this->performSearch($query);
+        $resultSet = $this->performSearch($query, $manager);
 
         $transformer = $this->get('fos_elastica.elastica_to_model_transformer.collection.criticalmass');
 

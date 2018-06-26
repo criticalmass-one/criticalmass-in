@@ -14,12 +14,11 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RideType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, array('required' => false))
-            ->add('description', TextareaType::class, array('required' => false))
-            ->add('socialDescription', TextareaType::class, ['required' => false])
+            ->add('title', TextType::class, ['required' => false])
+            ->add('description', TextareaType::class, ['required' => false])
             ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'Europe/Berlin',
@@ -28,25 +27,15 @@ class RideType extends AbstractType
                 'time_widget' => 'single_text',
                 'compound' => true
             ])
-            ->add('location', TextType::class, array('required' => false))
-            ->add('latitude', HiddenType::class)
-            ->add('longitude', HiddenType::class)
-            ->add('facebook', TextType::class, array('required' => false))
-            ->add('twitter', TextType::class, array('required' => false))
-            ->add('url', TextType::class, array('required' => false))
-            ->add('hasLocation', CheckboxType::class)
-            ->add('hasTime', CheckboxType::class)
-            ->add('save', SubmitType::class)
-            ->add('archiveMessage', TextType::class, array('required' => true))
-            ->add('imageFile',
-                VichFileType::class,
-                [
-                    'required' => false
-                ])
-        ;
+            ->add('location', TextType::class, ['required' => false])
+            ->add('latitude', HiddenType::class, ['required' => false])
+            ->add('longitude', HiddenType::class, ['required' => false])
+            ->add('hasLocation', CheckboxType::class, ['required' => false])
+            ->add('hasTime', CheckboxType::class, ['required' => false])
+            ->add('save', SubmitType::class);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'ride';
     }

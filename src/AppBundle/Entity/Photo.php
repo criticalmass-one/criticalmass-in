@@ -2,11 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\AutoParamConverterAble;
+use AppBundle\EntityInterface\PhotoInterface;
+use AppBundle\EntityInterface\PostableInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -15,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Photo implements ViewableInterface
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble
 {
     /**
      * @ORM\Id
@@ -275,7 +278,7 @@ class Photo implements ViewableInterface
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName): Photo
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 

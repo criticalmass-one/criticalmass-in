@@ -1,11 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Traits;
 
+use AppBundle\Repository\BikerightVoucherRepository;
 use AppBundle\Repository\BlockedCityRepository;
 use AppBundle\Repository\BoardRepository;
+use AppBundle\Repository\CityCycleRepository;
 use AppBundle\Repository\CityRepository;
-use AppBundle\Repository\FacebookRidePropertiesRepository;
+use AppBundle\Repository\FrontpageTeaserRepository;
 use AppBundle\Repository\LocationRepository;
 use AppBundle\Repository\ParticipationRepository;
 use AppBundle\Repository\PhotoRepository;
@@ -21,6 +23,11 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 trait RepositoryTrait
 {
+    protected function getBikeRightVoucherRepository(): BikerightVoucherRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:BikerightVoucher');
+    }
+
     protected function getBlockedCityRepository(): BlockedCityRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:BlockedCity');
@@ -31,9 +38,19 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:Board');
     }
 
+    protected function getFrontpageTeaserRepository(): FrontpageTeaserRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:FrontpageTeaser');
+    }
+
     protected function getRideRepository(): RideRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Ride');
+    }
+
+    protected function getCityCycleRepository(): CityCycleRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:CityCycle');
     }
 
     protected function getCitySlugRepository(): ObjectRepository
@@ -46,14 +63,14 @@ trait RepositoryTrait
         return $this->getDoctrine()->getRepository('AppBundle:City');
     }
 
-    protected function getFacebookCityPropertiesRepository(): ObjectRepository
+    protected function getHelpCategoryRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository('AppBundle:FacebookCityProperties');
+        return $this->getDoctrine()->getRepository('AppBundle:HelpCategory');
     }
 
-    protected function getFacebookRidePropertiesRepository(): FacebookRidePropertiesRepository
+    protected function getHelpItemRepository(): ObjectRepository
     {
-        return $this->getDoctrine()->getRepository('AppBundle:FacebookRideProperties');
+        return $this->getDoctrine()->getRepository('AppBundle:HelpItem');
     }
 
     protected function getLocationRepository(): LocationRepository

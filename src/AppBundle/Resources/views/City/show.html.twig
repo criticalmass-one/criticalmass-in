@@ -3,26 +3,8 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_desktop_city_list') }}">Städteliste</a></li>
+    <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
     <li class="active">{{ city.city }}</li>
-{% endblock %}
-
-{% block additionalHeaderElements %}
-    <meta property="og:title" content="{{ city.title }}" />
-    <meta property="og:type" content="Website" />
-    <meta property="og:description" content="{{ city.description }}" />
-    <meta property="og:url" content="{{ url('caldera_criticalmass_desktop_city_show', { citySlug: city.slug }) }}" />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:site_name" content="criticalmass.in" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@calderacc" />
-    <meta name="twitter:creator" content="@maltehuebner" />
-    <meta name="twitter:title" content="{{ city.title }}" />
-    <meta name="twitter:description" content="{{ city.description }}" />
-    {% if city.imageName %}
-        <meta property="og:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('facebook_preview_image') }}" />
-        <meta name="twitter:image" content="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('twitter_summary_large_image') }}" />
-    {% endif %}
 {% endblock %}
 
 {% block optionsButton %}
@@ -35,16 +17,30 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <a href="{{ path('caldera_criticalmass_desktop_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ path('caldera_criticalmass_city_edit', { citySlug: city.getMainSlugString() } ) }}">
                     <i class="fa fa-cogs"></i>
                     Stadt editieren
                 </a>
             </li>
 
             <li>
-                <a href="{{ path('caldera_criticalmass_desktop_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ path('caldera_criticalmass_ride_add', { citySlug: city.getMainSlugString() } ) }}">
                     <i class="fa fa-plus"></i>
                     Tour hinzufügen
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('caldera_criticalmass_citycycle_list', { citySlug: city.getMainSlugString() } ) }}">
+                    <i class="fa fa-calendar-o"></i>
+                    Turnus verwalten
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('criticalmass_socialnetwork_city_list', { citySlug: city.getMainSlugString() } ) }}">
+                    <i class="fa fa-at"></i>
+                    soziale Netzwerke verwalten
                 </a>
             </li>
         </ul>
@@ -100,38 +96,42 @@
                 <div class="row">
                     <div class="col-md-12">
                         {% if city.longDescription %}
-                        {{ city.longDescription|markdown }}
+                            {{ city.longDescription|markdown }}
                         {% else %}
-                        <div class="alert alert-info">
-                            <strong>Huch?</strong>
-                            Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du Lust und Zeit hast, kannst du {{ city.title }} <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}">hier beschreiben</a>:
+                            <div class="alert alert-info">
+                                <strong>Huch?</strong>
+                                Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
+                                Lust und Zeit hast, kannst du {{ city.title }} <a
+                                        href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}">hier
+                                    beschreiben</a>:
 
-                            <ul>
-                                <li>
-                                    Seit wann gibt es die Critical Mass in {{ city.city }}?
-                                </li>
-                                <li>
-                                    Wie lange dauern eure Touren?
-                                </li>
-                                <li>
-                                    Wo fahrt ihr ungefähr lang?
-                                </li>
-                                <li>
-                                    Welche Probleme gibt es in {{ city.city }} für den Radverkehr?
-                                </li>
-                            </ul>
+                                <ul>
+                                    <li>
+                                        Seit wann gibt es die Critical Mass in {{ city.city }}?
+                                    </li>
+                                    <li>
+                                        Wie lange dauern eure Touren?
+                                    </li>
+                                    <li>
+                                        Wo fahrt ihr ungefähr lang?
+                                    </li>
+                                    <li>
+                                        Welche Probleme gibt es in {{ city.city }} für den Radverkehr?
+                                    </li>
+                                </ul>
 
-                            <p class="text-center margin-top-medium">
-                                <a href="{{ path('caldera_criticalmass_desktop_city_edit', {citySlug: city.mainSlugString}) }}" class="btn btn-primary btn-lg">
-                                    {{ city.city }} editieren
-                                </a>
-                            </p>
-                        </div>
+                                <p class="text-center margin-top-medium">
+                                    <a href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}"
+                                       class="btn btn-primary btn-lg">
+                                        {{ city.city }} editieren
+                                    </a>
+                                </p>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
 
-                {% if photos|length > 0 %}
+                {% if feature_enabled('photos') and photos|length > 0 %}
                     <div class="row">
                         <div class="col-md-12">
                             <h2>
@@ -140,7 +140,7 @@
 
                             <p>
                                 Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
-                                        href="{{ path('caldera_criticalmass_desktop_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
+                                        href="{{ path('caldera_criticalmass_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
                                     über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>
@@ -175,16 +175,6 @@
                         {% include 'AppBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                     </div>
                 </div>
-
-                {% if 'Hamburg' in city.city %}
-                <div class="row">
-                    <div class="col-md-12" id="fahrradstadthamburg-container">
-                        <script>
-                            CriticalMass.loadModule('FahrradstadtHamburg', '#fahrradstadthamburg-container');
-                        </script>
-                    </div>
-                </div>
-                {% endif %}
 
                 <div class="row">
                     <div class="col-md-12">

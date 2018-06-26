@@ -2,10 +2,11 @@
 
 namespace AppBundle\Entity;
 
-use Caldera\GeoBundle\Entity\Track as BaseTrack;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\EntityInterface\RouteableInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -14,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class Track extends BaseTrack
+class Track implements RouteableInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';

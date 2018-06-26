@@ -3,38 +3,41 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\Location;
 use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class LocationRepository extends EntityRepository
 {
-    public function findLocationsByCity(City $city)
+    public function findLocationsByCity(City $city): array
     {
-        $builder = $this->createQueryBuilder('location');
+        $builder = $this->createQueryBuilder('l');
 
-        $builder->select('location');
-
-        $builder->where($builder->expr()->eq('location.city', $city->getId()));
-
-        $builder->orderBy('location.title', 'ASC');
+        $builder
+            ->select('l')
+            ->where($builder->expr()->eq('l.city', ':city'))
+            ->orderBy('l.title', 'ASC')
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
         return $query->getResult();
     }
 
-    public function findLocationForRide(Ride $ride)
+    public function findLocationForRide(Ride $ride): ?Location
     {
         if (!$ride->getHasLocation()) {
             return null;
         }
 
-        $builder = $this->createQueryBuilder('location');
+        $builder = $this->createQueryBuilder('l');
 
-        $builder->select('location');
-
-        $builder->where($builder->expr()->like('location.title', '\'%' . $ride->getLocation() . '%\''));
-        $builder->andWhere($builder->expr()->eq('location.city', $ride->getCity()->getId()));
+        $builder
+            ->where($builder->expr()->like('l.title', ':locationTitle'))
+            ->andWhere($builder->expr()->eq('l.city', ':city'))
+            ->setParameter('locationTitle', $ride->getLocation())
+            ->setParameter('city', $ride->getCity())
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 

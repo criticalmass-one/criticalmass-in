@@ -22,14 +22,12 @@ class RideEstimateAdmin extends AbstractAdmin
             ->add('estimatedDistance', NumberType::class, ['required' => false])
             ->add('estimatedDuration', NumberType::class, ['required' => false])
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('user', EntityType::class, ['class' => User::class])
             ->add('ride', EntityType::class, ['class' => Ride::class])
             ->add('track', EntityType::class, ['class' => Track::class, 'required' => false])
             ->add('creationDateTime')
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -40,8 +38,7 @@ class RideEstimateAdmin extends AbstractAdmin
             ->add('track')
             ->add('estimatedParticipants')
             ->add('estimatedDistance')
-            ->add('estimatedDuration')
-        ;
+            ->add('estimatedDuration');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -53,7 +50,6 @@ class RideEstimateAdmin extends AbstractAdmin
             ->add('estimatedParticipants')
             ->add('estimatedDistance')
             ->add('estimatedDuration')
-            ->add('creationDateTime')
-        ;
+            ->add('creationDateTime');
     }
 }

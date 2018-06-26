@@ -1,5 +1,5 @@
 define(['TrackEntity', 'PositionMarker'], function () {
-    TimelapseTrackEntity = function (trackId, polylineString, colorRed, colorGreen, colorBlue, username, backgroundImage) {
+    TimelapseTrackEntity = function (trackId, polylineString, colorRed, colorGreen, colorBlue, username, imageName) {
         this._trackId = trackId;
 
         this.setColor(colorRed, colorGreen, colorBlue);
@@ -7,7 +7,7 @@ define(['TrackEntity', 'PositionMarker'], function () {
         this._polyline = L.Polyline.fromEncoded(polylineString, {color: this._color});
 
         this._username = username;
-        this._backgroundImage = backgroundImage;
+        this._imageName = imageName;
     };
 
     // do not call constructor directly as this will execute the entity
@@ -25,7 +25,7 @@ define(['TrackEntity', 'PositionMarker'], function () {
 
     TimelapseTrackEntity.prototype._createMarker = function () {
         if (!this._marker) {
-            this._marker = new PositionMarker(this._currentLatLng, false, this._username, this._backgroundImage);
+            this._marker = new PositionMarker(this._currentLatLng, false, this._username, this._imageName);
 
             this._marker.setColorRed(this.getColorRed());
             this._marker.setColorGreen(this.getColorGreen());

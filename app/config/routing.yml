@@ -1,5 +1,5 @@
 user:
-    resource: "@UserBundle/Resources/config/routing.xml"
+    resource: "@AppBundle/Resources/config/routing/profile.xml"
     prefix:   /
 
 sonata_user_security:

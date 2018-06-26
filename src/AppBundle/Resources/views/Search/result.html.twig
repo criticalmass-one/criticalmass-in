@@ -12,57 +12,60 @@
             </div>
         </div>
 
-        <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="query-input">
-                            Deine Suchanfrage
-                        </label>
-                        <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input"
-                               placeholder="Deine Suchanfrage"/>
-
-                    </div>
-
-                    <button type="submit" class="btn btn-success pull-right">
-                        Finden
-                    </button>
-                </div>
-            </div>
-
-            <div class="row">
+        <div class="row">
+            <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
                 <div class="col-md-3">
-                    <ul>
-                        {% for city in resultSet.getAggregations().city.buckets %}
-                            <li>
-                                <input type="checkbox" name="cities[]" value="{{ city.key }}"/> {{ city.key }}
-                                ({{ city.doc_count }})
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="query-input">
+                                    Deine Suchanfrage
+                                </label>
+                                <input type="text" class="form-control" name="query" value="{{ query }}"
+                                       id="query-input"
+                                       placeholder="Deine Suchanfrage"/>
+                            </div>
 
-                    <ul>
-                        {% for country in resultSet.getAggregations().country.buckets %}
-                            <li>
-                                <input type="checkbox" name="countries[]" value="{{ country.key }}"/> {{ country.key }}
-                                ({{ country.doc_count }})
-                            </li>
-                        {% endfor %}
-                    </ul>
+                            <button type="submit" class="btn btn-success pull-right">
+                                Finden
+                            </button>
+                        </div>
+                    </div>
+                    {#
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <ul>
+                                                    {% for city in resultSet.getAggregations().city.buckets %}
+                                                        <li>
+                                                            <input type="checkbox" name="cities[]" value="{{ city.key }}"/> {{ city.key }}
+                                                            ({{ city.doc_count }})
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                                <ul>
+                                                    {% for country in resultSet.getAggregations().country.buckets %}
+                                                        <li>
+                                                            <input type="checkbox" name="countries[]" value="{{ country.key }}"/> {{ country.key }}
+                                                            ({{ country.doc_count }})
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    #}
                 </div>
+            </form>
 
-                <div class="col-md-9">
-                    {% for result in results %}
-                        {% if result.standardLocation is defined %}
-                            {% include 'AppBundle:Search:city.html.twig' with { city: result } %}
-                        {% else %}
-                            {% include 'AppBundle:Search:ride.html.twig' with { ride: result } %}
-                        {% endif %}
-
-                    {% endfor %}
-                </div>
+            <div class="col-md-9">
+                {% for result in results %}
+                    {% if result.standardLocation is defined %}
+                        {% include 'AppBundle:Search/includes:_city.html.twig' with { city: result } %}
+                    {% else %}
+                        {% include 'AppBundle:Search/includes:_ride.html.twig' with { ride: result } %}
+                    {% endif %}
+                {% endfor %}
             </div>
-
-        </form>
+        </div>
     </div>
 {% endblock %}

@@ -1,9 +1,19 @@
 caldera_criticalmass_rest_ride_list:
+    path:     /ride
+    defaults: { _controller: AppBundle:Api/Ride:list }
+    methods:  [GET]
+
+caldera_criticalmass_rest_ride_list_deprecated:
     path:     /ride/list
     defaults: { _controller: AppBundle:Api/Ride:list }
     methods:  [GET]
 
 caldera_criticalmass_rest_city_list:
+    path:     /city
+    defaults: { _controller: AppBundle:Api/City:list }
+    methods:  [GET]
+
+caldera_criticalmass_rest_city_list_deprecated:
     path:     /city/list
     defaults: { _controller: AppBundle:Api/City:list }
     methods:  [GET]
@@ -27,3 +37,8 @@ caldera_criticalmass_rest_ride_show:
     path:     /{citySlug}/{rideDate}
     defaults: { _controller: AppBundle:Api/Ride:show }
     methods:  [GET]
+
+caldera_criticalmass_rest_estimate_create:
+    path:     /estimate
+    defaults: { _controller: AppBundle:Api/Estimate:create }
+    methods:  [POST]

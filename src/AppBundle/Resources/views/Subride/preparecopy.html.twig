@@ -41,7 +41,7 @@
                     <a href="{{ objectPath(newRide) }}" class="btn btn-default">
                         Abbrechen
                     </a>
-                    <a href="{{ path('caldera_criticalmass_desktop_subride_copy', { 'citySlug': oldRide.city.getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'newDate': newRide.getFormattedDate() } ) }}"
+                    <a href="{{ path('caldera_criticalmass_subride_copy', { 'citySlug': oldRide.city.getMainSlugString(), 'oldDate': oldRide.getFormattedDate(), 'rideDate': newRide.getFormattedDate() } ) }}"
                        class="btn btn-success">
                         Kopieren</a>
                 </div>

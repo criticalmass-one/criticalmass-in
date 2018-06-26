@@ -3,7 +3,6 @@ services:
         class: AppBundle\Twig\Extension\SiteTwigExtension
         arguments:
             - '@translator'
-            - '@caldera.html_metadata'
             - '@router'
             - '@critical_markdown'
         tags:
@@ -16,7 +15,9 @@ services:
         tags:
             - { name: twig.extension }
 
-    caldera_criticalmass.twig.map_extension:
-        class: AppBundle\Twig\Extension\MapTwigExtension
+    caldera_criticalmass.twig.staticmaps:
+        class: AppBundle\Twig\Extension\StaticmapsTwigExtension
+        arguments:
+            - '%staticmaps.host%'
         tags:
             - { name: twig.extension }

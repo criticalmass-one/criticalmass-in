@@ -3,43 +3,39 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ride;
-use AppBundle\Timeline\Timeline;
+use AppBundle\Criticalmass\SeoPage\SeoPage;
+use AppBundle\Criticalmass\Timeline\CachedTimeline;
+use AppBundle\Criticalmass\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function indexAction(SeoPage $seoPage, CachedTimeline $cachedTimeline): Response
     {
-        $this->getMetadata()
-            ->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren')
-            ->setKeywords('Critical Mass, Tracks, Live-Tracking, Tracking');
+        $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $rideList = $this->getFrontpageRideList();
+        $frontpageTeaserList = $this->getFrontpageTeaserRepository()->findForFrontpage();
 
         $endDateTime = new \DateTime();
         $startDateTime = new \DateTime();
         $monthInterval = new \DateInterval('P1M');
         $startDateTime->sub($monthInterval);
 
-        /**
-         * @var Timeline $timeline
-         */
-        $timelineContent = $this
-            ->get('caldera.criticalmass.timeline.cached')
+        $timelineContent = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();
 
-        return $this->render(
-            'AppBundle:Frontpage:index.html.twig',
-            [
-                'timelineContent' => $timelineContent,
-                'rideList' => $rideList
-            ]
-        );
+        return $this->render('AppBundle:Frontpage:index.html.twig', [
+            'timelineContent' => $timelineContent,
+            'rideList' => $rideList,
+            'frontpageTeaserList' => $frontpageTeaserList,
+        ]);
     }
 
-    protected function getFrontpageRideList()
+    protected function getFrontpageRideList(): array
     {
         $rides = $this->getRideRepository()->findFrontpageRides();
 
@@ -58,5 +54,10 @@ class FrontpageController extends AbstractController
         }
 
         return $rideList;
+    }
+
+    public function introAction(): Response
+    {
+        return $this->render('AppBundle:Frontpage:intro.html.twig');
     }
 }

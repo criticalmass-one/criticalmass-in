@@ -4,7 +4,7 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ path('caldera_criticalmass_desktop_city_list') }}">
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
         </a>
     </li>
@@ -92,7 +92,8 @@
                                 </h4>
 
                                 <p>
-                                    Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert keine fünf Sekunden:
+                                    Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert
+                                    keine fünf Sekunden:
                                 </p>
 
                                 <p class="text-center">
@@ -107,16 +108,23 @@
 
                                 <p>
                                     <small>
-                                        criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich) besser verteilen.
+                                        criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur
+                                        Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider
+                                        regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für
+                                        angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich)
+                                        besser verteilen.
                                     </small>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}" style="width: 100%;" />
+                <img id="photo" class="img-responsive"
+                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}"
+                     style="width: 100%;"/>
             {% else %}
-                <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+                <img id="photo" class="img-responsive"
+                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
             {% endif %}
         </div>
     </div>
@@ -147,7 +155,7 @@
                         {{ render(controller('AppBundle:Post:list', { 'photoId': photo.id })) }}
 
                         {% if app.getUser() %}
-                            {{ render(controller('AppBundle:Post:write', { 'photoId': photo.id, 'noButton': true })) }}
+                            {{ render(controller('AppBundle:Post:writePhoto', { 'photoId': photo.id, 'noButton': true })) }}
                         {% endif %}
                     </div>
                 </div>

@@ -7,9 +7,9 @@
 
     {% block breadcrumbContainer %}
         {% if block('breadcrumb') %}
-        <div class="container">
+        <div class="container pt-4">
             <ol class="breadcrumb">
-                <li>
+                <li class="breadcrumb-item">
                     <a href="{{ path('caldera_criticalmass_frontpage') }}">Critical Mass</a>
                 </li>
                 {% block breadcrumb %}{% endblock %}

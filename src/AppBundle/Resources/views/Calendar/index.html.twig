@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block content %}
+    {% set month = calendr_month(dateTime|date('Y'), dateTime|date('m')) %}
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -23,10 +25,12 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h3>
-                    {{ time|format_date('MMMM YYYY') }}
+                    {{ dateTime|format_date('MMMM YYYY') }}
                 </h3>
             </div>
         </div>
+
+        {% include('AppBundle:Calendar:_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
         <div class="row">
             <div class="col-md-12">
@@ -63,61 +67,39 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        {% set daysInMonth = time|date('t') %}
-                        {% set startDow = time|date('F 1\\s\\t Y')|date('w') - 1%}
-                        {% set dow = startDow %}
+                    {% for week in month %}
+                        <tr>
+                            {% for day in week %}
+                                {% if month.includes(day) %}
+                                    <td class="day">
+                                        <div class="day-number">
+                                            {{ day.format('d') }}
+                                        </div>
 
-                        {% for day in range(1, startDow) %}
-                        <td class="none-day">
-                            <div class="day-number">
-
-                            </div>
-                        </td>
-                        {% endfor %}
-
-                        {% for day,rideList in dayList %}
-
-                        <td class="day">
-                            <div class="day-number">
-                                {{ day|date('d') }}
-                            </div>
-
-                            {% if rideList|length %}
-                            <ul class="ride-list list-unstyled">
-                                {% for ride in rideList %}
-                                <li>
-                                    <a href="{{ objectPath(ride) }}">
-                                        {{ ride.city.city }}
-                                    </a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </td>
-
-                        {% if dow == 6 %}
-                        {% set dow = 0 %}
-                    </tr>
-                    <tr>
-                        {% else %}
-                            {% set dow = dow + 1 %}
-                        {% endif %}
-                        {% endfor %}
-
-                        {% for day in range(dow, 6) %}
-                            <td class="none-day">
-                                <div class="day-number">
-
-                                </div>
-                            </td>
-                        {% endfor %}
-                    </tr>
+                                        <ul class="ride-list list-unstyled">
+                                            {% for event in calendr_events(day).all %}
+                                                <li>
+                                                    {% set ride = event.ride %}
+                                                    <a href="{{ objectPath(ride) }}">
+                                                        {{ ride.city.city }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    {% include('AppBundle:Calendar:_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
     <script type="text/javascript">
         CriticalMass.loadModule('CalendarPage', '#calendar');

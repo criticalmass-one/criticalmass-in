@@ -2,17 +2,20 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\City;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Position;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Traits\TrackHandlingTrait;
-use AppBundle\Gps\GpxExporter\GpxExporter;
+use AppBundle\Criticalmass\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StravaController extends AbstractController
 {
@@ -48,11 +51,10 @@ class StravaController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function authAction(Request $request, $citySlug, $rideDate)
+    public function authAction(Request $request, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $oauth = $this->initOauthForRide($request, $ride);
 
         $authorizationOptions = [
@@ -62,72 +64,55 @@ class StravaController extends AbstractController
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
 
-        return $this->render(
-            'AppBundle:Strava:auth.html.twig',
-            [
-                'authorizationUrl' => $authorizationUrl,
-                'ride' => $ride
-            ]
-        );
+        return $this->render('AppBundle:Strava:auth.html.twig', [
+            'authorizationUrl' => $authorizationUrl,
+            'ride' => $ride
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function tokenAction(Request $request, $citySlug, $rideDate)
+    public function tokenAction(Request $request, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $error = $request->get('error');
 
         if ($error) {
-            return $this->redirectToRoute(
-                'caldera_criticalmass_strava_auth',
-                [
-                    'citySlug' => $citySlug,
-                    'rideDate' => $rideDate
-                ]
-            );
+            return $this->redirectToRoute('caldera_criticalmass_strava_auth', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate(),
+            ]);
         }
 
         $oauth = $this->initOauthForRide($request, $ride);
 
         try {
-            $token = $oauth->getAccessToken(
-                'authorization_code',
-                [
-                    'code' => $request->get('code')
-                ]
-            );
+            $token = $oauth->getAccessToken('authorization_code', [
+                'code' => $request->get('code')
+            ]);
 
             $session = $this->getSession();
             $session->set('strava_token', $token);
 
-            return $this->redirectToRoute(
-                'caldera_criticalmass_strava_list',
-                [
-                    'citySlug' => $citySlug,
-                    'rideDate' => $rideDate
-                ]
-            );
+            return $this->redirectToRoute('caldera_criticalmass_strava_list', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate(),
+            ]);
         } catch (\Exception $e) {
-            return $this->redirectToRoute(
-                'caldera_criticalmass_strava_auth',
-                [
-                    'citySlug' => $citySlug,
-                    'rideDate' => $rideDate
-                ]
-            );
+            return $this->redirectToRoute('caldera_criticalmass_strava_auth', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getFormattedDate(),
+            ]);
         }
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function listridesAction(Request $request, $citySlug, $rideDate)
+    public function listridesAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $afterDateTime = new \DateTime($ride->getFormattedDate() . ' 00:00:00');
         $beforeDateTime = new \DateTime($ride->getFormattedDate() . ' 23:59:59');
 
@@ -140,21 +125,18 @@ class StravaController extends AbstractController
 
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
 
-        return $this->render(
-            'AppBundle:Strava:list.html.twig',
-            [
-                'activities' => $activities,
-                'ride' => $ride
-            ]
-        );
+        return $this->render('AppBundle:Strava:list.html.twig', [
+            'activities' => $activities,
+            'ride' => $ride
+        ]);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function importAction(Request $request, $citySlug, $rideDate)
+    public function importAction(Request $request, GpxExporter $exporter, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
         $activityId = $request->get('activityId');
 
         $token = $this->getSession()->get('strava_token');
@@ -196,11 +178,6 @@ class StravaController extends AbstractController
             $positionArray[] = $position;
         }
 
-        /**
-         * @var GpxExporter $exporter
-         */
-        $exporter = $this->get('caldera.criticalmass.gps.gpxexporter');
-
         $exporter->setPositionArray($positionArray);
 
         $exporter->execute();
@@ -229,11 +206,8 @@ class StravaController extends AbstractController
         $em->persist($track);
         $em->flush();
 
-        return $this->redirectToRoute(
-            'caldera_criticalmass_track_view',
-            [
-                'trackId' => $track->getId()
-            ]
-        );
+        return $this->redirectToRoute('caldera_criticalmass_track_view', [
+            'trackId' => $track->getId()
+        ]);
     }
 }

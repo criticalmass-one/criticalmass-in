@@ -1,71 +1,37 @@
 <div id="frontpage-carousel" class="carousel slide" data-interval="4000" data-ride="carousel">
     <div class="carousel-inner">
-        <div class="item active" style="background-image: url({{ asset('/bundles/app/images/frontpage/teaser1.jpg') }})">
-            <div class="carousel-caption">
-                <h2>
-                    Hier ist die Critical Mass
-                </h2>
+        {% for frontpageTeaser in frontpageTeaserList %}
+            <div class="item{% if loop.first %} active{% endif %}"
+                 style="background-image: url({{ vich_uploader_asset(frontpageTeaser, 'imageFile')|imagine_filter('frontpage_teaser_large') }})">
+                <div class="carousel-caption">
+                    {% if frontpageTeaser.headline %}
+                        <h2>
+                            {{ frontpageTeaser.headline }}
+                        </h2>
+                    {% endif %}
 
-                <p class="lead">
-                    Überall treffen sich am letzten Freitag im Monat tausende Menschen zu einer gemeinsamen Radtour durch ihre Stadt.
-                </p>
+                    {% if frontpageTeaser.text %}
+                        <p class="lead">
+                            {{ frontpageTeaser.text }}
+                        </p>
+                    {% endif %}
 
-                <div class="btn-group" role="group">
-                    <a class="btn btn-default" role="button"
-                       href="{{ path('caldera_criticalmass_static_display', { slug: 'what-is-the-mass'}) }}">
-                        <i class="fa fa-bicycle"></i>
-                        Mehr darüber
-                    </a>
-
-                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_desktop_city_list') }}"
-                       role="button">
-                        <i class="fa fa-university"></i>
-                        Städte
-                    </a>
+                    <div class="btn-group" role="group">
+                        {% for button in frontpageTeaser.buttons %}
+                            <a class="btn {{ button.class }}" role="button"
+                               href="{{ button.link }}">
+                                {% if button.icon %}
+                                    <i class="fa {{ button.icon }}"></i>
+                                {% endif %}
+                                {% if button.caption %}
+                                    {{ button.caption }}
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="item" style="background-image: url({{ asset('/bundles/app/images/frontpage/teaser2.jpg') }})">
-            <div class="carousel-caption">
-                <h2>
-                    Live dabei
-                </h2>
-
-                <p class="lead">
-                    Noch im Bureau? Zu spät? Treffpunkt nicht gefunden?
-                    <br />
-                    Verfolge die Critical Mass online.
-                </p>
-
-                <div class="btn-group" role="group">
-                    <a href="https://criticalmass.live/" class="btn btn-default">
-                        criticalmass.live
-                    </a>
-                    <a href="http://criticalmaps.net/" class="btn btn-default">
-                        Critical Maps
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="item" style="background-image: url({{ asset('/bundles/app/images/frontpage/teaser3.jpg') }})">>
-            <div class="carousel-caption">
-                <h2>
-                    So sieht’s nämlich aus!
-                </h2>
-
-                <p class="lead">
-                    Schau dir Fotos und Videos von Critical-Mass-Touren an.
-                </p>
-
-                <p>
-                    <a href="{{ path('caldera_criticalmass_photo_examplegallery') }}" class="btn btn-default">
-                        Zur Fotogalerie
-                    </a>
-                </p>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 
     <a class="left carousel-control" href="#frontpage-carousel" data-slide="prev"></a>

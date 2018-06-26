@@ -19,7 +19,6 @@ class CityRepository extends EntityRepository
         $builder->select('city');
 
         $builder->where($builder->expr()->isNotNull('city.facebook'));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
         $builder->orderBy('city.city', 'ASC');
 
@@ -35,7 +34,6 @@ class CityRepository extends EntityRepository
         $builder->select('city');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
         $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
         $builder->andWhere($builder->expr()->neq('city.latitude', 0));
         $builder->andWhere($builder->expr()->neq('city.longitude', 0));
@@ -58,7 +56,6 @@ class CityRepository extends EntityRepository
         $builder->leftJoin('region2.parent', 'region3');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
         $builder->andWhere(
             $builder->expr()->orX(
@@ -84,7 +81,6 @@ class CityRepository extends EntityRepository
         $builder->leftJoin('region2.parent', 'region3');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
 
         $builder->andWhere(
             $builder->expr()->orX(
@@ -106,14 +102,13 @@ class CityRepository extends EntityRepository
 
     public function findCities()
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
-
-        $builder->orderBy('city.city', 'ASC');
+        $builder
+            ->select('c')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->orderBy('c.city', 'ASC')
+            ->setParameter('enabled', true);
 
         $query = $builder->getQuery();
 
@@ -127,7 +122,6 @@ class CityRepository extends EntityRepository
         $builder->select('city');
 
         $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.isArchived', 0));
         $builder->andWhere($builder->expr()->eq('city.enableBoard', 1));
 
         $builder->orderBy('city.city', 'ASC');
@@ -144,31 +138,84 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findForTimelineCityEditCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
-        $builder = $this->createQueryBuilder('city');
+    public function findForTimelineCityEditCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        int $limit = null
+    ): array {
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->eq('city.isArchived', 1));
-        $builder->andWhere($builder->expr()->isNotNull('city.archiveUser'));
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNotNull('c.updatedAt'))
+            ->addOrderBy('c.updatedAt', 'DESC');
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('city.archiveDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('c.updatedAt', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('city.archiveDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('c.updatedAt', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
-            $builder->setMaxResults($limit);
+            $builder
+                ->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('city.archiveDateTime', 'DESC');
+        $query = $builder->getQuery();
 
-        $builder->addGroupBy('city.user');
-        $builder->addGroupBy('city.archiveParent');
+        return $query->getResult();
+    }
+
+    public function findForTimelineCityCreatedCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        int $limit = null
+    ): array {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNull('c.updatedAt'))
+            ->addOrderBy('c.createdAt', 'DESC');
+
+        if ($startDateTime) {
+            $builder
+                ->andWhere($builder->expr()->gte('c.createdAt', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
+        }
+
+        if ($endDateTime) {
+            $builder
+                ->andWhere($builder->expr()->lte('c.createdAt', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
+        }
+
+        if ($limit) {
+            $builder
+                ->setMaxResults($limit);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findCitiesBySlugList(array $slugList): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->join('c.slugs', 's')
+            ->where($builder->expr()->in('s.slug', ':slugList'))
+            ->orderBy('c.city', 'ASC')
+            ->setParameter('slugList', $slugList);
 
         $query = $builder->getQuery();
 

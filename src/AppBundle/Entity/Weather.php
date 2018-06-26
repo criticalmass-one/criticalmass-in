@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="weather")
@@ -129,7 +128,7 @@ class Weather
         return $this->id;
     }
 
-     public function getJson(): ?string
+    public function getJson(): ?string
     {
         return $this->json;
     }

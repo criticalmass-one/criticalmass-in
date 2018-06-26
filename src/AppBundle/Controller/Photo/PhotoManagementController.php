@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Photo;
 
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
+use AppBundle\Entity\Ride;
 use AppBundle\Form\Type\PhotoCoordType;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
@@ -11,35 +12,36 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
+use Knp\Component\Pager\Paginator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PhotoManagementController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listAction(Request $request, UserInterface $user): Response
+    public function listAction(UserInterface $user): Response
     {
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
+        $this->errorIfFeatureDisabled('photos');
 
-        return $this->render(
-            'AppBundle:PhotoManagement:user_list.html.twig',
-            [
-                'result' => $result
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:user_list.html.twig', [
+            'result' => $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user),
+        ]);
     }
 
-    public function ridelistAction(Request $request, $citySlug, $rideDate): Response
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function ridelistAction(Request $request, Paginator $paginator, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $this->errorIfFeatureDisabled('photos');
 
         $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
-
-        $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query,
@@ -47,23 +49,21 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render(
-            'AppBundle:PhotoManagement:ride_list.html.twig',
-            [
-                'ride' => $ride,
-                'pagination' => $pagination
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:ride_list.html.twig', [
+            'ride' => $ride,
+            'pagination' => $pagination,
+        ]);
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', photo)")
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function deleteAction(Request $request, UserInterface $user, int $photoId): Response
+    public function deleteAction(Request $request, Photo $photo): Response
     {
-        $this->saveReferer($request);
+        $this->errorIfFeatureDisabled('photos');
 
-        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+        $this->saveReferer($request);
 
         $photo->setDeleted(true);
 
@@ -74,14 +74,13 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function manageAction(Request $request, $citySlug, $rideDate): Response
+    public function manageAction(Request $request, Paginator $paginator, Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $this->errorIfFeatureDisabled('photos');
 
         $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
-
-        $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query,
@@ -89,39 +88,38 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render('AppBundle:PhotoManagement:manage.html.twig',
-            [
-                'ride' => $ride,
-                'pagination' => $pagination
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:manage.html.twig', [
+            'ride' => $ride,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', photo)")
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function toggleAction(Request $request, UserInterface $user, int $photoId): Response
+    public function toggleAction(Request $request, Photo $photo): Response
     {
-        $this->saveReferer($request);
+        $this->errorIfFeatureDisabled('photos');
 
-        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+        $this->saveReferer($request);
 
         $photo->setEnabled(!$photo->getEnabled());
 
         $this->getManager()->flush();
 
-
         return $this->createRedirectResponseForSavedReferer();
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', photo)")
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function featuredPhotoAction(Request $request, UserInterface $user, int $photoId): Response
+    public function featuredPhotoAction(Request $request, Photo $photo): Response
     {
-        $this->saveReferer($request);
+        $this->errorIfFeatureDisabled('photos');
 
-        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+        $this->saveReferer($request);
 
         $photo->getRide()->setFeaturedPhoto($photo);
 
@@ -130,44 +128,21 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer();
     }
 
-    protected function getCredentialsCheckedPhoto(UserInterface $user, int $photoId): Photo
-    {
-        /**
-         * @var Photo $photo
-         */
-        $photo = $this->getPhotoRepository()->find($photoId);
-
-        if (!$photo) {
-            throw $this->createNotFoundException();
-        }
-
-        if ($photo->getUser() !== $user) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return $photo;
-    }
-
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', photo)")
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function placeSingleAction(Request $request, UserInterface $user, int $photoId): Response
+    public function placeSingleAction(Request $request, Photo $photo): Response
     {
-        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+        $this->errorIfFeatureDisabled('photos');
 
-        $form = $this->createForm(
-            PhotoCoordType::class,
-            $photo,
-            [
-                'action' => $this->generateUrl('caldera_criticalmass_photo_place_single',
-                    [
-                        'photoId' => $photoId,
-                    ]
-                )
-            ]
-        );
+        $form = $this->createForm(PhotoCoordType::class, $photo, [
+            'action' => $this->generateUrl('caldera_criticalmass_photo_place_single', [
+                'photoId' => $photo->getId(),
+            ])
+        ]);
 
-        if ($request->isMethod(Request::METHOD_POST)) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->placeSinglePostAction($request, $photo, $form);
         } else {
             return $this->placeSingleGetAction($request, $photo, $form);
@@ -183,15 +158,13 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
 
-        return $this->render('AppBundle:PhotoManagement:place.html.twig',
-            [
-                'photo' => $photo,
-                'previousPhoto' => $previousPhoto,
-                'nextPhoto' => $nextPhoto,
-                'track' => $track,
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:place.html.twig', [
+            'photo' => $photo,
+            'previousPhoto' => $previousPhoto,
+            'nextPhoto' => $nextPhoto,
+            'track' => $track,
+            'form' => $form->createView(),
+        ]);
     }
 
     protected function placeSinglePostAction(Request $request, Photo $photo, Form $form): Response
@@ -209,32 +182,32 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function relocateAction(Request $request, $citySlug, $rideDate): Response
+    public function relocateAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
+        $this->errorIfFeatureDisabled('photos');
 
         $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
 
-        return $this->render('AppBundle:PhotoManagement:relocate.html.twig',
-            [
-                'ride' => $ride,
-                'photos' => $photos,
-                'track' => $track
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:relocate.html.twig', [
+            'ride' => $ride,
+            'photos' => $photos,
+            'track' => $track,
+        ]);
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', photo)")
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function rotateAction(Request $request, UserInterface $user, int $photoId): Response
+    public function rotateAction(Request $request, Photo $photo): Response
     {
-        $this->saveReferer($request);
+        $this->errorIfFeatureDisabled('photos');
 
-        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+        $this->saveReferer($request);
 
         $angle = 90;
 
@@ -254,13 +227,14 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('edit', photo)")
+     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function censorAction(Request $request, UserInterface $user, int $photoId): Response
+    public function censorAction(Request $request, UserInterface $user, Photo $photo): Response
     {
-        $photo = $this->getCredentialsCheckedPhoto($user, $photoId);
+        $this->errorIfFeatureDisabled('photos');
 
-        if ($request->isMethod(Request::METHOD_POST)) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->censorPostAction($request, $user, $photo);
         } else {
             return $this->censorGetAction($request, $user, $photo);
@@ -269,12 +243,9 @@ class PhotoManagementController extends AbstractController
 
     public function censorGetAction(Request $request, UserInterface $user, Photo $photo): Response
     {
-        return $this->render(
-            'AppBundle:PhotoManagement:censor.html.twig',
-            [
-                'photo' => $photo,
-            ]
-        );
+        return $this->render('AppBundle:PhotoManagement:censor.html.twig', [
+            'photo' => $photo,
+        ]);
     }
 
     public function censorPostAction(Request $request, UserInterface $user, Photo $photo): Response
@@ -316,8 +287,7 @@ class PhotoManagementController extends AbstractController
         $blurImage
             ->crop($topLeftPoint, $dimension)
             ->resize($pixelateDimension, ImageInterface::FILTER_CUBIC)
-            ->resize($dimension, ImageInterface::FILTER_CUBIC)
-        ;
+            ->resize($dimension, ImageInterface::FILTER_CUBIC);
 
         $image->paste($blurImage, $topLeftPoint);
     }
@@ -327,13 +297,13 @@ class PhotoManagementController extends AbstractController
         $path = $this->getParameter('kernel.root_dir') . '/../web';
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
-        return $path.$filename;
+        return $path . $filename;
     }
 
     protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
     {
         if (!$photo->getBackupName()) {
-            $newFilename = uniqid().'.JPG';
+            $newFilename = uniqid() . '.JPG';
 
             $photo->setBackupName($photo->getImageName());
 

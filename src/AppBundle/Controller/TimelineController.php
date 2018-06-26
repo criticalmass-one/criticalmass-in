@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Timeline\Timeline;
+use AppBundle\Criticalmass\Timeline\CachedTimeline;
 use Symfony\Component\HttpFoundation\Request;
 
 class TimelineController extends AbstractController
@@ -19,11 +19,8 @@ class TimelineController extends AbstractController
 
         $endDateTime = new \DateTime($year . '-' . $month . '-' . $startDateTime->format('t'));
 
-        /**
-         * @var Timeline $timeline
-         */
         $timelineContent = $this
-            ->get('caldera.criticalmass.timeline.cached')
+            ->get(CachedTimeline::class)
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();
@@ -39,16 +36,13 @@ class TimelineController extends AbstractController
             $previousDateTime = null;
         }
 
-        return $this->render(
-            'AppBundle:Timeline:yearmonth.html.twig',
-            [
-                'timelineContent' => $timelineContent,
-                'startDateTime' => $startDateTime,
-                'endDateTime' => $endDateTime,
-                'nextDateTime' => $nextDateTime,
-                'previousDateTime' => $previousDateTime
-            ]
-        );
+        return $this->render('AppBundle:Timeline:yearmonth.html.twig', [
+            'timelineContent' => $timelineContent,
+            'startDateTime' => $startDateTime,
+            'endDateTime' => $endDateTime,
+            'nextDateTime' => $nextDateTime,
+            'previousDateTime' => $previousDateTime
+        ]);
     }
 
     protected function getNextDateTime(\DateTime $dateTime)
@@ -73,10 +67,9 @@ class TimelineController extends AbstractController
     {
         $dateTime = new \DateTime();
 
-        return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth',
-            [
-                'year' => $dateTime->format('Y'),
-                'month' => $dateTime->format('m')
-            ]);
+        return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth', [
+            'year' => $dateTime->format('Y'),
+            'month' => $dateTime->format('m')
+        ]);
     }
 }

@@ -1,0 +1,3 @@
+caldera_criticalmass_profile_show:
+    path:  /{userId}
+    defaults: { _controller: AppBundle:Profile:show }

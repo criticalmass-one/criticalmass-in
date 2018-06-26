@@ -17,12 +17,10 @@ class BikerightVoucherAdmin extends AbstractAdmin
             ->add('priority')
             ->add('user')
             ->end()
-
             ->with('Date', ['class' => 'col-md-6'])
             ->add('createdAt')
             ->add('assignedAt')
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -32,8 +30,7 @@ class BikerightVoucherAdmin extends AbstractAdmin
             ->add('priority')
             ->add('user')
             ->add('createdAt')
-            ->add('assignedAt')
-        ;
+            ->add('assignedAt');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -42,7 +39,6 @@ class BikerightVoucherAdmin extends AbstractAdmin
             ->addIdentifier('code')
             ->add('priority')
             ->add('user')
-            ->add('assignedAt')
-        ;
+            ->add('assignedAt');
     }
 }

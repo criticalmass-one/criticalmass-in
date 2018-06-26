@@ -1,0 +1,99 @@
+<?php declare(strict_types=1);
+
+namespace AppBundle\Command\Cycles;
+
+use AppBundle\Entity\City;
+use AppBundle\Entity\CitySlug;
+use AppBundle\Criticalmass\Cycles\Analyzer\ComparisonResultInterface;
+use AppBundle\Criticalmass\Cycles\Analyzer\CycleAnalyzerInterface;
+use AppBundle\Criticalmass\Cycles\Analyzer\CycleAnalyzerModel;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class AnalyzeCyclesCommand extends Command
+{
+    /** @var CycleAnalyzerInterface $cycleAnalyzer */
+    protected $cycleAnalyzer;
+
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, RegistryInterface $registry)
+    {
+        $this->cycleAnalyzer = $cycleAnalyzer;
+        $this->registry = $registry;
+
+        parent::__construct($name);
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->setName('criticalmass:cycles:analyze')
+            ->setDescription('Compare city cycles to existing rides')
+            ->addArgument(
+                'citySlug',
+                InputArgument::REQUIRED,
+                'City to analyze'
+            );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): void
+    {
+        $timezone = new \DateTimeZone('UTC');
+
+        $city = $this->getCityBySlug($input->getArgument('citySlug'));
+
+        $this->cycleAnalyzer->setCity($city)->analyze();
+
+        $table = new Table($output);
+
+        $table->setHeaders(['Ride Id', 'Cycle Id', 'Computed DateTime', 'Actual DateTime', 'Computed Location', 'Actual Location']);
+
+        /** @var CycleAnalyzerModel $result */
+        foreach ($this->cycleAnalyzer->getResultList() as $result) {
+            $table->addRow([
+                $result->getRide()->getId(),
+                $result->getCycle() ? $result->getCycle()->getId() : '',
+                $result->getGeneratedRide() ? $result->getGeneratedRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i') : '',
+                $result->getRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+                $result->getGeneratedRide() ? $result->getGeneratedRide()->getLocation() : '',
+                $result->getRide()->getLocation(),
+                $this->compare($result),
+            ]);
+        }
+
+        $table->render();
+    }
+
+    protected function getCityBySlug(string $slug): City
+    {
+        /** @var CitySlug $citySlug */
+        $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($slug);
+
+        return $citySlug->getCity();
+    }
+
+    protected function compare(CycleAnalyzerModel $model): string
+    {
+        switch ($model->compare()) {
+            case ComparisonResultInterface::EQUAL:
+                return '️✅️';
+
+            case ComparisonResultInterface::NO_RIDE:
+                return '️⚠️';
+
+            case ComparisonResultInterface::LOCATION_MISMATCH:
+                return '️❌️';
+
+            case ComparisonResultInterface::DATETIME_MISMATCH:
+                return '️❌️';
+
+            default: return '';
+        }
+    }
+}

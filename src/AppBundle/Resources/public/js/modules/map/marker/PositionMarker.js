@@ -35,6 +35,8 @@ define(['Marker'], function () {
     };
 
     PositionMarker.prototype._initIcon = function () {
+        console.log('fooobar');
+        console.log(this._backgroundImage);
         this._icon = L.divIcon({
             iconSize: new L.Point(50, 50),
             className: 'user-position',

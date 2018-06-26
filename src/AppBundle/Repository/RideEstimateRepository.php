@@ -1,38 +1,65 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideEstimate;
 use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository
 {
-    public function findForTimelineRideParticipantsEstimateCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null)
-    {
-        $builder = $this->createQueryBuilder('estimate');
+    public function findForTimelineRideParticipationEstimateCollector(
+        \DateTime $startDateTime = null,
+        \DateTime $endDateTime = null,
+        $limit = null
+    ): array {
+        $builder = $this->createQueryBuilder('e');
 
-        $builder->select('estimate');
-        $builder->where($builder->expr()->isNull('estimate.track'));
-        $builder->andWhere($builder->expr()->isNull('estimate.estimatedDistance'));
-        $builder->andWhere($builder->expr()->isNull('estimate.estimatedDuration'));
+        $builder
+            ->select('e')
+            ->where($builder->expr()->isNull('e.track'))
+            ->andWhere($builder->expr()->isNull('e.estimatedDistance'))
+            ->andWhere($builder->expr()->isNull('e.estimatedDuration'))
+            ->andWhere($builder->expr()->isNotNull('e.user'))
+            ->addOrderBy('e.dateTime', 'DESC');
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('estimate.creationDateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('e.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
+
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('estimate.creationDateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('e.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('estimate.creationDateTime', 'DESC');
 
         $query = $builder->getQuery();
 
         $result = $query->getResult();
 
         return $result;
+    }
+
+    public function findByRideAndParticipants(Ride $ride, int $estimatedParticipants): ?RideEstimate
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb->where($qb->expr()->eq('e.ride', ':ride'))
+            ->andWhere($qb->expr()->eq('e.estimatedParticipants', ':estimatedParticipants'))
+            ->setParameter('estimatedParticipants', $estimatedParticipants)
+            ->setParameter('ride', $ride)
+            ->setMaxResults(1);
+
+        $query = $qb->getQuery();
+
+        return $query->getOneOrNullResult();
     }
 }

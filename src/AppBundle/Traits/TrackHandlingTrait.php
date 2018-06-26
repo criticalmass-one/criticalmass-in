@@ -10,7 +10,9 @@ use Caldera\GeoBundle\GpxReader\TrackReader;
 use Caldera\GeoBundle\LatLngListGenerator\RangeLatLngListGenerator;
 use Caldera\GeoBundle\LatLngListGenerator\SimpleLatLngListGenerator;
 use Caldera\GeoBundle\PolylineGenerator\PolylineGenerator;
+use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 
+/** @deprecated  */
 trait TrackHandlingTrait
 {
     protected function getTrackReader(): TrackReader
@@ -23,6 +25,7 @@ trait TrackHandlingTrait
         return $this->get('caldera.geobundle.distance_calculator.track');
     }
 
+    /** @deprecated  */
     protected function loadTrackProperties(Track $track)
     {
         /**
@@ -40,21 +43,22 @@ trait TrackHandlingTrait
         ;
 
         $tdc = $this->getTrackDistanceCalculator();
+
         $tdc->loadTrack($track);
 
         $track->setDistance($tdc->calculate());
     }
 
+    /** @deprecated  */
     protected function addRideEstimate(Track $track, Ride $ride)
     {
-        /**
-         * @var RideEstimateService $estimateService
-         */
-        $estimateService = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-        $estimateService->addEstimate($track);
-        $estimateService->calculateEstimates($ride);
+        $estimateService = $this->get(RideEstimateService::class);
+        $estimateService
+            ->addEstimateFromTrack($track)
+            ->calculateEstimates($ride);
     }
 
+    /** @deprecated  */
     protected function generateSimpleLatLngList(Track $track)
     {
         /**
@@ -73,6 +77,7 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
+    /** @deprecated  */
     protected function saveLatLngList(Track $track)
     {
         /**
@@ -88,6 +93,7 @@ trait TrackHandlingTrait
         $em->flush();
     }
 
+    /** @deprecated  */
     protected function updateTrackProperties(Track $track)
     {
         $tr = $this->getTrackReader();
@@ -106,22 +112,24 @@ trait TrackHandlingTrait
         $this->getDoctrine()->getManager()->flush();
     }
 
+    /** @deprecated  */
     protected function calculateRideEstimates(Track $track)
     {
-        /**
-         * @var RideEstimateService $res
-         */
-        $res = $this->get('caldera.criticalmass.statistic.rideestimate.track');
-        $res->flushEstimates($track->getRide());
+        /** @var RideEstimateHandler $reh */
+        $reh = $this->get(RideEstimateHandler::class);
 
-        $res->refreshEstimate($track->getRideEstimate());
-        $res->calculateEstimates($track->getRide());
+        $reh
+            ->setRide($track->getRide())
+            ->flushEstimates()
+            ->addEstimateFromTrack($track);
+        $reh->calculateEstimates($track->getRide());
     }
 
-    protected function generatePolylines(Track $track)
+    /** @deprecated  */
+    protected function generatePolyline(Track $track)
     {
         /**
-         * @var PolylineGenerator $polylineGenerator
+         * @var PolylineGenerator $trackPolyline
          */
         $olylineGeneator = $this->get('caldera.geobundle.polyline_generator');
 

@@ -7,14 +7,15 @@ use Doctrine\ORM\EntityRepository;
 
 class SubrideRepository extends EntityRepository
 {
-    public function getSubridesForRide(Ride $ride)
+    public function getSubridesForRide(Ride $ride): array
     {
-        $builder = $this->createQueryBuilder('subride');
+        $builder = $this->createQueryBuilder('sr');
 
-        $builder->select('subride');
-        $builder->where($builder->expr()->eq('subride.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('subride.isArchived', 0));
-        $builder->addOrderBy('subride.dateTime', 'ASC');
+        $builder
+            ->select('sr')
+            ->where($builder->expr()->eq('sr.ride', ':ride'))
+            ->addOrderBy('sr.dateTime', 'ASC')
+            ->setParameter('ride', $ride);
 
         $query = $builder->getQuery();
 

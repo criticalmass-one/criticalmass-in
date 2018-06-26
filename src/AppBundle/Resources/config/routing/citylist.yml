@@ -1,0 +1,3 @@
+caldera_criticalmass_city_list:
+    path:  /citylist
+    defaults: { _controller: AppBundle:City/CityList:list }

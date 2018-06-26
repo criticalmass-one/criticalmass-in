@@ -2,39 +2,36 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\City;
 use AppBundle\Entity\Location;
-use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Ride;
+use FOS\ElasticaBundle\Finder\FinderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LocationController extends AbstractController
 {
-    public function listlocationsAction(Request $request, $citySlug)
+    /**
+     * @ParamConverter("city", class="AppBundle:City")
+     */
+    public function listlocationsAction(City $city): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
         $locations = $this->getLocationRepository()->findAll();
 
-        return $this->render(
-            'CalderaCriticalmassDesktopBundle:Location:list.html.twig',
-            [
-                'locations' => $locations
-            ]
-        );
+        return $this->render('CalderaCriticalmassDesktopBundle:Location:list.html.twig', [
+            'locations' => $locations
+        ]);
     }
 
-    public function showAction(Request $request, $citySlug, $locationSlug)
+    /**
+     * @ParamConverter("location", class="AppBundle:Location", options={"slug": "locationSlug"})
+     */
+    public function showAction(Location $location): Response
     {
-        $city = $this->getCheckedCity($citySlug);
-
-        $location = $this->getLocationRepository()->findOneBySlug($locationSlug);
-
-        if (!$location) {
-            throw new NotFoundHttpException();
-        }
-
         $rides = $this->findRidesForLocation($location);
 
-        $locations = $this->getLocationRepository()->findLocationsByCity($city);
+        $locations = $this->getLocationRepository()->findLocationsByCity($location->getCity());
 
         return $this->render(
             'AppBundle:Location:show.html.twig',
@@ -47,10 +44,11 @@ class LocationController extends AbstractController
         );
     }
 
-    public function rideAction(Request $request, $citySlug, $rideDate)
+    /**
+     * @ParamConverter("ride", class="AppBundle:Ride")
+     */
+    public function rideAction(Ride $ride): Response
     {
-        $ride = $this->getCheckedCitySlugRideDateRide($citySlug, $rideDate);
-
         $location = $this->getLocationRepository()->findLocationForRide($ride);
 
         if (!$location) {
@@ -61,47 +59,40 @@ class LocationController extends AbstractController
 
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
-        return $this->render(
-            'AppBundle:Location:show.html.twig',
-            [
-                'location' => $location,
-                'locations' => $locations,
-                'rides' => $rides,
-                'ride' => $ride
-            ]
-        );
+        return $this->render('AppBundle:Location:show.html.twig', [
+            'location' => $location,
+            'locations' => $locations,
+            'rides' => $rides,
+            'ride' => $ride
+        ]);
     }
 
-    protected function findRidesForLocation(Location $location)
+    protected function findRidesForLocation(Location $location): array
     {
         if (!$location->getLatitude() || !$location->getLongitude()) {
-            return false;
+            return [];
         }
 
-        $finder = $this->container->get('fos_elastica.finder.criticalmass.ride');
+        /** @var FinderInterface $finder */
+        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
 
-        $archivedFilter = new \Elastica\Filter\Term(['isArchived' => false]);
-        $geoFilter = new \Elastica\Filter\GeoDistance(
-            'pin',
-            [
-                'lat' => $location->getLatitude(),
-                'lon' => $location->getLongitude()
-            ],
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
+            'lat' => $location->getLatitude(),
+            'lon' => $location->getLongitude(),
+        ],
             '500m'
         );
 
-        $filter = new \Elastica\Filter\BoolAnd([$archivedFilter, $geoFilter]);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($geoQuery);
 
-        $filteredQuery = new \Elastica\Query\Filtered(new \Elastica\Query\MatchAll(), $filter);
-
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(25);
-        $query->setSort(
-            [
-                'dateTime'
-            ]
-        );
+        $query->setSort([
+            'simpleDate'
+        ]);
 
         $result = $finder->find($query);
 
