@@ -3,8 +3,8 @@
 namespace Tests\Component\Image\PhotoGps;
 
 use Criticalmass\Bundle\AppBundle\Entity\City;
-use Criticalmass\Component\Image\PhotoGps\PhotoGps;
-use Criticalmass\Component\Image\PhotoGps\PhotoGpsInterface;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
+use Criticalmass\Bundle\AppBundle\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Tests\Component\Image\PhotoGps\Mocks\GpsPhoto;
 use Tests\Component\Image\PhotoGps\Mocks\MockTrack;
