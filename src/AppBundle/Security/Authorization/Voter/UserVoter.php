@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Criticalmass\Bundle\AppBundle\Security\Authorization\Voter;
+namespace AppBundle\Security\Authorization\Voter;
 
-use Criticalmass\Bundle\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 
 class UserVoter extends AbstractVoter
 {

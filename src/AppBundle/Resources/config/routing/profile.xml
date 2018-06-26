@@ -29,7 +29,7 @@
     </route>
 
     <route id="criticalmass_user_profile_cancel" path="/profile/cancel">
-        <default key="_controller">UserBundle:ProfileCancelation:cancel</default>
+        <default key="_controller">AppBundle:Profile/ProfileCancelation:cancel</default>
     </route>
 
     <route id="criticalmass_user_profile_photo" path="/profile/profilephoto">
