@@ -85,6 +85,8 @@ class ImportRideEstimatesCommand extends Command
             }
 
             $this->registry->getManager()->flush();
+
+            $output->writeln('Persisted estimations. Please recalculate now.');
         }
     }
 
