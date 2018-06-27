@@ -35,7 +35,8 @@ class ImportRideEstimatesCommand extends Command
             ->setName('criticalmass:rideestimate:import')
             ->setDescription('')
             ->addArgument('year', InputArgument::REQUIRED)
-            ->addArgument('month', InputArgument::REQUIRED);
+            ->addArgument('month', InputArgument::REQUIRED)
+            ->addArgument('filename', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -45,7 +46,7 @@ class ImportRideEstimatesCommand extends Command
 
         $this->citySlugs = $this->registry->getRepository(CitySlug::class)->findAllIndexed();
 
-        $importLines = $this->readFromStdin();
+        $importLines = $this->readFromFile($input->getArgument('filename'));
 
         $estimateList = [];
 
@@ -87,19 +88,9 @@ class ImportRideEstimatesCommand extends Command
         }
     }
 
-    protected function readFromStdin(): array
+    protected function readFromFile(string $filename): array
     {
-        $lines = [];
-
-        if (0 === ftell(STDIN)) {
-            while ($line = fgets(STDIN)) {
-                $line = preg_replace( "/\r|\n/", "", $line);
-
-                $lines[] = $line;
-            }
-        }
-
-        fclose(STDIN);
+        $lines = file($filename);
 
         return $lines;
     }
