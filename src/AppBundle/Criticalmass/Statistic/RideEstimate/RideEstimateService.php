@@ -18,6 +18,7 @@ class RideEstimateService
     public function __construct(Doctrine $doctrine, RideEstimateCalculator $calculator)
     {
         $this->doctrine = $doctrine;
+
         $this->calculator = $calculator;
     }
 

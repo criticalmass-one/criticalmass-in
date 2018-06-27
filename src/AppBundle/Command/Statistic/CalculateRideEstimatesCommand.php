@@ -6,6 +6,7 @@ use AppBundle\Entity\Ride;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -36,11 +37,17 @@ class CalculateRideEstimatesCommand extends Command
     {
         $rides = $this->registry->getRepository(Ride::class)->findEstimatedRides();
 
+        $progressBar = new ProgressBar($output, count($rides));
+
         /** @var Ride $ride */
         foreach ($rides as $ride) {
             $output->writeln(sprintf('%s: %s', $ride->getCity()->getCity(), $ride->getFormattedDate()));
 
+            $progressBar->advance();
+
             $this->rideEstimateService->flushEstimates($ride)->calculateEstimates($ride);
         }
+
+        $progressBar->finish();
     }
 }
