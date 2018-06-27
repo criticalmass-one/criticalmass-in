@@ -22,19 +22,21 @@ class RideEstimateService
         $this->calculator = $calculator;
     }
 
-    public function flushEstimates(Ride $ride): RideEstimateService
+    public function flushEstimates(Ride $ride, bool $flush = true): RideEstimateService
     {
         $ride
             ->setEstimatedDistance(0.0)
             ->setEstimatedDuration(0.0)
             ->setEstimatedParticipants(0);
 
-        $this->doctrine->getManager()->flush();
+        if ($flush) {
+            $this->doctrine->getManager()->flush();
+        }
 
         return $this;
     }
 
-    public function calculateEstimates(Ride $ride): RideEstimateService
+    public function calculateEstimates(Ride $ride, bool $flush = true): RideEstimateService
     {
         $estimates = $this->doctrine->getRepository(RideEstimate::class)->findByRide($ride);
 
@@ -43,12 +45,14 @@ class RideEstimateService
             ->setEstimates($estimates)
             ->calculate();
 
-        $this->doctrine->getManager()->flush();
+        if ($flush) {
+            $this->doctrine->getManager()->flush();
+        }
 
         return $this;
     }
 
-    public function addEstimateFromTrack(Track $track): RideEstimateService
+    public function addEstimateFromTrack(Track $track, bool $flush = true): RideEstimateService
     {
         $re = new RideEstimate();
         $re
@@ -61,7 +65,10 @@ class RideEstimateService
         $track->setRideEstimate($re);
 
         $this->doctrine->getManager()->persist($re);
-        $this->doctrine->getManager()->flush();
+
+        if ($flush) {
+            $this->doctrine->getManager()->flush();
+        }
 
         return $this;
     }

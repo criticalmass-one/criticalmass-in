@@ -60,9 +60,13 @@ class CalculateRideEstimatesCommand extends Command
 
             $progressBar->advance();
 
-            $this->rideEstimateService->flushEstimates($ride)->calculateEstimates($ride);
+            $this->rideEstimateService
+                ->flushEstimates($ride, false)
+                ->calculateEstimates($ride, false);
         }
 
+        $this->registry->getManager()->flush();
+        
         $table->render();
         $progressBar->finish();
     }
