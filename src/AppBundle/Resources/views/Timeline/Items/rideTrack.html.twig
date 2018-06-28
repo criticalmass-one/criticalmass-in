@@ -1,18 +1,7 @@
 <div class="row margin-bottom-medium">
     {{ include('AppBundle:Timeline/_includes:user_column.html.twig') }}
 
-    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-        <div id="map-{{ item.uniqId }}"
-             data-polyline="{{ item.polyline }}"
-             data-polyline-color="{{ item.polylineColor }}"
-             data-lock-map="true"
-             data-map-marker-clickable="false"
-             style="height: 150px;">
-
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
         <div class="row">
             <div class="col-md-12">
                 <strong>
@@ -29,6 +18,18 @@
                         {{ item.rideTitle }}
                     </h4>
                 </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map-{{ item.uniqId }}"
+                     data-polyline="{{ item.polyline }}"
+                     data-polyline-color="{{ item.polylineColor }}"
+                     data-lock-map="true"
+                     data-map-marker-clickable="false"
+                     style="height: 150px;">
+                </div>
             </div>
         </div>
 
