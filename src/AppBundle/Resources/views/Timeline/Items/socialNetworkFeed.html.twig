@@ -20,8 +20,7 @@
 
 <div class="row margin-bottom-medium">
     <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        <time>{{ item.dateTime|date('d.m.Y') }}</time>
-        <time>{{ item.dateTime|date('H:i') }}&nbsp;Uhr</time>
+        {{ include('AppBundle:Timeline/_includes:date_time.html.twig') }}
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
