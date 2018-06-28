@@ -42,11 +42,14 @@ class RidePhotoCollector extends AbstractTimelineCollector
 
                 // take last photo to fetch $user and $ride and $dateTime
                 $lastPhoto = array_pop($rideGroup);
-                $item->setUsername($lastPhoto->getUser()->getUsername());
-                $item->setRide($lastPhoto->getRide());
-                $item->setCity($lastPhoto->getCity());
-                $item->setRideTitle($lastPhoto->getRide()->getFancyTitle());
-                $item->setDateTime($lastPhoto->getCreationDateTime());
+
+                $item
+                    ->setUser($lastPhoto->getUser())
+                    ->setUsername($lastPhoto->getUser()->getUsername())
+                    ->setRide($lastPhoto->getRide())
+                    ->setCity($lastPhoto->getCity())
+                    ->setRideTitle($lastPhoto->getRide()->getFancyTitle())
+                    ->setDateTime($lastPhoto->getCreationDateTime());
 
                 $this->addItem($item);
             }

@@ -16,10 +16,13 @@ class CityCreatedCollector extends AbstractTimelineCollector
             if ($city->getSlugs()) {
                 $item = new CityCreatedItem();
 
-                $item->setUsername($city->getUser()->getUsername());
-                $item->setCityName($city->getCity());
-                $item->setCity($city);
-                $item->setDateTime($city->getCreatedAt());
+                $item
+                    ->setUser($city->getUser())
+                    ->setUsername($city->getUser()->getUsername())
+                    ->setCityName($city->getCity())
+                    ->setCity($city)
+                    ->setDateTime($city->getCreatedAt());
+
                 $this->addItem($item);
             }
         }

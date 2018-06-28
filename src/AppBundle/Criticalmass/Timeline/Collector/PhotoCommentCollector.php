@@ -15,11 +15,13 @@ class PhotoCommentCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $postEntity) {
             $item = new PhotoCommentItem();
 
-            $item->setUsername($postEntity->getUser()->getUsername());
-            $item->setRideTitle($postEntity->getPhoto()->getRide()->getFancyTitle());
-            $item->setPhoto($postEntity->getPhoto());
-            $item->setText($postEntity->getMessage());
-            $item->setDateTime($postEntity->getDateTime());
+            $item
+                ->setUser($postEntity->getUser())
+                ->setUsername($postEntity->getUser()->getUsername())
+                ->setRideTitle($postEntity->getPhoto()->getRide()->getFancyTitle())
+                ->setPhoto($postEntity->getPhoto())
+                ->setText($postEntity->getMessage())
+                ->setDateTime($postEntity->getDateTime());
 
             $this->addItem($item);
         }

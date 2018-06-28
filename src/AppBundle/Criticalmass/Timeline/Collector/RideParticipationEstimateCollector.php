@@ -15,11 +15,13 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $estimateEntity) {
             $item = new RideParticipationEstimateItem();
 
-            $item->setRide($estimateEntity->getRide());
-            $item->setRideTitle($estimateEntity->getRide()->getFancyTitle());
-            $item->setUsername($estimateEntity->getUser()->getUsername());
-            $item->setEstimatedParticipants($estimateEntity->getEstimatedParticipants());
-            $item->setDateTime($estimateEntity->getDateTime());
+            $item
+                ->setUser($estimateEntity->getUser())
+                ->setRide($estimateEntity->getRide())
+                ->setRideTitle($estimateEntity->getRide()->getFancyTitle())
+                ->setUsername($estimateEntity->getUser()->getUsername())
+                ->setEstimatedParticipants($estimateEntity->getEstimatedParticipants())
+                ->setDateTime($estimateEntity->getDateTime());
 
             $this->addItem($item);
         }

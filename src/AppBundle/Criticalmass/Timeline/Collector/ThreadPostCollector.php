@@ -15,11 +15,13 @@ class ThreadPostCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $postEntity) {
             $item = new ThreadPostItem();
 
-            $item->setUsername($postEntity->getUser()->getUsername());
-            $item->setThreadTitle($postEntity->getThread()->getTitle());
-            $item->setThread($postEntity->getThread());
-            $item->setText($postEntity->getMessage());
-            $item->setDateTime($postEntity->getDateTime());
+            $item
+                ->setUser($postEntity->getUser())
+                ->setUsername($postEntity->getUser()->getUsername())
+                ->setThreadTitle($postEntity->getThread()->getTitle())
+                ->setThread($postEntity->getThread())
+                ->setText($postEntity->getMessage())
+                ->setDateTime($postEntity->getDateTime());
 
             $this->addItem($item);
         }

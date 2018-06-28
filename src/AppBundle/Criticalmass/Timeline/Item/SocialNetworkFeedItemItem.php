@@ -19,9 +19,6 @@ class SocialNetworkFeedItemItem extends AbstractItem
     /** @var Subride $subride */
     protected $subride;
 
-    /** @var User $user */
-    protected $user;
-
     /** @var SocialNetworkProfile */
     protected $socialNetworkProfile;
 
@@ -66,18 +63,6 @@ class SocialNetworkFeedItemItem extends AbstractItem
     public function setSubride(Subride $subride = null): SocialNetworkFeedItemItem
     {
         $this->subride = $subride;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user = null): SocialNetworkFeedItemItem
-    {
-        $this->user = $user;
 
         return $this;
     }

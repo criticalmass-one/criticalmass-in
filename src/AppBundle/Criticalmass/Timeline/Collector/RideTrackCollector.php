@@ -15,15 +15,17 @@ class RideTrackCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $trackEntity) {
             $item = new RideTrackItem();
 
-            $item->setRide($trackEntity->getRide());
-            $item->setTrack($trackEntity);
-            $item->setRideTitle($trackEntity->getRide()->getFancyTitle());
-            $item->setUsername($trackEntity->getUser()->getUsername());
-            $item->setDistance($trackEntity->getDistance());
-            $item->setDuration($trackEntity->getDurationInSeconds());
-            $item->setPolyline($trackEntity->getPolyline());
-            $item->setPolylineColor('rgb(' . $trackEntity->getUser()->getColorRed() . ', ' . $trackEntity->getUser()->getColorGreen() . ', ' . $trackEntity->getUser()->getColorBlue() . ')');
-            $item->setDateTime($trackEntity->getCreationDateTime());
+            $item
+                ->setUser($trackEntity->getUser())
+                ->setRide($trackEntity->getRide())
+                ->setTrack($trackEntity)
+                ->setRideTitle($trackEntity->getRide()->getFancyTitle())
+                ->setUsername($trackEntity->getUser()->getUsername())
+                ->setDistance($trackEntity->getDistance())
+                ->setDuration($trackEntity->getDurationInSeconds())
+                ->setPolyline($trackEntity->getPolyline())
+                ->setPolylineColor('rgb(' . $trackEntity->getUser()->getColorRed() . ', ' . $trackEntity->getUser()->getColorGreen() . ', ' . $trackEntity->getUser()->getColorBlue() . ')')
+                ->setDateTime($trackEntity->getCreationDateTime());
 
             $this->addItem($item);
         }
