@@ -117,9 +117,9 @@
         {% for photo in photos %}
         {% if photo.hasCoordinates() %}
         {% if photo.user.blurGalleries %}
-        {% set blur = 'true' %}
+        {% set blur = true %}
         {% else %}
-        {% set blur = 'false' %}
+        {% set blur = false %}
         {% endif %}
         ridePage.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
         {% endif %}
