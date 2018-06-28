@@ -6,19 +6,13 @@ use AppBundle\Entity\Ride;
 
 class RideParticipationEstimateItem extends AbstractItem
 {
-    /**
-     * @var Ride $ride
-     */
+    /** @var Ride $ride */
     protected $ride;
 
-    /**
-     * @var string $rideTitle
-     */
+    /** @var string $rideTitle */
     protected $rideTitle;
 
-    /**
-     * @var integer $estimatedParticipants
-     */
+    /** @var int $estimatedParticipants */
     protected $estimatedParticipants;
 
     public function getRide(): Ride
