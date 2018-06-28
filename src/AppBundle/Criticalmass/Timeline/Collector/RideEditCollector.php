@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Timeline\Collector;
 
@@ -15,10 +15,11 @@ class RideEditCollector extends AbstractTimelineCollector
         foreach ($groupedEntities as $ride) {
             $item = new RideEditItem();
 
-            $item->setUsername($ride->getUser()->getUsername());
-            $item->setRideTitle($ride->getFancyTitle());
-            $item->setRide($ride);
-            $item->setDateTime($ride->getUpdatedAt());
+            $item
+                ->setUser($ride->getUser())
+                ->setRideTitle($ride->getFancyTitle())
+                ->setRide($ride)
+                ->setDateTime($ride->getUpdatedAt());
 
             $this->addItem($item);
         }

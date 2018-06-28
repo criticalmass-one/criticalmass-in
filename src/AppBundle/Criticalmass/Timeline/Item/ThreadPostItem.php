@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Timeline\Item;
 
@@ -6,9 +6,6 @@ use AppBundle\Entity\Thread;
 
 class ThreadPostItem extends AbstractItem
 {
-    /** @var string $username */
-    public $username;
-
     /** @var Thread $thread */
     public $thread;
 
@@ -17,18 +14,6 @@ class ThreadPostItem extends AbstractItem
 
     /** @var string $text */
     public $text;
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): ThreadPostItem
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getThread(): Thread
     {
