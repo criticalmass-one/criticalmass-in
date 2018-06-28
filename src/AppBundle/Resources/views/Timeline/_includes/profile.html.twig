@@ -1,4 +1,0 @@
-{% if item.user.imageName %}
-    <img class="media-object round-media-object"
-         src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
-{% endif %}
