@@ -17,7 +17,6 @@ class ThreadPostCollector extends AbstractTimelineCollector
 
             $item
                 ->setUser($postEntity->getUser())
-                ->setUsername($postEntity->getUser()->getUsername())
                 ->setThreadTitle($postEntity->getThread()->getTitle())
                 ->setThread($postEntity->getThread())
                 ->setText($postEntity->getMessage())

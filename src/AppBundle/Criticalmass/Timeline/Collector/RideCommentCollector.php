@@ -17,7 +17,6 @@ class RideCommentCollector extends AbstractTimelineCollector
 
             $item
                 ->setUser($postEntity->getUser())
-                ->setUsername($postEntity->getUser()->getUsername())
                 ->setRideTitle($postEntity->getRide()->getFancyTitle())
                 ->setRide($postEntity->getRide())
                 ->setText($postEntity->getMessage())

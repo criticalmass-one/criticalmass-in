@@ -20,7 +20,6 @@ class RideTrackCollector extends AbstractTimelineCollector
                 ->setRide($trackEntity->getRide())
                 ->setTrack($trackEntity)
                 ->setRideTitle($trackEntity->getRide()->getFancyTitle())
-                ->setUsername($trackEntity->getUser()->getUsername())
                 ->setDistance($trackEntity->getDistance())
                 ->setDuration($trackEntity->getDurationInSeconds())
                 ->setPolyline($trackEntity->getPolyline())

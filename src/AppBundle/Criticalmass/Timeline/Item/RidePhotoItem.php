@@ -8,9 +8,6 @@ use AppBundle\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {
-    /** @var string $username */
-    protected $username;
-
     /** @var Ride $ride */
     protected $ride;
 
@@ -25,18 +22,6 @@ class RidePhotoItem extends AbstractItem
 
     /** @var Photo $previewPhoto */
     protected $previewPhoto;
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): RidePhotoItem
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getRide(): Ride
     {

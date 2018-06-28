@@ -6,26 +6,11 @@ use AppBundle\Entity\City;
 
 class CityEditItem extends AbstractItem
 {
-    /** @var string $username */
-    protected $username;
-
     /** @var City $city */
     protected $city;
 
     /** @var string $cityName */
     protected $cityName;
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): CityEditItem
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getCity(): City
     {

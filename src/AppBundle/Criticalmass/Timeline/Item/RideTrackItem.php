@@ -7,9 +7,6 @@ use AppBundle\Entity\Track;
 
 class RideTrackItem extends AbstractItem
 {
-    /** @var string $username */
-    protected $username;
-
     /** @var Ride $ride */
     protected $ride;
 
@@ -30,18 +27,6 @@ class RideTrackItem extends AbstractItem
 
     /** @var string $polylineColor */
     protected $polylineColor;
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): RideTrackItem
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getRide(): Ride
     {

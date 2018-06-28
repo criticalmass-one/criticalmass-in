@@ -45,7 +45,6 @@ class RidePhotoCollector extends AbstractTimelineCollector
 
                 $item
                     ->setUser($lastPhoto->getUser())
-                    ->setUsername($lastPhoto->getUser()->getUsername())
                     ->setRide($lastPhoto->getRide())
                     ->setCity($lastPhoto->getCity())
                     ->setRideTitle($lastPhoto->getRide()->getFancyTitle())

@@ -18,7 +18,6 @@ class CityCreatedCollector extends AbstractTimelineCollector
 
                 $item
                     ->setUser($city->getUser())
-                    ->setUsername($city->getUser()->getUsername())
                     ->setCityName($city->getCity())
                     ->setCity($city)
                     ->setDateTime($city->getCreatedAt());

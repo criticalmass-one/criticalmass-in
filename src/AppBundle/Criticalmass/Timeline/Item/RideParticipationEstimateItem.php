@@ -7,11 +7,6 @@ use AppBundle\Entity\Ride;
 class RideParticipationEstimateItem extends AbstractItem
 {
     /**
-     * @var string $username
-     */
-    protected $username;
-
-    /**
      * @var Ride $ride
      */
     protected $ride;
@@ -25,18 +20,6 @@ class RideParticipationEstimateItem extends AbstractItem
      * @var integer $estimatedParticipants
      */
     protected $estimatedParticipants;
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): RideParticipationEstimateItem
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getRide(): Ride
     {
