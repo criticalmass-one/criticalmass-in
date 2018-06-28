@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Timeline\Item;
+
+use AppBundle\Entity\User;
 
 abstract class AbstractItem implements ItemInterface
 {
