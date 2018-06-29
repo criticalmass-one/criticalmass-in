@@ -62,3 +62,7 @@ hint_modal:
         participation_button:
             title: Bist du dabei?
             text: <p>Hier kannst du als registrierter Nutzer deine Teilnahme bei der Critical Mass in %city% am %dateTime% bestätigen.</p><p>Als registrierter Nutzer kannst du in deinem Profilbereich eine Statistik mit deinen Teilnahmen und den Städten, die du besucht hast, aufrufen.</p>
+
+        location_edit_link:
+            title: Wo geht’s denn los?
+            text: <p>Bislang hat leider noch niemand den Treffpunkt für die Critical Mass in %city% am %dateTime% eingetragen. Das ist schade — als registrierter Nutzer kannst du den Treffpunkt ergänzen und anderen Interessenten helfen, an der Critical Mass teilzunehmen.</p>
