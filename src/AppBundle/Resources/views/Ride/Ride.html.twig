@@ -71,12 +71,6 @@
                         </span>
                         </a>
                     </li>
-                    <li role="presentation">
-                        <a href="#music" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="fa fa-music"></i>
-                            Musik
-                        </a>
-                    </li>
                 {% endif %}
             </ul>
 
@@ -87,7 +81,6 @@
 
                 {% if pastRide %}
                     {{ render(controller('AppBundle:Ride/RideTabs:renderTracksTab', { 'ride': ride } )) }}
-                    {{ render(controller('AppBundle:Ride/RideTabs:renderMusicTab', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>
