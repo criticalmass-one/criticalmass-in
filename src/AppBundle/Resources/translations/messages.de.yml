@@ -70,3 +70,9 @@ hint_modal:
         edit_button:
             title: Bitte mehr Details?
             text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+
+# noch nicht umgeschrieben
+        post_write_button:
+            title: Kommentar verfassen
+            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+
