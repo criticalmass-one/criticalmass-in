@@ -71,25 +71,24 @@ hint_modal:
             title: Bitte mehr Details?
             text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
 
-# noch nicht umgeschrieben
         post_write_button:
             title: Kommentar verfassen
-            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+            text: '<p>Hat dir die Tour gefallen? Oder lief’s richtig schlecht? Als angemeldeter Nutzer könntest du hier einen Kommentar schreiben.</p>'
 
         track_upload_button:
-            title: Kommentar verfassen
-            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+            title: Tracks hochladen oder importieren
+            text: '<p>Wo ging’s denn eigentlich lang? Wenn du deine Teilnahme an der Critical Mass in %city% mit einem GPS-Tracker oder einer App wie Strava aufgezeichnet hast, kannst du deinen Track hier hochladen oder direkt importieren.</p><p>Auf einer Karte ist dann sichtbar, durch welche Straßen sich die Critical Mass bewegt hat. Sobald mehrere Tracks hochgeladen wurden, kannst du die Tour noch einmal mit unserer Timelapse ablaufen lassen.</p><p>Selbstverständlich bleibt deine Privatsphäre gewahrt: Du kannst deinen Track jederzeit löschen oder beschneiden, so dass beispielsweise dein Heimweg nicht mehr angezeigt wird.</p>'
 
         estimate_add_button:
-            title: Kommentar verfassen
-            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+            title: Teilnehmerzahl schätzen
+            text: '<p>Als angemeldeter Nutzer kannst du an dieser Stelle eine Schätzung abgeben, wie viele Radfahrer bei der Critical Mass in %city% teilgenommen haben.</p><p>Deine Schätzung wird unter anderem auf dieser Seite angezeigt und für unterschiedliche Statistiken mit einberechnet.</p>'
 
     gallery:
         photo_upload_button:
-            title: Kommentar verfassen
-            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+            title: Fotos hochladen
+            text: '<p>Als angemeldeter Nutzer kannst du auf dieser Seite deine Eindrücke von der Critical Mass in %city% teilen. Melde dich an und lade Fotos direkt von deinem Smartphone oder deinem Computer hoch.</p><p>Andere Gäste können dann dein Fotoalbum durchstöbern und Kommentare schreiben.</p>'
 
     photo:
         post_add_button:
             title: Kommentar verfassen
-            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+            text: '<p>Gefällt dir dieses Foto? Hast du etwas lustiges während der Tour erlebt? Mit einem criticalmass.in-Benutzerkonto kannst du an dieser Stelle einen Kommentar verfassen.</p>'
