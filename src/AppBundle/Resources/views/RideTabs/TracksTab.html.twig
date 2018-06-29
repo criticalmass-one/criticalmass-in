@@ -1,39 +1,45 @@
 <div role="tabpanel" class="tab-pane" id="tracks">
     <div class="row">
         <div class="col-md-12">
-            {% if app.getUser() %}
-                <!-- Single button -->
-                <div class="btn-group pull-right margin-top-medium">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+            <div class="btn-group pull-right margin-top-medium">
+                {% if app.user %}
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-map-o"></i>
+                    Track hinzufügen
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_strava_auth', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+                            <i class="fa fa-map-o"></i>
+                            Track von Strava importieren
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_track_upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                           title="Track hochladen">
+                            <i class="fa fa-upload"></i>
+                            GPX-Datei hochladen
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                           title="Track manuell zeichnen">
+                            <i class="fa fa-map-signs"></i>
+                            Track manuell zeichnen
+                        </a>
+                    </li>
+                </ul>
+                {% else %}
+                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
                         <i class="fa fa-map-o"></i>
                         Track hinzufügen
                         <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_strava_auth', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
-                                <i class="fa fa-map-o"></i>
-                                Track von Strava importieren
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_track_upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
-                               title="Track hochladen">
-                                <i class="fa fa-upload"></i>
-                                GPX-Datei hochladen
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
-                               title="Track manuell zeichnen">
-                                <i class="fa fa-map-signs"></i>
-                                Track manuell zeichnen
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            {% endif %}
+                    </span>
+                {% endif %}
+            </div>
+
 
             <h3>GPX-Tracks</h3>
         </div>
