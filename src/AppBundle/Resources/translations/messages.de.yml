@@ -55,3 +55,10 @@ about %hours hours ago: vor %hours Stunden
 %days days ago: vor %days Tagen
 "{1} 1 month ago |]1,Inf[ %months months ago": "vor einem Monat|]1,Inf[v or %months Monaten"
 "{1} 1 year ago |]1,Inf[ %years years ago":  "vor einem Jahr|]1,Inf[ vor %years Jahren"
+
+# Modal hints
+hint_modal:
+    ride:
+        participation_button:
+            title: Bist du dabei?
+            text: <p>Hier kannst du als registrierter Nutzer deine Teilnahme bei der Critical Mass in %city% am %dateTime% bestätigen.</p><p>Als registrierter Nutzer kannst du in deinem Profilbereich eine Statistik mit deinen Teilnahmen und den Städten, die du besucht hast, aufrufen.</p>
