@@ -40,7 +40,9 @@ define(['jquery', 'Modal'], function ($) {
         this._modal = new Modal();
         this._modal.setTitle(title);
         this._modal.setBody(text);
-        this._modal.setFooter('foobar');
+
+        this._modal.setFooter('<a href="/login"  class="btn btn-primary">zum Login</a>');
+
         this._modal.setSize(size);
     };
 
