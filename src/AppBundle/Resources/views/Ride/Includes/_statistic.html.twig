@@ -1,12 +1,12 @@
 {% set hasEstimations = ride.estimatedParticipants or ride.estimatedDistance or ride.estimatedDuration %}
 
-{% if dateTime > ride.getDateTime() %}
+{% if dateTime > ride.dateTime %}
     {% set pastRide = true %}
 {% else %}
     {% set pastRide = false %}
 {% endif %}
 
-{% if pastRide and (hasEstimations or app.getUser()) %}
+{% if pastRide %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Statistik</h3>
