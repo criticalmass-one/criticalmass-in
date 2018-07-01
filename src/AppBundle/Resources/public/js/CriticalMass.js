@@ -58,6 +58,7 @@ require.config({
         "AutoMap": "/bundles/app/js/modules/map/AutoMap",
         "DrawMap": "/bundles/app/js/modules/map/DrawMap",
         "Geocoding": "/bundles/app/js/modules/Geocoding",
+        "HintModal": "/bundles/app/js/modules/HintModal",
         "Modal": "/bundles/app/js/modules/modal/Modal",
         "BaseModalButton": "/bundles/app/js/modules/modal/BaseModalButton",
         "CloseModalButton": "/bundles/app/js/modules/modal/CloseModalButton",

@@ -27,9 +27,15 @@
                         {% endif %}
                     {% else %}
                         <dd>
+                            {% if app.user %}
                             <a href="{{ path('caldera_criticalmass_ride_edit', { citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate }) }}">
                                 noch nicht bekannt
                             </a>
+                            {% else %}
+                            <a href="#" class="modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                                noch nicht bekannt
+                            </a>
+                            {% endif %}
                         </dd>
                     {% endif %}
                     {% if weatherForecast %}
