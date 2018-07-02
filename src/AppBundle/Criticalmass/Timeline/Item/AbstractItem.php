@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Timeline\Item;
+
+use AppBundle\Entity\User;
 
 abstract class AbstractItem implements ItemInterface
 {
@@ -9,6 +11,9 @@ abstract class AbstractItem implements ItemInterface
 
     /** @var \DateTime $dateTime */
     protected $dateTime;
+
+    /** @var User $user */
+    protected $user;
 
     public function __construct()
     {
@@ -30,5 +35,17 @@ abstract class AbstractItem implements ItemInterface
     public function getUniqId(): string
     {
         return $this->uniqId;
+    }
+
+    public function setUser(User $user): AbstractItem
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }

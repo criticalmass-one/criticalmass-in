@@ -1,0 +1,18 @@
+<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center">
+    {% if item.user.imageName %}
+        <img class="media-object round-media-object img-responsive img-fluid"
+             src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
+    {% endif %}
+
+    <p>
+        <strong>
+            {{ item.user.username }}
+        </strong>
+        <br />
+        <small>
+            <time>
+                {{ item.dateTime|time_ago_in_words }}
+            </time>
+        </small>
+    </p>
+</div>

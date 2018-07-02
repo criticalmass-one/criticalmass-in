@@ -1,39 +1,43 @@
 <div role="tabpanel" class="tab-pane active" id="details">
     <div class="row">
         <div class="col-md-12">
+            <div class="btn-group pull-right" style="margin-top: 16px;">
             {% if app.getUser() %}
-                <div class="btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success"
-                       href="{{ path('caldera_criticalmass_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
-                       title="Tour bearbeiten">
-                        <i class="fa fa-cogs"></i> Tour editieren
-                    </a>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_ride_facebookupdate', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
-                                von facebook aktualisieren
-                            </a>
-                        </li>
+                <a class="btn btn-success"
+                   href="{{ path('caldera_criticalmass_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
+                   title="Tour bearbeiten">
+                    <i class="fa fa-cogs"></i> Tour editieren
+                </a>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_ride_facebookupdate', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
+                            von facebook aktualisieren
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ path('criticalmass_socialnetwork_ride_list', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">
-                                soziale Netzwerke verwalten
-                            </a>
-                        </li>
+                    <li>
+                        <a href="{{ path('criticalmass_socialnetwork_ride_list', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">
+                            soziale Netzwerke verwalten
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ path('caldera_criticalmass_ride_socialpreview', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
-                                Vorschau für soziale Netzwerke
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_ride_socialpreview', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
+                            Vorschau für soziale Netzwerke
+                        </a>
+                    </li>
+                </ul>
+            {% else %}
+                <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                    <i class="fa fa-cogs"></i> Tour editieren
+                </span>
             {% endif %}
+            </div>
 
             <h3>{{ ride.getFancyTitle() }}</h3>
         </div>

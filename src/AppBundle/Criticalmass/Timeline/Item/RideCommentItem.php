@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Timeline\Item;
 
@@ -6,9 +6,6 @@ use AppBundle\Entity\Ride;
 
 class RideCommentItem extends AbstractItem
 {
-    /** @var string $username */
-    protected $username;
-
     /* @var Ride $ride */
     protected $ride;
 
@@ -17,18 +14,6 @@ class RideCommentItem extends AbstractItem
 
     /** @var string $text */
     protected $text;
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): RideCommentItem
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getRide(): Ride
     {

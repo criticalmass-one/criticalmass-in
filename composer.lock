@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "20f2b9c246d2145bafeaa5ce9828ef25",
+    "content-hash": "d8d56dd71a13a84debe35324fdbcf3dc",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -5469,6 +5469,62 @@
                 "search"
             ],
             "time": "2018-05-29T08:31:52+00:00"
+        },
+        {
+            "name": "salavert/time-ago-in-words",
+            "version": "v1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/salavert/time-ago-in-words.git",
+                "reference": "c2d73752291eb3dd5bdbfe7d3523ac683ff1b90a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/salavert/time-ago-in-words/zipball/c2d73752291eb3dd5bdbfe7d3523ac683ff1b90a",
+                "reference": "c2d73752291eb3dd5bdbfe7d3523ac683ff1b90a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "twig/twig": "~1.12 || ~2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "symfony/symfony": "2.* || 3.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Salavert": "src/",
+                    "Salavert\\Test": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jose Salavert",
+                    "email": "salavert@gmail.com",
+                    "homepage": "http://www.josesalavert.com"
+                }
+            ],
+            "description": "Time ago Twig extension where you can easily convert a datetime or timestamp to a distance of time in words.",
+            "homepage": "http://github.com/salavert/time-ago-in-words",
+            "keywords": [
+                "distance of time",
+                "time",
+                "time ago",
+                "time ago in words",
+                "twig"
+            ],
+            "time": "2018-03-05T14:17:47+00:00"
         },
         {
             "name": "sensio/distribution-bundle",

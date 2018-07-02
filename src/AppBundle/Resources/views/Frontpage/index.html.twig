@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="row hidden-xs hidden-sm margin-top-medium">
+                <div class="row margin-top-medium">
                     <div class="col-md-12">
                         {{ timelineContent|raw }}
                     </div>
@@ -68,7 +68,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+
+                <div class="row hidden-xs hidden-sm">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -88,7 +89,7 @@
                                                 {% for ride in rides %}
                                                     <li>
                                                         <a href="{{ objectPath(ride) }}">
-                                                            {{ ride.getFancyTitle() }}
+                                                            {{ ride.city.city }}
                                                         </a>
                                                     </li>
                                                 {% endfor %}
