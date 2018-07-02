@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\EntityInterface\RouteableInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -34,6 +33,13 @@ class Track implements RouteableInterface
      * @JMS\Expose
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     */
+    protected $username;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
@@ -104,6 +110,11 @@ class Track implements RouteableInterface
     protected $endPoint;
 
     /**
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    protected $md5Hash;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
@@ -112,6 +123,48 @@ class Track implements RouteableInterface
      * @ORM\Column(type="boolean")
      */
     protected $deleted = false;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @deprecated
+     */
+    protected $latLngList;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     */
+    protected $geoJson;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     * @JMS\SerializedName("polylineString")
+     */
+    protected $polyline;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
+     * @var File
+     */
+    protected $trackFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    protected $trackFilename;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $updatedAt;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
@@ -127,12 +180,24 @@ class Track implements RouteableInterface
 
     public function __construct()
     {
-        parent::__construct();
+        $this->setCreationDateTime(new \DateTime());
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setUsername(string $username): Track
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
     }
 
     public function setRide(Ride $ride = null): Track
@@ -157,6 +222,86 @@ class Track implements RouteableInterface
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function setCreationDateTime(\DateTime $creationDateTime): Track
+    {
+        $this->creationDateTime = $creationDateTime;
+
+        return $this;
+    }
+
+    public function getCreationDateTime(): \DateTime
+    {
+        return $this->creationDateTime;
+    }
+
+    public function setMd5Hash(string $md5Hash): Track
+    {
+        $this->md5Hash = $md5Hash;
+
+        return $this;
+    }
+
+    public function getMd5Hash(): ?string
+    {
+        return $this->md5Hash;
+    }
+
+    public function setStartDateTime(\DateTime $startDateTime): Track
+    {
+        $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    public function getStartDateTime(): ?\DateTime
+    {
+        if ($this->startDateTime) {
+            return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
+        }
+
+        return null;
+    }
+
+    public function setEndDateTime(\DateTime $endDateTime): Track
+    {
+        $this->endDateTime = $endDateTime;
+
+        return $this;
+    }
+
+    public function getEndDateTime(): ?\DateTime
+    {
+        if ($this->endDateTime) {
+            return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
+        }
+
+        return null;
+    }
+
+    public function setDistance(float $distance): Track
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+    public function getDistance(): float
+    {
+        return $this->distance;
+    }
+
+    public function setPoints(int $points): Track
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    public function getPoints(): int
+    {
+        return $this->points;
     }
 
     public function getEnabled(): bool
@@ -202,6 +347,23 @@ class Track implements RouteableInterface
         return $this;
     }
 
+    public function getLatLngList(): string
+    {
+        return $this->latLngList;
+    }
+
+    public function setPolyline(string $polyline): Track
+    {
+        $this->polyline = $polyline;
+
+        return $this;
+    }
+
+    public function getPolyline(): ?string
+    {
+        return $this->polyline;
+    }
+
     /**
      * @JMS\Groups({"timelapse"})
      * @JMS\VirtualProperty
@@ -211,6 +373,10 @@ class Track implements RouteableInterface
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorRed();
+        } elseif ($this->getTicket()) {
+            return $this->getTicket()->getColorRed();
+        } elseif ($this->getCriticalmapsUser()) {
+            return $this->getCriticalmapsUser()->getColorRed();
         }
 
         return null;
@@ -225,6 +391,10 @@ class Track implements RouteableInterface
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorGreen();
+        } elseif ($this->getTicket()) {
+            return $this->getTicket()->getColorGreen();
+        } elseif ($this->getCriticalmapsUser()) {
+            return $this->getCriticalmapsUser()->getColorGreen();
         }
 
         return null;
@@ -239,6 +409,10 @@ class Track implements RouteableInterface
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorBlue();
+        } elseif ($this->getTicket()) {
+            return $this->getTicket()->getColorBlue();
+        } elseif ($this->getCriticalmapsUser()) {
+            return $this->getCriticalmapsUser()->getColorBlue();
         }
 
         return null;
@@ -246,7 +420,7 @@ class Track implements RouteableInterface
 
     public function __toString(): string
     {
-        $result = $this->getUser()->getUsername() . '(';
+        $result = $this->getUsername() . '(';
 
         if ($this->getCreationDateTime()) {
             $result .= $this->getCreationDateTime()->format('Y-m-d');
@@ -261,7 +435,78 @@ class Track implements RouteableInterface
         return $result;
     }
 
-    /** @deprecated  */
+    public function setTrackFile(File $track = null): Track
+    {
+        $this->trackFile = $track;
+
+        if ($track) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getTrackFile(): ?File
+    {
+        return $this->trackFile;
+    }
+
+    public function setTrackFilename(string $trackFilename = null): Track
+    {
+        $this->trackFilename = $trackFilename;
+
+        return $this;
+    }
+
+    public function getTrackFilename(): ?string
+    {
+        return $this->trackFilename;
+    }
+
+    public function setStartPoint(int $startPoint): Track
+    {
+        if ($startPoint >= 1) {
+            $this->startPoint = $startPoint;
+        } else {
+            $this->startPoint = 1;
+        }
+
+        return $this;
+    }
+
+    public function getStartPoint(): int
+    {
+        return $this->startPoint;
+    }
+
+    public function setEndPoint(int $endPoint): Track
+    {
+        if ($endPoint <= $this->points) {
+            $this->endPoint = $endPoint;
+        } else {
+            $this->endPoint = $this->points - 1;
+        }
+
+        return $this;
+    }
+
+    public function getEndPoint(): int
+    {
+        return $this->endPoint;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): Track
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
     public function getDurationInterval(): ?\DateInterval
     {
         if ($this->startDateTime && $this->endDateTime) {
@@ -271,7 +516,6 @@ class Track implements RouteableInterface
         return null;
     }
 
-    /** @deprecated */
     public function getDurationInSeconds(): int
     {
         if ($this->startDateTime && $this->endDateTime) {
@@ -281,7 +525,6 @@ class Track implements RouteableInterface
         return 0;
     }
 
-    /** @deprecated  */
     public function getAverageVelocity(): ?float
     {
         if ($this->startDateTime && $this->endDateTime && $this->distance) {
@@ -298,13 +541,11 @@ class Track implements RouteableInterface
         return null;
     }
 
-    /** @deprecated  */
     public function getStartTime(): \DateTime
     {
         return $this->startDateTime;
     }
 
-    /** @deprecated  */
     public function setStartTime(\DateTime $time): Track
     {
         $this->startDateTime = new \DateTime($this->startDateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
@@ -312,13 +553,11 @@ class Track implements RouteableInterface
         return $this;
     }
 
-    /** @deprecated  */
     public function getStartDate(): \DateTime
     {
         return $this->startDateTime;
     }
 
-    /** @deprecated  */
     public function setStartDate(\DateTime $date): Track
     {
         $newDate = new \DateTime($this->startDateTime->format('Y-m-d') . ' 00:00:00');
@@ -350,5 +589,17 @@ class Track implements RouteableInterface
     public function getStravaActivityId(): ?int
     {
         return $this->stravaActitityId;
+    }
+
+    public function setGeoJson(string $geoJson): Track
+    {
+        $this->geoJson = $geoJson;
+
+        return $this;
+    }
+
+    public function getWaypointList(): string
+    {
+        return $this->geoJson;
     }
 }
