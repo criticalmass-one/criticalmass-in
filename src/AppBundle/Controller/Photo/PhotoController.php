@@ -53,7 +53,7 @@ class PhotoController extends AbstractController
             'city' => $city,
             'ride' => $ride,
             'track' => $track,
-            'exifData' => $this->readExifData($photo),
+            'exifData' => $this->readExifData($photo)->getData(),
         ]);
     }
 

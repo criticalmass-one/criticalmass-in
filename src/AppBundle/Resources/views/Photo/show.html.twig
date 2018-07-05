@@ -208,6 +208,51 @@
                             </a>
                         </dd>
                         {% endif %}
+
+                        {% if exifData.exposure %}
+                        <dt>
+                            Verschlusszeit
+                        </dt>
+                        <dd>
+                            {{ exifData.exposure }}"
+                        </dd>
+                        {% endif %}
+
+                        {% if exifData.aperture %}
+                        <dt>
+                            Blende
+                        </dt>
+                        <dd>
+                            {{ exifData.aperture }}
+                        </dd>
+                        {% endif %}
+
+                        {% if exifData.iso %}
+                        <dt>
+                            ISO
+                        </dt>
+                        <dd>
+                            {{ exifData.iso }}
+                        </dd>
+                        {% endif %}
+
+                        {% if exifData.focalLength %}
+                        <dt>
+                            Brennweite
+                        </dt>
+                        <dd>
+                            {{ exifData.focalLength }} mm
+                        </dd>
+                        {% endif %}
+
+                        {% if exifData.camera %}
+                        <dt>
+                            Kamera
+                        </dt>
+                        <dd>
+                            {{ exifData.camera }}
+                        </dd>
+                        {% endif %}
                     </dl>
                 </div>
             </div>
