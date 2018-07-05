@@ -37,7 +37,7 @@
                     <div class="panel panel-default{% if not track.enabled %} panel-danger{% endif %}">
                         <div class="panel-heading">
                             <a href="{{ objectPath(track.ride) }}">
-                                {{ track.ride.getFancyTitle() }}
+                                {{ ride_title(track.ride) }}
                             </a>
                         </div>
                         <div class="panel-body">

@@ -39,7 +39,9 @@
             {% endif %}
             </div>
 
-            <h3>{{ ride.getFancyTitle() }}</h3>
+            <h3>
+                {{ ride_title(ride) }}
+            </h3>
         </div>
     </div>
 
@@ -83,7 +85,7 @@
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
                     Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
-                    hast, kannst du {{ ride.fancyTitle }} <a
+                    hast, kannst du {{ ride_title(ride) }} <a
                             href="{{ path('caldera_criticalmass_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}">hier
                         editieren</a>:
 
