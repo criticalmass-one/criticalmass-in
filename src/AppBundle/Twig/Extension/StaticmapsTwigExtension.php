@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Twig\Extension;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
+use AppBundle\EntityInterface\StaticMapableInterface;
 
 class StaticmapsTwigExtension extends \Twig_Extension
 {
@@ -25,11 +26,11 @@ class StaticmapsTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('staticmaps', [$this, 'staticmaps',], ['is_safe' => ['raw']]),
+            new \Twig_SimpleFunction('static_map', [$this, 'staticmap',], ['is_safe' => ['raw']]),
         ];
     }
 
-    public function staticmaps($object, int $width = null, int $height = null, int $zoom = null): string
+    public function staticmap(StaticMapableInterface $object, int $width = null, int $height = null, int $zoom = null): string
     {
         if ($object instanceof Ride) {
             return $this->staticmapsRide($object, $width, $height, $zoom);
