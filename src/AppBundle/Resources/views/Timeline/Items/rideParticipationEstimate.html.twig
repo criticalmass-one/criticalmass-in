@@ -2,15 +2,25 @@
     {{ include('AppBundle:Timeline/_includes:user_column.html.twig') }}
 
     <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
-        <strong>
-            {{ item.user.username }}
-        </strong>
-        schätzt, dass {{ item.estimatedParticipants }} Radfahrer an
-        <strong>
-            <a href="{{ objectPath(item.ride) }}">
-                {{ item.rideTitle }}
-            </a>
-        </strong>
-        teilgenommen haben.
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{ item.user.username }}
+                </strong>
+                schätzt, dass {{ item.estimatedParticipants }} Radfahrer an
+                <strong>
+                    <a href="{{ objectPath(item.ride) }}">
+                        {{ item.rideTitle }}
+                    </a>
+                </strong>
+                teilgenommen haben.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{ static_map(item.ride, 650, 200) }}" class="img-fluid img-responsive" />
+            </div>
+        </div>
     </div>
 </div>
