@@ -6,7 +6,7 @@ use AppBundle\Entity\Track;
 use AppBundle\Event\Track\TrackTrimmedEvent;
 use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGeneratorInterface;
+use AppBundle\Criticalmass\Gps\PolylineGenerator\PolylineGeneratorInterface;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

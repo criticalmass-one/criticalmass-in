@@ -8,7 +8,7 @@ use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
 use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGenerator;
+use AppBundle\Criticalmass\Gps\PolylineGenerator\PolylineGenerator;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 
