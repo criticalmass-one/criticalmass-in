@@ -2,12 +2,20 @@
 
 namespace AppBundle\EventSubscriber;
 
+use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
+use AppBundle\Event\Track\TrackDeletedEvent;
+use AppBundle\Event\Track\TrackHiddenEvent;
+use AppBundle\Event\Track\TrackShownEvent;
+use AppBundle\Event\Track\TrackTimeEvent;
 use AppBundle\Event\Track\TrackTrimmedEvent;
 use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGeneratorInterface;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
+use AppBundle\Event\Track\TrackUpdatedEvent;
+use AppBundle\Event\Track\TrackUploadedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -101,7 +109,11 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function addRideEstimate(Track $track, Ride $ride)
     {
-        /** WIP TODO */
+        $this->rideEstimateHandler
+            ->setRide($ride)
+            ->addEstimateFromTrack($track);
+
+        $this->rideEstimateHandler->calculateEstimates();
     }
 
     protected function updatePolyline(Track $track): void
