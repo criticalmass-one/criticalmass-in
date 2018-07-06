@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8d56dd71a13a84debe35324fdbcf3dc",
+    "content-hash": "41d170b344686679fb462425b66f524c",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -1634,6 +1634,53 @@
                 "maps"
             ],
             "time": "2016-04-05T01:18:39+00:00"
+        },
+        {
+            "name": "emcconville/point-reduction-algorithms",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emcconville/point-reduction-algorithms.git",
+                "reference": "f51784bf4ba274d35b6fe58ec4c50a495299842e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emcconville/point-reduction-algorithms/zipball/f51784bf4ba274d35b6fe58ec4c50a495299842e",
+                "reference": "f51784bf4ba274d35b6fe58ec4c50a495299842e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.4.*",
+                "satooshi/php-coveralls": "1.*",
+                "squizlabs/php_codesniffer": "2.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PointReduction\\": "src",
+                    "PointReduction\\Test\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "Eric McConville",
+                    "email": "emcconville@emcconville.com"
+                }
+            ],
+            "description": "A collection of algorithms for reducing the number of points in polyline",
+            "keywords": [
+                "Polygon",
+                "point-reduction",
+                "polyline"
+            ],
+            "time": "2017-02-20T17:53:10+00:00"
         },
         {
             "name": "facebook/graph-sdk",
