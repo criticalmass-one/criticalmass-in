@@ -84,7 +84,13 @@
 
                             <td>
                                 {% if (cycle.range) %}
-                                    {{ cycle.validFrom|date('d.m.Y') }} bis {{ cycle.validUntil|date('d.m.Y') }}
+                                    {% if cycle.validFrom %}
+                                        vom {{ cycle.validFrom|date('d.m.Y') }}
+                                    {% endif %}
+
+                                    {% if cycle.validUntil %}
+                                        bis {{ cycle.validUntil|date('d.m.Y') }}
+                                    {% endif %}
                                 {% else %}
                                     <em>
                                         nicht begrenzt
