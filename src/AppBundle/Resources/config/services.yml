@@ -1,0 +1,106 @@
+parameters:
+#    caldera.example.class: AppBundle\Example
+
+services:
+    critical_markdown:
+        class: AppBundle\Markdown\CriticalMarkdown
+
+    caldera.user_provider:
+        class: AppBundle\UserProvider\FOSUBUserProvider
+        arguments: ['@fos_user.user_manager', {facebook: facebookId, strava: stravaId, runkeeper: runkeeperId}]
+
+    caldera.manager.post_manager:
+        class: AppBundle\Manager\PostManager\PostManager
+        arguments: ['@doctrine']
+
+    caldera.html_metadata:
+        class: AppBundle\HtmlMetadata\Metadata
+
+    caldera.view_storage.cache:
+        class: AppBundle\ViewStorage\ViewStorageCache
+        arguments: ['@security.token_storage']
+
+    caldera.view_storage.persister:
+        class: AppBundle\ViewStorage\ViewStoragePersister
+        arguments: ['@doctrine']
+
+    caldera.criticalmass.routing.object_router:
+        class: AppBundle\Router\ObjectRouter
+        arguments:
+            - '@router.default'
+
+    caldera.criticalmass.uploadvalidator.track:
+        class: AppBundle\UploadValidator\TrackValidator
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
+
+    caldera.criticalmass.statistic.rideestimatecalculator:
+        class: AppBundle\Statistic\RideEstimate\RideEstimateCalculator
+        arguments: []
+
+    caldera.criticalmass.statistic.rideestimate:
+        class: AppBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.geobundle.reader.track' ]
+
+    caldera.criticalmass.statistic.rideestimate.track:
+        class: AppBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.geobundle.reader.track' ]
+
+    caldera.criticalmass.statistic.rideestimate.gpx:
+        class: AppBundle\Statistic\RideEstimate\RideEstimateService
+        arguments: [ '@doctrine.orm.entity_manager', '@caldera.criticalmass.statistic.rideestimatecalculator', '@caldera.geobundle.reader.gpx' ]
+
+    caldera.criticalmass.image.photogps:
+        class: AppBundle\Image\PhotoGps\PhotoGps
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%', '@caldera.criticalmass.image.exifreader.gps', '@caldera.criticalmass.image.exifreader.datetime', '@caldera.geobundle.reader.track' ]
+
+    caldera.criticalmass.image.exifreader.gps:
+        class: AppBundle\Image\ExifReader\GpsExifReader
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
+
+    caldera.criticalmass.image.exifreader.datetime:
+        class: AppBundle\Image\ExifReader\DateTimeExifReader
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
+
+    caldera.criticalmass.image.exifreader:
+        class: AppBundle\Image\ExifReader\ExifReader
+        arguments: [ '@vich_uploader.templating.helper.uploader_helper', '%kernel.root_dir%' ]
+
+    caldera.criticalmass.board.builder.boardbuilder:
+        class: AppBundle\Board\Builder\BoardBuilder
+        arguments: [ '@doctrine' ]
+
+    fos_user.doctrine_registry:
+        alias: doctrine
+
+    caldera.criticalmass.facebookapi.eventride:
+        class: AppBundle\Facebook\FacebookEventRideApi
+        arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
+
+    caldera.criticalmass.facebookapi.citypageproperties:
+        class: AppBundle\Facebook\FacebookPageApi
+        arguments: [ '%facebook.app_id%', '%facebook.app_secret%', '%facebook.default_token%' ]
+
+    caldera.criticalmass.flow.create_city:
+        class: AppBundle\Form\Flow\CreateCityFlow
+        parent: craue.form.flow
+
+    caldera.criticalmass.validator.single_ride_day:
+        class: AppBundle\Validator\SingleRideForDayValidator
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: validator.constraint_validator }
+
+    caldera.criticalmass.image.filter.blur:
+        class: AppBundle\Image\Filter\BlurFilter
+        tags:
+            - { name: "liip_imagine.filter.loader", loader: blur_filter }
+
+    caldera.criticalmass.image.filter.fast_blur:
+        class: AppBundle\Image\Filter\FastBlurFilter
+        tags:
+            - { name: 'liip_imagine.filter.loader', loader: fast_blur_filter }
+
+imports:
+  - { resource: ./services/timeline.yml }
+  - { resource: ./services/admin.yml }
+  - { resource: ./services/twig_extensions.yml }

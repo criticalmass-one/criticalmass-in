@@ -198,6 +198,7 @@ class StravaController extends AbstractController
 
         $this->loadTrackProperties($track);
         $this->generatePolyline($track);
+        $this->generatePreviewPolyline($track);
 
         $this->addRideEstimate($track, $ride);
 

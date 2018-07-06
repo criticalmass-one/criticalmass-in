@@ -4,24 +4,34 @@ namespace AppBundle\Traits;
 
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
-use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
-use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
-use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGenerator;
+use AppBundle\Statistic\RideEstimate\RideEstimateService;
+use Caldera\GeoBundle\DistanceCalculator\TrackDistanceCalculator;
+use Caldera\GeoBundle\GpxReader\TrackReader;
+use Caldera\GeoBundle\LatLngListGenerator\RangeLatLngListGenerator;
+use Caldera\GeoBundle\LatLngListGenerator\SimpleLatLngListGenerator;
+use Caldera\GeoBundle\PolylineGenerator\PolylineGenerator;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
-use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 
 /** @deprecated  */
 trait TrackHandlingTrait
 {
+    protected function getTrackReader(): TrackReader
+    {
+        return $this->get('caldera.geobundle.reader.track');
+    }
+
+    protected function getTrackDistanceCalculator(): TrackDistanceCalculator
+    {
+        return $this->get('caldera.geobundle.distance_calculator.track');
+    }
+
     /** @deprecated  */
     protected function loadTrackProperties(Track $track)
     {
         /**
          * @var TrackReader $gr
          */
-        $gr = $this->get('caldera.criticalmass.gps.trackreader');
+        $gr = $this->getTrackReader();
         $gr->loadTrack($track);
 
         $track
@@ -29,17 +39,14 @@ trait TrackHandlingTrait
             ->setStartPoint(0)
             ->setEndPoint($gr->countPoints() - 1)
             ->setStartDateTime($gr->getStartDateTime())
-            ->setEndDateTime($gr->getEndDateTime());
+            ->setEndDateTime($gr->getEndDateTime())
+        ;
 
-        /**
-         * @var TrackDistanceCalculator $tdc
-         */
-        $tdc = $this->get('caldera.criticalmass.gps.distancecalculator.track');
+        $tdc = $this->getTrackDistanceCalculator();
+
         $tdc->loadTrack($track);
 
         $track->setDistance($tdc->calculate());
-
-        $track->setMd5Hash($gr->getMd5Hash());
     }
 
     /** @deprecated  */
@@ -57,7 +64,7 @@ trait TrackHandlingTrait
         /**
          * @var SimpleLatLngListGenerator $generator
          */
-        $generator = $this->get('caldera.criticalmass.gps.latlnglistgenerator.simple');
+        $generator = $this->get('caldera.geobundle.latlnglist_generator.simple');
         $list = $generator
             ->loadTrack($track)
             ->execute()
@@ -76,7 +83,7 @@ trait TrackHandlingTrait
         /**
          * @var RangeLatLngListGenerator $llag
          */
-        $llag = $this->container->get('caldera.criticalmass.gps.latlnglistgenerator.range');
+        $llag = $this->container->get('caldera.geobundle.latlnglist_generator.range');
         $llag->loadTrack($track);
         $llag->execute();
         $track->setLatLngList($llag->getList());
@@ -89,19 +96,20 @@ trait TrackHandlingTrait
     /** @deprecated  */
     protected function updateTrackProperties(Track $track)
     {
-        /**
-         * @var TrackReader $tr
-         */
-        $tr = $this->get('caldera.criticalmass.gps.trackreader');
+        $tr = $this->getTrackReader();
         $tr->loadTrack($track);
 
-        $track->setStartDateTime($tr->getStartDateTime());
-        $track->setEndDateTime($tr->getEndDateTime());
-        $track->setDistance($tr->calculateDistance());
+        $track
+            ->setStartDateTime($tr->getStartDateTime())
+            ->setEndDateTime($tr->getEndDateTime())
+        ;
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $tdc = $this->getTrackDistanceCalculator();
+        $tdc->loadTrack($track);
+
+        $track->setDistance($tdc->calculate());
+
+        $this->getDoctrine()->getManager()->flush();
     }
 
     /** @deprecated  */
@@ -123,18 +131,13 @@ trait TrackHandlingTrait
         /**
          * @var PolylineGenerator $trackPolyline
          */
-        $trackPolyline = $this->get('caldera.criticalmass.gps.polyline.track');
+        $olylineGeneator = $this->get('caldera.geobundle.polyline_generator');
 
-        $trackPolyline->loadTrack($track);
+        $olylineGeneator
+            ->setTrack($track)
+            ->processTrack()
+        ;
 
-        $trackPolyline->execute();
-
-        $track->setPolyline($trackPolyline->getPolyline());
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
     }
-
-
 }
