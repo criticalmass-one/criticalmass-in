@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace AppBundle\Command\Track;
 
 use AppBundle\Entity\Track;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
