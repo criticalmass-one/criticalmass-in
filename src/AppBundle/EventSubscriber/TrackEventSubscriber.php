@@ -2,11 +2,12 @@
 
 namespace AppBundle\EventSubscriber;
 
+use AppBundle\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
 use AppBundle\Entity\Track;
 use AppBundle\Event\Track\TrackTrimmedEvent;
 use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use AppBundle\Criticalmass\Gps\PolylineGenerator\PolylineGeneratorInterface;
+use AppBundle\Criticalmass\Gps\PolylineGenerator\PolylineGenerator;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,8 +17,11 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var TrackReader $trackReader */
     protected $trackReader;
 
-    /** @var PolylineGeneratorInterface $trackPolyline */
-    protected $trackPolyline;
+    /** @var PolylineGenerator $polylineGenerator */
+    protected $polylineGenerator;
+
+    /** @var ReducedPolylineGenerator $reducedPolylineGenerator */
+    protected $reducedPolylineGenerator;
 
     /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
     protected $rangeLatLngListGenerator;
@@ -28,9 +32,11 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var Registry $registry */
     protected $registry;
 
-    public function __construct(Registry $registry, RideEstimateHandler $rideEstimateHandler, TrackReader $trackReader, PolylineGeneratorInterface $trackPolyline, RangeLatLngListGenerator $rangeLatLngListGenerator)
+    public function __construct(Registry $registry, RideEstimateHandler $rideEstimateHandler, TrackReader $trackReader, PolylineGenerator $polylineGenerator, ReducedPolylineGenerator $reducedPolylineGenerator, RangeLatLngListGenerator $rangeLatLngListGenerator)
     {
-        $this->trackPolyline = $trackPolyline;
+        $this->polylineGenerator = $polylineGenerator;
+
+        $this->reducedPolylineGenerator = $reducedPolylineGenerator;
 
         $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
 
@@ -65,12 +71,19 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function updatePolyline(Track $track): void
     {
-        $polyline = $this->trackPolyline
+        $polyline = $this->polylineGenerator
             ->loadTrack($track)
             ->execute()
             ->getPolyline();
 
         $track->setPolyline($polyline);
+
+        $reducedPolyline = $this->reducedPolylineGenerator
+            ->loadTrack($track)
+            ->execute()
+            ->getPolyline();
+
+        $track->setReducedPolyline($reducedPolyline);
     }
 
     protected function updateLatLngList(Track $track): void
