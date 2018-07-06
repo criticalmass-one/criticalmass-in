@@ -3,7 +3,14 @@
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Städteliste</li>
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+    <li class="active">
+        Turnus anzeigen
+    </li>
 {% endblock %}
     
 {% block content %}
