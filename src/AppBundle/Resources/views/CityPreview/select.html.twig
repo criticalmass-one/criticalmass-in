@@ -1,0 +1,41 @@
+{% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
+
+{% block title %}{{ city.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li class="active">
+        {{ city.city }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Vorschaubild für {{ city.title }} auswählen
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+
+            <div class="col-md-4">
+
+            </div>
+
+            <div class="col-md-4">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

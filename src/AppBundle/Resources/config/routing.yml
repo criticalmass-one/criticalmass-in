@@ -86,6 +86,10 @@ caldera_criticalmass_citymanagement:
     resource: "@AppBundle/Resources/config/routing/citymanagement.yml"
     prefix: /
 
+caldera_criticalmass_citypreview:
+    resource: "@AppBundle/Resources/config/routing/city_preview.yml"
+    prefix: /
+
 caldera_criticalmass_citycycle:
     resource: "@AppBundle/Resources/config/routing/citycycle.yml"
     prefix: /
