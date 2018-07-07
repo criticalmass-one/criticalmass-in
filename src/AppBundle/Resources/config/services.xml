@@ -5,7 +5,6 @@
         <import resource="services/admin.xml"/>
         <import resource="services/logging.xml"/>
         <import resource="services/calendar.xml"/>
-        <import resource="services/facebook.xml"/>
         <import resource="services/imagine.xml"/>
     </imports>
 

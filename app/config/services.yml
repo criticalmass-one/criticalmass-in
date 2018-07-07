@@ -10,10 +10,13 @@ services:
             $staticmapsHost: '%staticmaps.host%'
             $featurePhotos: '%feature.photos%'
             $gapWidth: '%track.gap_width%'
+            $facebookAppId: '%facebook.app_id%'
+            $facebookAppSecret: '%facebook.app_secret%'
+            $facebookDefaultToken: '%facebook.default_token%'
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Menu,Model,Repository,Tests,UserProvider,Validator,Criticalmass/Facebook,Criticalmass/Image,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Menu,Model,Repository,Tests,UserProvider,Validator,Criticalmass/Image,Criticalmass/UploadValidator/UploadValidatorException}'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
