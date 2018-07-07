@@ -5,31 +5,10 @@
         <import resource="services/admin.xml"/>
         <import resource="services/logging.xml"/>
         <import resource="services/calendar.xml"/>
-        <import resource="services/facebook.xml"/>
+        <import resource="services/imagine.xml"/>
     </imports>
 
     <services>
-        <service id="critical_markdown" class="AppBundle\Criticalmass\Markdown\CriticalMarkdown"/>
-
-        <service id="caldera.criticalmass.validator.single_ride_day"
-                 class="AppBundle\Validator\SingleRideForDayValidator">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <tag name="validator.constraint_validator"/>
-        </service>
-
-        <service id="caldera.criticalmass.image.filter.blur" class="AppBundle\Criticalmass\Image\Filter\BlurFilter">
-            <tag name="liip_imagine.filter.loader" loader="blur_filter"/>
-        </service>
-
-        <service id="caldera.criticalmass.image.filter.fast_blur"
-                 class="AppBundle\Criticalmass\Image\Filter\FastBlurFilter">
-            <tag name="liip_imagine.filter.loader" loader="fast_blur_filter"/>
-        </service>
-
-        <service id="caldera.criticalmass.routing.object_router" class="AppBundle\Criticalmass\Router\ObjectRouter">
-            <argument type="service" id="router.default"/>
-        </service>
-
         <service id="fos_user.doctrine_registry" alias="doctrine"/>
 
         <service id="caldera.user_provider" class="AppBundle\UserProvider\FOSUBUserProvider">

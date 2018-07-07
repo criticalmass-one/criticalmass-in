@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 trait UtilTrait
 {
+    /** @deprecated  */
     protected function getSession(): Session
     {
         $session = new Session();
@@ -18,16 +19,18 @@ trait UtilTrait
         return $session;
     }
 
+    /** @deprecated  */
     protected function generateObjectUrl($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         /** @var ObjectRouter $router */
-        $router = $this->get('caldera.criticalmass.routing.object_router');
+        $router = $this->get(ObjectRouter::class);
 
         $url = $router->generate($object, $referenceType);
 
         return $url;
     }
 
+    /** @deprecated  */
     protected function redirectToObject($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $url = $this->generateObjectUrl($object, $referenceType);
@@ -35,6 +38,7 @@ trait UtilTrait
         return $this->redirect($url);
     }
 
+    /** @deprecated  */
     protected function getManager(): EntityManagerInterface
     {
         return $this->getDoctrine()->getManager();
