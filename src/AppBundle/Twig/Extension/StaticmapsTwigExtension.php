@@ -66,9 +66,17 @@ class StaticmapsTwigExtension extends \Twig_Extension
 
     public function staticmapsRide(Ride $ride, int $width = null, int $height = null, int $zoom = null): string
     {
+        if ($ride->getHasLocation() && $ride->getLatitude() && $ride->getLongitude()) {
+            $latitude = $ride->getLatitude();
+            $longitude = $ride->getLongitude();
+        } else {
+            $latitude = $ride->getCity()->getLatitude();
+            $longitude = $ride->getCity()->getLongitude();
+        }
+
         $parameters = [
-            'center' => sprintf('%f,%f', $ride->getLatitude(), $ride->getLongitude()),
-            'markers' => sprintf('%f,%f,%s,%s,%s', $ride->getLatitude(), $ride->getLongitude(), 'circle', 'red', 'bicycle'),
+            'center' => sprintf('%f,%f', $latitude, $longitude),
+            'markers' => sprintf('%f,%f,%s,%s,%s', $latitude, $longitude, 'circle', 'red', 'bicycle'),
         ];
 
         return $this->generateMapUrl($parameters, $width, $height, $zoom);
