@@ -78,7 +78,8 @@ class TrackUploadController extends AbstractController
             $track
                 ->setRide($ride)
                 ->setUser($this->getUser())
-                ->setUsername($this->getUser()->getUsername());
+                ->setUsername($this->getUser()->getUsername())
+                ->setSource(Track::TRACK_SOURCE_GPX);
 
             $em->persist($track);
             $em->flush();
