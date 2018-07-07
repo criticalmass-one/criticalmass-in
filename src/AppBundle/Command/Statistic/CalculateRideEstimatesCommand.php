@@ -38,7 +38,7 @@ class CalculateRideEstimatesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $rides = $this->registry->getRepository(Ride::class)->findEstimatedRides();
+        $rides = $this->registry->getRepository(Ride::class)->findAll();
 
         $progressBar = new ProgressBar($output, count($rides));
         $table = new Table($output);
