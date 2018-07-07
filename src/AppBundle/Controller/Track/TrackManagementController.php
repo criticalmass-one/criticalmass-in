@@ -22,7 +22,7 @@ class TrackManagementController extends AbstractController
      */
     public function listAction(Request $request, UserInterface $user, PaginatorInterface $paginator)
     {
-        $query = $this->getTrackRepository()->findByUserQuery($user);
+        $query = $this->getTrackRepository()->findByUserQuery($user, null);
 
         $pagination = $paginator->paginate(
             $query,
