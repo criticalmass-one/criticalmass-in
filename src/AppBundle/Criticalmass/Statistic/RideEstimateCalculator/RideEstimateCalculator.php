@@ -1,26 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimate;
+namespace AppBundle\Criticalmass\Statistic\RideEstimateCalcular;
 
-use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 
-class RideEstimateCalculator
+class RideEstimateCalculator extends AbstractRideEstimateCalculator
 {
-    /** @var Ride $ride */
-    protected $ride;
-
-    /** @var array $estimates */
-    protected $estimates = [];
-
-    public function setEstimates(array $estimates): RideEstimateCalculator
-    {
-        $this->estimates = $estimates;
-
-        return $this;
-    }
-
-    public function calculate(): RideEstimateCalculator
+    public function calculate(): RideEstimateCalculatorInterface
     {
         $this->calculateDistance();
         $this->calculateDuration();
@@ -92,18 +78,6 @@ class RideEstimateCalculator
         }
 
         $this->ride->setEstimatedParticipants($participants);
-
-        return $this;
-    }
-
-    public function getRide(): Ride
-    {
-        return $this->ride;
-    }
-
-    public function setRide(Ride $ride): RideEstimateCalculator
-    {
-        $this->ride = $ride;
 
         return $this;
     }
