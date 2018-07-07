@@ -6,9 +6,10 @@ use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Track;
 use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Event\View\ViewEvent;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -21,7 +22,7 @@ class PhotoController extends AbstractController
     public function showAction(
         Request $request,
         SeoPage $seoPage,
-        ViewStorageCache $viewStorageCache,
+        EventDispatcher $eventDispatcher,
         Photo $photo
     ): Response {
         $this->errorIfFeatureDisabled('photos');
@@ -37,7 +38,7 @@ class PhotoController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $viewStorageCache->countView($photo);
+        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($photo));
 
         if ($ride && $photo->getUser()) {
             /** @var Track $track */
@@ -57,19 +58,17 @@ class PhotoController extends AbstractController
         ]);
     }
 
-    public function ajaxphotoviewAction(Request $request, ViewStorageCache $viewStorageCache): Response
+    public function ajaxphotoviewAction(Request $request, EventDispatcher $eventDispatcher): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
         $photoId = $request->get('photoId');
 
-        /**
-         * @var Photo $photo
-         */
+        /** @var Photo $photo */
         $photo = $this->getPhotoRepository()->find($photoId);
 
         if ($photo) {
-            $viewStorageCache->countView($photo);
+            $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($photo));
         }
 
         return new Response(null);
