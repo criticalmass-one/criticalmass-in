@@ -7,14 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
-use AppBundle\Traits\TrackHandlingTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackDrawController extends AbstractController
 {
-    use TrackHandlingTrait;
-
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
