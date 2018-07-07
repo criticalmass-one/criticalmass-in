@@ -18,7 +18,7 @@ class ProfileManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function manageAction(Request $request, UserInterface $user): Response
+    public function manageAction(UserInterface $user = null): Response
     {
         $participationCounter = $this->getDoctrine()->getRepository('AppBundle:Participation')->countByUser($user);
         $trackCounter = $this->getDoctrine()->getRepository('AppBundle:Track')->countByUser($user);
@@ -34,7 +34,7 @@ class ProfileManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function editUsernameAction(Request $request, UserInterface $user): Response
+    public function editUsernameAction(Request $request, UserInterface $user = null): Response
     {
         $usernameForm = $this->createForm(UsernameType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editusername')
@@ -70,7 +70,7 @@ class ProfileManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function editEmailAction(Request $request, UserInterface $user): Response
+    public function editEmailAction(Request $request, UserInterface $user = null): Response
     {
         $userEmailForm = $this->createForm(UserEmailType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editemail')

@@ -52,7 +52,7 @@ class CityManagementController extends AbstractController
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, City $city, Region $region, Form $form)
+    protected function addGetAction(Request $request, UserInterface $user = null, City $city, Region $region, Form $form)
     {
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => null,
@@ -64,7 +64,7 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, City $city, Region $region, Form $form): Response
+    protected function addPostAction(Request $request, UserInterface $user = null, City $city, Region $region, Form $form): Response
     {
         $form->handleRequest($request);
 
@@ -130,7 +130,7 @@ class CityManagementController extends AbstractController
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user, City $city, Form $form): Response
+    protected function editGetAction(Request $request, UserInterface $user = null, City $city, Form $form): Response
     {
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => $city,
@@ -142,7 +142,7 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user, City $city, Form $form): Response
+    protected function editPostAction(Request $request, UserInterface $user = null, City $city, Form $form): Response
     {
         $form->handleRequest($request);
 

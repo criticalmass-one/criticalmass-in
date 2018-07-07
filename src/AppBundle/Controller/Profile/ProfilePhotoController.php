@@ -16,7 +16,7 @@ class ProfilePhotoController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function uploadAction(Request $request, UserInterface $user): Response
+    public function uploadAction(Request $request, UserInterface $user = null): Response
     {
         $form = $this->createForm(UserProfilePhotoType::class, $user);
         $form->add('submit', SubmitType::class);
@@ -28,14 +28,14 @@ class ProfilePhotoController extends AbstractController
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user, FormInterface $form): Response
+    protected function uploadGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
     {
         return $this->render('AppBundle:ProfilePhoto:upload.html.twig', [
             'profilePhotoForm' => $form->createView(),
         ]);
     }
 
-    public function uploadPostAction(Request $request, UserInterface $user, FormInterface $form): Response
+    public function uploadPostAction(Request $request, UserInterface $user = null, FormInterface $form): Response
     {
         $form->handleRequest($request);
 

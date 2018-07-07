@@ -23,7 +23,7 @@ class RideEstimateController extends AbstractController
      */
     public function addestimateAction(
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride,
         EventDispatcherInterface $eventDispatcher
     ): Response {
