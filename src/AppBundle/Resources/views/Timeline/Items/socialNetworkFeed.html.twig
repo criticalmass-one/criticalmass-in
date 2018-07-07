@@ -5,7 +5,7 @@
 
 {% if item.ride %}
     {% set source = item.ride %}
-    {% set sourceName = ride_title(source) %}
+    {% set sourceName = source.title %}
 {% endif %}
 
 {% if item.subride %}

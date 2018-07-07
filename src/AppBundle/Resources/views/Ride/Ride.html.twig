@@ -10,7 +10,7 @@
     <div class="col-md-12">
         {% include('AppBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1>
-            {{ ride_title(ride) }}
+            {{ ride.title }}
         </h1>
     </div>
 </div>

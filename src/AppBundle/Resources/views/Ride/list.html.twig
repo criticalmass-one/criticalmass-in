@@ -46,7 +46,7 @@
                                     href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{% if ride.getHasLocation() %}{{ ride.getLocation() }}{% endif %}</a>
                         </td>
                         <td class="hidden-xs hidden-sm col-md-4 col-lg-4"><a
-                                    href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride_title(ride) }}</a>
+                                    href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() }) }}">{{ ride.title }}</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,6 +1,6 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% block title %}{{ ride_title(ride) }}{% endblock %}
+{% block title %}{{ ride.title }}{% endblock %}
 
 {% block breadcrumb %}
     <li>
@@ -14,7 +14,7 @@
         </a>
     </li>
     <li class="active">
-        {{ ride_title(ride) }}
+        {{ ride.title }}
     </li>
 {% endblock %}
 
