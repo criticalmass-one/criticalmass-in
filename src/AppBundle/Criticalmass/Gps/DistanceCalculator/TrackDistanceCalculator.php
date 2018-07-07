@@ -1,43 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Gps\DistanceCalculator;
-
-
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 
 /**
  * @deprecated
  */
-class TrackDistanceCalculator extends BaseDistanceCalculator
+class TrackDistanceCalculator extends AbstractDistanceCalculator
 {
-    protected $doctrine;
-
-    /**
-     * @var TrackReader $trackReader
-     */
-    protected $trackReader;
-
-    /**
-     * @var Track $track
-     */
-    protected $track;
-
-    public function __construct($doctrine, TrackReader $trackReader)
-    {
-        $this->doctrine = $doctrine;
-        $this->trackReader = $trackReader;
-    }
-
-    public function loadTrack(Track $track)
-    {
-        $this->track = $track;
-        $this->trackReader->loadTrack($track);
-
-        return $this;
-    }
-
-    public function calculate()
+    public function calculate(): float
     {
         $startPoint = intval($this->track->getStartPoint());
         $endPoint = intval($this->track->getEndPoint());

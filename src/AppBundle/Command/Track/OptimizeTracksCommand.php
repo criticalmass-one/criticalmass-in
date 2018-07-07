@@ -1,34 +1,39 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace AppBundle\Command;
+namespace AppBundle\Command\Track;
 
+use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
 use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculator;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class OptimizeTracksCommand extends ContainerAwareCommand
+class OptimizeTracksCommand extends Command
 {
-    /**
-     * @var Registry $doctrine
-     */
-    protected $doctrine;
+    /** @var RegistryInterface $registry */
+    protected $registry;
 
-    /**
-     * @var RangeLatLngListGenerator $generator
-     */
-    protected $generator;
+    /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
+    protected $rangeLatLngListGenerator;
 
-    /**
-     * @var EntityManager $manager
-     */
+    /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
+    protected $trackDistanceCalculator;
+
+    /** @var EntityManager $manager */
     protected $manager;
+
+    public function __construct(?string $name = null, RegistryInterface $registry, RangeLatLngListGenerator $rangeLatLngListGenerator, TrackDistanceCalculatorInterface $trackDistanceCalculator)
+    {
+        $this->registry = $registry;
+        $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
+        $this->trackDistanceCalculator = $trackDistanceCalculator;
+
+        parent::__construct($name);
+    }
 
     protected function configure()
     {
@@ -45,14 +50,9 @@ class OptimizeTracksCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->doctrine = $this->getContainer()->get('doctrine');
-        $this->manager = $this->doctrine->getManager();
+        $repository = $this->registry->getRepository(Track::class);
 
-        $repository = $this->doctrine->getRepository('AppBundle:Track');
-
-        /**
-         * @var Track $track
-         */
+        /** @var Track $track */
         if ($input->hasArgument('trackId') && $input->getArgument('trackId')) {
             $trackId = $input->getArgument('trackId');
             $track = $repository->find($trackId);
@@ -74,29 +74,20 @@ class OptimizeTracksCommand extends ContainerAwareCommand
 
     protected function optimizeTrack(Track $track)
     {
-        /**
-         * @var RangeLatLngListGenerator $latLngGenerator
-         */
-        $latLngGenerator = $this->getContainer()->get('caldera.criticalmass.gps.latlnglistgenerator.range');
-
-        $list = $latLngGenerator
+        $list = $this->rangeLatLngListGenerator
             ->loadTrack($track)
             ->execute()
             ->getList();
 
         $track->setLatLngList($list);
 
-        /**
-         * @var TrackDistanceCalculator $tdc
-         */
-        $tdc = $this->getContainer()->get('caldera.criticalmass.gps.distancecalculator.track');
-        $tdc->loadTrack($track);
+        $this->trackDistanceCalculator->loadTrack($track);
 
-        $track->setDistance($tdc->calculate());
+        $track->setDistance($this->trackDistanceCalculator->calculate());
 
         $track->setUpdatedAt(new \DateTime());
 
-        $this->manager->persist($track);
-        $this->manager->flush();
+        $this->registry->getManager()->persist($track);
+        $this->registry->getManager()->flush();
     }
 }
