@@ -5,9 +5,10 @@ namespace AppBundle\Controller\City;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\City;
 use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Event\View\ViewEvent;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -97,7 +98,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="AppBundle:City", isOptional=true)
      */
-    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, City $city = null): Response
+    public function showAction(Request $request, SeoPage $seoPage, EventDispatcher $eventDispatcher, City $city = null): Response
     {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -111,7 +112,7 @@ class CityController extends AbstractController
             ]);
         }
 
-        $viewStorageCache->countView($city);
+        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($city));
 
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
@@ -128,13 +129,6 @@ class CityController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city, 'DESC', 6);
 
-        $dateTime = null;
-
-        if ($city->getTimezone()) {
-            $dateTime = new \DateTime();
-            $dateTime->setTimezone(new \DateTimeZone($city->getTimezone()));
-        }
-
         $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
@@ -148,7 +142,6 @@ class CityController extends AbstractController
         return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
-            'dateTime' => $dateTime,
             'nearCities' => $nearCities,
             'locations' => $locations,
             'photos' => $photos,

@@ -5,13 +5,14 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\CitySlug;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
+use AppBundle\Event\RideEstimate\RideEstimateCreatedEvent;
 use AppBundle\Model\CreateEstimateModel;
 use AppBundle\Traits\RepositoryTrait;
 use AppBundle\Traits\UtilTrait;
-use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\Serializer;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -47,7 +48,7 @@ class EstimateController extends BaseController
      *  description="Adds an estimation to statistic"
      * )
      */
-    public function createAction(Request $request, UserInterface $user, Serializer $serializer): Response
+    public function createAction(Request $request, UserInterface $user, Serializer $serializer, EventDispatcherInterface $eventDispatcher): Response
     {
         $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
 
@@ -56,7 +57,7 @@ class EstimateController extends BaseController
         $this->getManager()->persist($rideEstimation);
         $this->getManager()->flush();
 
-        $this->recalculateEstimates($rideEstimation);
+        $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
         $view = View::create();
         $view
@@ -153,13 +154,5 @@ class EstimateController extends BaseController
         }
 
         return null;
-    }
-
-    protected function recalculateEstimates(RideEstimate $rideEstimate): void
-    {
-        if ($rideEstimate->getRide()) {
-            $estimateService = $this->get(RideEstimateService::class);
-            $estimateService->calculateEstimates($rideEstimate->getRide());
-        }
     }
 }

@@ -19,7 +19,7 @@ class PhotoUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
+    public function uploadAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
@@ -30,14 +30,14 @@ class PhotoUploadController extends AbstractController
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
+    protected function uploadGetAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
     {
         return $this->render('AppBundle:PhotoUpload:upload.html.twig', [
             'ride' => $ride,
         ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user, PhotoGps $photoGps, Ride $ride): Response
+    protected function uploadPostAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
     {
         $em = $this->getDoctrine()->getManager();
 

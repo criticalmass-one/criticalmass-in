@@ -3,16 +3,30 @@
 {% block title %}Track beschneiden{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('fos_user_profile_show') }}">Dein Benutzerkonto</a></li>
-    <li><a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a></li>
-    <li class="active">Track beschneiden</li>
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ path('caldera_criticalmass_track_list') }}">
+            Deine Tracks
+        </a>
+    </li>
+
+    <li class="active">
+        Track beschneiden
+    </li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Track beschneiden</h1>
+                <h2>
+                    Track beschneiden
+                </h2>
             </div>
         </div>
 

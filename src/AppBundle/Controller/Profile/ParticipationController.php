@@ -21,7 +21,7 @@ class ParticipationController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listAction(UserInterface $user, RegistryInterface $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator): Response
+    public function listAction(UserInterface $user = null, RegistryInterface $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator): Response
     {
         $streakGenerator->setUser($user);
 

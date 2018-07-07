@@ -2,13 +2,15 @@
 
 namespace AppBundle\Controller\Ride;
 
+use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
+use AppBundle\Event\RideEstimate\RideEstimateCreatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Form\Type\RideEstimateType;
-use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,8 +23,9 @@ class RideEstimateController extends AbstractController
      */
     public function addestimateAction(
         Request $request,
-        UserInterface $user,
-        Ride $ride
+        UserInterface $user = null,
+        Ride $ride,
+        EventDispatcherInterface $eventDispatcher
     ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
@@ -42,7 +45,7 @@ class RideEstimateController extends AbstractController
             $this->getManager()->persist($estimateForm->getData());
             $this->getManager()->flush();
 
-            $this->recalculateEstimates($ride);
+            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
         }
 
         return $this->redirectToObject($ride);
@@ -54,7 +57,8 @@ class RideEstimateController extends AbstractController
     public function anonymousestimateAction(
         Request $request,
         UserInterface $user = null,
-        Ride $ride
+        Ride $ride,
+        EventDispatcherInterface $eventDispatcher
     ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
@@ -74,7 +78,7 @@ class RideEstimateController extends AbstractController
             $this->getManager()->persist($estimateForm->getData());
             $this->getManager()->flush();
 
-            $this->recalculateEstimates($ride);
+            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
 
             return $this->redirectToObject($ride);
         }
@@ -83,11 +87,5 @@ class RideEstimateController extends AbstractController
             'estimateForm' => $estimateForm->createView(),
             'ride' => $ride,
         ]);
-    }
-
-    protected function recalculateEstimates(Ride $ride): void
-    {
-        $estimateService = $this->get(RideEstimateService::class);
-        $estimateService->calculateEstimates($ride);
     }
 }

@@ -20,7 +20,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function listAction(UserInterface $user, City $city): Response
+    public function listAction(City $city): Response
     {
         return $this->render('AppBundle:CityCycle:list.html.twig', [
             'cycles' => $this->getCityCycleRepository()->findByCity($city),
@@ -32,7 +32,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, City $city): Response
+    public function addAction(Request $request, UserInterface $user = null, City $city): Response
     {
         $cityCycle = new CityCycle();
         $cityCycle
@@ -46,13 +46,13 @@ class CityCycleController extends AbstractController
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $user, $cityCycle, $form);
+            return $this->addPostAction($request, $cityCycle, $form);
         } else {
-            return $this->addGetAction($request, $user, $cityCycle, $form);
+            return $this->addGetAction($request, $cityCycle, $form);
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function addGetAction(Request $request, CityCycle $cityCycle, Form $form): Response
     {
         return $this->render('AppBundle:CityCycle:edit.html.twig', [
             'city' => $cityCycle->getCity(),
@@ -61,7 +61,7 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    protected function addPostAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function addPostAction(Request $request, CityCycle $cityCycle, Form $form): Response
     {
         $city = $cityCycle->getCity();
 
@@ -88,7 +88,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="AppBundle:CityCycle", options={"id" = "cycleId"})
      */
-    public function editAction(Request $request, UserInterface $user, CityCycle $cityCycle): Response
+    public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle): Response
     {
         $cityCycle->setUser($user);
 
@@ -106,7 +106,7 @@ class CityCycleController extends AbstractController
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, Form $form): Response
     {
         return $this->render('AppBundle:CityCycle:edit.html.twig', [
             'city' => $cityCycle->getCity(),
@@ -115,7 +115,7 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user, CityCycle $cityCycle, Form $form): Response
+    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, Form $form): Response
     {
         $city = $cityCycle->getCity();
 
@@ -153,7 +153,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="AppBundle:CityCycle", options={"id" = "cycleId"})
      */
-    public function disableAction(Request $request, UserInterface $user, CityCycle $cityCycle, ObjectManager $objectManager): Response
+    public function disableAction(CityCycle $cityCycle, ObjectManager $objectManager): Response
     {
         if ($cityCycle->getRides()->count() > 0) {
             if (!$cityCycle->getValidFrom()) {
@@ -171,6 +171,8 @@ class CityCycleController extends AbstractController
 
         $objectManager->flush();
 
-        return $this->redirectToRoute('caldera_criticalmass_citycycle_list', ['citySlug' => $cityCycle->getCity()->getMainSlugString()]);
+        return $this->redirectToRoute('caldera_criticalmass_citycycle_list', [
+            'citySlug' => $cityCycle->getCity()->getMainSlugString()
+        ]);
     }
 }

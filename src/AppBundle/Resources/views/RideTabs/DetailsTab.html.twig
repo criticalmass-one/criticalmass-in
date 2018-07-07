@@ -15,12 +15,6 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ path('caldera_criticalmass_ride_facebookupdate', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
-                            von facebook aktualisieren
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="{{ path('criticalmass_socialnetwork_ride_list', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">
                             soziale Netzwerke verwalten
                         </a>
@@ -56,12 +50,6 @@
             <div class="row">
                 <div class="col-md-12">
                     {% include 'AppBundle:Ride:Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    {% include 'AppBundle:Ride:Includes/_participationNumbers.html.twig' with { 'ride': ride } %}
                 </div>
             </div>
 
