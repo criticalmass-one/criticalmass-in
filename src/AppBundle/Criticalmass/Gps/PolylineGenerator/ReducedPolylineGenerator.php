@@ -7,11 +7,10 @@ use PointReduction\Common\Point;
 
 class ReducedPolylineGenerator extends AbstractPolylineGenerator
 {
-    public function execute(float $tolerance = 0.1): PolylineGeneratorInterface
+    public function execute(float $tolerance = 0.005): PolylineGeneratorInterface
     {
         $list = array_values($this->trackReader->slicePublicCoords());
 
-        $tolerance = 0.01;
         $reducer = new RadialDistance($list);
 
         $reducedPointList = $reducer->reduce($tolerance);
