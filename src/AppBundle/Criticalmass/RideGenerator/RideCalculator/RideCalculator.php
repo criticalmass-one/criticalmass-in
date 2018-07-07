@@ -44,6 +44,7 @@ class RideCalculator extends AbstractRideCalculator
         $ride = $this->calculateDate($cycle, $ride);
         $ride = $this->calculateTime($cycle, $ride);
         $ride = $this->setupLocation($cycle, $ride);
+        $ride = $this->generateTitle($cycle, $ride);
 
         return $ride;
     }
@@ -123,6 +124,19 @@ class RideCalculator extends AbstractRideCalculator
             ->setLocation($cityCycle->getLocation())
             ->setHasLocation(true)
         ;
+
+        return $ride;
+    }
+
+    protected function generateTitle(CityCycle $cityCycle, Ride $ride): Ride
+    {
+        if (!$ride->getDateTime()) {
+            return $ride;
+        }
+
+        $title = sprintf('%s %s', $cityCycle->getCity()->getTitle(), $ride->getDateTime()->format('d.m.Y'));
+
+        $ride->setTitle($title);
 
         return $ride;
     }

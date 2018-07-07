@@ -17,7 +17,7 @@ class RideEditCollector extends AbstractTimelineCollector
 
             $item
                 ->setUser($ride->getUser())
-                ->setRideTitle($ride->getFancyTitle())
+                ->setRideTitle($ride->getTitle())
                 ->setRide($ride)
                 ->setDateTime($ride->getUpdatedAt());
 
