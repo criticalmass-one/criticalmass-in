@@ -4,6 +4,7 @@ namespace AppBundle\Twig\Extension;
 
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
+use AppBundle\Entity\Track;
 use AppBundle\EntityInterface\StaticMapableInterface;
 
 class StaticmapsTwigExtension extends \Twig_Extension
@@ -36,6 +37,8 @@ class StaticmapsTwigExtension extends \Twig_Extension
             return $this->staticmapsRide($object, $width, $height, $zoom);
         } elseif ($object instanceof City) {
             return $this->staticmapsCity($object, $width, $height, $zoom);
+        } elseif ($object instanceof Track) {
+            return $this->staticmapsTrack($object, $width, $height, $zoom);
         }
 
         return '';
@@ -44,6 +47,21 @@ class StaticmapsTwigExtension extends \Twig_Extension
     public function getName(): string
     {
         return 'staticmaps_extension';
+    }
+
+    public function staticmapsTrack(Track $track, int $width = null, int $height = null, int $zoom = null): string
+    {
+        if (!$track->getReducedPolyline()) {
+            return '';
+        }
+
+        $parameters = [
+            'center' => sprintf('%f,%f', $track->getRide()->getLatitude(), $track->getRide()->getLongitude()),
+            'polylines' => sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue()),
+            'zoom' => 10,
+        ];
+
+        return $this->generateMapUrl($parameters, $width, $height, $zoom);
     }
 
     public function staticmapsRide(Ride $ride, int $width = null, int $height = null, int $zoom = null): string
@@ -61,7 +79,6 @@ class StaticmapsTwigExtension extends \Twig_Extension
         $parameters = [
             'center' => sprintf('%f,%f', $city->getLatitude(), $city->getLongitude()),
             'markers' => sprintf('%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'circle', 'blue', 'university'),
-
         ];
 
         return $this->generateMapUrl($parameters, $width, $height, $zoom);
@@ -92,7 +109,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
             $list [] = sprintf('%s=%s', $key, $value);
         }
 
-        return implode('&',$list);
+        return implode('&', $list);
     }
 }
 
